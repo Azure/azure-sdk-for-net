@@ -40,6 +40,26 @@ namespace Azure.Storage.Queues
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateDequeueRequestUri(int? numberOfMessages, int? visibilitytimeout, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/messages", false);
+            if (numberOfMessages != null)
+            {
+                uri.AppendQuery("numofmessages", numberOfMessages.Value, true);
+            }
+            if (visibilitytimeout != null)
+            {
+                uri.AppendQuery("visibilitytimeout", visibilitytimeout.Value, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDequeueRequest(int? numberOfMessages, int? visibilitytimeout, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -130,6 +150,18 @@ namespace Azure.Storage.Queues
             }
         }
 
+        internal RequestUriBuilder CreateClearRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/messages", false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateClearRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -180,6 +212,26 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateEnqueueRequestUri(QueueMessage queueMessage, int? visibilitytimeout, int? messageTimeToLive, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/messages", false);
+            if (visibilitytimeout != null)
+            {
+                uri.AppendQuery("visibilitytimeout", visibilitytimeout.Value, true);
+            }
+            if (messageTimeToLive != null)
+            {
+                uri.AppendQuery("messagettl", messageTimeToLive.Value, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateEnqueueRequest(QueueMessage queueMessage, int? visibilitytimeout, int? messageTimeToLive, int? timeout)
@@ -288,6 +340,23 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePeekRequestUri(int? numberOfMessages, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/messages", false);
+            uri.AppendQuery("peekonly", "true", true);
+            if (numberOfMessages != null)
+            {
+                uri.AppendQuery("numofmessages", numberOfMessages.Value, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreatePeekRequest(int? numberOfMessages, int? timeout)

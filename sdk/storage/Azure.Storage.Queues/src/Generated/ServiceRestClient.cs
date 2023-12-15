@@ -40,6 +40,20 @@ namespace Azure.Storage.Queues
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateSetPropertiesRequestUri(QueueServiceProperties storageServiceProperties, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetPropertiesRequest(QueueServiceProperties storageServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -112,6 +126,20 @@ namespace Azure.Storage.Queues
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -182,6 +210,20 @@ namespace Azure.Storage.Queues
             }
         }
 
+        internal RequestUriBuilder CreateGetStatisticsRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "stats", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetStatisticsRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -250,6 +292,35 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListQueuesSegmentRequestUri(string prefix, string marker, int? maxresults, IEnumerable<string> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListQueuesSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<string> include, int? timeout)
@@ -343,6 +414,14 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListQueuesSegmentNextPageRequestUri(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<string> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListQueuesSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<string> include, int? timeout)

@@ -44,6 +44,18 @@ namespace Azure.Storage.Files.DataLake
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(int? timeout, string properties)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("resource", _resource, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(int? timeout, string properties)
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +114,18 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetPropertiesRequestUri(int? timeout, string properties, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("resource", _resource, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSetPropertiesRequest(int? timeout, string properties, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
@@ -176,6 +200,18 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("resource", _resource, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -228,6 +264,18 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("resource", _resource, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
@@ -294,6 +342,35 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPathsRequestUri(bool recursive, int? timeout, string continuation, string path, int? maxResults, bool? upn)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("resource", _resource, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (continuation != null)
+            {
+                uri.AppendQuery("continuation", continuation, true);
+            }
+            if (path != null)
+            {
+                uri.AppendQuery("directory", path, true);
+            }
+            uri.AppendQuery("recursive", recursive, true);
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxResults", maxResults.Value, true);
+            }
+            if (upn != null)
+            {
+                uri.AppendQuery("upn", upn.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListPathsRequest(bool recursive, int? timeout, string continuation, string path, int? maxResults, bool? upn)
@@ -385,6 +462,43 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBlobHierarchySegmentRequestUri(string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, ListBlobsShowOnly? showonly, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (delimiter != null)
+            {
+                uri.AppendQuery("delimiter", delimiter, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxResults", maxResults.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            if (showonly != null)
+            {
+                uri.AppendQuery("showonly", showonly.Value.ToString(), true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBlobHierarchySegmentRequest(string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, ListBlobsShowOnly? showonly, int? timeout)
@@ -490,6 +604,14 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBlobHierarchySegmentNextPageRequestUri(string nextLink, string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, ListBlobsShowOnly? showonly, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, ListBlobsShowOnly? showonly, int? timeout)

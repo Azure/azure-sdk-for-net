@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateQueryPipelineRunsByWorkspaceRequestUri(RunFilterParameters filterParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/queryPipelineRuns", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateQueryPipelineRunsByWorkspaceRequest(RunFilterParameters filterParameters)
         {
             var message = _pipeline.CreateMessage();
@@ -108,6 +117,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetPipelineRunRequestUri(string runId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pipelineruns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPipelineRunRequest(string runId)
         {
             var message = _pipeline.CreateMessage();
@@ -175,6 +194,19 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateQueryActivityRunsRequestUri(string pipelineName, string runId, RunFilterParameters filterParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pipelines/", false);
+            uri.AppendPath(pipelineName, true);
+            uri.AppendPath("/pipelineruns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/queryActivityruns", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateQueryActivityRunsRequest(string pipelineName, string runId, RunFilterParameters filterParameters)
@@ -271,6 +303,21 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelPipelineRunRequestUri(string runId, bool? isRecursive)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/pipelineruns/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/cancel", false);
+            if (isRecursive != null)
+            {
+                uri.AppendQuery("isRecursive", isRecursive.Value, true);
+            }
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelPipelineRunRequest(string runId, bool? isRecursive)

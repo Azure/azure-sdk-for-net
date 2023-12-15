@@ -82,7 +82,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageQueueQueueRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<StorageQueueResource>(Response.FromValue(new StorageQueueResource(Client, response), response.GetRawResponse()));
+                var uri = _storageQueueQueueRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation<StorageQueueResource>(Response.FromValue(new StorageQueueResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +125,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageQueueQueueRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, data, cancellationToken);
-                var operation = new StorageArmOperation<StorageQueueResource>(Response.FromValue(new StorageQueueResource(Client, response), response.GetRawResponse()));
+                var uri = _storageQueueQueueRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation<StorageQueueResource>(Response.FromValue(new StorageQueueResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

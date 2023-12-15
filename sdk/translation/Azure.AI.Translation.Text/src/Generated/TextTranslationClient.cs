@@ -219,6 +219,19 @@ namespace Azure.AI.Translation.Text
             }
         }
 
+        internal RequestUriBuilder CreateGetLanguagesRequestUri(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/languages", false);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLanguagesRequest(string clientTraceId, string scope, string acceptLanguage, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -247,6 +260,66 @@ namespace Azure.AI.Translation.Text
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateTranslateRequestUri(IEnumerable<string> to, RequestContent content, string clientTraceId, string @from, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedFrom, string fromScript, string toScript, bool? allowFallback, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/translate", false);
+            if (to != null && Optional.IsCollectionDefined(to))
+            {
+                foreach (var param in to)
+                {
+                    uri.AppendQuery("to", param, true);
+                }
+            }
+            if (@from != null)
+            {
+                uri.AppendQuery("from", @from, true);
+            }
+            if (textType != null)
+            {
+                uri.AppendQuery("textType", textType, true);
+            }
+            if (category != null)
+            {
+                uri.AppendQuery("category", category, true);
+            }
+            if (profanityAction != null)
+            {
+                uri.AppendQuery("profanityAction", profanityAction, true);
+            }
+            if (profanityMarker != null)
+            {
+                uri.AppendQuery("profanityMarker", profanityMarker, true);
+            }
+            if (includeAlignment != null)
+            {
+                uri.AppendQuery("includeAlignment", includeAlignment.Value, true);
+            }
+            if (includeSentenceLength != null)
+            {
+                uri.AppendQuery("includeSentenceLength", includeSentenceLength.Value, true);
+            }
+            if (suggestedFrom != null)
+            {
+                uri.AppendQuery("suggestedFrom", suggestedFrom, true);
+            }
+            if (fromScript != null)
+            {
+                uri.AppendQuery("fromScript", fromScript, true);
+            }
+            if (toScript != null)
+            {
+                uri.AppendQuery("toScript", toScript, true);
+            }
+            if (allowFallback != null)
+            {
+                uri.AppendQuery("allowFallback", allowFallback.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateTranslateRequest(IEnumerable<string> to, RequestContent content, string clientTraceId, string @from, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedFrom, string fromScript, string toScript, bool? allowFallback, RequestContext context)
@@ -320,6 +393,18 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
+        internal RequestUriBuilder CreateTransliterateRequestUri(string language, string fromScript, string toScript, RequestContent content, string clientTraceId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/transliterate", false);
+            uri.AppendQuery("language", language, true);
+            uri.AppendQuery("fromScript", fromScript, true);
+            uri.AppendQuery("toScript", toScript, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateTransliterateRequest(string language, string fromScript, string toScript, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -341,6 +426,23 @@ namespace Azure.AI.Translation.Text
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateFindSentenceBoundariesRequestUri(RequestContent content, string clientTraceId, string language, string script, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/breaksentence", false);
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (script != null)
+            {
+                uri.AppendQuery("script", script, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateFindSentenceBoundariesRequest(RequestContent content, string clientTraceId, string language, string script, RequestContext context)
@@ -371,6 +473,17 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
+        internal RequestUriBuilder CreateLookupDictionaryEntriesRequestUri(string @from, string to, RequestContent content, string clientTraceId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dictionary/lookup", false);
+            uri.AppendQuery("from", @from, true);
+            uri.AppendQuery("to", to, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateLookupDictionaryEntriesRequest(string @from, string to, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -391,6 +504,17 @@ namespace Azure.AI.Translation.Text
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateLookupDictionaryExamplesRequestUri(string @from, string to, RequestContent content, string clientTraceId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dictionary/examples", false);
+            uri.AppendQuery("from", @from, true);
+            uri.AppendQuery("to", to, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateLookupDictionaryExamplesRequest(string @from, string to, RequestContent content, string clientTraceId, RequestContext context)

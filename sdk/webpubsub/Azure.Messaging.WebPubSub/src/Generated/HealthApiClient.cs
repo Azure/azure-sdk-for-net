@@ -114,6 +114,15 @@ namespace Azure.Messaging.WebPubSub
             }
         }
 
+        internal RequestUriBuilder CreateGetServiceStatusRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/api/health", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetServiceStatusRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

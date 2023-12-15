@@ -84,7 +84,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamingJobOutputOutputsRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobOutputResource>(Response.FromValue(new StreamingJobOutputResource(Client, response), response.GetRawResponse()));
+                var uri = _streamingJobOutputOutputsRestClient.CreateCreateOrReplaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, data, ifMatch, ifNoneMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StreamAnalyticsArmOperation<StreamingJobOutputResource>(Response.FromValue(new StreamingJobOutputResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +129,9 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamingJobOutputOutputsRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamingJobOutputResource>(Response.FromValue(new StreamingJobOutputResource(Client, response), response.GetRawResponse()));
+                var uri = _streamingJobOutputOutputsRestClient.CreateCreateOrReplaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, data, ifMatch, ifNoneMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StreamAnalyticsArmOperation<StreamingJobOutputResource>(Response.FromValue(new StreamingJobOutputResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -40,6 +40,17 @@ namespace Azure.Storage.Queues
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(int? timeout, IDictionary<string, string> metadata)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
@@ -99,6 +110,17 @@ namespace Azure.Storage.Queues
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -148,6 +170,18 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "metadata", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetPropertiesRequest(int? timeout)
@@ -200,6 +234,18 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetMetadataRequestUri(int? timeout, IDictionary<string, string> metadata)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "metadata", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata)
@@ -258,6 +304,18 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAccessPolicyRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "acl", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAccessPolicyRequest(int? timeout)
@@ -336,6 +394,18 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetAccessPolicyRequestUri(int? timeout, IEnumerable<QueueSignedIdentifier> queueAcl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "acl", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSetAccessPolicyRequest(int? timeout, IEnumerable<QueueSignedIdentifier> queueAcl)

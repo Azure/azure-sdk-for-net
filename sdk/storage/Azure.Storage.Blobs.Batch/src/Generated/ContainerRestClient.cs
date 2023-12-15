@@ -38,6 +38,21 @@ namespace Azure.Storage.Blobs.Batch
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateSubmitBatchRequestUri(string containerName, long contentLength, string multipartContentType, Stream body, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(containerName, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "batch", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="contentLength"> The length of the request. </param>
@@ -112,6 +127,21 @@ namespace Azure.Storage.Blobs.Batch
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSubmitBatchRequestUri(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(containerName, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "batch", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSubmitBatchRequest(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout, RequestContext context)

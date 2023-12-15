@@ -175,7 +175,9 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = await _subscriptionAliasAliasRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SubscriptionArmOperation(response);
+                var uri = _subscriptionAliasAliasRestClient.CreateDeleteRequestUri(Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SubscriptionArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -209,7 +211,9 @@ namespace Azure.ResourceManager.Subscription
             try
             {
                 var response = _subscriptionAliasAliasRestClient.Delete(Id.Name, cancellationToken);
-                var operation = new SubscriptionArmOperation(response);
+                var uri = _subscriptionAliasAliasRestClient.CreateDeleteRequestUri(Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SubscriptionArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

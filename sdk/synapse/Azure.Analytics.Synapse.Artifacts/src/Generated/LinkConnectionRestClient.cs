@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateListByWorkspaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByWorkspaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -88,6 +97,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string linkConnectionName, LinkConnectionResource linkConnection)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string linkConnectionName, LinkConnectionResource linkConnection)
@@ -173,6 +192,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string linkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string linkConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -242,6 +271,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string linkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string linkConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -301,6 +340,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateEditTablesRequestUri(string linkConnectionName, EditTablesRequest editTablesRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/edittables", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateEditTablesRequest(string linkConnectionName, EditTablesRequest editTablesRequest)
@@ -377,6 +427,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateStartRequestUri(string linkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartRequest(string linkConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -437,6 +498,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateStopRequestUri(string linkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateStopRequest(string linkConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -495,6 +567,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDetailedStatusRequestUri(string linkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/detailedstatus", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDetailedStatusRequest(string linkConnectionName)
@@ -567,6 +650,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateListLinkTablesRequestUri(string linkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/linktables", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateListLinkTablesRequest(string linkConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -635,6 +729,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateQueryTableStatusRequestUri(string linkConnectionName, QueryTableStatusRequest queryTableStatusRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/querytablestatus", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateQueryTableStatusRequest(string linkConnectionName, QueryTableStatusRequest queryTableStatusRequest)
@@ -721,6 +826,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateUpdateLandingZoneCredentialRequestUri(string linkConnectionName, UpdateLandingZoneCredential updateLandingZoneCredentialRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/updateLandingZoneCredential", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateLandingZoneCredentialRequest(string linkConnectionName, UpdateLandingZoneCredential updateLandingZoneCredentialRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -795,6 +911,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreatePauseRequestUri(string linkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/pause", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreatePauseRequest(string linkConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -855,6 +982,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateResumeRequestUri(string linkConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkconnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/resume", false);
+            uri.AppendQuery("api-version", "2023-04-18-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateResumeRequest(string linkConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -913,6 +1051,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByWorkspaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByWorkspaceNextPageRequest(string nextLink)

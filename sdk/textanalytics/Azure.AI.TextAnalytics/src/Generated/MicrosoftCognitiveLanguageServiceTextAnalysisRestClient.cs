@@ -39,6 +39,20 @@ namespace Azure.AI.TextAnalytics
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateAnalyzeRequestUri(AnalyzeTextTask body, bool? showStats)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/:analyze-text", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateAnalyzeRequest(AnalyzeTextTask body, bool? showStats)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +134,16 @@ namespace Azure.AI.TextAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateAnalyzeBatchSubmitJobRequestUri(AnalyzeTextJobsInput body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAnalyzeBatchSubmitJobRequest(AnalyzeTextJobsInput body)
         {
             var message = _pipeline.CreateMessage();
@@ -185,6 +209,29 @@ namespace Azure.AI.TextAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAnalyzeBatchJobStatusRequestUri(Guid jobId, bool? showStats, int? top, int? skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateAnalyzeBatchJobStatusRequest(Guid jobId, bool? showStats, int? top, int? skip)
@@ -263,6 +310,18 @@ namespace Azure.AI.TextAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAnalyzeBatchCancelJobRequestUri(Guid jobId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/analyze-text/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAnalyzeBatchCancelJobRequest(Guid jobId)

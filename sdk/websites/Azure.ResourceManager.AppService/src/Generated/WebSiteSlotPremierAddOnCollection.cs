@@ -79,7 +79,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteSlotPremierAddOnWebAppsRestClient.AddPremierAddOnSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSlotPremierAddOnResource>(Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteSlotPremierAddOnWebAppsRestClient.CreateAddPremierAddOnSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AppServiceArmOperation<WebSiteSlotPremierAddOnResource>(Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +122,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteSlotPremierAddOnWebAppsRestClient.AddPremierAddOnSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSlotPremierAddOnResource>(Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteSlotPremierAddOnWebAppsRestClient.CreateAddPremierAddOnSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, premierAddOnName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AppServiceArmOperation<WebSiteSlotPremierAddOnResource>(Response.FromValue(new WebSiteSlotPremierAddOnResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

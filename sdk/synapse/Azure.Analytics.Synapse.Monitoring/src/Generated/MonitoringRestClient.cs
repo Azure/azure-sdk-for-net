@@ -39,6 +39,15 @@ namespace Azure.Analytics.Synapse.Monitoring
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetSparkJobListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/monitoring/workloadTypes/spark/Applications", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkJobListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -91,6 +100,27 @@ namespace Azure.Analytics.Synapse.Monitoring
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlJobQueryStringRequestUri(string filter, string orderby, string skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/monitoring/workloadTypes/sql/querystring", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlJobQueryStringRequest(string filter, string orderby, string skip)

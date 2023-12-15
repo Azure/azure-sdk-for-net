@@ -38,6 +38,20 @@ namespace Azure.IoT.TimeSeriesInsights
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetAvailabilityRequestUri(string storeType, string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/availability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (storeType != null)
+            {
+                uri.AppendQuery("storeType", storeType, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetAvailabilityRequest(string storeType, string clientSessionId)
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +117,20 @@ namespace Azure.IoT.TimeSeriesInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetEventSchemaRequestUri(GetEventSchemaRequest parameters, string storeType, string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/eventSchema", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (storeType != null)
+            {
+                uri.AppendQuery("storeType", storeType, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetEventSchemaRequest(GetEventSchemaRequest parameters, string storeType, string clientSessionId)
@@ -188,6 +216,20 @@ namespace Azure.IoT.TimeSeriesInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExecuteRequestUri(QueryRequest parameters, string storeType, string continuationToken, string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/timeseries/query", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (storeType != null)
+            {
+                uri.AppendQuery("storeType", storeType, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateExecuteRequest(QueryRequest parameters, string storeType, string continuationToken, string clientSessionId)

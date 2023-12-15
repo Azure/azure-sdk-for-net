@@ -44,6 +44,18 @@ namespace Azure.Storage.Files.Shares
             _fileRequestIntent = fileRequestIntent;
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, ShareAccessTier? accessTier, string enabledProtocols, ShareRootSquash? rootSquash)
         {
             var message = _pipeline.CreateMessage();
@@ -126,6 +138,22 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(string sharesnapshot, int? timeout, ShareFileRequestConditions leaseAccessConditions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(string sharesnapshot, int? timeout, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
@@ -188,6 +216,22 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string sharesnapshot, int? timeout, DeleteSnapshotsOptionType? deleteSnapshots, ShareFileRequestConditions leaseAccessConditions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string sharesnapshot, int? timeout, DeleteSnapshotsOptionType? deleteSnapshots, ShareFileRequestConditions leaseAccessConditions)
@@ -260,6 +304,23 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateAcquireLeaseRequestUri(int? timeout, int? duration, string proposedLeaseId, string sharesnapshot)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "share", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateAcquireLeaseRequest(int? timeout, int? duration, string proposedLeaseId, string sharesnapshot)
         {
             var message = _pipeline.CreateMessage();
@@ -330,6 +391,23 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReleaseLeaseRequestUri(string leaseId, int? timeout, string sharesnapshot)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "share", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? timeout, string sharesnapshot)
@@ -405,6 +483,23 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateChangeLeaseRequestUri(string leaseId, int? timeout, string proposedLeaseId, string sharesnapshot)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "share", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateChangeLeaseRequest(string leaseId, int? timeout, string proposedLeaseId, string sharesnapshot)
@@ -488,6 +583,23 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateRenewLeaseRequestUri(string leaseId, int? timeout, string sharesnapshot)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "share", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateRenewLeaseRequest(string leaseId, int? timeout, string sharesnapshot)
         {
             var message = _pipeline.CreateMessage();
@@ -563,6 +675,23 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateBreakLeaseRequestUri(int? timeout, int? breakPeriod, string sharesnapshot, ShareFileRequestConditions leaseAccessConditions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "share", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateBreakLeaseRequest(int? timeout, int? breakPeriod, string sharesnapshot, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
@@ -635,6 +764,19 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateCreateSnapshotRequestUri(int? timeout, IDictionary<string, string> metadata)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "snapshot", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateSnapshotRequest(int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
@@ -692,6 +834,19 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreatePermissionRequestUri(SharePermission sharePermission, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "filepermission", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateCreatePermissionRequest(SharePermission sharePermission, int? timeout)
@@ -767,6 +922,19 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPermissionRequestUri(string filePermissionKey, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "filepermission", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetPermissionRequest(string filePermissionKey, int? timeout)
@@ -851,6 +1019,19 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateSetPropertiesRequestUri(int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, ShareFileRequestConditions leaseAccessConditions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetPropertiesRequest(int? timeout, int? quota, ShareAccessTier? accessTier, ShareRootSquash? rootSquash, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
@@ -928,6 +1109,19 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateSetMetadataRequestUri(int? timeout, IDictionary<string, string> metadata, ShareFileRequestConditions leaseAccessConditions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "metadata", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
@@ -991,6 +1185,19 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAccessPolicyRequestUri(int? timeout, ShareFileRequestConditions leaseAccessConditions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "acl", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAccessPolicyRequest(int? timeout, ShareFileRequestConditions leaseAccessConditions)
@@ -1078,6 +1285,19 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateSetAccessPolicyRequestUri(int? timeout, IEnumerable<ShareSignedIdentifier> shareAcl, ShareFileRequestConditions leaseAccessConditions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "acl", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetAccessPolicyRequest(int? timeout, IEnumerable<ShareSignedIdentifier> shareAcl, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
@@ -1149,6 +1369,19 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStatisticsRequestUri(int? timeout, ShareFileRequestConditions leaseAccessConditions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "stats", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetStatisticsRequest(int? timeout, ShareFileRequestConditions leaseAccessConditions)
@@ -1224,6 +1457,19 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestoreRequestUri(int? timeout, string deletedShareName, string deletedShareVersion)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "share", true);
+            uri.AppendQuery("comp", "undelete", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateRestoreRequest(int? timeout, string deletedShareName, string deletedShareVersion)

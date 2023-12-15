@@ -36,6 +36,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateRegisterRequestUri(string id, MetastoreRegisterObject registerBody)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/metastore/create-database-operations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegisterRequest(string id, MetastoreRegisterObject registerBody)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +129,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetDatabaseOperationsRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/metastore/create-database-operations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDatabaseOperationsRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -186,6 +206,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string id, MetastoreUpdateObject updateBody)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/metastore/update-database-operations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string id, MetastoreUpdateObject updateBody)
@@ -269,6 +299,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/metastore/databases/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string id)

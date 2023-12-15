@@ -248,7 +248,9 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = await _webPubSubPrivateEndpointConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation<WebPubSubPrivateEndpointConnectionResource>(Response.FromValue(new WebPubSubPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _webPubSubPrivateEndpointConnectionRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new WebPubSubArmOperation<WebPubSubPrivateEndpointConnectionResource>(Response.FromValue(new WebPubSubPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,7 +288,9 @@ namespace Azure.ResourceManager.WebPubSub
             try
             {
                 var response = _webPubSubPrivateEndpointConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new WebPubSubArmOperation<WebPubSubPrivateEndpointConnectionResource>(Response.FromValue(new WebPubSubPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _webPubSubPrivateEndpointConnectionRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new WebPubSubArmOperation<WebPubSubPrivateEndpointConnectionResource>(Response.FromValue(new WebPubSubPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -36,6 +36,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string kqlScriptName, KqlScriptResource kqlScript)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kqlScripts/", false);
+            uri.AppendPath(kqlScriptName, true);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string kqlScriptName, KqlScriptResource kqlScript)
         {
             var message = _pipeline.CreateMessage();
@@ -111,6 +121,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetByNameRequestUri(string kqlScriptName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kqlScripts/", false);
+            uri.AppendPath(kqlScriptName, true);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByNameRequest(string kqlScriptName)
         {
             var message = _pipeline.CreateMessage();
@@ -180,6 +200,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteByNameRequestUri(string kqlScriptName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kqlScripts/", false);
+            uri.AppendPath(kqlScriptName, true);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteByNameRequest(string kqlScriptName)
         {
             var message = _pipeline.CreateMessage();
@@ -241,6 +271,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameRequestUri(string kqlScriptName, ArtifactRenameRequest renameRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/kqlScripts/", false);
+            uri.AppendPath(kqlScriptName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", "2021-11-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameRequest(string kqlScriptName, ArtifactRenameRequest renameRequest)

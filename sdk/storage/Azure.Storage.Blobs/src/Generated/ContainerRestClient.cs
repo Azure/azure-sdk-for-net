@@ -41,6 +41,18 @@ namespace Azure.Storage.Blobs
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(int? timeout, IDictionary<string, string> metadata, PublicAccessType? access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, PublicAccessType? access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride)
         {
             var message = _pipeline.CreateMessage();
@@ -117,6 +129,18 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(int? timeout, string leaseId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(int? timeout, string leaseId)
         {
             var message = _pipeline.CreateMessage();
@@ -173,6 +197,18 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
@@ -245,6 +281,19 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateSetMetadataRequestUri(int? timeout, string leaseId, IDictionary<string, string> metadata, DateTimeOffset? ifModifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "metadata", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetMetadataRequest(int? timeout, string leaseId, IDictionary<string, string> metadata, DateTimeOffset? ifModifiedSince)
         {
             var message = _pipeline.CreateMessage();
@@ -314,6 +363,19 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAccessPolicyRequestUri(int? timeout, string leaseId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "acl", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAccessPolicyRequest(int? timeout, string leaseId)
@@ -399,6 +461,19 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetAccessPolicyRequestUri(int? timeout, string leaseId, PublicAccessType? access, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, IEnumerable<BlobSignedIdentifier> containerAcl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "acl", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSetAccessPolicyRequest(int? timeout, string leaseId, PublicAccessType? access, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, IEnumerable<BlobSignedIdentifier> containerAcl)
@@ -492,6 +567,19 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateRestoreRequestUri(int? timeout, string deletedContainerName, string deletedContainerVersion)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "undelete", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateRestoreRequest(int? timeout, string deletedContainerName, string deletedContainerVersion)
         {
             var message = _pipeline.CreateMessage();
@@ -555,6 +643,19 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameRequestUri(string sourceContainerName, int? timeout, string sourceLeaseId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "rename", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateRenameRequest(string sourceContainerName, int? timeout, string sourceLeaseId)
@@ -629,6 +730,19 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSubmitBatchRequestUri(long contentLength, string multipartContentType, Stream body, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "batch", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSubmitBatchRequest(long contentLength, string multipartContentType, Stream body, int? timeout)
@@ -717,6 +831,35 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFilterBlobsRequestUri(int? timeout, string @where, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "blobs", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (@where != null)
+            {
+                uri.AppendQuery("where", @where, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateFilterBlobsRequest(int? timeout, string @where, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include)
@@ -812,6 +955,19 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateAcquireLeaseRequestUri(int? timeout, long? duration, string proposedLeaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
@@ -888,6 +1044,19 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAcquireLeaseRequestUri(int? timeout, long? duration, string proposedLeaseId, RequestConditions requestConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, RequestConditions requestConditions, RequestContext context)
@@ -994,6 +1163,19 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateReleaseLeaseRequestUri(string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
@@ -1073,6 +1255,19 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenewLeaseRequestUri(string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateRenewLeaseRequest(string leaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
@@ -1156,6 +1351,19 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateBreakLeaseRequestUri(int? timeout, long? breakPeriod, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateBreakLeaseRequest(int? timeout, long? breakPeriod, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
@@ -1226,6 +1434,19 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateChangeLeaseRequestUri(string leaseId, string proposedLeaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "lease", true);
+            uri.AppendQuery("restype", "container", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateChangeLeaseRequest(string leaseId, string proposedLeaseId, int? timeout, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
@@ -1320,6 +1541,35 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateListBlobFlatSegmentRequestUri(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListBlobFlatSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -1411,6 +1661,39 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBlobHierarchySegmentRequestUri(string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (delimiter != null)
+            {
+                uri.AppendQuery("delimiter", delimiter, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListBlobHierarchySegmentRequest(string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
@@ -1512,6 +1795,14 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateListBlobFlatSegmentNextPageRequestUri(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBlobFlatSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -1596,6 +1887,14 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBlobHierarchySegmentNextPageRequestUri(string nextLink, string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)

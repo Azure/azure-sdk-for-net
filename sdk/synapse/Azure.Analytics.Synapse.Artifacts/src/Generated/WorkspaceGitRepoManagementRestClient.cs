@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateGetGitHubAccessTokenRequestUri(GitHubAccessTokenRequest gitHubAccessTokenRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/getGitHubAccessToken", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetGitHubAccessTokenRequest(GitHubAccessTokenRequest gitHubAccessTokenRequest)
         {
             var message = _pipeline.CreateMessage();

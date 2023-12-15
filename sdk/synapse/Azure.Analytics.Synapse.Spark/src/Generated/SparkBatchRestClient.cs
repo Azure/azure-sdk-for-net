@@ -42,6 +42,30 @@ namespace Azure.Analytics.Synapse.Spark
             _sparkPoolName = sparkPoolName ?? throw new ArgumentNullException(nameof(sparkPoolName));
         }
 
+        internal RequestUriBuilder CreateGetSparkBatchJobsRequestUri(int? @from, int? size, bool? detailed)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/batches", false);
+            if (@from != null)
+            {
+                uri.AppendQuery("from", @from.Value, true);
+            }
+            if (size != null)
+            {
+                uri.AppendQuery("size", size.Value, true);
+            }
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkBatchJobsRequest(int? @from, int? size, bool? detailed)
         {
             var message = _pipeline.CreateMessage();
@@ -121,6 +145,22 @@ namespace Azure.Analytics.Synapse.Spark
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateSparkBatchJobRequestUri(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/batches", false);
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateCreateSparkBatchJobRequest(SparkBatchJobOptions sparkBatchJobOptions, bool? detailed)
@@ -204,6 +244,23 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
+        internal RequestUriBuilder CreateGetSparkBatchJobRequestUri(int batchId, bool? detailed)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/batches/", false);
+            uri.AppendPath(batchId, true);
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkBatchJobRequest(int batchId, bool? detailed)
         {
             var message = _pipeline.CreateMessage();
@@ -268,6 +325,19 @@ namespace Azure.Analytics.Synapse.Spark
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelSparkBatchJobRequestUri(int batchId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/batches/", false);
+            uri.AppendPath(batchId, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelSparkBatchJobRequest(int batchId)

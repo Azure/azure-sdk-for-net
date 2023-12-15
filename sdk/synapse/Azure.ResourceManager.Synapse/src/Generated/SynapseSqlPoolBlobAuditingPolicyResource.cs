@@ -180,7 +180,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseSqlPoolBlobAuditingPolicySqlPoolBlobAuditingPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseSqlPoolBlobAuditingPolicyResource>(Response.FromValue(new SynapseSqlPoolBlobAuditingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseSqlPoolBlobAuditingPolicySqlPoolBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SynapseArmOperation<SynapseSqlPoolBlobAuditingPolicyResource>(Response.FromValue(new SynapseSqlPoolBlobAuditingPolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -218,7 +220,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSqlPoolBlobAuditingPolicySqlPoolBlobAuditingPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseSqlPoolBlobAuditingPolicyResource>(Response.FromValue(new SynapseSqlPoolBlobAuditingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseSqlPoolBlobAuditingPolicySqlPoolBlobAuditingPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SynapseArmOperation<SynapseSqlPoolBlobAuditingPolicyResource>(Response.FromValue(new SynapseSqlPoolBlobAuditingPolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

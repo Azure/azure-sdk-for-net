@@ -43,6 +43,29 @@ namespace Azure.Storage.Files.DataLake
             _xMsLeaseDuration = xMsLeaseDuration;
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string owner, string group, string acl, string proposedLeaseId, long? leaseDuration, PathExpiryOptions? expiryOptions, string expiresOn, string encryptionContext)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (resource != null)
+            {
+                uri.AppendQuery("resource", resource.Value.ToSerialString(), true);
+            }
+            if (continuation != null)
+            {
+                uri.AppendQuery("continuation", continuation, true);
+            }
+            if (mode != null)
+            {
+                uri.AppendQuery("mode", mode.Value.ToSerialString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(int? timeout, PathResourceType? resource, string continuation, PathRenameMode? mode, string cacheControl, string contentEncoding, string contentLanguage, string contentDisposition, string contentType, string renameSource, string leaseId, string sourceLeaseId, string properties, string permissions, string umask, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string owner, string group, string acl, string proposedLeaseId, long? leaseDuration, PathExpiryOptions? expiryOptions, string expiresOn, string encryptionContext)
         {
             var message = _pipeline.CreateMessage();
@@ -294,6 +317,43 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout, int? maxRecords, string continuation, bool? forceFlag, long? position, bool? retainUncommittedData, bool? close, long? contentLength, byte[] contentMD5, string leaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, string properties, string owner, string group, string permissions, string acl, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            uri.AppendQuery("action", action.ToSerialString(), true);
+            if (maxRecords != null)
+            {
+                uri.AppendQuery("maxRecords", maxRecords.Value, true);
+            }
+            if (continuation != null)
+            {
+                uri.AppendQuery("continuation", continuation, true);
+            }
+            uri.AppendQuery("mode", mode.ToSerialString(), true);
+            if (forceFlag != null)
+            {
+                uri.AppendQuery("forceFlag", forceFlag.Value, true);
+            }
+            if (position != null)
+            {
+                uri.AppendQuery("position", position.Value, true);
+            }
+            if (retainUncommittedData != null)
+            {
+                uri.AppendQuery("retainUncommittedData", retainUncommittedData.Value, true);
+            }
+            if (close != null)
+            {
+                uri.AppendQuery("close", close.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(PathUpdateAction action, PathSetAccessControlRecursiveMode mode, Stream body, int? timeout, int? maxRecords, string continuation, bool? forceFlag, long? position, bool? retainUncommittedData, bool? close, long? contentLength, byte[] contentMD5, string leaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, string properties, string owner, string group, string permissions, string acl, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
@@ -521,6 +581,17 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        internal RequestUriBuilder CreateLeaseRequestUri(PathLeaseAction xMsLeaseAction, int? timeout, int? xMsLeaseBreakPeriod, string leaseId, string proposedLeaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateLeaseRequest(PathLeaseAction xMsLeaseAction, int? timeout, int? xMsLeaseBreakPeriod, string leaseId, string proposedLeaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
@@ -625,6 +696,17 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReadRequestUri(int? timeout, string range, string leaseId, bool? xMsRangeGetContentMd5, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateReadRequest(int? timeout, string range, string leaseId, bool? xMsRangeGetContentMd5, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
@@ -749,6 +831,25 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(int? timeout, PathGetPropertiesAction? action, bool? upn, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (action != null)
+            {
+                uri.AppendQuery("action", action.Value.ToSerialString(), true);
+            }
+            if (upn != null)
+            {
+                uri.AppendQuery("upn", upn.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(int? timeout, PathGetPropertiesAction? action, bool? upn, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
         {
             var message = _pipeline.CreateMessage();
@@ -842,6 +943,29 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(int? timeout, bool? recursive, string continuation, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, bool? paginated)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (recursive != null)
+            {
+                uri.AppendQuery("recursive", recursive.Value, true);
+            }
+            if (continuation != null)
+            {
+                uri.AppendQuery("continuation", continuation, true);
+            }
+            if (paginated != null)
+            {
+                uri.AppendQuery("paginated", paginated.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(int? timeout, bool? recursive, string continuation, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, bool? paginated)
@@ -945,6 +1069,18 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetAccessControlRequestUri(int? timeout, string leaseId, string owner, string group, string permissions, string acl, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("action", "setAccessControl", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSetAccessControlRequest(int? timeout, string leaseId, string owner, string group, string permissions, string acl, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
@@ -1053,6 +1189,31 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        internal RequestUriBuilder CreateSetAccessControlRecursiveRequestUri(PathSetAccessControlRecursiveMode mode, int? timeout, string continuation, bool? forceFlag, int? maxRecords, string acl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("action", "setAccessControlRecursive", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (continuation != null)
+            {
+                uri.AppendQuery("continuation", continuation, true);
+            }
+            uri.AppendQuery("mode", mode.ToSerialString(), true);
+            if (forceFlag != null)
+            {
+                uri.AppendQuery("forceFlag", forceFlag.Value, true);
+            }
+            if (maxRecords != null)
+            {
+                uri.AppendQuery("maxRecords", maxRecords.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetAccessControlRecursiveRequest(PathSetAccessControlRecursiveMode mode, int? timeout, string continuation, bool? forceFlag, int? maxRecords, string acl)
         {
             var message = _pipeline.CreateMessage();
@@ -1140,6 +1301,30 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFlushDataRequestUri(int? timeout, long? position, bool? retainUncommittedData, bool? close, long? contentLength, byte[] contentMD5, string leaseId, DataLakeLeaseAction? leaseAction, long? leaseDuration, string proposedLeaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("action", "flush", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (position != null)
+            {
+                uri.AppendQuery("position", position.Value, true);
+            }
+            if (retainUncommittedData != null)
+            {
+                uri.AppendQuery("retainUncommittedData", retainUncommittedData.Value, true);
+            }
+            if (close != null)
+            {
+                uri.AppendQuery("close", close.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateFlushDataRequest(int? timeout, long? position, bool? retainUncommittedData, bool? close, long? contentLength, byte[] contentMD5, string leaseId, DataLakeLeaseAction? leaseAction, long? leaseDuration, string proposedLeaseId, string cacheControl, string contentType, string contentDisposition, string contentEncoding, string contentLanguage, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm)
@@ -1316,6 +1501,26 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        internal RequestUriBuilder CreateAppendDataRequestUri(Stream body, long? position, int? timeout, long? contentLength, byte[] transactionalContentHash, byte[] transactionalContentCrc64, string leaseId, DataLakeLeaseAction? leaseAction, long? leaseDuration, string proposedLeaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, bool? flush)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("action", "append", true);
+            if (position != null)
+            {
+                uri.AppendQuery("position", position.Value, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (flush != null)
+            {
+                uri.AppendQuery("flush", flush.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateAppendDataRequest(Stream body, long? position, int? timeout, long? contentLength, byte[] transactionalContentHash, byte[] transactionalContentCrc64, string leaseId, DataLakeLeaseAction? leaseAction, long? leaseDuration, string proposedLeaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, bool? flush)
         {
             var message = _pipeline.CreateMessage();
@@ -1456,6 +1661,18 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        internal RequestUriBuilder CreateSetExpiryRequestUri(PathExpiryOptions expiryOptions, int? timeout, string expiresOn)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "expiry", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetExpiryRequest(PathExpiryOptions expiryOptions, int? timeout, string expiresOn)
         {
             var message = _pipeline.CreateMessage();
@@ -1515,6 +1732,18 @@ namespace Azure.Storage.Files.DataLake
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUndeleteRequestUri(int? timeout, string undeleteSource)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "undelete", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateUndeleteRequest(int? timeout, string undeleteSource)

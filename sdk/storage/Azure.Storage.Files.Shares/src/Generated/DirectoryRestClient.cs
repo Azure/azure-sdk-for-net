@@ -49,6 +49,18 @@ namespace Azure.Storage.Files.Shares
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string fileAttributes, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileCreationTime, string fileLastWriteTime, string fileChangeTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "directory", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string fileAttributes, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileCreationTime, string fileLastWriteTime, string fileChangeTime)
         {
             var message = _pipeline.CreateMessage();
@@ -160,6 +172,22 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(string sharesnapshot, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "directory", true);
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(string sharesnapshot, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -226,6 +254,18 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "directory", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -284,6 +324,19 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetPropertiesRequestUri(string fileAttributes, int? timeout, string filePermission, string filePermissionKey, string fileCreationTime, string fileLastWriteTime, string fileChangeTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "directory", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSetPropertiesRequest(string fileAttributes, int? timeout, string filePermission, string filePermissionKey, string fileCreationTime, string fileLastWriteTime, string fileChangeTime)
@@ -392,6 +445,19 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateSetMetadataRequestUri(int? timeout, IDictionary<string, string> metadata)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "directory", true);
+            uri.AppendQuery("comp", "metadata", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata)
         {
             var message = _pipeline.CreateMessage();
@@ -457,6 +523,39 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListFilesAndDirectoriesSegmentRequestUri(string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "directory", true);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListFilesAndDirectoriesSegmentRequest(string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
@@ -572,6 +671,30 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateListHandlesRequestUri(string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "listhandles", true);
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListHandlesRequest(string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive)
         {
             var message = _pipeline.CreateMessage();
@@ -672,6 +795,26 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateForceCloseHandlesRequestUri(string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "forceclosehandles", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateForceCloseHandlesRequest(string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive)
         {
             var message = _pipeline.CreateMessage();
@@ -763,6 +906,19 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameRequestUri(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, IDictionary<string, string> metadata, CopyFileSmbInfo copyFileSmbInfo)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "directory", true);
+            uri.AppendQuery("comp", "rename", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string filePermission, string filePermissionKey, IDictionary<string, string> metadata, CopyFileSmbInfo copyFileSmbInfo)
@@ -903,6 +1059,14 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListFilesAndDirectoriesSegmentNextPageRequestUri(string nextLink, string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListFilesAndDirectoriesSegmentNextPageRequest(string nextLink, string prefix, string sharesnapshot, string marker, int? maxresults, int? timeout, IEnumerable<ListFilesIncludeType> include, bool? includeExtendedInfo)
