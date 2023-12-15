@@ -23,6 +23,7 @@ public class MessageDelayTests : SyncAsyncTestBase
 
         MockMessagDelay delay = new MockMessagDelay(i => TimeSpan.FromSeconds(1));
 
+        await delay.ReleaseWait();
         Task task = delay.DelaySyncOrAsync(message, IsAsync);
 
         Assert.IsFalse(delay.IsComplete);

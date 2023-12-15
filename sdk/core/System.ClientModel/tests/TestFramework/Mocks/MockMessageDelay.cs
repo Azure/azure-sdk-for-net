@@ -15,21 +15,23 @@ public class MockMessagDelay : MessageDelay
         count => TimeSpan.FromSeconds(count);
 
     private readonly Func<int, TimeSpan> _delayFactory;
-    private readonly AsyncGate<TimeSpan, object> _gate;
+    private readonly AsyncGate<TimeSpan, object> _asyncGate;
 
     public MockMessagDelay() : this(DefaultDelayFactory) { }
 
     public MockMessagDelay(Func<int, TimeSpan> delayFactory)
     {
         _delayFactory = delayFactory;
-        _gate = new AsyncGate<TimeSpan, object>();
+        _asyncGate = new AsyncGate<TimeSpan, object>();
     }
 
     public bool IsComplete { get; private set; }
 
     public TimeSpan GetDelay(int count) => GetDelayCore(null!, count);
 
-    public async Task ReleaseWait() => await _gate.Cycle();
+    public void ReleaseWait() { }
+
+    public async Task ReleaseWaitAsync() => await _asyncGate.Cycle();
 
     protected override TimeSpan GetDelayCore(PipelineMessage message, int delayCount)
         => _delayFactory(delayCount);
@@ -38,8 +40,8 @@ public class MockMessagDelay : MessageDelay
         => IsComplete = true;
 
     protected override void WaitCore(TimeSpan duration, CancellationToken cancellationToken)
-        => _gate.WaitForRelease(duration).GetAwaiter().GetResult();
+        => _asyncGate.WaitForRelease(duration).GetAwaiter().GetResult();
 
     protected override async Task WaitCoreAsync(TimeSpan duration, CancellationToken cancellationToken)
-        => await _gate.WaitForRelease(duration).ConfigureAwait(false);
+        => await _asyncGate.WaitForRelease(duration).ConfigureAwait(false);
 }
