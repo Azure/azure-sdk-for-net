@@ -52,29 +52,6 @@ namespace Azure.ResourceManager.Resources.Models
             AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMappings>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocationExpanded"/>. </summary>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
-        /// <param name="subscriptionId"> The subscription ID. </param>
-        /// <param name="name"> The location name. </param>
-        /// <param name="locationType"> The location type. </param>
-        /// <param name="displayName"> The display name of the location. </param>
-        /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
-        /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
-        /// <param name="availabilityZoneMappings"> The availability zone mappings for this region. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocationExpanded(string id, string subscriptionId, string name, LocationType? locationType, string displayName, string regionalDisplayName, LocationMetadata metadata, IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            Id = id;
-            SubscriptionId = subscriptionId;
-            Name = name;
-            LocationType = locationType;
-            DisplayName = displayName;
-            RegionalDisplayName = regionalDisplayName;
-            Metadata = metadata;
-            AvailabilityZoneMappings = availabilityZoneMappings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
         /// <summary> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </summary>
         public string Id { get; }
         /// <summary> The subscription ID. </summary>
