@@ -11,18 +11,17 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Microsoft.Azure.Core.NewtonsoftJson" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Core.csproj" />
     <ProjectReference Include="..\common\Azure.Core.Tests.Common.csproj" />
+    <ProjectReference Include="..\..\..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
 </Project>

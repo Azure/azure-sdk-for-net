@@ -7,7 +7,7 @@ using System.ClientModel.Internal;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// Provides functionality to read and write <see cref="IPersistableModel{T}"/> and <see cref="IJsonModel{T}"/>.
