@@ -49,7 +49,7 @@ public static partial class AzureOpenAIModelFactory
         CompletionsFinishReason? finishReason = null,
         string functionName = null,
         string functionArgumentsUpdate = null,
-        ChatCompletionsToolCall toolCall = null,
+        StreamingToolCallUpdate toolCallUpdate = null,
         AzureChatExtensionsMessageContext azureExtensionsContext = null)
     {
         return new StreamingChatCompletionsUpdate(
@@ -63,8 +63,17 @@ public static partial class AzureOpenAIModelFactory
             finishReason,
             functionName,
             functionArgumentsUpdate,
-            toolCall,
+            toolCallUpdate,
             azureExtensionsContext);
+    }
+
+    public static StreamingFunctionToolCallUpdate StreamingFunctionToolCallUpdate(
+        string id,
+        int toolCallIndex,
+        string functionName,
+        string functionArgumentsUpdate)
+    {
+        return new StreamingFunctionToolCallUpdate(id, toolCallIndex, functionName, functionArgumentsUpdate);
     }
 
     /// <summary> Initializes a new instance of AudioTranscription. </summary>
