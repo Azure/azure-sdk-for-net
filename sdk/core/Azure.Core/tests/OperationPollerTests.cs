@@ -58,7 +58,7 @@ namespace Azure.Core.Tests.DelayStrategies
         {
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(OperationState.Pending(new MockResponse(200)));
 
-            public string GetOperationId() => "testId";
+            public string GetOperationId() => string.Empty;
         }
 
         private class TestDelayStrategy : DelayStrategy
