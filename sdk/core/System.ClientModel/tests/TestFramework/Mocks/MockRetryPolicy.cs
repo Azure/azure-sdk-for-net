@@ -18,20 +18,22 @@ public class MockRetryPolicy : RequestRetryPolicy
     {
     }
 
-    public bool ShouldRetryCalled { get; private set; }
     public Exception? LastException {  get; private set; }
+
+    public bool ShouldRetryCalled { get; private set; }
+
+    public bool OnRequestSentCalled {  get; private set; }
+
+    public bool OnSendingRequestCalled { get; private set; }
 
     public void Reset()
     {
-        ShouldRetryCalled = false;
         LastException = null;
+
+        ShouldRetryCalled = false;
+        OnSendingRequestCalled = false;
+        OnRequestSentCalled = false;
     }
-
-    public bool ShouldRetry(PipelineMessage message, Exception? exception)
-        => ShouldRetryCore(message, exception);
-
-    public async Task<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
-        => await ShouldRetryCoreAsync(message, exception).ConfigureAwait(false);
 
     protected override bool ShouldRetryCore(PipelineMessage message, Exception? exception)
     {
@@ -47,5 +49,33 @@ public class MockRetryPolicy : RequestRetryPolicy
         LastException = exception;
 
         return base.ShouldRetryCoreAsync(message, exception);
+    }
+
+    protected override void OnRequestSent(PipelineMessage message)
+    {
+        OnRequestSentCalled = true;
+
+        base.OnRequestSent(message);
+    }
+
+    protected override ValueTask OnRequestSentAsync(PipelineMessage message)
+    {
+        OnRequestSentCalled = true;
+
+        return base.OnRequestSentAsync(message);
+    }
+
+    protected override void OnSendingRequest(PipelineMessage message)
+    {
+        OnSendingRequestCalled = true;
+
+        base.OnSendingRequest(message);
+    }
+
+    protected override ValueTask OnSendingRequestAsync(PipelineMessage message)
+    {
+        OnSendingRequestCalled = true;
+
+        return base.OnSendingRequestAsync(message);
     }
 }
