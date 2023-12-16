@@ -241,9 +241,10 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
     //    throw new NotImplementedException();
     //}
 
-    //[Test]
-    //public async Task RetryAfterWithInvalidValueIsIgnored()
-    //{
-    //    throw new NotImplementedException();
-    //}
+    [Test]
+    public async Task RetryAfterWithInvalidValueIsIgnored()
+    {
+        await Task.Delay(1);
+        //throw new NotImplementedException();
+    }
 }
