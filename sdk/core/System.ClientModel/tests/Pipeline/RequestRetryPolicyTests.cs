@@ -205,4 +205,45 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
     }
+
+    //[Test]
+    //public async Task OnRequestSentIsCalledForErrorResponseAndException()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //[Test]
+    //public async Task RetriesOnException()
+    //{
+    //    throw new NotImplementedException();
+    //}
+    //[Test]
+    //public async Task RetriesWithPolly()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //[Test]
+    //public async Task RethrowsAggregateExceptionAfterMaxRetryCount()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //[Test]
+    //public async Task RespectsRetryAfterHeaderWithInt()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //[Test]
+    //public async Task RespectsRetryAfterHeaderWithDate()
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    //[Test]
+    //public async Task RetryAfterWithInvalidValueIsIgnored()
+    //{
+    //    throw new NotImplementedException();
+    //}
 }
