@@ -12,27 +12,23 @@ namespace ClientModel.Tests.Mocks;
 
 public class RetriableTransport : PipelineTransport
 {
-    private readonly int[] _codes;
-    private int _current;
+    private readonly Func<int, int> _responseFactory;
+    private int _retryCount;
 
     public string Id { get; }
 
+    public Action<int>? OnSendingRequest { get; set; }
+    public Action<int>? OnReceivedResponse { get; set; }
+
     public RetriableTransport(string id, params int[] codes)
+        : this(id, i => codes[i])
     {
-        Id = id;
-        _codes = codes;
     }
 
-    private bool TryGetNextStatus(out int status)
+    public RetriableTransport(string id, Func<int, int> responseFactory)
     {
-        if (_current < _codes.Length)
-        {
-            status = _codes[_current++];
-            return true;
-        }
-
-        status = 0;
-        return false;
+        Id = id;
+        _responseFactory = responseFactory;
     }
 
     protected override PipelineMessage CreateMessageCore()
@@ -42,23 +38,45 @@ public class RetriableTransport : PipelineTransport
 
     protected override void ProcessCore(PipelineMessage message)
     {
-        Stamp(message, "Transport");
-
-        if (message is RetriableTransportMessage transportMessage &&
-            TryGetNextStatus(out int status))
+        try
         {
-            transportMessage.SetResponse(status);
+            Stamp(message, "Transport");
+
+            OnSendingRequest?.Invoke(_retryCount);
+
+            if (message is RetriableTransportMessage transportMessage)
+            {
+                int status = _responseFactory(_retryCount);
+                transportMessage.SetResponse(status);
+            }
+
+            OnReceivedResponse?.Invoke(_retryCount);
+        }
+        finally
+        {
+            _retryCount++;
         }
     }
 
     protected override ValueTask ProcessCoreAsync(PipelineMessage message)
     {
-        Stamp(message, "Transport");
-
-        if (message is RetriableTransportMessage transportMessage &&
-            TryGetNextStatus(out int status))
+        try
         {
-            transportMessage.SetResponse(status);
+            Stamp(message, "Transport");
+
+            OnSendingRequest?.Invoke(_retryCount);
+
+            if (message is RetriableTransportMessage transportMessage)
+            {
+                int status = _responseFactory(_retryCount);
+                transportMessage.SetResponse(status);
+            }
+
+            OnReceivedResponse?.Invoke(_retryCount);
+        }
+        finally
+        {
+            _retryCount++;
         }
 
         return new ValueTask();
