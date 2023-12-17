@@ -55,6 +55,7 @@
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
   "words": [
+    "aaduser",
     "apos",
     "azsdk",
     "blazor",

@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             string connectorName = Recording.GenerateAssetName("dfdsdktest-tmp");
 
             ResourceGroupData input = new ResourceGroupData(TestEnvironment.Location);
-            var rglro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, tempResourceGroupName, input);
-            var resourceGroup = rglro.Value;
+            var armOperationResourceGroupResource = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, tempResourceGroupName, input);
+            var resourceGroup = armOperationResourceGroupResource.Value;
 
             var data = new SecurityConnectorData(TestEnvironment.Location)
             {
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsTrue(devopsConfigurationResource.Value.HasData);
             Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
 
-            var azurDevOpsOrgs = await devopsConfigurationResource.Value.GetAvailableAzureDevOpsOrgsAsync().ToEnumerableAsync();
+            var azureDevOpsOrgs = await devopsConfigurationResource.Value.GetAvailableAzureDevOpsOrgsAsync().ToEnumerableAsync();
 
-            Assert.IsTrue(azurDevOpsOrgs.Count > 0);
-            Assert.IsTrue(azurDevOpsOrgs.FirstOrDefault().HasData);
-            Assert.AreEqual(OnboardingState.Onboarded, azurDevOpsOrgs.FirstOrDefault().Data.Properties.OnboardingState);
+            Assert.IsTrue(azureDevOpsOrgs.Count > 0);
+            Assert.IsTrue(azureDevOpsOrgs.FirstOrDefault().HasData);
+            Assert.AreEqual(OnboardingState.Onboarded, azureDevOpsOrgs.FirstOrDefault().Data.Properties.OnboardingState);
         }
 
         [RecordedTest]
