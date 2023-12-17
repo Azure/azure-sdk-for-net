@@ -160,7 +160,7 @@ public partial class ClientPipeline
                 {
                     Debug.Assert(i < 64);
                     Debug.Assert(value < 16);
-                    Debug.Assert(value > 0);
+                    Debug.Assert(value >= 0);
 
                     int storeIndex = i >> 4;
                     int valueIndex = i & 0b1111;
