@@ -34,10 +34,10 @@ public partial class ClientPipeline
         private readonly ReadOnlyMemory<PipelinePolicy> _customBeforeTransportPolicies;
 
         // Starting indexes of each of the ROM segments.
-        private readonly SixteenVector64 _offsets = new();
+        private readonly FourBitIntVector64 _offsets = new();
 
         // Lookup table from policy to ROM segment policy is in.
-        private readonly SixteenVector64 _segments = new();
+        private readonly FourBitIntVector64 _segments = new();
 
         private PolicyEnumerator? _enumerator;
 
@@ -67,10 +67,10 @@ public partial class ClientPipeline
             if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
             if (perTryIndex > beforeTransportIndex) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than beforeTransportIndex.");
 
-            ClientUtilities.AssertInRange(fixedPolicies.Length, 0, 16, nameof(fixedPolicies.Length));
-            ClientUtilities.AssertInRange(perCallPolicies.Length, 0, 16, nameof(perCallPolicies.Length));
-            ClientUtilities.AssertInRange(perTryPolicies.Length, 0, 16, nameof(perTryPolicies.Length));
-            ClientUtilities.AssertInRange(beforeTransportPolicies.Length, 0, 16, nameof(beforeTransportPolicies.Length));
+            ClientUtilities.AssertInRange(fixedPolicies.Length, 0, 15, nameof(fixedPolicies.Length));
+            ClientUtilities.AssertInRange(perCallPolicies.Length, 0, 15, nameof(perCallPolicies.Length));
+            ClientUtilities.AssertInRange(perTryPolicies.Length, 0, 15, nameof(perTryPolicies.Length));
+            ClientUtilities.AssertInRange(beforeTransportPolicies.Length, 0, 15, nameof(beforeTransportPolicies.Length));
 
             _fixedPolicies = fixedPolicies;
             _customPerCallPolicies = perCallPolicies;
@@ -81,6 +81,7 @@ public partial class ClientPipeline
             _perTryIndex = perTryIndex;
             _beforeTransportIndex = beforeTransportIndex;
 
+            // Initialize the offsets of the segments in the logical array.
             _offsets[0] = 0;
             _offsets[1] = perCallIndex;
             _offsets[2] = _offsets[1] + perCallPolicies.Length;
@@ -92,6 +93,7 @@ public partial class ClientPipeline
 
             _length = _offsets[7];
 
+            // Initialize the lookup table from policy to segment.
             int romIndex = 0;
             for (int i = 0; i < _length; i++)
             {
@@ -136,7 +138,7 @@ public partial class ClientPipeline
             => GetEnumerator();
 
         // Holds up to sixty-four four-bit "ints"
-        public struct SixteenVector64
+        public struct FourBitIntVector64
         {
             private ulong _storage0;
             private ulong _storage1;
@@ -160,8 +162,8 @@ public partial class ClientPipeline
 
                     int storageIndex = i >> 4;
                     int valueIndex = i & 0b1111;
-                    ulong setValue = ((ulong)value & 0b1111) << valueIndex * 4;
-                    Set(storageIndex, setValue);
+                    ulong bits = ((ulong)value & 0b1111) << valueIndex * 4;
+                    Set(storageIndex, bits);
                 }
             }
 
