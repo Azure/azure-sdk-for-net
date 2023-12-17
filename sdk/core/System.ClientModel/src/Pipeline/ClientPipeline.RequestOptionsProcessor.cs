@@ -137,7 +137,7 @@ public partial class ClientPipeline
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
 
-        // Holds up to sixty-four four-bit "ints"
+        // Holds up to sixty-four four-bit unsigned "ints", i.e. from 0 to 15.
         public struct FourBitIntVector64
         {
             private ulong _storage0;
@@ -159,6 +159,8 @@ public partial class ClientPipeline
                 set
                 {
                     Debug.Assert(i < 64);
+                    Debug.Assert(value < 16);
+                    Debug.Assert(value > 0);
 
                     int storageIndex = i >> 4;
                     int valueIndex = i & 0b1111;
