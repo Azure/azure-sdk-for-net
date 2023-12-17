@@ -140,10 +140,10 @@ public partial class ClientPipeline
         // Holds up to sixty-four four-bit unsigned "ints", i.e. from 0 to 15.
         public struct FourBitIntVector64
         {
-            private ulong _storage0;
-            private ulong _storage1;
-            private ulong _storage2;
-            private ulong _storage3;
+            private ulong _store0;
+            private ulong _store1;
+            private ulong _store2;
+            private ulong _store3;
 
             public int this[int i]
             {
@@ -151,9 +151,9 @@ public partial class ClientPipeline
                 {
                     Debug.Assert(i < 64);
 
-                    int storageIndex = i >> 4;
+                    int storeIndex = i >> 4;
                     int valueIndex = i & 0b1111;
-                    ulong bits = Get(storageIndex);
+                    ulong bits = Get(storeIndex);
                     return (int)(bits >> valueIndex * 4) & 0b1111;
                 }
                 set
@@ -162,39 +162,39 @@ public partial class ClientPipeline
                     Debug.Assert(value < 16);
                     Debug.Assert(value > 0);
 
-                    int storageIndex = i >> 4;
+                    int storeIndex = i >> 4;
                     int valueIndex = i & 0b1111;
                     ulong bits = ((ulong)value & 0b1111) << valueIndex * 4;
-                    Set(storageIndex, bits);
+                    Set(storeIndex, bits);
                 }
             }
 
-            private readonly ulong Get(int storageIndex)
+            private readonly ulong Get(int storeIndex)
             {
-                return storageIndex switch
+                return storeIndex switch
                 {
-                    0 => _storage0,
-                    1 => _storage1,
-                    2 => _storage2,
-                    3 => _storage3,
+                    0 => _store0,
+                    1 => _store1,
+                    2 => _store2,
+                    3 => _store3,
                     _ => throw new IndexOutOfRangeException("Requested index exceeds capacity of type."),
                 };
             }
-            private void Set(int storageIndex, ulong value)
+            private void Set(int storeIndex, ulong value)
             {
-                switch (storageIndex)
+                switch (storeIndex)
                 {
                     case 0:
-                        _storage0 |= value;
+                        _store0 |= value;
                         break;
                     case 1:
-                        _storage1 |= value;
+                        _store1 |= value;
                         break;
                     case 2:
-                        _storage2 |= value;
+                        _store2 |= value;
                         break;
                     case 3:
-                        _storage3 |= value;
+                        _store3 |= value;
                         break;
                     default:
                         throw new IndexOutOfRangeException("Requested index exceeds capacity of type.");
