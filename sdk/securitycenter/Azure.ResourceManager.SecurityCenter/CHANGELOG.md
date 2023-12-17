@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2023-12-11)
+## 1.3.0 (2023-12-17)
 
 ### Features Added
 
@@ -11,10 +11,6 @@
 ### Breaking Changes
 
 - Removed IngestionSettings (deprecated)
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.4 (2023-11-30)
 
