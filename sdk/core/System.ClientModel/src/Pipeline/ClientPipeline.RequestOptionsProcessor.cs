@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace System.ClientModel.Primitives;
 
@@ -31,8 +33,25 @@ public partial class ClientPipeline
         // Custom per-try policies used for the scope of the method invocation.
         private readonly ReadOnlyMemory<PipelinePolicy> _customBeforeTransportPolicies;
 
+        // Starting indexes of each of the ROM segments.
+        private readonly SixteenVector64 _offsets = new();
+
+        // Lookup table from policy to ROM segment policy is in.
+        private readonly SixteenVector64 _segments = new();
+
         private PolicyEnumerator? _enumerator;
 
+        /// <summary>
+        /// This custom pipeline is divided into seven segments by the per-call,
+        /// per-try, and before-transport indexes:
+        ///
+        /// [FixedPerCall] [CustomPerCall][FixedPerTry] [CustomPerTry][FixedPerTransport] [CustomBeforeTransport][Transport]
+        ///               ^_perCallIndex               ^_perTryIndex                     ^_beforeTransport
+        ///
+        /// This method returns the next policy in the customized pipeline
+        /// sequence and maintains state by incrementing the _current counter
+        /// after each "next policy" is returned.
+        /// </summary>
         public RequestOptionsProcessor(
             ReadOnlyMemory<PipelinePolicy> fixedPolicies,
             ReadOnlyMemory<PipelinePolicy> perCallPolicies,
@@ -48,6 +67,11 @@ public partial class ClientPipeline
             if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
             if (perTryIndex > beforeTransportIndex) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than beforeTransportIndex.");
 
+            ClientUtilities.AssertInRange(fixedPolicies.Length, 0, 16, nameof(fixedPolicies.Length));
+            ClientUtilities.AssertInRange(perCallPolicies.Length, 0, 16, nameof(perCallPolicies.Length));
+            ClientUtilities.AssertInRange(perTryPolicies.Length, 0, 16, nameof(perTryPolicies.Length));
+            ClientUtilities.AssertInRange(beforeTransportPolicies.Length, 0, 16, nameof(beforeTransportPolicies.Length));
+
             _fixedPolicies = fixedPolicies;
             _customPerCallPolicies = perCallPolicies;
             _customPerTryPolicies = perTryPolicies;
@@ -57,22 +81,53 @@ public partial class ClientPipeline
             _perTryIndex = perTryIndex;
             _beforeTransportIndex = beforeTransportIndex;
 
-            _length = _fixedPolicies.Length +
-                _customPerCallPolicies.Length +
-                _customPerTryPolicies.Length +
-                _customBeforeTransportPolicies.Length;
+            _offsets[0] = 0;
+            _offsets[1] = perCallIndex;
+            _offsets[2] = _offsets[1] + perCallPolicies.Length;
+            _offsets[3] = _offsets[2] + perTryIndex - perCallIndex;
+            _offsets[4] = _offsets[3] + perTryPolicies.Length;
+            _offsets[5] = _offsets[4] + beforeTransportIndex - perTryIndex;
+            _offsets[6] = _offsets[5] + beforeTransportPolicies.Length;
+            _offsets[7] = _offsets[6] + fixedPolicies.Length - beforeTransportIndex;
+
+            _length = _offsets[7];
+
+            int romIndex = 0;
+            for (int i = 0; i < _length; i++)
+            {
+                while (i >= _offsets[romIndex + 1])
+                {
+                    romIndex++;
+                }
+
+                _segments[i] = romIndex;
+            }
         }
 
         public PipelinePolicy this[int index]
         {
             get
             {
-                TryGetPolicy(index, out PipelinePolicy policy);
-                return policy;
+                int rom = _segments[index];
+                int offset = index - _offsets[rom];
+                return GetRom(rom).Span[offset];
             }
         }
 
         public int Count => _length;
+
+        private ReadOnlyMemory<PipelinePolicy> GetRom(int rom)
+            => rom switch
+            {
+                0 => _fixedPolicies,
+                1 => _customPerCallPolicies,
+                2 => _fixedPolicies.Slice(_perCallIndex),
+                3 => _customPerTryPolicies,
+                4 => _fixedPolicies.Slice(_perTryIndex),
+                5 => _customBeforeTransportPolicies,
+                6 => _fixedPolicies.Slice(_beforeTransportIndex),
+                _ => throw new InvalidOperationException(),
+            };
 
         public IEnumerator<PipelinePolicy> GetEnumerator()
             => _enumerator ??= new(this);
@@ -80,145 +135,67 @@ public partial class ClientPipeline
         IEnumerator IEnumerable.GetEnumerator()
             => GetEnumerator();
 
-        /// <summary>
-        /// This custom pipeline is divided into seven segments by the per-call,
-        /// per-try, and before-transport indexes:
-        ///
-        /// [FixedPerCall] [CustomPerCall][FixedPerTry] [CustomPerTry][FixedPerTransport] [CustomBeforeTransport][Transport]
-        ///               ^_perCallIndex               ^_perTryIndex                     ^_beforeTransport
-        ///
-        /// This method returns the next policy in the customized pipeline
-        /// sequence and maintains state by incrementing the _current counter
-        /// after each "next policy" is returned.
-        /// </summary>
-        private bool TryGetPolicy(int index, out PipelinePolicy policy)
+        // Holds up to sixty-four four-bit "ints"
+        public struct SixteenVector64
         {
-            if (TryGetFixedPerCallPolicy(index, out policy))
+            private ulong _storage0;
+            private ulong _storage1;
+            private ulong _storage2;
+            private ulong _storage3;
+
+            public int this[int i]
             {
-                return true;
+                readonly get
+                {
+                    Debug.Assert(i < 64);
+
+                    int storageIndex = i >> 4;
+                    int valueIndex = i & 0b1111;
+                    ulong bits = Get(storageIndex);
+                    return (int)(bits >> valueIndex * 4) & 0b1111;
+                }
+                set
+                {
+                    Debug.Assert(i < 64);
+
+                    int storageIndex = i >> 4;
+                    int valueIndex = i & 0b1111;
+                    ulong setValue = ((ulong)value & 0b1111) << valueIndex * 4;
+                    Set(storageIndex, setValue);
+                }
             }
 
-            if (TryGetCustomPerCallPolicy(index, out policy))
+            private readonly ulong Get(int storageIndex)
             {
-                return true;
+                return storageIndex switch
+                {
+                    0 => _storage0,
+                    1 => _storage1,
+                    2 => _storage2,
+                    3 => _storage3,
+                    _ => throw new IndexOutOfRangeException("Requested index exceeds capacity of type."),
+                };
             }
-
-            if (TryGetFixedPerTryPolicy(index, out policy))
+            private void Set(int storageIndex, ulong value)
             {
-                return true;
+                switch (storageIndex)
+                {
+                    case 0:
+                        _storage0 |= value;
+                        break;
+                    case 1:
+                        _storage1 |= value;
+                        break;
+                    case 2:
+                        _storage2 |= value;
+                        break;
+                    case 3:
+                        _storage3 |= value;
+                        break;
+                    default:
+                        throw new IndexOutOfRangeException("Requested index exceeds capacity of type.");
+                }
             }
-
-            if (TryGetCustomPerTryPolicy(index, out policy))
-            {
-                return true;
-            }
-
-            if (TryGetFixedPerTransportPolicy(index, out policy))
-            {
-                return true;
-            }
-
-            if (TryGetCustomBeforeTransportPolicy(index, out policy))
-            {
-                return true;
-            }
-
-            if (TryGetFixedTransportPolicy(index, out policy))
-            {
-                return true;
-            }
-
-            policy = default!;
-            return false;
-        }
-
-        private bool TryGetFixedPerCallPolicy(int index, out PipelinePolicy policy)
-        {
-            if (index < _perCallIndex)
-            {
-                policy = _fixedPolicies.Span[index];
-                return true;
-            }
-
-            policy = default!;
-            return false;
-        }
-
-        private bool TryGetCustomPerCallPolicy(int index, out PipelinePolicy policy)
-        {
-            if (index < _perCallIndex + _customPerCallPolicies.Length)
-            {
-                policy = _customPerCallPolicies.Span[index - _perCallIndex];
-                return true;
-            }
-
-            policy = default!;
-            return false;
-        }
-
-        private bool TryGetFixedPerTryPolicy(int index, out PipelinePolicy policy)
-        {
-            if (index < _perTryIndex + _customPerCallPolicies.Length)
-            {
-                policy = _fixedPolicies.Span[index - _customPerCallPolicies.Length];
-                return true;
-            }
-
-            policy = default!;
-            return false;
-        }
-
-        private bool TryGetCustomPerTryPolicy(int index, out PipelinePolicy policy)
-        {
-            if (index < _perTryIndex +
-                           _customPerCallPolicies.Length +
-                           _customPerTryPolicies.Length)
-            {
-                policy = _customPerTryPolicies.Span[index - (_perTryIndex + _customPerCallPolicies.Length)];
-                return true;
-            }
-
-            policy = default!;
-            return false;
-        }
-
-        private bool TryGetFixedPerTransportPolicy(int index, out PipelinePolicy policy)
-        {
-            if (index < _perTryIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)
-            {
-                policy = _fixedPolicies.Span[index - (_customPerCallPolicies.Length + _customPerTryPolicies.Length)];
-                return true;
-            }
-
-            policy = default!;
-            return false;
-        }
-
-        private bool TryGetCustomBeforeTransportPolicy(int index, out PipelinePolicy policy)
-        {
-            if (index < _perTryIndex +
-                           _customPerCallPolicies.Length +
-                           _customPerTryPolicies.Length +
-                           _customBeforeTransportPolicies.Length)
-            {
-                policy = _customPerTryPolicies.Span[index - (_beforeTransportIndex + _customPerCallPolicies.Length + _customPerTryPolicies.Length)];
-                return true;
-            }
-
-            policy = default!;
-            return false;
-        }
-
-        private bool TryGetFixedTransportPolicy(int index, out PipelinePolicy policy)
-        {
-            if (index < _length)
-            {
-                policy = _fixedPolicies.Span[index - (_customPerCallPolicies.Length + _customPerTryPolicies.Length + _customBeforeTransportPolicies.Length)];
-                return true;
-            }
-
-            policy = default!;
-            return false;
         }
     }
 }
