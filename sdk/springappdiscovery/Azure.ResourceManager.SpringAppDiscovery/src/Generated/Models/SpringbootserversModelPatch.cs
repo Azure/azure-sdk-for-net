@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The springbootservers resource patch definition. </summary>
     public partial class SpringbootserversModelPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of SpringbootserversModelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootserversModelPatch"/>. </summary>
         public SpringbootserversModelPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SpringbootserversModelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootserversModelPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

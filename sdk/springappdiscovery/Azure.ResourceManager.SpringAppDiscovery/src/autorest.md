@@ -20,7 +20,14 @@ modelerfour:
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+# rename-mapping:
+#   GroupInformation: DeviceUpdatePrivateLink
+#   CheckNameAvailabilityRequest.type: -|resource-type
+#   GroupConnectivityInformation.privateLinkServiceArmRegion: -|azure-location
+#   GroupIdProvisioningState: DeviceUpdatePrivateLinkProvisioningState
+#   PrivateEndpointUpdate.id: -|arm-id
+# SpringBootSitesProperties.ProvisioningState:
+
 
 format-by-name-rules:
   'tenantId': 'uuid'

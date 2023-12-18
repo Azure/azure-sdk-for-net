@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The SpringbootappsPropertiesInstancesItem. </summary>
     public partial class SpringbootappsPropertiesInstancesItem
     {
-        /// <summary> Initializes a new instance of SpringbootappsPropertiesInstancesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsPropertiesInstancesItem"/>. </summary>
         /// <param name="machineArmId"> The machine ARM resource Id of this app instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineArmId"/> is null. </exception>
         public SpringbootappsPropertiesInstancesItem(string machineArmId)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             MachineArmId = machineArmId;
         }
 
-        /// <summary> Initializes a new instance of SpringbootappsPropertiesInstancesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsPropertiesInstancesItem"/>. </summary>
         /// <param name="machineArmId"> The machine ARM resource Id of this app instance. </param>
         /// <param name="instanceCount"> The instance count of this app instance. </param>
         /// <param name="jvmMemoryInMB"> The jvm heap memory allocated of this app instance. </param>

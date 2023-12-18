@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery
     /// </summary>
     public partial class ErrorSummaryData : ResourceData
     {
-        /// <summary> Initializes a new instance of ErrorSummaryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorSummaryData"/>. </summary>
         public ErrorSummaryData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ErrorSummaryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorSummaryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

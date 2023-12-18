@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The SpringbootappsPropertiesApplicationConfigurationsItem. </summary>
     public partial class SpringbootappsPropertiesApplicationConfigurationsItem
     {
-        /// <summary> Initializes a new instance of SpringbootappsPropertiesApplicationConfigurationsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsPropertiesApplicationConfigurationsItem"/>. </summary>
         /// <param name="key"> The application config file name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public SpringbootappsPropertiesApplicationConfigurationsItem(string key)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Key = key;
         }
 
-        /// <summary> Initializes a new instance of SpringbootappsPropertiesApplicationConfigurationsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsPropertiesApplicationConfigurationsItem"/>. </summary>
         /// <param name="key"> The application config file name. </param>
         /// <param name="value"> The application config file content, only contains config keys. </param>
         internal SpringbootappsPropertiesApplicationConfigurationsItem(string key, string value)

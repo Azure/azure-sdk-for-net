@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSpringAppDiscoveryModelFactory
     {
-        /// <summary> Initializes a new instance of SpringbootsitesModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.SpringbootsitesModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringbootsitesModelData(id, name, resourceType, systemData, tags, location, properties, extendedLocation);
         }
 
-        /// <summary> Initializes a new instance of SpringbootsitesModelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SpringbootsitesModelPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringbootsitesModelPatch(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of SpringbootserversModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.SpringbootserversModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringbootserversModelData(id, name, resourceType, systemData, tags, properties);
         }
 
-        /// <summary> Initializes a new instance of SpringbootserversModelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SpringbootserversModelPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringbootserversModelPatch(id, name, resourceType, systemData, tags, properties);
         }
 
-        /// <summary> Initializes a new instance of SpringbootappsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.SpringbootappsModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringbootappsModelData(id, name, resourceType, systemData, properties, tags);
         }
 
-        /// <summary> Initializes a new instance of SpringbootappsModelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SpringbootappsModelPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringbootappsModelPatch(id, name, resourceType, systemData, properties, tags);
         }
 
-        /// <summary> Initializes a new instance of SummaryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.SummaryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SummaryData(id, name, resourceType, systemData, properties, tags);
         }
 
-        /// <summary> Initializes a new instance of ErrorSummaryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringAppDiscovery.ErrorSummaryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

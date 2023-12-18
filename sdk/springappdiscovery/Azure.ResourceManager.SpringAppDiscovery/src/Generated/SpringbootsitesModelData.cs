@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery
     /// </summary>
     public partial class SpringbootsitesModelData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SpringbootsitesModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootsitesModelData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SpringbootsitesModelData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SpringbootsitesModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootsitesModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

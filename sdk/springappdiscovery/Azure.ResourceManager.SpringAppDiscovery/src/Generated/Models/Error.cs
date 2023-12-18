@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> Defines the error. </summary>
     public partial class Error
     {
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         public Error()
         {
         }
 
-        /// <summary> Initializes a new instance of Error. </summary>
+        /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="id"> The error ID. </param>
         /// <param name="code"> The error code. </param>
         /// <param name="summaryMessage"> The summarized error message. </param>

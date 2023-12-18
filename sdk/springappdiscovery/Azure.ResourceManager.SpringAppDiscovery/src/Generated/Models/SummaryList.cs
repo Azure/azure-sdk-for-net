@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> List of Sites. </summary>
     internal partial class SummaryList
     {
-        /// <summary> Initializes a new instance of SummaryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummaryList"/>. </summary>
         internal SummaryList()
         {
             Value = new ChangeTrackingList<SummaryData>();
         }
 
-        /// <summary> Initializes a new instance of SummaryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummaryList"/>. </summary>
         /// <param name="value"> List of Sites. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal SummaryList(IReadOnlyList<SummaryData> value, string nextLink)

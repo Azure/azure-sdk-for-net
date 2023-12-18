@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> ErrorSummary model. </summary>
     public partial class ErrorSummaryModel
     {
-        /// <summary> Initializes a new instance of ErrorSummaryModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorSummaryModel"/>. </summary>
         public ErrorSummaryModel()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorSummaryModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorSummaryModel"/>. </summary>
         /// <param name="affectedResourceType"> The type of Object. </param>
         /// <param name="affectedObjectsCount"> The count. </param>
         internal ErrorSummaryModel(string affectedResourceType, long? affectedObjectsCount)

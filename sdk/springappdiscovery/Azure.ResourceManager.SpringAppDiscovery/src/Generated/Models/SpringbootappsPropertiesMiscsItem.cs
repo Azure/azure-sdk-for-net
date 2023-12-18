@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The SpringbootappsPropertiesMiscsItem. </summary>
     public partial class SpringbootappsPropertiesMiscsItem
     {
-        /// <summary> Initializes a new instance of SpringbootappsPropertiesMiscsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsPropertiesMiscsItem"/>. </summary>
         /// <param name="key"> The miscs. key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public SpringbootappsPropertiesMiscsItem(string key)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Key = key;
         }
 
-        /// <summary> Initializes a new instance of SpringbootappsPropertiesMiscsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsPropertiesMiscsItem"/>. </summary>
         /// <param name="key"> The miscs. key. </param>
         /// <param name="value"> The miscs. value. </param>
         internal SpringbootappsPropertiesMiscsItem(string key, string value)

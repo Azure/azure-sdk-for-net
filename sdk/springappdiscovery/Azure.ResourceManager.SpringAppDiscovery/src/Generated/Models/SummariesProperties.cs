@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> Summaries properties. </summary>
     public partial class SummariesProperties
     {
-        /// <summary> Initializes a new instance of SummariesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummariesProperties"/>. </summary>
         public SummariesProperties()
         {
             Errors = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of SummariesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SummariesProperties"/>. </summary>
         /// <param name="discoveredServers"> The of number discovered spring boot servers. </param>
         /// <param name="discoveredApps"> The of number discovered spring boot apps. </param>
         /// <param name="errors"> The list of errors. </param>

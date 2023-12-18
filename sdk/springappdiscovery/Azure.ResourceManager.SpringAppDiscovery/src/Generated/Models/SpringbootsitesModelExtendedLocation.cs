@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The extended location definition. </summary>
     public partial class SpringbootsitesModelExtendedLocation
     {
-        /// <summary> Initializes a new instance of SpringbootsitesModelExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootsitesModelExtendedLocation"/>. </summary>
         public SpringbootsitesModelExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of SpringbootsitesModelExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootsitesModelExtendedLocation"/>. </summary>
         /// <param name="springbootsitesModelExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         internal SpringbootsitesModelExtendedLocation(string springbootsitesModelExtendedLocationType, string name)

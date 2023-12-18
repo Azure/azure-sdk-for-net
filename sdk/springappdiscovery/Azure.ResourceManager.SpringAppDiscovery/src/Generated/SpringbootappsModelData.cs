@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery
     /// </summary>
     public partial class SpringbootappsModelData : ResourceData
     {
-        /// <summary> Initializes a new instance of SpringbootappsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsModelData"/>. </summary>
         public SpringbootappsModelData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SpringbootappsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsModelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

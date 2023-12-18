@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The springbootapps list resource definition. </summary>
     internal partial class SpringbootappsListResult
     {
-        /// <summary> Initializes a new instance of SpringbootappsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsListResult"/>. </summary>
         internal SpringbootappsListResult()
         {
             Value = new ChangeTrackingList<SpringbootappsModelData>();
         }
 
-        /// <summary> Initializes a new instance of SpringbootappsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsListResult"/>. </summary>
         /// <param name="value"> The springbootsites list. </param>
         /// <param name="nextLink"> The link used to get the next page of springbootapps resources list. </param>
         internal SpringbootappsListResult(IReadOnlyList<SpringbootappsModelData> value, string nextLink)

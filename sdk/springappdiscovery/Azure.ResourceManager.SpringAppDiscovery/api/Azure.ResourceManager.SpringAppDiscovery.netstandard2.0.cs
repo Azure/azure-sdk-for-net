@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SpringAppDiscovery.ErrorSummaryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SpringAppDiscovery.ErrorSummaryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiscoveredErrorSummaryData : Azure.ResourceManager.Models.ResourceData
+    public partial class ErrorSummaryData : Azure.ResourceManager.Models.ResourceData
     {
-        public DiscoveredErrorSummaryData() { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredErrorSummariesProperties Properties { get { throw null; } set { } }
+        public ErrorSummaryData() { }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.ErrorSummariesProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class ErrorSummaryResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ErrorSummaryResource() { }
-        public virtual Azure.ResourceManager.SpringAppDiscovery.DiscoveredErrorSummaryData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.SpringAppDiscovery.ErrorSummaryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string errorSummaryName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.ErrorSummaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SpringBootAppsModelData : Azure.ResourceManager.Models.ResourceData
+    public partial class SpringbootappsModelData : Azure.ResourceManager.Models.ResourceData
     {
-        public SpringBootAppsModelData() { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsProperties Properties { get { throw null; } set { } }
+        public SpringbootappsModelData() { }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SpringbootappsModelResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpringbootappsModelResource() { }
-        public virtual Azure.ResourceManager.SpringAppDiscovery.SpringBootAppsModelData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SpringbootserversModelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>, System.Collections.IEnumerable
     {
         protected SpringbootserversModelCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string springbootserversName, Azure.ResourceManager.SpringAppDiscovery.SpringBootServersModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string springbootserversName, Azure.ResourceManager.SpringAppDiscovery.SpringBootServersModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string springbootserversName, Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string springbootserversName, Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string springbootserversName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string springbootserversName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource> Get(string springbootserversName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SpringBootServersModelData : Azure.ResourceManager.Models.ResourceData
+    public partial class SpringbootserversModelData : Azure.ResourceManager.Models.ResourceData
     {
-        public SpringBootServersModelData() { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServersProperties Properties { get { throw null; } set { } }
+        public SpringbootserversModelData() { }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootserversProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SpringbootserversModelResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpringbootserversModelResource() { }
-        public virtual Azure.ResourceManager.SpringAppDiscovery.SpringBootServersModelData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServersModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServersModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootserversModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootserversModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SpringbootsitesModelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>, System.Collections.IEnumerable
     {
         protected SpringbootsitesModelCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string springbootsitesName, Azure.ResourceManager.SpringAppDiscovery.SpringBootSitesModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string springbootsitesName, Azure.ResourceManager.SpringAppDiscovery.SpringBootSitesModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string springbootsitesName, Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string springbootsitesName, Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string springbootsitesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string springbootsitesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource> Get(string springbootsitesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -147,17 +147,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SpringBootSitesModelData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SpringbootsitesModelData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SpringBootSitesModelData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesModelExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesProperties Properties { get { throw null; } set { } }
+        public SpringbootsitesModelData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesModelExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesProperties Properties { get { throw null; } set { } }
     }
     public partial class SpringbootsitesModelResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SpringbootsitesModelResource() { }
-        public virtual Azure.ResourceManager.SpringAppDiscovery.SpringBootSitesModelData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation TriggerRefreshSite(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerRefreshSiteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesModelPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SummaryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SpringAppDiscovery.SummaryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SpringAppDiscovery.SummaryResource>, System.Collections.IEnumerable
     {
@@ -202,17 +202,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SpringAppDiscovery.SummaryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SpringAppDiscovery.SummaryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiscoveredSummaryData : Azure.ResourceManager.Models.ResourceData
+    public partial class SummaryData : Azure.ResourceManager.Models.ResourceData
     {
-        public DiscoveredSummaryData() { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredSummariesProperties Properties { get { throw null; } set { } }
+        public SummaryData() { }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.SummariesProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class SummaryResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SummaryResource() { }
-        public virtual Azure.ResourceManager.SpringAppDiscovery.DiscoveredSummaryData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.SpringAppDiscovery.SummaryData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string summaryName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SpringAppDiscovery.SummaryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -252,18 +252,18 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
     public static partial class ArmSpringAppDiscoveryModelFactory
     {
-        public static Azure.ResourceManager.SpringAppDiscovery.DiscoveredErrorSummaryData ErrorSummaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredErrorSummariesProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.SpringBootAppsModelData SpringbootappsModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsModelPatch SpringbootappsModelPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.SpringBootServersModelData SpringbootserversModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServersProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServersModelPatch SpringbootserversModelPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServersProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.SpringBootSitesModelData SpringbootsitesModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesProperties properties = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesModelExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesModelPatch SpringbootsitesModelPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.DiscoveredSummaryData SummaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredSummariesProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.ErrorSummaryData ErrorSummaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.ErrorSummariesProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.SpringbootappsModelData SpringbootappsModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsModelPatch SpringbootappsModelPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.SpringbootserversModelData SpringbootserversModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootserversProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootserversModelPatch SpringbootserversModelPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootserversProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.SpringbootsitesModelData SpringbootsitesModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesProperties properties = null, Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesModelExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesModelPatch SpringbootsitesModelPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.SummaryData SummaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SpringAppDiscovery.Models.SummariesProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
     }
-    public partial class DiscoveredError
+    public partial class Error
     {
-        public DiscoveredError() { }
+        public Error() { }
         public string Code { get { throw null; } set { } }
         public long? Id { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
@@ -274,52 +274,52 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public string SummaryMessage { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedTimeStamp { get { throw null; } set { } }
     }
-    public partial class DiscoveredErrorSummariesProperties
+    public partial class ErrorSummariesProperties
     {
-        public DiscoveredErrorSummariesProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredErrorSummaryModel> DiscoveryScopeErrorSummaries { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredError> Errors { get { throw null; } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public ErrorSummariesProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.ErrorSummaryModel> DiscoveryScopeErrorSummaries { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.Error> Errors { get { throw null; } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
-    public partial class DiscoveredErrorSummaryModel
+    public partial class ErrorSummaryModel
     {
-        public DiscoveredErrorSummaryModel() { }
+        public ErrorSummaryModel() { }
         public long? AffectedObjectsCount { get { throw null; } set { } }
         public string AffectedResourceType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DiscoveredProvisioningState : System.IEquatable<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState>
+    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public DiscoveredProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState other) { throw null; }
+        public ProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState left, Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState left, Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState left, Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState left, Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SpringBootAppsModelPatch : Azure.ResourceManager.Models.ResourceData
+    public partial class SpringbootappsModelPatch : Azure.ResourceManager.Models.ResourceData
     {
-        public SpringBootAppsModelPatch() { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsProperties Properties { get { throw null; } set { } }
+        public SpringbootappsModelPatch() { }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class SpringBootAppsProperties
+    public partial class SpringbootappsProperties
     {
-        public SpringBootAppsProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootApplicationConfigurationsItem> ApplicationConfigurations { get { throw null; } }
+        public SpringbootappsProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsPropertiesApplicationConfigurationsItem> ApplicationConfigurations { get { throw null; } }
         public string AppName { get { throw null; } set { } }
         public int? AppPort { get { throw null; } set { } }
         public string AppType { get { throw null; } set { } }
@@ -331,84 +331,84 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public System.Collections.Generic.IList<string> ConnectionStrings { get { throw null; } }
         public System.Collections.Generic.IList<string> Dependencies { get { throw null; } }
         public System.Collections.Generic.IList<string> Environments { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredError> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.Error> Errors { get { throw null; } }
         public int? InstanceCount { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsPropertiesInstancesItem> Instances { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsPropertiesInstancesItem> Instances { get { throw null; } }
         public string JarFileLocation { get { throw null; } set { } }
         public int? JvmMemoryInMB { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> JvmOptions { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MachineArmIds { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppsPropertiesMiscsItem> Miscs { get { throw null; } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootappsPropertiesMiscsItem> Miscs { get { throw null; } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string RuntimeJdkVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Servers { get { throw null; } }
         public string SiteName { get { throw null; } set { } }
         public string SpringBootVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StaticContentLocations { get { throw null; } }
     }
-    public partial class SpringBootApplicationConfigurationsItem
+    public partial class SpringbootappsPropertiesApplicationConfigurationsItem
     {
-        public SpringBootApplicationConfigurationsItem(string key) { }
+        public SpringbootappsPropertiesApplicationConfigurationsItem(string key) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class SpringBootAppsPropertiesInstancesItem
+    public partial class SpringbootappsPropertiesInstancesItem
     {
-        public SpringBootAppsPropertiesInstancesItem(string machineArmId) { }
+        public SpringbootappsPropertiesInstancesItem(string machineArmId) { }
         public int? InstanceCount { get { throw null; } set { } }
         public int? JvmMemoryInMB { get { throw null; } set { } }
         public string MachineArmId { get { throw null; } set { } }
     }
-    public partial class SpringBootAppsPropertiesMiscsItem
+    public partial class SpringbootappsPropertiesMiscsItem
     {
-        public SpringBootAppsPropertiesMiscsItem(string key) { }
+        public SpringbootappsPropertiesMiscsItem(string key) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class SpringBootServersModelPatch : Azure.ResourceManager.Models.ResourceData
+    public partial class SpringbootserversModelPatch : Azure.ResourceManager.Models.ResourceData
     {
-        public SpringBootServersModelPatch() { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootServersProperties Properties { get { throw null; } set { } }
+        public SpringbootserversModelPatch() { }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootserversProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class SpringBootServersProperties
+    public partial class SpringbootserversProperties
     {
-        public SpringBootServersProperties(string server) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredError> Errors { get { throw null; } }
+        public SpringbootserversProperties(string server) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.Error> Errors { get { throw null; } }
         public System.Collections.Generic.IList<string> FqdnAndIPAddressList { get { throw null; } }
         public string MachineArmId { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string Server { get { throw null; } set { } }
         public int? SpringBootApps { get { throw null; } set { } }
         public int? TotalApps { get { throw null; } set { } }
     }
-    public partial class SpringBootSitesModelExtendedLocation
+    public partial class SpringbootsitesModelExtendedLocation
     {
-        public SpringBootSitesModelExtendedLocation() { }
+        public SpringbootsitesModelExtendedLocation() { }
         public string Name { get { throw null; } set { } }
         public string SpringbootsitesModelExtendedLocationType { get { throw null; } set { } }
     }
-    public partial class SpringBootSitesModelPatch : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SpringbootsitesModelPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SpringBootSitesModelPatch(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSitesProperties Properties { get { throw null; } set { } }
+        public SpringbootsitesModelPatch(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.SpringbootsitesProperties Properties { get { throw null; } set { } }
     }
-    public partial class SpringBootSitesProperties
+    public partial class SpringbootsitesProperties
     {
-        public SpringBootSitesProperties() { }
+        public SpringbootsitesProperties() { }
         public string MasterSiteId { get { throw null; } set { } }
         public string MigrateProjectId { get { throw null; } set { } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
-    public partial class DiscoveredSummariesProperties
+    public partial class SummariesProperties
     {
-        public DiscoveredSummariesProperties() { }
+        public SummariesProperties() { }
         public long? DiscoveredApps { get { throw null; } set { } }
         public long? DiscoveredServers { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredError> Errors { get { throw null; } }
-        public Azure.ResourceManager.SpringAppDiscovery.Models.DiscoveredProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.Error> Errors { get { throw null; } }
+        public Azure.ResourceManager.SpringAppDiscovery.Models.ProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
 }

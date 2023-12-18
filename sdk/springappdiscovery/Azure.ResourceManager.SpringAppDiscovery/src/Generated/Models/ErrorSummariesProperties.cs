@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> Error summary properties. </summary>
     public partial class ErrorSummariesProperties
     {
-        /// <summary> Initializes a new instance of ErrorSummariesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorSummariesProperties"/>. </summary>
         public ErrorSummariesProperties()
         {
             DiscoveryScopeErrorSummaries = new ChangeTrackingList<ErrorSummaryModel>();
             Errors = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of ErrorSummariesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorSummariesProperties"/>. </summary>
         /// <param name="discoveryScopeErrorSummaries"> The list of ErrorSummary. </param>
         /// <param name="errors"> The list of errors. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         private readonly SpringbootappsRestOperations _springbootappsModelspringbootappsRestClient;
         private readonly SpringbootappsModelData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OffAzureSpringBoot/springbootsites/springbootapps";
+
         /// <summary> Initializes a new instance of the <see cref="SpringbootappsModelResource"/> class for mocking. </summary>
         protected SpringbootappsModelResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OffAzureSpringBoot/springbootsites/springbootapps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         private readonly SummariesRestOperations _summaryRestClient;
         private readonly SummaryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OffAzureSpringBoot/springbootsites/summaries";
+
         /// <summary> Initializes a new instance of the <see cref="SummaryResource"/> class for mocking. </summary>
         protected SummaryResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OffAzureSpringBoot/springbootsites/summaries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

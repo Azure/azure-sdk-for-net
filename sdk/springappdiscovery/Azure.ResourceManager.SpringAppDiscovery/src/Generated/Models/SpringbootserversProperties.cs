@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The springbootservers resource definition. </summary>
     public partial class SpringbootserversProperties
     {
-        /// <summary> Initializes a new instance of SpringbootserversProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootserversProperties"/>. </summary>
         /// <param name="server"> Server is the target server name or ip address to discover of SpringBootServer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public SpringbootserversProperties(string server)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Errors = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of SpringbootserversProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootserversProperties"/>. </summary>
         /// <param name="port"> Target server port for remote login. </param>
         /// <param name="server"> Server is the target server name or ip address to discover of SpringBootServer. </param>
         /// <param name="fqdnAndIPAddressList"> The alternative FQDN or IP addresses to discover for this server. </param>

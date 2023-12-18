@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The springbootsites resource definition. </summary>
     public partial class SpringbootsitesProperties
     {
-        /// <summary> Initializes a new instance of SpringbootsitesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootsitesProperties"/>. </summary>
         public SpringbootsitesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SpringbootsitesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootsitesProperties"/>. </summary>
         /// <param name="masterSiteId"> The master site ID from Azure Migrate. </param>
         /// <param name="migrateProjectId"> The migrate project ID from Azure Migrate. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>

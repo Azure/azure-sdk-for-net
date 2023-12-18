@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The list of ErrorSummary. </summary>
     internal partial class ErrorSummaryList
     {
-        /// <summary> Initializes a new instance of ErrorSummaryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorSummaryList"/>. </summary>
         internal ErrorSummaryList()
         {
             Value = new ChangeTrackingList<ErrorSummaryData>();
         }
 
-        /// <summary> Initializes a new instance of ErrorSummaryList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorSummaryList"/>. </summary>
         /// <param name="value"> The list of ErrorSummary. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal ErrorSummaryList(IReadOnlyList<ErrorSummaryData> value, string nextLink)

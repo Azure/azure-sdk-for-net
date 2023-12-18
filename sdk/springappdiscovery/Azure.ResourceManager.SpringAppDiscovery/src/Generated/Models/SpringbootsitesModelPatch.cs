@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The springbootsites resource patch definition. </summary>
     public partial class SpringbootsitesModelPatch : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SpringbootsitesModelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootsitesModelPatch"/>. </summary>
         /// <param name="location"> The location. </param>
         public SpringbootsitesModelPatch(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SpringbootsitesModelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootsitesModelPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

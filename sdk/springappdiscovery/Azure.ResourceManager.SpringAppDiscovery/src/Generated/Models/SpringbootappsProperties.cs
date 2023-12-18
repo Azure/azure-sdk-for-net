@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// <summary> The springbootapps resource definition. </summary>
     public partial class SpringbootappsProperties
     {
-        /// <summary> Initializes a new instance of SpringbootappsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsProperties"/>. </summary>
         public SpringbootappsProperties()
         {
             ApplicationConfigurations = new ChangeTrackingList<SpringbootappsPropertiesApplicationConfigurationsItem>();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Errors = new ChangeTrackingList<Error>();
         }
 
-        /// <summary> Initializes a new instance of SpringbootappsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpringbootappsProperties"/>. </summary>
         /// <param name="appName"> The name of SpringBootApp. </param>
         /// <param name="artifactName"> The artifact name of SpringBootApp. </param>
         /// <param name="appPort"> The application port. </param>
