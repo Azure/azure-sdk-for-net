@@ -68,14 +68,13 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
-        public virtual async Task<Operation<TrialMatcherResult>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = trialMatcherData.ToRequestContent();
-            Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
+            return await MatchTrialsAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Create Trial Matcher job. </summary>
@@ -85,14 +84,13 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
-        public virtual Operation<TrialMatcherResult> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
+        public virtual Operation MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = trialMatcherData.ToRequestContent();
-            Operation<BinaryData> response = MatchTrials(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
+            return MatchTrials(waitUntil, content, context);
         }
 
         /// <summary>
@@ -117,7 +115,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> MatchTrialsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation> MatchTrialsAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -126,7 +124,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             try
             {
                 using HttpMessage message = CreateMatchTrialsRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -157,7 +155,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,RequestContent,RequestContext)']/*" />
-        public virtual Operation<BinaryData> MatchTrials(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual Operation MatchTrials(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -166,7 +164,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             try
             {
                 using HttpMessage message = CreateMatchTrialsRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
