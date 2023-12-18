@@ -15,7 +15,7 @@ using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 {
-    public partial class Sample_SpringbootappsModelCollection
+    public partial class Sample_SpringBootAppCollection
     {
         // springbootapps_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
@@ -30,24 +30,24 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootsitesModelResource created on azure
-            // for more information of creating SpringbootsitesModelResource, please refer to the document of SpringbootsitesModelResource
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            ResourceIdentifier springbootsitesModelResourceId = SpringbootsitesModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringbootsitesModelResource springbootsitesModel = client.GetSpringbootsitesModelResource(springbootsitesModelResourceId);
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
 
-            // get the collection of this SpringbootappsModelResource
-            SpringbootappsModelCollection collection = springbootsitesModel.GetSpringbootappsModels();
+            // get the collection of this SpringBootAppResource
+            SpringBootAppCollection collection = springBootSite.GetSpringBootApps();
 
             // invoke the operation
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
-            SpringbootappsModelResource result = await collection.GetAsync(springbootappsName);
+            SpringBootAppResource result = await collection.GetAsync(springbootappsName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootappsModelData resourceData = result.Data;
+            SpringBootAppData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootsitesModelResource created on azure
-            // for more information of creating SpringbootsitesModelResource, please refer to the document of SpringbootsitesModelResource
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            ResourceIdentifier springbootsitesModelResourceId = SpringbootsitesModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringbootsitesModelResource springbootsitesModel = client.GetSpringbootsitesModelResource(springbootsitesModelResourceId);
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
 
-            // get the collection of this SpringbootappsModelResource
-            SpringbootappsModelCollection collection = springbootsitesModel.GetSpringbootappsModels();
+            // get the collection of this SpringBootAppResource
+            SpringBootAppCollection collection = springBootSite.GetSpringBootApps();
 
             // invoke the operation
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootsitesModelResource created on azure
-            // for more information of creating SpringbootsitesModelResource, please refer to the document of SpringbootsitesModelResource
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            ResourceIdentifier springbootsitesModelResourceId = SpringbootsitesModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringbootsitesModelResource springbootsitesModel = client.GetSpringbootsitesModelResource(springbootsitesModelResourceId);
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
 
-            // get the collection of this SpringbootappsModelResource
-            SpringbootappsModelCollection collection = springbootsitesModel.GetSpringbootappsModels();
+            // get the collection of this SpringBootAppResource
+            SpringBootAppCollection collection = springBootSite.GetSpringBootApps();
 
             // invoke the operation
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
-            NullableResponse<SpringbootappsModelResource> response = await collection.GetIfExistsAsync(springbootappsName);
-            SpringbootappsModelResource result = response.HasValue ? response.Value : null;
+            NullableResponse<SpringBootAppResource> response = await collection.GetIfExistsAsync(springbootappsName);
+            SpringBootAppResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootappsModelData resourceData = result.Data;
+                SpringBootAppData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -139,24 +139,24 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootsitesModelResource created on azure
-            // for more information of creating SpringbootsitesModelResource, please refer to the document of SpringbootsitesModelResource
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            ResourceIdentifier springbootsitesModelResourceId = SpringbootsitesModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringbootsitesModelResource springbootsitesModel = client.GetSpringbootsitesModelResource(springbootsitesModelResourceId);
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
 
-            // get the collection of this SpringbootappsModelResource
-            SpringbootappsModelCollection collection = springbootsitesModel.GetSpringbootappsModels();
+            // get the collection of this SpringBootAppResource
+            SpringBootAppCollection collection = springBootSite.GetSpringBootApps();
 
             // invoke the operation
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
-            SpringbootappsModelResource result = await collection.GetAsync(springbootappsName);
+            SpringBootAppResource result = await collection.GetAsync(springbootappsName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootappsModelData resourceData = result.Data;
+            SpringBootAppData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -174,16 +174,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootsitesModelResource created on azure
-            // for more information of creating SpringbootsitesModelResource, please refer to the document of SpringbootsitesModelResource
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            ResourceIdentifier springbootsitesModelResourceId = SpringbootsitesModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringbootsitesModelResource springbootsitesModel = client.GetSpringbootsitesModelResource(springbootsitesModelResourceId);
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
 
-            // get the collection of this SpringbootappsModelResource
-            SpringbootappsModelCollection collection = springbootsitesModel.GetSpringbootappsModels();
+            // get the collection of this SpringBootAppResource
+            SpringBootAppCollection collection = springBootSite.GetSpringBootApps();
 
             // invoke the operation
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
@@ -205,21 +205,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootsitesModelResource created on azure
-            // for more information of creating SpringbootsitesModelResource, please refer to the document of SpringbootsitesModelResource
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            ResourceIdentifier springbootsitesModelResourceId = SpringbootsitesModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringbootsitesModelResource springbootsitesModel = client.GetSpringbootsitesModelResource(springbootsitesModelResourceId);
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
 
-            // get the collection of this SpringbootappsModelResource
-            SpringbootappsModelCollection collection = springbootsitesModel.GetSpringbootappsModels();
+            // get the collection of this SpringBootAppResource
+            SpringBootAppCollection collection = springBootSite.GetSpringBootApps();
 
             // invoke the operation
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
-            NullableResponse<SpringbootappsModelResource> response = await collection.GetIfExistsAsync(springbootappsName);
-            SpringbootappsModelResource result = response.HasValue ? response.Value : null;
+            NullableResponse<SpringBootAppResource> response = await collection.GetIfExistsAsync(springbootappsName);
+            SpringBootAppResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootappsModelData resourceData = result.Data;
+                SpringBootAppData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -248,23 +248,23 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootsitesModelResource created on azure
-            // for more information of creating SpringbootsitesModelResource, please refer to the document of SpringbootsitesModelResource
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            ResourceIdentifier springbootsitesModelResourceId = SpringbootsitesModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringbootsitesModelResource springbootsitesModel = client.GetSpringbootsitesModelResource(springbootsitesModelResourceId);
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
 
-            // get the collection of this SpringbootappsModelResource
-            SpringbootappsModelCollection collection = springbootsitesModel.GetSpringbootappsModels();
+            // get the collection of this SpringBootAppResource
+            SpringBootAppCollection collection = springBootSite.GetSpringBootApps();
 
             // invoke the operation and iterate over the result
-            await foreach (SpringbootappsModelResource item in collection.GetAllAsync())
+            await foreach (SpringBootAppResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootappsModelData resourceData = item.Data;
+                SpringBootAppData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -285,23 +285,23 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootsitesModelResource created on azure
-            // for more information of creating SpringbootsitesModelResource, please refer to the document of SpringbootsitesModelResource
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            ResourceIdentifier springbootsitesModelResourceId = SpringbootsitesModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringbootsitesModelResource springbootsitesModel = client.GetSpringbootsitesModelResource(springbootsitesModelResourceId);
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
 
-            // get the collection of this SpringbootappsModelResource
-            SpringbootappsModelCollection collection = springbootsitesModel.GetSpringbootappsModels();
+            // get the collection of this SpringBootAppResource
+            SpringBootAppCollection collection = springBootSite.GetSpringBootApps();
 
             // invoke the operation and iterate over the result
-            await foreach (SpringbootappsModelResource item in collection.GetAllAsync())
+            await foreach (SpringBootAppResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootappsModelData resourceData = item.Data;
+                SpringBootAppData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
         public async Task TestServersCRUDAsyncOperations()
         {
             //get a site
-            SpringbootsitesModelResource siteModelResource = await GetSpringsiteModelResource(rgName, siteName);
+            SpringBootSiteResource siteModelResource = await GetSpringsiteModelResource(rgName, siteName);
 
             //get a server collection
-            SpringbootserversModelCollection serverColletion = siteModelResource.GetSpringbootserversModels();
-            SpringbootserversProperties properties = new SpringbootserversProperties(serverIp);
+            SpringBootServerCollection serverColletion = siteModelResource.GetSpringBootServers();
+            SpringBootServerProperties properties = new SpringBootServerProperties(serverIp);
             properties.MachineArmId=machineId;
             properties.Port=22;
-            SpringbootserversModelData data = new SpringbootserversModelData();
+            SpringBootServerData data = new SpringBootServerData();
             data.Properties = properties;
 
             //create a server
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             Assert.IsTrue(await serverColletion.ExistsAsync(serverName));
 
             //get a server
-            NullableResponse<SpringbootserversModelResource> getIfExistResponse = await serverColletion.GetIfExistsAsync(serverName);
+            NullableResponse<SpringBootServerResource> getIfExistResponse = await serverColletion.GetIfExistsAsync(serverName);
             Assert.True(getIfExistResponse.HasValue);
 
             //get all servers
-            AsyncPageable<SpringbootserversModelResource> getServersResponse = serverColletion.GetAllAsync(CancellationToken.None);
+            AsyncPageable<SpringBootServerResource> getServersResponse = serverColletion.GetAllAsync(CancellationToken.None);
             int serverCount = 0;
             await foreach (var item in getServersResponse) {
                 serverCount++;
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             Assert.True(serverCount > 0);
 
             //get a server
-            Response<SpringbootserversModelResource> getServerResponse = await serverColletion.GetAsync(serverName);
-            SpringbootserversModelResource serverModelResource = getServerResponse.Value;
+            Response<SpringBootServerResource> getServerResponse = await serverColletion.GetAsync(serverName);
+            SpringBootServerResource serverModelResource = getServerResponse.Value;
             Assert.IsNotNull(serverModelResource);
 
-            SpringbootserversModelPatch serverPatch = new SpringbootserversModelPatch(){
+            SpringBootServerPatch serverPatch = new SpringBootServerPatch(){
                  Tags = {["serverKey"] = "serverValue1",}
             };
 

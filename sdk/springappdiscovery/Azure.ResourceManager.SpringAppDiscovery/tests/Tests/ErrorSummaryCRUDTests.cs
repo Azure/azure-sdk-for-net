@@ -38,18 +38,18 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
         [TestCase]
         public async Task TestSummariesCRUDAsyncOperations()
         {
-            SpringbootsitesModelCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
+            SpringBootSiteCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
 
             //judge a site exist or not
             Assert.IsTrue(await siteColletion.ExistsAsync(siteName));
 
             //get a site
-            Response<SpringbootsitesModelResource> getSiteResponse = await siteColletion.GetAsync(siteName);
-            SpringbootsitesModelResource siteResource = getSiteResponse.Value;
-            ErrorSummaryCollection errorSummaryCollection = siteResource.GetErrorSummaries();
+            Response<SpringBootSiteResource> getSiteResponse = await siteColletion.GetAsync(siteName);
+            SpringBootSiteResource siteResource = getSiteResponse.Value;
+            SpringBootSiteErrorSummaryCollection errorSummaryCollection = siteResource.GetSpringBootSiteErrorSummaries();
 
             //get all errorSummaries
-            AsyncPageable<ErrorSummaryResource> getErrorSummaryResponse = errorSummaryCollection.GetAllAsync();
+            AsyncPageable<SpringBootSiteErrorSummaryResource> getErrorSummaryResponse = errorSummaryCollection.GetAllAsync();
             int errorSummaryCount = 0;
             await foreach (var item in getErrorSummaryResponse) {
                 errorSummaryCount++;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             Assert.True(errorSummaryCount > 0);
 
             //get an errorSummary
-            Response<ErrorSummaryResource> getErrorSummaryReponse = await errorSummaryCollection.GetAsync("default", CancellationToken.None);
+            Response<SpringBootSiteErrorSummaryResource> getErrorSummaryReponse = await errorSummaryCollection.GetAsync("default", CancellationToken.None);
             Assert.IsNotNull(getErrorSummaryReponse.Value);
         }
     }

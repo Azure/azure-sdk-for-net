@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             return await Subscription.GetResourceGroups().GetAsync(name);
         }
 
-        protected async Task<SpringbootsitesModelCollection> GetSpringbootsitesModelCollectionAsync(string resourceGroupName)
+        protected async Task<SpringBootSiteCollection> GetSpringbootsitesModelCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetSpringbootsitesModels();
+            return rg.GetSpringBootSites();
         }
 
-        protected async Task<SpringbootsitesModelResource> GetSpringsiteModelResource(string resourceGroupName, string siteName)
+        protected async Task<SpringBootSiteResource> GetSpringsiteModelResource(string resourceGroupName, string siteName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             return await GetSpringbootsitesModelCollectionAsync(resourceGroupName).Result.GetAsync(siteName);

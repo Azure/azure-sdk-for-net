@@ -17,7 +17,7 @@ using Azure.ResourceManager.SpringAppDiscovery.Models;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 {
-    public partial class Sample_SpringbootsitesModelCollection
+    public partial class Sample_SpringBootSiteCollection
     {
         // springbootsites_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation
             string springbootsitesName = "xrmzlavpewxtfeitghdrj";
-            SpringbootsitesModelResource result = await collection.GetAsync(springbootsitesName);
+            SpringBootSiteResource result = await collection.GetAsync(springbootsitesName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootsitesModelData resourceData = result.Data;
+            SpringBootSiteData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation
             string springbootsitesName = "xrmzlavpewxtfeitghdrj";
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation
             string springbootsitesName = "xrmzlavpewxtfeitghdrj";
-            NullableResponse<SpringbootsitesModelResource> response = await collection.GetIfExistsAsync(springbootsitesName);
-            SpringbootsitesModelResource result = response.HasValue ? response.Value : null;
+            NullableResponse<SpringBootSiteResource> response = await collection.GetIfExistsAsync(springbootsitesName);
+            SpringBootSiteResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootsitesModelData resourceData = result.Data;
+                SpringBootSiteData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -145,16 +145,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation
             string springbootsitesName = "xrmzlavpewxtfeitghdrj";
-            SpringbootsitesModelResource result = await collection.GetAsync(springbootsitesName);
+            SpringBootSiteResource result = await collection.GetAsync(springbootsitesName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootsitesModelData resourceData = result.Data;
+            SpringBootSiteData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation
             string springbootsitesName = "xrmzlavpewxtfeitghdrj";
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation
             string springbootsitesName = "xrmzlavpewxtfeitghdrj";
-            NullableResponse<SpringbootsitesModelResource> response = await collection.GetIfExistsAsync(springbootsitesName);
-            SpringbootsitesModelResource result = response.HasValue ? response.Value : null;
+            NullableResponse<SpringBootSiteResource> response = await collection.GetIfExistsAsync(springbootsitesName);
+            SpringBootSiteResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootsitesModelData resourceData = result.Data;
+                SpringBootSiteData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -251,19 +251,19 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation
             string springbootsitesName = "xrmzlavpewxtfeitghdrj";
-            SpringbootsitesModelData data = new SpringbootsitesModelData(new AzureLocation("tgobtvxktootwhhvjtsmpddvlqlrq"))
+            SpringBootSiteData data = new SpringBootSiteData(new AzureLocation("tgobtvxktootwhhvjtsmpddvlqlrq"))
             {
-                Properties = new SpringbootsitesProperties()
+                Properties = new SpringBootSiteProperties()
                 {
                     MasterSiteId = "xsoimrgshsactearljwuljmi",
                     MigrateProjectId = "wwuattybgco",
                 },
-                ExtendedLocation = new SpringbootsitesModelExtendedLocation()
+                ExtendedLocation = new SpringBootSiteModelExtendedLocation()
                 {
                     SpringbootsitesModelExtendedLocationType = "lvsb",
                     Name = "rywvpbfsqovhlfirtwisugsdsfsgf",
@@ -273,12 +273,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 ["key3558"] = "xeuhtglamqzj",
 },
             };
-            ArmOperation<SpringbootsitesModelResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, springbootsitesName, data);
-            SpringbootsitesModelResource result = lro.Value;
+            ArmOperation<SpringBootSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, springbootsitesName, data);
+            SpringBootSiteResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootsitesModelData resourceData = result.Data;
+            SpringBootSiteData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -303,18 +303,18 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation
             string springbootsitesName = "xrmzlavpewxtfeitghdrj";
-            SpringbootsitesModelData data = new SpringbootsitesModelData(new AzureLocation("tgobtvxktootwhhvjtsmpddvlqlrq"));
-            ArmOperation<SpringbootsitesModelResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, springbootsitesName, data);
-            SpringbootsitesModelResource result = lro.Value;
+            SpringBootSiteData data = new SpringBootSiteData(new AzureLocation("tgobtvxktootwhhvjtsmpddvlqlrq"));
+            ArmOperation<SpringBootSiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, springbootsitesName, data);
+            SpringBootSiteResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootsitesModelData resourceData = result.Data;
+            SpringBootSiteData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -339,15 +339,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation and iterate over the result
-            await foreach (SpringbootsitesModelResource item in collection.GetAllAsync())
+            await foreach (SpringBootSiteResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootsitesModelData resourceData = item.Data;
+                SpringBootSiteData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -375,15 +375,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this SpringbootsitesModelResource
-            SpringbootsitesModelCollection collection = resourceGroupResource.GetSpringbootsitesModels();
+            // get the collection of this SpringBootSiteResource
+            SpringBootSiteCollection collection = resourceGroupResource.GetSpringBootSites();
 
             // invoke the operation and iterate over the result
-            await foreach (SpringbootsitesModelResource item in collection.GetAllAsync())
+            await foreach (SpringBootSiteResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootsitesModelData resourceData = item.Data;
+                SpringBootSiteData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

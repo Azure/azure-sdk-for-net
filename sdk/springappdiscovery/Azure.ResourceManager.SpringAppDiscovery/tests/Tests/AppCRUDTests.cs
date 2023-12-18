@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
         public async Task TestAppsCRUDAsyncOperations()
         {
             //get a site
-            SpringbootsitesModelResource siteModelResource = await GetSpringsiteModelResource(rgName, siteName);
+            SpringBootSiteResource siteModelResource = await GetSpringsiteModelResource(rgName, siteName);
             await siteModelResource.TriggerRefreshSiteAsync(WaitUntil.Completed);
 
             //judge a app exist or not
-            SpringbootappsModelCollection appsColletion = siteModelResource.GetSpringbootappsModels();
+            SpringBootAppCollection appsColletion = siteModelResource.GetSpringBootApps();
             bool result = await appsColletion.ExistsAsync(appName, CancellationToken.None);
             Assert.IsTrue(result);
 
             //get all apps
-            AsyncPageable<SpringbootappsModelResource> appListResponse = appsColletion.GetAllAsync();
+            AsyncPageable<SpringBootAppResource> appListResponse = appsColletion.GetAllAsync();
             int appCount = 0;
             await foreach (var item in appListResponse) {
                 appCount++;
@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             Assert.True(appCount > 0);
 
             //get an app
-            Response<SpringbootappsModelResource> appResponse = await appsColletion.GetAsync(appName);
-            SpringbootappsModelResource appModelResource = appResponse.Value;
+            Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
+            SpringBootAppResource appModelResource = appResponse.Value;
             Assert.IsNotNull(appModelResource);
-            SpringbootappsModelData appModelData = appModelResource.Data;
+            SpringBootAppData appModelData = appModelResource.Data;
             Assert.IsNotNull(appModelData);
 
             //patch an app
             KeyValuePair<string, string> myKeyValuePair = new KeyValuePair<string, string>("appKey", "appValue");
-            SpringbootappsModelPatch appPatch = new SpringbootappsModelPatch(){
+            SpringBootAppPatch appPatch = new SpringBootAppPatch(){
                 Tags = {myKeyValuePair,}
             };
 
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             Assert.IsTrue(await containsTag(appsColletion, appName, myKeyValuePair));
         }
 
-        private async Task<bool> containsTag(SpringbootappsModelCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair) {
-            Response<SpringbootappsModelResource> appResponse = await appsColletion.GetAsync(appName);
-            SpringbootappsModelResource appModelResource = appResponse.Value;
+        private async Task<bool> containsTag(SpringBootAppCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair) {
+            Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
+            SpringBootAppResource appModelResource = appResponse.Value;
             Assert.IsNotNull(appModelResource);
-            SpringbootappsModelData appModelData = appModelResource.Data;
+            SpringBootAppData appModelData = appModelResource.Data;
             Assert.IsNotNull(appModelData);
             IDictionary<string, string> tags = appModelData.Tags;
             return tags.Contains(myKeyValuePair);

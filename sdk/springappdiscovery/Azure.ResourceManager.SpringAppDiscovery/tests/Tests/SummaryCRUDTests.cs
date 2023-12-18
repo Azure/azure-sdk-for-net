@@ -38,18 +38,18 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
         [TestCase]
         public async Task TestSummariesCRUDAsyncOperations()
         {
-            SpringbootsitesModelCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
+            SpringBootSiteCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
 
             //judge a site exist or not
             Assert.IsTrue(await siteColletion.ExistsAsync(siteName));
 
             //get a site
-            Response<SpringbootsitesModelResource> getSiteResponse = await siteColletion.GetAsync(siteName);
-            SpringbootsitesModelResource siteResource = getSiteResponse.Value;
-            SummaryCollection summaryCollection = siteResource.GetSummaries();
+            Response<SpringBootSiteResource> getSiteResponse = await siteColletion.GetAsync(siteName);
+            SpringBootSiteResource siteResource = getSiteResponse.Value;
+            SpringBootSiteSummaryCollection summaryCollection = siteResource.GetSpringBootSiteSummaries();
 
             //get all summaries
-            AsyncPageable<SummaryResource> getSummaryResponse = summaryCollection.GetAllAsync();
+            AsyncPageable<SpringBootSiteSummaryResource> getSummaryResponse = summaryCollection.GetAllAsync();
             int summaryCount = 0;
             await foreach (var item in getSummaryResponse) {
                 summaryCount++;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             Assert.True(summaryCount > 0);
 
             //get a summary
-            Response<SummaryResource> getSummaryReponse = await summaryCollection.GetAsync("default", CancellationToken.None);
+            Response<SpringBootSiteSummaryResource> getSummaryReponse = await summaryCollection.GetAsync("default", CancellationToken.None);
             Assert.IsNotNull(getSummaryReponse.Value);
         }
     }

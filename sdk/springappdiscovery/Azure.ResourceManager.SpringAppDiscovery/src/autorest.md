@@ -17,17 +17,36 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+ show-serialized-names: true
 
-# rename-mapping:
-#   GroupInformation: DeviceUpdatePrivateLink
-#   CheckNameAvailabilityRequest.type: -|resource-type
-#   GroupConnectivityInformation.privateLinkServiceArmRegion: -|azure-location
-#   GroupIdProvisioningState: DeviceUpdatePrivateLinkProvisioningState
-#   PrivateEndpointUpdate.id: -|arm-id
-# SpringBootSitesProperties.ProvisioningState:
-
+rename-mapping:
+    SpringbootsitesModel: SpringBootSite
+    SpringbootsitesPatch: SpringBootSitePatch
+    SpringbootsitesProperties: SpringBootSiteProperties
+    SpringbootsitesListResult: SpringBootSiteList
+    SpringbootserversModel: SpringBootServer
+    SpringbootserversPatch: SpringBootServerPatch
+    SpringbootserversProperties: SpringBootServerProperties
+    SpringbootserversProperties.MachineArmId: -|arm-id
+    SpringbootserversProperties.FqdnAndIPAddressList: -|ip-address
+    SpringbootserversListResult: SpringBootServerList
+    SpringbootappsModel: SpringBootApp
+    SpringbootappsPatch: SpringBootAppPatch
+    SpringbootappsProperties: SpringBootAppProperties
+    SpringbootappsListResult: SpringBootAppList
+    ProvisioningState: SpringAppDiscoveryProvisioningState
+    Error: SpringBootSiteError
+    ErrorSummary: SpringBootSiteErrorSummary
+    ErrorSummariesProperties: SpringBootSiteErrorSummariesProperties
+    ErrorSummaryModel: SpringBootSiteErrorSummaryModel
+    Summary: SpringBootSiteSummary
+    SummariesProperties: SpringBootSiteSummariesProperties
+    SpringbootsitesModelExtendedLocation: SpringBootSiteModelExtendedLocation
+    SpringbootappsPropertiesMiscsItem: SpringBootAppMiscsItem
+    SpringbootappsPropertiesApplicationConfigurationsItem: SpringBootAppApplicationConfigurationsItem
+    SpringbootappsPropertiesInstancesItem: SpringBootAppInstancesItem
+    SpringbootappsPropertiesInstancesItem.MachineArmId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'

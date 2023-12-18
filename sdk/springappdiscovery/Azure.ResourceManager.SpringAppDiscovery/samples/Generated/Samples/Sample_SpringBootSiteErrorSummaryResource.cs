@@ -14,7 +14,7 @@ using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 {
-    public partial class Sample_ErrorSummaryResource
+    public partial class Sample_SpringBootSiteErrorSummaryResource
     {
         // ErrorSummaries_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ErrorSummaryResource created on azure
-            // for more information of creating ErrorSummaryResource, please refer to the document of ErrorSummaryResource
+            // this example assumes you already have this SpringBootSiteErrorSummaryResource created on azure
+            // for more information of creating SpringBootSiteErrorSummaryResource, please refer to the document of SpringBootSiteErrorSummaryResource
             string subscriptionId = "libzegdqkcxmhqhhhcxm";
             string resourceGroupName = "rgspringbootdiscovery";
             string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
             string errorSummaryName = "K2lv";
-            ResourceIdentifier errorSummaryResourceId = ErrorSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, errorSummaryName);
-            ErrorSummaryResource errorSummary = client.GetErrorSummaryResource(errorSummaryResourceId);
+            ResourceIdentifier springBootSiteErrorSummaryResourceId = SpringBootSiteErrorSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, errorSummaryName);
+            SpringBootSiteErrorSummaryResource springBootSiteErrorSummary = client.GetSpringBootSiteErrorSummaryResource(springBootSiteErrorSummaryResourceId);
 
             // invoke the operation
-            ErrorSummaryResource result = await errorSummary.GetAsync();
+            SpringBootSiteErrorSummaryResource result = await springBootSiteErrorSummary.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ErrorSummaryData resourceData = result.Data;
+            SpringBootSiteErrorSummaryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ErrorSummaryResource created on azure
-            // for more information of creating ErrorSummaryResource, please refer to the document of ErrorSummaryResource
+            // this example assumes you already have this SpringBootSiteErrorSummaryResource created on azure
+            // for more information of creating SpringBootSiteErrorSummaryResource, please refer to the document of SpringBootSiteErrorSummaryResource
             string subscriptionId = "libzegdqkcxmhqhhhcxm";
             string resourceGroupName = "rgspringbootdiscovery";
             string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
             string errorSummaryName = "K2lv";
-            ResourceIdentifier errorSummaryResourceId = ErrorSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, errorSummaryName);
-            ErrorSummaryResource errorSummary = client.GetErrorSummaryResource(errorSummaryResourceId);
+            ResourceIdentifier springBootSiteErrorSummaryResourceId = SpringBootSiteErrorSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, errorSummaryName);
+            SpringBootSiteErrorSummaryResource springBootSiteErrorSummary = client.GetSpringBootSiteErrorSummaryResource(springBootSiteErrorSummaryResourceId);
 
             // invoke the operation
-            ErrorSummaryResource result = await errorSummary.GetAsync();
+            SpringBootSiteErrorSummaryResource result = await springBootSiteErrorSummary.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ErrorSummaryData resourceData = result.Data;
+            SpringBootSiteErrorSummaryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

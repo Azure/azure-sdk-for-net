@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
 
         public ResourceType resourceType = new ResourceType("microsoft.offazurespringboot/springbootsites");
 
-        public SpringbootsitesProperties siteProperties = new SpringbootsitesProperties();
+        public SpringBootSiteProperties siteProperties = new SpringBootSiteProperties();
 
-        public SpringbootsitesModelExtendedLocation extendLocation = new SpringbootsitesModelExtendedLocation("CustomLocation", "/subscriptions/" + subId +"/resourceGroups/" +  rgName + "/providers/Microsoft.ExtendedLocation/customLocations/springboot");
+        public SpringBootSiteModelExtendedLocation extendLocation = new SpringBootSiteModelExtendedLocation("CustomLocation", "/subscriptions/" + subId +"/resourceGroups/" +  rgName + "/providers/Microsoft.ExtendedLocation/customLocations/springboot");
 
         public SiteCRUDTests() : base(true)
         {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
         [TestCase]
         public async Task TestSitesCRUDAsyncOperations()
         {
-            SpringbootsitesModelCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
+            SpringBootSiteCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
 
             siteProperties.MasterSiteId="1234";
             siteProperties.MigrateProjectId="5678";
 
-            SpringbootsitesModelData modelData = new SpringbootsitesModelData(null, siteName, resourceType, null, new Dictionary<string, string>(),
+            SpringBootSiteData modelData = new SpringBootSiteData(null, siteName, resourceType, null, new Dictionary<string, string>(),
                 defaultResourceLocation, siteProperties, extendLocation);
 
             //create a site
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             Assert.IsTrue(await siteColletion.ExistsAsync(siteName));
 
             //get a site
-            Response<SpringbootsitesModelResource> getSiteResponse = await siteColletion.GetAsync(siteName);
-            SpringbootsitesModelResource siteResource = getSiteResponse.Value;
-            NullableResponse<SpringbootsitesModelResource> getIfExistResponse = await siteColletion.GetIfExistsAsync(siteName);
+            Response<SpringBootSiteResource> getSiteResponse = await siteColletion.GetAsync(siteName);
+            SpringBootSiteResource siteResource = getSiteResponse.Value;
+            NullableResponse<SpringBootSiteResource> getIfExistResponse = await siteColletion.GetIfExistsAsync(siteName);
             Assert.True(getIfExistResponse.HasValue);
 
             //get all sites
-            AsyncPageable<SpringbootsitesModelResource> getSiteAllResponse = siteColletion.GetAllAsync(CancellationToken.None);
+            AsyncPageable<SpringBootSiteResource> getSiteAllResponse = siteColletion.GetAllAsync(CancellationToken.None);
             int siteCount = 0;
             await foreach (var item in getSiteAllResponse) {
                 siteCount++;

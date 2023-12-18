@@ -14,7 +14,7 @@ using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 {
-    public partial class Sample_SummaryResource
+    public partial class Sample_SpringBootSiteSummaryResource
     {
         // Summaries_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SummaryResource created on azure
-            // for more information of creating SummaryResource, please refer to the document of SummaryResource
+            // this example assumes you already have this SpringBootSiteSummaryResource created on azure
+            // for more information of creating SpringBootSiteSummaryResource, please refer to the document of SpringBootSiteSummaryResource
             string subscriptionId = "libzegdqkcxmhqhhhcxm";
             string resourceGroupName = "rgspringbootdiscovery";
             string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
             string summaryName = "vjB";
-            ResourceIdentifier summaryResourceId = SummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, summaryName);
-            SummaryResource summary = client.GetSummaryResource(summaryResourceId);
+            ResourceIdentifier springBootSiteSummaryResourceId = SpringBootSiteSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, summaryName);
+            SpringBootSiteSummaryResource springBootSiteSummary = client.GetSpringBootSiteSummaryResource(springBootSiteSummaryResourceId);
 
             // invoke the operation
-            SummaryResource result = await summary.GetAsync();
+            SpringBootSiteSummaryResource result = await springBootSiteSummary.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SummaryData resourceData = result.Data;
+            SpringBootSiteSummaryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -61,21 +61,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SummaryResource created on azure
-            // for more information of creating SummaryResource, please refer to the document of SummaryResource
+            // this example assumes you already have this SpringBootSiteSummaryResource created on azure
+            // for more information of creating SpringBootSiteSummaryResource, please refer to the document of SpringBootSiteSummaryResource
             string subscriptionId = "libzegdqkcxmhqhhhcxm";
             string resourceGroupName = "rgspringbootdiscovery";
             string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
             string summaryName = "vjB";
-            ResourceIdentifier summaryResourceId = SummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, summaryName);
-            SummaryResource summary = client.GetSummaryResource(summaryResourceId);
+            ResourceIdentifier springBootSiteSummaryResourceId = SpringBootSiteSummaryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, summaryName);
+            SpringBootSiteSummaryResource springBootSiteSummary = client.GetSpringBootSiteSummaryResource(springBootSiteSummaryResourceId);
 
             // invoke the operation
-            SummaryResource result = await summary.GetAsync();
+            SpringBootSiteSummaryResource result = await springBootSiteSummary.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SummaryData resourceData = result.Data;
+            SpringBootSiteSummaryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

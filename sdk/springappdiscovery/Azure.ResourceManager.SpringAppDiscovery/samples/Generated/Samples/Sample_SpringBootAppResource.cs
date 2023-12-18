@@ -17,7 +17,7 @@ using Azure.ResourceManager.SpringAppDiscovery.Models;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 {
-    public partial class Sample_SpringbootappsModelResource
+    public partial class Sample_SpringBootAppResource
     {
         // springbootapps_Get_MaximumSet_Gen
         [NUnit.Framework.Test]
@@ -32,21 +32,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootappsModelResource created on azure
-            // for more information of creating SpringbootappsModelResource, please refer to the document of SpringbootappsModelResource
+            // this example assumes you already have this SpringBootAppResource created on azure
+            // for more information of creating SpringBootAppResource, please refer to the document of SpringBootAppResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
-            ResourceIdentifier springbootappsModelResourceId = SpringbootappsModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, springbootappsName);
-            SpringbootappsModelResource springbootappsModel = client.GetSpringbootappsModelResource(springbootappsModelResourceId);
+            ResourceIdentifier springBootAppResourceId = SpringBootAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, springbootappsName);
+            SpringBootAppResource springBootApp = client.GetSpringBootAppResource(springBootAppResourceId);
 
             // invoke the operation
-            SpringbootappsModelResource result = await springbootappsModel.GetAsync();
+            SpringBootAppResource result = await springBootApp.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootappsModelData resourceData = result.Data;
+            SpringBootAppData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -64,21 +64,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootappsModelResource created on azure
-            // for more information of creating SpringbootappsModelResource, please refer to the document of SpringbootappsModelResource
+            // this example assumes you already have this SpringBootAppResource created on azure
+            // for more information of creating SpringBootAppResource, please refer to the document of SpringBootAppResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
-            ResourceIdentifier springbootappsModelResourceId = SpringbootappsModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, springbootappsName);
-            SpringbootappsModelResource springbootappsModel = client.GetSpringbootappsModelResource(springbootappsModelResourceId);
+            ResourceIdentifier springBootAppResourceId = SpringBootAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, springbootappsName);
+            SpringBootAppResource springBootApp = client.GetSpringBootAppResource(springBootAppResourceId);
 
             // invoke the operation
-            SpringbootappsModelResource result = await springbootappsModel.GetAsync();
+            SpringBootAppResource result = await springBootApp.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootappsModelData resourceData = result.Data;
+            SpringBootAppData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -96,23 +96,23 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootappsModelResource created on azure
-            // for more information of creating SpringbootappsModelResource, please refer to the document of SpringbootappsModelResource
+            // this example assumes you already have this SpringBootAppResource created on azure
+            // for more information of creating SpringBootAppResource, please refer to the document of SpringBootAppResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
-            ResourceIdentifier springbootappsModelResourceId = SpringbootappsModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, springbootappsName);
-            SpringbootappsModelResource springbootappsModel = client.GetSpringbootappsModelResource(springbootappsModelResourceId);
+            ResourceIdentifier springBootAppResourceId = SpringBootAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, springbootappsName);
+            SpringBootAppResource springBootApp = client.GetSpringBootAppResource(springBootAppResourceId);
 
             // invoke the operation
-            SpringbootappsModelPatch patch = new SpringbootappsModelPatch();
-            ArmOperation<SpringbootappsModelResource> lro = await springbootappsModel.UpdateAsync(WaitUntil.Completed, patch);
-            SpringbootappsModelResource result = lro.Value;
+            SpringBootAppPatch patch = new SpringBootAppPatch();
+            ArmOperation<SpringBootAppResource> lro = await springBootApp.UpdateAsync(WaitUntil.Completed, patch);
+            SpringBootAppResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootappsModelData resourceData = result.Data;
+            SpringBootAppData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -130,23 +130,23 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SpringbootappsModelResource created on azure
-            // for more information of creating SpringbootappsModelResource, please refer to the document of SpringbootappsModelResource
+            // this example assumes you already have this SpringBootAppResource created on azure
+            // for more information of creating SpringBootAppResource, please refer to the document of SpringBootAppResource
             string subscriptionId = "jnetwlorzmxpxmcucorv";
             string resourceGroupName = "rgspringbootapps";
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
             string springbootappsName = "ofjeesoahqtnovlbuvflyknpbhcpeqqhekntvqxyemuwbcqnuxjgfhsf";
-            ResourceIdentifier springbootappsModelResourceId = SpringbootappsModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, springbootappsName);
-            SpringbootappsModelResource springbootappsModel = client.GetSpringbootappsModelResource(springbootappsModelResourceId);
+            ResourceIdentifier springBootAppResourceId = SpringBootAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName, springbootappsName);
+            SpringBootAppResource springBootApp = client.GetSpringBootAppResource(springBootAppResourceId);
 
             // invoke the operation
-            SpringbootappsModelPatch patch = new SpringbootappsModelPatch();
-            ArmOperation<SpringbootappsModelResource> lro = await springbootappsModel.UpdateAsync(WaitUntil.Completed, patch);
-            SpringbootappsModelResource result = lro.Value;
+            SpringBootAppPatch patch = new SpringBootAppPatch();
+            ArmOperation<SpringBootAppResource> lro = await springBootApp.UpdateAsync(WaitUntil.Completed, patch);
+            SpringBootAppResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SpringbootappsModelData resourceData = result.Data;
+            SpringBootAppData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
         // springbootapps_ListBySubscription_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSpringbootappsModels_SpringbootappsListBySubscriptionMaximumSetGen()
+        public async Task GetSpringBootApps_SpringbootappsListBySubscriptionMaximumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootapps_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "springbootapps_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -172,11 +172,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // invoke the operation and iterate over the result
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            await foreach (SpringbootappsModelResource item in subscriptionResource.GetSpringbootappsModelsAsync(siteName))
+            await foreach (SpringBootAppResource item in subscriptionResource.GetSpringBootAppsAsync(siteName))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootappsModelData resourceData = item.Data;
+                SpringBootAppData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
         // springbootapps_ListBySubscription_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSpringbootappsModels_SpringbootappsListBySubscriptionMinimumSetGen()
+        public async Task GetSpringBootApps_SpringbootappsListBySubscriptionMinimumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/springbootapps_ListBySubscription_MinimumSet_Gen.json
             // this example is just showing the usage of "springbootapps_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
             // invoke the operation and iterate over the result
             string siteName = "pdfosfhtemfsaglvwjdyqlyeipucrd";
-            await foreach (SpringbootappsModelResource item in subscriptionResource.GetSpringbootappsModelsAsync(siteName))
+            await foreach (SpringBootAppResource item in subscriptionResource.GetSpringBootAppsAsync(siteName))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SpringbootappsModelData resourceData = item.Data;
+                SpringBootAppData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
