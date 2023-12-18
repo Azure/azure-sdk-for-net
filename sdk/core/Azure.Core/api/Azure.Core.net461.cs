@@ -132,6 +132,7 @@ namespace Azure
         protected Operation() { }
         public abstract bool HasCompleted { get; }
         public abstract string Id { get; }
+        public virtual string RehydrationId { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
