@@ -17,6 +17,11 @@ namespace Azure
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
+        /// Gets an ID representing the operation that can be used to rehydrate the operation.
+        /// </summary>
+        public virtual string RehydrationId => string.Empty;
+
+        /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
         /// the status of the long-running operation.
         /// </summary>
