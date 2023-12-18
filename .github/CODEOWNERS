@@ -185,7 +185,6 @@
 /sdk/formrecognizer/                                               @kinelski @pallavit @joseharriaga
 
 # ServiceLabel: %Cognitive - Form Recognizer %Service Attention
-/sdk/documentintelligence/                                         @toothache
 /sdk/cognitiveservices/FormRecognizer/                             @ctstone @vkurpad
 
 # PRLabel: %Cognitive - Metrics Advisor
