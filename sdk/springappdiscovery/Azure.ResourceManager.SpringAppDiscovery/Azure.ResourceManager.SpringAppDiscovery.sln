@@ -9,8 +9,6 @@ Project("{D5740887-B929-4A8E-A2B7-6113F059F929}") = "Azure.ResourceManager.Sprin
 EndProject
 Project("{D5740887-B929-4A8E-A2B7-6113F059F929}") = "Azure.ResourceManager.SpringAppDiscovery.Samples", "samples\Azure.ResourceManager.SpringAppDiscovery.Samples.csproj", "{55EE66FE-62A1-451D-BA43-C10FE3382F66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sdkTest", "sdkTest\sdkTest.csproj", "{8D1F559A-21E0-4079-B9EC-98823F799151}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
