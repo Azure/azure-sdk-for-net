@@ -41,11 +41,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var builder = new StringBuilder();
             builder.Append("{\"fields\":[\"testField\"]")
-                .Append(",\"keyValuePairs\":{\"color\":\"red\"}")
-                .Append(",\"xProperty\":100")
-                .Append(",\"kind\":\"X\",\"name\":\"xmodel\"")
-                .Append(",\"extra\":\"stuff\"")
-                .Append("}");
+                .Append(",\"keyValuePairs\":{\"color\":\"red\"}");
+            if (format == "J")
+            {
+                builder.Append(",\"xProperty\":100");
+            }
+            builder.Append(",\"kind\":\"X\",\"name\":\"xmodel\"");
+            if (format == "J")
+            {
+                builder.Append(",\"extra\":\"stuff\"");
+            }
+            builder.Append("}");
             return builder.ToString();
         }
 
