@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateResponseInternal
+    public partial class MessageTemplateResult
     {
-        internal static MessageTemplateResponseInternal DeserializeMessageTemplateResponseInternal(JsonElement element)
+        internal static MessageTemplateResult DeserializeMessageTemplateResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> language = default;
-            Optional<CommunicationMessagesChannel> channelType = default;
-            Optional<MessageTemplateStatus> status = default;
-            Optional<WhatsAppMessageTemplateResponse> whatsApp = default;
+            string name = default;
+            string language = default;
+            CommunicationMessagesChannel channelType = default;
+            MessageTemplateStatus status = default;
+            Optional<WhatsAppMessageTemplateResult> whatsApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -38,19 +38,11 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("channelType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     channelType = new CommunicationMessagesChannel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     status = new MessageTemplateStatus(property.Value.GetString());
                     continue;
                 }
@@ -60,19 +52,19 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    whatsApp = WhatsAppMessageTemplateResponse.DeserializeWhatsAppMessageTemplateResponse(property.Value);
+                    whatsApp = WhatsAppMessageTemplateResult.DeserializeWhatsAppMessageTemplateResponse(property.Value);
                     continue;
                 }
             }
-            return new MessageTemplateResponseInternal(name.Value, language.Value, Optional.ToNullable(channelType), Optional.ToNullable(status), whatsApp.Value);
+            return new MessageTemplateResult(name, language, channelType, status, whatsApp.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MessageTemplateResponseInternal FromResponse(Response response)
+        internal static MessageTemplateResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMessageTemplateResponseInternal(document.RootElement);
+            return DeserializeMessageTemplateResponse(document.RootElement);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
             };
 
-            return new MessageTemplateBindingsInternal() { WhatsApp = whatsApp };
+            return whatsApp;
         }
     }
 }

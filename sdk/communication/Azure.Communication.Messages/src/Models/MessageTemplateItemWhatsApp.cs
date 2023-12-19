@@ -19,7 +19,7 @@ namespace Azure.Communication.Messages
         /// </summary>
         public BinaryData Content { get; }
 
-        internal MessageTemplateItemWhatsApp(WhatsAppMessageTemplateResponse templateResponseWhatsAppInternal)
+        internal MessageTemplateItemWhatsApp(WhatsAppMessageTemplateResult templateResponseWhatsAppInternal)
         {
             Content = new BinaryData(templateResponseWhatsAppInternal.Content);
         }

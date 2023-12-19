@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Communication.Messages.Models.Channels;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -28,10 +29,11 @@ namespace Azure.Communication.Messages.Tests
             Assert.IsNotNull(templates);
             var templatesEnumerable = templates.ToEnumerableAsync().Result;
             Assert.IsNotEmpty(templatesEnumerable);
-            foreach (MessageTemplateItem template in templatesEnumerable)
+            foreach (WhatsAppMessageTemplateItem template in templatesEnumerable)
             {
                 Assert.IsNotNull(template.Name);
                 Assert.IsNotNull(template.Language);
+                Assert.IsNotNull(template.Content);
             }
 
             return Task.CompletedTask;
@@ -51,10 +53,11 @@ namespace Azure.Communication.Messages.Tests
             Assert.IsNotNull(templates);
             var templatesEnumerable = templates.ToEnumerableAsync().Result;
             Assert.IsNotEmpty(templatesEnumerable);
-            foreach (MessageTemplateItem template in templatesEnumerable)
+            foreach (WhatsAppMessageTemplateItem template in templatesEnumerable)
             {
                 Assert.IsNotNull(template.Name);
                 Assert.IsNotNull(template.Language);
+                Assert.IsNotNull(template.Content);
             }
 
             return Task.CompletedTask;

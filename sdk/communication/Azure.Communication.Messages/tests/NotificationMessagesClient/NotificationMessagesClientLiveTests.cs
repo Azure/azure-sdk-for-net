@@ -64,6 +64,7 @@ namespace Azure.Communication.Messages.Tests
             };
 
             MessageTemplate template = new MessageTemplate("sample_shipping_confirmation", "en_us", values, bindings);
+
             SendMessageOptions options = new SendMessageOptions(channelRegistrationId, recipients, template);
 
             // Act

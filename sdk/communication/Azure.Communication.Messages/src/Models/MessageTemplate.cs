@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages
             {
                 foreach (MessageTemplateValue value in Values)
                 {
-                    messageTemplateInternal.Values.Add(value.Name, value.ToMessageTemplateValueInternal());
+                    messageTemplateInternal.Values.Add(value);
                 }
             }
 

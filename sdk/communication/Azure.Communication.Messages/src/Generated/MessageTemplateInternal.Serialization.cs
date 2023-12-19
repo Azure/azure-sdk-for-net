@@ -22,13 +22,12 @@ namespace Azure.Communication.Messages
             if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
-                writer.WriteStartObject();
+                writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Bindings))
             {
