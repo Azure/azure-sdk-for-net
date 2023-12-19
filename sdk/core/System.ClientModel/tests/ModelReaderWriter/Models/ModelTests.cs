@@ -112,37 +112,37 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             return result;
         }
 
-        internal static Dictionary<string, BinaryData> GetRawData(object model)
+        internal static IDictionary<string, BinaryData> GetRawData(object model)
         {
             Type modelType = model.GetType();
             while (modelType.BaseType != typeof(object) && modelType.BaseType != typeof(ValueType))
             {
                 modelType = modelType.BaseType!;
             }
-            var propertyInfo = modelType.GetField("_rawData", BindingFlags.Instance | BindingFlags.NonPublic);
-            return propertyInfo?.GetValue(model) as Dictionary<string, BinaryData> ?? throw new InvalidOperationException($"unable to get raw data from {model.GetType().Name}");
+            var propertyInfo = modelType.GetField("_serializedAdditionalRawData", BindingFlags.Instance | BindingFlags.NonPublic);
+            return propertyInfo?.GetValue(model) as IDictionary<string, BinaryData> ?? throw new InvalidOperationException($"unable to get raw data from {model.GetType().Name}");
         }
 
         [Test]
         public void ThrowsIfUnknownFormat()
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions("x");
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(ModelInstance, options));
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IPersistableModel<object>)ModelInstance, options));
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write((IPersistableModel<object>)ModelInstance, options));
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
             if (ModelInstance is IJsonModel<T> jsonModel)
             {
-                Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
-                Assert.Throws<FormatException>(() => ((IJsonModel<object>)jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
+                Assert.Throws<InvalidOperationException>(() => ((IJsonModel<object>)jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));
                 bool gotException = false;
                 try
                 {
                     Utf8JsonReader reader = default;
                     jsonModel.Create(ref reader, options);
                 }
-                catch (FormatException)
+                catch (InvalidOperationException)
                 {
                     gotException = true;
                 }
@@ -157,7 +157,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                     Utf8JsonReader reader = default;
                     ((IJsonModel<object>)jsonModel).Create(ref reader, options);
                 }
-                catch (FormatException)
+                catch (InvalidOperationException)
                 {
                     gotException = true;
                 }

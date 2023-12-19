@@ -5,6 +5,8 @@ using NUnit.Framework;
 using System.IO;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.Text;
+using System.Linq;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -37,15 +39,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string GetExpectedResult(string format)
         {
-            string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
-            expected += ",\"fields\":[\"testField\"]";
-            expected += ",\"keyValuePairs\":{\"color\":\"red\"}";
-            if (format == "J")
-                expected += ",\"xProperty\":100";
-            if (format == "J")
-                expected += ",\"extra\":\"stuff\"";
-            expected += "}";
-            return expected;
+            var builder = new StringBuilder();
+            builder.Append("{\"fields\":[\"testField\"]")
+                .Append(",\"keyValuePairs\":{\"color\":\"red\"}")
+                .Append(",\"xProperty\":100")
+                .Append(",\"kind\":\"X\",\"name\":\"xmodel\"")
+                .Append(",\"extra\":\"stuff\"")
+                .Append("}");
+            return builder.ToString();
         }
 
         protected override void VerifyModel(ModelX model, string format)
