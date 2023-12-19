@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
     public static partial class ArmComputeModelFactory
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineScaleSetData VirtualMachineScaleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ComputeSku sku = null, ComputePlan plan = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null, ExtendedLocation extendedLocation = null, VirtualMachineScaleSetUpgradePolicy upgradePolicy = null, AutomaticRepairsPolicy automaticRepairsPolicy = null, VirtualMachineScaleSetVmProfile virtualMachineProfile = null, string provisioningState = null, bool? overprovision = null, bool? doNotRunExtensionsOnOverprovisionedVms = null, string uniqueId = null, bool? singlePlacementGroup = null, bool? zoneBalance = null, int? platformFaultDomainCount = null, ResourceIdentifier proximityPlacementGroupId = null, ResourceIdentifier hostGroupId = null, AdditionalCapabilities additionalCapabilities = null, ScaleInPolicy scaleInPolicy = null, OrchestrationMode? orchestrationMode = null, SpotRestorePolicy spotRestorePolicy = null, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = null, DateTimeOffset? timeCreated = null, bool? isMaximumCapacityConstrained = null)
+        public static VirtualMachineScaleSetData VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ResourceIdentifier proximityPlacementGroupId, ResourceIdentifier hostGroupId, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string instanceId = null, ComputeSku sku = null, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, bool? latestModelApplied = null, string vmId = null, VirtualMachineScaleSetVmInstanceView instanceView = null, VirtualMachineHardwareProfile hardwareProfile = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, SecurityProfile securityProfile = null, VirtualMachineNetworkProfile networkProfile = null, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, DateTimeOffset? timeCreated = null)
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, IEnumerable<string> zones, ManagedServiceIdentity identity, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated)
         {
             tags ??= new Dictionary<string, string>();
             resources ??= new List<VirtualMachineExtensionData>();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities , VirtualMachineOSProfile osProfile , VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, ResourceIdentifier virtualMachineScaleSetId = null, ResourceIdentifier proximityPlacementGroupId = null, VirtualMachinePriorityType? priority = null, VirtualMachineEvictionPolicyType? evictionPolicy = null, double? billingMaxPrice = null, ResourceIdentifier hostId = null, ResourceIdentifier hostGroupId = null, string provisioningState = null, VirtualMachineInstanceView instanceView = null, string licenseType = null, string vmId = null, string extensionsTimeBudget = null, int? platformFaultDomain = null, ComputeScheduledEventsProfile scheduledEventsProfile = null, string userData = null, ResourceIdentifier capacityReservationGroupId = null, IEnumerable<VirtualMachineGalleryApplication> galleryApplications = null, DateTimeOffset? timeCreated = null)
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile , VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
         {
             tags ??= new Dictionary<string, string>();
             resources ??= new List<VirtualMachineExtensionData>();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain = null, int? platformFaultDomain = null, string computerName = null, string osName = null, string osVersion = null, HyperVGeneration? hyperVGeneration = null, string rdpThumbPrint = null, VirtualMachineAgentInstanceView vmAgent = null, MaintenanceRedeployStatus maintenanceRedeployStatus = null, IEnumerable<DiskInstanceView> disks = null, IEnumerable<VirtualMachineExtensionInstanceView> extensions = null, InstanceViewStatus vmHealthStatus = null, BootDiagnosticsInstanceView bootDiagnostics = null, string assignedHost = null, IEnumerable<InstanceViewStatus> statuses = null, VirtualMachinePatchStatus patchStatus = null)
+        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IEnumerable<DiskInstanceView> disks, IEnumerable<VirtualMachineExtensionInstanceView> extensions, InstanceViewStatus vmHealthStatus, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IEnumerable<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus)
         {
             disks ??= new List<DiskInstanceView>();
             extensions ??= new List<VirtualMachineExtensionInstanceView>();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null, IEnumerable<SubResource> capacityReservations = null, IEnumerable<SubResource> virtualMachinesAssociated = null, IEnumerable<CapacityReservationInstanceViewWithName> instanceViewCapacityReservations = null)
+        public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, IEnumerable<SubResource> capacityReservations, IEnumerable<SubResource> virtualMachinesAssociated, IEnumerable<CapacityReservationInstanceViewWithName> instanceViewCapacityReservations)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = null, GalleryProvisioningState? provisioningState = null, GalleryImageVersionStorageProfile storageProfile = null, GalleryImageVersionSafetyProfile safetyProfile = null, ReplicationStatus replicationStatus = null)
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharedGalleryData SharedGalleryData(string name = null, AzureLocation? location = null, string uniqueId = null)
+        public static SharedGalleryData SharedGalleryData(string name, AzureLocation? location, string uniqueId)
         {
             return new SharedGalleryData(name, location, uniqueId, null);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharedGalleryImageData SharedGalleryImageData(string name = null, AzureLocation? location = null, string uniqueId = null, SupportedOperatingSystemType? osType = null, OperatingSystemStateType? osState = null, DateTimeOffset? endOfLifeOn = null, GalleryImageIdentifier identifier = null, RecommendedMachineConfiguration recommended = null, IEnumerable<string> disallowedDiskTypes = null, HyperVGeneration? hyperVGeneration = null, IEnumerable<GalleryImageFeature> features = null, ImagePurchasePlan purchasePlan = null, ArchitectureType? architecture = null, Uri privacyStatementUri = null, string eula = null)
+        public static SharedGalleryImageData SharedGalleryImageData(string name, AzureLocation? location, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
         {
             disallowedDiskTypes ??= new List<string>();
             features ??= new List<GalleryImageFeature>();
@@ -93,19 +93,19 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = null, AzureLocation? location = null, string uniqueId = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, bool? isExcludedFromLatest = null, SharedGalleryImageVersionStorageProfile storageProfile = null)
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
         {
             return new SharedGalleryImageVersionData(name, location, uniqueId, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile, null);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunityGalleryData CommunityGalleryData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null)
+        public static CommunityGalleryData CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
         {
             return new CommunityGalleryData(name, location, resourceType, uniqueId, null, null, null);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunityGalleryImageData CommunityGalleryImageData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null, SupportedOperatingSystemType? osType = null, OperatingSystemStateType? osState = null, DateTimeOffset? endOfLifeOn = null, CommunityGalleryImageIdentifier imageIdentifier = null, RecommendedMachineConfiguration recommended = null, IEnumerable<string> disallowedDiskTypes = null, HyperVGeneration? hyperVGeneration = null, IEnumerable<GalleryImageFeature> features = null, ImagePurchasePlan purchasePlan = null, ArchitectureType? architecture = null, Uri privacyStatementUri = null, string eula = null)
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
         {
             disallowedDiskTypes ??= new List<string>();
             features ??= new List<GalleryImageFeature>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = null, AzureLocation? location = null, ResourceType? resourceType = null, string uniqueId = null, DateTimeOffset? publishedOn = null, DateTimeOffset? endOfLifeOn = null, bool? isExcludedFromLatest = null, SharedGalleryImageVersionStorageProfile storageProfile = null)
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
         {
             return new CommunityGalleryImageVersionData(name, location, resourceType, uniqueId, publishedOn, endOfLifeOn, isExcludedFromLatest, storageProfile, null, null);
         }
