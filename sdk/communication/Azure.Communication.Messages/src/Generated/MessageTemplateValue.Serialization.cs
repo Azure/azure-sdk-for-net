@@ -10,13 +10,15 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateValueText : IUtf8JsonSerializable
+    public partial class MessageTemplateValue : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("text"u8);
-            writer.WriteStringValue(Text);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 

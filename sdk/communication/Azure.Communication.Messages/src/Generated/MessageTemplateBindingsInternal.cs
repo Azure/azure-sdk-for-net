@@ -7,22 +7,26 @@
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The binding object to link values to the template specific locations. </summary>
-    internal partial class MessageTemplateBindingsInternal
+    /// <summary>
+    /// The binding object to link values to the template specific locations
+    /// Please note <see cref="MessageTemplateBindingsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="WhatsAppMessageTemplateBindingsInternal"/>.
+    /// </summary>
+    internal abstract partial class MessageTemplateBindingsInternal
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsInternal"/>. </summary>
-        public MessageTemplateBindingsInternal()
+        protected MessageTemplateBindingsInternal()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsInternal"/>. </summary>
-        /// <param name="whatsApp"> The template bindings for WhatsApp. </param>
-        internal MessageTemplateBindingsInternal(WhatsAppMessageTemplateBindingsInternal whatsApp)
+        /// <param name="kind"> Discriminator. </param>
+        internal MessageTemplateBindingsInternal(string kind)
         {
-            WhatsApp = whatsApp;
+            Kind = kind;
         }
 
-        /// <summary> The template bindings for WhatsApp. </summary>
-        public WhatsAppMessageTemplateBindingsInternal WhatsApp { get; set; }
+        /// <summary> Discriminator. </summary>
+        internal string Kind { get; set; }
     }
 }

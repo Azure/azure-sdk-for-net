@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
@@ -14,18 +15,23 @@ namespace Azure.Communication.Messages
     /// Could be an image, document or
     /// video.
     /// </summary>
-    internal partial class MessageTemplateValueMedia
+    public partial class MessageTemplateMedia
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueMedia"/>. </summary>
-        public MessageTemplateValueMedia()
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateMedia"/>. </summary>
+        /// <param name="url"> The (public) URL of the media. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        internal MessageTemplateMedia(Uri url)
         {
+            Argument.AssertNotNull(url, nameof(url));
+
+            Url = url;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueMedia"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateMedia"/>. </summary>
         /// <param name="url"> The (public) URL of the media. </param>
         /// <param name="caption"> The [optional] caption of the media object. </param>
         /// <param name="fileName"> The [optional] filename of the media file. </param>
-        internal MessageTemplateValueMedia(Uri url, string caption, string fileName)
+        internal MessageTemplateMedia(Uri url, string caption, string fileName)
         {
             Url = url;
             Caption = caption;
@@ -33,10 +39,10 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The (public) URL of the media. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
         /// <summary> The [optional] caption of the media object. </summary>
-        public string Caption { get; set; }
+        public string Caption { get; }
         /// <summary> The [optional] filename of the media file. </summary>
-        public string FileName { get; set; }
+        public string FileName { get; }
     }
 }

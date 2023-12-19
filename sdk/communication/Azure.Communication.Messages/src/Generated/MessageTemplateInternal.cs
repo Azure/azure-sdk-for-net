@@ -25,7 +25,7 @@ namespace Azure.Communication.Messages
 
             Name = name;
             Language = language;
-            Values = new ChangeTrackingDictionary<string, MessageTemplateValueInternal>();
+            Values = new ChangeTrackingList<MessageTemplateValue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateInternal"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.Communication.Messages
         /// <param name="language"> The codes for the supported languages for templates. </param>
         /// <param name="values"> The template values. </param>
         /// <param name="bindings"> The binding object to link values to the template specific locations. </param>
-        internal MessageTemplateInternal(string name, string language, IDictionary<string, MessageTemplateValueInternal> values, MessageTemplateBindingsInternal bindings)
+        internal MessageTemplateInternal(string name, string language, IList<MessageTemplateValue> values, MessageTemplateBindingsInternal bindings)
         {
             Name = name;
             Language = language;
@@ -45,9 +45,17 @@ namespace Azure.Communication.Messages
         public string Name { get; }
         /// <summary> The codes for the supported languages for templates. </summary>
         public string Language { get; }
-        /// <summary> The template values. </summary>
-        public IDictionary<string, MessageTemplateValueInternal> Values { get; }
-        /// <summary> The binding object to link values to the template specific locations. </summary>
+        /// <summary>
+        /// The template values.
+        /// Please note <see cref="MessageTemplateValue"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MessageTemplateText"/>, <see cref="MessageTemplateImage"/>, <see cref="MessageTemplateDocument"/>, <see cref="MessageTemplateVideo"/>, <see cref="MessageTemplateLocation"/> and <see cref="MessageTemplateQuickAction"/>.
+        /// </summary>
+        public IList<MessageTemplateValue> Values { get; }
+        /// <summary>
+        /// The binding object to link values to the template specific locations
+        /// Please note <see cref="MessageTemplateBindingsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WhatsAppMessageTemplateBindingsInternal"/>.
+        /// </summary>
         public MessageTemplateBindingsInternal Bindings { get; set; }
     }
 }

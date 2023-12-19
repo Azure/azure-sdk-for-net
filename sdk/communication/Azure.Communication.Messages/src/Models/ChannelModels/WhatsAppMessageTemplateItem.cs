@@ -14,10 +14,10 @@ namespace Azure.Communication.Messages.Models.Channels
         {
         }
 
-        internal static new MessageTemplateItem DeserializeMessageTemplateResponseInternal(JsonElement element)
+        internal static new MessageTemplateItem DeserializeMessageTemplateResponse(JsonElement element)
         {
-            var messageTemplateResponseInternal = MessageTemplateResponseInternal.DeserializeMessageTemplateResponseInternal(element);
-            return new WhatsAppMessageTemplateItem(messageTemplateResponseInternal);
+            var messageTemplateResponse = MessageTemplateResult.DeserializeMessageTemplateResponse(element);
+            return new WhatsAppMessageTemplateItem(messageTemplateResponse);
         }
 
         /// <summary> Initializes a new instance of MessageTemplateItem. </summary>
@@ -35,7 +35,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <summary> The WhatsApp-specific template response contract. </summary>
         public BinaryData Content { get; }
 
-        internal WhatsAppMessageTemplateItem(MessageTemplateResponseInternal templateResponseInternal)
+        internal WhatsAppMessageTemplateItem(MessageTemplateResult templateResponseInternal)
             : base(templateResponseInternal)
         {
             Content = new BinaryData(templateResponseInternal.WhatsApp.Content);

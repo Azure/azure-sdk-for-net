@@ -11,11 +11,12 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     /// <summary> The template bindings for WhatsApp. </summary>
-    internal partial class WhatsAppMessageTemplateBindingsInternal
+    internal partial class WhatsAppMessageTemplateBindingsInternal : MessageTemplateBindingsInternal
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsInternal"/>. </summary>
         public WhatsAppMessageTemplateBindingsInternal()
         {
+            Kind = "whatsApp";
             Header = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
             Body = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
             Footer = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
@@ -23,11 +24,12 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsInternal"/>. </summary>
+        /// <param name="kind"> Discriminator. </param>
         /// <param name="header"> The header template bindings. </param>
         /// <param name="body"> The body template bindings. </param>
         /// <param name="footer"> The footer template bindings. </param>
         /// <param name="button"> The button template bindings. </param>
-        internal WhatsAppMessageTemplateBindingsInternal(IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> button)
+        internal WhatsAppMessageTemplateBindingsInternal(string kind, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> button) : base(kind)
         {
             Header = header;
             Body = body;

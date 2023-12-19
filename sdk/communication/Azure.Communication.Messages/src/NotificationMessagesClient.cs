@@ -119,8 +119,8 @@ namespace Azure.Communication.Messages
 
             try
             {
-                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal());
-                return await PostMessageAsync(request, cancellationToken).ConfigureAwait(false);
+                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template.ToMessageTemplateInternal());
+                return await SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -141,8 +141,8 @@ namespace Azure.Communication.Messages
 
             try
             {
-                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal());
-                return PostMessage(request, cancellationToken);
+                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template.ToMessageTemplateInternal());
+                return Send(request, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -157,7 +157,7 @@ namespace Azure.Communication.Messages
         /// <param name="mediaContentId">The Media Identifier contained in the User to Business message event.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<Stream>> DownloadMediaAsync(string mediaContentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<System.IO.Stream>> DownloadMediaAsync(string mediaContentId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaAsync)}");
             scope.Start();
@@ -182,7 +182,7 @@ namespace Azure.Communication.Messages
         /// <param name="mediaContentId">The Media Identifier contained in the User to Business message event.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<Stream> DownloadMedia(string mediaContentId, CancellationToken cancellationToken = default)
+        public virtual Response<System.IO.Stream> DownloadMedia(string mediaContentId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
             scope.Start();
@@ -201,14 +201,14 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary>
-        /// The <see cref="DownloadMediaToAsync(string, Stream, CancellationToken)"/> operation downloads the
+        /// The <see cref="DownloadMediaToAsync(string, System.IO.Stream, CancellationToken)"/> operation downloads the
         /// specified content asynchronously, and writes the content to <paramref name="destinationStream"/>.
         /// </summary>
         /// <param name="mediaContentId">The Media Identifier contained in the User to Business message event.</param>
-        /// <param name="destinationStream"> A <see cref="Stream"/> to write the downloaded content to. </param>
+        /// <param name="destinationStream"> A <see cref="System.IO.Stream"/> to write the downloaded content to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> DownloadMediaToAsync(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DownloadMediaToAsync(string mediaContentId, System.IO.Stream destinationStream, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMediaAsync)}");
             scope.Start();
@@ -226,14 +226,14 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary>
-        /// The <see cref="DownloadMediaTo(string, Stream, CancellationToken)"/> operation downloads the
+        /// The <see cref="DownloadMediaTo(string, System.IO.Stream, CancellationToken)"/> operation downloads the
         /// specified content, and writes the content to <paramref name="destinationStream"/>.
         /// </summary>
         /// <param name="mediaContentId">The Media Identifier contained in the User to Business message event.</param>
-        /// <param name="destinationStream"> A <see cref="Stream"/> to write the downloaded content to. </param>
+        /// <param name="destinationStream"> A <see cref="System.IO.Stream"/> to write the downloaded content to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response DownloadMediaTo(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
+        public virtual Response DownloadMediaTo(string mediaContentId, System.IO.Stream destinationStream, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(NotificationMessagesClient)}.{nameof(DownloadMedia)}");
             scope.Start();
@@ -264,7 +264,7 @@ namespace Azure.Communication.Messages
             scope.Start();
             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
-            using Stream destinationStream = File.Create(destinationPath);
+            using System.IO.Stream destinationStream = File.Create(destinationPath);
 
             try
             {
@@ -291,7 +291,7 @@ namespace Azure.Communication.Messages
             scope.Start();
             _ = mediaContentId ?? throw new ArgumentNullException(nameof(mediaContentId));
 
-            using Stream destinationStream = File.Create(destinationPath);
+            using System.IO.Stream destinationStream = File.Create(destinationPath);
 
             try
             {
@@ -304,32 +304,32 @@ namespace Azure.Communication.Messages
             }
         }
 
-        private async Task<Response> DownloadMediaToAsyncInternal(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
+        private async Task<Response> DownloadMediaToAsyncInternal(string mediaContentId, System.IO.Stream destinationStream, CancellationToken cancellationToken = default)
         {
             var binaryDataResponse = await GetMediaAsync(mediaContentId, cancellationToken).ConfigureAwait(false);
-            Response<Stream> initialResponse = Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
+            Response<System.IO.Stream> initialResponse = Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
 
             await CopyToAsync(initialResponse, destinationStream).ConfigureAwait(false);
 
             return initialResponse.GetRawResponse();
         }
 
-        private Response DownloadMediaToInternal(string mediaContentId, Stream destinationStream, CancellationToken cancellationToken = default)
+        private Response DownloadMediaToInternal(string mediaContentId, System.IO.Stream destinationStream, CancellationToken cancellationToken = default)
         {
             var binaryDataResponse = GetMedia(mediaContentId, cancellationToken);
-            Response<Stream> initialResponse = Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
+            Response<System.IO.Stream> initialResponse = Response.FromValue(binaryDataResponse.Value.ToStream(), binaryDataResponse.GetRawResponse());
 
             CopyTo(initialResponse, destinationStream, cancellationToken);
 
             return initialResponse.GetRawResponse();
         }
 
-        private static async Task CopyToAsync(Stream result, Stream destination)
+        private static async Task CopyToAsync(System.IO.Stream result, System.IO.Stream destination)
         {
             await result.CopyToAsync(destination).ConfigureAwait(false);
         }
 
-        private static void CopyTo(Stream result, Stream destination, CancellationToken cancellationToken)
+        private static void CopyTo(System.IO.Stream result, System.IO.Stream destination, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             result.CopyTo(destination);

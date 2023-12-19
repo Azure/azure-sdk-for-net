@@ -24,4 +24,8 @@
     <PackageReference Include="Azure.Communication.Common" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\InternalModels\" />
+  </ItemGroup>
+
 </Project>

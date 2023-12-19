@@ -10,16 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateValueMedia : IUtf8JsonSerializable
+    public partial class MessageTemplateImage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Url))
-            {
-                writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
-            }
+            writer.WritePropertyName("url"u8);
+            writer.WriteStringValue(Url.AbsoluteUri);
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
@@ -30,11 +27,15 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

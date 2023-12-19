@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     /// <summary> The template bindings component button for WhatsApp. </summary>
-    internal partial class WhatsAppMessageTemplateBindingsButton
+    public partial class WhatsAppMessageTemplateBindingsButton
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
         /// <param name="refValue">
