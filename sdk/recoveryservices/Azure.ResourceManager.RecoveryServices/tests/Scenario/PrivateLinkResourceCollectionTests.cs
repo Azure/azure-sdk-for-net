@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServices.Tests.Scenario
     public class PrivateLinkResourceCollectionTests : RecoveryServicesManagementTestBase
     {
         public PrivateLinkResourceCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
