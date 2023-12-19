@@ -5,9 +5,9 @@
 
 using System.Text.Json;
 
-namespace Azure.Core
+namespace System.ClientModel.Internal
 {
-    internal interface IUtf8JsonSerializable
+    internal interface IUtf8JsonWriteable
     {
         void Write(Utf8JsonWriter writer);
     }
