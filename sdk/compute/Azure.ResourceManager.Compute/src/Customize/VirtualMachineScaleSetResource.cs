@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<VirtualMachineScaleSetResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualMachineScaleSetResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 

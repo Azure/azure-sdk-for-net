@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
     public partial class SshPublicKeyResource
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<SshPublicKeyGenerateKeyPairResult>> GenerateKeyPairAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SshPublicKeyGenerateKeyPairResult>> GenerateKeyPairAsync(CancellationToken cancellationToken)
         {
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyResource.GenerateKeyPair");
             scope.Start();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<SshPublicKeyGenerateKeyPairResult> GenerateKeyPair(CancellationToken cancellationToken = default)
+        public virtual Response<SshPublicKeyGenerateKeyPairResult> GenerateKeyPair(CancellationToken cancellationToken)
         {
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyResource.GenerateKeyPair");
             scope.Start();
