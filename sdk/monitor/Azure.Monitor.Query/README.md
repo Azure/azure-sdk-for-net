@@ -101,6 +101,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
   - [Query metrics with options](#query-metrics-with-options)
+  - [Get metrics namespaces](#get-metrics-namespaces)
   - [Split a metric by dimension](#split-a-metric-by-dimension)
 - [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 
