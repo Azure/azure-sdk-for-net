@@ -24,7 +24,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             DatabaseName = "sample-db";
         }
 
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DataConnectionsListTest()
         {
             var results = client.GetDataConnectionsAsync();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DataConnectionsGetTest()
         {
             var result = await client.GetDataConnectionAsync(DataConnectionName);
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             Assert.IsNotNull(dataConnection.Content);
         }
 
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DataConnectionsValidateTest()
         {
             AzureDataExplorerDataConnectionProperties properties = new AzureDataExplorerDataConnectionProperties();
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             Assert.IsNull(response.Value.Error);
         }
 
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DataConnectionsCreateOrReplaceTest()
         {
             AzureDataExplorerDataConnectionProperties properties = new AzureDataExplorerDataConnectionProperties();

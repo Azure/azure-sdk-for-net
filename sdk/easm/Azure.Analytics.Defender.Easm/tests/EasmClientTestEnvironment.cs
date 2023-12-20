@@ -7,11 +7,10 @@ namespace Azure.Analytics.Defender.Easm.Tests
 {
     public class EasmClientTestEnvironment : TestEnvironment
     {
-        // public string Endpoint => GetRecordedVariable("ENDPOINT");
-        public string Endpoint = "https://eastus.easm.defender.microsoft.com";
+        public string Endpoint => GetRecordedVariable("ENDPOINT");
         // Add other client paramters here as above.
-        public string ResourceGroupName => GetRecordedVariable("RESOURCEGROUPNAME", options => options.IsSecret());
-        public string WorkspaceName => GetRecordedVariable("WORKSPACENAME", options => options.IsSecret());
+        public string ResourceGroupName => GetRecordedVariable("RESOURCEGROUPNAME");
+        public string WorkspaceName => GetRecordedVariable("WORKSPACENAME");
         public string Region => GetRecordedVariable("REGION");
 
         public string Hosts = "ns1.ku.edu,ns2.ku.edu";

@@ -26,7 +26,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             seedKind = "domain";
             seedName = "example.org";
         }
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryGroupsListTest()
         {
             var results = client.GetDiscoGroupsAsync();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
                 break;
             }
         }
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task ValidateDiscoveryGroupTest()
         {
             DiscoSource seed = new DiscoSource();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             ValidateResult result = await client.ValidateDiscoGroupAsync(request).ConfigureAwait(false);
             Assert.IsNull(result.Error);
         }
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryGroupsGetTest()
         {
             var result = await client.GetDiscoGroupAsync(knownGroupName);
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             Assert.IsNotNull(discoGroup.Seeds[0].Kind);
             Assert.IsNotNull(discoGroup.Seeds[0].Name);
         }
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryGroupsCreateOrReplaceTest()
         {
             DiscoSource seed = new DiscoSource();
@@ -85,13 +85,13 @@ namespace Azure.Analytics.Defender.Easm.Tests
             DiscoGroup discoGroup = response.Value;
             Assert.IsTrue(doSeedsMatch(seed, discoGroup.Seeds[0]));
         }
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DiscoGroupsRunTest()
         {
             Response response = await client.RunDiscoGroupAsync(knownGroupName).ConfigureAwait(false);
             Assert.AreEqual(204, response.Status);
         }
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DiscoRunListTest()
         {
             var response = client.GetRunsAsync(knownGroupName).ConfigureAwait(false);

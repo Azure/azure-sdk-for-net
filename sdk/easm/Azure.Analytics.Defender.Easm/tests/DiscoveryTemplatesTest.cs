@@ -20,7 +20,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
             TemplateId = "43488";
             PartialName = "sample";
         }
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryTemplatesListTest()
         {
             var response = client.GetDiscoTemplatesAsync(PartialName);
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
                 Assert.IsTrue(template.Name.ToLower().Contains(PartialName));
             }
         }
-        [Test]
+        [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryTemplatesGetTest()
         {
             var response =  await client.GetDiscoTemplateAsync(TemplateId);
