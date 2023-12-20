@@ -547,6 +547,22 @@ foreach (MetricTimeSeriesElement element in metric.TimeSeries)
 }
 ```
 
+#### Get metrics namespaces
+
+To programmatically retrieve metrics namespaces, use the following code:
+    
+```C# Snippet:GetMetricsNamespaces
+string resourceId =
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+var client = new MetricsQueryClient(new DefaultAzureCredential());
+AsyncPageable<MetricNamespace> metricNamespaces = client.GetMetricNamespacesAsync(resourceId);
+
+await foreach (var metricNamespace in metricNamespaces)
+{
+    Console.WriteLine($"Metric namespace = {metricNamespace.Name}");
+}
+```
+
 #### Split a metric by dimension
 
 The [MetricsQueryOptions.Filter](https://learn.microsoft.com/dotnet/api/azure.monitor.query.metricsqueryoptions.filter?view=azure-dotnet#azure-monitor-query-metricsqueryoptions-filter) property can be used for [splitting a metric](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-charts#metric-splitting) by a dimension when its filter value is set to an asterisk. Consider the following example for an App Service resource named *TestWebApp*. The code queries the resource's `Http2xx` metric and splits it by the `Instance` dimension.
