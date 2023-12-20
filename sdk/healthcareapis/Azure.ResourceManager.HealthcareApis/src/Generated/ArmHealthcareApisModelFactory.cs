@@ -140,15 +140,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="serviceUri"> The url of the Dicom Services. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        /// <param name="eventState"> DICOM Service event support status. </param>
+        /// <param name="keyEncryptionKeyUri"> The encryption settings of the DICOM service. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.DicomServiceData"/> instance for mocking. </returns>
-        public static DicomServiceData DicomServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = null, DicomServiceAuthenticationConfiguration authenticationConfiguration = null, DicomServiceCorsConfiguration corsConfiguration = null, Uri serviceUri = null, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, HealthcareApisPublicNetworkAccess? publicNetworkAccess = null, ManagedServiceIdentity identity = null, ETag? etag = null)
+        public static DicomServiceData DicomServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = null, DicomServiceAuthenticationConfiguration authenticationConfiguration = null, DicomServiceCorsConfiguration corsConfiguration = null, Uri serviceUri = null, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, HealthcareApisPublicNetworkAccess? publicNetworkAccess = null, FhirServiceEventState? eventState = null, Uri keyEncryptionKeyUri = null, ManagedServiceIdentity identity = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<HealthcareApisPrivateEndpointConnectionData>();
 
-            return new DicomServiceData(id, name, resourceType, systemData, tags, location, provisioningState, authenticationConfiguration, corsConfiguration, serviceUri, privateEndpointConnections?.ToList(), publicNetworkAccess, identity, etag);
+            return new DicomServiceData(id, name, resourceType, systemData, tags, location, provisioningState, authenticationConfiguration, corsConfiguration, serviceUri, privateEndpointConnections?.ToList(), publicNetworkAccess, eventState, keyEncryptionKeyUri != null ? new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri)) : null, identity, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DicomServiceAuthenticationConfiguration"/>. </summary>
@@ -208,7 +210,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="accessPolicies"> Fhir Service access policies. </param>
         /// <param name="acrConfiguration"> Fhir Service Azure container registry configuration. </param>
         /// <param name="authenticationConfiguration"> Fhir Service authentication configuration. </param>
         /// <param name="corsConfiguration"> Fhir Service Cors configuration. </param>
@@ -218,16 +219,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="eventState"> Fhir Service event support status. </param>
         /// <param name="resourceVersionPolicyConfiguration"> Determines tracking of history for resources. </param>
         /// <param name="importConfiguration"> Fhir Service import configuration. </param>
+        /// <param name="isUsCoreMissingDataEnabled"> Implementation Guides configuration. </param>
+        /// <param name="keyEncryptionKeyUri"> The encryption settings of the FHIR service. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.FhirServiceData"/> instance for mocking. </returns>
-        public static FhirServiceData FhirServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, FhirServiceKind? kind = null, HealthcareApisProvisioningState? provisioningState = null, IEnumerable<FhirServiceAccessPolicyEntry> accessPolicies = null, FhirServiceAcrConfiguration acrConfiguration = null, FhirServiceAuthenticationConfiguration authenticationConfiguration = null, FhirServiceCorsConfiguration corsConfiguration = null, string exportStorageAccountName = null, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, HealthcareApisPublicNetworkAccess? publicNetworkAccess = null, FhirServiceEventState? eventState = null, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = null, FhirServiceImportConfiguration importConfiguration = null, ManagedServiceIdentity identity = null, ETag? etag = null)
+        public static FhirServiceData FhirServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, FhirServiceKind? kind = null, HealthcareApisProvisioningState? provisioningState = null, FhirServiceAcrConfiguration acrConfiguration = null, FhirServiceAuthenticationConfiguration authenticationConfiguration = null, FhirServiceCorsConfiguration corsConfiguration = null, string exportStorageAccountName = null, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, HealthcareApisPublicNetworkAccess? publicNetworkAccess = null, FhirServiceEventState? eventState = null, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = null, FhirServiceImportConfiguration importConfiguration = null, bool? isUsCoreMissingDataEnabled = null, Uri keyEncryptionKeyUri = null, ManagedServiceIdentity identity = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
-            accessPolicies ??= new List<FhirServiceAccessPolicyEntry>();
             privateEndpointConnections ??= new List<HealthcareApisPrivateEndpointConnectionData>();
 
-            return new FhirServiceData(id, name, resourceType, systemData, tags, location, kind, provisioningState, accessPolicies?.ToList(), acrConfiguration, authenticationConfiguration, corsConfiguration, exportStorageAccountName != null ? new FhirServiceExportConfiguration(exportStorageAccountName) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, eventState, resourceVersionPolicyConfiguration, importConfiguration, identity, etag);
+            return new FhirServiceData(id, name, resourceType, systemData, tags, location, kind, provisioningState, acrConfiguration, authenticationConfiguration, corsConfiguration, exportStorageAccountName != null ? new FhirServiceExportConfiguration(exportStorageAccountName) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, eventState, resourceVersionPolicyConfiguration, importConfiguration, isUsCoreMissingDataEnabled != null ? new ImplementationGuidesConfiguration(isUsCoreMissingDataEnabled) : null, keyEncryptionKeyUri != null ? new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri)) : null, identity, etag);
         }
     }
 }
