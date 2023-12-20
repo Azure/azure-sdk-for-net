@@ -519,6 +519,44 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="TopicNetworkSecurityPerimeterConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopicNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="TopicNetworkSecurityPerimeterConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEventGridArmClient.GetTopicNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TopicNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public static TopicNetworkSecurityPerimeterConfigurationResource GetTopicNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventGridArmClient(client).GetTopicNetworkSecurityPerimeterConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainNetworkSecurityPerimeterConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainNetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DomainNetworkSecurityPerimeterConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableEventGridArmClient.GetDomainNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DomainNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public static DomainNetworkSecurityPerimeterConfigurationResource GetDomainNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventGridArmClient(client).GetDomainNetworkSecurityPerimeterConfigurationResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="EventGridNamespacePermissionBindingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="EventGridNamespacePermissionBindingResource.CreateResourceIdentifier" /> to create an <see cref="EventGridNamespacePermissionBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
