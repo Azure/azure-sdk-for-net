@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="ValidateDiscoGroupAsync(DiscoGroupData,CancellationToken)">
+      <example>
+This sample shows how to call ValidateDiscoGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+DiscoGroupData discoGroupData = new DiscoGroupData();
+Response<ValidateResult> response = await client.ValidateDiscoGroupAsync(discoGroupData);
+]]></code>
+This sample shows how to call ValidateDiscoGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+DiscoGroupData discoGroupData = new DiscoGroupData
+{
+    Name = "<name>",
+    Description = "<description>",
+    Tier = "<tier>",
+    FrequencyMilliseconds = 1234L,
+    Seeds = {new DiscoSource
+    {
+        Kind = DiscoSourceKind.As,
+        Name = "<name>",
+    }},
+    Names = { "<names>" },
+    Excludes = { default },
+    TemplateId = "<templateId>",
+};
+Response<ValidateResult> response = await client.ValidateDiscoGroupAsync(discoGroupData);
+]]></code></example>
+    </member>
+    <member name="ValidateDiscoGroup(DiscoGroupData,CancellationToken)">
+      <example>
+This sample shows how to call ValidateDiscoGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+DiscoGroupData discoGroupData = new DiscoGroupData();
+Response<ValidateResult> response = client.ValidateDiscoGroup(discoGroupData);
+]]></code>
+This sample shows how to call ValidateDiscoGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+DiscoGroupData discoGroupData = new DiscoGroupData
+{
+    Name = "<name>",
+    Description = "<description>",
+    Tier = "<tier>",
+    FrequencyMilliseconds = 1234L,
+    Seeds = {new DiscoSource
+    {
+        Kind = DiscoSourceKind.As,
+        Name = "<name>",
+    }},
+    Names = { "<names>" },
+    Excludes = { default },
+    TemplateId = "<templateId>",
+};
+Response<ValidateResult> response = client.ValidateDiscoGroup(discoGroupData);
+]]></code></example>
+    </member>
+    <member name="ValidateDiscoGroupAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ValidateDiscoGroupAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.ValidateDiscoGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call ValidateDiscoGroupAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "<name>",
+    description = "<description>",
+    tier = "<tier>",
+    frequencyMilliseconds = 1234L,
+    seeds = new object[]
+    {
+        new
+        {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    names = new object[]
+    {
+        "<names>"
+    },
+    excludes = new object[]
+    {
+        null
+    },
+    templateId = "<templateId>",
+});
+Response response = await client.ValidateDiscoGroupAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
+]]></code></example>
+    </member>
+    <member name="ValidateDiscoGroup(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ValidateDiscoGroup and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.ValidateDiscoGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call ValidateDiscoGroup with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "<name>",
+    description = "<description>",
+    tier = "<tier>",
+    frequencyMilliseconds = 1234L,
+    seeds = new object[]
+    {
+        new
+        {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    names = new object[]
+    {
+        "<names>"
+    },
+    excludes = new object[]
+    {
+        null
+    },
+    templateId = "<templateId>",
+});
+Response response = client.ValidateDiscoGroup(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDiscoGroupAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetDiscoGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<DiscoGroup> response = await client.GetDiscoGroupAsync("<groupName>");
+]]></code>
+This sample shows how to call GetDiscoGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<DiscoGroup> response = await client.GetDiscoGroupAsync("<groupName>");
+]]></code></example>
+    </member>
+    <member name="GetDiscoGroup(string,CancellationToken)">
+      <example>
+This sample shows how to call GetDiscoGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<DiscoGroup> response = client.GetDiscoGroup("<groupName>");
+]]></code>
+This sample shows how to call GetDiscoGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<DiscoGroup> response = client.GetDiscoGroup("<groupName>");
+]]></code></example>
+    </member>
+    <member name="GetDiscoGroupAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetDiscoGroupAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.GetDiscoGroupAsync("<groupName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call GetDiscoGroupAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.GetDiscoGroupAsync("<groupName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDiscoGroup(string,RequestContext)">
+      <example>
+This sample shows how to call GetDiscoGroup and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.GetDiscoGroup("<groupName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call GetDiscoGroup with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.GetDiscoGroup("<groupName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceDiscoGroupAsync(string,DiscoGroupData,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceDiscoGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+DiscoGroupData discoGroupData = new DiscoGroupData();
+Response<DiscoGroup> response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", discoGroupData);
+]]></code>
+This sample shows how to call CreateOrReplaceDiscoGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+DiscoGroupData discoGroupData = new DiscoGroupData
+{
+    Name = "<name>",
+    Description = "<description>",
+    Tier = "<tier>",
+    FrequencyMilliseconds = 1234L,
+    Seeds = {new DiscoSource
+    {
+        Kind = DiscoSourceKind.As,
+        Name = "<name>",
+    }},
+    Names = { "<names>" },
+    Excludes = { default },
+    TemplateId = "<templateId>",
+};
+Response<DiscoGroup> response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", discoGroupData);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceDiscoGroup(string,DiscoGroupData,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceDiscoGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+DiscoGroupData discoGroupData = new DiscoGroupData();
+Response<DiscoGroup> response = client.CreateOrReplaceDiscoGroup("<groupName>", discoGroupData);
+]]></code>
+This sample shows how to call CreateOrReplaceDiscoGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+DiscoGroupData discoGroupData = new DiscoGroupData
+{
+    Name = "<name>",
+    Description = "<description>",
+    Tier = "<tier>",
+    FrequencyMilliseconds = 1234L,
+    Seeds = {new DiscoSource
+    {
+        Kind = DiscoSourceKind.As,
+        Name = "<name>",
+    }},
+    Names = { "<names>" },
+    Excludes = { default },
+    TemplateId = "<templateId>",
+};
+Response<DiscoGroup> response = client.CreateOrReplaceDiscoGroup("<groupName>", discoGroupData);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceDiscoGroupAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceDiscoGroupAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceDiscoGroupAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "<name>",
+    description = "<description>",
+    tier = "<tier>",
+    frequencyMilliseconds = 1234L,
+    seeds = new object[]
+    {
+        new
+        {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    names = new object[]
+    {
+        "<names>"
+    },
+    excludes = new object[]
+    {
+        null
+    },
+    templateId = "<templateId>",
+});
+Response response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceDiscoGroup(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceDiscoGroup and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrReplaceDiscoGroup("<groupName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceDiscoGroup with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "<name>",
+    description = "<description>",
+    tier = "<tier>",
+    frequencyMilliseconds = 1234L,
+    seeds = new object[]
+    {
+        new
+        {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    names = new object[]
+    {
+        "<names>"
+    },
+    excludes = new object[]
+    {
+        null
+    },
+    templateId = "<templateId>",
+});
+Response response = client.CreateOrReplaceDiscoGroup("<groupName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code></example>
+    </member>
+    <member name="RunDiscoGroupAsync(string,RequestContext)">
+      <example>
+This sample shows how to call RunDiscoGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.RunDiscoGroupAsync("<groupName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call RunDiscoGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.RunDiscoGroupAsync("<groupName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RunDiscoGroup(string,RequestContext)">
+      <example>
+This sample shows how to call RunDiscoGroup.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.RunDiscoGroup("<groupName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call RunDiscoGroup with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.RunDiscoGroup("<groupName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetDiscoGroupsAsync(string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetDiscoGroupsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (DiscoGroup item in client.GetDiscoGroupsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetDiscoGroupsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (DiscoGroup item in client.GetDiscoGroupsAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetDiscoGroups(string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetDiscoGroups.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (DiscoGroup item in client.GetDiscoGroups())
+{
+}
+]]></code>
+This sample shows how to call GetDiscoGroups with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (DiscoGroup item in client.GetDiscoGroups(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetDiscoGroupsAsync(string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetDiscoGroupsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (BinaryData item in client.GetDiscoGroupsAsync(null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+This sample shows how to call GetDiscoGroupsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (BinaryData item in client.GetDiscoGroupsAsync("<filter>", 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("tier").ToString());
+    Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+    Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("names")[0].ToString());
+    Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+    Console.WriteLine(result.GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("templateId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetDiscoGroups(string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetDiscoGroups and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (BinaryData item in client.GetDiscoGroups(null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+This sample shows how to call GetDiscoGroups with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (BinaryData item in client.GetDiscoGroups("<filter>", 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("tier").ToString());
+    Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+    Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("names")[0].ToString());
+    Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+    Console.WriteLine(result.GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("templateId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetRunsAsync(string,string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetRunsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (DiscoRunResult item in client.GetRunsAsync("<groupName>"))
+{
+}
+]]></code>
+This sample shows how to call GetRunsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (DiscoRunResult item in client.GetRunsAsync("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetRuns(string,string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetRuns.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (DiscoRunResult item in client.GetRuns("<groupName>"))
+{
+}
+]]></code>
+This sample shows how to call GetRuns with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (DiscoRunResult item in client.GetRuns("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetRunsAsync(string,string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetRunsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (BinaryData item in client.GetRunsAsync("<groupName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetRunsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (BinaryData item in client.GetRunsAsync("<groupName>", "<filter>", 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("submittedDate").ToString());
+    Console.WriteLine(result.GetProperty("startedDate").ToString());
+    Console.WriteLine(result.GetProperty("completedDate").ToString());
+    Console.WriteLine(result.GetProperty("tier").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("totalAssetsFoundCount").ToString());
+    Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("names")[0].ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetRuns(string,string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetRuns and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (BinaryData item in client.GetRuns("<groupName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetRuns with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+DiscoveryGroups client = new EasmClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (BinaryData item in client.GetRuns("<groupName>", "<filter>", 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("submittedDate").ToString());
+    Console.WriteLine(result.GetProperty("startedDate").ToString());
+    Console.WriteLine(result.GetProperty("completedDate").ToString());
+    Console.WriteLine(result.GetProperty("tier").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("totalAssetsFoundCount").ToString());
+    Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("names")[0].ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

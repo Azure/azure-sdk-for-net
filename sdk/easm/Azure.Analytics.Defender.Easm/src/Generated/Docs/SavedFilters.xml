@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSavedFilterAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetSavedFilterAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<SavedFilter> response = await client.GetSavedFilterAsync("<filterName>");
+]]></code>
+This sample shows how to call GetSavedFilterAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<SavedFilter> response = await client.GetSavedFilterAsync("<filterName>");
+]]></code></example>
+    </member>
+    <member name="GetSavedFilter(string,CancellationToken)">
+      <example>
+This sample shows how to call GetSavedFilter.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<SavedFilter> response = client.GetSavedFilter("<filterName>");
+]]></code>
+This sample shows how to call GetSavedFilter with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<SavedFilter> response = client.GetSavedFilter("<filterName>");
+]]></code></example>
+    </member>
+    <member name="GetSavedFilterAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetSavedFilterAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.GetSavedFilterAsync("<filterName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call GetSavedFilterAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.GetSavedFilterAsync("<filterName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("filter").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSavedFilter(string,RequestContext)">
+      <example>
+This sample shows how to call GetSavedFilter and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.GetSavedFilter("<filterName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call GetSavedFilter with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.GetSavedFilter("<filterName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("filter").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceSavedFilterAsync(string,SavedFilterData,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceSavedFilterAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+SavedFilterData savedFilterData = new SavedFilterData("<filter>", "<description>");
+Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", savedFilterData);
+]]></code>
+This sample shows how to call CreateOrReplaceSavedFilterAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+SavedFilterData savedFilterData = new SavedFilterData("<filter>", "<description>");
+Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", savedFilterData);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceSavedFilter(string,SavedFilterData,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceSavedFilter.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+SavedFilterData savedFilterData = new SavedFilterData("<filter>", "<description>");
+Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", savedFilterData);
+]]></code>
+This sample shows how to call CreateOrReplaceSavedFilter with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+SavedFilterData savedFilterData = new SavedFilterData("<filter>", "<description>");
+Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", savedFilterData);
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceSavedFilterAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceSavedFilterAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    filter = "<filter>",
+    description = "<description>",
+});
+Response response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceSavedFilterAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    filter = "<filter>",
+    description = "<description>",
+});
+Response response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("filter").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceSavedFilter(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrReplaceSavedFilter and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    filter = "<filter>",
+    description = "<description>",
+});
+Response response = client.CreateOrReplaceSavedFilter("<filterName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call CreateOrReplaceSavedFilter with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    filter = "<filter>",
+    description = "<description>",
+});
+Response response = client.CreateOrReplaceSavedFilter("<filterName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("filter").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteSavedFilterAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteSavedFilterAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.DeleteSavedFilterAsync("<filterName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteSavedFilterAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.DeleteSavedFilterAsync("<filterName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteSavedFilter(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteSavedFilter.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.DeleteSavedFilter("<filterName>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteSavedFilter with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.DeleteSavedFilter("<filterName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetSavedFiltersAsync(string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetSavedFiltersAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (SavedFilter item in client.GetSavedFiltersAsync())
+{
+}
+]]></code>
+This sample shows how to call GetSavedFiltersAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (SavedFilter item in client.GetSavedFiltersAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetSavedFilters(string,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetSavedFilters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (SavedFilter item in client.GetSavedFilters())
+{
+}
+]]></code>
+This sample shows how to call GetSavedFilters with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (SavedFilter item in client.GetSavedFilters(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetSavedFiltersAsync(string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetSavedFiltersAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (BinaryData item in client.GetSavedFiltersAsync(null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+This sample shows how to call GetSavedFiltersAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (BinaryData item in client.GetSavedFiltersAsync("<filter>", 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("filter").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSavedFilters(string,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetSavedFilters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (BinaryData item in client.GetSavedFilters(null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("name").ToString());
+}
+]]></code>
+This sample shows how to call GetSavedFilters with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+SavedFilters client = new EasmClient(endpoint, credential).GetSavedFiltersClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (BinaryData item in client.GetSavedFilters("<filter>", 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("filter").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

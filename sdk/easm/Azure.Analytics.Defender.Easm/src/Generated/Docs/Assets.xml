@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="UpdateAssetsAsync(string,AssetUpdateData,CancellationToken)">
+      <example>
+This sample shows how to call UpdateAssetsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+AssetUpdateData assetUpdateData = new AssetUpdateData();
+Response<Task> response = await client.UpdateAssetsAsync("<filter>", assetUpdateData);
+]]></code>
+This sample shows how to call UpdateAssetsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+AssetUpdateData assetUpdateData = new AssetUpdateData
+{
+    State = AssetUpdateState.Candidate,
+    ExternalId = "<externalId>",
+    Labels =
+    {
+        ["key"] = true
+    },
+    Transfers = AssetUpdateTransfers.As,
+};
+Response<Task> response = await client.UpdateAssetsAsync("<filter>", assetUpdateData);
+]]></code></example>
+    </member>
+    <member name="UpdateAssets(string,AssetUpdateData,CancellationToken)">
+      <example>
+This sample shows how to call UpdateAssets.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+AssetUpdateData assetUpdateData = new AssetUpdateData();
+Response<Task> response = client.UpdateAssets("<filter>", assetUpdateData);
+]]></code>
+This sample shows how to call UpdateAssets with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+AssetUpdateData assetUpdateData = new AssetUpdateData
+{
+    State = AssetUpdateState.Candidate,
+    ExternalId = "<externalId>",
+    Labels =
+    {
+        ["key"] = true
+    },
+    Transfers = AssetUpdateTransfers.As,
+};
+Response<Task> response = client.UpdateAssets("<filter>", assetUpdateData);
+]]></code></example>
+    </member>
+    <member name="UpdateAssetsAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAssetsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.UpdateAssetsAsync("<filter>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpdateAssetsAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    state = "candidate",
+    externalId = "<externalId>",
+    labels = new
+    {
+        key = true,
+    },
+    transfers = "as",
+});
+Response response = await client.UpdateAssetsAsync("<filter>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAssets(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAssets and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.UpdateAssets("<filter>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call UpdateAssets with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    state = "candidate",
+    externalId = "<externalId>",
+    labels = new
+    {
+        key = true,
+    },
+    transfers = "as",
+});
+Response response = client.UpdateAssets("<filter>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetResourceAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetResourceAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<AssetResource> response = await client.GetAssetResourceAsync("<assetId>");
+]]></code>
+This sample shows how to call GetAssetResourceAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<AssetResource> response = await client.GetAssetResourceAsync("<assetId>");
+]]></code></example>
+    </member>
+    <member name="GetAssetResource(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetResource.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<AssetResource> response = client.GetAssetResource("<assetId>");
+]]></code>
+This sample shows how to call GetAssetResource with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response<AssetResource> response = client.GetAssetResource("<assetId>");
+]]></code></example>
+    </member>
+    <member name="GetAssetResourceAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetResourceAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.GetAssetResourceAsync("<assetId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetAssetResourceAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = await client.GetAssetResourceAsync("<assetId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("uuid").ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("externalId").ToString());
+Console.WriteLine(result.GetProperty("labels")[0].ToString());
+Console.WriteLine(result.GetProperty("wildcard").ToString());
+Console.WriteLine(result.GetProperty("discoGroupName").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetResource(string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetResource and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.GetAssetResource("<assetId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call GetAssetResource with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+Response response = client.GetAssetResource("<assetId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("uuid").ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("externalId").ToString());
+Console.WriteLine(result.GetProperty("labels")[0].ToString());
+Console.WriteLine(result.GetProperty("wildcard").ToString());
+Console.WriteLine(result.GetProperty("discoGroupName").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAssetResourcesAsync(string,string,int?,int?,string,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetResourcesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (AssetResource item in client.GetAssetResourcesAsync())
+{
+}
+]]></code>
+This sample shows how to call GetAssetResourcesAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (AssetResource item in client.GetAssetResourcesAsync(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234, mark: "<mark>"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetAssetResources(string,string,int?,int?,string,CancellationToken)">
+      <example>
+This sample shows how to call GetAssetResources.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (AssetResource item in client.GetAssetResources())
+{
+}
+]]></code>
+This sample shows how to call GetAssetResources with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (AssetResource item in client.GetAssetResources(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234, mark: "<mark>"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetAssetResourcesAsync(string,string,int?,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetResourcesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (BinaryData item in client.GetAssetResourcesAsync(null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code>
+This sample shows how to call GetAssetResourcesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+await foreach (BinaryData item in client.GetAssetResourcesAsync("<filter>", "<orderby>", 1234, 1234, "<mark>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("uuid").ToString());
+    Console.WriteLine(result.GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("updatedDate").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("externalId").ToString());
+    Console.WriteLine(result.GetProperty("labels")[0].ToString());
+    Console.WriteLine(result.GetProperty("wildcard").ToString());
+    Console.WriteLine(result.GetProperty("discoGroupName").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("reason").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetAssetResources(string,string,int?,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetAssetResources and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (BinaryData item in client.GetAssetResources(null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code>
+This sample shows how to call GetAssetResources with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Assets client = new EasmClient(endpoint, credential).GetAssetsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", apiVersion: "2023-03-01-preview");
+
+foreach (BinaryData item in client.GetAssetResources("<filter>", "<orderby>", 1234, 1234, "<mark>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("uuid").ToString());
+    Console.WriteLine(result.GetProperty("createdDate").ToString());
+    Console.WriteLine(result.GetProperty("updatedDate").ToString());
+    Console.WriteLine(result.GetProperty("state").ToString());
+    Console.WriteLine(result.GetProperty("externalId").ToString());
+    Console.WriteLine(result.GetProperty("labels")[0].ToString());
+    Console.WriteLine(result.GetProperty("wildcard").ToString());
+    Console.WriteLine(result.GetProperty("discoGroupName").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("auditTrail")[0].GetProperty("reason").ToString());
+    Console.WriteLine(result.GetProperty("reason").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>
