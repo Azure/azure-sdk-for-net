@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     /// <summary> The Message Template Response. </summary>
-    public partial class MessageTemplateResult
+    internal partial class MessageTemplateResponse
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateResponse"/>. </summary>
         /// <param name="name"> Get the template's Name. </param>
         /// <param name="language"> Get the template's language. </param>
         /// <param name="channelType"> The Communication Messages Channel. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
-        internal MessageTemplateResult(string name, string language, CommunicationMessagesChannel channelType, MessageTemplateStatus status)
+        internal MessageTemplateResponse(string name, string language, CommunicationMessagesChannel channelType, MessageTemplateStatus status)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(language, nameof(language));
@@ -30,13 +30,13 @@ namespace Azure.Communication.Messages
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateResponse"/>. </summary>
         /// <param name="name"> Get the template's Name. </param>
         /// <param name="language"> Get the template's language. </param>
         /// <param name="channelType"> The Communication Messages Channel. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="whatsApp"> The WhatsApp-specific template response contract. </param>
-        internal MessageTemplateResult(string name, string language, CommunicationMessagesChannel channelType, MessageTemplateStatus status, WhatsAppMessageTemplateResult whatsApp)
+        internal MessageTemplateResponse(string name, string language, CommunicationMessagesChannel channelType, MessageTemplateStatus status, WhatsAppMessageTemplateResponse whatsApp)
         {
             Name = name;
             Language = language;
@@ -54,6 +54,6 @@ namespace Azure.Communication.Messages
         /// <summary> The aggregated template status. </summary>
         public MessageTemplateStatus Status { get; }
         /// <summary> The WhatsApp-specific template response contract. </summary>
-        public WhatsAppMessageTemplateResult WhatsApp { get; }
+        public WhatsAppMessageTemplateResponse WhatsApp { get; }
     }
 }

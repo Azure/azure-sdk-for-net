@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class MessageTemplateResult
+    internal partial class MessageTemplateResponse
     {
-        internal static MessageTemplateResult DeserializeMessageTemplateResponse(JsonElement element)
+        internal static MessageTemplateResponse DeserializeMessageTemplateResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -23,7 +23,7 @@ namespace Azure.Communication.Messages
             string language = default;
             CommunicationMessagesChannel channelType = default;
             MessageTemplateStatus status = default;
-            Optional<WhatsAppMessageTemplateResult> whatsApp = default;
+            Optional<WhatsAppMessageTemplateResponse> whatsApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,16 +52,16 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    whatsApp = WhatsAppMessageTemplateResult.DeserializeWhatsAppMessageTemplateResponse(property.Value);
+                    whatsApp = WhatsAppMessageTemplateResponse.DeserializeWhatsAppMessageTemplateResponse(property.Value);
                     continue;
                 }
             }
-            return new MessageTemplateResult(name, language, channelType, status, whatsApp.Value);
+            return new MessageTemplateResponse(name, language, channelType, status, whatsApp.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MessageTemplateResult FromResponse(Response response)
+        internal static MessageTemplateResponse FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeMessageTemplateResponse(document.RootElement);

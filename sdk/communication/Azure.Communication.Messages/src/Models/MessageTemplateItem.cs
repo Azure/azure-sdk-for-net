@@ -16,7 +16,7 @@ namespace Azure.Communication.Messages
 
         internal static MessageTemplateItem DeserializeMessageTemplateResponse(JsonElement element)
         {
-            var messageTemplateResponse = MessageTemplateResult.DeserializeMessageTemplateResponse(element);
+            var messageTemplateResponse = MessageTemplateResponse.DeserializeMessageTemplateResponse(element);
             return messageTemplateResponse.ChannelType.ToString() switch
             {
                 "whatsApp" => new WhatsAppMessageTemplateItem(messageTemplateResponse),
@@ -46,7 +46,7 @@ namespace Azure.Communication.Messages
         /// <summary> The aggregated template status. </summary>
         public MessageTemplateStatus? Status { get; }
 
-        internal MessageTemplateItem(MessageTemplateResult templateResponseInternal)
+        internal MessageTemplateItem(MessageTemplateResponse templateResponseInternal)
         {
             Name = templateResponseInternal.Name;
             Language = templateResponseInternal.Language;
