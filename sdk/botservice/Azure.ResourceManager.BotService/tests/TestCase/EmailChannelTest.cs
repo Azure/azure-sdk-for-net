@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Tests
     public class EmailChannelTest : BotServiceManagementTestBase
     {
         public EmailChannelTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -29,9 +29,10 @@ namespace Azure.ResourceManager.BotService.Tests
             var channelName = Recording.GenerateAssetName("testemailchannel");
             var channelName2 = Recording.GenerateAssetName("testemailchannel");
             var channelName3 = Recording.GenerateAssetName("testemailchannel");
+            var msaAppId = Recording.Random.NewGuid().ToString();
             var resourceGroup = await CreateResourceGroupAsync();
             var botCollection = resourceGroup.GetBots();
-            var botInput = ResourceDataHelpers.GetBotData();
+            var botInput = ResourceDataHelpers.GetBotData(msaAppId);
             var botResource = (await botCollection.CreateOrUpdateAsync(WaitUntil.Completed, botName, botInput)).Value;
             var collection = botResource.GetBotChannels();
             var input = ResourceDataHelpers.GetEmailChannelData();

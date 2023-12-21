@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         }
 
         #region BotService
-        public static BotData GetBotData()
+        public static BotData GetBotData(string msaAppId)
         {
             var data = new BotData(new AzureLocation("global"))
             {
-                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), Guid.NewGuid().ToString())
+                Properties = new BotProperties("TestBot", new Uri("https://mybot.coffee"), msaAppId)
                 {
                     Description = "The description of the bot",
                 },
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         #endregion
 
         #region ConnectionSetting
-        public static BotConnectionSettingData GetBotConnectionSettingData()
+        public static BotConnectionSettingData GetBotConnectionSettingData(string providerId)
         {
             BotConnectionSettingData data = new BotConnectionSettingData(new AzureLocation("global"))
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
                 {
                     ClientId = "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
                     ClientSecret = "aCL8Q~tRxT~r3yyWr5~UUIpS47KbbgvQfMnekaKT",
-                    ServiceProviderId = "facebook",
+                    ServiceProviderId = providerId,
                     Parameters =
                     {
                         new BotConnectionSettingParameter()
                         {
-                        Key = "key1",
+                        Key = "key11",
                         Value = "value1",
                         },
                         new BotConnectionSettingParameter()
@@ -143,7 +143,12 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
                         }
                     }
                 },
-                ETag = new ETag("etag1")
+                ETag = new ETag("etag1"),
+                Tags =
+                {
+                    ["tag1"] = "value1",
+                    ["tag2"] = "value2",
+                }
             };
             return data;
         }

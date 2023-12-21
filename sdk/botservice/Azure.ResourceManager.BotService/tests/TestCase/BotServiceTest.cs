@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Tests
     public class BotServiceTest : BotServiceManagementTestBase
     {
         public BotServiceTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -27,9 +27,10 @@ namespace Azure.ResourceManager.BotService.Tests
             var botName = Recording.GenerateAssetName("testbotService");
             var botName2 = Recording.GenerateAssetName("testbotservice");
             var botName3 = Recording.GenerateAssetName("testbotService");
+            var msaAppId = Recording.Random.NewGuid().ToString();
             var resourceGroup = await CreateResourceGroupAsync();
             var collection = resourceGroup.GetBots();
-            var input = ResourceDataHelpers.GetBotData();
+            var input = ResourceDataHelpers.GetBotData(msaAppId);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, botName, input)).Value;
             Assert.AreEqual(botName, resource.Data.Name);
             //2.Get

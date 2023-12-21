@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Tests
     internal class BotDirectLneChannelTest : BotServiceManagementTestBase
     {
         public BotDirectLneChannelTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -29,9 +29,10 @@ namespace Azure.ResourceManager.BotService.Tests
             var channelName = Recording.GenerateAssetName("testchannel");
             var channelName2 = Recording.GenerateAssetName("testchannel");
             var channelName3 = Recording.GenerateAssetName("testchannel");
+            var msaAppId = Recording.Random.NewGuid().ToString();
             var resourceGroup = await CreateResourceGroupAsync();
             var botCollection = resourceGroup.GetBots();
-            var botInput = ResourceDataHelpers.GetBotData();
+            var botInput = ResourceDataHelpers.GetBotData(msaAppId);
             var botResource = (await botCollection.CreateOrUpdateAsync(WaitUntil.Completed, botName, botInput)).Value;
             var collection = botResource.GetBotChannels();
             var input = ResourceDataHelpers.GetDirectLineSpeechChannelData();

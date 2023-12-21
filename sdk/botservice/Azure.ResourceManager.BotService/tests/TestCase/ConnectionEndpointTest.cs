@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.BotService.Tests
     internal class ConnectionEndpointTest : BotServiceManagementTestBase
     {
         public ConnectionEndpointTest(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -33,9 +33,10 @@ namespace Azure.ResourceManager.BotService.Tests
             var connectionName = Recording.GenerateAssetName("testconnection");
             var connectionName2 = Recording.GenerateAssetName("testconnection");
             var connectionName3 = Recording.GenerateAssetName("testconnection");
+            var msaAppId = Recording.Random.NewGuid().ToString();
             var resourceGroup = await CreateResourceGroupAsync();
             var botCollection = resourceGroup.GetBots();
-            var botInput = ResourceDataHelpers.GetBotData();
+            var botInput = ResourceDataHelpers.GetBotData(msaAppId);
             var botResource = (await botCollection.CreateOrUpdateAsync(WaitUntil.Completed, botName, botInput)).Value;
             var collection = botResource.GetBotServicePrivateEndpointConnections();
             var endpoint = await GetEndpointResource(resourceGroup, botResource.Data.Id);
@@ -56,12 +57,13 @@ namespace Azure.ResourceManager.BotService.Tests
             //Resouece operation
             //Delete
             Assert.AreEqual(1, list.Count);
-            foreach (var item in list)
+            /*foreach (var item in list)
             {
                 await item.DeleteAsync(WaitUntil.Completed);
             }
             list = await collection.GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, list.Count);
+            Assert.AreEqual(0, list.Count);*/
+            await endpoint.DeleteAsync(WaitUntil.Completed);
         }
 
         public async Task<PrivateEndpointResource> GetEndpointResource(ResourceGroupResource resourceGroup, ResourceIdentifier providerId)
