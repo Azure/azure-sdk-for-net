@@ -119,7 +119,7 @@ namespace Azure.Communication.Messages
 
             try
             {
-                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template.ToMessageTemplateInternal());
+                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal());
                 return await SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -141,7 +141,7 @@ namespace Azure.Communication.Messages
 
             try
             {
-                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template.ToMessageTemplateInternal());
+                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal());
                 return Send(request, cancellationToken);
             }
             catch (Exception ex)

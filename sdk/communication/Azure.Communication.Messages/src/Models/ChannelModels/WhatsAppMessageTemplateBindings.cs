@@ -9,7 +9,7 @@ namespace Azure.Communication.Messages.Models.Channels
     public class WhatsAppMessageTemplateBindings : MessageTemplateBindings
     {
         /// <summary> Initializes a new instance of MessageTemplateWhatsAppBindings. </summary>
-        public WhatsAppMessageTemplateBindings()
+        public WhatsAppMessageTemplateBindings() : base ("whatsApp")
         {
         }
 
@@ -57,6 +57,8 @@ namespace Azure.Communication.Messages.Models.Channels
                     whatsApp.Button.Add(new WhatsAppMessageTemplateBindingsButton(item.Key) { SubType = item.Value });
                 }
             };
+
+            whatsApp.Kind = Kind;
 
             return whatsApp;
         }
