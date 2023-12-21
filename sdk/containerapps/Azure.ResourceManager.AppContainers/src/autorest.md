@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/ad997e99eccc15b7ab4cd66ae3f1f9534a1e2628/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/59a090f3e1335711aa419638f0197f59ff92eb9d/specification/app/resource-manager/readme.md
 # tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -230,6 +230,7 @@ rename-mapping:
   JobScale.pollingInterval: PollingIntervalInSeconds
   JobScaleRule: ContainerAppJobScaleRule
   JobConfigurationEventTriggerConfig: EventTriggerConfiguration
+  DaprSubscriptionBulkSubscribeOptions: DaprSubscriptionBulkSubscribeConfig
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -239,6 +240,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}: ContainerAppManagedEnvironmentDaprComponent
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}: ContainerAppManagedEnvironmentDetector
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi: ContainerAppManagedEnvironmentDetectorResourceProperty
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}: ContainerAppJob
 
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
