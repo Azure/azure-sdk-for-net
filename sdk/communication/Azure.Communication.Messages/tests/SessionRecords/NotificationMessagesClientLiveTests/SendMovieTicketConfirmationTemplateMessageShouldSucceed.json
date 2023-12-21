@@ -6,19 +6,19 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "679",
+        "Content-Length": "673",
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-dcf27dee37901e6a2c34bd3ec406b04e-bcf7b6259b105cd9-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231209.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "41da3768bd7ac9acff610d104eb16a20",
+        "traceparent": "00-c3a19349fb05b35be6ddc72ee777743e-fe97304577e38f94-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231220.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "0afd6b9b265f1a12cdde0a5ad74ff9a6",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Sat, 09 Dec 2023 08:08:13 GMT",
+        "x-ms-date": "Thu, 21 Dec 2023 07:56:38 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "channelRegistrationId": "59aced66-68ae-4b7a-8430-36f4c5dfa328",
+        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
         "to": [
           "\u002B16041234567"
         ],
@@ -26,80 +26,75 @@
         "template": {
           "name": "sample_movie_ticket_confirmation",
           "language": "en_us",
-          "values": {
-            "image": {
+          "values": [
+            {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg",
               "kind": "image",
-              "image": {
-                "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg"
-              }
+              "name": "image"
             },
-            "title": {
+            {
+              "text": "Avengers",
               "kind": "text",
-              "text": {
-                "text": "Avengers"
-              }
+              "name": "title"
             },
-            "time": {
+            {
+              "text": "July 1st, 2023 12:30PM",
               "kind": "text",
-              "text": {
-                "text": "July 1st, 2023 12:30PM"
-              }
+              "name": "time"
             },
-            "venue": {
+            {
+              "text": "Cineplex",
               "kind": "text",
-              "text": {
-                "text": "Cineplex"
-              }
+              "name": "venue"
             },
-            "seats": {
+            {
+              "text": "Seat 1A",
               "kind": "text",
-              "text": {
-                "text": "Seat 1A"
-              }
+              "name": "seats"
             }
-          },
+          ],
           "bindings": {
-            "whatsApp": {
-              "header": [
-                {
-                  "refValue": "image"
-                }
-              ],
-              "body": [
-                {
-                  "refValue": "title"
-                },
-                {
-                  "refValue": "time"
-                },
-                {
-                  "refValue": "venue"
-                },
-                {
-                  "refValue": "seats"
-                }
-              ]
-            }
+            "header": [
+              {
+                "refValue": "image"
+              }
+            ],
+            "body": [
+              {
+                "refValue": "title"
+              },
+              {
+                "refValue": "time"
+              },
+              {
+                "refValue": "venue"
+              },
+              {
+                "refValue": "seats"
+              }
+            ],
+            "kind": "whatsApp"
           }
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 09 Dec 2023 08:08:14 GMT",
-        "MS-CV": "om3aL84caE\u002BkbrQW4Wtx6Q.0",
+        "Date": "Thu, 21 Dec 2023 07:56:39 GMT",
+        "MS-CV": "T/w4aCIy7k\u002B438DJ1PYMtw.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0bSB0ZQAAAADwgcfEeegnR7oQdBp0nnZ7V1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "x-azure-ref": "20231221T075638Z-h103g5m3n54c31dcez93unauug00000001hg000000005nz8",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "324ms"
+        "X-Processing-Time": "474ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "54b96848-4a55-4a92-9a0e-d4fc1b70384a",
+            "messageId": "41d8ae5e-e837-48d1-ba2e-21344f18ca23",
             "to": "\u002B16041234567"
           }
         ]
@@ -107,9 +102,6 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1103954421",
-    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
-    "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
+    "RandomSeed": "853951978"
   }
 }

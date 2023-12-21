@@ -10,15 +10,15 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-c01c738e92719c9eb2cd270f99924237-7aa3e49cbec46e67-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231209.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "c65b0f311116a3e19a05a1047479d3ce",
+        "traceparent": "00-c57647b5a9fd67a5e884bc2d3488c172-8e3c90dab153bcaf-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231220.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "ea2dbeb50d45710a7155f286c3e3e340",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Sat, 09 Dec 2023 08:08:14 GMT",
+        "x-ms-date": "Thu, 21 Dec 2023 07:56:39 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "channelRegistrationId": "59aced66-68ae-4b7a-8430-36f4c5dfa328",
+        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
         "to": [
           "\u002B16041234567"
         ],
@@ -26,53 +26,51 @@
         "template": {
           "name": "sample_purchase_feedback",
           "language": "en_us",
-          "values": {
-            "image": {
+          "values": [
+            {
+              "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg",
               "kind": "image",
-              "image": {
-                "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg"
-              }
+              "name": "image"
             },
-            "product": {
+            {
+              "text": "Microsoft Office",
               "kind": "text",
-              "text": {
-                "text": "Microsoft Office"
-              }
+              "name": "product"
             }
-          },
+          ],
           "bindings": {
-            "whatsApp": {
-              "header": [
-                {
-                  "refValue": "image"
-                }
-              ],
-              "body": [
-                {
-                  "refValue": "product"
-                }
-              ]
-            }
+            "header": [
+              {
+                "refValue": "image"
+              }
+            ],
+            "body": [
+              {
+                "refValue": "product"
+              }
+            ],
+            "kind": "whatsApp"
           }
         }
       },
       "StatusCode": 202,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 09 Dec 2023 08:08:14 GMT",
-        "MS-CV": "yEi/rBruMEeg64bonKfulA.0",
+        "Date": "Thu, 21 Dec 2023 07:56:40 GMT",
+        "MS-CV": "fB6DxuWZx0KFmLh2BGy6OQ.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0biB0ZQAAAAAXG5Vh93VhQrb\u002BHeE8xrJ6V1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "x-azure-ref": "20231221T075639Z-h103g5m3n54c31dcez93unauug00000001hg000000005nze",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "326ms"
+        "X-Processing-Time": "604ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "4cb5e14e-aa65-4623-9266-201c67d36ff2",
+            "messageId": "c172318b-02ab-4ae6-8978-47589e0be66f",
             "to": "\u002B16041234567"
           }
         ]
@@ -80,9 +78,6 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1624157553",
-    "RECIPIENT_IDENTIFIER": "\u002B16041234567",
-    "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
+    "RandomSeed": "1935871814"
   }
 }
