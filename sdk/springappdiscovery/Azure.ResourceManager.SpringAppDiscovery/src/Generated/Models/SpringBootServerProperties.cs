@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Argument.AssertNotNull(server, nameof(server));
 
             Server = server;
-            FqdnAndIPAddressList = new ChangeTrackingList<string>();
+            FqdnAndIPAddressList = new ChangeTrackingList<IPAddress>();
             Errors = new ChangeTrackingList<SpringBootSiteError>();
         }
 
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The resource provisioning state.
         /// Serialized Name: SpringbootserversProperties.provisioningState
         /// </param>
-        internal SpringBootServerProperties(int? port, string server, IList<string> fqdnAndIPAddressList, string machineArmId, int? totalApps, int? springBootApps, IList<SpringBootSiteError> errors, SpringAppDiscoveryProvisioningState? provisioningState)
+        internal SpringBootServerProperties(int? port, string server, IList<IPAddress> fqdnAndIPAddressList, ResourceIdentifier machineArmId, int? totalApps, int? springBootApps, IList<SpringBootSiteError> errors, SpringAppDiscoveryProvisioningState? provisioningState)
         {
             Port = port;
             Server = server;
@@ -91,12 +92,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The alternative FQDN or IP addresses to discover for this server
         /// Serialized Name: SpringbootserversProperties.fqdnAndIpAddressList
         /// </summary>
-        public IList<string> FqdnAndIPAddressList { get; }
+        public IList<IPAddress> FqdnAndIPAddressList { get; }
         /// <summary>
         /// The machine Id from ARM
         /// Serialized Name: SpringbootserversProperties.machineArmId
         /// </summary>
-        public string MachineArmId { get; set; }
+        public ResourceIdentifier MachineArmId { get; set; }
         /// <summary>
         /// The total number of apps been discovered
         /// Serialized Name: SpringbootserversProperties.totalApps

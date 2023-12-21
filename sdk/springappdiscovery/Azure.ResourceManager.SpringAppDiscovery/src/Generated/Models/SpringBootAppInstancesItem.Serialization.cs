@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            string machineArmId = default;
+            ResourceIdentifier machineArmId = default;
             Optional<int> instanceCount = default;
             Optional<int> jvmMemoryInMB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("machineArmId"u8))
                 {
-                    machineArmId = property.Value.GetString();
+                    machineArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))

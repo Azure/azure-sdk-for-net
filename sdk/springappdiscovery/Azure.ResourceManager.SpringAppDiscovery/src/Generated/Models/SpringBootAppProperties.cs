@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Miscs = new ChangeTrackingList<SpringBootAppMiscsItem>();
             Instances = new ChangeTrackingList<SpringBootAppInstancesItem>();
             Servers = new ChangeTrackingList<string>();
-            MachineArmIds = new ChangeTrackingList<string>();
+            MachineArmIds = new ChangeTrackingList<ResourceIdentifier>();
             StaticContentLocations = new ChangeTrackingList<string>();
             ConnectionStrings = new ChangeTrackingList<string>();
             Errors = new ChangeTrackingList<SpringBootSiteError>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The list of errors.
         /// Serialized Name: SpringbootappsProperties.errors
         /// </param>
-        internal SpringBootAppProperties(string appName, string artifactName, int? appPort, string appType, IList<SpringBootAppApplicationConfigurationsItem> applicationConfigurations, IList<int> bindingPorts, string buildJdkVersion, IList<string> certificates, string checksum, IList<string> dependencies, IList<string> environments, int? instanceCount, string jarFileLocation, int? jvmMemoryInMB, IList<string> jvmOptions, IList<SpringBootAppMiscsItem> miscs, IList<SpringBootAppInstancesItem> instances, string runtimeJdkVersion, IList<string> servers, IList<string> machineArmIds, string siteName, string springBootVersion, IList<string> staticContentLocations, IList<string> connectionStrings, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastUpdatedOn, SpringAppDiscoveryProvisioningState? provisioningState, IList<SpringBootSiteError> errors)
+        internal SpringBootAppProperties(string appName, string artifactName, int? appPort, string appType, IList<SpringBootAppApplicationConfigurationsItem> applicationConfigurations, IList<int> bindingPorts, string buildJdkVersion, IList<string> certificates, string checksum, IList<string> dependencies, IList<string> environments, int? instanceCount, string jarFileLocation, int? jvmMemoryInMB, IList<string> jvmOptions, IList<SpringBootAppMiscsItem> miscs, IList<SpringBootAppInstancesItem> instances, string runtimeJdkVersion, IList<string> servers, IList<ResourceIdentifier> machineArmIds, string siteName, string springBootVersion, IList<string> staticContentLocations, IList<string> connectionStrings, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastUpdatedOn, SpringAppDiscoveryProvisioningState? provisioningState, IList<SpringBootSiteError> errors)
         {
             AppName = appName;
             ArtifactName = artifactName;
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The machine ARM id list the app belongs to.
         /// Serialized Name: SpringbootappsProperties.machineArmIds
         /// </summary>
-        public IList<string> MachineArmIds { get; }
+        public IList<ResourceIdentifier> MachineArmIds { get; }
         /// <summary>
         /// The site name.
         /// Serialized Name: SpringbootappsProperties.siteName

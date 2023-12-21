@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// Serialized Name: SpringbootappsPropertiesInstancesItem.machineArmId
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="machineArmId"/> is null. </exception>
-        public SpringBootAppInstancesItem(string machineArmId)
+        public SpringBootAppInstancesItem(ResourceIdentifier machineArmId)
         {
             Argument.AssertNotNull(machineArmId, nameof(machineArmId));
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The jvm heap memory allocated of this app instance
         /// Serialized Name: SpringbootappsPropertiesInstancesItem.jvmMemoryInMB
         /// </param>
-        internal SpringBootAppInstancesItem(string machineArmId, int? instanceCount, int? jvmMemoryInMB)
+        internal SpringBootAppInstancesItem(ResourceIdentifier machineArmId, int? instanceCount, int? jvmMemoryInMB)
         {
             MachineArmId = machineArmId;
             InstanceCount = instanceCount;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The machine ARM resource Id of this app instance
         /// Serialized Name: SpringbootappsPropertiesInstancesItem.machineArmId
         /// </summary>
-        public string MachineArmId { get; set; }
+        public ResourceIdentifier MachineArmId { get; set; }
         /// <summary>
         /// The instance count of this app instance
         /// Serialized Name: SpringbootappsPropertiesInstancesItem.instanceCount

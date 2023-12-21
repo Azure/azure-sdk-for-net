@@ -28,12 +28,13 @@ rename-mapping:
     SpringbootserversModel: SpringBootServer
     SpringbootserversPatch: SpringBootServerPatch
     SpringbootserversProperties: SpringBootServerProperties
-    SpringbootserversProperties.MachineArmId: -|arm-id
-    SpringbootserversProperties.FqdnAndIPAddressList: -|ip-address
+    SpringbootserversProperties.machineArmId: -|arm-id
+    SpringbootserversProperties.fqdnAndIpAddressList: -|ip-address
     SpringbootserversListResult: SpringBootServerList
     SpringbootappsModel: SpringBootApp
     SpringbootappsPatch: SpringBootAppPatch
     SpringbootappsProperties: SpringBootAppProperties
+    SpringbootappsProperties.machineArmIds: -|arm-id
     SpringbootappsListResult: SpringBootAppList
     ProvisioningState: SpringAppDiscoveryProvisioningState
     Error: SpringBootSiteError
@@ -46,7 +47,7 @@ rename-mapping:
     SpringbootappsPropertiesMiscsItem: SpringBootAppMiscsItem
     SpringbootappsPropertiesApplicationConfigurationsItem: SpringBootAppApplicationConfigurationsItem
     SpringbootappsPropertiesInstancesItem: SpringBootAppInstancesItem
-    SpringbootappsPropertiesInstancesItem.MachineArmId: -|arm-id
+    SpringbootappsPropertiesInstancesItem.machineArmId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'

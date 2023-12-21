@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
                     FqdnAndIPAddressList =
 {
 },
-                    MachineArmId = "fvfkiapbqsprnbzczdfmuryknrna",
+                    MachineArmId = new ResourceIdentifier("fvfkiapbqsprnbzczdfmuryknrna"),
                     TotalApps = 5,
                     SpringBootApps = 17,
                     Errors =

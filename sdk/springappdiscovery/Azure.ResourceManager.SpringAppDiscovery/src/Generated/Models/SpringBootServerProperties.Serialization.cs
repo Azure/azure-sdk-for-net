@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -29,7 +30,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in FqdnAndIPAddressList)
                 {
-                    writer.WriteStringValue(item);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -74,8 +80,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
             Optional<int> port = default;
             string server = default;
-            Optional<IList<string>> fqdnAndIPAddressList = default;
-            Optional<string> machineArmId = default;
+            Optional<IList<IPAddress>> fqdnAndIPAddressList = default;
+            Optional<ResourceIdentifier> machineArmId = default;
             Optional<int> totalApps = default;
             Optional<int> springBootApps = default;
             Optional<IList<SpringBootSiteError>> errors = default;
@@ -102,17 +108,28 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     fqdnAndIPAddressList = array;
                     continue;
                 }
                 if (property.NameEquals("machineArmId"u8))
                 {
-                    machineArmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    machineArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("totalApps"u8))

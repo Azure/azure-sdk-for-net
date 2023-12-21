@@ -13,22 +13,13 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SpringAppDiscovery.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
+namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
     [TestFixture]
     public class AppCRUDTests : SpringAppDiscoveryManagementTestBase
     {
         public AppCRUDTests() : base(true)
         {
-        }
-
-        [SetUp]
-        public async Task ClearAndInitialize()
-        {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                await CreateCommonClient();
-            }
         }
 
         /// <summary>
@@ -71,10 +62,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             var updateOperataion = await appModelResource.UpdateAsync(WaitUntil.Completed, appPatch);
             await  updateOperataion.WaitForCompletionAsync();
             Assert.IsTrue(updateOperataion.HasCompleted);
-            Assert.IsTrue(await containsTag(appsColletion, appName, myKeyValuePair));
+            Assert.IsTrue(await ContainsTag(appsColletion, appName, myKeyValuePair));
         }
 
-        private async Task<bool> containsTag(SpringBootAppCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair) {
+        private async Task<bool> ContainsTag(SpringBootAppCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair) {
             Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
             SpringBootAppResource appModelResource = appResponse.Value;
             Assert.IsNotNull(appModelResource);

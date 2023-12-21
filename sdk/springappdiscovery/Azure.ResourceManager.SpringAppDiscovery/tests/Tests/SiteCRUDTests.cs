@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SpringAppDiscovery.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
+namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
     [TestFixture]
     public class SiteCRUDTests : SpringAppDiscoveryManagementTestBase
@@ -29,15 +29,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
 
         public SiteCRUDTests() : base(true)
         {
-        }
-
-        [SetUp]
-        public async Task ClearAndInitialize()
-        {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                await CreateCommonClient();
-            }
         }
 
         /// <summary>

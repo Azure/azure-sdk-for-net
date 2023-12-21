@@ -163,6 +163,11 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MachineArmIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -250,7 +255,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Optional<IList<SpringBootAppInstancesItem>> instances = default;
             Optional<string> runtimeJdkVersion = default;
             Optional<IList<string>> servers = default;
-            Optional<IList<string>> machineArmIds = default;
+            Optional<IList<ResourceIdentifier>> machineArmIds = default;
             Optional<string> siteName = default;
             Optional<string> springBootVersion = default;
             Optional<IList<string>> staticContentLocations = default;
@@ -455,10 +460,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     machineArmIds = array;
                     continue;

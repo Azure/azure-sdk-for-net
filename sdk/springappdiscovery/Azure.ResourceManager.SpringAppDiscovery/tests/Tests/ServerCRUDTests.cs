@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SpringAppDiscovery.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
+namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
     [TestFixture]
     public class ServerCRUDTests : SpringAppDiscoveryManagementTestBase
@@ -25,15 +25,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
 
         public ServerCRUDTests() : base(true)
         {
-        }
-
-        [SetUp]
-        public async Task ClearAndInitialize()
-        {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                await CreateCommonClient();
-            }
         }
 
         /// <summary>
@@ -49,7 +40,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
             //get a server collection
             SpringBootServerCollection serverColletion = siteModelResource.GetSpringBootServers();
             SpringBootServerProperties properties = new SpringBootServerProperties(serverIp);
-            properties.MachineArmId=machineId;
+            ResourceIdentifier resourceIdentifier = new ResourceIdentifier(machineId);
+            properties.MachineArmId=resourceIdentifier;
             properties.Port=22;
             SpringBootServerData data = new SpringBootServerData();
             data.Properties = properties;
@@ -84,7 +76,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests.Tests
                  Tags = {["serverKey"] = "serverValue1",}
             };
 
-            properties.MachineArmId=machineId1;
+            ResourceIdentifier resourceIdentifier1 = new ResourceIdentifier(machineId1);
+            properties.MachineArmId=resourceIdentifier1;
             serverPatch.Properties= properties;
 
             //patch a server

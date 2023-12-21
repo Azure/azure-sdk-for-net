@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     }
     public partial class SpringBootAppInstancesItem
     {
-        public SpringBootAppInstancesItem(string machineArmId) { }
+        public SpringBootAppInstancesItem(Azure.Core.ResourceIdentifier machineArmId) { }
         public int? InstanceCount { get { throw null; } set { } }
         public int? JvmMemoryInMB { get { throw null; } set { } }
-        public string MachineArmId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier MachineArmId { get { throw null; } set { } }
     }
     public partial class SpringBootAppMiscsItem
     {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         public System.Collections.Generic.IList<string> JvmOptions { get { throw null; } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> MachineArmIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> MachineArmIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootAppMiscsItem> Miscs { get { throw null; } }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringAppDiscoveryProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string RuntimeJdkVersion { get { throw null; } set { } }
@@ -351,8 +351,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     {
         public SpringBootServerProperties(string server) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SpringAppDiscovery.Models.SpringBootSiteError> Errors { get { throw null; } }
-        public System.Collections.Generic.IList<string> FqdnAndIPAddressList { get { throw null; } }
-        public string MachineArmId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Net.IPAddress> FqdnAndIPAddressList { get { throw null; } }
+        public Azure.Core.ResourceIdentifier MachineArmId { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
         public Azure.ResourceManager.SpringAppDiscovery.Models.SpringAppDiscoveryProvisioningState? ProvisioningState { get { throw null; } set { } }
         public string Server { get { throw null; } set { } }
