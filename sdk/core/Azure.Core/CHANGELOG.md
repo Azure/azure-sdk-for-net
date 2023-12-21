@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fixed retry behavior so that delay milliseconds greater than `Int32.MaxValue` does not trigger an exception.
+- Fixed retry behavior to no longer double the initial delay for the first retry attempt.
+
 ### Other Changes
 
 ## 1.36.0 (2023-11-10)
