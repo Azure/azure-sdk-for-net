@@ -26,7 +26,6 @@ You can use Azure PowerShell to create the Event Hubs namespace with the followi
 New-AzEventHubNamespace -ResourceGroupName myResourceGroup -NamespaceName namespace_name -Location eastus
 ```
 
-
 ### Authenticate the client
 
 In order to interact with the Azure Schema Registry service, you'll need to create an instance of the [Schema Registry Client][schema_registry_client] class. To create this client, you'll need Azure resource credentials and the Event Hubs namespace hostname.
