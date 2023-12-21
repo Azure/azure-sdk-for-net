@@ -10,20 +10,20 @@ using System;
 namespace Azure.Communication.Messages
 {
     /// <summary> The WhatsApp-specific template response contract. </summary>
-    public partial class WhatsAppMessageTemplateResult
+    internal partial class WhatsAppMessageTemplateResponse
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateResult"/>. </summary>
-        internal WhatsAppMessageTemplateResult()
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateResponse"/>. </summary>
+        internal WhatsAppMessageTemplateResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateResponse"/>. </summary>
         /// <param name="content">
         /// WhatsApp platform's template content
         /// This is the payload returned from WhatsApp
         /// API.
         /// </param>
-        internal WhatsAppMessageTemplateResult(BinaryData content)
+        internal WhatsAppMessageTemplateResponse(BinaryData content)
         {
             Content = content;
         }

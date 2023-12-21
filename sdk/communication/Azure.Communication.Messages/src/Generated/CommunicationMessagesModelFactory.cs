@@ -42,29 +42,5 @@ namespace Azure.Communication.Messages
 
             return new MessageReceipt(messageId, to);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateResult"/>. </summary>
-        /// <param name="name"> Get the template's Name. </param>
-        /// <param name="language"> Get the template's language. </param>
-        /// <param name="channelType"> The Communication Messages Channel. </param>
-        /// <param name="status"> The aggregated template status. </param>
-        /// <param name="whatsApp"> The WhatsApp-specific template response contract. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateResult"/> instance for mocking. </returns>
-        public static MessageTemplateResult MessageTemplateResponse(string name = null, string language = null, CommunicationMessagesChannel channelType = default, MessageTemplateStatus status = default, WhatsAppMessageTemplateResult whatsApp = null)
-        {
-            return new MessageTemplateResult(name, language, channelType, status, whatsApp);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppMessageTemplateResult"/>. </summary>
-        /// <param name="content">
-        /// WhatsApp platform's template content
-        /// This is the payload returned from WhatsApp
-        /// API.
-        /// </param>
-        /// <returns> A new <see cref="Messages.WhatsAppMessageTemplateResult"/> instance for mocking. </returns>
-        public static WhatsAppMessageTemplateResult WhatsAppMessageTemplateResponse(BinaryData content = null)
-        {
-            return new WhatsAppMessageTemplateResult(content);
-        }
     }
 }

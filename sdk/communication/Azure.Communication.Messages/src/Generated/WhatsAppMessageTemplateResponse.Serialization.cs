@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class WhatsAppMessageTemplateResult
+    internal partial class WhatsAppMessageTemplateResponse
     {
-        internal static WhatsAppMessageTemplateResult DeserializeWhatsAppMessageTemplateResponse(JsonElement element)
+        internal static WhatsAppMessageTemplateResponse DeserializeWhatsAppMessageTemplateResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,12 +33,12 @@ namespace Azure.Communication.Messages
                     continue;
                 }
             }
-            return new WhatsAppMessageTemplateResult(content.Value);
+            return new WhatsAppMessageTemplateResponse(content.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static WhatsAppMessageTemplateResult FromResponse(Response response)
+        internal static WhatsAppMessageTemplateResponse FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeWhatsAppMessageTemplateResponse(document.RootElement);
