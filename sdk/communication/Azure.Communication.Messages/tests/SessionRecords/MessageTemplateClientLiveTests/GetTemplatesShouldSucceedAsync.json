@@ -1,117 +1,155 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://sanitized.communication.azure.com/messages/channels/59aced66-68ae-4b7a-8430-36f4c5dfa328/templates?api-version=2024-02-01",
+      "RequestUri": "https://sanitized.communication.azure.com/messages/channels/75da05b7-831f-45cf-923d-98e9a9f4c16a/templates?api-version=2024-02-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231209.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "5e1b95a03d3dc5c26111b0a47eb78e85",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231220.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "b2ce65eb1ff03adb2fc3d69736dfc4e8",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Sat, 09 Dec 2023 08:08:09 GMT",
+        "x-ms-date": "Thu, 21 Dec 2023 07:56:31 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
         "Content-Length": "9825",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 09 Dec 2023 08:08:10 GMT",
-        "MS-CV": "7ddOMAMTIE2uvexJk\u002BuZAw.0",
+        "Date": "Thu, 21 Dec 2023 07:56:32 GMT",
+        "MS-CV": "8Zr9iFoXLUqLYWbCsza14Q.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0aSB0ZQAAAAA7dgJBA1WeQIG0997qPgbpV1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "x-azure-ref": "20231221T075632Z-h103g5m3n54c31dcez93unauug00000001hg000000005nxr",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1359ms"
+        "X-Processing-Time": "195ms"
       },
       "ResponseBody": {
         "value": [
           {
-            "name": "sample_happy_hour_announcement",
-            "language": "en_US",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "HEADER",
-                  "format": "VIDEO"
-                },
-                {
-                  "type": "BODY",
-                  "text": "Happy hour is here! \uD83C\uDF7A\uD83D\uDE00\uD83C\uDF78\nPlease be merry and enjoy the day. \uD83C\uDF89\nVenue: {{1}}\nTime: {{2}}"
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "This message is from an unverified business."
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_happy_hour_announcement",
-            "language": "id",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "HEADER",
-                  "format": "VIDEO"
-                },
-                {
-                  "type": "BODY",
-                  "text": "Jam diskon telah tiba! \uD83C\uDF7A\uD83D\uDE00\uD83C\uDF78\nBergembiralah dan nikmati hari Anda. \uD83C\uDF89\nTempat: {{1}}\nWaktu: {{2}}"
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "Pesan ini berasal dari bisnis yang tidak terverifikasi."
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_happy_hour_announcement",
-            "language": "es",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "HEADER",
-                  "format": "VIDEO"
-                },
-                {
-                  "type": "BODY",
-                  "text": "\u00A1Lleg\u00F3 el happy hour! \uD83C\uDF7A\uD83D\uDE00\uD83C\uDF78\nA divertirse y disfrutar. \uD83C\uDF89\nLugar: {{1}}\nHora: {{2}}"
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "Este mensaje proviene de un negocio no verificado."
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_happy_hour_announcement",
+            "name": "sample_issue_resolution",
             "language": "pt_BR",
             "channelType": "whatsApp",
             "status": "approved",
             "whatsApp": {
               "content": [
                 {
-                  "type": "HEADER",
-                  "format": "VIDEO"
-                },
-                {
                   "type": "BODY",
-                  "text": "O happy hour chegou! \uD83C\uDF7A\uD83D\uDE00\uD83C\uDF78\nSeja feliz e aproveite o dia. \uD83C\uDF89\nLocal: {{1}}\nHor\u00E1rio: {{2}}"
+                  "text": "Oi, {{1}}. N\u00F3s conseguimos resolver o problema que voc\u00EA estava enfrentando?"
                 },
                 {
                   "type": "FOOTER",
                   "text": "Esta mensagem \u00E9 de uma empresa n\u00E3o verificada."
+                },
+                {
+                  "type": "BUTTONS",
+                  "buttons": [
+                    {
+                      "type": "QUICK_REPLY",
+                      "text": "Sim"
+                    },
+                    {
+                      "type": "QUICK_REPLY",
+                      "text": "N\u00E3o"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_issue_resolution",
+            "language": "en_US",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "BODY",
+                  "text": "Hi {{1}}, were we able to solve the issue that you were facing?"
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "This message is from an unverified business."
+                },
+                {
+                  "type": "BUTTONS",
+                  "buttons": [
+                    {
+                      "type": "QUICK_REPLY",
+                      "text": "Yes"
+                    },
+                    {
+                      "type": "QUICK_REPLY",
+                      "text": "No"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_issue_resolution",
+            "language": "es",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "BODY",
+                  "text": "Hola, {{1}}. \u00BFPudiste solucionar el problema que ten\u00EDas?"
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "Este mensaje proviene de un negocio no verificado."
+                },
+                {
+                  "type": "BUTTONS",
+                  "buttons": [
+                    {
+                      "type": "QUICK_REPLY",
+                      "text": "S\u00ED"
+                    },
+                    {
+                      "type": "QUICK_REPLY",
+                      "text": "No"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_issue_resolution",
+            "language": "id",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "BODY",
+                  "text": "Halo {{1}}, apakah kami bisa mengatasi masalah yang sedang Anda hadapi?"
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "Pesan ini berasal dari bisnis yang tidak terverifikasi."
+                },
+                {
+                  "type": "BUTTONS",
+                  "buttons": [
+                    {
+                      "type": "QUICK_REPLY",
+                      "text": "Ya"
+                    },
+                    {
+                      "type": "QUICK_REPLY",
+                      "text": "Tidak"
+                    }
+                  ]
                 }
               ]
             }
@@ -141,38 +179,6 @@
                     {
                       "type": "URL",
                       "text": "Responder \u00E0 pesquisa",
-                      "url": "https://www.example.com/"
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_purchase_feedback",
-            "language": "id",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "HEADER",
-                  "format": "IMAGE"
-                },
-                {
-                  "type": "BODY",
-                  "text": "Terima kasih sudah membeli {{1}}! Kami menghargai masukan Anda dan ingin mempelajari lebih lanjut terkait pengalaman Anda."
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "Pesan ini berasal dari bisnis yang tidak terverifikasi."
-                },
-                {
-                  "type": "BUTTONS",
-                  "buttons": [
-                    {
-                      "type": "URL",
-                      "text": "Ikuti survei",
                       "url": "https://www.example.com/"
                     }
                   ]
@@ -245,46 +251,19 @@
             }
           },
           {
-            "name": "sample_issue_resolution",
-            "language": "es",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "BODY",
-                  "text": "Hola, {{1}}. \u00BFPudiste solucionar el problema que ten\u00EDas?"
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "Este mensaje proviene de un negocio no verificado."
-                },
-                {
-                  "type": "BUTTONS",
-                  "buttons": [
-                    {
-                      "type": "QUICK_REPLY",
-                      "text": "S\u00ED"
-                    },
-                    {
-                      "type": "QUICK_REPLY",
-                      "text": "No"
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_issue_resolution",
+            "name": "sample_purchase_feedback",
             "language": "id",
             "channelType": "whatsApp",
             "status": "approved",
             "whatsApp": {
               "content": [
                 {
+                  "type": "HEADER",
+                  "format": "IMAGE"
+                },
+                {
                   "type": "BODY",
-                  "text": "Halo {{1}}, apakah kami bisa mengatasi masalah yang sedang Anda hadapi?"
+                  "text": "Terima kasih sudah membeli {{1}}! Kami menghargai masukan Anda dan ingin mempelajari lebih lanjut terkait pengalaman Anda."
                 },
                 {
                   "type": "FOOTER",
@@ -294,74 +273,9 @@
                   "type": "BUTTONS",
                   "buttons": [
                     {
-                      "type": "QUICK_REPLY",
-                      "text": "Ya"
-                    },
-                    {
-                      "type": "QUICK_REPLY",
-                      "text": "Tidak"
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_issue_resolution",
-            "language": "pt_BR",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "BODY",
-                  "text": "Oi, {{1}}. N\u00F3s conseguimos resolver o problema que voc\u00EA estava enfrentando?"
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "Esta mensagem \u00E9 de uma empresa n\u00E3o verificada."
-                },
-                {
-                  "type": "BUTTONS",
-                  "buttons": [
-                    {
-                      "type": "QUICK_REPLY",
-                      "text": "Sim"
-                    },
-                    {
-                      "type": "QUICK_REPLY",
-                      "text": "N\u00E3o"
-                    }
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_issue_resolution",
-            "language": "en_US",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "BODY",
-                  "text": "Hi {{1}}, were we able to solve the issue that you were facing?"
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "This message is from an unverified business."
-                },
-                {
-                  "type": "BUTTONS",
-                  "buttons": [
-                    {
-                      "type": "QUICK_REPLY",
-                      "text": "Yes"
-                    },
-                    {
-                      "type": "QUICK_REPLY",
-                      "text": "No"
+                      "type": "URL",
+                      "text": "Ikuti survei",
+                      "url": "https://www.example.com/"
                     }
                   ]
                 }
@@ -383,25 +297,89 @@
             }
           },
           {
-            "name": "appointment_reminder",
+            "name": "sample_happy_hour_announcement",
             "language": "en_US",
             "channelType": "whatsApp",
             "status": "approved",
             "whatsApp": {
               "content": [
                 {
+                  "type": "HEADER",
+                  "format": "VIDEO"
+                },
+                {
                   "type": "BODY",
-                  "text": "Dear {{1}} {{2}}, your next appointment with {{3}} is scheduled for {{4}}. Reply YES to confirm.",
-                  "example": {
-                    "body_text": [
-                      [
-                        "Eugenia",
-                        "Lopez",
-                        "Lamna Healthcare",
-                        "September 25, 2022 at 9:00 AM"
-                      ]
-                    ]
-                  }
+                  "text": "Happy hour is here! \uD83C\uDF7A\uD83D\uDE00\uD83C\uDF78\nPlease be merry and enjoy the day. \uD83C\uDF89\nVenue: {{1}}\nTime: {{2}}"
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "This message is from an unverified business."
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_happy_hour_announcement",
+            "language": "es",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "HEADER",
+                  "format": "VIDEO"
+                },
+                {
+                  "type": "BODY",
+                  "text": "\u00A1Lleg\u00F3 el happy hour! \uD83C\uDF7A\uD83D\uDE00\uD83C\uDF78\nA divertirse y disfrutar. \uD83C\uDF89\nLugar: {{1}}\nHora: {{2}}"
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "Este mensaje proviene de un negocio no verificado."
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_happy_hour_announcement",
+            "language": "id",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "HEADER",
+                  "format": "VIDEO"
+                },
+                {
+                  "type": "BODY",
+                  "text": "Jam diskon telah tiba! \uD83C\uDF7A\uD83D\uDE00\uD83C\uDF78\nBergembiralah dan nikmati hari Anda. \uD83C\uDF89\nTempat: {{1}}\nWaktu: {{2}}"
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "Pesan ini berasal dari bisnis yang tidak terverifikasi."
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_happy_hour_announcement",
+            "language": "pt_BR",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "HEADER",
+                  "format": "VIDEO"
+                },
+                {
+                  "type": "BODY",
+                  "text": "O happy hour chegou! \uD83C\uDF7A\uD83D\uDE00\uD83C\uDF78\nSeja feliz e aproveite o dia. \uD83C\uDF89\nLocal: {{1}}\nHor\u00E1rio: {{2}}"
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "Esta mensagem \u00E9 de uma empresa n\u00E3o verificada."
                 }
               ]
             }
@@ -431,89 +409,25 @@
             }
           },
           {
-            "name": "sample_flight_confirmation",
+            "name": "appointment_reminder",
             "language": "en_US",
             "channelType": "whatsApp",
             "status": "approved",
             "whatsApp": {
               "content": [
                 {
-                  "type": "HEADER",
-                  "format": "DOCUMENT"
-                },
-                {
                   "type": "BODY",
-                  "text": "This is your flight confirmation for {{1}}-{{2}} on {{3}}."
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "This message is from an unverified business."
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_flight_confirmation",
-            "language": "pt_BR",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "HEADER",
-                  "format": "DOCUMENT"
-                },
-                {
-                  "type": "BODY",
-                  "text": "Esta \u00E9 a sua confirma\u00E7\u00E3o de voo para {{1}}-{{2}} em {{3}}."
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "Esta mensagem \u00E9 de uma empresa n\u00E3o verificada."
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_flight_confirmation",
-            "language": "es",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "HEADER",
-                  "format": "DOCUMENT"
-                },
-                {
-                  "type": "BODY",
-                  "text": "Confirmamos tu vuelo a {{1}}-{{2}} para el {{3}}."
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "Este mensaje proviene de un negocio no verificado."
-                }
-              ]
-            }
-          },
-          {
-            "name": "sample_flight_confirmation",
-            "language": "id",
-            "channelType": "whatsApp",
-            "status": "approved",
-            "whatsApp": {
-              "content": [
-                {
-                  "type": "HEADER",
-                  "format": "DOCUMENT"
-                },
-                {
-                  "type": "BODY",
-                  "text": "Ini merupakan konfirmasi penerbangan Anda untuk {{1}}-{{2}} di {{3}}."
-                },
-                {
-                  "type": "FOOTER",
-                  "text": "Pesan ini berasal dari bisnis yang tidak terverifikasi."
+                  "text": "Dear {{1}} {{2}}, your next appointment with {{3}} is scheduled for {{4}}. Reply YES to confirm.",
+                  "example": {
+                    "body_text": [
+                      [
+                        "Eugenia",
+                        "Lopez",
+                        "Lamna Healthcare",
+                        "September 25, 2022 at 9:00 AM"
+                      ]
+                    ]
+                  }
                 }
               ]
             }
@@ -607,19 +521,89 @@
             }
           },
           {
-            "name": "sample_shipping_confirmation",
+            "name": "sample_flight_confirmation",
+            "language": "es",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "HEADER",
+                  "format": "DOCUMENT"
+                },
+                {
+                  "type": "BODY",
+                  "text": "Confirmamos tu vuelo a {{1}}-{{2}} para el {{3}}."
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "Este mensaje proviene de un negocio no verificado."
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_flight_confirmation",
             "language": "en_US",
             "channelType": "whatsApp",
             "status": "approved",
             "whatsApp": {
               "content": [
                 {
+                  "type": "HEADER",
+                  "format": "DOCUMENT"
+                },
+                {
                   "type": "BODY",
-                  "text": "Your package has been shipped. It will be delivered in {{1}} business days."
+                  "text": "This is your flight confirmation for {{1}}-{{2}} on {{3}}."
                 },
                 {
                   "type": "FOOTER",
                   "text": "This message is from an unverified business."
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_flight_confirmation",
+            "language": "pt_BR",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "HEADER",
+                  "format": "DOCUMENT"
+                },
+                {
+                  "type": "BODY",
+                  "text": "Esta \u00E9 a sua confirma\u00E7\u00E3o de voo para {{1}}-{{2}} em {{3}}."
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "Esta mensagem \u00E9 de uma empresa n\u00E3o verificada."
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_flight_confirmation",
+            "language": "id",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "HEADER",
+                  "format": "DOCUMENT"
+                },
+                {
+                  "type": "BODY",
+                  "text": "Ini merupakan konfirmasi penerbangan Anda untuk {{1}}-{{2}} di {{3}}."
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "Pesan ini berasal dari bisnis yang tidak terverifikasi."
                 }
               ]
             }
@@ -638,6 +622,24 @@
                 {
                   "type": "FOOTER",
                   "text": "Esta mensagem \u00E9 de uma empresa n\u00E3o verificada."
+                }
+              ]
+            }
+          },
+          {
+            "name": "sample_shipping_confirmation",
+            "language": "en_US",
+            "channelType": "whatsApp",
+            "status": "approved",
+            "whatsApp": {
+              "content": [
+                {
+                  "type": "BODY",
+                  "text": "Your package has been shipped. It will be delivered in {{1}} business days."
+                },
+                {
+                  "type": "FOOTER",
+                  "text": "This message is from an unverified business."
                 }
               ]
             }
@@ -679,34 +681,36 @@
             }
           }
         ],
-        "nextLink": "/messages/channels/59aced66-68ae-4b7a-8430-36f4c5dfa328/templates?api-version=2024-02-01\u0026continuationToken=MjQZD"
+        "nextLink": "/messages/channels/75da05b7-831f-45cf-923d-98e9a9f4c16a/templates?api-version=2024-02-01\u0026continuationToken=MjQZD"
       }
     },
     {
-      "RequestUri": "https://sanitized.communication.azure.com/messages/channels/59aced66-68ae-4b7a-8430-36f4c5dfa328/templates?api-version=2024-02-01\u0026continuationToken=MjQZD",
+      "RequestUri": "https://sanitized.communication.azure.com/messages/channels/75da05b7-831f-45cf-923d-98e9a9f4c16a/templates?api-version=2024-02-01\u0026continuationToken=MjQZD",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231209.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "857a0fae13672bdaf61c0b620505bc28",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20231220.1 (.NET 7.0.14; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "aec2ad80a04c94cee17aca9587181224",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Sat, 09 Dec 2023 08:08:11 GMT",
+        "x-ms-date": "Thu, 21 Dec 2023 07:56:31 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
         "Content-Length": "12",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 09 Dec 2023 08:08:10 GMT",
-        "MS-CV": "3y0GhD2bUEup5ff3mmNfgA.0",
+        "Date": "Thu, 21 Dec 2023 07:56:32 GMT",
+        "MS-CV": "j9nVtBpI\u002BUus/0IQ1ykigA.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0ayB0ZQAAAACdNxLw5GIESLTBg0S3A5akV1NURURHRTA4MDgAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "x-azure-ref": "20231221T075632Z-h103g5m3n54c31dcez93unauug00000001hg000000005nxv",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "134ms"
+        "X-Processing-Time": "144ms"
       },
       "ResponseBody": {
         "value": []
@@ -714,8 +718,6 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "878879436",
-    "SENDER_CHANNEL_REGISTRATION_ID": "59aced66-68ae-4b7a-8430-36f4c5dfa328"
+    "RandomSeed": "1435588166"
   }
 }
