@@ -8,8 +8,8 @@
 
 ### Bugs Fixed
 
-- Fixed retry behavior so that delay milliseconds greater than `Int32.MaxValue` does not trigger an exception.
-- Fixed retry behavior to no longer double the initial delay for the first retry attempt.
+- Fixed exponential retry behavior so that delay milliseconds greater than `Int32.MaxValue` do not trigger an exception.
+- Fixed exponential retry behavior to no longer shift the delay to be used over by one attempt. Previously, the first delay would be what should have been used for the second, and the second was what should have been used for the third, etc.
 
 ### Other Changes
 
