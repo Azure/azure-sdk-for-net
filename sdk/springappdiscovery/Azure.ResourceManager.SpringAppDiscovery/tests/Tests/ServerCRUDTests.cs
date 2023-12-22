@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
+    [TestFixture]
     public class ServerCRUDTests : SpringAppDiscoveryManagementTestBase
     {
         public const string serverIp = "10.150.221.94";
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
         public const string machineId1 = "test-swagger-marchine-id1";
 
-        public ServerCRUDTests(bool isAsync) : base(isAsync)
+        public ServerCRUDTests() : base(true)
         {
         }
 
@@ -31,7 +32,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
-        [RecordedTest]
         public async Task TestServersCRUDAsyncOperations()
         {
             //get a site
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             SpringBootServerCollection serverColletion = siteModelResource.GetSpringBootServers();
             SpringBootServerProperties properties = new SpringBootServerProperties(serverIp);
             ResourceIdentifier resourceIdentifier = new ResourceIdentifier(machineId);
-            properties.MachineArmId=resourceIdentifier;
-            properties.Port=22;
+            properties.MachineArmId = resourceIdentifier;
+            properties.Port = 22;
             SpringBootServerData data = new SpringBootServerData();
             data.Properties = properties;
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             Assert.IsTrue(createServerOperation.HasCompleted);
             Assert.IsTrue(createServerOperation.HasValue);
 
-             //judge a server exist or not
+            //judge a server exist or not
             Assert.IsTrue(await serverColletion.ExistsAsync(serverName));
 
             //get a server
@@ -62,7 +62,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             //get all servers
             AsyncPageable<SpringBootServerResource> getServersResponse = serverColletion.GetAllAsync(CancellationToken.None);
             int serverCount = 0;
-            await foreach (var item in getServersResponse) {
+            await foreach (var item in getServersResponse)
+            {
                 serverCount++;
             }
             Assert.True(serverCount > 0);
@@ -72,13 +73,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             SpringBootServerResource serverModelResource = getServerResponse.Value;
             Assert.IsNotNull(serverModelResource);
 
-            SpringBootServerPatch serverPatch = new SpringBootServerPatch(){
-                 Tags = {["serverKey"] = "serverValue1",}
+            SpringBootServerPatch serverPatch = new SpringBootServerPatch()
+            {
+                Tags = { ["serverKey"] = "serverValue1", }
             };
 
             ResourceIdentifier resourceIdentifier1 = new ResourceIdentifier(machineId1);
-            properties.MachineArmId=resourceIdentifier1;
-            serverPatch.Properties= properties;
+            properties.MachineArmId = resourceIdentifier1;
+            serverPatch.Properties = properties;
 
             //patch a server
             var updateOperataion = await serverModelResource.UpdateAsync(WaitUntil.Completed, serverPatch);

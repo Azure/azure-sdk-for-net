@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
+    [TestFixture]
     public class SiteCRUDTests : SpringAppDiscoveryManagementTestBase
     {
         public const string migrationProject = "springboot-sites-crud-migrationprj";
@@ -24,9 +25,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
         public SpringBootSiteProperties siteProperties = new SpringBootSiteProperties();
 
-        public SpringBootSiteModelExtendedLocation extendLocation = new SpringBootSiteModelExtendedLocation("CustomLocation", "/subscriptions/" + subId +"/resourceGroups/" +  rgName + "/providers/Microsoft.ExtendedLocation/customLocations/springboot");
+        public SpringBootSiteModelExtendedLocation extendLocation = new SpringBootSiteModelExtendedLocation("CustomLocation", "/subscriptions/" + subId + "/resourceGroups/" + rgName + "/providers/Microsoft.ExtendedLocation/customLocations/springboot");
 
-        public SiteCRUDTests(bool isAsync) : base(isAsync)
+        public SiteCRUDTests() : base(true)
         {
         }
 
@@ -35,13 +36,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
-        [RecordedTest]
         public async Task TestSitesCRUDAsyncOperations()
         {
             SpringBootSiteCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
 
-            siteProperties.MasterSiteId="1234";
-            siteProperties.MigrateProjectId="5678";
+            siteProperties.MasterSiteId = "1234";
+            siteProperties.MigrateProjectId = "5678";
 
             SpringBootSiteData modelData = new SpringBootSiteData(null, siteName, resourceType, null, new Dictionary<string, string>(),
                 defaultResourceLocation, siteProperties, extendLocation);
@@ -63,7 +63,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             //get all sites
             AsyncPageable<SpringBootSiteResource> getSiteAllResponse = siteColletion.GetAllAsync(CancellationToken.None);
             int siteCount = 0;
-            await foreach (var item in getSiteAllResponse) {
+            await foreach (var item in getSiteAllResponse)
+            {
                 siteCount++;
             }
             Assert.True(siteCount > 0);

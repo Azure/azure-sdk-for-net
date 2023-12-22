@@ -15,9 +15,10 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
+    [TestFixture]
     public class ErrorSummaryCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public ErrorSummaryCRUDTests(bool isAsync) : base(isAsync)
+        public ErrorSummaryCRUDTests() : base(true)
         {
         }
 
@@ -26,7 +27,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
-        [RecordedTest]
         public async Task TestSummariesCRUDAsyncOperations()
         {
             SpringBootSiteCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
@@ -42,7 +42,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             //get all errorSummaries
             AsyncPageable<SpringBootSiteErrorSummaryResource> getErrorSummaryResponse = errorSummaryCollection.GetAllAsync();
             int errorSummaryCount = 0;
-            await foreach (var item in getErrorSummaryResponse) {
+            await foreach (var item in getErrorSummaryResponse)
+            {
                 errorSummaryCount++;
             }
             Assert.True(errorSummaryCount > 0);

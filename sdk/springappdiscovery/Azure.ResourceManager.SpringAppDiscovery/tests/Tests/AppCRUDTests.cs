@@ -15,9 +15,10 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
+    [TestFixture]
     public class AppCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public AppCRUDTests(bool isAsync) : base(isAsync)
+        public AppCRUDTests() : base(true)
         {
         }
 
@@ -26,7 +27,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
-        [RecordedTest]
         public async Task TestAppsCRUDAsyncOperations()
         {
             //get a site
@@ -41,7 +41,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             //get all apps
             AsyncPageable<SpringBootAppResource> appListResponse = appsColletion.GetAllAsync();
             int appCount = 0;
-            await foreach (var item in appListResponse) {
+            await foreach (var item in appListResponse)
+            {
                 appCount++;
             }
             Assert.True(appCount > 0);
@@ -55,17 +56,19 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
             //patch an app
             KeyValuePair<string, string> myKeyValuePair = new KeyValuePair<string, string>("appKey", "appValue");
-            SpringBootAppPatch appPatch = new SpringBootAppPatch(){
-                Tags = {myKeyValuePair,}
+            SpringBootAppPatch appPatch = new SpringBootAppPatch()
+            {
+                Tags = { myKeyValuePair, }
             };
 
             var updateOperataion = await appModelResource.UpdateAsync(WaitUntil.Completed, appPatch);
-            await  updateOperataion.WaitForCompletionAsync();
+            await updateOperataion.WaitForCompletionAsync();
             Assert.IsTrue(updateOperataion.HasCompleted);
             Assert.IsTrue(await ContainsTag(appsColletion, appName, myKeyValuePair));
         }
 
-        private async Task<bool> ContainsTag(SpringBootAppCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair) {
+        private async Task<bool> ContainsTag(SpringBootAppCollection appsColletion, string appName, KeyValuePair<string, string> myKeyValuePair)
+        {
             Response<SpringBootAppResource> appResponse = await appsColletion.GetAsync(appName);
             SpringBootAppResource appModelResource = appResponse.Value;
             Assert.IsNotNull(appModelResource);
