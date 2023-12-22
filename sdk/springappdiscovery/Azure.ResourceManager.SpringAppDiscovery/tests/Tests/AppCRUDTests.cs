@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
+        [RecordedTest]
         public async Task TestAppsCRUDAsyncOperations()
         {
             //get a site
