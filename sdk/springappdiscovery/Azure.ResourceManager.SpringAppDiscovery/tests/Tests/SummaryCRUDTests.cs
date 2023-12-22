@@ -15,10 +15,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
-    [TestFixture]
     public class SummaryCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public SummaryCRUDTests() : base(true)
+        public SummaryCRUDTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -27,6 +26,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
+        [RecordedTest]
         public async Task TestSummariesCRUDAsyncOperations()
         {
             SpringBootSiteCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);

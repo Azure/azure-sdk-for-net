@@ -14,7 +14,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
-    [TestFixture]
     public class ServerCRUDTests : SpringAppDiscoveryManagementTestBase
     {
         public const string serverIp = "10.150.221.94";
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
         public const string machineId1 = "test-swagger-marchine-id1";
 
-        public ServerCRUDTests() : base(true)
+        public ServerCRUDTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -32,6 +31,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
+        [RecordedTest]
         public async Task TestServersCRUDAsyncOperations()
         {
             //get a site

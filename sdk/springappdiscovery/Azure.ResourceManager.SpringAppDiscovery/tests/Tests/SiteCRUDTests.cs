@@ -15,7 +15,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
-    [TestFixture]
     public class SiteCRUDTests : SpringAppDiscoveryManagementTestBase
     {
         public const string migrationProject = "springboot-sites-crud-migrationprj";
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
         public SpringBootSiteModelExtendedLocation extendLocation = new SpringBootSiteModelExtendedLocation("CustomLocation", "/subscriptions/" + subId + "/resourceGroups/" + rgName + "/providers/Microsoft.ExtendedLocation/customLocations/springboot");
 
-        public SiteCRUDTests() : base(true)
+        public SiteCRUDTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -36,6 +35,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
         /// </summary>
         /// <returns></returns>
         [TestCase]
+        [RecordedTest]
         public async Task TestSitesCRUDAsyncOperations()
         {
             SpringBootSiteCollection siteColletion = await GetSpringbootsitesModelCollectionAsync(rgName);
