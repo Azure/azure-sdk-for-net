@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _sshPublicKeyRestClient.GenerateKeyPairAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sshPublicKeyRestClient.GenerateKeyPairAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null,cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _sshPublicKeyRestClient.GenerateKeyPair(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _sshPublicKeyRestClient.GenerateKeyPair(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                 return response;
             }
             catch (Exception e)
