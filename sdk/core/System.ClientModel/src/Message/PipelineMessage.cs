@@ -59,14 +59,7 @@ public class PipelineMessage : IDisposable
 
     #region Per-request pipeline
 
-    internal bool CustomRequestPipeline =>
-        PerCallPolicies is not null || PerTryPolicies is not null;
-
-    internal PipelinePolicy[]? PerCallPolicies { get; set; }
-
-    internal PipelinePolicy[]? PerTryPolicies { get; set; }
-
-    internal PipelinePolicy[]? BeforeTransportPolicies { get; set; }
+    internal ClientPipeline.RequestOptionsProcessor? CustomProcessor { get; set; }
 
     #endregion
 

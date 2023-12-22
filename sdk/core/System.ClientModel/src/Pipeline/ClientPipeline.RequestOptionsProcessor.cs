@@ -61,16 +61,16 @@ public partial class ClientPipeline
             int perTryIndex,
             int beforeTransportIndex)
         {
-            if (perCallIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than pipeline length.");
-            if (perTryIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than pipeline length.");
-            if (beforeTransportIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(beforeTransportIndex), "beforeTransportIndex cannot be greater than pipeline length.");
-            if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
-            if (perTryIndex > beforeTransportIndex) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than beforeTransportIndex.");
+            //if (perCallIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than pipeline length.");
+            //if (perTryIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than pipeline length.");
+            //if (beforeTransportIndex > fixedPolicies.Length) throw new ArgumentOutOfRangeException(nameof(beforeTransportIndex), "beforeTransportIndex cannot be greater than pipeline length.");
+            //if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
+            //if (perTryIndex > beforeTransportIndex) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "perTryIndex cannot be greater than beforeTransportIndex.");
 
-            ClientUtilities.AssertInRange(fixedPolicies.Length, 0, 15, nameof(fixedPolicies.Length));
-            ClientUtilities.AssertInRange(perCallPolicies.Length, 0, 15, nameof(perCallPolicies.Length));
-            ClientUtilities.AssertInRange(perTryPolicies.Length, 0, 15, nameof(perTryPolicies.Length));
-            ClientUtilities.AssertInRange(beforeTransportPolicies.Length, 0, 15, nameof(beforeTransportPolicies.Length));
+            //ClientUtilities.AssertInRange(fixedPolicies.Length, 0, 15, nameof(fixedPolicies.Length));
+            //ClientUtilities.AssertInRange(perCallPolicies.Length, 0, 15, nameof(perCallPolicies.Length));
+            //ClientUtilities.AssertInRange(perTryPolicies.Length, 0, 15, nameof(perTryPolicies.Length));
+            //ClientUtilities.AssertInRange(beforeTransportPolicies.Length, 0, 15, nameof(beforeTransportPolicies.Length));
 
             _fixedPolicies = fixedPolicies;
             _customPerCallPolicies = perCallPolicies;

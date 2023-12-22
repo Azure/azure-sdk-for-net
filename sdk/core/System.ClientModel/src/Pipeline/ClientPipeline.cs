@@ -152,7 +152,7 @@ public sealed partial class ClientPipeline
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
     {
-        if (message.CustomRequestPipeline)
+        if (message.CustomProcessor is not null)
         {
             return new RequestOptionsProcessor(_policies,
                 message.PerCallPolicies,

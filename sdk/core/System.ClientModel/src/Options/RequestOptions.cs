@@ -86,7 +86,13 @@ public class RequestOptions
             // The internal global default classifier.
             PipelineMessageClassifier.Default;
 
-        // Copy custom pipeline policies.
+        // Create the custom pipeline processor if needed.
+        if (_perCallPolicies is not null || _perTryPolicies is not null | _beforeTransportPolicies is not null) {
+            message.CustomProcessor = new ClientPipeline.RequestOptionsProcessor(null,
+                _perCallPolicies,
+                _perTryPolicies,
+                _beforeTransportPolicies)
+        }
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;
         message.BeforeTransportPolicies = _beforeTransportPolicies;
