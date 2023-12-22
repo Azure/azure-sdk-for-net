@@ -15,10 +15,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 {
-    [TestFixture]
     public class SummaryCRUDTests : SpringAppDiscoveryManagementTestBase
     {
-        public SummaryCRUDTests() : base(true)
+        public SummaryCRUDTests(bool isAsync) : base(isAsync)
         {
         }
 
