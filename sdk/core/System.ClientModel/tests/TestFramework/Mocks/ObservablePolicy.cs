@@ -18,20 +18,20 @@ public class ObservablePolicy : PipelinePolicy
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        Stamp(message, "Request");
+        //Stamp(message, "Request");
 
         ProcessNext(message, pipeline, currentIndex);
 
-        Stamp(message, "Response");
+        //Stamp(message, "Response");
     }
 
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        Stamp(message, "Request");
+        //Stamp(message, "Request");
 
         await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
 
-        Stamp(message, "Response");
+        //Stamp(message, "Response");
     }
 
     private void Stamp(PipelineMessage message, string prefix)

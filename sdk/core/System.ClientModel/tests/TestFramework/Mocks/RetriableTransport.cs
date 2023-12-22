@@ -118,6 +118,8 @@ public class RetriableTransport : PipelineTransport
 
     private class TransportRequest : PipelineRequest
     {
+        private Uri? _uri;
+
         public TransportRequest() { }
 
         public override void Dispose()
@@ -141,9 +143,7 @@ public class RetriableTransport : PipelineTransport
         }
 
         protected override Uri GetUriCore()
-        {
-            throw new NotImplementedException();
-        }
+            => _uri!;
 
         protected override void SetContentCore(BinaryContent? content)
         {
@@ -156,9 +156,7 @@ public class RetriableTransport : PipelineTransport
         }
 
         protected override void SetUriCore(Uri uri)
-        {
-            throw new NotImplementedException();
-        }
+            => _uri = uri;
     }
 
     private class RetriableTransportResponse : PipelineResponse
