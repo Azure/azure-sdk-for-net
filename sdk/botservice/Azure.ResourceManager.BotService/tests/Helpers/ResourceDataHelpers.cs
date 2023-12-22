@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.BotService.Tests.Helpers
         #endregion
 
         #region ConnectionSetting
-        public static BotConnectionSettingData GetBotConnectionSettingData(string providerId)
+        public static BotConnectionSettingData GetBotConnectionSettingData(string clientId, string ClientSecret, string providerId)
         {
             BotConnectionSettingData data = new BotConnectionSettingData(new AzureLocation("global"))
             {
                 Properties = new BotConnectionSettingProperties()
                 {
-                    ClientId = "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
-                    ClientSecret = "aCL8Q~tRxT~r3yyWr5~UUIpS47KbbgvQfMnekaKT",
+                    ClientId = clientId,
+                    ClientSecret = ClientSecret,
                     ServiceProviderId = providerId,
                     Parameters =
                     {

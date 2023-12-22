@@ -38,7 +38,9 @@ namespace Azure.ResourceManager.BotService.Tests
             var collection = botResource.GetBotConnectionSettings();
             var providers =await DefaultSubscription.GetBotConnectionServiceProvidersAsync().ToEnumerableAsync();
             var providerId = providers.ElementAt(1).Properties.Id;
-            var input = ResourceDataHelpers.GetBotConnectionSettingData(providerId);
+            var clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
+            var clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+            var input = ResourceDataHelpers.GetBotConnectionSettingData(clientId, clientSecret, providerId);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, input)).Value;
             Assert.AreEqual(botName +"/" + settingName, resource.Data.Name);
             //2.Get
