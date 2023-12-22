@@ -22,10 +22,78 @@ namespace Azure.ResourceManager.BotService.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("There is a bug in the Get method")]
-        public async Task ProviderApiTest()
+        public async Task CreateOrUpdate()
         {
             //1.Create
+            var botName = Recording.GenerateAssetName("testbotService");
+            var settingName = Recording.GenerateAssetName("testsetting");
+            var msaAppId = Recording.Random.NewGuid().ToString();
+            var resourceGroup = await CreateResourceGroupAsync();
+            var botCollection = resourceGroup.GetBots();
+            var botInput = ResourceDataHelpers.GetBotData(msaAppId);
+            var botResource = (await botCollection.CreateOrUpdateAsync(WaitUntil.Completed, botName, botInput)).Value;
+            var collection = botResource.GetBotConnectionSettings();
+            var providers = await DefaultSubscription.GetBotConnectionServiceProvidersAsync().ToEnumerableAsync();
+            var providerId = providers.ElementAt(1).Properties.Id;
+            var clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
+            string clientSecret;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                clientSecret = "CLIENT_SECRET";
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+                }
+            }
+            var input = ResourceDataHelpers.GetBotConnectionSettingData(clientId, clientSecret, providerId);
+            var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, input)).Value;
+            Assert.AreEqual(botName + "/" + settingName, resource.Data.Name);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        [Ignore("There is a bug in the Get method")]
+        public async Task GetTest()
+        {
+            //1.Create
+            var botName = Recording.GenerateAssetName("testbotService");
+            var settingName = Recording.GenerateAssetName("testsetting");
+            var msaAppId = Recording.Random.NewGuid().ToString();
+            var resourceGroup = await CreateResourceGroupAsync();
+            var botCollection = resourceGroup.GetBots();
+            var botInput = ResourceDataHelpers.GetBotData(msaAppId);
+            var botResource = (await botCollection.CreateOrUpdateAsync(WaitUntil.Completed, botName, botInput)).Value;
+            var collection = botResource.GetBotConnectionSettings();
+            var providers = await DefaultSubscription.GetBotConnectionServiceProvidersAsync().ToEnumerableAsync();
+            var providerId = providers.ElementAt(1).Properties.Id;
+            var clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
+            string clientSecret;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                clientSecret = "CLIENT_SECRET";
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+                }
+            }
+            var input = ResourceDataHelpers.GetBotConnectionSettingData(clientId, clientSecret, providerId);
+            var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, input)).Value;
+            //2.Get
+            var resource2 = (await resource.GetAsync()).Value;
+            ResourceDataHelpers.AssertBotConnectionSettingData(resource.Data, resource2.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task ListTest()
+        {
+            //Create
             var botName = Recording.GenerateAssetName("testbotService");
             var settingName = Recording.GenerateAssetName("testsetting");
             var settingName2 = Recording.GenerateAssetName("testsetting");
@@ -36,16 +104,23 @@ namespace Azure.ResourceManager.BotService.Tests
             var botInput = ResourceDataHelpers.GetBotData(msaAppId);
             var botResource = (await botCollection.CreateOrUpdateAsync(WaitUntil.Completed, botName, botInput)).Value;
             var collection = botResource.GetBotConnectionSettings();
-            var providers =await DefaultSubscription.GetBotConnectionServiceProvidersAsync().ToEnumerableAsync();
+            var providers = await DefaultSubscription.GetBotConnectionServiceProvidersAsync().ToEnumerableAsync();
             var providerId = providers.ElementAt(1).Properties.Id;
             var clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
-            var clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+            string clientSecret;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                clientSecret = "CLIENT_SECRET";
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+                }
+            }
             var input = ResourceDataHelpers.GetBotConnectionSettingData(clientId, clientSecret, providerId);
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, input)).Value;
-            Assert.AreEqual(botName +"/" + settingName, resource.Data.Name);
-            //2.Get
-            var resource2 = (await resource.GetAsync()).Value;
-            ResourceDataHelpers.AssertBotConnectionSettingData(resource.Data, resource2.Data);
             //3.GetAll
             int count = 0;
             _ = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName2, input)).Value;
