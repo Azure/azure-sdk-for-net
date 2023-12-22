@@ -2,6 +2,8 @@
 
 ## 1.3.0-beta.1 (Unreleased)
 
+- Compute RP to `2023-09-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+
 ### Features Added
 
 ### Breaking Changes
