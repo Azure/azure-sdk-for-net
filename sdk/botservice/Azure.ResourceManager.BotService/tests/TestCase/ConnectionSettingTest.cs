@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.BotService.Tests
             string clientSecret;
             if (Mode == RecordedTestMode.Playback)
             {
-                clientSecret = "CLIENT_SECRET";
+                clientSecret = "ABCD~1234~1234567~ABCDEFGHIJKLMNOPQRST";
             }
             else
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.BotService.Tests
             string clientSecret;
             if (Mode == RecordedTestMode.Playback)
             {
-                clientSecret = "CLIENT_SECRET";
+                clientSecret = "ABCD~1234~1234567~ABCDEFGHIJKLMNOPQRST";
             }
             else
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Tests
             string clientSecret;
             if (Mode == RecordedTestMode.Playback)
             {
-                clientSecret = "CLIENT_SECRET";
+                clientSecret = "ABCD~1234~1234567~ABCDEFGHIJKLMNOPQRST";
             }
             else
             {
