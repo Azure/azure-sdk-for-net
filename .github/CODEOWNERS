@@ -842,3 +842,6 @@
 
 # ServiceLabel: %Cognitive - Content Safety %Service Attention
 /sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims @JieZhou000
+
+# PRLabel: %Spring App Discovery
+/sdk/springappdisovery/Azure.ResourceManager.*/                    @sunkun99
