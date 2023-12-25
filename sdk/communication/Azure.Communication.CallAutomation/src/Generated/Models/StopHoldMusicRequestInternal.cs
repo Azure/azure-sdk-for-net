@@ -27,6 +27,18 @@ namespace Azure.Communication.CallAutomation
             TargetParticipant = targetParticipant;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StopHoldMusicRequestInternal"/>. </summary>
+        /// <param name="targetParticipant">
+        /// Participants to be hold from the call.
+        /// Only ACS Users are supported.
+        /// </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal StopHoldMusicRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext)
+        {
+            TargetParticipant = targetParticipant;
+            OperationContext = operationContext;
+        }
+
         /// <summary>
         /// Participants to be hold from the call.
         /// Only ACS Users are supported.

@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeAuthorizeReplicationContent"/>. </summary>
+        /// <param name="remoteVolumeResourceId"> Resource id of the remote volume. </param>
+        internal NetAppVolumeAuthorizeReplicationContent(ResourceIdentifier remoteVolumeResourceId)
+        {
+            RemoteVolumeResourceId = remoteVolumeResourceId;
+        }
+
         /// <summary> Resource id of the remote volume. </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
     }

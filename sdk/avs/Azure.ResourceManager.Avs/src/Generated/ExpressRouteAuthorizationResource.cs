@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Avs
         private readonly AuthorizationsRestOperations _expressRouteAuthorizationAuthorizationsRestClient;
         private readonly ExpressRouteAuthorizationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/authorizations";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteAuthorizationResource"/> class for mocking. </summary>
         protected ExpressRouteAuthorizationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/authorizations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

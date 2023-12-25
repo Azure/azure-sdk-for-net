@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Storage
         private readonly BlobServicesRestOperations _blobServiceRestClient;
         private readonly BlobServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices";
+
         /// <summary> Initializes a new instance of the <see cref="BlobServiceResource"/> class for mocking. </summary>
         protected BlobServiceResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/blobServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

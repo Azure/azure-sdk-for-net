@@ -20,6 +20,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Processor;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.EventHubs.Primitives
 {
@@ -146,19 +147,16 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (_runningProcessorTask == null)
                 {
-                    try
+                    if (!ProcessorRunningGuard.Wait(100))
                     {
-                        if (!ProcessorRunningGuard.Wait(100))
-                        {
-                            return (_statusOverride ?? EventProcessorStatus.NotRunning);
-                        }
+                        return (_statusOverride ?? EventProcessorStatus.NotRunning);
+                    }
 
-                        statusOverride = _statusOverride;
-                    }
-                    finally
-                    {
-                        ProcessorRunningGuard.Release();
-                    }
+                    // If we reach this point, the semaphore was acquired and should
+                    // be released.
+
+                    statusOverride = _statusOverride;
+                    ProcessorRunningGuard.Release();
                 }
                 else
                 {
@@ -1302,7 +1300,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             Logger.EventProcessorStart(Identifier, EventHubName, ConsumerGroup);
 
             var capturedValidationException = default(Exception);
-            var releaseGuard = false;
 
             try
             {
@@ -1318,7 +1315,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ProcessorRunningGuard.Wait(cancellationToken);
                 }
 
-                releaseGuard = true;
                 _statusOverride = EventProcessorStatus.Starting;
 
                 // If the processor is already running, then it was started before the
@@ -1420,7 +1416,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // If the cancellation token was signaled during the attempt to acquire the
                 // semaphore, it cannot be safely released; ensure that it is held.
 
-                if (releaseGuard)
+                if (ProcessorRunningGuard.CurrentCount == 0)
                 {
                     ProcessorRunningGuard.Release();
                 }
@@ -1466,7 +1462,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             Logger.EventProcessorStop(Identifier, EventHubName, ConsumerGroup);
 
             var processingException = default(Exception);
-            var releaseGuard = false;
 
             try
             {
@@ -1482,7 +1477,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ProcessorRunningGuard.Wait(cancellationToken);
                 }
 
-                releaseGuard = true;
                 _statusOverride = EventProcessorStatus.Stopping;
 
                 // If the processor is not running, then it was never started or has been stopped
@@ -1585,7 +1579,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // If the cancellation token was signaled during the attempt to acquire the
                 // semaphore, it cannot be safely released; ensure that it is held.
 
-                if (releaseGuard)
+                if (ProcessorRunningGuard.CurrentCount == 0)
                 {
                     ProcessorRunningGuard.Release();
                 }
@@ -2065,17 +2059,20 @@ namespace Azure.Messaging.EventHubs.Primitives
             await using var connectionAwaiter = connection.ConfigureAwait(false);
 
             var properties = await connection.GetPropertiesAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
+            var partitionIndex = new Random().Next(0, (properties.PartitionIds.Length - 1));
 
             // To ensure validity of the requested consumer group and that at least one partition exists,
             // attempt to read from a partition.
 
-            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[0], $"SV-{ Identifier }", EventPosition.Earliest, connection, Options, false);
+            var consumer = CreateConsumer(ConsumerGroup, properties.PartitionIds[partitionIndex], $"SV-{ Identifier }", EventPosition.Earliest, connection, Options, false);
 
             try
             {
                 await consumer.ReceiveAsync(1, TimeSpan.FromMilliseconds(5), cancellationToken).ConfigureAwait(false);
             }
-            catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+            catch (EventHubsException ex)
+                when ((ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
+                    || (ex.Reason == EventHubsException.FailureReason.QuotaExceeded))
             {
                 // This is expected when another processor is already running; no action is needed, as it
                 // validates that the reader was able to connect.

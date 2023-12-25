@@ -15,22 +15,6 @@ namespace Azure.Health.Insights.CancerProfiling
     /// <summary> Model factory for models. </summary>
     public static partial class HealthInsightsCancerProfilingModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeResult"/>. </summary>
-        /// <param name="jobId"> A processing job identifier. </param>
-        /// <param name="createdDateTime"> The date and time when the processing job was created. </param>
-        /// <param name="expirationDateTime"> The date and time when the processing job is set to expire. </param>
-        /// <param name="lastUpdateDateTime"> The date and time when the processing job was last updated. </param>
-        /// <param name="status"> The status of the processing job. </param>
-        /// <param name="errors"> An array of errors, if any errors occurred during the processing job. </param>
-        /// <param name="results"> The inference results for the Onco Phenotype request. </param>
-        /// <returns> A new <see cref="CancerProfiling.OncoPhenotypeResult"/> instance for mocking. </returns>
-        public static OncoPhenotypeResult OncoPhenotypeResult(Guid jobId = default, DateTimeOffset createdDateTime = default, DateTimeOffset expirationDateTime = default, DateTimeOffset lastUpdateDateTime = default, JobStatus status = default, IEnumerable<ResponseError> errors = null, OncoPhenotypeResults results = null)
-        {
-            errors ??= new List<ResponseError>();
-
-            return new OncoPhenotypeResult(jobId, createdDateTime, expirationDateTime, lastUpdateDateTime, status, errors?.ToList(), results);
-        }
-
         /// <summary> Initializes a new instance of <see cref="CancerProfiling.OncoPhenotypeResults"/>. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>

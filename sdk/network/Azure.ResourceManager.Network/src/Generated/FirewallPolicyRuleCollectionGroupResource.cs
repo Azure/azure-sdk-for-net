@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly FirewallPolicyRuleCollectionGroupsRestOperations _firewallPolicyRuleCollectionGroupRestClient;
         private readonly FirewallPolicyRuleCollectionGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies/ruleCollectionGroups";
+
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupResource"/> class for mocking. </summary>
         protected FirewallPolicyRuleCollectionGroupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies/ruleCollectionGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

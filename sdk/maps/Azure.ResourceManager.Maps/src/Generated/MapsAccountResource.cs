@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Maps
         private readonly AccountsRestOperations _mapsAccountAccountsRestClient;
         private readonly MapsAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Maps/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="MapsAccountResource"/> class for mocking. </summary>
         protected MapsAccountResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Maps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Maps/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

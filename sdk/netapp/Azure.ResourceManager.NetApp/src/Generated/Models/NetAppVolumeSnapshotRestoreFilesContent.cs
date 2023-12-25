@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.NetApp.Models
             FilePaths = filePaths.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeSnapshotRestoreFilesContent"/>. </summary>
+        /// <param name="filePaths"> List of files to be restored. </param>
+        /// <param name="destinationPath"> Destination folder where the files will be restored. </param>
+        internal NetAppVolumeSnapshotRestoreFilesContent(IList<string> filePaths, string destinationPath)
+        {
+            FilePaths = filePaths;
+            DestinationPath = destinationPath;
+        }
+
         /// <summary> List of files to be restored. </summary>
         public IList<string> FilePaths { get; }
         /// <summary> Destination folder where the files will be restored. </summary>

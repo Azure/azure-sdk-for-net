@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly MachineExtensionsRestOperations _hybridComputeMachineExtensionMachineExtensionsRestClient;
         private readonly HybridComputeMachineExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineExtensionResource"/> class for mocking. </summary>
         protected HybridComputeMachineExtensionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridCompute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

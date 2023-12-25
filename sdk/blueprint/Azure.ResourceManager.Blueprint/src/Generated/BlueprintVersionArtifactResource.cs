@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Blueprint
         private readonly PublishedArtifactsRestOperations _blueprintVersionArtifactPublishedArtifactsRestClient;
         private readonly ArtifactData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Blueprint/blueprints/versions/artifacts";
+
         /// <summary> Initializes a new instance of the <see cref="BlueprintVersionArtifactResource"/> class for mocking. </summary>
         protected BlueprintVersionArtifactResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Blueprint
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Blueprint/blueprints/versions/artifacts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

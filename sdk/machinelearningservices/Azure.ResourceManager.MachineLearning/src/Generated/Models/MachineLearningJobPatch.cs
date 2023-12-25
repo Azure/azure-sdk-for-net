@@ -17,6 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobPatch"/>. </summary>
+        /// <param name="properties"> Additional attributes of the entity. </param>
+        internal MachineLearningJobPatch(PartialJobBase properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Additional attributes of the entity. </summary>
         internal PartialJobBase Properties { get; set; }
         /// <summary>

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Workloads.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapStopContent"/>. </summary>
+        /// <param name="softStopTimeoutSeconds"> This parameter defines how long (in seconds) the soft shutdown waits until the RFC/HTTP clients no longer consider the server for calls with load balancing. Value 0 means that the kernel does not wait, but goes directly into the next shutdown state, i.e. hard stop. </param>
+        internal SapStopContent(long? softStopTimeoutSeconds)
+        {
+            SoftStopTimeoutSeconds = softStopTimeoutSeconds;
+        }
+
         /// <summary> This parameter defines how long (in seconds) the soft shutdown waits until the RFC/HTTP clients no longer consider the server for calls with load balancing. Value 0 means that the kernel does not wait, but goes directly into the next shutdown state, i.e. hard stop. </summary>
         public long? SoftStopTimeoutSeconds { get; set; }
     }

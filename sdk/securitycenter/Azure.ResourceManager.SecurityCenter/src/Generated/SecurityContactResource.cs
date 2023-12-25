@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SecurityContactsRestOperations _securityContactRestClient;
         private readonly SecurityContactData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/securityContacts";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityContactResource"/> class for mocking. </summary>
         protected SecurityContactResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/securityContacts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Attestation
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly AttestationProviderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Attestation/attestationProviders";
+
         /// <summary> Initializes a new instance of the <see cref="AttestationProviderResource"/> class for mocking. </summary>
         protected AttestationProviderResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.Attestation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Attestation/attestationProviders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

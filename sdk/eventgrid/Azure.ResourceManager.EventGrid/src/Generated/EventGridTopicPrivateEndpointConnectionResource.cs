@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PrivateEndpointConnectionsRestOperations _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly EventGridPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topics/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridTopicPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected EventGridTopicPrivateEndpointConnectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topics/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

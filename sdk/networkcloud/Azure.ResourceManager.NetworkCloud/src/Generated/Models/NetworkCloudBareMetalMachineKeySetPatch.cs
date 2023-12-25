@@ -23,6 +23,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             UserList = new ChangeTrackingList<KeySetUser>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
+        /// <param name="jumpHostsAllowed"> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </param>
+        /// <param name="userList"> The unique list of permitted users. </param>
+        internal NetworkCloudBareMetalMachineKeySetPatch(IDictionary<string, string> tags, DateTimeOffset? expireOn, IList<IPAddress> jumpHostsAllowed, IList<KeySetUser> userList)
+        {
+            Tags = tags;
+            ExpireOn = expireOn;
+            JumpHostsAllowed = jumpHostsAllowed;
+            UserList = userList;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The date and time after which the users in this key set will be removed from the bare metal machines. </summary>

@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Network
         private readonly WebCategoriesRestOperations _azureWebCategoryWebCategoriesRestClient;
         private readonly AzureWebCategoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/azureWebCategories";
+
         /// <summary> Initializes a new instance of the <see cref="AzureWebCategoryResource"/> class for mocking. </summary>
         protected AzureWebCategoryResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/azureWebCategories";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

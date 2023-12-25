@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly PrivateLinkResourcesRestOperations _hybridComputePrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly HybridComputePrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/privateLinkScopes/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="HybridComputePrivateLinkResource"/> class for mocking. </summary>
         protected HybridComputePrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HybridCompute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/privateLinkScopes/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

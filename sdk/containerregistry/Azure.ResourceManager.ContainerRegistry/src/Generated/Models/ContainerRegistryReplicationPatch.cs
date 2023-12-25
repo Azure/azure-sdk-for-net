@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationPatch"/>. </summary>
+        /// <param name="tags"> The tags for the replication. </param>
+        /// <param name="isRegionEndpointEnabled"> Specifies whether the replication's regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </param>
+        internal ContainerRegistryReplicationPatch(IDictionary<string, string> tags, bool? isRegionEndpointEnabled)
+        {
+            Tags = tags;
+            IsRegionEndpointEnabled = isRegionEndpointEnabled;
+        }
+
         /// <summary> The tags for the replication. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Specifies whether the replication's regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </summary>

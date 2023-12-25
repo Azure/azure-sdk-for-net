@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Add `IsRetentionInDaysAsDefault`,`IsTotalRetentionInDaysAsDefault` to replace the original `RetentionInDaysAsDefault`, `TotalRetentionInDaysAsDefault` to solve the deserialization issue
+
 ### Other Changes
 
 ## 1.2.0 (2023-11-29)

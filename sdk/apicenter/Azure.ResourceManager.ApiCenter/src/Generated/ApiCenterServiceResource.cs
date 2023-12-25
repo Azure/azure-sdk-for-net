@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.ApiCenter
         private readonly ServicesRestOperations _apiCenterServiceServicesRestClient;
         private readonly ApiCenterServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services";
+
         /// <summary> Initializes a new instance of the <see cref="ApiCenterServiceResource"/> class for mocking. </summary>
         protected ApiCenterServiceResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiCenter/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -54,6 +54,9 @@ namespace Azure.ResourceManager.Sql
         private readonly DatabasesRestOperations _sqlDatabaseDatabasesRestClient;
         private readonly ElasticPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/elasticPools";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticPoolResource"/> class for mocking. </summary>
         protected ElasticPoolResource()
         {
@@ -93,9 +96,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/elasticPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

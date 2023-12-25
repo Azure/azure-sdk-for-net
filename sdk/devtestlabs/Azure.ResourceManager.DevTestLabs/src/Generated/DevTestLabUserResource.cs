@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly UsersRestOperations _devTestLabUserUsersRestClient;
         private readonly DevTestLabUserData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabUserResource"/> class for mocking. </summary>
         protected DevTestLabUserResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

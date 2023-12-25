@@ -19,6 +19,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             Data = new ChangeTrackingList<KeyValuePairString>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="CollectionConfigurationError"/>. </summary>
+        /// <param name="collectionConfigurationErrorType"> Collection configuration error type reported by SDK. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="fullException"> Exception that leads to the creation of the configuration error. </param>
+        /// <param name="data"> Custom properties to add more information to the error. </param>
+        internal CollectionConfigurationError(CollectionConfigurationErrorType? collectionConfigurationErrorType, string message, string fullException, IList<KeyValuePairString> data)
+        {
+            CollectionConfigurationErrorType = collectionConfigurationErrorType;
+            Message = message;
+            FullException = fullException;
+            Data = data;
+        }
+
         /// <summary> Collection configuration error type reported by SDK. </summary>
         public CollectionConfigurationErrorType? CollectionConfigurationErrorType { get; set; }
         /// <summary> Error message. </summary>

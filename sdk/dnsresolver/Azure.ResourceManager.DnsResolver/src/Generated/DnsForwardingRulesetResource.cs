@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DnsResolver
         private readonly DnsForwardingRulesetsRestOperations _dnsForwardingRulesetRestClient;
         private readonly DnsForwardingRulesetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsForwardingRulesets";
+
         /// <summary> Initializes a new instance of the <see cref="DnsForwardingRulesetResource"/> class for mocking. </summary>
         protected DnsForwardingRulesetResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DnsResolver
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/dnsForwardingRulesets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

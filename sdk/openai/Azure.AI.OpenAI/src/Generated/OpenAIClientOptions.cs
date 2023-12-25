@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> Client options for OpenAIClient. </summary>
     public partial class OpenAIClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_09_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2023_12_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
@@ -30,6 +30,8 @@ namespace Azure.AI.OpenAI
             V2023_08_01_Preview = 5,
             /// <summary> Service version "2023-09-01-preview". </summary>
             V2023_09_01_Preview = 6,
+            /// <summary> Service version "2023-12-01-preview". </summary>
+            V2023_12_01_Preview = 7,
         }
 
         internal string Version { get; }
@@ -45,6 +47,7 @@ namespace Azure.AI.OpenAI
                 ServiceVersion.V2023_07_01_Preview => "2023-07-01-preview",
                 ServiceVersion.V2023_08_01_Preview => "2023-08-01-preview",
                 ServiceVersion.V2023_09_01_Preview => "2023-09-01-preview",
+                ServiceVersion.V2023_12_01_Preview => "2023-12-01-preview",
                 _ => throw new NotSupportedException()
             };
         }

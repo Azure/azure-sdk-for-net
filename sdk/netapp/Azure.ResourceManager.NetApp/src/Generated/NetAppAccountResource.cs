@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.NetApp
         private readonly VolumeGroupsRestOperations _netAppVolumeGroupVolumeGroupsRestClient;
         private readonly NetAppAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class for mocking. </summary>
         protected NetAppAccountResource()
         {
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

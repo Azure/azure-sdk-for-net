@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly PortalRevisionRestOperations _apiManagementPortalRevisionPortalRevisionRestClient;
         private readonly ApiManagementPortalRevisionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/portalRevisions";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalRevisionResource"/> class for mocking. </summary>
         protected ApiManagementPortalRevisionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/portalRevisions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

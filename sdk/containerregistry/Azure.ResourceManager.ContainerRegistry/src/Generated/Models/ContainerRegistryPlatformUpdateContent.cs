@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPlatformUpdateContent"/>. </summary>
+        /// <param name="os"> The operating system type required for the run. </param>
+        /// <param name="architecture"> The OS architecture. </param>
+        /// <param name="variant"> Variant of the CPU. </param>
+        internal ContainerRegistryPlatformUpdateContent(ContainerRegistryOS? os, ContainerRegistryOSArchitecture? architecture, ContainerRegistryCpuVariant? variant)
+        {
+            OS = os;
+            Architecture = architecture;
+            Variant = variant;
+        }
+
         /// <summary> The operating system type required for the run. </summary>
         public ContainerRegistryOS? OS { get; set; }
         /// <summary> The OS architecture. </summary>

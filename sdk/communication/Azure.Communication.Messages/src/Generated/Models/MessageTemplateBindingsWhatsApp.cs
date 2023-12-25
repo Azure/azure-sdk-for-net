@@ -22,6 +22,19 @@ namespace Azure.Communication.Messages
             Button = new ChangeTrackingList<MessageTemplateBindingsWhatsAppButton>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsApp"/>. </summary>
+        /// <param name="header"></param>
+        /// <param name="body"></param>
+        /// <param name="footer"></param>
+        /// <param name="button"></param>
+        internal MessageTemplateBindingsWhatsApp(IList<MessageTemplateBindingsWhatsAppComponent> header, IList<MessageTemplateBindingsWhatsAppComponent> body, IList<MessageTemplateBindingsWhatsAppComponent> footer, IList<MessageTemplateBindingsWhatsAppButton> button)
+        {
+            Header = header;
+            Body = body;
+            Footer = footer;
+            Button = button;
+        }
+
         /// <summary> Gets the header. </summary>
         public IList<MessageTemplateBindingsWhatsAppComponent> Header { get; }
         /// <summary> Gets the body. </summary>

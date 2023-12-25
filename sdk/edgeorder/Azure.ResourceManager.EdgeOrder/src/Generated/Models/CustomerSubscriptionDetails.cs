@@ -25,6 +25,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             QuotaId = quotaId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomerSubscriptionDetails"/>. </summary>
+        /// <param name="registeredFeatures"> List of registered feature flags for subscription. </param>
+        /// <param name="locationPlacementId"> Location placement Id of a subscription. </param>
+        /// <param name="quotaId"> Quota ID of a subscription. </param>
+        internal CustomerSubscriptionDetails(IList<CustomerSubscriptionRegisteredFeatures> registeredFeatures, string locationPlacementId, string quotaId)
+        {
+            RegisteredFeatures = registeredFeatures;
+            LocationPlacementId = locationPlacementId;
+            QuotaId = quotaId;
+        }
+
         /// <summary> List of registered feature flags for subscription. </summary>
         public IList<CustomerSubscriptionRegisteredFeatures> RegisteredFeatures { get; }
         /// <summary> Location placement Id of a subscription. </summary>

@@ -22,6 +22,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Localized = new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplatePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="priority"> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </param>
+        /// <param name="author"> Information about the author of the workbook template. </param>
+        /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
+        /// <param name="galleries"> Workbook galleries supported by the template. </param>
+        /// <param name="localized"> Key value pair of localized gallery. Each key is the locale code of languages supported by the Azure portal. </param>
+        internal WorkbookTemplatePatch(IDictionary<string, string> tags, int? priority, string author, BinaryData templateData, IList<WorkbookTemplateGallery> galleries, IDictionary<string, IList<WorkbookTemplateLocalizedGallery>> localized)
+        {
+            Tags = tags;
+            Priority = priority;
+            Author = author;
+            TemplateData = templateData;
+            Galleries = galleries;
+            Localized = localized;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Priority of the template. Determines which template to open when a workbook gallery is opened in viewer mode. </summary>

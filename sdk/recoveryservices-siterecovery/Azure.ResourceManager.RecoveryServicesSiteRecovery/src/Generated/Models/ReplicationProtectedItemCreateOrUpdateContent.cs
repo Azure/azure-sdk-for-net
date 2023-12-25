@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Enable protection input properties. </param>
+        internal ReplicationProtectedItemCreateOrUpdateContent(EnableProtectionProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Enable protection input properties. </summary>
         public EnableProtectionProperties Properties { get; set; }
     }

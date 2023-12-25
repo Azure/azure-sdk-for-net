@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.Sql
         private readonly SyncMembersRestOperations _syncMemberRestClient;
         private readonly SyncMemberData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/syncGroups/syncMembers";
+
         /// <summary> Initializes a new instance of the <see cref="SyncMemberResource"/> class for mocking. </summary>
         protected SyncMemberResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/syncGroups/syncMembers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

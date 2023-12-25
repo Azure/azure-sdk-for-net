@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly GovernanceAssignmentsRestOperations _governanceAssignmentRestClient;
         private readonly GovernanceAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/governanceAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="GovernanceAssignmentResource"/> class for mocking. </summary>
         protected GovernanceAssignmentResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/governanceAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

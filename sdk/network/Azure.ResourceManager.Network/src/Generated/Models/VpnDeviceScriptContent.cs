@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VpnDeviceScriptContent"/>. </summary>
+        /// <param name="vendor"> The vendor for the vpn device. </param>
+        /// <param name="deviceFamily"> The device family for the vpn device. </param>
+        /// <param name="firmwareVersion"> The firmware version for the vpn device. </param>
+        internal VpnDeviceScriptContent(string vendor, string deviceFamily, string firmwareVersion)
+        {
+            Vendor = vendor;
+            DeviceFamily = deviceFamily;
+            FirmwareVersion = firmwareVersion;
+        }
+
         /// <summary> The vendor for the vpn device. </summary>
         public string Vendor { get; set; }
         /// <summary> The device family for the vpn device. </summary>

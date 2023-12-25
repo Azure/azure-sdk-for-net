@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.Quantum.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspacePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal QuantumWorkspacePatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

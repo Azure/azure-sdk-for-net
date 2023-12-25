@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabImportVmContent"/>. </summary>
+        /// <param name="sourceVmResourceId"> The full resource ID of the virtual machine to be imported. </param>
+        /// <param name="destinationVmName"> The name of the virtual machine in the destination lab. </param>
+        internal DevTestLabImportVmContent(ResourceIdentifier sourceVmResourceId, string destinationVmName)
+        {
+            SourceVmResourceId = sourceVmResourceId;
+            DestinationVmName = destinationVmName;
+        }
+
         /// <summary> The full resource ID of the virtual machine to be imported. </summary>
         public ResourceIdentifier SourceVmResourceId { get; set; }
         /// <summary> The name of the virtual machine in the destination lab. </summary>

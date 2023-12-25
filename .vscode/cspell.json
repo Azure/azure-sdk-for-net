@@ -118,11 +118,13 @@
     "Vectorizable",
     "Vectorizer",
     "Vectorizers",
+    "vhdx",
     "vmss",
     "vnet",
     "westcentralus",
     "westus",
-    "xunit"
+    "xunit",
+    "miscs"
   ],
   "overrides": [
     {

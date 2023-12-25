@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentPatch"/>. </summary>
+        /// <param name="description"> A description for the Agent. </param>
+        internal StorageMoverAgentPatch(string description)
+        {
+            Description = description;
+        }
+
         /// <summary> A description for the Agent. </summary>
         public string Description { get; set; }
     }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Cdn
         private readonly FrontDoorRuleSetsRestOperations _frontDoorRuleSetRestClient;
         private readonly FrontDoorRuleSetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/ruleSets";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorRuleSetResource"/> class for mocking. </summary>
         protected FrontDoorRuleSetResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/ruleSets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

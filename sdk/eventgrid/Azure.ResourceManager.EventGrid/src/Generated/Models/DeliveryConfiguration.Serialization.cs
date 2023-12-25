@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("queue"u8);
                 writer.WriteObjectValue(Queue);
             }
+            if (Optional.IsDefined(Push))
+            {
+                writer.WritePropertyName("push"u8);
+                writer.WriteObjectValue(Push);
+            }
             writer.WriteEndObject();
         }
 
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             Optional<DeliveryMode> deliveryMode = default;
             Optional<QueueInfo> queue = default;
+            Optional<PushInfo> push = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deliveryMode"u8))
@@ -56,8 +62,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                     queue = QueueInfo.DeserializeQueueInfo(property.Value);
                     continue;
                 }
+                if (property.NameEquals("push"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    push = PushInfo.DeserializePushInfo(property.Value);
+                    continue;
+                }
             }
-            return new DeliveryConfiguration(Optional.ToNullable(deliveryMode), queue.Value);
+            return new DeliveryConfiguration(Optional.ToNullable(deliveryMode), queue.Value, push.Value);
         }
     }
 }

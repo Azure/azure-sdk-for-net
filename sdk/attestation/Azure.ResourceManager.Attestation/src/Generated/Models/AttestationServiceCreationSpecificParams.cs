@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Attestation.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        /// <param name="policySigningCertificates"> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </param>
+        internal AttestationServiceCreationSpecificParams(PublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates)
+        {
+            PublicNetworkAccess = publicNetworkAccess;
+            PolicySigningCertificates = policySigningCertificates;
+        }
+
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </summary>

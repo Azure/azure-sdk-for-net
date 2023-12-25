@@ -2,11 +2,11 @@
 
 [Azure AI Content Safety][contentsafety_overview] detects harmful user-generated and AI-generated content in applications and services. Content Safety includes several APIs that allow you to detect material that is harmful:
 
-* Text Analysis API: Scans text for sexual content, violence, hate, and self harm with multi-severity levels.
-* Image Analysis API: Scans images for sexual content, violence, hate, and self harm with multi-severity levels.
+* Text Analysis API: Scans text for sexual content, violence, hate, and self-harm with multi-severity levels.
+* Image Analysis API: Scans images for sexual content, violence, hate, and self-harm with multi-severity levels.
 * Text Blocklist Management APIs: The default AI classifiers are sufficient for most content safety needs; however, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentSafety) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/content-safety/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentSafety) | [API reference documentation](https://learn.microsoft.com/dotnet/api/azure.ai.contentsafety) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/content-safety/)
 
 ## Getting started
 
@@ -15,13 +15,13 @@
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.ContentSafety --prerelease
+dotnet add package Azure.AI.ContentSafety
 ```
 
 ### Prerequisites
 
 * You need an [Azure subscription][azure_sub] to use this package.
-* An existing [Azure AI Content Safety][contentsafety_overview] instance.
+* An [Azure AI Content Safety][contentsafety_overview] resource, if no existing resource, you could [create a new one](https://aka.ms/acs-create).
 
 ### Authenticate the client
 
@@ -34,9 +34,9 @@ You can find the endpoint for your Azure AI Content Safety service resource usin
 az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "properties.endpoint"
 ```
 
-#### Create a ContentSafetyClient with API key
+#### Create a ContentSafetyClient/BlocklistClient with API key
 
-- Step 1: Get the API key
+* Step 1: Get the API key
 
     The API key can be found in the [Azure Portal][azure_portal] or by running the following [Azure CLI][azure_cli_key_lookup] command:
 
@@ -44,7 +44,7 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
     az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
     ```
 
-- Step 2: Create a ContentSafetyClient with AzureKeyCredential
+* Step 2: Create a ContentSafetyClient with AzureKeyCredential
 
     Pass the API key as a string into an instance of `AzureKeyCredential`.
 
@@ -52,12 +52,13 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
     string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
     string key = "<api_key>";
 
-    ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+    ContentSafetyClient contentSafetyClient = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+    BlocklistClient blocklistClient = new BlocklistClient(new Uri(endpoint), new AzureKeyCredential(key));
     ```
 
-#### Create a ContentSafetyClient with Microsoft Entra ID credential
+#### Create a ContentSafetyClient/BlocklistClient with Microsoft Entra ID credential
 
-* Step 1: Enable Microsoft Entra ID for your resource. Please refer to this Cognitive Services authentication document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id] for the steps to enable Microsoft Entra ID for your resource.
+* Step 1: Enable Microsoft Entra ID for your resource. Please refer to this document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id] for the steps to enable Microsoft Entra ID for your resource.
 
     The main steps are:
 
@@ -66,14 +67,26 @@ az cognitiveservices account show --name "resource-name" --resource-group "resou
 
 * Step 2: Set the values of the client ID, tenant ID, and client secret of the Microsoft Entra application as environment variables: `AZURE_CLIENT_ID`, `TENANT_ID`, `AZURE_CLIENT_SECRET`.
    DefaultAzureCredential will use the values from these environment variables.
+   And you need to install **Azure.Identity** package to use DefaultAzureCredential.
 
    ```csharp
     string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
 
-    ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new DefaultAzureCredential());
+    ContentSafetyClient contentSafetyClient = new ContentSafetyClient(new Uri(endpoint), new DefaultAzureCredential());
+    BlocklistClient blocklistClient = new BlocklistClient(new Uri(endpoint), new DefaultAzureCredential());
     ```
 
 ## Key concepts
+
+### Available features
+
+There are different types of analysis available from this service. The following table describes the currently available APIs.
+
+|Feature  |Description  |
+|---------|---------|
+|Text Analysis API|Scans text for sexual content, violence, hate, and self-harm with multi-severity levels.|
+|Image Analysis API|Scans images for sexual content, violence, hate, and self-harm with multi-severity levels.|
+| Text Blocklist Management APIs|The default AI classifiers are sufficient for most content safety needs. However, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.|
 
 ### Harm categories
 
@@ -92,14 +105,14 @@ Classification can be multi-labeled. For example, when a text sample goes throug
 
 Every harm category the service applies also comes with a severity level rating. The severity level is meant to indicate the severity of the consequences of showing the flagged content.
 
-**Text**: The current version of the text model supports the full 0-7 severity scale. The classifier detects amongst all severities along this scale. If the user specifies, it can return severities in the trimmed scale of 0, 2, 4, and 6; each two adjacent levels are mapped to a single level. You can refer [text content severity levels definitions][text_severity_levels] for details.
+**Text**: The current version of the text model supports the **full 0-7 severity scale**. The classifier detects amongst all severities along this scale. If the user specifies, it can return severities in the trimmed scale of 0, 2, 4, and 6; each two adjacent levels are mapped to a single level. You can refer [text content severity levels definitions][text_severity_levels] for details.
 
 - [0,1] -> 0
 - [2,3] -> 2
 - [4,5] -> 4
 - [6,7] -> 6
 
-**Image**: The current version of the image model supports the trimmed version of the full 0-7 severity scale. The classifier only returns severities 0, 2, 4, and 6; each two adjacent levels are mapped to a single level. You can refer [image content severity levels definitions][image_severity_levels] for details.
+**Image**: The current version of the image model supports the **trimmed version of the full 0-7 severity scale**. The classifier only returns severities 0, 2, 4, and 6; each two adjacent levels are mapped to a single level. You can refer [image content severity levels definitions][image_severity_levels] for details.
 
 - [0,1] -> 0
 - [2,3] -> 2
@@ -113,11 +126,11 @@ Following operations are supported to manage your text blocklist:
 * Create or modify a blocklist
 * List all blocklists
 * Get a blocklist by blocklistName
-* Add blockItems to a blocklist
-* Remove blockItems from a blocklist
-* List all blockItems in a blocklist by blocklistName
-* Get a blockItem in a blocklist by blockItemId and blocklistName
-* Delete a blocklist and all of its blockItems
+* Add blocklistItems to a blocklist
+* Remove blocklistItems from a blocklist
+* List all blocklistItems in a blocklist by blocklistName
+* Get a blocklistItem in a blocklist by blocklistItemId and blocklistName
+* Delete a blocklist and all of its blocklistItems
 
 You can set the blocklists you want to use when analyze text, then you can get blocklist match result from returned response.
 

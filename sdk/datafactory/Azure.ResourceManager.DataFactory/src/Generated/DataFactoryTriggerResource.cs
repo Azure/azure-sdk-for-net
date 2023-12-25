@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly TriggerRunsRestOperations _triggerRunsRestClient;
         private readonly DataFactoryTriggerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/triggers";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryTriggerResource"/> class for mocking. </summary>
         protected DataFactoryTriggerResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/triggers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

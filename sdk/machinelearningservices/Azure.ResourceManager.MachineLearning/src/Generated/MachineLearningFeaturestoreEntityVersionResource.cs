@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly FeaturestoreEntityVersionsRestOperations _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient;
         private readonly MachineLearningFeaturestoreEntityVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningFeaturestoreEntityVersionResource"/> class for mocking. </summary>
         protected MachineLearningFeaturestoreEntityVersionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

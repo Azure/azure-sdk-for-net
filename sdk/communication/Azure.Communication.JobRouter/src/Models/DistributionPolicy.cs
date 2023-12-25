@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
@@ -29,19 +30,25 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Length of time after which any offers created under this policy will be expired. </summary>
+        [CodeGenMember("OfferExpiresAfterSeconds")]
+        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteOfferExpiresAfter), DeserializationValueHook = nameof(ReadOfferExpiresAfter))]
         public TimeSpan? OfferExpiresAfter { get; set; }
 
-        [CodeGenMember("OfferExpiresAfterSeconds")]
-        internal double? _offerExpiresAfterSeconds
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void WriteOfferExpiresAfter(Utf8JsonWriter writer)
         {
-            get
+            writer.WriteNumberValue(OfferExpiresAfter.Value.TotalSeconds);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadOfferExpiresAfter(JsonProperty property, ref Optional<TimeSpan> offerExpiresAfter)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
             {
-                return OfferExpiresAfter?.TotalSeconds is null or 0 ? null : OfferExpiresAfter?.TotalSeconds;
+                return;
             }
-            set
-            {
-                OfferExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
-            }
+            var value = property.Value.GetDouble();
+            offerExpiresAfter = TimeSpan.FromSeconds(value);
         }
 
         /// <summary> Friendly name of this policy. </summary>
@@ -52,21 +59,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public DistributionMode Mode { get; set; }
 
-        [CodeGenMember("Etag")]
-        internal string _etag
-        {
-            get
-            {
-                return ETag.ToString();
-            }
-            set
-            {
-                ETag = new ETag(value);
-            }
-        }
-
         /// <summary> The entity tag for this resource. </summary>
-        public ETag ETag { get; internal set; }
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -76,10 +71,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(_offerExpiresAfterSeconds))
+            if (Optional.IsDefined(OfferExpiresAfter))
             {
                 writer.WritePropertyName("offerExpiresAfterSeconds"u8);
-                writer.WriteNumberValue(_offerExpiresAfterSeconds.Value);
+                WriteOfferExpiresAfter(writer);
             }
             if (Optional.IsDefined(Mode))
             {

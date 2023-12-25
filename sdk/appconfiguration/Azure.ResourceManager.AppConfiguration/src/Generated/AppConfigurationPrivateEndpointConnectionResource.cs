@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly PrivateEndpointConnectionsRestOperations _appConfigurationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly AppConfigurationPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="AppConfigurationPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected AppConfigurationPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

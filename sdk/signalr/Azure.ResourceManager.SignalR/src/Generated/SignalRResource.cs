@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.SignalR
         private readonly SignalRPrivateLinkResourcesRestOperations _signalRPrivateLinkResourcesRestClient;
         private readonly SignalRData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR";
+
         /// <summary> Initializes a new instance of the <see cref="SignalRResource"/> class for mocking. </summary>
         protected SignalRResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.SignalR
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

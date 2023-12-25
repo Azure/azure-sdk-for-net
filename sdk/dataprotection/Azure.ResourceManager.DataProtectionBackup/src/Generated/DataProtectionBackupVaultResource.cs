@@ -45,6 +45,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly ExportJobsRestOperations _exportJobsRestClient;
         private readonly DataProtectionBackupVaultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults";
+
         /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupVaultResource"/> class for mocking. </summary>
         protected DataProtectionBackupVaultResource()
         {
@@ -76,9 +79,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

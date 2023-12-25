@@ -15,6 +15,21 @@ namespace Azure.Storage.Blobs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextConfigurationInternal"/>. </summary>
+        /// <param name="columnSeparator"> The string used to separate columns. </param>
+        /// <param name="fieldQuote"> The string used to quote a specific field. </param>
+        /// <param name="recordSeparator"> The string used to separate records. </param>
+        /// <param name="escapeChar"> The string used as an escape character. </param>
+        /// <param name="headersPresent"> Represents whether the data has headers. </param>
+        internal DelimitedTextConfigurationInternal(string columnSeparator, string fieldQuote, string recordSeparator, string escapeChar, bool? headersPresent)
+        {
+            ColumnSeparator = columnSeparator;
+            FieldQuote = fieldQuote;
+            RecordSeparator = recordSeparator;
+            EscapeChar = escapeChar;
+            HeadersPresent = headersPresent;
+        }
+
         /// <summary> The string used to separate columns. </summary>
         public string ColumnSeparator { get; set; }
         /// <summary> The string used to quote a specific field. </summary>

@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly NetworkConnectionsRestOperations _devCenterNetworkConnectionNetworkConnectionsRestClient;
         private readonly DevCenterNetworkConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterNetworkConnectionResource"/> class for mocking. </summary>
         protected DevCenterNetworkConnectionResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/networkConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

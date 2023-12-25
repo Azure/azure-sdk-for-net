@@ -11,6 +11,9 @@ using Azure.Core.TestFramework;
 using Azure.Health.Insights.CancerProfiling.Tests.Infrastructure;
 using Azure.Health.Insights.CancerProfiling;
 using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.Azure;
+using System.Text.Json;
 
 namespace Azure.Health.Insights.CancerProfiling.Tests
 {
@@ -44,9 +47,9 @@ namespace Azure.Health.Insights.CancerProfiling.Tests
                 Response response = operation.GetRawResponse();
                 Assert.IsNotNull(response);
                 Assert.IsTrue(response.Status == (int)HttpStatusCode.OK);
-                OncoPhenotypeResult oncoResponse = OncoPhenotypeResult.FromResponse(response);
-                Assert.IsNotEmpty(oncoResponse.Results.Patients);
-                var patient = oncoResponse.Results.Patients[0];
+                OncoPhenotypeResults results = FetchResults(response);
+                Assert.IsNotEmpty(results.Patients);
+                var patient = results.Patients[0];
                 Assert.IsNotEmpty(patient.Inferences);
             }
             catch (System.Exception ex)
@@ -63,6 +66,37 @@ namespace Azure.Health.Insights.CancerProfiling.Tests
             using StreamReader reader = new StreamReader(content);
             string data = reader.ReadToEnd();
             return RequestContent.Create(data);
+        }
+
+        private OncoPhenotypeResults FetchResults(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return OncoPhenotypeResults.DeserializeOncoPhenotypeResults(document.RootElement.GetProperty("results"));
+        }
+
+        // TODO: Use model class to compose request
+        private OncoPhenotypeData GetRequestData()
+        {
+            var requestData = new OncoPhenotypeData(new List<PatientRecord> {
+                new PatientRecord("patient1"){
+                    Data = {
+                        new PatientDocument(DocumentType.Note, "document1", new DocumentContent(DocumentContentSourceType.Inline, "Laterality: Left \n Tumor type present: Invasive duct carcinoma; duct carcinoma in situ \n Tumor site: Upper inner quadrant \n Invasive carcinoma \n Histologic type: Ductal \n Size of invasive component: 0.9 cm \n Histologic Grade - Nottingham combined histologic score: 1 out of 3 \n In situ carcinoma (DCIS) \n Histologic type of DCIS: Cribriform and solid \n Necrosis in DCIS: Yes \n DCIS component of invasive carcinoma: Extensive \n"))
+                        {
+                            Language = "en",
+                            CreatedDateTime = DateTimeOffset.Parse("2022-01-01T00:00:00"),
+                        }
+                    }
+                }
+            })
+            {
+                Configuration = new OncoPhenotypeModelConfiguration()
+                {
+                    CheckForCancerCase = true,
+                    IncludeEvidence = true
+                }
+            };
+
+            return requestData;
         }
     }
 }

@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ObjectType = "FullBackupStoreDetails";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFullBackupStoreDetails"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="sasUriList"> SASUriList of storage containers where backup data is to be streamed/copied. </param>
+        internal MySqlFlexibleServerFullBackupStoreDetails(string objectType, IList<string> sasUriList) : base(objectType)
+        {
+            SasUriList = sasUriList;
+            ObjectType = objectType ?? "FullBackupStoreDetails";
+        }
+
         /// <summary> SASUriList of storage containers where backup data is to be streamed/copied. </summary>
         public IList<string> SasUriList { get; }
     }

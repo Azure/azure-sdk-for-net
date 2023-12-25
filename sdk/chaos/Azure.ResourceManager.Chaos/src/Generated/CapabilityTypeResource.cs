@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Chaos
         private readonly CapabilityTypesRestOperations _capabilityTypeRestClient;
         private readonly CapabilityTypeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Chaos/locations/targetTypes/capabilityTypes";
+
         /// <summary> Initializes a new instance of the <see cref="CapabilityTypeResource"/> class for mocking. </summary>
         protected CapabilityTypeResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Chaos
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Chaos/locations/targetTypes/capabilityTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

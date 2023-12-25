@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DnsResolverPatch"/>. </summary>
+        /// <param name="tags"> Tags for DNS Resolver. </param>
+        internal DnsResolverPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Tags for DNS Resolver. </summary>
         public IDictionary<string, string> Tags { get; }
     }

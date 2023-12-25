@@ -15,6 +15,15 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="FarmBeatsUpdateProperties"/>. </summary>
+        /// <param name="sensorIntegration"> Sensor integration request model. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block public traffic for an Azure FarmBeats resource. </param>
+        internal FarmBeatsUpdateProperties(SensorIntegration sensorIntegration, PublicNetworkAccess? publicNetworkAccess)
+        {
+            SensorIntegration = sensorIntegration;
+            PublicNetworkAccess = publicNetworkAccess;
+        }
+
         /// <summary> Sensor integration request model. </summary>
         public SensorIntegration SensorIntegration { get; set; }
         /// <summary> Property to allow or block public traffic for an Azure FarmBeats resource. </summary>

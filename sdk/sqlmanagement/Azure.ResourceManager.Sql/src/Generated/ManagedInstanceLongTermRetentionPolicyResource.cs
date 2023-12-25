@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstanceLongTermRetentionPoliciesRestOperations _managedInstanceLongTermRetentionPolicyRestClient;
         private readonly ManagedInstanceLongTermRetentionPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceLongTermRetentionPolicyResource"/> class for mocking. </summary>
         protected ManagedInstanceLongTermRetentionPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

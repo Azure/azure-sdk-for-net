@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly JobTargetGroupsRestOperations _sqlServerJobTargetGroupJobTargetGroupsRestClient;
         private readonly SqlServerJobTargetGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/targetGroups";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobTargetGroupResource"/> class for mocking. </summary>
         protected SqlServerJobTargetGroupResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/targetGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

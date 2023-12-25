@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Compute
         private readonly CloudServicesUpdateDomainRestOperations _cloudServicesUpdateDomainRestClient;
         private readonly CloudServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/cloudServices";
+
         /// <summary> Initializes a new instance of the <see cref="CloudServiceResource"/> class for mocking. </summary>
         protected CloudServiceResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/cloudServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

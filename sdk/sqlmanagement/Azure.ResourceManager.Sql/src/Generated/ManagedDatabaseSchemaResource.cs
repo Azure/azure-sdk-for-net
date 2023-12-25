@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabaseSchemasRestOperations _managedDatabaseSchemaRestClient;
         private readonly DatabaseSchemaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/schemas";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSchemaResource"/> class for mocking. </summary>
         protected ManagedDatabaseSchemaResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/schemas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
