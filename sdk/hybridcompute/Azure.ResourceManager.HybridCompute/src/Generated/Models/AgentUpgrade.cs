@@ -21,14 +21,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
         /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
         /// <param name="enableAutomaticUpgrade"> Specifies if RSM should try to upgrade this machine. </param>
+        /// <param name="lastAttemptDesiredVersion"> Specifies the version of the last attempt. </param>
         /// <param name="lastAttemptTimestamp"> Timestamp of last upgrade attempt. </param>
         /// <param name="lastAttemptStatus"> Specifies the status of Agent Upgrade. </param>
         /// <param name="lastAttemptMessage"> Failure message of last upgrade attempt if any. </param>
-        internal AgentUpgrade(string desiredVersion, Guid? correlationId, bool? enableAutomaticUpgrade, DateTimeOffset? lastAttemptTimestamp, LastAttemptStatusEnum? lastAttemptStatus, string lastAttemptMessage)
+        internal AgentUpgrade(string desiredVersion, Guid? correlationId, bool? enableAutomaticUpgrade, string lastAttemptDesiredVersion, DateTimeOffset? lastAttemptTimestamp, LastAttemptStatusEnum? lastAttemptStatus, string lastAttemptMessage)
         {
             DesiredVersion = desiredVersion;
             CorrelationId = correlationId;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            LastAttemptDesiredVersion = lastAttemptDesiredVersion;
             LastAttemptTimestamp = lastAttemptTimestamp;
             LastAttemptStatus = lastAttemptStatus;
             LastAttemptMessage = lastAttemptMessage;
@@ -40,6 +42,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public Guid? CorrelationId { get; set; }
         /// <summary> Specifies if RSM should try to upgrade this machine. </summary>
         public bool? EnableAutomaticUpgrade { get; set; }
+        /// <summary> Specifies the version of the last attempt. </summary>
+        public string LastAttemptDesiredVersion { get; }
         /// <summary> Timestamp of last upgrade attempt. </summary>
         public DateTimeOffset? LastAttemptTimestamp { get; }
         /// <summary> Specifies the status of Agent Upgrade. </summary>

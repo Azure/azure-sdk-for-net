@@ -158,6 +158,59 @@ namespace Azure.ResourceManager.HybridCompute
             return GetHybridComputeMachineExtensions().Get(extensionName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of MachineRunCommandResources in the HybridComputeMachine. </summary>
+        /// <returns> An object representing collection of MachineRunCommandResources and their operations over a MachineRunCommandResource. </returns>
+        public virtual MachineRunCommandCollection GetMachineRunCommands()
+        {
+            return GetCachedClient(client => new MachineRunCommandCollection(client, Id));
+        }
+
+        /// <summary>
+        /// The operation to get a run command.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MachineRunCommands_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runCommandName"> The name of the run command. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MachineRunCommandResource>> GetMachineRunCommandAsync(string runCommandName, CancellationToken cancellationToken = default)
+        {
+            return await GetMachineRunCommands().GetAsync(runCommandName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The operation to get a run command.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MachineRunCommands_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runCommandName"> The name of the run command. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineRunCommandResource> GetMachineRunCommand(string runCommandName, CancellationToken cancellationToken = default)
+        {
+            return GetMachineRunCommands().Get(runCommandName, cancellationToken);
+        }
+
         /// <summary>
         /// Retrieves information about the model view or the instance view of a hybrid machine.
         /// <list type="bullet">
@@ -173,7 +226,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HybridComputeMachineResource>> GetAsync(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeMachineResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Get");
             scope.Start();
@@ -206,7 +259,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HybridComputeMachineResource> Get(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeMachineResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Get");
             scope.Start();

@@ -93,6 +93,25 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MachineRunCommandResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MachineRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="MachineRunCommandResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetMachineRunCommandResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MachineRunCommandResource"/> object. </returns>
+        public static MachineRunCommandResource GetMachineRunCommandResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridComputeArmClient(client).GetMachineRunCommandResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="HybridComputePrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridComputePrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -180,7 +199,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeMachineAsync(string,InstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeMachineAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -190,7 +209,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(this ResourceGroupResource resourceGroupResource, string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -211,7 +230,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeMachine(string,InstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeMachine(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -221,7 +240,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<HybridComputeMachineResource> GetHybridComputeMachine(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public static Response<HybridComputeMachineResource> GetHybridComputeMachine(this ResourceGroupResource resourceGroupResource, string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
