@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(string filter, CancellationToken cancellationToken)
                 => GetAllAsync(filter, null, cancellationToken);
 
-
         /// <summary> Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<VirtualMachineResource> GetAll(string filter, CancellationToken cancellationToken)
