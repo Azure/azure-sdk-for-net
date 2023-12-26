@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
         /// <param name="role"> The chat role associated with this message. </param>
         /// <param name="content"> The contents of the user message, with available input types varying by selected model. </param>
         /// <param name="name"> An optional name for the participant. </param>
-        internal ChatRequestUserMessage(ChatRole role, BinaryData content, string name) : base(role)
+        internal ChatRequestUserMessage(ChatRole role, string content, string name) : base(role)
         {
             Content = content;
             Name = name;

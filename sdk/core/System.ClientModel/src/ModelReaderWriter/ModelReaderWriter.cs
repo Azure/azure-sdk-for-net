@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics.CodeAnalysis;
-using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
-namespace System.ClientModel
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// Provides functionality to read and write <see cref="IPersistableModel{T}"/> and <see cref="IJsonModel{T}"/>.
@@ -21,7 +21,8 @@ namespace System.ClientModel
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-        public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+        public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default)
+            where T : IPersistableModel<T>
         {
             if (model is null)
             {
@@ -30,13 +31,8 @@ namespace System.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            if (options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
+            if (IsJsonFormatRequested(model, options) && model is IJsonModel<T> jsonModel)
             {
-                if (model is not IJsonModel<T> jsonModel)
-                {
-                    throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
-                }
-
                 using (ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options))
                 {
                     return writer.ToBinaryData();
@@ -72,13 +68,8 @@ namespace System.ClientModel
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
             }
 
-            if (options.Format == "J" || (options.Format == "W" && iModel.GetFormatFromOptions(options) == "J"))
+            if (IsJsonFormatRequested(iModel, options) && model is IJsonModel<object> jsonModel)
             {
-                if (model is not IJsonModel<object> jsonModel)
-                {
-                    throw new FormatException($"The model {model.GetType().Name} does not support '{options.Format}' format.");
-                }
-
                 using (ModelWriter<object> writer = new ModelWriter<object>(jsonModel, options))
                 {
                     return writer.ToBinaryData();
@@ -100,7 +91,8 @@ namespace System.ClientModel
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
         /// <exception cref="MissingMethodException">If <typeparamref name="T"/> does not have a public or non public empty constructor.</exception>
-        public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+        public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default)
+            where T : IPersistableModel<T>
         {
             if (data is null)
             {
@@ -151,7 +143,8 @@ namespace System.ClientModel
             return model;
         }
 
-        private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : IPersistableModel<T>
+        private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
+            where T : IPersistableModel<T>
         {
             var model = GetObjectInstance(typeof(T)) as IPersistableModel<T>;
             if (model is null)
@@ -178,5 +171,13 @@ namespace System.ClientModel
             }
             return obj;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
+            => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsJsonFormatRequested(IPersistableModel<object> model, ModelReaderWriterOptions options)
+            => IsJsonFormatRequested<object>(model, options);
     }
 }

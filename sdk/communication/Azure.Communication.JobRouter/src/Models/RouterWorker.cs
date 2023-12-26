@@ -88,21 +88,9 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        [CodeGenMember("Etag")]
-        internal string _etag
-        {
-            get
-            {
-                return ETag.ToString();
-            }
-            set
-            {
-                ETag = new ETag(value);
-            }
-        }
-
         /// <summary> The entity tag for this resource. </summary>
-        public ETag ETag { get; internal set; }
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

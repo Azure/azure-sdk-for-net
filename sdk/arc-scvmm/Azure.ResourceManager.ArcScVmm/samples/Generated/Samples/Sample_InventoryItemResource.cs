@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             InventoryItemResource inventoryItem = client.GetInventoryItemResource(inventoryItemResourceId);
 
             // invoke the operation
-            InventoryItemData data = new InventoryItemData(InventoryType.Cloud);
+            InventoryItemData data = new InventoryItemData(new CloudInventoryItem());
             ArmOperation<InventoryItemResource> lro = await inventoryItem.UpdateAsync(WaitUntil.Completed, data);
             InventoryItemResource result = lro.Value;
 
