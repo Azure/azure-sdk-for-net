@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var setLro = await setCollection.CreateOrUpdateAsync(WaitUntil.Completed, setName, setData);
             var setResource = setLro.Value;
             var vmCollection = rg.GetVirtualMachines();
-            var vmLro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, vmData);
+            var vmLro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, vmData, default);
             var vmResource = vmLro.Value;
 
             Assert.AreEqual(setId, setResource.Id);
