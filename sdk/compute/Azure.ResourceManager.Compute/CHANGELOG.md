@@ -2,15 +2,9 @@
 
 ## 1.3.0 (2023-12-29)
 
-- Compute RP to `2023-09-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
-
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Compute RP to `2023-09-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
 
 ## 1.2.1 (2023-11-21)
 
