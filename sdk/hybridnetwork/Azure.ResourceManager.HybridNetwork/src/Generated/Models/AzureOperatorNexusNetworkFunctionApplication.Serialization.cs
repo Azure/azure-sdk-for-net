@@ -44,32 +44,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     case "ImageFile": return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element);
                 }
             }
-            AzureOperatorNexusArtifactType artifactType = default;
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("artifactType"u8))
-                {
-                    artifactType = new AzureOperatorNexusArtifactType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dependsOnProfile"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
-                    continue;
-                }
-            }
-            return new AzureOperatorNexusNetworkFunctionApplication(name.Value, dependsOnProfile.Value, artifactType);
+            return UnknownAzureOperatorNexusNetworkFunctionApplication.DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(element);
         }
     }
 }
