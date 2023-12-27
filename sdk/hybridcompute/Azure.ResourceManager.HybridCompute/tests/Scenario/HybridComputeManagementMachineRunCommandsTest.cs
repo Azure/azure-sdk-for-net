@@ -26,38 +26,38 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
             }
         }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanCreateMachineRunCommand()
-        // {
-        //     MachineRunCommandData resourceData = await createRunCommand();
-        //     Assert.AreEqual(runCommandName, resourceData.Name);
-        // }
+        [TestCase]
+        [RecordedTest]
+        public async Task CanCreateMachineRunCommand()
+        {
+            MachineRunCommandData resourceData = await createRunCommand();
+            Assert.AreEqual(runCommandName, resourceData.Name);
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanUpdateMachineRunCommand()
-        // {
-        //     MachineRunCommandData resourceData = await updateRunCommand();
-        //     Assert.AreEqual(runCommandName, resourceData.Name);
-        // }
+        [TestCase]
+        [RecordedTest]
+        public async Task CanUpdateMachineRunCommand()
+        {
+            MachineRunCommandData resourceData = await updateRunCommand();
+            Assert.AreEqual(runCommandName, resourceData.Name);
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanGetMachineRunCommand()
-        // {
-        //     MachineRunCommandData resourceData = await getRunCommand();
-        //     Assert.AreEqual(runCommandName, resourceData.Name);
-        // }
+        [TestCase]
+        [RecordedTest]
+        public async Task CanGetMachineRunCommand()
+        {
+            MachineRunCommandData resourceData = await getRunCommand();
+            Assert.AreEqual(runCommandName, resourceData.Name);
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanGetMachineRunCommandCollection()
-        // {
-        //     MachineRunCommandCollection resourceCollection = await getRunCommandCollection();
-        //     string collectionId = "/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.HybridCompute/machines/" + machineName;
-        //     Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
-        // }
+        [TestCase]
+        [RecordedTest]
+        public async Task CanGetMachineRunCommandCollection()
+        {
+            MachineRunCommandCollection resourceCollection = await getRunCommandCollection();
+            string collectionId = "/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.HybridCompute/machines/" + machineName;
+            Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
+        }
 
         [TestCase]
         [RecordedTest]

@@ -17,67 +17,67 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         {
         }
 
-        // [SetUp]
-        // public async Task ClearAndInitialize()
-        // {
-        //     if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-        //     {
-        //         await InitializeClients();
-        //     }
-        // }
+        [SetUp]
+        public async Task ClearAndInitialize()
+        {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await InitializeClients();
+            }
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanGetMachine()
-        // {
-        //     HybridComputeMachineData resourceData = await getMachine();
+        [TestCase]
+        [RecordedTest]
+        public async Task CanGetMachine()
+        {
+            HybridComputeMachineData resourceData = await getMachine();
 
-        //     Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
-        //     Debug.WriteLine($"Succeeded on name: {resourceData.Name}");
-        //     Assert.AreEqual(machineName, resourceData.Name);
-        // }
+            Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Debug.WriteLine($"Succeeded on name: {resourceData.Name}");
+            Assert.AreEqual(machineName, resourceData.Name);
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanGetMachineCollection()
-        // {
-        //     HybridComputeMachineCollection resourceCollection = await getMachineCollection();
+        [TestCase]
+        [RecordedTest]
+        public async Task CanGetMachineCollection()
+        {
+            HybridComputeMachineCollection resourceCollection = await getMachineCollection();
 
-        //     Debug.WriteLine($"Succeeded on id: {resourceCollection.Id}");
-        //     string collectionId = "/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName;
-        //     Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
-        // }
+            Debug.WriteLine($"Succeeded on id: {resourceCollection.Id}");
+            string collectionId = "/subscriptions/" + subscriptionId + "/resourcegroups/" + resourceGroupName;
+            Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanUpdateMachine()
-        // {
-        //     HybridComputeMachineData resourceData = await updateMachine();
+        [TestCase]
+        [RecordedTest]
+        public async Task CanUpdateMachine()
+        {
+            HybridComputeMachineData resourceData = await updateMachine();
 
-        //     Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
-        //     Assert.AreEqual(machineName, resourceData.Name.ToString());
-        // }
+            Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Assert.AreEqual(machineName, resourceData.Name.ToString());
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanInstallPatch(){
-        //     MachineInstallPatchesResult resourceData = await installPatch();
+        [TestCase]
+        [RecordedTest]
+        public async Task CanInstallPatch(){
+            MachineInstallPatchesResult resourceData = await installPatch();
 
-        //     Assert.NotNull(resourceData.Status.ToString());
-        // }
+            Assert.NotNull(resourceData.Status.ToString());
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanAssessPatch(){
-        //     MachineAssessPatchesResult resourceData = await assessPatch();
+        [TestCase]
+        [RecordedTest]
+        public async Task CanAssessPatch(){
+            MachineAssessPatchesResult resourceData = await assessPatch();
 
-        //     Assert.AreEqual("Succeeded", resourceData.Status.ToString());
-        // }
+            Assert.AreEqual("Succeeded", resourceData.Status.ToString());
+        }
 
-        // [TestCase]
-        // [RecordedTest]
-        // public async Task CanDeleteMachine(){
-        //     await deleteMachine();
-        // }
+        [TestCase]
+        [RecordedTest]
+        public async Task CanDeleteMachine(){
+            await deleteMachine();
+        }
     }
 }
