@@ -161,24 +161,5 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             return ((IJsonModel<object>)model).Create(ref reader, options);
         }
     }
-
-    public class ModelJsonConverterStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
-    {
-        public override bool IsExplicitJsonWrite => true;
-        public override bool IsExplicitJsonRead => true;
-
-        public override BinaryData Write(T model, ModelReaderWriterOptions options)
-        {
-            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.Converters.Add(new ModelJsonConverter(options));
-            return BinaryData.FromString(JsonSerializer.Serialize(model, jsonSerializerOptions));
-        }
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
-        {
-            JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions();
-            jsonSerializerOptions.Converters.Add(new ModelJsonConverter(options));
-            return JsonSerializer.Deserialize<T>(payload, jsonSerializerOptions) ?? throw new InvalidOperationException($"Reading model of type {model.GetType().Name} resulted in null");
-        }
-    }
 }
 #pragma warning restore SA1402 // File may only contain a single type

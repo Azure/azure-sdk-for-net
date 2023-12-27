@@ -23,6 +23,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskId = diskId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateDiskContent"/>. </summary>
+        /// <param name="diskId"> The disk Id. </param>
+        /// <param name="targetDiskName"> The target disk name. </param>
+        internal UpdateDiskContent(string diskId, string targetDiskName)
+        {
+            DiskId = diskId;
+            TargetDiskName = targetDiskName;
+        }
+
         /// <summary> The disk Id. </summary>
         public string DiskId { get; }
         /// <summary> The target disk name. </summary>

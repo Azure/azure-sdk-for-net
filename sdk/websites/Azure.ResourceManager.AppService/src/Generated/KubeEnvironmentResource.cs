@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppService
         private readonly KubeEnvironmentsRestOperations _kubeEnvironmentRestClient;
         private readonly KubeEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/kubeEnvironments";
+
         /// <summary> Initializes a new instance of the <see cref="KubeEnvironmentResource"/> class for mocking. </summary>
         protected KubeEnvironmentResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/kubeEnvironments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmResizeContent"/>. </summary>
+        /// <param name="size"> Specifies the size of the virtual machine. </param>
+        internal DevTestLabVmResizeContent(string size)
+        {
+            Size = size;
+        }
+
         /// <summary> Specifies the size of the virtual machine. </summary>
         public string Size { get; set; }
     }

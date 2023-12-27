@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly ClustersRestOperations _streamAnalyticsClusterClustersRestClient;
         private readonly StreamAnalyticsClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="StreamAnalyticsClusterResource"/> class for mocking. </summary>
         protected StreamAnalyticsClusterResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

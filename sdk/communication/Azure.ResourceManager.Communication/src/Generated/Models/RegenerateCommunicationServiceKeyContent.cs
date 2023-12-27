@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Communication.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RegenerateCommunicationServiceKeyContent"/>. </summary>
+        /// <param name="keyType"> The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive). </param>
+        internal RegenerateCommunicationServiceKeyContent(CommunicationServiceKeyType? keyType)
+        {
+            KeyType = keyType;
+        }
+
         /// <summary> The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive). </summary>
         public CommunicationServiceKeyType? KeyType { get; set; }
     }

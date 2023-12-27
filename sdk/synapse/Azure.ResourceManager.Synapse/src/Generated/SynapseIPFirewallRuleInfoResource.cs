@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly IpFirewallRulesRestOperations _synapseIPFirewallRuleInfoIPFirewallRulesRestClient;
         private readonly SynapseIPFirewallRuleInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseIPFirewallRuleInfoResource"/> class for mocking. </summary>
         protected SynapseIPFirewallRuleInfoResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

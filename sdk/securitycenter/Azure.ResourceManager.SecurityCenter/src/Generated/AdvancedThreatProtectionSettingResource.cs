@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly AdvancedThreatProtectionRestOperations _advancedThreatProtectionSettingAdvancedThreatProtectionRestClient;
         private readonly AdvancedThreatProtectionSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/advancedThreatProtectionSettings";
+
         /// <summary> Initializes a new instance of the <see cref="AdvancedThreatProtectionSettingResource"/> class for mocking. </summary>
         protected AdvancedThreatProtectionSettingResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/advancedThreatProtectionSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

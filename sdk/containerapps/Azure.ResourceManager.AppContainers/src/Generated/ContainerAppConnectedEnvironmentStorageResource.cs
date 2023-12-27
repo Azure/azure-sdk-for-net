@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ConnectedEnvironmentsStoragesRestOperations _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient;
         private readonly ContainerAppConnectedEnvironmentStorageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments/storages";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentStorageResource"/> class for mocking. </summary>
         protected ContainerAppConnectedEnvironmentStorageResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments/storages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

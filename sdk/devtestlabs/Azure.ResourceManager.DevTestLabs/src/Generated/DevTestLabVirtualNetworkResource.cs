@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly VirtualNetworksRestOperations _devTestLabVirtualNetworkVirtualNetworksRestClient;
         private readonly DevTestLabVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/virtualnetworks";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabVirtualNetworkResource"/> class for mocking. </summary>
         protected DevTestLabVirtualNetworkResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/virtualnetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

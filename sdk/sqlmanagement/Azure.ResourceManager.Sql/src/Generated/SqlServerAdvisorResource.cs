@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerAdvisorsRestOperations _sqlServerAdvisorServerAdvisorsRestClient;
         private readonly SqlAdvisorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/advisors";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerAdvisorResource"/> class for mocking. </summary>
         protected SqlServerAdvisorResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/advisors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

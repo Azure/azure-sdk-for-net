@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly DataCollectionRuleAssociationsRestOperations _dataCollectionRuleAssociationRestClient;
         private readonly DataCollectionRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionRules";
+
         /// <summary> Initializes a new instance of the <see cref="DataCollectionRuleResource"/> class for mocking. </summary>
         protected DataCollectionRuleResource()
         {
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

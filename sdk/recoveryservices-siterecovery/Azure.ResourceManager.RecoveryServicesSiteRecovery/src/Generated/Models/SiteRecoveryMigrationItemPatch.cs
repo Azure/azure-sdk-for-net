@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemPatch"/>. </summary>
+        /// <param name="properties"> Update migration item input properties. </param>
+        internal SiteRecoveryMigrationItemPatch(UpdateMigrationItemProperties properties)
+        {
+            Properties = properties;
+        }
+
         /// <summary> Update migration item input properties. </summary>
         internal UpdateMigrationItemProperties Properties { get; set; }
         /// <summary>

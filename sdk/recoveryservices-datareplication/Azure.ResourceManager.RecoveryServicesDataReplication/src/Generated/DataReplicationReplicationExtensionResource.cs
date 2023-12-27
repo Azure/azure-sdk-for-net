@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly ReplicationExtensionRestOperations _dataReplicationReplicationExtensionReplicationExtensionRestClient;
         private readonly DataReplicationReplicationExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/replicationExtensions";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationReplicationExtensionResource"/> class for mocking. </summary>
         protected DataReplicationReplicationExtensionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/replicationExtensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

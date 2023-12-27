@@ -101,6 +101,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
   - [Query metrics with options](#query-metrics-with-options)
+  - [Get metrics namespaces](#get-metrics-namespaces)
   - [Split a metric by dimension](#split-a-metric-by-dimension)
 - [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 
@@ -546,6 +547,22 @@ foreach (MetricTimeSeriesElement element in metric.TimeSeries)
 }
 ```
 
+#### Get metrics namespaces
+
+To programmatically retrieve metrics namespaces, use the following code:
+    
+```C# Snippet:GetMetricsNamespaces
+string resourceId =
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+var client = new MetricsQueryClient(new DefaultAzureCredential());
+AsyncPageable<MetricNamespace> metricNamespaces = client.GetMetricNamespacesAsync(resourceId);
+
+await foreach (var metricNamespace in metricNamespaces)
+{
+    Console.WriteLine($"Metric namespace = {metricNamespace.Name}");
+}
+```
+
 #### Split a metric by dimension
 
 The [MetricsQueryOptions.Filter](https://learn.microsoft.com/dotnet/api/azure.monitor.query.metricsqueryoptions.filter?view=azure-dotnet#azure-monitor-query-metricsqueryoptions-filter) property can be used for [splitting a metric](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-charts#metric-splitting) by a dimension when its filter value is set to an asterisk. Consider the following example for an App Service resource named *TestWebApp*. The code queries the resource's `Http2xx` metric and splits it by the `Instance` dimension.
@@ -596,12 +613,12 @@ Note, each resource must be in the same region as the endpoint passed in when in
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
+Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
     resourceIds: new List<string> { resourceId },
     metricNames: new List<string> { "Ingress" },
     metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
+MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
 foreach (var value in metricsQueryResults.Values)
 {
     Console.WriteLine(value.Interval);

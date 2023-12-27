@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Relay
         private readonly WCFRelaysRestOperations _wcfRelayAuthorizationRuleWCFRelaysRestClient;
         private readonly RelayAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/wcfRelays/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="WcfRelayAuthorizationRuleResource"/> class for mocking. </summary>
         protected WcfRelayAuthorizationRuleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/wcfRelays/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

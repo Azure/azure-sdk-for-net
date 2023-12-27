@@ -66,17 +66,32 @@ namespace Azure.Identity.Tests
             }
         }
 
+        public static IEnumerable<object[]> ExcludeCredOptions()
+        {
+            yield return new object[] { false, true, false, false, false, false, false, false, false, false };
+            yield return new object[] { false, false, true, false, false, false, false, false, false, false };
+            yield return new object[] { true, false, false, false, false, false, false, false, false, false };
+            yield return new object[] { false, false, false, true, false, false, false, false, false, false };
+            yield return new object[] { false, false, false, false, true, false, false, false, false, false };
+            yield return new object[] { false, false, false, false, false, true, false, false, false, false };
+            yield return new object[] { false, false, false, false, false, false, true, false, false, false };
+            yield return new object[] { false, false, false, false, false, false, false, true, false, false };
+            yield return new object[] { false, false, false, false, false, false, false, false, true, false };
+            yield return new object[] { false, false, false, false, false, false, false, false, false, true };
+        }
+
         [Test]
-        public void ValidateAllUnavailable([Values(true, false)] bool excludeEnvironmentCredential,
-                                           [Values(true, false)] bool excludeWorkloadIdentityCredential,
-                                           [Values(true, false)] bool excludeManagedIdentityCredential,
-                                           [Values(true, false)] bool excludeDeveloperCliCredential,
-                                           [Values(true, false)] bool excludeSharedTokenCacheCredential,
-                                           [Values(true, false)] bool excludeVisualStudioCredential,
-                                           [Values(true, false)] bool excludeVisualStudioCodeCredential,
-                                           [Values(true, false)] bool excludeCliCredential,
-                                           [Values(true, false)] bool excludePowerShellCredential,
-                                           [Values(true, false)] bool excludeInteractiveBrowserCredential)
+        [TestCaseSource(nameof(ExcludeCredOptions))]
+        public void ValidateAllUnavailable(bool excludeEnvironmentCredential,
+                                           bool excludeWorkloadIdentityCredential,
+                                           bool excludeManagedIdentityCredential,
+                                           bool excludeDeveloperCliCredential,
+                                           bool excludeSharedTokenCacheCredential,
+                                           bool excludeVisualStudioCredential,
+                                           bool excludeVisualStudioCodeCredential,
+                                           bool excludeCliCredential,
+                                           bool excludePowerShellCredential,
+                                           bool excludeInteractiveBrowserCredential)
         {
             if (excludeEnvironmentCredential && excludeWorkloadIdentityCredential && excludeManagedIdentityCredential && excludeDeveloperCliCredential && excludeSharedTokenCacheCredential && excludeVisualStudioCredential && excludeVisualStudioCodeCredential && excludeCliCredential && excludeInteractiveBrowserCredential)
             {
@@ -94,7 +109,7 @@ namespace Azure.Identity.Tests
                 ExcludeVisualStudioCodeCredential = excludeVisualStudioCodeCredential,
                 ExcludeAzureCliCredential = excludeCliCredential,
                 ExcludeAzurePowerShellCredential = excludePowerShellCredential,
-                ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential
+                ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential,
             };
 
             var credFactory = new MockDefaultAzureCredentialFactory(options);

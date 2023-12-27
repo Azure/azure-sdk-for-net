@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -10,9 +10,31 @@
 
 ### Other Changes
 
+## 1.1.0-beta.4 (2023-12-12)
+
+### Features Added
+
+- Added support for NSP API's
+- Added support for SystemTopic with MonitorDestination.
+- Added support for SystemTopic/CustomTopic with NamespaceTopic as destination.
+- Added support for Namespace subscription to EventHub.
+- Added support for Namespace with deadletter.
+
+## 1.1.0-beta.3 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+
 ## 1.1.0-beta.2 (2023-06-27)
 
 ### Features Added
+
 - Added support for Namespace
 - Added support for Namespace Topics.
 - Added support for Namespace Topic EventSubscriptions.

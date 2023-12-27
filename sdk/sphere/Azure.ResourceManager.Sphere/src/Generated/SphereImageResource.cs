@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sphere
         private readonly ImagesRestOperations _sphereImageImagesRestClient;
         private readonly SphereImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/images";
+
         /// <summary> Initializes a new instance of the <see cref="SphereImageResource"/> class for mocking. </summary>
         protected SphereImageResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/images";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

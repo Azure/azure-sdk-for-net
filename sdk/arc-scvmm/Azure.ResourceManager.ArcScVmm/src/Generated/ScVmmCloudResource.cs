@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ArcScVmm
         private readonly CloudsRestOperations _scVmmCloudCloudsRestClient;
         private readonly ScVmmCloudData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/clouds";
+
         /// <summary> Initializes a new instance of the <see cref="ScVmmCloudResource"/> class for mocking. </summary>
         protected ScVmmCloudResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ArcScVmm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ScVmm/clouds";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

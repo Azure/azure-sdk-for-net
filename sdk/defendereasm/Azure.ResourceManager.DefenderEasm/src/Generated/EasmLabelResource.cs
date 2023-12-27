@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DefenderEasm
         private readonly LabelsRestOperations _easmLabelLabelsRestClient;
         private readonly EasmLabelData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Easm/workspaces/labels";
+
         /// <summary> Initializes a new instance of the <see cref="EasmLabelResource"/> class for mocking. </summary>
         protected EasmLabelResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DefenderEasm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Easm/workspaces/labels";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

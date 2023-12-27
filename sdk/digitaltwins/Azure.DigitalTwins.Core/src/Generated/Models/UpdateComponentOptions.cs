@@ -14,6 +14,17 @@ namespace Azure.DigitalTwins.Core
         public UpdateComponentOptions()
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateComponentOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="ifMatch"> Only perform the operation if the entity's etag matches one of the etags provided or * is provided. </param>
+        internal UpdateComponentOptions(string traceParent, string traceState, string ifMatch)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
+            IfMatch = ifMatch;
+        }
         /// <summary> Only perform the operation if the entity's etag matches one of the etags provided or * is provided. </summary>
         public string IfMatch { get; set; }
     }

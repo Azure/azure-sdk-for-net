@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly FeaturesetVersionsRestOperations _machineLearningFeatureSetVersionFeaturesetVersionsRestClient;
         private readonly MachineLearningFeatureSetVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/featuresets/versions";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningFeatureSetVersionResource"/> class for mocking. </summary>
         protected MachineLearningFeatureSetVersionResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/featuresets/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

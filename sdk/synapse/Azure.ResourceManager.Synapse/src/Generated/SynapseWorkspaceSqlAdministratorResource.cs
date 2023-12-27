@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly WorkspaceSqlAadAdminsRestOperations _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient;
         private readonly SynapseWorkspaceAadAdminInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlAdministrators";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseWorkspaceSqlAdministratorResource"/> class for mocking. </summary>
         protected SynapseWorkspaceSqlAdministratorResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlAdministrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

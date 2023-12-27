@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sphere
         private readonly DeviceGroupsRestOperations _sphereDeviceGroupDeviceGroupsRestClient;
         private readonly SphereDeviceGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/products/deviceGroups";
+
         /// <summary> Initializes a new instance of the <see cref="SphereDeviceGroupResource"/> class for mocking. </summary>
         protected SphereDeviceGroupResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sphere
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureSphere/catalogs/products/deviceGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

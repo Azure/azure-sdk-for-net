@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly GatewayCustomDomainsRestOperations _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient;
         private readonly AppPlatformGatewayCustomDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/gateways/domains";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformGatewayCustomDomainResource"/> class for mocking. </summary>
         protected AppPlatformGatewayCustomDomainResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/gateways/domains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

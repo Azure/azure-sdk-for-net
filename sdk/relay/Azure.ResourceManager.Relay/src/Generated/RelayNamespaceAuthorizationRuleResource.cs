@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Relay
         private readonly NamespacesRestOperations _relayNamespaceAuthorizationRuleNamespacesRestClient;
         private readonly RelayAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="RelayNamespaceAuthorizationRuleResource"/> class for mocking. </summary>
         protected RelayNamespaceAuthorizationRuleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

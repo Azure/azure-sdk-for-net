@@ -9,6 +9,7 @@
   SDKType values
    - "all" will build all projects
    - "client" will build the new track 2 client/data libraries
+   - "functions" will build the functions libraries
    - "mgmtclient" will build the track 2 mgmt libraries
    - "data" will build the track 1 data plane libraries
 -->
@@ -16,6 +17,9 @@
 <Project>
   <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(SDKType)' == 'functions'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.EventHubs\**\*.csproj" />
   </ItemGroup>
 

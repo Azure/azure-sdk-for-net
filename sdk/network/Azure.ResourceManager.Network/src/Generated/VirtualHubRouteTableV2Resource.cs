@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualHubRouteTableV2SRestOperations _virtualHubRouteTableV2RestClient;
         private readonly VirtualHubRouteTableV2Data _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/routeTables";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualHubRouteTableV2Resource"/> class for mocking. </summary>
         protected VirtualHubRouteTableV2Resource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/routeTables";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

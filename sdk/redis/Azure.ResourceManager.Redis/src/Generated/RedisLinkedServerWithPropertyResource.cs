@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Redis
         private readonly LinkedServerRestOperations _redisLinkedServerWithPropertyLinkedServerRestClient;
         private readonly RedisLinkedServerWithPropertyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/linkedServers";
+
         /// <summary> Initializes a new instance of the <see cref="RedisLinkedServerWithPropertyResource"/> class for mocking. </summary>
         protected RedisLinkedServerWithPropertyResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Redis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cache/redis/linkedServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

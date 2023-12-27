@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private readonly IotDpsResourceRestOperations _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient;
         private readonly DeviceProvisioningServicesPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateLinkResource"/> class for mocking. </summary>
         protected DeviceProvisioningServicesPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

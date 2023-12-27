@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly RulesRestOperations _serviceBusRuleRulesRestClient;
         private readonly ServiceBusRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusRuleResource"/> class for mocking. </summary>
         protected ServiceBusRuleResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Billing
         private readonly BillingSubscriptionsRestOperations _billingSubscriptionRestClient;
         private readonly BillingSubscriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingSubscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="BillingSubscriptionResource"/> class for mocking. </summary>
         protected BillingSubscriptionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Billing
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingSubscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ManagementGroups
         private readonly ManagementGroupsRestOperations _managementGroupRestClient;
         private readonly ManagementGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Management/managementGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ManagementGroupResource"/> class for mocking. </summary>
         protected ManagementGroupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ManagementGroups
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Management/managementGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

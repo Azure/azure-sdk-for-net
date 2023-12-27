@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         private readonly AccountsRestOperations _dataLakeAnalyticsAccountAccountsRestClient;
         private readonly DataLakeAnalyticsAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="DataLakeAnalyticsAccountResource"/> class for mocking. </summary>
         protected DataLakeAnalyticsAccountResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataLakeAnalytics/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

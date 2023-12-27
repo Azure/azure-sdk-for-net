@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventHubs
         private readonly PrivateEndpointConnectionsRestOperations _eventHubsPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly EventHubsPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected EventHubsPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

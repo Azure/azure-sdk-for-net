@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppService
         private readonly CertificatesRestOperations _appCertificateCertificatesRestClient;
         private readonly AppCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="AppCertificateResource"/> class for mocking. </summary>
         protected AppCertificateResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.CostManagement
         private readonly ScheduledActionsRestOperations _tenantScheduledActionScheduledActionsRestClient;
         private readonly ScheduledActionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/scheduledActions";
+
         /// <summary> Initializes a new instance of the <see cref="TenantScheduledActionResource"/> class for mocking. </summary>
         protected TenantScheduledActionResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.CostManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/scheduledActions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

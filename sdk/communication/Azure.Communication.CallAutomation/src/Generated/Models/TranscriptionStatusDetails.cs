@@ -31,6 +31,12 @@ namespace Azure.Communication.CallAutomation
         private const string SpeechServicesConnectionErrorValue = "speechServicesConnectionError";
         private const string SubscriptionStoppedValue = "subscriptionStopped";
         private const string UnspecifiedErrorValue = "unspecifiedError";
+        private const string AuthenticationFailureValue = "authenticationFailure";
+        private const string BadRequestValue = "badRequest";
+        private const string TooManyRequestsValue = "tooManyRequests";
+        private const string ForbiddenValue = "forbidden";
+        private const string ServiceTimeoutValue = "serviceTimeout";
+        private const string TranscriptionLocaleUpdatedValue = "transcriptionLocaleUpdated";
 
         /// <summary> subscriptionStarted. </summary>
         public static TranscriptionStatusDetails SubscriptionStarted { get; } = new TranscriptionStatusDetails(SubscriptionStartedValue);
@@ -50,6 +56,18 @@ namespace Azure.Communication.CallAutomation
         public static TranscriptionStatusDetails SubscriptionStopped { get; } = new TranscriptionStatusDetails(SubscriptionStoppedValue);
         /// <summary> unspecifiedError. </summary>
         public static TranscriptionStatusDetails UnspecifiedError { get; } = new TranscriptionStatusDetails(UnspecifiedErrorValue);
+        /// <summary> authenticationFailure. </summary>
+        public static TranscriptionStatusDetails AuthenticationFailure { get; } = new TranscriptionStatusDetails(AuthenticationFailureValue);
+        /// <summary> badRequest. </summary>
+        public static TranscriptionStatusDetails BadRequest { get; } = new TranscriptionStatusDetails(BadRequestValue);
+        /// <summary> tooManyRequests. </summary>
+        public static TranscriptionStatusDetails TooManyRequests { get; } = new TranscriptionStatusDetails(TooManyRequestsValue);
+        /// <summary> forbidden. </summary>
+        public static TranscriptionStatusDetails Forbidden { get; } = new TranscriptionStatusDetails(ForbiddenValue);
+        /// <summary> serviceTimeout. </summary>
+        public static TranscriptionStatusDetails ServiceTimeout { get; } = new TranscriptionStatusDetails(ServiceTimeoutValue);
+        /// <summary> transcriptionLocaleUpdated. </summary>
+        public static TranscriptionStatusDetails TranscriptionLocaleUpdated { get; } = new TranscriptionStatusDetails(TranscriptionLocaleUpdatedValue);
         /// <summary> Determines if two <see cref="TranscriptionStatusDetails"/> values are the same. </summary>
         public static bool operator ==(TranscriptionStatusDetails left, TranscriptionStatusDetails right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TranscriptionStatusDetails"/> values are not the same. </summary>

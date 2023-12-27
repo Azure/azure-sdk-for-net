@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionPatch"/>. </summary>
+        /// <param name="tags"> Instance patch properties. </param>
+        /// <param name="identity"> The managed identity for the DigitalTwinsInstance. </param>
+        /// <param name="properties"> Properties for the DigitalTwinsInstance. </param>
+        internal DigitalTwinsDescriptionPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DigitalTwinsPatchProperties properties)
+        {
+            Tags = tags;
+            Identity = identity;
+            Properties = properties;
+        }
+
         /// <summary> Instance patch properties. </summary>
         public IDictionary<string, string> Tags { get; set; }
         /// <summary> The managed identity for the DigitalTwinsInstance. </summary>

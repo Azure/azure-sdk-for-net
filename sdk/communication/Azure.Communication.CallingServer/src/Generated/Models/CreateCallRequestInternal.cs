@@ -32,6 +32,21 @@ namespace Azure.Communication.CallingServer
             CallbackUri = callbackUri;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CreateCallRequestInternal"/>. </summary>
+        /// <param name="targets"> The targets of the call. </param>
+        /// <param name="source"> The source of the call. </param>
+        /// <param name="subject"> The subject. </param>
+        /// <param name="callbackUri"> The callback URI. </param>
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, CallSourceInternal source, string subject, string callbackUri, MediaStreamingOptionsInternal mediaStreamingConfiguration)
+        {
+            Targets = targets;
+            Source = source;
+            Subject = subject;
+            CallbackUri = callbackUri;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
+        }
+
         /// <summary> The targets of the call. </summary>
         public IList<CommunicationIdentifierModel> Targets { get; }
         /// <summary> The source of the call. </summary>

@@ -24,6 +24,7 @@ namespace Azure.Identity
         private readonly IProcessService _processService;
         internal TimeSpan ProcessTimeout { get; private set; }
         internal bool UseLegacyPowerShell { get; set; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
         internal const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
@@ -40,7 +41,7 @@ namespace Azure.Identity
         private readonly bool _logAccountDetails;
         internal readonly bool _isChainedCredential;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
-        internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
+        internal const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
         internal const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
 
@@ -66,6 +67,7 @@ namespace Azure.Identity
             TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(10);
             _isChainedCredential = options?.IsChainedCredential ?? false;

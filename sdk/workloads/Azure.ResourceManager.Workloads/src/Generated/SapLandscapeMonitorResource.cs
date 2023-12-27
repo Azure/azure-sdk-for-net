@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Workloads
         private readonly SapLandscapeMonitorRestOperations _sapLandscapeMonitorRestClient;
         private readonly SapLandscapeMonitorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors/sapLandscapeMonitor";
+
         /// <summary> Initializes a new instance of the <see cref="SapLandscapeMonitorResource"/> class for mocking. </summary>
         protected SapLandscapeMonitorResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Workloads
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors/sapLandscapeMonitor";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

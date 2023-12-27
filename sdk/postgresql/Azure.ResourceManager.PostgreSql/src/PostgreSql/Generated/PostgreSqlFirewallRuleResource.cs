@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly FirewallRulesRestOperations _postgreSqlFirewallRuleFirewallRulesRestClient;
         private readonly PostgreSqlFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlFirewallRuleResource"/> class for mocking. </summary>
         protected PostgreSqlFirewallRuleResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

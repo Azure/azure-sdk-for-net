@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteVirtualNetworkConnectionGatewayWebAppsRestClient;
         private readonly AppServiceVirtualNetworkGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/virtualNetworkConnections/gateways";
+
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionGatewayResource"/> class for mocking. </summary>
         protected SiteVirtualNetworkConnectionGatewayResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/virtualNetworkConnections/gateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

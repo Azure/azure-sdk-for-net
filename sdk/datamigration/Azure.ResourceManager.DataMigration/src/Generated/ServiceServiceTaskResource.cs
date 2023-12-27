@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataMigration
         private readonly ServiceTasksRestOperations _serviceServiceTaskServiceTasksRestClient;
         private readonly ProjectTaskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataMigration/services/serviceTasks";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceServiceTaskResource"/> class for mocking. </summary>
         protected ServiceServiceTaskResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataMigration/services/serviceTasks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

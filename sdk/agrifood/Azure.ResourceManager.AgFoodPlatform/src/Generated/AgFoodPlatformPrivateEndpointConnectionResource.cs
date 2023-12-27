@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
         private readonly PrivateEndpointConnectionsRestOperations _agFoodPlatformPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly AgFoodPlatformPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected AgFoodPlatformPrivateEndpointConnectionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
