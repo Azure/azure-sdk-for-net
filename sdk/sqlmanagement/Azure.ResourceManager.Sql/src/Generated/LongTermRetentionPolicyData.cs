@@ -7,6 +7,7 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -26,18 +27,26 @@ namespace Azure.ResourceManager.Sql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="makeBackupsImmutable"> The setting whether to make LTR backups immutable. </param>
+        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backups. </param>
         /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
-        internal LongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear) : base(id, name, resourceType, systemData)
+        internal LongTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? makeBackupsImmutable, BackupStorageAccessTier? backupStorageAccessTier, string weeklyRetention, string monthlyRetention, string yearlyRetention, int? weekOfYear) : base(id, name, resourceType, systemData)
         {
+            MakeBackupsImmutable = makeBackupsImmutable;
+            BackupStorageAccessTier = backupStorageAccessTier;
             WeeklyRetention = weeklyRetention;
             MonthlyRetention = monthlyRetention;
             YearlyRetention = yearlyRetention;
             WeekOfYear = weekOfYear;
         }
 
+        /// <summary> The setting whether to make LTR backups immutable. </summary>
+        public bool? MakeBackupsImmutable { get; set; }
+        /// <summary> The BackupStorageAccessTier for the LTR backups. </summary>
+        public BackupStorageAccessTier? BackupStorageAccessTier { get; set; }
         /// <summary> The weekly retention policy for an LTR backup in an ISO 8601 format. </summary>
         public string WeeklyRetention { get; set; }
         /// <summary> The monthly retention policy for an LTR backup in an ISO 8601 format. </summary>

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Set or update a database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Sets a database's long term retention policy.
+        /// Set or update a database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
