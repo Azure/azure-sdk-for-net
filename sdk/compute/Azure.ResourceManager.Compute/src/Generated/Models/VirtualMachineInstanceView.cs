@@ -38,7 +38,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="patchStatus"> [Preview Feature] The status of virtual machine patch operations. </param>
-        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus)
+        /// <param name="isVmInStandbyPool"> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </param>
+        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus, bool? isVmInStandbyPool)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
             AssignedHost = assignedHost;
             Statuses = statuses;
             PatchStatus = patchStatus;
+            IsVmInStandbyPool = isVmInStandbyPool;
         }
 
         /// <summary> Specifies the update domain of the virtual machine. </summary>
@@ -96,5 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
         /// <summary> [Preview Feature] The status of virtual machine patch operations. </summary>
         public VirtualMachinePatchStatus PatchStatus { get; }
+        /// <summary> [Preview Feature] Specifies whether the VM is currently in or out of the Standby Pool. </summary>
+        public bool? IsVmInStandbyPool { get; }
     }
 }
