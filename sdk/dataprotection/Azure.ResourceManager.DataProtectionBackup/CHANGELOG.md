@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0 (2023-12-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Stable version release for API version 2023-11-01.
 
 ## 1.4.0-beta.1 (2023-12-13)
 
