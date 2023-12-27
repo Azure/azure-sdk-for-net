@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.7 (2023-12-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added run commands for hybrid machine
 
 ## 1.0.0-beta.6 (2023-11-29)
 
