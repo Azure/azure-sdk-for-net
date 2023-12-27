@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinimalTlsVersion);
+                writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
