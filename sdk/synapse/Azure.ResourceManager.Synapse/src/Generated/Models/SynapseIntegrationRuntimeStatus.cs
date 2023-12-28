@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Please note <see cref="SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SynapseManagedIntegrationRuntimeStatus"/> and <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>.
     /// </summary>
-    public partial class SynapseIntegrationRuntimeStatus
+    public abstract partial class SynapseIntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeStatus"/>. </summary>
-        internal SynapseIntegrationRuntimeStatus()
+        protected SynapseIntegrationRuntimeStatus()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
