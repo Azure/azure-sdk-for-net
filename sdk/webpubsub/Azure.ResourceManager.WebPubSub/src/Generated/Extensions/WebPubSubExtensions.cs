@@ -139,6 +139,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/webPubSub</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +172,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/webPubSub</description>
         /// </item>
         /// </list>
         /// <item>
@@ -199,6 +207,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/webPubSub</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -227,6 +239,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/webPubSub</description>
         /// </item>
         /// </list>
         /// <item>
@@ -257,6 +273,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/webPubSub</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -284,6 +304,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/webPubSub</description>
         /// </item>
         /// </list>
         /// <item>

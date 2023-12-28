@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
@@ -113,6 +117,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,6 +160,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
@@ -176,6 +188,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
@@ -199,6 +215,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,6 +256,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
@@ -271,6 +295,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,6 +337,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

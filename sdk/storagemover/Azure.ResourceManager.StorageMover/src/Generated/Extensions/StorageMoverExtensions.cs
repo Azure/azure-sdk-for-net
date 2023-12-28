@@ -176,6 +176,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageMover/storageMovers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -205,6 +209,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageMover/storageMovers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -236,6 +244,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>StorageMovers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageMover/storageMovers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -263,6 +275,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageMovers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageMover/storageMovers</description>
         /// </item>
         /// </list>
         /// <item>

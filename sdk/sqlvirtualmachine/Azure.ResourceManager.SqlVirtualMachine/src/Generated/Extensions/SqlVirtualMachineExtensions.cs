@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -148,6 +152,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
         /// </item>
         /// </list>
         /// <item>
@@ -196,6 +204,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -226,6 +238,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
         /// </item>
         /// </list>
         /// <item>
@@ -258,6 +274,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,6 +305,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
         /// </item>
         /// </list>
         /// <item>
@@ -314,6 +338,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -341,6 +369,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
         /// </item>
         /// </list>
         /// <item>

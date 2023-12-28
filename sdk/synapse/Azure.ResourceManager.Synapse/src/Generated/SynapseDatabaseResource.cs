@@ -120,6 +120,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
@@ -142,6 +146,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,6 +181,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -196,6 +208,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -218,6 +234,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +271,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -282,6 +306,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,6 +345,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -350,6 +382,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,6 +425,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabases_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -427,6 +467,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the data connection. </param>
@@ -461,6 +505,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the data connection. </param>
@@ -494,6 +542,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_dataConnectionValidation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,6 +585,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDataConnections_dataConnectionValidation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -571,6 +627,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -604,6 +664,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPoolDatabasePrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments</description>
         /// </item>
         /// </list>
         /// </summary>

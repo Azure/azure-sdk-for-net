@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>GetPublishingUser</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/publishingUsers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>GetPublishingUser</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/publishingUsers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +169,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UpdatePublishingUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/publishingUsers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +211,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UpdatePublishingUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/publishingUsers</description>
         /// </item>
         /// </list>
         /// </summary>

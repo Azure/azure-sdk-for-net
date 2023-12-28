@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// <term>Operation Id</term>
         /// <description>DiskPools_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StoragePool/diskPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,6 +87,10 @@ namespace Azure.ResourceManager.StoragePool.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StoragePool/diskPools</description>
         /// </item>
         /// </list>
         /// </summary>

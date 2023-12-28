@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
@@ -102,6 +106,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,6 +149,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_ListStateChanges</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
@@ -167,6 +179,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_ListStateChanges</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
@@ -192,6 +208,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,6 +249,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
@@ -264,6 +288,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +330,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
         /// </item>
         /// </list>
         /// </summary>

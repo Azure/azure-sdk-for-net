@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
         /// </item>
         /// </list>
         /// </summary>

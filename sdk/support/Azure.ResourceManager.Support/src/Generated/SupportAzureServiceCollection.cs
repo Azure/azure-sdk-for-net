@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
@@ -101,6 +105,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +147,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Services_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +172,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Services_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,6 +196,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +236,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
@@ -250,6 +274,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,6 +315,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
         /// </item>
         /// </list>
         /// </summary>

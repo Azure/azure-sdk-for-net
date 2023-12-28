@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Subscription/aliases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Subscription/aliases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,6 +130,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Subscription/policies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -144,6 +156,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Subscription/policies</description>
         /// </item>
         /// </list>
         /// </summary>

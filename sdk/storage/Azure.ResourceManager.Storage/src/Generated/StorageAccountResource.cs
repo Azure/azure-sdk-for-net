@@ -129,6 +129,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -151,6 +155,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +190,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/objectReplicationPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="objectReplicationPolicyId"> For the destination account, provide the value 'default'. Configure the policy on the destination account first. For the source account, provide the value of the policy ID that is returned when you download the policy that was defined on the destination account. The policy is downloaded as a JSON file. </param>
@@ -204,6 +216,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ObjectReplicationPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/objectReplicationPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,6 +251,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>LocalUsers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/localUsers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
@@ -257,6 +277,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalUsers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/localUsers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +312,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/encryptionScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="encryptionScopeName"> The name of the encryption scope within the specified storage account. Encryption scope names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
@@ -310,6 +338,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/encryptionScopes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,6 +394,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
@@ -395,6 +431,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus. </param>
@@ -427,6 +467,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -462,6 +506,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -495,6 +543,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -530,6 +582,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The parameters to provide for the updated account. </param>
@@ -564,6 +620,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
@@ -586,6 +646,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
@@ -607,6 +671,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -633,6 +701,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_RegenerateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
@@ -657,6 +729,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_ListAccountSAS</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -692,6 +768,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_ListAccountSAS</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters to provide to list SAS credentials for the storage account. </param>
@@ -725,6 +805,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_ListServiceSAS</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -760,6 +844,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_ListServiceSAS</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters to provide to list service SAS credentials. </param>
@@ -793,6 +881,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Failover</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -829,6 +921,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_Failover</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -863,6 +959,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_HierarchicalNamespaceMigration</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -902,6 +1002,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_HierarchicalNamespaceMigration</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -940,6 +1044,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_AbortHierarchicalNamespaceMigration</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -974,6 +1082,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_AbortHierarchicalNamespaceMigration</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1007,6 +1119,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_RestoreBlobRanges</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1046,6 +1162,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_RestoreBlobRanges</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1084,6 +1204,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_RevokeUserDelegationKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1113,6 +1237,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_RevokeUserDelegationKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1186,6 +1314,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1239,6 +1371,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1294,6 +1430,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1343,6 +1483,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1391,6 +1535,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1443,6 +1591,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

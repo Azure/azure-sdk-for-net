@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +137,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +172,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +212,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -234,6 +250,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageTargets_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,6 +293,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -311,6 +335,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_DnsRefresh</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -344,6 +372,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageTargets_DnsRefresh</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,6 +411,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Flush</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -412,6 +448,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Flush</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,6 +487,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Suspend</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -480,6 +524,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,6 +563,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Resume</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -548,6 +600,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -583,6 +639,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Invalidate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -616,6 +676,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageTargets_Invalidate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -651,6 +715,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>StorageTargets_RestoreDefaults</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -684,6 +752,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageTargets_RestoreDefaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches/storageTargets</description>
         /// </item>
         /// </list>
         /// </summary>

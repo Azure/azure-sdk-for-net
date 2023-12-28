@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the streaming job. </param>
@@ -77,6 +81,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +117,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -131,6 +143,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/clusters</description>
         /// </item>
         /// </list>
         /// </summary>

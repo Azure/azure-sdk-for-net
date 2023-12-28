@@ -115,6 +115,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceProcess</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/instances/processes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="processId"> PID. </param>
@@ -138,6 +142,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceProcess</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/instances/processes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="processId"> PID. </param>
@@ -160,6 +168,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/instances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,6 +204,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceInfo</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/instances</description>
         /// </item>
         /// </list>
         /// </summary>

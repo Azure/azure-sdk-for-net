@@ -163,6 +163,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -192,6 +196,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -240,6 +248,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -267,6 +279,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -296,6 +312,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>Profiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -323,6 +343,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -369,6 +393,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -396,6 +424,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
         /// </item>
         /// </list>
         /// <item>

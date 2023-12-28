@@ -108,6 +108,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteAnalysis</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics/analyses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteAnalysis</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics/analyses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,6 +169,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Name. </param>
@@ -184,6 +196,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Name. </param>
@@ -206,6 +222,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDiagnosticCategory</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,6 +258,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDiagnosticCategory</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics</description>
         /// </item>
         /// </list>
         /// </summary>

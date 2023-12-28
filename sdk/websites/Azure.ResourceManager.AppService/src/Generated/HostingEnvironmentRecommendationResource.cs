@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,6 +177,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentName"> Site name. </param>
@@ -202,6 +214,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
         /// </item>
         /// </list>
         /// </summary>

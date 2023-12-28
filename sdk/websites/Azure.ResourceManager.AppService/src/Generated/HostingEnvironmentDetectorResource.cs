@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="startTime"> Start Time. </param>
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/detectors</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
         /// </item>
         /// </list>
         /// <item>

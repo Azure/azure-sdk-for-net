@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles/heatMaps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles/heatMaps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +141,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles/heatMaps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
@@ -166,6 +178,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles/heatMaps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
@@ -198,6 +214,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles/heatMaps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,6 +253,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles/heatMaps</description>
         /// </item>
         /// </list>
         /// </summary>

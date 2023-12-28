@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/restorableDroppedSqlPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorableDroppedSqlPoolId"> The id of the deleted Sql Pool in the form of sqlPoolName,deletionTimeInFileTimeFormat. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/restorableDroppedSqlPools</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/restorableDroppedSqlPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,6 +171,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/restorableDroppedSqlPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +195,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/restorableDroppedSqlPools</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +235,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/restorableDroppedSqlPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorableDroppedSqlPoolId"> The id of the deleted Sql Pool in the form of sqlPoolName,deletionTimeInFileTimeFormat. </param>
@@ -249,6 +273,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/restorableDroppedSqlPools</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +314,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/restorableDroppedSqlPools</description>
         /// </item>
         /// </list>
         /// </summary>

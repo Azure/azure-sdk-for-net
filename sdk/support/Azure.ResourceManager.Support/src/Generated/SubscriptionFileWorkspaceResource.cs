@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Files_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces/files</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> File Name. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Files_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces/files</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileName"> File Name. </param>
@@ -152,6 +160,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,6 +270,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/restorePoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/restorePoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/restorePoints</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +211,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/restorePoints</description>
         /// </item>
         /// </list>
         /// </summary>

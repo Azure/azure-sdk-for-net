@@ -2139,6 +2139,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2168,6 +2172,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2216,6 +2224,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/domains</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2245,6 +2257,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/domains</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2293,6 +2309,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2322,6 +2342,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2370,6 +2394,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2399,6 +2427,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2447,6 +2479,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/certificates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2476,6 +2512,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/certificates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2524,6 +2564,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/kubeEnvironments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2553,6 +2597,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/kubeEnvironments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2601,6 +2649,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSite</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2630,6 +2682,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSite</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2678,6 +2734,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2707,6 +2767,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2811,6 +2875,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/topLevelDomains</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2840,6 +2908,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/topLevelDomains</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2888,6 +2960,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2917,6 +2993,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2948,6 +3028,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2975,6 +3059,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3116,6 +3204,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/domains</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3143,6 +3235,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/domains</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3284,6 +3380,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3312,6 +3412,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3339,6 +3443,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3372,6 +3480,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3404,6 +3516,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/certificates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3432,6 +3548,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/certificates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3462,6 +3582,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3491,6 +3615,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3519,6 +3647,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -3550,6 +3682,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3580,6 +3716,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/kubeEnvironments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -3607,6 +3747,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/kubeEnvironments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4380,6 +4524,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -4407,6 +4555,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4436,6 +4588,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -4463,6 +4619,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4526,6 +4686,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>GetSourceControl</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sourcecontrols</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -4555,6 +4719,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetSourceControl</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sourcecontrols</description>
         /// </item>
         /// </list>
         /// <item>

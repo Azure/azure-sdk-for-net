@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindowOptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/maintenanceWindowOptions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
@@ -136,6 +140,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/maintenanceWindowOptions</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetFromServerFarm</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/virtualNetworkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/virtualNetworkConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_ListVnets</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/virtualNetworkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,6 +171,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_ListVnets</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/virtualNetworkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +195,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/virtualNetworkConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +235,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetFromServerFarm</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/virtualNetworkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
@@ -249,6 +273,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/virtualNetworkConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +314,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetVnetFromServerFarm</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/virtualNetworkConnections</description>
         /// </item>
         /// </list>
         /// </summary>

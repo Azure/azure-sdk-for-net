@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
@@ -106,6 +110,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +152,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,6 +178,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,6 +203,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +243,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
@@ -257,6 +281,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +322,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

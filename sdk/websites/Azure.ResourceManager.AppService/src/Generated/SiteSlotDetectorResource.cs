@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorResponseSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="startTime"> Start Time. </param>
@@ -136,6 +140,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorResponseSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/detectors</description>
         /// </item>
         /// </list>
         /// </summary>

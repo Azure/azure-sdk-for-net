@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteAnalysisSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/diagnostics/analyses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="analysisName"> Analysis Name. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteAnalysisSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/diagnostics/analyses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +170,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/diagnostics/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Name. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/diagnostics/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Name. </param>
@@ -207,6 +223,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDiagnosticCategorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/diagnostics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,6 +259,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDiagnosticCategorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/diagnostics</description>
         /// </item>
         /// </list>
         /// </summary>

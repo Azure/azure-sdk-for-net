@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StoragePool/diskPools</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StoragePool/diskPools</description>
         /// </item>
         /// </list>
         /// <item>
@@ -161,6 +169,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StoragePool/diskPools</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -188,6 +200,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StoragePool/diskPools</description>
         /// </item>
         /// </list>
         /// <item>

@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -137,6 +141,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors/history</description>
         /// </item>
         /// </list>
         /// </summary>

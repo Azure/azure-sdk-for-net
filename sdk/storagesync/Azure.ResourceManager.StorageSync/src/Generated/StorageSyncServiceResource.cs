@@ -115,6 +115,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -137,6 +141,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +176,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>SyncGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/syncGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="syncGroupName"> Name of Sync Group resource. </param>
@@ -190,6 +202,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SyncGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/syncGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +237,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>RegisteredServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/registeredServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverId"> GUID identifying the on-premises server. </param>
@@ -241,6 +261,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegisteredServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/registeredServers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +294,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/workflows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowId"> workflow Id. </param>
@@ -293,6 +321,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/workflows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowId"> workflow Id. </param>
@@ -315,6 +347,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,6 +384,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -379,6 +419,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,6 +458,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -447,6 +495,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -485,6 +537,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -566,6 +622,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -619,6 +679,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -674,6 +738,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -723,6 +791,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -771,6 +843,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -823,6 +899,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// </summary>

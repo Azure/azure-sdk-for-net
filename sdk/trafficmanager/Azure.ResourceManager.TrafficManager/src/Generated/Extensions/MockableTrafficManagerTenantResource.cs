@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <term>Operation Id</term>
         /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
@@ -95,6 +99,10 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_CheckTrafficManagerRelativeDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles</description>
         /// </item>
         /// </list>
         /// </summary>

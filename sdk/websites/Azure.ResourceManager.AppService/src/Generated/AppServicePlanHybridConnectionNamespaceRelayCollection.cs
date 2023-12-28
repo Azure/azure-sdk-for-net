@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/hybridConnectionNamespaces/relays</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/hybridConnectionNamespaces/relays</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +147,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/hybridConnectionNamespaces/relays</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
@@ -176,6 +188,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/hybridConnectionNamespaces/relays</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the Service Bus namespace. </param>
@@ -212,6 +228,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/hybridConnectionNamespaces/relays</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +271,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_GetHybridConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms/hybridConnectionNamespaces/relays</description>
         /// </item>
         /// </list>
         /// </summary>

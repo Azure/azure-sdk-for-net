@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/topLevelDomains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +137,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/topLevelDomains</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,6 +174,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_ListAgreements</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/topLevelDomains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
@@ -191,6 +203,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_ListAgreements</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/topLevelDomains</description>
         /// </item>
         /// </list>
         /// </summary>

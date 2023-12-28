@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles/heatMaps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
@@ -136,6 +140,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HeatMap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/trafficmanagerprofiles/heatMaps</description>
         /// </item>
         /// </list>
         /// </summary>

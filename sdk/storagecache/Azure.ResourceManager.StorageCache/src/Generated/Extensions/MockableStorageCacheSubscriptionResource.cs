@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/amlFilesystems</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/amlFilesystems</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +386,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -399,6 +411,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
         /// </item>
         /// </list>
         /// </summary>

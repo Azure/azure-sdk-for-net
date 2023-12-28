@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/workflows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/workflows</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>Workflows_Abort</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/workflows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,6 +206,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Abort</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices/workflows</description>
         /// </item>
         /// </list>
         /// </summary>

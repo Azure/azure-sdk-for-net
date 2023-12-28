@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +82,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,6 +109,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,6 +134,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>

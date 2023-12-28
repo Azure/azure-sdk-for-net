@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +147,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
@@ -176,6 +188,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the recommendation. </param>
@@ -212,6 +228,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +271,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments/recommendations</description>
         /// </item>
         /// </list>
         /// </summary>

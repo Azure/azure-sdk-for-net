@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlVmName"> Name of the SQL virtual machine. </param>
@@ -130,6 +142,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>

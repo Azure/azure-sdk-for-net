@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> The name of the table. </param>
@@ -154,6 +162,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +198,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas</description>
         /// </item>
         /// </list>
         /// </summary>

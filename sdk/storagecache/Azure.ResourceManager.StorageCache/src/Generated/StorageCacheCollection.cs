@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +155,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
@@ -183,6 +195,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +237,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,6 +263,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -264,6 +288,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +328,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheName"> Name of cache. Length of name must not be greater than 80 and chars must be from the [-0-9a-zA-Z_] char class. </param>
@@ -334,6 +366,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,6 +407,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteAnalysis</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics/analyses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteAnalysis</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics/analyses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,6 +175,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_ExecuteSiteAnalysis</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics/analyses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="startTime"> Start Time. </param>
@@ -199,6 +211,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_ExecuteSiteAnalysis</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/diagnostics/analyses</description>
         /// </item>
         /// </list>
         /// </summary>

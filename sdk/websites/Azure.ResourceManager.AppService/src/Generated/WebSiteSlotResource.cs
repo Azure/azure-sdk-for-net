@@ -112,6 +112,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorResponseSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Detector Resource Name. </param>
@@ -137,6 +141,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorResponseSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/detectors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,6 +179,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetPrivateEndpointConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
@@ -193,6 +205,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetPrivateEndpointConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +240,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHybridConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace for this hybrid connection. </param>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHybridConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,6 +303,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetVnetConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/virtualNetworkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the virtual network. </param>
@@ -301,6 +329,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetVnetConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/virtualNetworkConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,6 +364,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDiagnosticCategorySlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/diagnostics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -354,6 +390,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDiagnosticCategorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/diagnostics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,6 +432,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetBackupStatusSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/backups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupId"> ID of the backup. </param>
@@ -414,6 +458,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetBackupStatusSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/backups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,6 +507,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/config/appsettings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="appSettingKey"> App Setting key name. </param>
@@ -481,6 +533,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetAppSettingKeyVaultReferenceSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/config/appsettings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,6 +568,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteConnectionStringKeyVaultReferenceSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/config/connectionstrings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionStringKey"> The <see cref="string"/> to use. </param>
@@ -534,6 +594,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteConnectionStringKeyVaultReferenceSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/config/connectionstrings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -579,6 +643,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetContinuousWebJobSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/continuouswebjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
@@ -601,6 +669,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetContinuousWebJobSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/continuouswebjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -632,6 +704,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetDeploymentSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/deployments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Deployment ID. </param>
@@ -654,6 +730,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetDeploymentSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/deployments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -685,6 +765,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetDomainOwnershipIdentifierSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/domainOwnershipIdentifiers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainOwnershipIdentifierName"> Name of domain ownership identifier. </param>
@@ -707,6 +791,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetDomainOwnershipIdentifierSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/domainOwnershipIdentifiers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -745,6 +833,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceFunctionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/functions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionName"> Function name. </param>
@@ -767,6 +859,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceFunctionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/functions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -798,6 +894,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHostNameBindingSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/hostNameBindings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hostName"> Hostname in the hostname binding. </param>
@@ -820,6 +920,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetHostNameBindingSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/hostNameBindings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -851,6 +955,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetRelayServiceConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/hybridconnection</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityName"> Name of the hybrid connection. </param>
@@ -873,6 +981,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetRelayServiceConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/hybridconnection</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -904,6 +1016,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceInfoSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/instances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceId"> The <see cref="string"/> to use. </param>
@@ -926,6 +1042,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceInfoSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/instances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -957,6 +1077,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/processes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="processId"> PID. </param>
@@ -979,6 +1103,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetProcessSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/processes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1017,6 +1145,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetPremierAddOnSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/premieraddons</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOnName"> Add-on name. </param>
@@ -1039,6 +1171,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetPremierAddOnSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/premieraddons</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1077,6 +1213,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetPublicCertificateSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/publicCertificates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publicCertificateName"> Public certificate name. </param>
@@ -1099,6 +1239,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetPublicCertificateSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/publicCertificates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1130,6 +1274,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteExtensionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/siteextensions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteExtensionId"> Site extension name. </param>
@@ -1152,6 +1300,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSiteExtensionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/siteextensions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1190,6 +1342,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/networkFeatures</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
@@ -1212,6 +1368,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/networkFeatures</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1250,6 +1410,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/triggeredwebjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="webJobName"> Name of Web Job. </param>
@@ -1272,6 +1436,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/triggeredwebjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1303,6 +1471,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetWebJobSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/webjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="webJobName"> Name of the web job. </param>
@@ -1326,6 +1498,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetWebJobSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/webjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="webJobName"> Name of the web job. </param>
@@ -1348,6 +1524,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1381,6 +1561,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1412,6 +1596,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_DeleteSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1449,6 +1637,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_DeleteSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1485,6 +1677,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> A JSON representation of the app properties. See example. </param>
@@ -1518,6 +1714,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1553,6 +1753,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_AnalyzeCustomHostnameSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hostName"> Custom hostname. </param>
@@ -1584,6 +1788,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_AnalyzeCustomHostnameSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hostName"> Custom hostname. </param>
@@ -1614,6 +1822,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ApplySlotConfigurationSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1649,6 +1861,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ApplySlotConfigurationSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
@@ -1682,6 +1898,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_BackupSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1717,6 +1937,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_BackupSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
@@ -1751,6 +1975,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateApplicationSettingsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="appSettings"> Application settings of the app. </param>
@@ -1784,6 +2012,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateApplicationSettingsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1879,6 +2111,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateAuthSettingsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteAuthSettings"> Auth settings associated with web app. </param>
@@ -1912,6 +2148,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateAuthSettingsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2007,6 +2247,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateAuthSettingsV2Slot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteAuthSettingsV2"> Auth settings associated with web app. </param>
@@ -2040,6 +2284,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateAuthSettingsV2Slot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2135,6 +2383,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateAzureStorageAccountsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureStorageAccounts"> Azure storage accounts of the app. </param>
@@ -2168,6 +2420,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateAzureStorageAccountsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2263,6 +2519,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateBackupConfigurationSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> Edited backup configuration. </param>
@@ -2296,6 +2556,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateBackupConfigurationSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2331,6 +2595,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_DeleteBackupConfigurationSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2360,6 +2628,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_DeleteBackupConfigurationSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2451,6 +2723,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateConnectionStringsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionStrings"> Connection strings of the app or deployment slot. See example. </param>
@@ -2484,6 +2760,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateConnectionStringsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2579,6 +2859,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateMetadataSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="metadata"> Edited metadata of the app or deployment slot. See example. </param>
@@ -2612,6 +2896,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateMetadataSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2775,6 +3063,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateSitePushSettingsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pushSettings"> Push settings associated with web app. </param>
@@ -2808,6 +3100,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_UpdateSitePushSettingsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2903,6 +3199,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetWebSiteContainerLogsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2932,6 +3232,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetWebSiteContainerLogsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3023,6 +3327,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_DiscoverBackupSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> A RestoreRequest object that includes Azure storage URL and blog name for discovery of backup. </param>
@@ -3056,6 +3364,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_DiscoverBackupSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3483,6 +3795,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_IsCloneableSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3512,6 +3828,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_IsCloneableSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3543,6 +3863,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListSyncFunctionTriggersSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3572,6 +3896,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListSyncFunctionTriggersSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4011,6 +4339,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GenerateNewSitePublishingPasswordSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4040,6 +4372,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GenerateNewSitePublishingPasswordSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4071,6 +4407,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListPerfMonCountersSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
@@ -4094,6 +4434,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListPerfMonCountersSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
@@ -4116,6 +4460,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSitePhpErrorLogFlagSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4147,6 +4495,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetSitePhpErrorLogFlagSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4177,6 +4529,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetPrivateLinkResourcesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4198,6 +4554,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetPrivateLinkResourcesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4218,6 +4578,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListPublishingProfileXmlWithSecretsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4253,6 +4617,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListPublishingProfileXmlWithSecretsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
@@ -4287,6 +4655,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ResetSlotConfigurationSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4317,6 +4689,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ResetSlotConfigurationSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4346,6 +4722,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_RestartSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4379,6 +4759,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_RestartSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="softRestart"> Specify true to apply the configuration settings and restarts the app only if necessary. By default, the API always restarts and reprovisions the app. </param>
@@ -4410,6 +4794,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_RestoreFromBackupBlobSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4449,6 +4837,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_RestoreFromBackupBlobSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -4486,6 +4878,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_RestoreFromDeletedAppSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4525,6 +4921,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_RestoreFromDeletedAppSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -4562,6 +4962,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_RestoreSnapshotSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4601,6 +5005,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_RestoreSnapshotSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -4639,6 +5047,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListSlotDifferencesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
@@ -4665,6 +5077,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListSlotDifferencesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="slotSwapEntity"> JSON object that contains the target slot name. See example. </param>
@@ -4690,6 +5106,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_SwapSlotSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4729,6 +5149,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_SwapSlotSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -4767,6 +5191,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListSnapshotsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4788,6 +5216,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListSnapshotsSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4811,6 +5243,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListSnapshotsFromDRSecondarySlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4833,6 +5269,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListSnapshotsFromDRSecondarySlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4854,6 +5294,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_StartSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4885,6 +5329,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_StartSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -4914,6 +5362,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_StartNetworkTraceSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4952,6 +5404,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_StartNetworkTraceSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -4989,6 +5445,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_StopSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5018,6 +5478,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_StopSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5049,6 +5513,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_StopNetworkTraceSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5078,6 +5546,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_StopNetworkTraceSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5109,6 +5581,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_SyncRepositorySlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5138,6 +5614,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_SyncRepositorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5169,6 +5649,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_SyncFunctionTriggersSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -5198,6 +5682,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_SyncFunctionTriggersSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5229,6 +5717,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListUsagesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
@@ -5251,6 +5743,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListUsagesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots</description>
         /// </item>
         /// </list>
         /// </summary>

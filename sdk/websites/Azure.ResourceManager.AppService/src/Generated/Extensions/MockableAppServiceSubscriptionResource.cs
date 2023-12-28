@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/topLevelDomains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the top-level domain. </param>
@@ -145,6 +149,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/topLevelDomains</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,6 +184,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
@@ -198,6 +210,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +238,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,6 +263,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,6 +426,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/domains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -423,6 +451,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DomainRegistration/domains</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -558,6 +590,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -580,6 +616,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/hostingEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -601,6 +641,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -628,6 +672,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/serverfarms</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detailed">
@@ -654,6 +702,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/certificates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
@@ -676,6 +728,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/certificates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -700,6 +756,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -723,6 +783,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -745,6 +809,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -782,6 +850,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/deletedSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -818,6 +890,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/kubeEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -839,6 +915,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/kubeEnvironments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1600,6 +1680,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>StaticSites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1621,6 +1705,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1644,6 +1732,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>WebApps_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1665,6 +1757,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.VoiceServices/communicationsGateways</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.VoiceServices/communicationsGateways</description>
         /// </item>
         /// </list>
         /// <item>
@@ -161,6 +169,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.VoiceServices/communicationsGateways</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -188,6 +200,10 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.VoiceServices/communicationsGateways</description>
         /// </item>
         /// </list>
         /// <item>

@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>FileShares_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/fileServices/shares</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>FileShares_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/fileServices/shares</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="shareName"> The name of the file share within the specified storage account. File share names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
@@ -156,6 +164,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileServices_GetServiceProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/fileServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,6 +201,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>FileServices_GetServiceProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/fileServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -220,6 +236,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileServices_SetServiceProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/fileServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,6 +278,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileServices_SetServiceProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/fileServices</description>
         /// </item>
         /// </list>
         /// </summary>

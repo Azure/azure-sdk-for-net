@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileWorkspaceName"> File Workspace Name. </param>
@@ -138,6 +150,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileWorkspaceName"> File Workspace Name. </param>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,6 +214,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// </summary>

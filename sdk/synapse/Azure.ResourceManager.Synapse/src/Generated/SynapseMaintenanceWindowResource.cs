@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/maintenancewindows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
@@ -137,6 +141,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/maintenancewindows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowName"> Maintenance window name. </param>
@@ -172,6 +180,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindows_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/maintenancewindows</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,6 +224,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindows_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/maintenancewindows</description>
         /// </item>
         /// </list>
         /// </summary>

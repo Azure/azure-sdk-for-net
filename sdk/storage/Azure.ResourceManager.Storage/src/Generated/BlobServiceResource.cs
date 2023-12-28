@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
@@ -152,6 +160,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobServices_GetServiceProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobServices_GetServiceProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobServices_SetServiceProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,6 +274,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobServices_SetServiceProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices</description>
         /// </item>
         /// </list>
         /// </summary>

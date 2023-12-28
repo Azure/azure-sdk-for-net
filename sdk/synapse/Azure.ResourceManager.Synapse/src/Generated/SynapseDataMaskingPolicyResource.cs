@@ -108,6 +108,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies/rules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies/rules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
@@ -153,6 +161,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataMaskingPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +198,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>DataMaskingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +233,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataMaskingPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,6 +275,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataMaskingPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

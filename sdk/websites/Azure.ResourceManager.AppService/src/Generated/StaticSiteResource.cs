@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetPrivateEndpointConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetPrivateEndpointConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSiteBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites/builds</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentName"> The stage site identifier. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSiteBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites/builds</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSite</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites/userProvidedFunctionApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionAppName"> Name of the function app registered with the static site. </param>
@@ -238,6 +258,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetUserProvidedFunctionAppForStaticSite</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites/userProvidedFunctionApps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +293,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSiteCustomDomain</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites/customDomains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> The custom domain name. </param>
@@ -292,6 +320,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSiteCustomDomain</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites/customDomains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> The custom domain name. </param>
@@ -314,6 +346,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSite</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,6 +383,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetStaticSite</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -378,6 +418,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_DeleteStaticSite</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,6 +457,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_DeleteStaticSite</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -447,6 +495,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_UpdateStaticSite</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> A JSON representation of the staticsite properties. See example. </param>
@@ -480,6 +532,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_UpdateStaticSite</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -857,6 +913,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateUserRolesInvitationLink</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The <see cref="StaticSiteUserInvitationContent"/> to use. </param>
@@ -890,6 +950,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateUserRolesInvitationLink</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -925,6 +989,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_DetachStaticSite</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -958,6 +1026,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_DetachStaticSite</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -993,6 +1065,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteFunctions</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1015,6 +1091,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteFunctions</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1036,6 +1116,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1067,6 +1151,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteAppSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1096,6 +1184,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteConfiguredRoles</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1127,6 +1219,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteConfiguredRoles</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1156,6 +1252,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteFunctionAppSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1187,6 +1287,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteFunctionAppSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1216,6 +1320,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1247,6 +1355,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ListStaticSiteSecrets</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1277,6 +1389,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetPrivateLinkResources</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1298,6 +1414,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_GetPrivateLinkResources</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1318,6 +1438,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_ResetStaticSiteApiKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1353,6 +1477,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>StaticSites_ResetStaticSiteApiKey</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The <see cref="StaticSiteResetContent"/> to use. </param>
@@ -1386,6 +1514,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateZipDeploymentForStaticSite</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1424,6 +1556,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_CreateZipDeploymentForStaticSite</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/staticSites</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.WorkloadMonitor.Mocking
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.WorkloadMonitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.WorkloadMonitor/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

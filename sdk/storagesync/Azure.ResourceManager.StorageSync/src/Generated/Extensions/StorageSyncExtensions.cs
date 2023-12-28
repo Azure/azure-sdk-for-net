@@ -196,6 +196,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +229,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -256,6 +264,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,6 +297,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -316,6 +332,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -343,6 +363,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageSync/storageSyncServices</description>
         /// </item>
         /// </list>
         /// <item>

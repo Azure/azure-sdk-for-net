@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscriptsNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +151,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketChatTranscriptsNoSubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +177,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketChatTranscriptsNoSubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,6 +202,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +242,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscriptsNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
@@ -256,6 +280,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,6 +321,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscriptsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets/chatTranscripts</description>
         /// </item>
         /// </list>
         /// </summary>

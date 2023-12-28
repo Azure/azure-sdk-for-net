@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>GetSourceControl</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sourcecontrols</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetSourceControl</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sourcecontrols</description>
         /// </item>
         /// </list>
         /// </summary>

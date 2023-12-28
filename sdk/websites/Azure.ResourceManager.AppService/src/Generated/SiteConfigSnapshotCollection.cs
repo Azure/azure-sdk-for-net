@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/config/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/config/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +143,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/config/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -170,6 +182,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/config/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -204,6 +220,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/config/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +261,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/config/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>

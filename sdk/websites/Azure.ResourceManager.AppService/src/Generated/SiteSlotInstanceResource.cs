@@ -116,6 +116,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceProcessSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/instances/processes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="processId"> PID. </param>
@@ -139,6 +143,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceProcessSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/instances/processes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="processId"> PID. </param>
@@ -161,6 +169,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceInfoSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/instances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,6 +205,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceInfoSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Web/sites/slots/instances</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -291,6 +291,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -320,6 +324,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// <item>
@@ -368,6 +376,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -397,6 +409,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -428,6 +444,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTickets_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -455,6 +475,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// <item>
@@ -501,6 +525,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -530,6 +558,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
         /// </item>
         /// </list>
         /// <item>
@@ -578,6 +610,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -607,6 +643,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// <item>
@@ -655,6 +695,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>FileWorkspacesNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -684,6 +728,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -715,6 +763,10 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -742,6 +794,10 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// <item>

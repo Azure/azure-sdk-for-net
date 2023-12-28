@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -536,6 +544,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -557,6 +569,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/clusters</description>
         /// </item>
         /// </list>
         /// </summary>

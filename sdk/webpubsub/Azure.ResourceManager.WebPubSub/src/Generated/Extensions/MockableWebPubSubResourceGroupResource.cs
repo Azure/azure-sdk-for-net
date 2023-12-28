@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/webPubSub</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/webPubSub</description>
         /// </item>
         /// </list>
         /// </summary>

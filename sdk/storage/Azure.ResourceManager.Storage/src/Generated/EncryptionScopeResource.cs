@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/encryptionScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +137,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/encryptionScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +172,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/encryptionScopes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +210,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EncryptionScopes_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/encryptionScopes</description>
         /// </item>
         /// </list>
         /// </summary>

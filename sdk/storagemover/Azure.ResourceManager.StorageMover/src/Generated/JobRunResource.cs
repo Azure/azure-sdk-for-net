@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageMover/storageMovers/projects/jobDefinitions/jobRuns</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageMover/storageMovers/projects/jobDefinitions/jobRuns</description>
         /// </item>
         /// </list>
         /// </summary>

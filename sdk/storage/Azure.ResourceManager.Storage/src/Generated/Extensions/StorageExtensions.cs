@@ -386,6 +386,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -416,6 +420,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_GetProperties</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -465,6 +473,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -495,6 +507,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -583,6 +599,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -610,6 +630,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -639,6 +663,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -666,6 +694,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -695,6 +727,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -722,6 +758,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
         /// </item>
         /// </list>
         /// <item>

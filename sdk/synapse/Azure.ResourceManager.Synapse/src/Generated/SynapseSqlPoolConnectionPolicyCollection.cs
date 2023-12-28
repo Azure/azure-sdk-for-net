@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/connectionPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
@@ -94,6 +98,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/connectionPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/connectionPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
@@ -159,6 +171,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/connectionPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
@@ -189,6 +205,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/connectionPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +242,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/connectionPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

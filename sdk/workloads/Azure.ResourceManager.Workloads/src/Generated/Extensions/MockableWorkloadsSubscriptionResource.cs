@@ -320,6 +320,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -341,6 +345,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/sapVirtualInstances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,6 +372,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>monitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -385,6 +397,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

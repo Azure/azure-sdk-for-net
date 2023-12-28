@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_GetImmutabilityPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of "*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_GetImmutabilityPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of "*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
@@ -166,6 +174,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_DeleteImmutabilityPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +214,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_DeleteImmutabilityPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -236,6 +252,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_CreateOrUpdateImmutabilityPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +296,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_CreateOrUpdateImmutabilityPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -315,6 +339,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_LockImmutabilityPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of "*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
@@ -345,6 +373,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_LockImmutabilityPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +409,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>BlobContainers_ExtendImmutabilityPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> The entity state (ETag) version of the immutability policy to update. A value of "*" can be used to apply the operation only if the immutability policy already exists. If omitted, this operation will always be applied. </param>
@@ -408,6 +444,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BlobContainers_ExtendImmutabilityPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

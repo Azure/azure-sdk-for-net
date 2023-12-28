@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_GetCertificate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders/certificates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the certificate. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_GetCertificate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders/certificates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
@@ -189,6 +201,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> The detector name which needs to be run. </param>
@@ -214,6 +230,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -278,6 +302,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,6 +341,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -346,6 +378,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,6 +417,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Distinguished name to use for the certificate order. </param>
@@ -414,6 +454,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Reissue</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,6 +493,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Reissue</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters for the reissue. </param>
@@ -482,6 +530,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Renew</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,6 +569,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Renew</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Renew parameters. </param>
@@ -551,6 +607,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ResendEmail</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -581,6 +641,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ResendEmail</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -610,6 +674,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ResendRequestEmails</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -645,6 +713,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ResendRequestEmails</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nameIdentifier"> Email address. </param>
@@ -678,6 +750,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveSiteSeal</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -713,6 +789,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveSiteSeal</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Site seal request. </param>
@@ -747,6 +827,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_VerifyDomainOwnership</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -776,6 +860,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_VerifyDomainOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -807,6 +895,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveCertificateActions</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -827,6 +919,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveCertificateActions</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -849,6 +945,10 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveCertificateEmailHistory</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -869,6 +969,10 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_RetrieveCertificateEmailHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// </list>
         /// </summary>

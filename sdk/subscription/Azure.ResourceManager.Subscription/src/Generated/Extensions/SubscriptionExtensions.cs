@@ -284,6 +284,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Subscription/aliases</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -313,6 +317,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Subscription/aliases</description>
         /// </item>
         /// </list>
         /// <item>
@@ -378,6 +386,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Subscription/policies</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -407,6 +419,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Subscription/policies</description>
         /// </item>
         /// </list>
         /// <item>

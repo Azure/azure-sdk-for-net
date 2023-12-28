@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +151,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolTableColumns_ListByTableName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
@@ -166,6 +178,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolTableColumns_ListByTableName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
@@ -188,6 +204,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +244,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
@@ -258,6 +282,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +323,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns</description>
         /// </item>
         /// </list>
         /// </summary>

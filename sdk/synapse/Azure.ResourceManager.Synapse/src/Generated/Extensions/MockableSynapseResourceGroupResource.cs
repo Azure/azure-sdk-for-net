@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkHubName"> Name of the privateLinkHub. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/privateLinkHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>

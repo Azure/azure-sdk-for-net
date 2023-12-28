@@ -1089,6 +1089,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1118,6 +1122,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/privateLinkHubs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1166,6 +1174,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1195,6 +1207,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1226,6 +1242,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1253,6 +1273,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/privateLinkHubs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1282,6 +1306,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1309,6 +1337,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1338,6 +1370,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPools_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1365,6 +1401,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPools_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1394,6 +1434,10 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>KustoPools_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1422,6 +1466,10 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools</description>
         /// </item>
         /// </list>
         /// <item>

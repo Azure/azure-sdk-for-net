@@ -120,6 +120,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/amlFilesystems</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -149,6 +153,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/amlFilesystems</description>
         /// </item>
         /// </list>
         /// <item>
@@ -197,6 +205,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -226,6 +238,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
         /// </item>
         /// </list>
         /// <item>
@@ -257,6 +273,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/amlFilesystems</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -284,6 +304,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/amlFilesystems</description>
         /// </item>
         /// </list>
         /// <item>
@@ -595,6 +619,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -622,6 +650,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StorageCache/caches</description>
         /// </item>
         /// </list>
         /// <item>

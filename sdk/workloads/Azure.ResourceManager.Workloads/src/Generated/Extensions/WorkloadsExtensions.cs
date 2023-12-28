@@ -196,6 +196,10 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +229,10 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/sapVirtualInstances</description>
         /// </item>
         /// </list>
         /// <item>
@@ -273,6 +281,10 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/monitors</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -302,6 +314,10 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/monitors</description>
         /// </item>
         /// </list>
         /// <item>
@@ -565,6 +581,10 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -592,6 +612,10 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/sapVirtualInstances</description>
         /// </item>
         /// </list>
         /// <item>
@@ -621,6 +645,10 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>monitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/monitors</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -648,6 +676,10 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/monitors</description>
         /// </item>
         /// </list>
         /// <item>

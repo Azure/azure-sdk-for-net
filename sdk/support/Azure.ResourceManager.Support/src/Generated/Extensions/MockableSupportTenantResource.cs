@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the Azure service. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/services</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> Support ticket name. </param>
@@ -137,6 +149,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +184,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>FileWorkspacesNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileWorkspaceName"> File Workspace Name. </param>
@@ -191,6 +211,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <term>Operation Id</term>
         /// <description>FileWorkspacesNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/fileWorkspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileWorkspaceName"> File Workspace Name. </param>
@@ -213,6 +237,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +275,10 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Support/supportTickets</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
@@ -98,6 +102,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
@@ -198,6 +210,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,6 +249,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -254,6 +274,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/storageAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,6 +301,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -298,6 +326,10 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

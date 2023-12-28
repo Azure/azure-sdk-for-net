@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Functions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs/functions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionName"> The name of the function. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Functions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs/functions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Inputs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs/inputs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="inputName"> The name of the input. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Inputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs/inputs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Outputs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs/outputs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="outputName"> The name of the output. </param>
@@ -238,6 +258,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Outputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs/outputs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +293,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Transformations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs/transformations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformationName"> The name of the transformation. </param>
@@ -292,6 +320,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>Transformations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs/transformations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformationName"> The name of the transformation. </param>
@@ -314,6 +346,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,6 +384,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
@@ -380,6 +420,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,6 +459,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -448,6 +496,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -484,6 +536,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> A streaming job object. The properties specified here will overwrite the corresponding properties in the existing streaming job (ie. Those properties will be updated). Any properties that are set to null here will mean that the corresponding property in the existing input will remain the same and not change as a result of this PATCH operation. </param>
@@ -518,6 +574,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -554,6 +614,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -589,6 +653,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -623,6 +691,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -656,6 +728,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Scale</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -692,6 +768,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Scale</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -726,6 +806,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -781,6 +865,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -835,6 +923,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -884,6 +976,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -932,6 +1028,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -984,6 +1084,10 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.StreamAnalytics/streamingjobs</description>
         /// </item>
         /// </list>
         /// </summary>

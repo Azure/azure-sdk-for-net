@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/sapVirtualInstances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapVirtualInstanceName"> The name of the Virtual Instances for SAP solutions resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/sapVirtualInstances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Name of the SAP monitor resource. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Workloads/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

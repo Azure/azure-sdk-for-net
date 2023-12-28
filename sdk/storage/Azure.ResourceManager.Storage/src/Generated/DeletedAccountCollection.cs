@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
@@ -174,6 +186,10 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
@@ -209,6 +225,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Storage/locations/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

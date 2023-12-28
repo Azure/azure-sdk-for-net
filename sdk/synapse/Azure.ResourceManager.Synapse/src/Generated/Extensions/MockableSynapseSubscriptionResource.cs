@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/privateLinkHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/privateLinkHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,6 +116,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,6 +168,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>KustoPools_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,6 +193,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>KustoPools_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,6 +217,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,6 +256,10 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Synapse/workspaces/kustoPools</description>
         /// </item>
         /// </list>
         /// </summary>
