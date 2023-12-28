@@ -180,6 +180,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/frontDoors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -201,6 +205,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/frontDoors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +232,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -245,6 +257,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/NetworkExperimentProfiles</description>
         /// </item>
         /// </list>
         /// </summary>

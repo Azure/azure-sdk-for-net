@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <term>Operation Id</term>
         /// <description>Grafana_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Dashboard/grafana</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Dashboard/grafana</description>
         /// </item>
         /// </list>
         /// </summary>

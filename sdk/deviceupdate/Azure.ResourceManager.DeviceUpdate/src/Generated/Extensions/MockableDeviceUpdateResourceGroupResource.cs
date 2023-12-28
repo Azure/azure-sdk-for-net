@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DeviceUpdate/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Account name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DeviceUpdate/accounts</description>
         /// </item>
         /// </list>
         /// </summary>

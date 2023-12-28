@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevSpaces/controllers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the resource. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevSpaces/controllers</description>
         /// </item>
         /// </list>
         /// </summary>

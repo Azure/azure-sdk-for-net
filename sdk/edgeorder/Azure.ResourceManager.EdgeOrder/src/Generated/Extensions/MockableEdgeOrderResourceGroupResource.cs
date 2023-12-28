@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>GetAddressByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EdgeOrder/addresses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetAddressByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EdgeOrder/addresses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EdgeOrder/locations/orders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -138,6 +150,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EdgeOrder/locations/orders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,6 +186,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>GetOrderItemByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EdgeOrder/orderItems</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderItemName"> The name of the order item. </param>
@@ -193,6 +213,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderItemByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EdgeOrder/orderItems</description>
         /// </item>
         /// </list>
         /// </summary>

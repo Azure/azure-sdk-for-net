@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthcareApis/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the service instance. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthcareApis/services</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthcareApis/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of workspace resource. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthcareApis/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.HealthBot
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthBot/healthBots</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -110,6 +114,10 @@ namespace Azure.ResourceManager.HealthBot
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthBot/healthBots</description>
         /// </item>
         /// </list>
         /// <item>
@@ -141,6 +149,10 @@ namespace Azure.ResourceManager.HealthBot
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthBot/healthBots</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +180,10 @@ namespace Azure.ResourceManager.HealthBot
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthBot/healthBots</description>
         /// </item>
         /// </list>
         /// <item>

@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.FluidRelay/fluidRelayServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.FluidRelay/fluidRelayServers</description>
         /// </item>
         /// </list>
         /// </summary>

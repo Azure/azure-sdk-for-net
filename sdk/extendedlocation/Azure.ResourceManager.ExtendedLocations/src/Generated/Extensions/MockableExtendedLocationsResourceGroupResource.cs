@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// <term>Operation Id</term>
         /// <description>CustomLocations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ExtendedLocation/customLocations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Custom Locations name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomLocations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ExtendedLocation/customLocations</description>
         /// </item>
         /// </list>
         /// </summary>

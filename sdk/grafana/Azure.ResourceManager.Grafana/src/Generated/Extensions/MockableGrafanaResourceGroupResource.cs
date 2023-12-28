@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Dashboard/grafana</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Dashboard/grafana</description>
         /// </item>
         /// </list>
         /// </summary>

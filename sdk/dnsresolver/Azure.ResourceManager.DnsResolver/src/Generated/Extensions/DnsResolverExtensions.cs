@@ -195,6 +195,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsResolvers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -224,6 +228,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsResolvers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -272,6 +280,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsForwardingRulesets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -301,6 +313,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsForwardingRulesets</description>
         /// </item>
         /// </list>
         /// <item>
@@ -332,6 +348,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsResolvers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -360,6 +380,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsResolvers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -390,6 +414,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsForwardingRulesets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -418,6 +446,10 @@ namespace Azure.ResourceManager.DnsResolver
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsForwardingRulesets</description>
         /// </item>
         /// </list>
         /// <item>

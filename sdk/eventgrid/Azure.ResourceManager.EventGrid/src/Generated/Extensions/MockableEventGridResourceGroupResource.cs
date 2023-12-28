@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/domains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> Name of the domain. </param>
@@ -89,6 +93,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/domains</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,6 +128,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the namespace. </param>
@@ -142,6 +154,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,6 +196,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>PartnerDestinations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/partnerDestinations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerDestinationName"> Name of the partner destination. </param>
@@ -202,6 +222,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartnerDestinations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/partnerDestinations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,6 +257,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>PartnerNamespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/partnerNamespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
@@ -255,6 +283,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartnerNamespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/partnerNamespaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +318,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>PartnerRegistrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/partnerRegistrations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
@@ -308,6 +344,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartnerRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/partnerRegistrations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,6 +379,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>PartnerTopics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/partnerTopics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
@@ -361,6 +405,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartnerTopics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/partnerTopics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,6 +440,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>SystemTopics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/systemTopics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
@@ -414,6 +466,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SystemTopics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/systemTopics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,6 +501,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>Topics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/topics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> Name of the topic. </param>
@@ -467,6 +527,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Topics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/topics</description>
         /// </item>
         /// </list>
         /// </summary>

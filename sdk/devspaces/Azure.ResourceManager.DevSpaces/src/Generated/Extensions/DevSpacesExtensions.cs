@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevSpaces/controllers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +115,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Controllers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevSpaces/controllers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -200,6 +208,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevSpaces/controllers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -227,6 +239,10 @@ namespace Azure.ResourceManager.DevSpaces
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevSpaces/controllers</description>
         /// </item>
         /// </list>
         /// <item>

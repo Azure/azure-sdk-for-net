@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HardwareSecurityModules/cloudHsmClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HardwareSecurityModules/cloudHsmClusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,6 +111,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HardwareSecurityModules/dedicatedHSMs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
@@ -125,6 +137,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HardwareSecurityModules/dedicatedHSMs</description>
         /// </item>
         /// </list>
         /// </summary>

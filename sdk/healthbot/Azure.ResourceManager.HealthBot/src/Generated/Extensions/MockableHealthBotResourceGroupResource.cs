@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthBot/healthBots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HealthBot/healthBots</description>
         /// </item>
         /// </list>
         /// </summary>

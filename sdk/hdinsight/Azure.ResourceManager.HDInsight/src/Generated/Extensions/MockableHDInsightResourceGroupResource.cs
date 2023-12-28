@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HDInsight/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HDInsight/clusters</description>
         /// </item>
         /// </list>
         /// </summary>

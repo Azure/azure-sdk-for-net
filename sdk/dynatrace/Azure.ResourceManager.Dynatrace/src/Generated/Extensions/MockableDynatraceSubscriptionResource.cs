@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Dynatrace.Observability/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Dynatrace.Observability/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

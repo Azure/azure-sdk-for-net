@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,6 +131,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationHCRPAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -146,6 +158,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationHCRPAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +199,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -206,6 +226,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
         /// </item>
         /// </list>
         /// </summary>

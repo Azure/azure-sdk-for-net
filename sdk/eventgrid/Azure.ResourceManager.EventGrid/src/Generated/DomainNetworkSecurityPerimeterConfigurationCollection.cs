@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/domains/networkSecurityPerimeterConfigurations/.</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
@@ -107,6 +111,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/domains/networkSecurityPerimeterConfigurations/.</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,6 +197,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/domains/networkSecurityPerimeterConfigurations/.</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
@@ -226,6 +238,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/domains/networkSecurityPerimeterConfigurations/.</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
@@ -262,6 +278,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/domains/networkSecurityPerimeterConfigurations/.</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +321,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventGrid/domains/networkSecurityPerimeterConfigurations/.</description>
         /// </item>
         /// </list>
         /// </summary>

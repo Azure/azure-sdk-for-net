@@ -138,6 +138,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -167,6 +171,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// <item>
@@ -198,6 +206,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +237,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// <item>

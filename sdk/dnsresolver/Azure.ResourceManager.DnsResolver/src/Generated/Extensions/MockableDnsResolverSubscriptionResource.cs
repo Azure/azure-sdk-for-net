@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsResolvers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsResolvers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,6 +111,10 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsForwardingRulesets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -125,6 +137,10 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsForwardingRulesets</description>
         /// </item>
         /// </list>
         /// </summary>

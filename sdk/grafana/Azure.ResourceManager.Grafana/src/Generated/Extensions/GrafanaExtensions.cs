@@ -138,6 +138,10 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Dashboard/grafana</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -167,6 +171,10 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Dashboard/grafana</description>
         /// </item>
         /// </list>
         /// <item>
@@ -198,6 +206,10 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>Grafana_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Dashboard/grafana</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +237,10 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Grafana_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Dashboard/grafana</description>
         /// </item>
         /// </list>
         /// <item>

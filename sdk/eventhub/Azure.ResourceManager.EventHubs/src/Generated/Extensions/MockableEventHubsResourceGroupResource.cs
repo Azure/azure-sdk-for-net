@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventHub/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventHub/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventHub/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> The Namespace name. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.EventHub/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DesktopVirtualization/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -87,6 +91,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DesktopVirtualization/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -108,6 +116,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DesktopVirtualization/scalingPlans</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +146,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DesktopVirtualization/scalingPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -159,6 +175,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DesktopVirtualization/applicationGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DesktopVirtualization/applicationGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
@@ -204,6 +228,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HostPools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DesktopVirtualization/hostPools</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,6 +257,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HostPools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DesktopVirtualization/hostPools</description>
         /// </item>
         /// </list>
         /// </summary>

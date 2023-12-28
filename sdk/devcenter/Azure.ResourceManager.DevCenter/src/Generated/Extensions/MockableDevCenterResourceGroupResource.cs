@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>DevCenters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/devcenters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="devCenterName"> The name of the devcenter. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DevCenters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/devcenters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/projects</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The name of the project. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/projects</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/networkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/networkConnections</description>
         /// </item>
         /// </list>
         /// </summary>

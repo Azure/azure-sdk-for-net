@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
@@ -98,6 +102,10 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +141,10 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_ListInvitations</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The continuation token. </param>
@@ -156,6 +168,10 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_ListInvitations</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The continuation token. </param>
@@ -178,6 +194,10 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +231,10 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
@@ -242,6 +266,10 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +304,10 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
         /// </item>
         /// </list>
         /// </summary>

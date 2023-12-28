@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
@@ -88,6 +92,10 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
@@ -109,6 +117,10 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +156,10 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_RejectInvitation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataShare/locations/consumerInvitations</description>
         /// </item>
         /// </list>
         /// </summary>

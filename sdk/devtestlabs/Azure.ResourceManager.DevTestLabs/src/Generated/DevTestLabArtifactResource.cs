@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Artifacts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevTestLab/labs/artifactsources/artifacts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Artifacts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevTestLab/labs/artifactsources/artifacts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,6 +177,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>Artifacts_GenerateArmTemplate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevTestLab/labs/artifactsources/artifacts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters for generating an ARM template for deploying artifacts. </param>
@@ -202,6 +214,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Artifacts_GenerateArmTemplate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevTestLab/labs/artifactsources/artifacts</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Elastic/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Elastic/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevSpaces/controllers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.DevSpaces.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Controllers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevSpaces/controllers</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>DevCenters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/devcenters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -102,6 +106,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DevCenters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/devcenters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,6 +134,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Projects_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/projects</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -148,6 +160,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/projects</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,6 +420,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/networkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
@@ -426,6 +446,10 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DevCenter/networkConnections</description>
         /// </item>
         /// </list>
         /// </summary>

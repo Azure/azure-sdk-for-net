@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ElasticSan/elasticSans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ElasticSan/elasticSans</description>
         /// </item>
         /// </list>
         /// </summary>

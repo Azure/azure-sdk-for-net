@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -107,6 +111,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,6 +159,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
@@ -187,6 +199,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +241,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -268,6 +292,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +332,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
@@ -338,6 +370,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +411,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// </summary>

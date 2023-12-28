@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.FluidRelay/fluidRelayServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.FluidRelay.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.FluidRelay/fluidRelayServers</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/provisioningServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/provisioningServices</description>
         /// </item>
         /// </list>
         /// </summary>

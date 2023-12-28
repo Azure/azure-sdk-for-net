@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HDInsight/clusterpools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterPoolName"> The name of the cluster pool. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HDInsight/clusterpools</description>
         /// </item>
         /// </list>
         /// </summary>

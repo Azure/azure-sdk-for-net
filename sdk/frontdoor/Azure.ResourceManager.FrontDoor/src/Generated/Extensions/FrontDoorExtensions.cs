@@ -182,6 +182,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/FrontDoorWebApplicationFirewallPolicies</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -211,6 +215,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/FrontDoorWebApplicationFirewallPolicies</description>
         /// </item>
         /// </list>
         /// <item>
@@ -259,6 +267,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/frontDoors</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -288,6 +300,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/frontDoors</description>
         /// </item>
         /// </list>
         /// <item>
@@ -336,6 +352,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -365,6 +385,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/NetworkExperimentProfiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -508,6 +532,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/frontDoors</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -535,6 +563,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/frontDoors</description>
         /// </item>
         /// </list>
         /// <item>
@@ -564,6 +596,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -591,6 +627,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/NetworkExperimentProfiles</description>
         /// </item>
         /// </list>
         /// <item>

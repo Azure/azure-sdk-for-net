@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// <term>Operation Id</term>
         /// <description>CustomLocations_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ExtendedLocation/customLocations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomLocations_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ExtendedLocation/customLocations</description>
         /// </item>
         /// </list>
         /// </summary>

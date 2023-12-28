@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/FrontDoorWebApplicationFirewallPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the Web Application Firewall Policy. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/FrontDoorWebApplicationFirewallPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/frontDoors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/frontDoors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/NetworkExperimentProfiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="profileName"> The Profile identifier associated with the Tenant and Partner. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/NetworkExperimentProfiles</description>
         /// </item>
         /// </list>
         /// </summary>

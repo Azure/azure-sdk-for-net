@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DefenderEasm.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Easm/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the Workspace. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.DefenderEasm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Easm/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>

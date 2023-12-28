@@ -272,6 +272,10 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>Zones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsZones</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -301,6 +305,10 @@ namespace Azure.ResourceManager.Dns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Zones_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsZones</description>
         /// </item>
         /// </list>
         /// <item>
@@ -332,6 +340,10 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsZones</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -360,6 +372,10 @@ namespace Azure.ResourceManager.Dns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dnsZones</description>
         /// </item>
         /// </list>
         /// <item>

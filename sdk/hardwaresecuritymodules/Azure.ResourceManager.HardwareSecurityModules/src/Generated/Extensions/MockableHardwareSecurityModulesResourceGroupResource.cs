@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HardwareSecurityModules/cloudHsmClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 24 characters in length. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HardwareSecurityModules/cloudHsmClusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HardwareSecurityModules/dedicatedHSMs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the dedicated HSM. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HardwareSecurityModules/dedicatedHSMs</description>
         /// </item>
         /// </list>
         /// </summary>
