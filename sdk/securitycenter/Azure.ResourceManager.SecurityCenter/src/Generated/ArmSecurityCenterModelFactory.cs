@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.ExternalSecuritySolution"/> instance for mocking. </returns>
         public static ExternalSecuritySolution ExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", AzureLocation? location = null)
         {
-            return new ExternalSecuritySolution(id, name, resourceType, systemData, kind, location);
+            return new UnknownExternalSecuritySolution(id, name, resourceType, systemData, kind, location);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecureScoreData"/>. </summary>
@@ -1230,7 +1230,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="SecurityCenter.SecuritySettingData"/> instance for mocking. </returns>
         public static SecuritySettingData SecuritySettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new SecuritySettingData(id, name, resourceType, systemData, kind);
+            return new UnknownSetting(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.IngestionSettingData"/>. </summary>
