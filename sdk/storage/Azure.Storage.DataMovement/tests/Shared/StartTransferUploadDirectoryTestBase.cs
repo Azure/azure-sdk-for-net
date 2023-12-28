@@ -230,7 +230,10 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
             DataTransfer transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
-            await transfer.WaitForCompletionAsync(cancellationToken);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationToken);
 
             // check if expected files exist, but not necessarily for contents
             if (errorMode == DataTransferErrorMode.ContinueOnFailure)
@@ -296,7 +299,10 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
             DataTransfer transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
-            await transfer.WaitForCompletionAsync(cancellationToken);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationToken);
 
             // check if expected files exist, but not necessarily for contents
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(preexistingFileCount);
