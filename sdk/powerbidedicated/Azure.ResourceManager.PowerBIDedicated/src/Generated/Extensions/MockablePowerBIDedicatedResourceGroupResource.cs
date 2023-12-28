@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dedicatedCapacityName"> The name of the dedicated capacity. It must be a minimum of 3 characters, and a maximum of 63. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vcoreName"> The name of the auto scale v-core. It must be a minimum of 3 characters, and a maximum of 63. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/autoScaleVCores</description>
         /// </item>
         /// </list>
         /// </summary>

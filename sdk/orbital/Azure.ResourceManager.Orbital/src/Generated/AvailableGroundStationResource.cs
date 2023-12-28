@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/availableGroundStations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/availableGroundStations</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/waitStatistics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/waitStatistics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +145,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/waitStatistics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="input"> The required parameters for retrieving wait statistics. </param>
@@ -163,6 +175,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/waitStatistics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="input"> The required parameters for retrieving wait statistics. </param>
@@ -188,6 +204,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/waitStatistics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +244,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/waitStatistics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
@@ -258,6 +282,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/waitStatistics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +323,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WaitStatistics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/waitStatistics</description>
         /// </item>
         /// </list>
         /// </summary>

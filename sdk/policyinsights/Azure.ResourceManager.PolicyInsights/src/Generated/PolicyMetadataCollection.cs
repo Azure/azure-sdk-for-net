@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
@@ -101,6 +105,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -161,6 +173,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyQuerySettings"> Parameter group. </param>
@@ -183,6 +199,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +238,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the policy metadata resource. </param>
@@ -251,6 +275,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,6 +315,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
         /// </item>
         /// </list>
         /// </summary>

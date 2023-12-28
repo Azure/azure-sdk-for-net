@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OpenEnergyPlatform/energyServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OpenEnergyPlatform/energyServices</description>
         /// </item>
         /// </list>
         /// </summary>

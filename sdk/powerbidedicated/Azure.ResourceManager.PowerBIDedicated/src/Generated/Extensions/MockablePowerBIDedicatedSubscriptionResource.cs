@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,6 +84,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +110,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,6 +135,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,6 +159,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,6 +199,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>Capacities_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region name which the operation will lookup into. </param>
@@ -214,6 +238,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -234,6 +262,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/autoScaleVCores</description>
         /// </item>
         /// </list>
         /// </summary>

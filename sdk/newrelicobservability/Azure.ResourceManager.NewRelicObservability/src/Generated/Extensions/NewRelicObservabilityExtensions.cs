@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>NewRelic.Observability/monitors</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>NewRelic.Observability/monitors</description>
         /// </item>
         /// </list>
         /// <item>
@@ -221,6 +229,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>NewRelic.Observability/monitors</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -248,6 +260,10 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>NewRelic.Observability/monitors</description>
         /// </item>
         /// </list>
         /// <item>

@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProducts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProducts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -177,6 +185,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProducts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProducts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -204,6 +216,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProducts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -233,6 +249,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProductsCatalogs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProductsCatalogs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -260,6 +280,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProductsCatalogs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProductsCatalogs</description>
         /// </item>
         /// </list>
         /// <item>

@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
@@ -92,6 +96,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,6 +124,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,6 +149,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/mobileNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,6 +201,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +228,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SimGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/simGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,6 +253,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/simGroups</description>
         /// </item>
         /// </list>
         /// </summary>

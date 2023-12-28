@@ -271,6 +271,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -300,6 +304,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -348,6 +356,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/clusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -377,6 +389,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/clusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -425,6 +441,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/workspaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -454,6 +474,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/workspaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -485,6 +509,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -512,6 +540,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -597,6 +629,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>QueryPacks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -624,6 +660,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -653,6 +693,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/clusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -680,6 +724,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/clusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -709,6 +757,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/workspaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -736,6 +788,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/workspaces</description>
         /// </item>
         /// </list>
         /// <item>

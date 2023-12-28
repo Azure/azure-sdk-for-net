@@ -314,6 +314,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/firewalls</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -343,6 +347,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/firewalls</description>
         /// </item>
         /// </list>
         /// <item>
@@ -391,6 +399,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/localRulestacks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -420,6 +432,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/localRulestacks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -451,6 +467,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>Firewalls_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/firewalls</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -478,6 +498,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/firewalls</description>
         /// </item>
         /// </list>
         /// <item>
@@ -507,6 +531,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/localRulestacks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -534,6 +562,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/localRulestacks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -580,6 +612,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>GlobalRulestack_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/globalRulestacks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -609,6 +645,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalRulestack_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/globalRulestacks</description>
         /// </item>
         /// </list>
         /// <item>

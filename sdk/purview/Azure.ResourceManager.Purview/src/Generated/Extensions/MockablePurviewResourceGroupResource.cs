@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the account. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
         /// </item>
         /// </list>
         /// </summary>

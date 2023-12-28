@@ -80,6 +80,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -103,6 +107,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,6 +144,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -159,6 +171,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +216,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DataCollectionRuleAssociations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRuleAssociations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -223,6 +243,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionRuleAssociations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRuleAssociations</description>
         /// </item>
         /// </list>
         /// </summary>

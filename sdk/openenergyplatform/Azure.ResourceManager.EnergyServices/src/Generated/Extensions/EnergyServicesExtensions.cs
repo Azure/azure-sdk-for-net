@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.EnergyServices
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OpenEnergyPlatform/energyServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +115,10 @@ namespace Azure.ResourceManager.EnergyServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OpenEnergyPlatform/energyServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -198,6 +206,10 @@ namespace Azure.ResourceManager.EnergyServices
         /// <term>Operation Id</term>
         /// <description>EnergyServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OpenEnergyPlatform/energyServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +237,10 @@ namespace Azure.ResourceManager.EnergyServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnergyServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OpenEnergyPlatform/energyServices</description>
         /// </item>
         /// </list>
         /// <item>

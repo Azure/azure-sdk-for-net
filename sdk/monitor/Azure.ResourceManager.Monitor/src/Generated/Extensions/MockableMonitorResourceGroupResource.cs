@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/autoscalesettings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="autoscaleSettingName"> The autoscale setting name. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/autoscalesettings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/alertrules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -137,6 +149,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/alertrules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +184,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ActionGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/actionGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="actionGroupName"> The name of the action group. </param>
@@ -190,6 +210,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActionGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/actionGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +245,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/metricAlerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -243,6 +271,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/metricAlerts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,6 +306,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/scheduledQueryRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
@@ -296,6 +332,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/scheduledQueryRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,6 +367,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>microsoft.insights/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Monitor PrivateLinkScope resource. </param>
@@ -349,6 +393,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>microsoft.insights/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,6 +428,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/activityLogAlerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
@@ -402,6 +454,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/activityLogAlerts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,6 +489,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionEndpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataCollectionEndpointName"> The name of the data collection endpoint. The name is case insensitive. </param>
@@ -455,6 +515,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionEndpoints</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,6 +550,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataCollectionRuleName"> The name of the data collection rule. The name is case insensitive. </param>
@@ -508,6 +576,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -539,6 +611,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Monitor/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureMonitorWorkspaceName"> The name of the Azure Monitor workspace.  The name is case insensitive. </param>
@@ -561,6 +637,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Monitor/accounts</description>
         /// </item>
         /// </list>
         /// </summary>

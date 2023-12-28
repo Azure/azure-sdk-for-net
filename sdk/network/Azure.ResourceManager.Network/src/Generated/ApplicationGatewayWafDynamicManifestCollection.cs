@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/locations/applicationGatewayWafDynamicManifests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,6 +108,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/locations/applicationGatewayWafDynamicManifests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +145,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/locations/applicationGatewayWafDynamicManifests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,6 +171,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/locations/applicationGatewayWafDynamicManifests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -180,6 +196,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/locations/applicationGatewayWafDynamicManifests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +231,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/locations/applicationGatewayWafDynamicManifests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -240,6 +264,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/locations/applicationGatewayWafDynamicManifests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,6 +300,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/locations/applicationGatewayWafDynamicManifests</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>NewRelic.Observability/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Name of the Monitors resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>NewRelic.Observability/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

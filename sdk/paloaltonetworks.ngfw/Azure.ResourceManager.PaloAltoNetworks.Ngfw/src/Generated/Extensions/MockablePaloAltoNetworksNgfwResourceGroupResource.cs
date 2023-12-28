@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/firewalls</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallName"> Firewall resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/firewalls</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/localRulestacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/localRulestacks</description>
         /// </item>
         /// </list>
         /// </summary>

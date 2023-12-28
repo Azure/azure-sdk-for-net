@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/flexibleServers/ltrBackupOperations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ltrBackupOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/flexibleServers/ltrBackupOperations</description>
         /// </item>
         /// </list>
         /// </summary>

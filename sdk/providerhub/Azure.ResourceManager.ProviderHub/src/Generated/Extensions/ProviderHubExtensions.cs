@@ -228,6 +228,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>ProviderRegistrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ProviderHub/providerRegistrations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -257,6 +261,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ProviderHub/providerRegistrations</description>
         /// </item>
         /// </list>
         /// <item>

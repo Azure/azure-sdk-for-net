@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RegisteredAsns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings/registeredAsns</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
@@ -141,6 +145,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegisteredAsns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings/registeredAsns</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +180,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RegisteredPrefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings/registeredPrefixes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
@@ -195,6 +207,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>RegisteredPrefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings/registeredPrefixes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
@@ -217,6 +233,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,6 +270,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -281,6 +305,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,6 +344,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -350,6 +382,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource tags. </param>
@@ -383,6 +419,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,6 +558,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -571,6 +615,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,6 +674,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -675,6 +727,10 @@ namespace Azure.ResourceManager.Peering
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -723,6 +779,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -775,6 +835,10 @@ namespace Azure.ResourceManager.Peering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
         /// </item>
         /// </list>
         /// </summary>

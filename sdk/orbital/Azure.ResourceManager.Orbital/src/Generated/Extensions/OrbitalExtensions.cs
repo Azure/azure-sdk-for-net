@@ -138,6 +138,10 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/spacecrafts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -167,6 +171,10 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/spacecrafts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -215,6 +223,10 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/contactProfiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -244,6 +256,10 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/contactProfiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -292,6 +308,10 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/availableGroundStations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -321,6 +341,10 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/availableGroundStations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -352,6 +376,10 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/spacecrafts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -380,6 +408,10 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/spacecrafts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -410,6 +442,10 @@ namespace Azure.ResourceManager.Orbital
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/contactProfiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -438,6 +474,10 @@ namespace Azure.ResourceManager.Orbital
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/contactProfiles</description>
         /// </item>
         /// </list>
         /// <item>

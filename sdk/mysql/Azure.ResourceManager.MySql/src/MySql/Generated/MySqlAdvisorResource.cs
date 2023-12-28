@@ -112,6 +112,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/advisors/recommendedActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendedActionName"> The recommended action name. </param>
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/advisors/recommendedActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendedActionName"> The recommended action name. </param>
@@ -157,6 +165,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Advisors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/advisors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,6 +201,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Advisors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/advisors</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>BareMetalMachineKeySets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters/bareMetalMachineKeySets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BareMetalMachineKeySets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters/bareMetalMachineKeySets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>BmcKeySets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters/bmcKeySets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bmcKeySetName"> The name of the baseboard management controller key set. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BmcKeySets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters/bmcKeySets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>MetricsConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters/metricsConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="metricsConfigurationName"> The name of the metrics configuration for the cluster. </param>
@@ -239,6 +259,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>MetricsConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters/metricsConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="metricsConfigurationName"> The name of the metrics configuration for the cluster. </param>
@@ -261,6 +285,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +322,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,6 +357,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,6 +396,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -393,6 +433,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,6 +476,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -470,6 +518,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Deploy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -505,6 +557,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Deploy</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -539,6 +595,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_UpdateVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -578,6 +638,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_UpdateVersion</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -615,6 +679,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -670,6 +738,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -724,6 +796,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -773,6 +849,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -821,6 +901,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -873,6 +957,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
         /// </item>
         /// </list>
         /// </summary>

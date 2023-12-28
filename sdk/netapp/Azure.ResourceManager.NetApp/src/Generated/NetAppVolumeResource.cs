@@ -116,6 +116,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the snapshot. </param>
@@ -138,6 +142,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,6 +177,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>VolumeQuotaRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeQuotaRuleName"> The name of volume quota rule. </param>
@@ -191,6 +203,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VolumeQuotaRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes/volumeQuotaRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +238,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Subvolumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subvolumeName"> The name of the subvolume. </param>
@@ -245,6 +265,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Subvolumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subvolumeName"> The name of the subvolume. </param>
@@ -267,6 +291,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +328,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -331,6 +363,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,6 +403,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -401,6 +441,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,6 +484,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -478,6 +526,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_PopulateAvailabilityZone</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -512,6 +564,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_PopulateAvailabilityZone</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -545,6 +601,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Revert</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -584,6 +644,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Revert</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -622,6 +686,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ResetCifsPassword</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -656,6 +724,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ResetCifsPassword</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -689,6 +761,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_BreakFileLocks</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -725,6 +801,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_BreakFileLocks</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -759,6 +839,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_ListGetGroupIdListForLdapUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -798,6 +882,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ListGetGroupIdListForLdapUser</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -836,6 +924,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_BreakReplication</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -871,6 +963,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_BreakReplication</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -905,6 +1001,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_ReestablishReplication</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -944,6 +1044,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ReestablishReplication</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -982,6 +1086,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ReplicationStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1011,6 +1119,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_ReplicationStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1042,6 +1154,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ListReplications</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1063,6 +1179,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ListReplications</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1083,6 +1203,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_ResyncReplication</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1118,6 +1242,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ResyncReplication</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1151,6 +1279,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_DeleteReplication</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1186,6 +1318,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_DeleteReplication</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1219,6 +1355,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_AuthorizeReplication</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1258,6 +1398,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_AuthorizeReplication</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1296,6 +1440,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ReInitializeReplication</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1330,6 +1478,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_ReInitializeReplication</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1363,6 +1515,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_PoolChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1402,6 +1558,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_PoolChange</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1440,6 +1600,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Relocate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1474,6 +1638,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Relocate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1510,6 +1678,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_FinalizeRelocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1543,6 +1715,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_FinalizeRelocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1578,6 +1754,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_RevertRelocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1611,6 +1791,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_RevertRelocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1706,6 +1890,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1759,6 +1947,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1814,6 +2006,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1863,6 +2059,10 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1911,6 +2111,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1963,6 +2167,10 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts/capacityPools/volumes</description>
         /// </item>
         /// </list>
         /// </summary>

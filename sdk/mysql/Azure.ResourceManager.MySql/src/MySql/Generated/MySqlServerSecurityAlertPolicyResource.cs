@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/securityAlertPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/securityAlertPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/securityAlertPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,6 +215,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/securityAlertPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

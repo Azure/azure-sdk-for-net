@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerport"> The name of the provider port. </param>
@@ -106,6 +110,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +152,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPortsLocation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
@@ -166,6 +178,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPortsLocation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
@@ -187,6 +203,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +243,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerport"> The name of the provider port. </param>
@@ -257,6 +281,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +322,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
         /// </item>
         /// </list>
         /// </summary>

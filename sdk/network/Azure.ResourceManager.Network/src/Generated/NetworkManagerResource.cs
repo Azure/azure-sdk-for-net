@@ -124,6 +124,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConnectivityConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers/connectivityConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the network manager connectivity configuration. </param>
@@ -146,6 +150,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectivityConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers/connectivityConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,6 +185,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers/networkGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkGroupName"> The name of the network group. </param>
@@ -199,6 +211,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers/networkGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,6 +246,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ScopeConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers/scopeConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeConnectionName"> Name for the cross-tenant connection. </param>
@@ -252,6 +272,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers/scopeConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,6 +307,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers/securityAdminConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
@@ -306,6 +334,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers/securityAdminConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the network manager Security Configuration. </param>
@@ -328,6 +360,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,6 +397,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -392,6 +432,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,6 +472,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -463,6 +511,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Patch</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to specify which network manager is. </param>
@@ -496,6 +548,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -531,6 +587,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListActiveConnectivityConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Active Configuration Parameter. </param>
@@ -556,6 +616,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListActiveConnectivityConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -583,6 +647,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListActiveSecurityAdminRules</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Active Configuration Parameter. </param>
@@ -608,6 +676,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListActiveSecurityAdminRules</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -763,6 +835,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -816,6 +892,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -871,6 +951,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -920,6 +1004,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -968,6 +1056,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1020,6 +1112,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
         /// </item>
         /// </list>
         /// </summary>

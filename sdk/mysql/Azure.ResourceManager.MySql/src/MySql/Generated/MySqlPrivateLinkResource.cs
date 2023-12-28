@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers/privateLinkResources</description>
         /// </item>
         /// </list>
         /// </summary>

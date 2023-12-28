@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/flexibleServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/flexibleServers</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -352,6 +352,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -381,6 +385,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/mobileNetworks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -429,6 +437,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -458,6 +470,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// <item>
@@ -506,6 +522,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/simGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -535,6 +555,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/simGroups</description>
         /// </item>
         /// </list>
         /// <item>
@@ -583,6 +607,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -612,6 +640,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -643,6 +675,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -670,6 +706,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/mobileNetworks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -699,6 +739,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -726,6 +770,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// <item>
@@ -755,6 +803,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/simGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -782,6 +834,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/simGroups</description>
         /// </item>
         /// </list>
         /// <item>
@@ -828,6 +884,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -857,6 +917,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
         /// </item>
         /// </list>
         /// <item>

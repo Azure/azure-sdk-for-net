@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/rackSkus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="rackSkuName"> The name of the rack SKU. </param>
@@ -128,6 +132,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RackSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/rackSkus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,6 +160,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/bareMetalMachines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,6 +185,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BareMetalMachines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/bareMetalMachines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +212,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/cloudServicesNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +237,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServicesNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/cloudServicesNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,6 +264,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusterManagers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -261,6 +289,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterManagers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusterManagers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +316,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -305,6 +341,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,6 +368,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/kubernetesClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -349,6 +393,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/kubernetesClusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +420,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>L2Networks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/l2Networks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -393,6 +445,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L2Networks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/l2Networks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,6 +472,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>L3Networks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/l3Networks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -437,6 +497,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L3Networks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/l3Networks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,6 +524,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>Racks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/racks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -481,6 +549,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Racks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/racks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -504,6 +576,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/storageAppliances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -525,6 +601,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageAppliances_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/storageAppliances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -548,6 +628,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/trunkedNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -569,6 +653,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrunkedNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/trunkedNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -592,6 +680,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/virtualMachines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -613,6 +705,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/virtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -636,6 +732,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <term>Operation Id</term>
         /// <description>Volumes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/volumes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -657,6 +757,10 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkCloud/volumes</description>
         /// </item>
         /// </list>
         /// </summary>

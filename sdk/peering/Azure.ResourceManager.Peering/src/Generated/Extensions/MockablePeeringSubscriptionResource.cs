@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeerAsns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerAsns</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peerAsnName"> The peer ASN name. </param>
@@ -121,6 +125,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeerAsns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerAsns</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,6 +455,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>Peerings_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -468,6 +480,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -625,6 +641,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peeringServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -647,6 +667,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peeringServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -668,6 +692,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peeringServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -698,6 +726,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_InitializeConnectionMonitor</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peeringServices</description>
         /// </item>
         /// </list>
         /// </summary>

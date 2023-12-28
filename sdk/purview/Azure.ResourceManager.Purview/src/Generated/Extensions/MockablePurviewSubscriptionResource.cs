@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
@@ -101,6 +109,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +147,10 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
         /// </item>
         /// </list>
         /// </summary>

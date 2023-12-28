@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignaturesOverrides_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/firewallPolicies/signatureOverrides</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignaturesOverrides_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/firewallPolicies/signatureOverrides</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignaturesOverrides_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/firewallPolicies/signatureOverrides</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +210,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignaturesOverrides_Patch</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/firewallPolicies/signatureOverrides</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Will contain all properties of the object to put. </param>
@@ -231,6 +247,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignaturesOverrides_Put</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/firewallPolicies/signatureOverrides</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +289,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignaturesOverrides_Put</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/firewallPolicies/signatureOverrides</description>
         /// </item>
         /// </list>
         /// </summary>

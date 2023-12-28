@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the NetApp account. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

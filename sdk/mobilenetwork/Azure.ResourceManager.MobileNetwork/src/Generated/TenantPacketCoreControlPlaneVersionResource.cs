@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
         /// </item>
         /// </list>
         /// </summary>

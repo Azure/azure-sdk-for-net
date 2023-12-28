@@ -127,6 +127,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/firewallRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
@@ -149,6 +153,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/firewallRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,6 +188,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/virtualNetworkRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
@@ -202,6 +214,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/virtualNetworkRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,6 +249,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/databases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
@@ -255,6 +275,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/databases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +310,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/configurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
@@ -308,6 +336,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/configurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,6 +378,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/securityAlertPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
@@ -366,6 +402,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/securityAlertPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,6 +435,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -417,6 +461,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -448,6 +496,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
@@ -470,6 +522,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/privateLinkResources</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,6 +557,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/keys</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the PostgreSQL Server key to be retrieved. </param>
@@ -524,6 +584,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/keys</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyName"> The name of the PostgreSQL Server key to be retrieved. </param>
@@ -546,6 +610,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -579,6 +647,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -610,6 +682,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -645,6 +721,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -678,6 +758,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -717,6 +801,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -755,6 +843,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -788,6 +880,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Restart</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1043,6 +1139,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1096,6 +1196,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1151,6 +1255,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1200,6 +1308,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1248,6 +1360,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1300,6 +1416,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// </summary>

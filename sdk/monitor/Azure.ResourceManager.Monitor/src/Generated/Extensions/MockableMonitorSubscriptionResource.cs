@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>LogProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/logprofiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="logProfileName"> The name of the log profile. </param>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/logprofiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,6 +161,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/autoscalesettings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,6 +186,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/autoscalesettings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,6 +213,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AlertRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/alertrules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +237,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/alertrules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,6 +263,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ActionGroups_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/actionGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,6 +287,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActionGroups_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/actionGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -435,6 +467,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/metricAlerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -456,6 +492,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/metricAlerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -476,6 +516,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/scheduledQueryRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,6 +543,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/scheduledQueryRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -520,6 +568,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>microsoft.insights/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -543,6 +595,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>microsoft.insights/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -564,6 +620,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/activityLogAlerts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,6 +647,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/activityLogAlerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -608,6 +672,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionEndpoints</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -631,6 +699,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionEndpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -652,6 +724,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -675,6 +751,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -697,6 +777,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Monitor/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -718,6 +802,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Monitor/accounts</description>
         /// </item>
         /// </list>
         /// </summary>

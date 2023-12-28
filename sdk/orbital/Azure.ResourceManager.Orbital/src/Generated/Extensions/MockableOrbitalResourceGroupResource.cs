@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/spacecrafts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="spacecraftName"> Spacecraft ID. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/spacecrafts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/contactProfiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="contactProfileName"> Contact Profile name. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Orbital/contactProfiles</description>
         /// </item>
         /// </list>
         /// </summary>

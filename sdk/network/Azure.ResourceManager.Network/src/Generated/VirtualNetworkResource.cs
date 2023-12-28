@@ -116,6 +116,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>Subnets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks/subnets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subnetName"> The name of the subnet. </param>
@@ -139,6 +143,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subnets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks/subnets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,6 +179,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkPeerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks/virtualNetworkPeerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
@@ -194,6 +206,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkPeerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks/virtualNetworkPeerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,6 +270,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -282,6 +306,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,6 +345,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -350,6 +382,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,6 +421,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to update virtual network tags. </param>
@@ -419,6 +459,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListNetworkManagerEffectiveConnectivityConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to list correct page. </param>
@@ -444,6 +488,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListNetworkManagerEffectiveConnectivityConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,6 +519,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListNetworkManagerEffectiveSecurityAdminRules</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to list correct page. </param>
@@ -497,6 +549,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ListNetworkManagerEffectiveSecurityAdminRules</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteProviderPorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to list correct page. </param>
@@ -522,6 +578,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_CheckIPAddressAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -557,6 +617,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_CheckIPAddressAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipAddress"> The private IP address to be verified. </param>
@@ -591,6 +655,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -613,6 +681,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -634,6 +706,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -689,6 +765,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -743,6 +823,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -792,6 +876,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -840,6 +928,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -892,6 +984,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>

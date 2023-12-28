@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RouteMaps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/routeMaps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RouteMaps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/routeMaps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>HubVirtualNetworkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/hubVirtualNetworkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HubVirtualNetworkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/hubVirtualNetworkConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubRouteTableV2s_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/routeTables</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
@@ -238,6 +258,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubRouteTableV2s_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/routeTables</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +293,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubBgpConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/bgpConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
@@ -291,6 +319,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubBgpConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/bgpConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,6 +354,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubIpConfiguration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/ipConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
@@ -344,6 +380,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubIpConfiguration_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/ipConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +415,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>HubRouteTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/hubRouteTables</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
@@ -397,6 +441,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HubRouteTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/hubRouteTables</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,6 +476,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/routingIntent</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
@@ -451,6 +503,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs/routingIntent</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
@@ -473,6 +529,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,6 +566,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -537,6 +601,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -572,6 +640,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -605,6 +677,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -640,6 +716,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
@@ -673,6 +753,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetEffectiveVirtualHubRoutes</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -709,6 +793,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetEffectiveVirtualHubRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -743,6 +831,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetInboundRoutes</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -782,6 +874,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetInboundRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -819,6 +915,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetOutboundRoutes</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -858,6 +958,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetOutboundRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -895,6 +999,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -950,6 +1058,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1004,6 +1116,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1053,6 +1169,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1101,6 +1221,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1153,6 +1277,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>

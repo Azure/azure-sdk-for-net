@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/azureWebCategories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/azureWebCategories</description>
         /// </item>
         /// </list>
         /// </summary>

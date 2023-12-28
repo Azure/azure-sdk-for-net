@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>LocationBasedCapabilitySet_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/locations/capabilitySets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocationBasedCapabilitySet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/locations/capabilitySets</description>
         /// </item>
         /// </list>
         /// </summary>

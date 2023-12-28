@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>Firewalls_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/firewalls</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +82,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firewalls_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/firewalls</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,6 +109,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/localRulestacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,6 +134,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/localRulestacks</description>
         /// </item>
         /// </list>
         /// </summary>

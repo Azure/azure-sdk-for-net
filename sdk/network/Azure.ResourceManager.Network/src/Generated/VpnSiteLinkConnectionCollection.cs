@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnSiteLinkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnSiteLinkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +151,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnLinkConnections_ListByVpnConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +177,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnLinkConnections_ListByVpnConnection</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,6 +202,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnSiteLinkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +242,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnSiteLinkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
@@ -256,6 +280,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnSiteLinkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,6 +321,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnSiteLinkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections</description>
         /// </item>
         /// </list>
         /// </summary>

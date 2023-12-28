@@ -128,6 +128,10 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <term>Operation Id</term>
         /// <description>EnergyServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OpenEnergyPlatform/energyServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,6 +153,10 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnergyServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OpenEnergyPlatform/energyServices</description>
         /// </item>
         /// </list>
         /// </summary>

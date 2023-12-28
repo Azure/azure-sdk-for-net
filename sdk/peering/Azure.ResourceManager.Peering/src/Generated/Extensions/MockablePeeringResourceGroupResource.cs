@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peeringName"> The name of the peering. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peerings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peeringServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peeringServiceName"> The name of the peering. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Peering/peeringServices</description>
         /// </item>
         /// </list>
         /// </summary>

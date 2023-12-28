@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateZones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of Private DNS zones to return. If not specified, returns up to 100 zones. </param>
@@ -75,6 +79,10 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateZones_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones</description>
         /// </item>
         /// </list>
         /// </summary>

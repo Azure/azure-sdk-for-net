@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/applicationGateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationGatewayName"> The name of the application gateway. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/applicationGateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationSecurityGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/applicationSecurityGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
@@ -150,6 +162,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationSecurityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/applicationSecurityGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +197,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureFirewalls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/azureFirewalls</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureFirewallName"> The name of the Azure Firewall. </param>
@@ -203,6 +223,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureFirewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/azureFirewalls</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,6 +258,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>BastionHosts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/bastionHosts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bastionHostName"> The name of the Bastion Host. </param>
@@ -256,6 +284,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BastionHosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/bastionHosts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +322,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VipSwap_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/cloudServiceSlots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the cloud service. </param>
@@ -312,6 +348,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VipSwap_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/cloudServiceSlots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,6 +383,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>CustomIPPrefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/customIpPrefixes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
@@ -366,6 +410,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomIPPrefixes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/customIpPrefixes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,6 +446,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>DdosCustomPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ddosCustomPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ddosCustomPolicyName"> The name of the DDoS custom policy. </param>
@@ -420,6 +472,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DdosCustomPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ddosCustomPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,6 +507,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>DdosProtectionPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ddosProtectionPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ddosProtectionPlanName"> The name of the DDoS protection plan. </param>
@@ -473,6 +533,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DdosProtectionPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ddosProtectionPlans</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -504,6 +568,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>DscpConfiguration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dscpConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dscpConfigurationName"> The name of the resource. </param>
@@ -526,6 +594,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscpConfiguration_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/dscpConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -557,6 +629,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRouteCircuits_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteCircuits</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="circuitName"> The name of express route circuit. </param>
@@ -579,6 +655,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteCircuits_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteCircuits</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -610,6 +690,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRouteCrossConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteCrossConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="crossConnectionName"> The name of the ExpressRouteCrossConnection (service key of the circuit). </param>
@@ -632,6 +716,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteCrossConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteCrossConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -663,6 +751,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePorts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ExpressRoutePorts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expressRoutePortName"> The name of ExpressRoutePort. </param>
@@ -685,6 +777,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePorts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ExpressRoutePorts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -716,6 +812,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/firewallPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firewallPolicyName"> The name of the Firewall Policy. </param>
@@ -739,6 +839,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/firewallPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -771,6 +875,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>IpAllocations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/IpAllocations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipAllocationName"> The name of the IpAllocation. </param>
@@ -794,6 +902,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpAllocations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/IpAllocations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -826,6 +938,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
@@ -849,6 +965,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -881,6 +1001,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/loadBalancers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadBalancerName"> The name of the load balancer. </param>
@@ -904,6 +1028,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/loadBalancers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -936,6 +1064,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NatGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/natGateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="natGatewayName"> The name of the nat gateway. </param>
@@ -959,6 +1091,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NatGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/natGateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -991,6 +1127,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> The name of the network interface. </param>
@@ -1014,6 +1154,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1046,6 +1190,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkManagerName"> The name of the network manager. </param>
@@ -1068,6 +1216,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkManagers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1099,6 +1251,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkProfiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkProfileName"> The name of the public IP prefix. </param>
@@ -1122,6 +1278,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkProfiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1154,6 +1314,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkSecurityGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkSecurityGroupName"> The name of the network security group. </param>
@@ -1177,6 +1341,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkSecurityGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1209,6 +1377,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkVirtualAppliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkVirtualAppliances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
@@ -1232,6 +1404,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkVirtualAppliances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkVirtualAppliances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1264,6 +1440,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkWatchers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkWatchers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkWatcherName"> The name of the network watcher. </param>
@@ -1286,6 +1466,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkWatchers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkWatchers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1317,6 +1501,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateEndpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
@@ -1340,6 +1528,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateEndpoints</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1372,6 +1564,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateLinkServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the private link service. </param>
@@ -1395,6 +1591,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateLinkServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1427,6 +1627,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PublicIPAddresses_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/publicIPAddresses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publicIPAddressName"> The name of the public IP address. </param>
@@ -1450,6 +1654,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicIPAddresses_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/publicIPAddresses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1482,6 +1690,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PublicIPPrefixes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/publicIPPrefixes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
@@ -1505,6 +1717,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicIPPrefixes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/publicIPPrefixes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1537,6 +1753,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>RouteFilters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/routeFilters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeFilterName"> The name of the route filter. </param>
@@ -1560,6 +1780,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RouteFilters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/routeFilters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1592,6 +1816,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>RouteTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/routeTables</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeTableName"> The name of the route table. </param>
@@ -1615,6 +1843,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RouteTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/routeTables</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1647,6 +1879,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>SecurityPartnerProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/securityPartnerProviders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPartnerProviderName"> The name of the Security Partner Provider. </param>
@@ -1669,6 +1905,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityPartnerProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/securityPartnerProviders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1700,6 +1940,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ServiceEndpointPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/serviceEndpointPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
@@ -1723,6 +1967,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServiceEndpointPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/serviceEndpointPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1755,6 +2003,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
@@ -1778,6 +2030,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1810,6 +2066,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworkGateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkGatewayName"> The name of the virtual network gateway. </param>
@@ -1832,6 +2092,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworkGateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1863,6 +2127,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkGatewayConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/connections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkGatewayConnectionName"> The name of the virtual network gateway connection. </param>
@@ -1885,6 +2153,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkGatewayConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/connections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1916,6 +2188,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>LocalNetworkGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/localNetworkGateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="localNetworkGatewayName"> The name of the local network gateway. </param>
@@ -1938,6 +2214,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocalNetworkGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/localNetworkGateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1969,6 +2249,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkTaps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworkTaps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tapName"> The name of virtual network tap. </param>
@@ -1991,6 +2275,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkTaps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualNetworkTaps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2022,6 +2310,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualRouters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualRouters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualRouterName"> The name of the Virtual Router. </param>
@@ -2045,6 +2337,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualRouters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualRouters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2077,6 +2373,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualWans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualWans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
@@ -2099,6 +2399,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualWans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualWans</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2130,6 +2434,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VpnSites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnSites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vpnSiteName"> The name of the VpnSite being retrieved. </param>
@@ -2152,6 +2460,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnSites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2183,6 +2495,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VpnServerConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnServerConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vpnServerConfigurationName"> The name of the VpnServerConfiguration being retrieved. </param>
@@ -2205,6 +2521,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnServerConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnServerConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2236,6 +2556,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHubName"> The name of the VirtualHub. </param>
@@ -2258,6 +2582,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/virtualHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2289,6 +2617,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
@@ -2311,6 +2643,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/vpnGateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2342,6 +2678,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>P2sVpnGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/p2svpnGateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayName"> The name of the gateway. </param>
@@ -2364,6 +2704,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>P2sVpnGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/p2svpnGateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2395,6 +2739,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRouteGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteGateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expressRouteGatewayName"> The name of the ExpressRoute gateway. </param>
@@ -2417,6 +2765,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/expressRouteGateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2448,6 +2800,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>WebApplicationFirewallPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the policy. </param>
@@ -2470,6 +2826,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApplicationFirewallPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers/privateLinkResources</description>
         /// </item>
         /// </list>
         /// </summary>

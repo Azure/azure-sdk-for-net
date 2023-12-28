@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Nginx.NginxPlus/nginxDeployments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Nginx.NginxPlus/nginxDeployments</description>
         /// </item>
         /// </list>
         /// </summary>

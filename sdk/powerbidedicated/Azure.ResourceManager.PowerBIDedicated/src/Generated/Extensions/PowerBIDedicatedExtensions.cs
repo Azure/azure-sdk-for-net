@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
         /// </item>
         /// </list>
         /// <item>
@@ -178,6 +186,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -207,6 +219,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/autoScaleVCores</description>
         /// </item>
         /// </list>
         /// <item>
@@ -238,6 +254,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -265,6 +285,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
         /// </item>
         /// </list>
         /// <item>
@@ -294,6 +318,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -322,6 +350,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -349,6 +381,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
         /// </item>
         /// </list>
         /// <item>
@@ -379,6 +415,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/capacities</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -408,6 +448,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/autoScaleVCores</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -435,6 +479,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PowerBIDedicated/autoScaleVCores</description>
         /// </item>
         /// </list>
         /// <item>

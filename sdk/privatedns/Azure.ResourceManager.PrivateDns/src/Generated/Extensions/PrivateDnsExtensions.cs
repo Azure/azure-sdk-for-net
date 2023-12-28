@@ -252,6 +252,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>PrivateZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -281,6 +285,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateZones_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones</description>
         /// </item>
         /// </list>
         /// <item>
@@ -312,6 +320,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>PrivateZones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -340,6 +352,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateZones_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones</description>
         /// </item>
         /// </list>
         /// <item>

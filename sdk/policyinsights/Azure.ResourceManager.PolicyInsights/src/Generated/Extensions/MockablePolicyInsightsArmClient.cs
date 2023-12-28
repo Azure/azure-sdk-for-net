@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/remediations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/remediations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +140,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/attestations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -155,6 +167,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/attestations</description>
         /// </item>
         /// </list>
         /// </summary>

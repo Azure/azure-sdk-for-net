@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>QueryPacks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +117,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +142,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,6 +169,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,6 +193,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>

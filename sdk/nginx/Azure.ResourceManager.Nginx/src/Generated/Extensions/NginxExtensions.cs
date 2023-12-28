@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Nginx.NginxPlus/nginxDeployments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -148,6 +152,10 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Nginx.NginxPlus/nginxDeployments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -179,6 +187,10 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Nginx.NginxPlus/nginxDeployments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -206,6 +218,10 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Nginx.NginxPlus/nginxDeployments</description>
         /// </item>
         /// </list>
         /// <item>

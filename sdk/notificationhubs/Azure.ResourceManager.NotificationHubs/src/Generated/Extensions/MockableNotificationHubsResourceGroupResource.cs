@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NotificationHubs/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>

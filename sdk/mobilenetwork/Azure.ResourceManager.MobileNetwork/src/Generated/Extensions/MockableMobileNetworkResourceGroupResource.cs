@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/mobileNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MobileNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/mobileNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SimGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/simGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="simGroupName"> The name of the SIM Group. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/simGroups</description>
         /// </item>
         /// </list>
         /// </summary>

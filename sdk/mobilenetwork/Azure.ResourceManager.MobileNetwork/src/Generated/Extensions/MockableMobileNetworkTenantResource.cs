@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlaneVersions</description>
         /// </item>
         /// </list>
         /// </summary>

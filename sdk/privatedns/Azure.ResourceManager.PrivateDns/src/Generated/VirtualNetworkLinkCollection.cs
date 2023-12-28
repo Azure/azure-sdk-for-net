@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -106,6 +110,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,6 +158,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
@@ -186,6 +198,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +240,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of virtual network links to return. If not specified, returns up to 100 virtual network links. </param>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of virtual network links to return. If not specified, returns up to 100 virtual network links. </param>
@@ -269,6 +293,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +333,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
@@ -339,6 +371,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +412,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/privateDnsZones/virtualNetworkLinks</description>
         /// </item>
         /// </list>
         /// </summary>

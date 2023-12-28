@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>QueryPacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
@@ -88,6 +92,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,6 +127,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> Name of the Log Analytics Cluster. </param>
@@ -141,6 +153,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +188,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -195,6 +215,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -217,6 +241,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +279,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OperationalInsights/queryPacks</description>
         /// </item>
         /// </list>
         /// </summary>

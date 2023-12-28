@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
@@ -90,6 +94,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,6 +161,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,6 +185,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,6 +225,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the diagnostic setting. </param>
@@ -239,6 +263,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +304,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
         /// </item>
         /// </list>
         /// </summary>

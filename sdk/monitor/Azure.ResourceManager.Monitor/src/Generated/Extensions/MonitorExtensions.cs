@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettings</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettings</description>
         /// </item>
         /// </list>
         /// <item>
@@ -149,6 +157,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -179,6 +191,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/diagnosticSettingsCategories</description>
         /// </item>
         /// </list>
         /// <item>
@@ -247,6 +263,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DataCollectionRuleAssociations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRuleAssociations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -277,6 +297,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionRuleAssociations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRuleAssociations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -900,6 +924,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/autoscalesettings</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -929,6 +957,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/autoscalesettings</description>
         /// </item>
         /// </list>
         /// <item>
@@ -977,6 +1009,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/alertrules</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1006,6 +1042,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/alertrules</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1054,6 +1094,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ActionGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/actionGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1083,6 +1127,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActionGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/actionGroups</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1131,6 +1179,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/metricAlerts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1160,6 +1212,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/metricAlerts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1208,6 +1264,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/scheduledQueryRules</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1237,6 +1297,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/scheduledQueryRules</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1285,6 +1349,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>microsoft.insights/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1314,6 +1382,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>microsoft.insights/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1362,6 +1434,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/activityLogAlerts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1391,6 +1467,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/activityLogAlerts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1439,6 +1519,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionEndpoints</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1468,6 +1552,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionEndpoints</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1516,6 +1604,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRules</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1545,6 +1637,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRules</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1593,6 +1689,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Monitor/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1622,6 +1722,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Monitor/accounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1728,6 +1832,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>LogProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/logprofiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1757,6 +1865,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/logprofiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1788,6 +1900,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/autoscalesettings</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1815,6 +1931,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoscaleSettings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/autoscalesettings</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1844,6 +1964,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AlertRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/alertrules</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1871,6 +1995,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/alertrules</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1900,6 +2028,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ActionGroups_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/actionGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1927,6 +2059,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActionGroups_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/actionGroups</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2132,6 +2268,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/metricAlerts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2159,6 +2299,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricAlerts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/metricAlerts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2188,6 +2332,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/scheduledQueryRules</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2215,6 +2363,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledQueryRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/scheduledQueryRules</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2244,6 +2396,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>microsoft.insights/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2271,6 +2427,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>microsoft.insights/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2300,6 +2460,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/activityLogAlerts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2327,6 +2491,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ActivityLogAlerts_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/activityLogAlerts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2356,6 +2524,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionEndpoints</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2383,6 +2555,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionEndpoints_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionEndpoints</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2412,6 +2588,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRules</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2439,6 +2619,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataCollectionRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/dataCollectionRules</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2468,6 +2652,10 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Monitor/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -2495,6 +2683,10 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Monitor/accounts</description>
         /// </item>
         /// </list>
         /// <item>

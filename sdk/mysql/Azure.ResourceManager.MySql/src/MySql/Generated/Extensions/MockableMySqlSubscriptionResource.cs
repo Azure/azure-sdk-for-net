@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.MySql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/servers</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -121,6 +121,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>NewRelic.Observability/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,6 +146,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>NewRelic.Observability/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

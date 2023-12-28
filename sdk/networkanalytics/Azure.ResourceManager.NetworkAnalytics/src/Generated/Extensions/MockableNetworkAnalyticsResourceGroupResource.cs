@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProducts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataProductName"> The data product resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProducts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProducts</description>
         /// </item>
         /// </list>
         /// </summary>

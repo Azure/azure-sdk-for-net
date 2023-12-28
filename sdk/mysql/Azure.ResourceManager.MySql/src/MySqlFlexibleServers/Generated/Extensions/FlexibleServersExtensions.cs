@@ -201,6 +201,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/flexibleServers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -230,6 +234,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/flexibleServers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -279,6 +287,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>LocationBasedCapabilitySet_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/locations/capabilitySets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -309,6 +321,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocationBasedCapabilitySet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/locations/capabilitySets</description>
         /// </item>
         /// </list>
         /// <item>
@@ -341,6 +357,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/flexibleServers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -368,6 +388,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/flexibleServers</description>
         /// </item>
         /// </list>
         /// <item>

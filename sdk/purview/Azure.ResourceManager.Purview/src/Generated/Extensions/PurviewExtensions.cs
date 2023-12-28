@@ -125,6 +125,10 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -154,6 +158,10 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -185,6 +193,10 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -213,6 +225,10 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -243,6 +259,10 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -270,6 +290,10 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Purview/accounts</description>
         /// </item>
         /// </list>
         /// <item>

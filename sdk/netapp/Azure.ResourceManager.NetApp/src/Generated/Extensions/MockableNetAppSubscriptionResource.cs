@@ -600,6 +600,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -621,6 +625,10 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetApp/netAppAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

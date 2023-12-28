@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProductsCatalogs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProductsCatalogs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProductsCatalogs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkAnalytics/dataProductsCatalogs</description>
         /// </item>
         /// </list>
         /// </summary>

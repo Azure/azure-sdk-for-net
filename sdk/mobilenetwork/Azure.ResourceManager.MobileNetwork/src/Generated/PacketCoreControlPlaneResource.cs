@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>DiagnosticsPackages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes/diagnosticsPackages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticsPackageName"> The name of the diagnostics package. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticsPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes/diagnosticsPackages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes/packetCaptures</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes/packetCaptures</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreDataPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes/packetCoreDataPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
@@ -239,6 +259,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreDataPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes/packetCoreDataPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
@@ -261,6 +285,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +322,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,6 +357,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,6 +396,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -393,6 +433,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,6 +472,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to patch packet core control plane resource. </param>
@@ -461,6 +509,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Rollback</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -496,6 +548,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Rollback</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -529,6 +585,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Reinstall</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -564,6 +624,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Reinstall</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -597,6 +661,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_CollectDiagnosticsPackage</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -636,6 +704,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_CollectDiagnosticsPackage</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -673,6 +745,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -728,6 +804,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -782,6 +862,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -831,6 +915,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -879,6 +967,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -931,6 +1023,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlanes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MobileNetwork/packetCoreControlPlanes</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -115,6 +115,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaceIPConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces/ipConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
@@ -137,6 +141,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaceIPConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces/ipConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +176,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaceTapConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces/tapConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
@@ -191,6 +203,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaceTapConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces/tapConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
@@ -213,6 +229,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -279,6 +303,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,6 +342,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -347,6 +379,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,6 +418,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to update network interface tags. </param>
@@ -415,6 +455,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_GetEffectiveRouteTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,6 +494,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_GetEffectiveRouteTable</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -484,6 +532,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_ListEffectiveNetworkSecurityGroups</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -517,6 +569,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_ListEffectiveNetworkSecurityGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -596,6 +652,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -649,6 +709,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -704,6 +768,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -753,6 +821,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -801,6 +873,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -853,6 +929,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>

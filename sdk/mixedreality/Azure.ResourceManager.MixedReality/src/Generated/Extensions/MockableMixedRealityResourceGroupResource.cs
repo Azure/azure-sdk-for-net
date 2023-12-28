@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MixedReality/spatialAnchorsAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MixedReality/spatialAnchorsAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MixedReality/remoteRenderingAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Name of an Mixed Reality Account. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MixedReality/remoteRenderingAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Nginx.NginxPlus/nginxDeployments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Nginx.NginxPlus/nginxDeployments</description>
         /// </item>
         /// </list>
         /// </summary>

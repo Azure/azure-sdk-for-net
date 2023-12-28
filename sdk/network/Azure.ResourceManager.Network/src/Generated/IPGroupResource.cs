@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
@@ -136,6 +140,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
@@ -168,6 +176,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpGroups_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,6 +215,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>IpGroups_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -236,6 +252,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpGroups_UpdateGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,6 +291,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>IpGroups_UpdateGroups</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to the update ipGroups operation. </param>
@@ -304,6 +328,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -359,6 +387,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -413,6 +445,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -462,6 +498,10 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -510,6 +550,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -562,6 +606,10 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Network/ipGroups</description>
         /// </item>
         /// </list>
         /// </summary>

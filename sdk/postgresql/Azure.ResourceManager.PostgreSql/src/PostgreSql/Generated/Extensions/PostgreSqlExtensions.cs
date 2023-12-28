@@ -253,6 +253,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -282,6 +286,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -313,6 +321,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -340,6 +352,10 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/servers</description>
         /// </item>
         /// </list>
         /// <item>

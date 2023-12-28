@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>LocationBasedCapabilitySet_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/locations/capabilitySets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
@@ -107,6 +111,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LocationBasedCapabilitySet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/locations/capabilitySets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +140,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/flexibleServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -153,6 +165,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforMySQL/flexibleServers</description>
         /// </item>
         /// </list>
         /// </summary>

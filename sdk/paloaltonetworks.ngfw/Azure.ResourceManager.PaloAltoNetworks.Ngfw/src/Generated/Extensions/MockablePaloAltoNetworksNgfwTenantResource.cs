@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>GlobalRulestack_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/globalRulestacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalRulestack_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>PaloAltoNetworks.Cloudngfw/globalRulestacks</description>
         /// </item>
         /// </list>
         /// </summary>

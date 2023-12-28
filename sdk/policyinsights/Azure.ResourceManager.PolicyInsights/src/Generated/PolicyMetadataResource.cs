@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
         /// </item>
         /// </list>
         /// </summary>

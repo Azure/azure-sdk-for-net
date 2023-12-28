@@ -139,6 +139,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +172,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NotificationHubs/namespaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -199,6 +207,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>Namespaces_CheckAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -226,6 +238,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NotificationHubs/namespaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -255,6 +271,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <term>Operation Id</term>
         /// <description>Namespaces_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NotificationHubs/namespaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -282,6 +302,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NotificationHubs/namespaces</description>
         /// </item>
         /// </list>
         /// <item>

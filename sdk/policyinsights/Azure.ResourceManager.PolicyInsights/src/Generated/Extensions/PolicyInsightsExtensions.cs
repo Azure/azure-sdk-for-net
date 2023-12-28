@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/remediations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/remediations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -155,6 +163,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/attestations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/attestations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1531,6 +1547,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1559,6 +1579,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.PolicyInsights/policyMetadata</description>
         /// </item>
         /// </list>
         /// <item>

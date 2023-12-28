@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkFunction/azureTrafficCollectors</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.NetworkFunction/azureTrafficCollectors</description>
         /// </item>
         /// </list>
         /// <item>
