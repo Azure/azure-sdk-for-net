@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VmmServers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/vmmServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,6 +98,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VmmServers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/vmmServers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,6 +125,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>Clouds_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/clouds</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,6 +150,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/clouds</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,6 +177,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,6 +229,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,6 +254,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,6 +281,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -270,6 +306,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachineTemplates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,6 +333,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/availabilitySets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -314,6 +358,10 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/availabilitySets</description>
         /// </item>
         /// </list>
         /// </summary>

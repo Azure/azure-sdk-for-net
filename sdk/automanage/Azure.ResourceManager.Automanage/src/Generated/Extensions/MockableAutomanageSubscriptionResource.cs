@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,6 +84,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfiles</description>
         /// </item>
         /// </list>
         /// </summary>

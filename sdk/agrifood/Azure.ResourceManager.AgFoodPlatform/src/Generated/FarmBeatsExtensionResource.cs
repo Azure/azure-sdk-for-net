@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions</description>
         /// </item>
         /// </list>
         /// </summary>

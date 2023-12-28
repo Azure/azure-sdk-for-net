@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <term>Operation Id</term>
         /// <description>BatchAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -81,6 +85,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

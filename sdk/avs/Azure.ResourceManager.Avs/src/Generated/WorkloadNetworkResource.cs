@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/workloadNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +137,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/workloadNetworks</description>
         /// </item>
         /// </list>
         /// </summary>

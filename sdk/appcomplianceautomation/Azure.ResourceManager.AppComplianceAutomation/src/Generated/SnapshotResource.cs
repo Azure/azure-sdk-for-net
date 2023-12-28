@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Download</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +213,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Download</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>

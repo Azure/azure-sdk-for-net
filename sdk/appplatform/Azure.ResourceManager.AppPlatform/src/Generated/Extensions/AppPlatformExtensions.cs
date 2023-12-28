@@ -524,6 +524,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -553,6 +557,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
         /// </item>
         /// </list>
         /// <item>
@@ -584,6 +592,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -612,6 +624,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
         /// </item>
         /// </list>
         /// <item>
@@ -642,6 +658,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -669,6 +689,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
         /// </item>
         /// </list>
         /// <item>

@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
@@ -166,6 +174,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +213,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Request body for patching a savings plan order alias. </param>
@@ -235,6 +251,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_ValidateUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
@@ -260,6 +280,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_ValidateUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans</description>
         /// </item>
         /// </list>
         /// </summary>

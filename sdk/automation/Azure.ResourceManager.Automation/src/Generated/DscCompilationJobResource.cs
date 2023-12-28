@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts/compilationjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts/compilationjobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts/compilationjobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,6 +215,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts/compilationjobs</description>
         /// </item>
         /// </list>
         /// </summary>

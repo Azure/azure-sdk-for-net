@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprints/versions/artifacts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublishedArtifacts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprints/versions/artifacts</description>
         /// </item>
         /// </list>
         /// </summary>

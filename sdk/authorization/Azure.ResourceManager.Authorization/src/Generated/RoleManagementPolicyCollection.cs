@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
@@ -90,6 +94,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,6 +162,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,6 +187,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,6 +227,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
@@ -241,6 +265,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,6 +306,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores</description>
         /// </item>
         /// </list>
         /// </summary>

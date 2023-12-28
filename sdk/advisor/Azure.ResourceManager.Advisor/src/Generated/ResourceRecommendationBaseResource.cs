@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Suppressions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations/suppressions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the suppression. </param>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Suppressions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations/suppressions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the suppression. </param>
@@ -151,6 +159,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +195,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
         /// </item>
         /// </list>
         /// </summary>

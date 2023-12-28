@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeats</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="farmBeatsResourceName"> FarmBeats resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeats</description>
         /// </item>
         /// </list>
         /// </summary>

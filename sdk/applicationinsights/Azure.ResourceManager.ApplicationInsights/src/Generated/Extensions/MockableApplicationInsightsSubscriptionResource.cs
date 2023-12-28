@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Components_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/components</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,6 +92,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/components</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,6 +119,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>WebTests_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/webtests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +145,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>WebTests_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/webtests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,6 +170,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/myWorkbooks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,6 +200,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/myWorkbooks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="category"> Category of workbook to return. </param>
@@ -205,6 +229,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="category"> Category of workbook to return. </param>
@@ -229,6 +257,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks</description>
         /// </item>
         /// </list>
         /// </summary>

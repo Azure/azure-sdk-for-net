@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/metadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/metadata</description>
         /// </item>
         /// </list>
         /// </summary>

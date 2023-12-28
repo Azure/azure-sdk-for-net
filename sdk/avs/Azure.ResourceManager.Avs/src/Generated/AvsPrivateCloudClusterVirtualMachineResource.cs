@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/clusters/virtualMachines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/clusters/virtualMachines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,6 +174,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_RestrictMovement</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/clusters/virtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +216,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_RestrictMovement</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/clusters/virtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrderAliases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrderAliases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +170,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrderAliases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +212,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrderAliases</description>
         /// </item>
         /// </list>
         /// </summary>

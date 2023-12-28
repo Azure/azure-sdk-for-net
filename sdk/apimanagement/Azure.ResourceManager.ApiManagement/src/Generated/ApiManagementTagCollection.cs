@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -106,6 +110,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,6 +157,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +239,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -249,6 +269,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -274,6 +298,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,6 +338,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
@@ -344,6 +376,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,6 +417,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
         /// </item>
         /// </list>
         /// </summary>

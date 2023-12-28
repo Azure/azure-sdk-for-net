@@ -95,6 +95,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -124,6 +128,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports</description>
         /// </item>
         /// </list>
         /// <item>

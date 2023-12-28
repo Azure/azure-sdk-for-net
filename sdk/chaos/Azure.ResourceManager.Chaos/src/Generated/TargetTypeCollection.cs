@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
@@ -106,6 +110,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +152,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
@@ -167,6 +179,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
@@ -189,6 +205,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +245,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
@@ -259,6 +283,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +324,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
         /// </item>
         /// </list>
         /// </summary>

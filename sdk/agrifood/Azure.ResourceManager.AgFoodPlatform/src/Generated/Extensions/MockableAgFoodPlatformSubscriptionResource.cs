@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeats</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxPageSize">
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeats</description>
         /// </item>
         /// </list>
         /// </summary>

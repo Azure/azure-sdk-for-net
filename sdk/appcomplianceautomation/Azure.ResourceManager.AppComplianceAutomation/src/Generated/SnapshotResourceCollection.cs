@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +151,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
@@ -170,6 +182,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
@@ -196,6 +212,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,6 +252,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
@@ -266,6 +290,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +331,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>

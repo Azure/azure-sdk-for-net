@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +155,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
@@ -183,6 +195,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +237,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
@@ -245,6 +265,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
@@ -268,6 +292,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +332,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
@@ -338,6 +370,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +411,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_MetaData</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/alerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_MetaData</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/alerts</description>
         /// </item>
         /// </list>
         /// </summary>

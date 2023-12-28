@@ -196,6 +196,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +229,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/accounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -273,6 +281,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/commitmentPlans</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -302,6 +314,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/commitmentPlans</description>
         /// </item>
         /// </list>
         /// <item>
@@ -350,6 +366,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -381,6 +401,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -414,6 +438,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -441,6 +469,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/accounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -470,6 +502,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -497,6 +533,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -874,6 +914,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_ListPlansBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/commitmentPlans</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -901,6 +945,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_ListPlansBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/commitmentPlans</description>
         /// </item>
         /// </list>
         /// <item>

@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

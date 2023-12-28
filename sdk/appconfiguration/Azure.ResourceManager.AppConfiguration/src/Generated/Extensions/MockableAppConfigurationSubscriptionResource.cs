@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/locations/deletedConfigurationStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -90,6 +94,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/locations/deletedConfigurationStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -137,6 +149,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores</description>
         /// </item>
         /// </list>
         /// </summary>

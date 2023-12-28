@@ -144,6 +144,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -173,6 +177,10 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -204,6 +212,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -231,6 +243,10 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -260,6 +276,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>BotConnection_ListServiceProviders</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices/connections</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -287,6 +307,10 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BotConnection_ListServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices/connections</description>
         /// </item>
         /// </list>
         /// <item>
@@ -426,6 +450,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_GetCheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -453,6 +481,10 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
         /// </item>
         /// </list>
         /// <item>

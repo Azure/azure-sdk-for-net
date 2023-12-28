@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
@@ -98,6 +102,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +140,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -157,6 +169,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -181,6 +197,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +233,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
@@ -243,6 +267,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +304,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
         /// </item>
         /// </list>
         /// </summary>

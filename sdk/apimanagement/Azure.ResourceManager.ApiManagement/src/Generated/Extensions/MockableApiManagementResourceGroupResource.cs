@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the API Management service. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>

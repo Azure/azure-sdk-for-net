@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -416,6 +424,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Recommendations_Generate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -443,6 +455,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Recommendations_Generate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -469,6 +485,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetGenerateStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -498,6 +518,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetGenerateStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -525,6 +549,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Suppressions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations/suppressions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -555,6 +583,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Suppressions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations/suppressions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -603,6 +635,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/metadata</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -632,6 +668,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/metadata</description>
         /// </item>
         /// </list>
         /// <item>

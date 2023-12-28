@@ -253,6 +253,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/components</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -282,6 +286,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/components</description>
         /// </item>
         /// </list>
         /// <item>
@@ -330,6 +338,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/webtests</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -359,6 +371,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebTests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/webtests</description>
         /// </item>
         /// </list>
         /// <item>
@@ -407,6 +423,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkbookTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooktemplates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -436,6 +456,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkbookTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooktemplates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -484,6 +508,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/myWorkbooks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -513,6 +541,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/myWorkbooks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -561,6 +593,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -591,6 +627,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -623,6 +663,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/components</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -650,6 +694,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/components</description>
         /// </item>
         /// </list>
         /// <item>
@@ -679,6 +727,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/webtests</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -707,6 +759,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/webtests</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -734,6 +790,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/myWorkbooks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -766,6 +826,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/myWorkbooks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -797,6 +861,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -827,6 +895,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks</description>
         /// </item>
         /// </list>
         /// <item>

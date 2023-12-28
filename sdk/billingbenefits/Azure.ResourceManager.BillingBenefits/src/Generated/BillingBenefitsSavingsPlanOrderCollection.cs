@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
@@ -102,6 +106,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,6 +149,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +175,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -184,6 +200,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +241,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
@@ -256,6 +280,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +322,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
         /// </item>
         /// </list>
         /// </summary>

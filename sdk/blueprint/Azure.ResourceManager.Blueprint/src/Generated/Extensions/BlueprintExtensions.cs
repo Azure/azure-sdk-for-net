@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>Blueprints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprints</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Blueprints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprints</description>
         /// </item>
         /// </list>
         /// <item>
@@ -132,6 +140,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>Assignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprintAssignments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -162,6 +174,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprintAssignments</description>
         /// </item>
         /// </list>
         /// <item>

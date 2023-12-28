@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildResult</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds/results</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildResultName"> The name of the build result resource. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildResult</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds/results</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_ListBuildResults</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds/results</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +172,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_ListBuildResults</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds/results</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,6 +197,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildResult</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds/results</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +237,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildResult</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds/results</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildResultName"> The name of the build result resource. </param>
@@ -251,6 +275,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildResult</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds/results</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +316,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildResult</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds/results</description>
         /// </item>
         /// </list>
         /// </summary>

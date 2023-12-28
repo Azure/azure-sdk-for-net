@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprintAssignments/assignmentOperations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssignmentOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprintAssignments/assignmentOperations</description>
         /// </item>
         /// </list>
         /// </summary>

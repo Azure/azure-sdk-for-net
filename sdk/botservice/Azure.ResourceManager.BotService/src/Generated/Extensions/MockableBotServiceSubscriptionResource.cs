@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,6 +93,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,6 +120,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>BotConnection_ListServiceProviders</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices/connections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +144,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BotConnection_ListServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices/connections</description>
         /// </item>
         /// </list>
         /// </summary>

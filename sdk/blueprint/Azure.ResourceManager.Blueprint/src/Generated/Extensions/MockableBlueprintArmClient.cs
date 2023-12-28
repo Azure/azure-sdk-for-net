@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// <term>Operation Id</term>
         /// <description>Blueprints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Blueprints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprints</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// <term>Operation Id</term>
         /// <description>Assignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprintAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -138,6 +150,10 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Blueprint/blueprintAssignments</description>
         /// </item>
         /// </list>
         /// </summary>

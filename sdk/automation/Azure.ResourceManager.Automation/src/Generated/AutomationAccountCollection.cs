@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -106,6 +110,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,6 +156,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -184,6 +196,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +238,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,6 +264,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -265,6 +289,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +329,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -335,6 +367,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +408,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

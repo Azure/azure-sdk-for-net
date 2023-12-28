@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
         /// </item>
         /// </list>
         /// <item>
@@ -160,6 +168,10 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +199,10 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
         /// </item>
         /// </list>
         /// <item>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_ListDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -243,6 +263,10 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_ListDefault</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
         /// </item>
         /// </list>
         /// <item>
@@ -272,6 +296,10 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_GetDefaultByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -299,6 +327,10 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
         /// </item>
         /// </list>
         /// <item>

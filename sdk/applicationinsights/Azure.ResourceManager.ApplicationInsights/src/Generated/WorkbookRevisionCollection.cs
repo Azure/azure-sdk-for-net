@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionsList</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +172,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionsList</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,6 +197,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +237,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
@@ -251,6 +275,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +316,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
         /// </item>
         /// </list>
         /// </summary>

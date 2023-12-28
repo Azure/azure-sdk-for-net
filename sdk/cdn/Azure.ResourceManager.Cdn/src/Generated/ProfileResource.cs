@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorCustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/customDomains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
@@ -141,6 +145,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorCustomDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/customDomains</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +180,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/afdEndpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
@@ -194,6 +206,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/afdEndpoints</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +241,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorOriginGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/originGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorOriginGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/originGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,6 +302,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorRuleSets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/ruleSets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
@@ -300,6 +328,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorRuleSets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/ruleSets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,6 +363,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecurityPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/securityPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
@@ -353,6 +389,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecurityPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/securityPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -384,6 +424,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/secrets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
@@ -406,6 +450,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/secrets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -437,6 +485,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/endpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
@@ -460,6 +512,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles/endpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
@@ -482,6 +538,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,6 +575,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -546,6 +610,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -581,6 +649,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -614,6 +686,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -652,6 +728,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1195,6 +1275,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_GenerateSsoUri</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1224,6 +1308,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_GenerateSsoUri</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1255,6 +1343,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_ListSupportedOptimizationTypes</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1284,6 +1376,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_ListSupportedOptimizationTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1315,6 +1411,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_ListResourceUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1337,6 +1437,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_ListResourceUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1358,6 +1462,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1413,6 +1521,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1467,6 +1579,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1516,6 +1632,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1564,6 +1684,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1616,6 +1740,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>

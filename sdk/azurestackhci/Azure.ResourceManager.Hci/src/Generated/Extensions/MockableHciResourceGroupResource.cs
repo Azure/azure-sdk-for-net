@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/galleryImages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/galleryImages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>LogicalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/logicalNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
@@ -127,6 +139,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogicalNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/logicalNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,6 +174,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceGalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
@@ -180,6 +200,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +235,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
@@ -233,6 +261,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,6 +296,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/storageContainers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
@@ -286,6 +322,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/storageContainers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,6 +357,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualHardDisks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/virtualHardDisks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
@@ -339,6 +383,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHardDisks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/virtualHardDisks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +418,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -392,6 +444,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters</description>
         /// </item>
         /// </list>
         /// </summary>

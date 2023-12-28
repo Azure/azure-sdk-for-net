@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AnalysisServices/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the Analysis Services server. It must be a minimum of 3 characters, and a maximum of 63. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AnalysisServices/servers</description>
         /// </item>
         /// </list>
         /// </summary>

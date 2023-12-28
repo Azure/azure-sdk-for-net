@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +139,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>TenantSettings_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Not used. </param>
@@ -154,6 +166,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>TenantSettings_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Not used. </param>
@@ -176,6 +192,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +228,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
@@ -238,6 +262,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,6 +299,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
         /// </item>
         /// </list>
         /// </summary>

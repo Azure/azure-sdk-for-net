@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>HybridIdentityMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/virtualMachineInstances/hybridIdentityMetadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HybridIdentityMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/virtualMachineInstances/hybridIdentityMetadata</description>
         /// </item>
         /// </list>
         /// </summary>

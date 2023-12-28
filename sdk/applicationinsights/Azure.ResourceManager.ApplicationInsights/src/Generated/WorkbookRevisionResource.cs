@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks/revisions</description>
         /// </item>
         /// </list>
         /// </summary>

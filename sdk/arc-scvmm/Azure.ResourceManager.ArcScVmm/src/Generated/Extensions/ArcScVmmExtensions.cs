@@ -195,6 +195,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VmmServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/vmmServers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -224,6 +228,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VmmServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/vmmServers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -272,6 +280,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/clouds</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -301,6 +313,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/clouds</description>
         /// </item>
         /// </list>
         /// <item>
@@ -349,6 +365,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -378,6 +398,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualNetworks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -426,6 +450,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachines</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -455,6 +483,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachines</description>
         /// </item>
         /// </list>
         /// <item>
@@ -503,6 +535,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -532,6 +568,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachineTemplates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -580,6 +620,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/availabilitySets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -609,6 +653,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/availabilitySets</description>
         /// </item>
         /// </list>
         /// <item>
@@ -640,6 +688,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VmmServers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/vmmServers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -667,6 +719,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VmmServers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/vmmServers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -696,6 +752,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>Clouds_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/clouds</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -723,6 +783,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clouds_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/clouds</description>
         /// </item>
         /// </list>
         /// <item>
@@ -752,6 +816,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -779,6 +847,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualNetworks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -808,6 +880,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachines</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -835,6 +911,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachines</description>
         /// </item>
         /// </list>
         /// <item>
@@ -864,6 +944,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachineTemplates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -891,6 +975,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/virtualMachineTemplates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -920,6 +1008,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/availabilitySets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -947,6 +1039,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ScVmm/availabilitySets</description>
         /// </item>
         /// </list>
         /// <item>

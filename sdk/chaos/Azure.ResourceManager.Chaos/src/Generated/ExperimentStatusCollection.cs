@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_GetStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments/statuses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="statusId"> GUID that represents a Experiment status. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_GetStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments/statuses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_ListAllStatuses</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments/statuses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +172,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_ListAllStatuses</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments/statuses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,6 +197,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_GetStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments/statuses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +237,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_GetStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments/statuses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="statusId"> GUID that represents a Experiment status. </param>
@@ -251,6 +275,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_GetStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments/statuses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +316,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_GetStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments/statuses</description>
         /// </item>
         /// </list>
         /// </summary>

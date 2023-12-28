@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>BestPractices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/bestPractices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bestPracticeName"> The Automanage best practice name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BestPractices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/bestPractices</description>
         /// </item>
         /// </list>
         /// </summary>

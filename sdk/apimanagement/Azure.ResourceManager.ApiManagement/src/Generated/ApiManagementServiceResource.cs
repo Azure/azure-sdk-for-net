@@ -178,6 +178,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Api_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/apis</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
@@ -200,6 +204,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Api_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/apis</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,6 +239,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Policy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/policies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
@@ -252,6 +264,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Policy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/policies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,6 +298,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
@@ -304,6 +324,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tags</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,6 +359,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Diagnostic_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/diagnostics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diagnosticId"> Diagnostic identifier. Must be unique in the current API Management service instance. </param>
@@ -357,6 +385,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostic_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/diagnostics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,6 +420,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Issue_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/issues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="issueId"> Issue identifier. Must be unique in the current API Management service instance. </param>
@@ -410,6 +446,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Issue_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/issues</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -441,6 +481,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiVersionSet_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/apiVersionSets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
@@ -463,6 +507,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiVersionSet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/apiVersionSets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,6 +542,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>AuthorizationServer_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/authorizationServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authsid"> Identifier of the authorization server. </param>
@@ -516,6 +568,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AuthorizationServer_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/authorizationServers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -547,6 +603,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Backend_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/backends</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="backendId"> Identifier of the Backend entity. Must be unique in the current API Management service instance. </param>
@@ -569,6 +629,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Backend_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/backends</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -600,6 +664,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Cache_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/caches</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either 'default' or valid Azure region identifier). </param>
@@ -622,6 +690,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Cache_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/caches</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -653,6 +725,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Certificate_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/certificates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateId"> Identifier of the certificate entity. Must be unique in the current API Management service instance. </param>
@@ -675,6 +751,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificate_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/certificates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -706,6 +786,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>EmailTemplate_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/templates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateName"> Email Template Name Identifier. </param>
@@ -726,6 +810,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailTemplate_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/templates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -755,6 +843,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Gateway_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/gateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
@@ -777,6 +869,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Gateway_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/gateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -808,6 +904,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Group_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/groups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
@@ -830,6 +930,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Group_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/groups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -861,6 +965,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>IdentityProvider_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/identityProviders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="identityProviderName"> Identity Provider Type identifier. </param>
@@ -881,6 +989,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IdentityProvider_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/identityProviders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -910,6 +1022,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Logger_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/loggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="loggerId"> Logger identifier. Must be unique in the API Management service instance. </param>
@@ -932,6 +1048,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Logger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/loggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -963,6 +1083,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>NamedValue_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/namedValues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namedValueId"> Identifier of the NamedValue. </param>
@@ -985,6 +1109,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NamedValue_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/namedValues</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1016,6 +1144,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Notification_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/notifications</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationName"> Notification Name Identifier. </param>
@@ -1036,6 +1168,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Notification_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/notifications</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1065,6 +1201,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>OpenIdConnectProvider_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/openidConnectProviders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
@@ -1087,6 +1227,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OpenIdConnectProvider_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/openidConnectProviders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1118,6 +1262,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>PortalRevision_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/portalRevisions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="portalRevisionId"> Portal revision identifier. Must be unique in the current API Management service instance. </param>
@@ -1140,6 +1288,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PortalRevision_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/portalRevisions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1192,6 +1344,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
@@ -1214,6 +1370,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1245,6 +1405,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_GetPrivateLinkResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkSubResourceName"> Name of the private link resource. </param>
@@ -1267,6 +1431,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_GetPrivateLinkResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/privateLinkResources</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1298,6 +1466,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Product_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/products</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="productId"> Product identifier. Must be unique in the current API Management service instance. </param>
@@ -1320,6 +1492,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Product_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/products</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1351,6 +1527,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>GlobalSchema_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/schemas</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaId"> Schema id identifier. Must be unique in the current API Management service instance. </param>
@@ -1373,6 +1553,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalSchema_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/schemas</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1404,6 +1588,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsType"> The identifier of the settings. </param>
@@ -1424,6 +1612,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TenantSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/settings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1453,6 +1645,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/subscriptions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
@@ -1475,6 +1671,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/subscriptions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1506,6 +1706,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>TenantAccess_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tenant</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessName"> The identifier of the Access configuration. </param>
@@ -1526,6 +1730,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TenantAccess_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/tenant</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1555,6 +1763,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>User_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/users</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
@@ -1578,6 +1790,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>User_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/users</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userId"> User identifier. Must be unique in the current API Management service instance. </param>
@@ -1600,6 +1816,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1633,6 +1853,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1664,6 +1888,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1699,6 +1927,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1732,6 +1964,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1771,6 +2007,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1809,6 +2049,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Api_ListByTags</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/apis</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| apiRevision | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| isCurrent | filter | eq |     |&lt;/br&gt;. </param>
@@ -1834,6 +2078,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Api_ListByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/apis</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2593,6 +2841,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Restore</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -2630,6 +2882,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Restore</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2669,6 +2925,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Backup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -2706,6 +2966,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Backup</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2745,6 +3009,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_GetSsoToken</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2775,6 +3043,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_GetSsoToken</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2804,6 +3076,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_ApplyNetworkConfigurationUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2839,6 +3115,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_ApplyNetworkConfigurationUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3065,6 +3345,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>PortalSettings_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3086,6 +3370,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>PortalSettings_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3106,6 +3394,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Product_ListByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/products</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3132,6 +3424,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Product_ListByTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service/products</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4269,6 +4565,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -4322,6 +4622,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4377,6 +4681,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -4426,6 +4734,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -4474,6 +4786,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4526,6 +4842,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>

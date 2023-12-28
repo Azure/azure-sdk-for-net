@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters/publishers/offers/skus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
@@ -101,6 +105,10 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters/publishers/offers/skus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,6 +148,10 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_ListByOffer</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters/publishers/offers/skus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
@@ -163,6 +175,10 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_ListByOffer</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters/publishers/offers/skus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
@@ -185,6 +201,10 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters/publishers/offers/skus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +242,10 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters/publishers/offers/skus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
@@ -257,6 +281,10 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters/publishers/offers/skus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +323,10 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters/publishers/offers/skus</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -178,6 +178,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_Generate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -208,6 +212,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_Generate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -237,6 +245,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetGenerateStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +281,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetGenerateStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
@@ -300,6 +316,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <term>Operation Id</term>
         /// <description>Suppressions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations/suppressions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of suppressions per page if a paged version of this API is being used. </param>
@@ -323,6 +343,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Suppressions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/recommendations/suppressions</description>
         /// </item>
         /// </list>
         /// </summary>

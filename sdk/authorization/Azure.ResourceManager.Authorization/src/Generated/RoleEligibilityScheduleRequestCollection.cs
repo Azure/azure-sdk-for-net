@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -94,6 +98,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,6 +144,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
@@ -172,6 +184,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,6 +226,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role eligibility schedule requests at or above the scope. Use $filter=principalId eq {id} to return all role eligibility schedule requests at, above or below the scope for the specified principal. Use $filter=asRequestor() to return all role eligibility schedule requests requested by the current user. Use $filter=asTarget() to return all role eligibility schedule requests created for the current user. Use $filter=asApprover() to return all role eligibility schedule requests where the current user is an approver. </param>
@@ -233,6 +253,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role eligibility schedule requests at or above the scope. Use $filter=principalId eq {id} to return all role eligibility schedule requests at, above or below the scope for the specified principal. Use $filter=asRequestor() to return all role eligibility schedule requests requested by the current user. Use $filter=asTarget() to return all role eligibility schedule requests created for the current user. Use $filter=asApprover() to return all role eligibility schedule requests where the current user is an approver. </param>
@@ -255,6 +279,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,6 +319,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
@@ -325,6 +357,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,6 +398,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
         /// </item>
         /// </list>
         /// </summary>

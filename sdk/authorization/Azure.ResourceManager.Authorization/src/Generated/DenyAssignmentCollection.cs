@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
@@ -92,6 +96,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,12 +139,20 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_ListForResource</description>
         /// </item>
         /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Request Path</term>
@@ -147,12 +163,20 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_List</description>
         /// </item>
         /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,12 +223,20 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_ListForResource</description>
         /// </item>
         /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Request Path</term>
@@ -215,12 +247,20 @@ namespace Azure.ResourceManager.Authorization
         /// <description>DenyAssignments_List</description>
         /// </item>
         /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
+        /// </item>
+        /// <item>
         /// <term>Request Path</term>
         /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_ListForScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +306,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
@@ -301,6 +345,10 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
@@ -335,6 +383,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +424,10 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +172,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -181,6 +197,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +237,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
@@ -251,6 +275,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +316,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
         /// </item>
         /// </list>
         /// </summary>

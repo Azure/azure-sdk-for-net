@@ -125,6 +125,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/actionRules</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -154,6 +158,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/actionRules</description>
         /// </item>
         /// </list>
         /// <item>
@@ -202,6 +210,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/alerts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -230,6 +242,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/alerts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -277,6 +293,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -305,6 +325,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
         /// </item>
         /// </list>
         /// <item>
@@ -335,6 +359,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/actionRules</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -362,6 +390,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertProcessingRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/actionRules</description>
         /// </item>
         /// </list>
         /// <item>
@@ -391,6 +423,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSummary</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/alerts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -418,6 +454,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSummary</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/alerts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -447,6 +487,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>Alerts_MetaData</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/alerts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -474,6 +518,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_MetaData</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/alerts</description>
         /// </item>
         /// </list>
         /// <item>

@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_ChangeState</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
@@ -195,6 +207,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_ChangeState</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,6 +243,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetHistory</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -256,6 +276,10 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AlertsManagement/smartGroups</description>
         /// </item>
         /// </list>
         /// </summary>

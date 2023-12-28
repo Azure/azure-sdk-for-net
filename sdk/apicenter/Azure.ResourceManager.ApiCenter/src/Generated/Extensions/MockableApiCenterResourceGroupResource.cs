@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiCenter/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Service name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiCenter/services</description>
         /// </item>
         /// </list>
         /// </summary>

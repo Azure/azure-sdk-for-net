@@ -163,6 +163,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeats</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -193,6 +197,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeats</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -222,6 +230,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeats</description>
         /// </item>
         /// </list>
         /// <item>
@@ -255,6 +267,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsModels_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeats</description>
         /// </item>
         /// </list>
         /// <item>
@@ -362,6 +378,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -391,6 +411,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FarmBeatsExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions</description>
         /// </item>
         /// </list>
         /// <item>

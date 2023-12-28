@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,6 +131,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCRPAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -146,6 +158,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCRPAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +199,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -206,6 +226,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
         /// </item>
         /// </list>
         /// </summary>

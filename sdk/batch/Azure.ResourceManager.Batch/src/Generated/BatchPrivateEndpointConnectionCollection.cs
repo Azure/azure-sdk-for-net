@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_ListByBatchAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
@@ -161,6 +173,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_ListByBatchAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
@@ -183,6 +199,10 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +239,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
@@ -253,6 +277,10 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +318,10 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>

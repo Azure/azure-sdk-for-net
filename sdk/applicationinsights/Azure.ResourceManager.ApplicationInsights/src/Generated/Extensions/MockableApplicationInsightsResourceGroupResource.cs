@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/components</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/components</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>WebTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/webtests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebTests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/webtests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>WorkbookTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooktemplates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkbookTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooktemplates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +237,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/myWorkbooks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
@@ -235,6 +263,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/myWorkbooks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +298,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workbooks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
@@ -289,6 +325,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Insights/workbooks</description>
         /// </item>
         /// </list>
         /// </summary>

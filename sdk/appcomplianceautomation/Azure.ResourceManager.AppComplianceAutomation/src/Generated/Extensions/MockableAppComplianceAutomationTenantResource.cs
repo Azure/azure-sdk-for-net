@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> Report Name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppComplianceAutomation/reports</description>
         /// </item>
         /// </list>
         /// </summary>

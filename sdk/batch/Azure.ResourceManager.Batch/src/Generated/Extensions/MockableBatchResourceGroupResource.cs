@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Batch account. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Batch.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

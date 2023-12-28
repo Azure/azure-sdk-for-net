@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AnalysisServices/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AnalysisServices/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,6 +106,10 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_ListSkusForNew</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AnalysisServices/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,6 +131,10 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_ListSkusForNew</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AnalysisServices/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,6 +155,10 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AnalysisServices/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,6 +194,10 @@ namespace Azure.ResourceManager.Analysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AnalysisServices/servers</description>
         /// </item>
         /// </list>
         /// </summary>

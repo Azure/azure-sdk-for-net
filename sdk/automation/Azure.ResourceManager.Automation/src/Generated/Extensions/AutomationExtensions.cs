@@ -500,6 +500,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -529,6 +533,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -560,6 +568,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -587,6 +599,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// <item>

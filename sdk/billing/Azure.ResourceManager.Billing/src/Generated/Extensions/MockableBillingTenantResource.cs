@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingSubscriptions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
@@ -80,6 +84,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingSubscriptions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptionsAliases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingSubscriptionAliases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
@@ -138,6 +150,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptionsAliases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingSubscriptionAliases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,6 +186,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/paymentMethods</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
@@ -192,6 +212,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/paymentMethods</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,6 +250,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/paymentMethods</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
@@ -249,6 +277,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/paymentMethods</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,6 +317,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
@@ -309,6 +345,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
         /// </item>
         /// </list>
         /// </summary>

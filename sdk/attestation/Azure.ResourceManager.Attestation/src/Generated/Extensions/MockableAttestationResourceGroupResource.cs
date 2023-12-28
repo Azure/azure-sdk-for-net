@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Name of the attestation provider. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
         /// </item>
         /// </list>
         /// </summary>

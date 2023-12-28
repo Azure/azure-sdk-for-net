@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/metadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendationMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Advisor/metadata</description>
         /// </item>
         /// </list>
         /// </summary>

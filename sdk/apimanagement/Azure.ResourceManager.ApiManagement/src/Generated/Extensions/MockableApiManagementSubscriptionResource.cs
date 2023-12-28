@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted API Management service. </param>
@@ -94,6 +98,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,6 +127,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,6 +152,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +179,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,6 +205,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -206,6 +230,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +269,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability operation. </param>
@@ -275,6 +307,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_GetDomainOwnershipIdentifier</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -304,6 +340,10 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiManagementService_GetDomainOwnershipIdentifier</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/service</description>
         /// </item>
         /// </list>
         /// </summary>

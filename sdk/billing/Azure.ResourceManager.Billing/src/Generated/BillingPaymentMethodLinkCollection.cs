@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
@@ -109,6 +113,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +155,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_ListByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,6 +181,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_ListByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,6 +206,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,6 +246,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="paymentMethodName"> The ID that uniquely identifies a payment method. </param>
@@ -260,6 +284,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +325,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
         /// </item>
         /// </list>
         /// </summary>

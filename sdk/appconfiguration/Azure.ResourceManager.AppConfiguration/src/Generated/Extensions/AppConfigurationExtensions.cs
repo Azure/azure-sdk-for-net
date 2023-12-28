@@ -158,6 +158,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +191,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores</description>
         /// </item>
         /// </list>
         /// <item>
@@ -235,6 +243,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/locations/deletedConfigurationStores</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -265,6 +277,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/locations/deletedConfigurationStores</description>
         /// </item>
         /// </list>
         /// <item>
@@ -297,6 +313,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -325,6 +345,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores</description>
         /// </item>
         /// </list>
         /// <item>

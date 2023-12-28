@@ -108,6 +108,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptCmdlets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptCmdlets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages/scriptCmdlets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
@@ -153,6 +161,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptPackages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds/scriptPackages</description>
         /// </item>
         /// </list>
         /// </summary>

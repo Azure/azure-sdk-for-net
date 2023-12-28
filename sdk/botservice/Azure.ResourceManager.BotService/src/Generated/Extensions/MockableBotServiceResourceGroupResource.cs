@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Bot resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
         /// </item>
         /// </list>
         /// </summary>

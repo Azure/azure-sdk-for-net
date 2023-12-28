@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/supportedBuildpacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +137,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/supportedBuildpacks</description>
         /// </item>
         /// </list>
         /// </summary>

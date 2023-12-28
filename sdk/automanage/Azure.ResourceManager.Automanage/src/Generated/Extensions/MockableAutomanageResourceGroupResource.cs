@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationProfileName"> The configuration profile name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfiles</description>
         /// </item>
         /// </list>
         /// </summary>

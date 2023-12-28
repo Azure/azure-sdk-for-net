@@ -215,6 +215,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -244,6 +248,10 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -275,6 +283,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -302,6 +314,10 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts</description>
         /// </item>
         /// </list>
         /// <item>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> The name of the Service resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
         /// </item>
         /// </list>
         /// </summary>

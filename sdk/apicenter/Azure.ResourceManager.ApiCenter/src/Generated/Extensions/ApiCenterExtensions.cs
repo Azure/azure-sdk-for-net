@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.ApiCenter
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiCenter/services</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -110,6 +114,10 @@ namespace Azure.ResourceManager.ApiCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiCenter/services</description>
         /// </item>
         /// </list>
         /// <item>
@@ -141,6 +149,10 @@ namespace Azure.ResourceManager.ApiCenter
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiCenter/services</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +180,10 @@ namespace Azure.ResourceManager.ApiCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiCenter/services</description>
         /// </item>
         /// </list>
         /// <item>

@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>GalleryImages_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/galleryImages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,6 +102,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/galleryImages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +129,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>LogicalNetworks_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/logicalNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,6 +154,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogicalNetworks_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/logicalNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +181,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceGalleryImages_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,6 +206,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceGalleryImages_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/marketplaceGalleryImages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +233,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/networkInterfaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,6 +258,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/networkInterfaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,6 +285,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageContainers_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/storageContainers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,6 +310,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageContainers_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/storageContainers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +337,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualHardDisks_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/virtualHardDisks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,6 +362,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHardDisks_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/virtualHardDisks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,6 +389,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,6 +414,10 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureStackHCI/clusters</description>
         /// </item>
         /// </list>
         /// </summary>

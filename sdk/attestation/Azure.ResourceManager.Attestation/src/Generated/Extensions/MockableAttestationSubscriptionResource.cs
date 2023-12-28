@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -75,6 +79,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,6 +105,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_ListDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -118,6 +130,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_ListDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -138,6 +154,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,6 +189,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Attestation/attestationProviders</description>
         /// </item>
         /// </list>
         /// </summary>

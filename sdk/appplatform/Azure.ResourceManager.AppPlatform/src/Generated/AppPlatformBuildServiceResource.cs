@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildName"> The name of the build resource. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builds</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +170,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/supportedBuildpacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
@@ -184,6 +196,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/supportedBuildpacks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +231,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedStack</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/supportedStacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="stackName"> The name of the stack resource. </param>
@@ -237,6 +257,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedStack</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/supportedStacks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +292,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildServiceBuilder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="builderName"> The name of the builder resource. </param>
@@ -290,6 +318,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildServiceBuilder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/builders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,6 +353,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildServiceAgentPool_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/agentPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agentPoolName"> The name of the build service agent pool resource. </param>
@@ -344,6 +380,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildServiceAgentPool_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices/agentPools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agentPoolName"> The name of the build service agent pool resource. </param>
@@ -366,6 +406,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildService</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -399,6 +443,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildService</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -431,6 +479,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetResourceUploadUrl</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -460,6 +512,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetResourceUploadUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring/buildServices</description>
         /// </item>
         /// </list>
         /// </summary>

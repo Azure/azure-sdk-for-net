@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -101,6 +105,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +150,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -180,6 +192,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -217,6 +233,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -257,6 +277,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrderAliases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
@@ -89,6 +93,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrderAliases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,6 +128,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
@@ -143,6 +155,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,6 +191,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/reservationOrderAliases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
@@ -198,6 +218,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/reservationOrderAliases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
@@ -220,6 +244,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,6 +273,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BillingBenefits/savingsPlanOrders/savingsPlans</description>
         /// </item>
         /// </list>
         /// </summary>

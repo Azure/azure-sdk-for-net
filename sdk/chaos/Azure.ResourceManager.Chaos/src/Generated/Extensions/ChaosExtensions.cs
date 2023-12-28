@@ -195,6 +195,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -224,6 +228,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -276,6 +284,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Targets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/targets</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -308,6 +320,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Targets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/targets</description>
         /// </item>
         /// </list>
         /// <item>
@@ -361,6 +377,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -391,6 +411,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes</description>
         /// </item>
         /// </list>
         /// <item>
@@ -423,6 +447,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>Experiments_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -452,6 +480,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
         /// </item>
         /// </list>
         /// <item>

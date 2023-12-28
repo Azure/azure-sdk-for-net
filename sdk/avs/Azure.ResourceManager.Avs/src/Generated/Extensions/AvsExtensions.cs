@@ -500,6 +500,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -529,6 +533,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds</description>
         /// </item>
         /// </list>
         /// <item>
@@ -674,6 +682,10 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_ListInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -701,6 +713,10 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_ListInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds</description>
         /// </item>
         /// </list>
         /// <item>

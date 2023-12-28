@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/experiments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,6 +120,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <term>Operation Id</term>
         /// <description>Targets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/targets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="parentProviderNamespace"> String that represents a resource provider namespace. </param>
@@ -137,6 +149,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Targets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/targets</description>
         /// </item>
         /// </list>
         /// </summary>

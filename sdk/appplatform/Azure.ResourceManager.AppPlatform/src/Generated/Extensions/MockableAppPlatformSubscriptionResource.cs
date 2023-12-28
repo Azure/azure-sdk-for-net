@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the region. </param>
@@ -94,6 +98,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +138,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,6 +163,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppPlatform/Spring</description>
         /// </item>
         /// </list>
         /// </summary>

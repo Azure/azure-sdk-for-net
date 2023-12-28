@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>CapabilityTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes/capabilityTypes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityTypeName"> String that represents a Capability Type resource name. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapabilityTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes/capabilityTypes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>CapabilityTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes/capabilityTypes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
@@ -161,6 +173,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>CapabilityTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes/capabilityTypes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
@@ -183,6 +199,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapabilityTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes/capabilityTypes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +239,10 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>CapabilityTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes/capabilityTypes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityTypeName"> String that represents a Capability Type resource name. </param>
@@ -253,6 +277,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapabilityTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes/capabilityTypes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +318,10 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapabilityTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Chaos/locations/targetTypes/capabilityTypes</description>
         /// </item>
         /// </list>
         /// </summary>

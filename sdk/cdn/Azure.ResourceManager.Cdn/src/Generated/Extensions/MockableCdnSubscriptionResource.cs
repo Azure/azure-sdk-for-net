@@ -204,6 +204,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <term>Operation Id</term>
         /// <description>Profiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -225,6 +229,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>

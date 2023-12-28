@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/cdnWebApplicationFirewallPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The name of the CdnWebApplicationFirewallPolicy. </param>
@@ -137,6 +149,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/cdnWebApplicationFirewallPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/accounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/commitmentPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="commitmentPlanName"> The name of the commitmentPlan associated with the Cognitive Services Account. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommitmentPlans_GetPlan</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CognitiveServices/commitmentPlans</description>
         /// </item>
         /// </list>
         /// </summary>

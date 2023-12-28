@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -149,6 +157,10 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCRPAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -179,6 +191,10 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCRPAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -229,6 +245,10 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -259,6 +279,10 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfileAssignments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -479,6 +503,10 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -508,6 +536,10 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -539,6 +571,10 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -566,6 +602,10 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfiles_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/configurationProfiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -722,6 +762,10 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>BestPractices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/bestPractices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -751,6 +795,10 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BestPractices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automanage/bestPractices</description>
         /// </item>
         /// </list>
         /// <item>

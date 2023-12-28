@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_GetDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/detectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Batch/batchAccounts/detectors</description>
         /// </item>
         /// </list>
         /// </summary>

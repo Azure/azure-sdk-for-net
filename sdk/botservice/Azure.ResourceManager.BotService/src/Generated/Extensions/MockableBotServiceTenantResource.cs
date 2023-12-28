@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>Bots_GetCheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
@@ -88,6 +92,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.BotService/botServices</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>KeyValues_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -104,6 +108,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,6 +154,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
@@ -182,6 +194,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,6 +236,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>KeyValues_ListByConfigurationStore</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -243,6 +263,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>KeyValues_ListByConfigurationStore</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -265,6 +289,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +329,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
@@ -335,6 +367,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +408,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AppConfiguration/configurationStores/keyValues</description>
         /// </item>
         /// </list>
         /// </summary>

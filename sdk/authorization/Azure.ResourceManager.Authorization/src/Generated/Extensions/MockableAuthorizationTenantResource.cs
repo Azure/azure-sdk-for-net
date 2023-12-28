@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/providerOperations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -83,6 +87,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/providerOperations</description>
         /// </item>
         /// </list>
         /// </summary>

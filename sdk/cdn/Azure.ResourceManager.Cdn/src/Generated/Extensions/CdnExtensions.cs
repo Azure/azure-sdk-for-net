@@ -353,6 +353,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -382,6 +386,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// <item>
@@ -430,6 +438,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/cdnWebApplicationFirewallPolicies</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -459,6 +471,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/cdnWebApplicationFirewallPolicies</description>
         /// </item>
         /// </list>
         /// <item>
@@ -658,6 +674,10 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -685,6 +705,10 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cdn/profiles</description>
         /// </item>
         /// </list>
         /// <item>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Automation.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Automation/automationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

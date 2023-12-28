@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted API Management service. </param>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted API Management service. </param>
@@ -174,6 +186,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted API Management service. </param>
@@ -209,6 +225,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ApiManagement/locations/deletedservices</description>
         /// </item>
         /// </list>
         /// </summary>

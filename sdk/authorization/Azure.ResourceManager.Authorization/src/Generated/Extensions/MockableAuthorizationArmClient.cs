@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -91,6 +95,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/denyAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,6 +132,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -147,6 +159,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,6 +196,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleDefinitions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -202,6 +222,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleDefinitions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,6 +258,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleAssignmentSchedules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -257,6 +285,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleAssignmentSchedules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +322,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleAssignmentScheduleInstances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -313,6 +349,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleAssignmentScheduleInstances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,6 +386,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleAssignmentScheduleRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -369,6 +413,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleAssignmentScheduleRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,6 +450,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilitySchedules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -425,6 +477,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilitySchedules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -458,6 +514,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleInstances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -481,6 +541,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleInstances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -514,6 +578,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -537,6 +605,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleEligibilityScheduleRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -570,6 +642,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -593,6 +669,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,6 +706,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicyAssignment</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -649,6 +733,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Authorization/roleManagementPolicyAssignment</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -154,6 +154,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingSubscriptions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -184,6 +188,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingSubscriptions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -235,6 +243,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptionsAliases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingSubscriptionAliases</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -265,6 +277,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingSubscriptionsAliases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingSubscriptionAliases</description>
         /// </item>
         /// </list>
         /// <item>
@@ -314,6 +330,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/paymentMethods</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -343,6 +363,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/paymentMethods</description>
         /// </item>
         /// </list>
         /// <item>
@@ -393,6 +417,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/paymentMethods</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -423,6 +451,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/paymentMethods</description>
         /// </item>
         /// </list>
         /// <item>
@@ -475,6 +507,10 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -506,6 +542,10 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks</description>
         /// </item>
         /// </list>
         /// <item>

@@ -186,6 +186,10 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_ListInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,6 +211,10 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_ListInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AVS/privateClouds</description>
         /// </item>
         /// </list>
         /// </summary>
