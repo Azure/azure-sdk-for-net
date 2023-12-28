@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
@@ -154,6 +162,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,6 +199,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -219,6 +235,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Reset</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -248,6 +268,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Reset</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,6 +303,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Run</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -308,6 +336,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Run</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,6 +371,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_GetSchemaJson</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -369,6 +405,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_GetSchemaJson</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -398,6 +438,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_SetState</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,6 +477,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_SetState</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The workflow trigger state. </param>
@@ -467,6 +515,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_ListCallbackUrl</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -496,6 +548,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_ListCallbackUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>

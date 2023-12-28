@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>Workflows_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +117,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -131,6 +143,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,6 +171,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -177,6 +197,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationServiceEnvironments</description>
         /// </item>
         /// </list>
         /// </summary>

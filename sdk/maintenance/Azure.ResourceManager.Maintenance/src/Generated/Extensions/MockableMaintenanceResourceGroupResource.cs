@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +139,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -157,6 +169,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -182,6 +198,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_GetParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +237,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_GetParent</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -250,6 +274,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +322,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateParent</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -337,6 +369,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> Resource provider name. </param>
@@ -375,6 +411,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// </summary>

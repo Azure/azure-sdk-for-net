@@ -118,6 +118,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/extensions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -150,6 +154,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/extensions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -205,6 +213,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/fluxConfigurations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -237,6 +249,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/fluxConfigurations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -292,6 +308,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/sourceControlConfigurations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -324,6 +344,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/sourceControlConfigurations</description>
         /// </item>
         /// </list>
         /// <item>

@@ -480,6 +480,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -509,6 +513,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
         /// </item>
         /// </list>
         /// <item>
@@ -557,6 +565,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -586,6 +598,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -634,6 +650,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -664,6 +684,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -693,6 +717,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
         /// </item>
         /// </list>
         /// <item>
@@ -725,6 +753,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>Workflows_ValidateByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -756,6 +788,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>Workflows_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -785,6 +821,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
         /// </item>
         /// </list>
         /// <item>
@@ -816,6 +856,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -844,6 +888,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -874,6 +922,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -902,6 +954,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationServiceEnvironments</description>
         /// </item>
         /// </list>
         /// <item>

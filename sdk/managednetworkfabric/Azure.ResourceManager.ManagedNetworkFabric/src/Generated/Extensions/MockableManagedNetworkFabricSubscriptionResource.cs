@@ -126,6 +126,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
@@ -148,6 +152,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,6 +187,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabricSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkFabricSkus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
@@ -201,6 +213,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkFabricSkus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +241,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>AccessControlLists_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/accessControlLists</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -246,6 +266,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AccessControlLists_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/accessControlLists</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +293,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>InternetGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/internetGateways</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -290,6 +318,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InternetGateways_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/internetGateways</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,6 +345,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>InternetGatewayRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/internetGatewayRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -334,6 +370,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InternetGatewayRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/internetGatewayRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,6 +397,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpCommunities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/ipCommunities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -378,6 +422,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpCommunities_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/ipCommunities</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,6 +449,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpExtendedCommunities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/ipExtendedCommunities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -422,6 +474,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpExtendedCommunities_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/ipExtendedCommunities</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,6 +501,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpPrefixes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -466,6 +526,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpPrefixes_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/ipPrefixes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -489,6 +553,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>L2IsolationDomains_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/l2IsolationDomains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -510,6 +578,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L2IsolationDomains_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/l2IsolationDomains</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -533,6 +605,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>L3IsolationDomains_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/l3IsolationDomains</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -554,6 +630,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L3IsolationDomains_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/l3IsolationDomains</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -577,6 +657,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NeighborGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/neighborGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -598,6 +682,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NeighborGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/neighborGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -621,6 +709,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkDevices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDevices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -642,6 +734,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkDevices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDevices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -665,6 +761,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkFabricControllers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -686,6 +786,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkFabricControllers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -709,6 +813,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabrics_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkFabrics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -730,6 +838,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabrics_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkFabrics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -753,6 +865,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkPacketBrokers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkPacketBrokers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -774,6 +890,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkPacketBrokers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkPacketBrokers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -797,6 +917,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkRacks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkRacks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -818,6 +942,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkRacks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkRacks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -841,6 +969,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkTapRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -862,6 +994,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkTapRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -885,6 +1021,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkTaps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkTaps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -906,6 +1046,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkTaps_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkTaps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -929,6 +1073,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>RoutePolicies_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/routePolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -950,6 +1098,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoutePolicies_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/routePolicies</description>
         /// </item>
         /// </list>
         /// </summary>

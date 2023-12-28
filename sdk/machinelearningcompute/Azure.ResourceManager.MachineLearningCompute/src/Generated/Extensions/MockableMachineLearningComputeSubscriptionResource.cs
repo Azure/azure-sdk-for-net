@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningCompute/operationalizationClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> Continuation token for pagination. </param>
@@ -75,6 +79,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningCompute/operationalizationClusters</description>
         /// </item>
         /// </list>
         /// </summary>

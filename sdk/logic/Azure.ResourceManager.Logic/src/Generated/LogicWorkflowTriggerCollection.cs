@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The workflow trigger name. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -162,6 +174,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -185,6 +201,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +241,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The workflow trigger name. </param>
@@ -255,6 +279,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,6 +320,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers</description>
         /// </item>
         /// </list>
         /// </summary>

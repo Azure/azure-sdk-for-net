@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
@@ -101,6 +105,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +147,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +173,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -182,6 +198,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +238,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
@@ -252,6 +276,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,6 +317,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetworkFabric/networkDeviceSkus</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/adminRequestApprovals</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherId"> The publisher id of this offer. </param>
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/adminRequestApprovals</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherId"> The publisher id of this offer. </param>
@@ -170,6 +178,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_UpdateAdminRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/adminRequestApprovals</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +220,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_UpdateAdminRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/adminRequestApprovals</description>
         /// </item>
         /// </list>
         /// </summary>

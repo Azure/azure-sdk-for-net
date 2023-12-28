@@ -177,6 +177,10 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>LabPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labPlans</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -206,6 +210,10 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labPlans</description>
         /// </item>
         /// </list>
         /// <item>
@@ -254,6 +262,10 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -283,6 +295,10 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -314,6 +330,10 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>LabPlans_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labPlans</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -342,6 +362,10 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabPlans_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labPlans</description>
         /// </item>
         /// </list>
         /// <item>
@@ -372,6 +396,10 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -400,6 +428,10 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labs</description>
         /// </item>
         /// </list>
         /// <item>

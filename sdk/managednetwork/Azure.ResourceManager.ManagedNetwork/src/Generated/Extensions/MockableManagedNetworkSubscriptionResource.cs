@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/managedNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/managedNetworks</description>
         /// </item>
         /// </list>
         /// </summary>

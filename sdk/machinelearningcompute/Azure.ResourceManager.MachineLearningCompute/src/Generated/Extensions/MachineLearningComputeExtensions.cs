@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningCompute/operationalizationClusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -116,6 +120,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningCompute/operationalizationClusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -147,6 +155,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningCompute/operationalizationClusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -175,6 +187,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningCompute/operationalizationClusters</description>
         /// </item>
         /// </list>
         /// <item>

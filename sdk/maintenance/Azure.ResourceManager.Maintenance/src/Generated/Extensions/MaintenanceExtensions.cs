@@ -120,6 +120,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -149,6 +153,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -197,6 +205,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -229,6 +241,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -263,6 +279,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_GetParent</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -291,6 +311,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_GetParent</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -318,6 +342,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateParent</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -352,6 +380,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateParent</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -385,6 +417,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -415,6 +451,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1382,6 +1422,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/publicMaintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1411,6 +1455,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/publicMaintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1442,6 +1490,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1469,6 +1521,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1498,6 +1554,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1525,6 +1585,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// <item>

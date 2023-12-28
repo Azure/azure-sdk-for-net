@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -128,6 +132,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements</description>
         /// </item>
         /// </list>
         /// <item>
@@ -179,6 +187,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/agreements/offers/plans</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -210,6 +222,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/agreements/offers/plans</description>
         /// </item>
         /// </list>
         /// <item>

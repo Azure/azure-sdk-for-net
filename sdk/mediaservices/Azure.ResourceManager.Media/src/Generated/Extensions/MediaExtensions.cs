@@ -348,6 +348,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -377,6 +381,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -408,6 +416,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -435,6 +447,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// <item>

@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/extensions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/extensions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,6 +131,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/fluxConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -148,6 +160,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/fluxConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,6 +203,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/sourceControlConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
@@ -212,6 +232,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KubernetesConfiguration/sourceControlConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>

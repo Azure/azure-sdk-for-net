@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>SystemAssignedIdentities_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedIdentity/identities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SystemAssignedIdentities_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedIdentity/identities</description>
         /// </item>
         /// </list>
         /// </summary>

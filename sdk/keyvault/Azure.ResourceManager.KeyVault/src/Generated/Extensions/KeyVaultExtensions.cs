@@ -196,6 +196,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +229,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults</description>
         /// </item>
         /// </list>
         /// <item>
@@ -273,6 +281,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/managedHSMs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -302,6 +314,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/managedHSMs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -350,6 +366,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Vaults_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedVaults</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -380,6 +400,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedVaults</description>
         /// </item>
         /// </list>
         /// <item>
@@ -429,6 +453,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedManagedHSMs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -459,6 +487,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedManagedHSMs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -491,6 +523,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -519,6 +555,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults</description>
         /// </item>
         /// </list>
         /// <item>
@@ -605,6 +645,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Vaults_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -632,6 +676,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults</description>
         /// </item>
         /// </list>
         /// <item>
@@ -661,6 +709,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/managedHSMs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -689,6 +741,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/managedHSMs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -775,6 +831,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/managedHSMs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -802,6 +862,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/managedHSMs</description>
         /// </item>
         /// </list>
         /// <item>

@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/scopeAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/scopeAssignments</description>
         /// </item>
         /// </list>
         /// </summary>

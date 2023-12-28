@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerType"> Offer Type, currently only virtualmachine type is supported. </param>
@@ -80,6 +84,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,6 +122,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/agreements/offers/plans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherId"> Publisher identifier string of image being deployed. </param>
@@ -138,6 +150,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/agreements/offers/plans</description>
         /// </item>
         /// </list>
         /// </summary>

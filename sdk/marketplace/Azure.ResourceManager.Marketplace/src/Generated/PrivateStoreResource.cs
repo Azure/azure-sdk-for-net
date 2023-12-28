@@ -112,6 +112,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/requestApprovals</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/requestApprovals</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/adminRequestApprovals</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
@@ -188,6 +200,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetAdminRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/adminRequestApprovals</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,6 +236,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/collections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
@@ -241,6 +261,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores/collections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
@@ -261,6 +285,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +322,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -325,6 +357,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,6 +396,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -393,6 +433,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,6 +476,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -470,6 +518,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_AnyExistingOffersInTheCollections</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -499,6 +551,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_AnyExistingOffersInTheCollections</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -530,6 +586,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryOffers</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -551,6 +611,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryOffers</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -571,6 +635,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryUserOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -594,6 +662,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryUserOffers</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The <see cref="QueryUserOffersContent"/> to use. </param>
@@ -615,6 +687,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_BillingAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -646,6 +722,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_BillingAccounts</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -675,6 +755,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_CollectionsToSubscriptionsMapping</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -707,6 +791,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_CollectionsToSubscriptionsMapping</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The <see cref="CollectionsToSubscriptionsMappingContent"/> to use. </param>
@@ -737,6 +825,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryApprovedPlans</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -769,6 +861,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryApprovedPlans</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The <see cref="QueryApprovedPlansContent"/> to use. </param>
@@ -799,6 +895,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_BulkCollectionsAction</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -831,6 +931,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_BulkCollectionsAction</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The <see cref="BulkCollectionsActionContent"/> to use. </param>
@@ -862,6 +966,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryNotificationsState</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -891,6 +999,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_QueryNotificationsState</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -994,6 +1106,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_FetchAllSubscriptionsInTenant</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
@@ -1016,6 +1132,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_FetchAllSubscriptionsInTenant</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
@@ -1037,6 +1157,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_ListNewPlansNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1068,6 +1192,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_ListNewPlansNotifications</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1097,6 +1225,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_ListStopSellOffersPlansNotifications</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1129,6 +1261,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_ListStopSellOffersPlansNotifications</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="stopSellSubscriptions"> The <see cref="StopSellSubscriptions"/> to use. </param>
@@ -1160,6 +1296,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_ListSubscriptionsContext</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1189,6 +1329,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_ListSubscriptionsContext</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>

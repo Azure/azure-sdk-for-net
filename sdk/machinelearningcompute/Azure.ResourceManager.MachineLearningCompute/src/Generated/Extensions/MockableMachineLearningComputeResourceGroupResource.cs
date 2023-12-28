@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningCompute/operationalizationClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningCompute/operationalizationClusters</description>
         /// </item>
         /// </list>
         /// </summary>

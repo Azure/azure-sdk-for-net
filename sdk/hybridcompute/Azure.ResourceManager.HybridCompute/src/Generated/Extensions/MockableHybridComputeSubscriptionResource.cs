@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the Extension being received. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,6 +132,10 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>Machines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -145,6 +157,10 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +184,10 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,6 +210,10 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -211,6 +235,10 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_GetValidationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +275,10 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_GetValidationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// </summary>

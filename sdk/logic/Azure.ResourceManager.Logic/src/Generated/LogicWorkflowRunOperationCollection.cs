@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/runs/operations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The workflow operation id. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/runs/operations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +143,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/runs/operations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The workflow operation id. </param>
@@ -170,6 +182,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/runs/operations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="operationId"> The workflow operation id. </param>
@@ -204,6 +220,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/runs/operations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +261,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/runs/operations</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -136,6 +136,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ClusterPrincipalAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/principalAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -158,6 +162,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPrincipalAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/principalAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,6 +197,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/databases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
@@ -211,6 +223,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/databases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -242,6 +258,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>AttachedDatabaseConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/attachedDatabaseConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration. </param>
@@ -264,6 +284,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttachedDatabaseConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/attachedDatabaseConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,6 +319,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/managedPrivateEndpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
@@ -317,6 +345,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/managedPrivateEndpoints</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,6 +380,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>SandboxCustomImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/sandboxCustomImages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
@@ -370,6 +406,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SandboxCustomImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/sandboxCustomImages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,6 +441,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -423,6 +467,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -454,6 +502,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
@@ -477,6 +529,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
@@ -499,6 +555,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,6 +592,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -563,6 +627,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -598,6 +666,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -631,6 +703,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -671,6 +747,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -710,6 +790,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -743,6 +827,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -778,6 +866,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -812,6 +904,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -845,6 +941,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Migrate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -884,6 +984,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Migrate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -922,6 +1026,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListFollowerDatabases</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -943,6 +1051,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListFollowerDatabases</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -963,6 +1075,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_DetachFollowerDatabases</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1002,6 +1118,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_DetachFollowerDatabases</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1040,6 +1160,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_DiagnoseVirtualNetwork</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1073,6 +1197,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_DiagnoseVirtualNetwork</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1108,6 +1236,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkusByResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1129,6 +1261,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkusByResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1149,6 +1285,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_ListOutboundNetworkDependenciesEndpoints</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1172,6 +1312,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListOutboundNetworkDependenciesEndpoints</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1194,6 +1338,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListLanguageExtensions</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1215,6 +1363,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListLanguageExtensions</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1235,6 +1387,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_AddLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1274,6 +1430,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_AddLanguageExtensions</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1311,6 +1471,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_RemoveLanguageExtensions</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1350,6 +1514,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_RemoveLanguageExtensions</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1388,6 +1556,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ClusterPrincipalAssignments_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/principalAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the principal assignment. </param>
@@ -1421,6 +1593,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterPrincipalAssignments_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/principalAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1456,6 +1632,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/databases</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1489,6 +1669,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/databases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1524,6 +1708,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>AttachedDatabaseConfigurations_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/attachedDatabaseConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1557,6 +1745,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttachedDatabaseConfigurations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/attachedDatabaseConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1592,6 +1784,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/managedPrivateEndpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1625,6 +1821,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedPrivateEndpoints_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/managedPrivateEndpoints</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1660,6 +1860,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>SandboxCustomImages_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/sandboxCustomImages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1694,6 +1898,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>SandboxCustomImages_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters/sandboxCustomImages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the resource. </param>
@@ -1727,6 +1935,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1782,6 +1994,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1836,6 +2052,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1885,6 +2105,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1933,6 +2157,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1985,6 +2213,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// </summary>

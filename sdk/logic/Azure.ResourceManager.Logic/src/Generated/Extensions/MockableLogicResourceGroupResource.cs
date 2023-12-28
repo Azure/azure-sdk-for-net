@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> The workflow name. </param>
@@ -83,6 +87,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,6 +122,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationAccountName"> The integration account name. </param>
@@ -136,6 +148,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,6 +183,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
@@ -190,6 +210,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationServiceEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
@@ -212,6 +236,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,6 +278,10 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows</description>
         /// </item>
         /// </list>
         /// </summary>

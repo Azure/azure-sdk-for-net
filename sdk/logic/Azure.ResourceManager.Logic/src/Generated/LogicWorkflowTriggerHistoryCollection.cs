@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -162,6 +174,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -185,6 +201,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +241,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
@@ -255,6 +279,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,6 +320,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/workflows/triggers/histories</description>
         /// </item>
         /// </list>
         /// </summary>

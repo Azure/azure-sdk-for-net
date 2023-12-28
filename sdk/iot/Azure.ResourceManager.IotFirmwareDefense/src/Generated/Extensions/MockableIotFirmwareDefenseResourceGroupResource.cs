@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTFirmwareDefense/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTFirmwareDefense/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>

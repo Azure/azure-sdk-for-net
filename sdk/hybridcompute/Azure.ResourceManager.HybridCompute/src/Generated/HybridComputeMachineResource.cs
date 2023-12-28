@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>MachineExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines/extensions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
@@ -146,6 +150,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>MachineExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines/extensions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
@@ -168,6 +176,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +214,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
@@ -234,6 +250,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +289,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -302,6 +326,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,6 +365,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the Update hybrid machine operation. </param>
@@ -370,6 +402,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_AssessPatches</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,6 +441,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_AssessPatches</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -438,6 +478,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_InstallPatches</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -476,6 +520,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_InstallPatches</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -651,6 +699,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_GetValidationDetailsForMachine</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -681,6 +733,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_GetValidationDetailsForMachine</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -710,6 +766,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -765,6 +825,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -819,6 +883,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -868,6 +936,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -916,6 +988,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -968,6 +1044,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// </summary>

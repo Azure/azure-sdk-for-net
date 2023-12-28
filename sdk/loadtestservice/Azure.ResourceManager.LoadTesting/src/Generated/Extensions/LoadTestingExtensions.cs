@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/loadTests</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/loadTests</description>
         /// </item>
         /// </list>
         /// <item>
@@ -178,6 +186,10 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/locations/quotas</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -208,6 +220,10 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/locations/quotas</description>
         /// </item>
         /// </list>
         /// <item>
@@ -240,6 +256,10 @@ namespace Azure.ResourceManager.LoadTesting
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/loadTests</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -267,6 +287,10 @@ namespace Azure.ResourceManager.LoadTesting
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/loadTests</description>
         /// </item>
         /// </list>
         /// <item>

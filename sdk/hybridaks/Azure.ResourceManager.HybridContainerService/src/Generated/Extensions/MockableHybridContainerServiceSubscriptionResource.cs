@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ProvisionedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/provisionedClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProvisionedClusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/provisionedClusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>storageSpaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/storageSpaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,6 +138,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>storageSpaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/storageSpaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,6 +165,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -170,6 +190,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>

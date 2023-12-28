@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <term>Operation Id</term>
         /// <description>RegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/registrationDefinitions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/registrationDefinitions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <term>Operation Id</term>
         /// <description>RegistrationAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/registrationAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -139,6 +151,10 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/registrationAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,6 +189,10 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/marketplaceRegistrationDefinitions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -196,6 +216,10 @@ namespace Azure.ResourceManager.ManagedServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/marketplaceRegistrationDefinitions</description>
         /// </item>
         /// </list>
         /// </summary>

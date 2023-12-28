@@ -159,6 +159,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -188,6 +192,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedIdentity/userAssignedIdentities</description>
         /// </item>
         /// </list>
         /// <item>
@@ -219,6 +227,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -246,6 +258,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedIdentity/userAssignedIdentities</description>
         /// </item>
         /// </list>
         /// <item>

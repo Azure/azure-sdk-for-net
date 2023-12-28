@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maps/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Maps Account. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maps/accounts</description>
         /// </item>
         /// </list>
         /// </summary>

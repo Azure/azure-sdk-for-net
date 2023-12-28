@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagementPartner/partners</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerId"> Id of the Partner. </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagementPartner/partners</description>
         /// </item>
         /// </list>
         /// </summary>

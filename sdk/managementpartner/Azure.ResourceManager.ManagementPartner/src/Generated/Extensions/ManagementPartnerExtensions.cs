@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagementPartner/partners</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -106,6 +110,10 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagementPartner/partners</description>
         /// </item>
         /// </list>
         /// <item>

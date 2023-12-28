@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridConnectivity/endpoints</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -81,6 +85,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridConnectivity/endpoints</description>
         /// </item>
         /// </list>
         /// <item>

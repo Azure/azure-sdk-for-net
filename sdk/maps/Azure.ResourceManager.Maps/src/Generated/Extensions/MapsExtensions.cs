@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maps/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maps/accounts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -160,6 +168,10 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maps/accounts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +199,10 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maps/accounts</description>
         /// </item>
         /// </list>
         /// <item>

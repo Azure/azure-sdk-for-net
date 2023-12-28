@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kubernetes/connectedClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Kubernetes cluster on which get is called. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kubernetes/connectedClusters</description>
         /// </item>
         /// </list>
         /// </summary>

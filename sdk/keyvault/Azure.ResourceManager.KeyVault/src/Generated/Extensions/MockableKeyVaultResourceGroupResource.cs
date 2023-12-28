@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the vault. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/managedHSMs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the managed HSM Pool. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/managedHSMs</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -259,6 +259,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Registries_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/registries</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -281,6 +285,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Registries_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/registries</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -302,6 +310,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,6 +338,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>

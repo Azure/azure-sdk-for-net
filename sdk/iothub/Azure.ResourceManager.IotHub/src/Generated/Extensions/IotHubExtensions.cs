@@ -158,6 +158,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +191,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -218,6 +226,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -245,6 +257,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -274,6 +290,10 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>IotHubResource_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -301,6 +321,10 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
         /// </item>
         /// </list>
         /// <item>

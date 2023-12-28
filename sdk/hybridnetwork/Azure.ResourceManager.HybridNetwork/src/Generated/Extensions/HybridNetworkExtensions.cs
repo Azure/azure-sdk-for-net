@@ -309,6 +309,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/configurationGroupValues</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -338,6 +342,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/configurationGroupValues</description>
         /// </item>
         /// </list>
         /// <item>
@@ -386,6 +394,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -415,6 +427,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -463,6 +479,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/publishers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -492,6 +512,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/publishers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -540,6 +564,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Sites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/sites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -569,6 +597,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Sites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/sites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -617,6 +649,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/siteNetworkServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -646,6 +682,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/siteNetworkServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -677,6 +717,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/configurationGroupValues</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -704,6 +748,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/configurationGroupValues</description>
         /// </item>
         /// </list>
         /// <item>
@@ -733,6 +781,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -760,6 +812,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -789,6 +845,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/publishers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -816,6 +876,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/publishers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -845,6 +909,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/sites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -872,6 +940,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/sites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -901,6 +973,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/siteNetworkServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -928,6 +1004,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/siteNetworkServices</description>
         /// </item>
         /// </list>
         /// <item>

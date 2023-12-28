@@ -104,6 +104,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -136,6 +140,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +175,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,6 +217,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MarketplaceOrdering/offerTypes/publishers/offers/plans/agreements</description>
         /// </item>
         /// </list>
         /// </summary>

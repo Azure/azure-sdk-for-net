@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +82,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -99,6 +107,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +146,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the name of the IoT Central application to check. </param>
@@ -167,6 +183,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_CheckSubdomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +222,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_CheckSubdomainAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Set the name parameter in the OperationInputs structure to the subdomain of the IoT Central application to check. </param>
@@ -236,6 +260,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_ListTemplates</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -257,6 +285,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_ListTemplates</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
         /// </item>
         /// </list>
         /// </summary>

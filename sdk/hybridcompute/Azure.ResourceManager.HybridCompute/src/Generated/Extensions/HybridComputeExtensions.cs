@@ -177,6 +177,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -207,6 +211,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// <item>
@@ -256,6 +264,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,6 +297,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// <item>
@@ -337,6 +353,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -369,6 +389,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -403,6 +427,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>Machines_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -430,6 +458,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Machines_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/machines</description>
         /// </item>
         /// </list>
         /// <item>
@@ -459,6 +491,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -487,6 +523,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -514,6 +554,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_GetValidationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// <item>
@@ -544,6 +588,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkScopes_GetValidationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/privateLinkScopes</description>
         /// </item>
         /// </list>
         /// <item>

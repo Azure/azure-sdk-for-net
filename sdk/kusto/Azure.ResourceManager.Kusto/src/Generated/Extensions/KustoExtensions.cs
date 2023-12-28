@@ -272,6 +272,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -301,6 +305,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -332,6 +340,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -359,6 +371,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -388,6 +404,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -415,6 +435,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -444,6 +468,10 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Clusters_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -472,6 +500,10 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Kusto/clusters</description>
         /// </item>
         /// </list>
         /// <item>

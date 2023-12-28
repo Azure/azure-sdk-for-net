@@ -152,6 +152,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -180,6 +184,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// <item>

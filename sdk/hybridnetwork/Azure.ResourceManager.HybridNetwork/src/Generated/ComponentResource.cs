@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions/components</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions/components</description>
         /// </item>
         /// </list>
         /// </summary>

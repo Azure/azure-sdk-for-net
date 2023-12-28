@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/configurationGroupValues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/configurationGroupValues</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFunctionName"> The name of the network function resource. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/publishers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/publishers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +237,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Sites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/sites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The name of the network service site. </param>
@@ -235,6 +263,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Sites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/sites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +298,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/siteNetworkServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
@@ -288,6 +324,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/siteNetworkServices</description>
         /// </item>
         /// </list>
         /// </summary>

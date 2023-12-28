@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/publicMaintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/publicMaintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +129,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -141,6 +153,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +179,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -183,6 +203,10 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>

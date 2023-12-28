@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <term>Operation Id</term>
         /// <description>Apps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The ARM resource name of the IoT Central application. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Apps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.IoTCentral/iotApps</description>
         /// </item>
         /// </list>
         /// </summary>

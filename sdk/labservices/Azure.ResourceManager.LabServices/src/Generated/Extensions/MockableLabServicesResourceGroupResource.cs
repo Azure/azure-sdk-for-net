@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>LabPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="labPlanName"> The name of the lab plan that uniquely identifies it within containing resource group. Used in resource URIs and in UI. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labPlans</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="labName"> The name of the lab that uniquely identifies it within containing lab plan. Used in resource URIs. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labs</description>
         /// </item>
         /// </list>
         /// </summary>

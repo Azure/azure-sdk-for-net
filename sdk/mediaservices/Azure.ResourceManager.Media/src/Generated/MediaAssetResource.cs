@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>AssetFilters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets/assetFilters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The Asset Filter name. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AssetFilters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets/assetFilters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Tracks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets/tracks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trackName"> The Asset Track name. </param>
@@ -186,6 +198,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Tracks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets/tracks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="trackName"> The Asset Track name. </param>
@@ -208,6 +224,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +261,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,6 +296,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,6 +335,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -340,6 +372,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +411,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The request parameters. </param>
@@ -409,6 +449,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_ListContainerSas</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
@@ -434,6 +478,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_ListContainerSas</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
@@ -458,6 +506,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_GetEncryptionKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -489,6 +541,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_GetEncryptionKey</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -519,6 +575,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_ListStreamingLocators</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -539,6 +599,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_ListStreamingLocators</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
         /// </item>
         /// </list>
         /// </summary>

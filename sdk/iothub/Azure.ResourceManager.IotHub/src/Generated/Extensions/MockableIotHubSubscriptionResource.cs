@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>IotHubResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,6 +111,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +149,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
         /// </item>
         /// </list>
         /// </summary>

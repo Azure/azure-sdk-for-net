@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Marketplace/privateStores</description>
         /// </item>
         /// </list>
         /// </summary>

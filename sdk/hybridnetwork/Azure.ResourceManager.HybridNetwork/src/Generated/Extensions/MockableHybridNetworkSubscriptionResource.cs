@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/configurationGroupValues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,6 +94,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/configurationGroupValues</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,6 +121,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +146,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/networkFunctions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,6 +173,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/publishers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,6 +198,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/publishers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +225,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/sites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,6 +250,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/sites</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,6 +277,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/siteNetworkServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -266,6 +302,10 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridNetwork/siteNetworkServices</description>
         /// </item>
         /// </list>
         /// </summary>

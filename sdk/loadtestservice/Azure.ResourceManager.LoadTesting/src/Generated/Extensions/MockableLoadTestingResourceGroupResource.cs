@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/loadTests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadTests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/loadTests</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -111,6 +111,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountAssemblies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/assemblies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assemblyArtifactName"> The assembly artifact name. </param>
@@ -133,6 +137,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountAssemblies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/assemblies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,6 +172,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountBatchConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/batchConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="batchConfigurationName"> The batch configuration name. </param>
@@ -186,6 +198,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountBatchConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/batchConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +233,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountSchemas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/schemas</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The integration account schema name. </param>
@@ -239,6 +259,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/schemas</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +294,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountMaps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/maps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="mapName"> The integration account map name. </param>
@@ -292,6 +320,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountMaps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/maps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,6 +355,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountPartners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/partners</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerName"> The integration account partner name. </param>
@@ -345,6 +381,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountPartners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/partners</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +416,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountAgreements_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/agreements</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agreementName"> The integration account agreement name. </param>
@@ -398,6 +442,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountAgreements_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/agreements</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,6 +477,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountCertificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/certificates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The integration account certificate name. </param>
@@ -451,6 +503,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountCertificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/certificates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -482,6 +538,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountSessions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/sessions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionName"> The integration account session name. </param>
@@ -505,6 +565,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccountSessions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts/sessions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionName"> The integration account session name. </param>
@@ -527,6 +591,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -560,6 +628,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -591,6 +663,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,6 +702,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -659,6 +739,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -694,6 +778,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The integration account. </param>
@@ -727,6 +815,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListCallbackUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -762,6 +854,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListCallbackUrl</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> The callback URL parameters. </param>
@@ -796,6 +892,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListKeyVaultKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The key vault parameters. </param>
@@ -821,6 +921,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListKeyVaultKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The key vault parameters. </param>
@@ -845,6 +949,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_LogTrackingEvents</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -880,6 +988,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_LogTrackingEvents</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The callback URL parameters. </param>
@@ -913,6 +1025,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_RegenerateAccessKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -948,6 +1064,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_RegenerateAccessKey</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The access key type. </param>
@@ -981,6 +1101,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1036,6 +1160,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1090,6 +1218,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1139,6 +1271,10 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1187,6 +1323,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1239,6 +1379,10 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Logic/integrationAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

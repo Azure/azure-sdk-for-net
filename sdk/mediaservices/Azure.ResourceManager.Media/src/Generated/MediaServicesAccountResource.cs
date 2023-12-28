@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>AccountFilters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/accountFilters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filterName"> The Account Filter name. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AccountFilters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/accountFilters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The <see cref="string"/> to use. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices/privateLinkResources</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +232,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The <see cref="string"/> to use. </param>
@@ -238,6 +258,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +293,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assetName"> The Asset name. </param>
@@ -291,6 +319,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/assets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,6 +354,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>ContentKeyPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/contentKeyPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="contentKeyPolicyName"> The Content Key Policy name. </param>
@@ -344,6 +380,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContentKeyPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/contentKeyPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,6 +415,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/transforms</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="transformName"> The Transform name. </param>
@@ -397,6 +441,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Transforms_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/transforms</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,6 +476,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/streamingPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
@@ -450,6 +502,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/streamingPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -481,6 +537,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingLocators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/streamingLocators</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingLocatorName"> The Streaming Locator name. </param>
@@ -503,6 +563,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingLocators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaServices/streamingLocators</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,6 +598,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices/liveEvents</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
@@ -556,6 +624,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices/liveEvents</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,6 +659,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices/streamingEndpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
@@ -610,6 +686,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices/streamingEndpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingEndpointName"> The name of the streaming endpoint, maximum length is 24. </param>
@@ -632,6 +712,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -665,6 +749,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -696,6 +784,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -731,6 +823,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -764,6 +860,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -803,6 +903,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -841,6 +945,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_SyncStorageKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
@@ -874,6 +982,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_SyncStorageKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -909,6 +1021,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_ListEdgePolicies</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
@@ -943,6 +1059,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_ListEdgePolicies</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request parameters. </param>
@@ -976,6 +1096,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1031,6 +1155,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1085,6 +1213,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1134,6 +1266,10 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1182,6 +1318,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1234,6 +1374,10 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Media/mediaservices</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces/featuresets/versions/features</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="featureName"> Feature Name. This is case-sensitive. </param>
@@ -100,6 +104,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces/featuresets/versions/features</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Features_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces/featuresets/versions/features</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
@@ -164,6 +176,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Features_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces/featuresets/versions/features</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
@@ -189,6 +205,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces/featuresets/versions/features</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +245,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces/featuresets/versions/features</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="featureName"> Feature Name. This is case-sensitive. </param>
@@ -259,6 +283,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces/featuresets/versions/features</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +324,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.MachineLearningServices/workspaces/featuresets/versions/features</description>
         /// </item>
         /// </list>
         /// </summary>

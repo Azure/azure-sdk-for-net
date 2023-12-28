@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +212,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The configuration. </param>
@@ -233,6 +249,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +308,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -342,6 +366,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -391,6 +419,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -439,6 +471,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -491,6 +527,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>

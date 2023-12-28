@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/marketplaceRegistrationDefinitions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/marketplaceRegistrationDefinitions</description>
         /// </item>
         /// </list>
         /// </summary>

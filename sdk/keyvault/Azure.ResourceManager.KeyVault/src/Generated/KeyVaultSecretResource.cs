@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults/secrets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +138,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>Secrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults/secrets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +173,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults/secrets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +211,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Secrets_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/vaults/secrets</description>
         /// </item>
         /// </list>
         /// </summary>

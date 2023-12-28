@@ -289,6 +289,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <term>Operation Id</term>
         /// <description>ProvisionedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/provisionedClusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -318,6 +322,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProvisionedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/provisionedClusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -366,6 +374,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <term>Operation Id</term>
         /// <description>storageSpaces_Retrieve</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/storageSpaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -395,6 +407,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>storageSpaces_Retrieve</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/storageSpaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -443,6 +459,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -472,6 +492,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/virtualNetworks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -503,6 +527,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <term>Operation Id</term>
         /// <description>ProvisionedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/provisionedClusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -530,6 +558,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProvisionedClusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/provisionedClusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -559,6 +591,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <term>Operation Id</term>
         /// <description>storageSpaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/storageSpaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -586,6 +622,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>storageSpaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/storageSpaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -615,6 +655,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -642,6 +686,10 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/virtualNetworks</description>
         /// </item>
         /// </list>
         /// <item>

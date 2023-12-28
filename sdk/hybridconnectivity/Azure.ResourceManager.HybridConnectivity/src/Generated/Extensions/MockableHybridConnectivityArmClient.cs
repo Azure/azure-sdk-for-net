@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridConnectivity/endpoints</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -81,6 +85,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Endpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridConnectivity/endpoints</description>
         /// </item>
         /// </list>
         /// </summary>

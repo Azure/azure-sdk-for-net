@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The version of the Extension being received. </param>
@@ -112,6 +116,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,6 +158,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,6 +183,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,6 +207,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,6 +247,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The version of the Extension being received. </param>
@@ -261,6 +285,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +326,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridCompute/locations/publishers/extensionTypes/versions</description>
         /// </item>
         /// </list>
         /// </summary>

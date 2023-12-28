@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the identity resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedIdentity/userAssignedIdentities</description>
         /// </item>
         /// </list>
         /// </summary>

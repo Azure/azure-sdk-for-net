@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/managedNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedNetworkName"> The name of the Managed Network. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/managedNetworks</description>
         /// </item>
         /// </list>
         /// </summary>

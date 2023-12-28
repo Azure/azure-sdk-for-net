@@ -105,6 +105,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,6 +141,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,6 +176,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateOrCancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +218,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplyUpdates_CreateOrUpdateOrCancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Maintenance/applyUpdates</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/locations/quotas</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/locations/quotas</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,6 +119,10 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/loadTests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +144,10 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadTests_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LoadTestService/loadTests</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -52,6 +52,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>RegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/registrationDefinitions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/registrationDefinitions</description>
         /// </item>
         /// </list>
         /// <item>
@@ -132,6 +140,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>RegistrationAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/registrationAssignments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -163,6 +175,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegistrationAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/registrationAssignments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -214,6 +230,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/marketplaceRegistrationDefinitions</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -244,6 +264,10 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedServices/marketplaceRegistrationDefinitions</description>
         /// </item>
         /// </list>
         /// <item>

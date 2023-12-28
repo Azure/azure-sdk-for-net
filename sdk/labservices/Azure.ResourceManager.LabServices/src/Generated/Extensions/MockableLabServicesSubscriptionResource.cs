@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>LabPlans_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labPlans</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -88,6 +92,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabPlans_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labPlans</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,6 +120,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
@@ -134,6 +146,10 @@ namespace Azure.ResourceManager.LabServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Labs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.LabServices/labs</description>
         /// </item>
         /// </list>
         /// </summary>

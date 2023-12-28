@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedManagedHSMs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
@@ -99,6 +103,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedManagedHSMs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedManagedHSMs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
@@ -174,6 +186,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedManagedHSMs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
@@ -209,6 +225,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedManagedHSMs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +267,10 @@ namespace Azure.ResourceManager.KeyVault
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.KeyVault/locations/deletedManagedHSMs</description>
         /// </item>
         /// </list>
         /// </summary>

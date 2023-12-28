@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/scopeAssignments</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -93,6 +97,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/scopeAssignments</description>
         /// </item>
         /// </list>
         /// <item>
@@ -218,6 +226,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/managedNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -247,6 +259,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/managedNetworks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -278,6 +294,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/managedNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -307,6 +327,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ManagedNetwork/managedNetworks</description>
         /// </item>
         /// </list>
         /// <item>

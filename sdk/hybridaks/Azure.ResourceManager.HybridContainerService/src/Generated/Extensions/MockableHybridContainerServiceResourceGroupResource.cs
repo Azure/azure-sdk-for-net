@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ProvisionedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/provisionedClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProvisionedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/provisionedClusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>storageSpaces_Retrieve</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/storageSpaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageSpacesName"> Parameter for the name of the storage object. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>storageSpaces_Retrieve</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/storageSpaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.HybridContainerService/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>

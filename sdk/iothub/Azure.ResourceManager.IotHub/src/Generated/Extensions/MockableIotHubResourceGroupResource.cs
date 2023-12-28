@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Devices/IotHubs</description>
         /// </item>
         /// </list>
         /// </summary>
