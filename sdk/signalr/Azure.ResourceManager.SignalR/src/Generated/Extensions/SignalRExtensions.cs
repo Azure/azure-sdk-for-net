@@ -158,6 +158,10 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/signalR</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +191,10 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/signalR</description>
         /// </item>
         /// </list>
         /// <item>
@@ -218,6 +226,10 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/signalR</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -246,6 +258,10 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/signalR</description>
         /// </item>
         /// </list>
         /// <item>
@@ -276,6 +292,10 @@ namespace Azure.ResourceManager.SignalR
         /// <term>Operation Id</term>
         /// <description>SignalR_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/signalR</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -303,6 +323,10 @@ namespace Azure.ResourceManager.SignalR
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SignalRService/signalR</description>
         /// </item>
         /// </list>
         /// <item>

@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> The policy name. </param>
@@ -150,6 +158,10 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedManagedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances/restorableDroppedDatabases</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +194,10 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedManagedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances/restorableDroppedDatabases</description>
         /// </item>
         /// </list>
         /// </summary>

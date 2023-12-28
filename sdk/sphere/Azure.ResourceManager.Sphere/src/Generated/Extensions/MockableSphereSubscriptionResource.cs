@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Catalogs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureSphere/catalogs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Catalogs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureSphere/catalogs</description>
         /// </item>
         /// </list>
         /// </summary>

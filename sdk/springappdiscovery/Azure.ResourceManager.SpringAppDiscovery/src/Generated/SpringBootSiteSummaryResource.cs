@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>Summaries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/summaries</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Summaries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/summaries</description>
         /// </item>
         /// </list>
         /// </summary>

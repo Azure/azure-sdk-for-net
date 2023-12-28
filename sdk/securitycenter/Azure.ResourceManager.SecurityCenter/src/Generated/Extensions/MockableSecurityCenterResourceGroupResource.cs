@@ -87,6 +87,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/customAssessmentAutomations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
@@ -109,6 +113,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/customAssessmentAutomations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,6 +148,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>CustomEntityStoreAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/customEntityStoreAssignments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customEntityStoreAssignmentName"> Name of the custom entity store assignment. Generated name is GUID. </param>
@@ -162,6 +174,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomEntityStoreAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/customEntityStoreAssignments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,6 +209,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolution_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/iotSecuritySolutions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="solutionName"> The name of the IoT Security solution. </param>
@@ -215,6 +235,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolution_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/iotSecuritySolutions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +271,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Tasks_GetResourceGroupLevelTask</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/tasks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
@@ -270,6 +298,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/tasks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +334,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Automations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/automations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationName"> The security automation name. </param>
@@ -324,6 +360,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Automations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/automations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,6 +400,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>ServerVulnerabilityAssessment_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/serverVulnerabilityAssessments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
@@ -384,6 +428,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerVulnerabilityAssessment_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/serverVulnerabilityAssessments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,6 +470,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>AdaptiveNetworkHardenings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/adaptiveNetworkHardenings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
@@ -447,6 +499,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AdaptiveNetworkHardenings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/adaptiveNetworkHardenings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -482,6 +538,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>JitNetworkAccessPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/jitNetworkAccessPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
@@ -505,6 +565,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JitNetworkAccessPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/jitNetworkAccessPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,6 +602,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_GetResourceGroupLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/alerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
@@ -561,6 +629,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_GetResourceGroupLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/alerts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -598,6 +670,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>SoftwareInventories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/softwareInventories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceNamespace"> The namespace of the resource. </param>
@@ -623,6 +699,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareInventories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/softwareInventories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -657,6 +737,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>SecurityConnectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/securityConnectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityConnectorName"> The security connector name. </param>
@@ -679,6 +763,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityConnectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/securityConnectors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -839,6 +927,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>JitNetworkAccessPolicies_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/jitNetworkAccessPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -860,6 +952,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JitNetworkAccessPolicies_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/jitNetworkAccessPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

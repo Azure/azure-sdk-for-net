@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassificationMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications/replicationStorageClassificationMappings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationMappingName"> Storage classification mapping name. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassificationMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications/replicationStorageClassificationMappings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationMappingName"> Storage classification mapping name. </param>
@@ -154,6 +162,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassifications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +198,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationStorageClassifications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications</description>
         /// </item>
         /// </list>
         /// </summary>

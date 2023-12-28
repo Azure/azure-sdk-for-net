@@ -85,6 +85,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/alertRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleId"> Alert rule ID. </param>
@@ -107,6 +111,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/alertRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>AlertRuleTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/alertRuleTemplates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
@@ -160,6 +172,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AlertRuleTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/alertRuleTemplates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,6 +207,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>AutomationRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/automationRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationRuleId"> Automation rule ID. </param>
@@ -213,6 +233,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/automationRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,6 +268,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Bookmarks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/bookmarks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="bookmarkId"> Bookmark ID. </param>
@@ -266,6 +294,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bookmarks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/bookmarks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +329,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>DataConnectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/dataConnectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataConnectorId"> Connector ID. </param>
@@ -319,6 +355,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataConnectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/dataConnectors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,6 +390,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/incidents</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="incidentId"> Incident ID. </param>
@@ -372,6 +416,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Incidents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/incidents</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,6 +451,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>SentinelOnboardingStates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/onboardingStates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sentinelOnboardingStateName"> The Sentinel onboarding state name. Supports - default. </param>
@@ -425,6 +477,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SentinelOnboardingStates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/onboardingStates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,6 +512,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>SecurityMLAnalyticsSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/securityMLAnalyticsSettings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
@@ -478,6 +538,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityMLAnalyticsSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/securityMLAnalyticsSettings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -509,6 +573,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/threatIntelligence/indicators</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Threat intelligence indicator name field. </param>
@@ -531,6 +599,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/threatIntelligence/indicators</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -562,6 +634,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>Watchlists_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/watchlists</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="watchlistAlias"> The watchlist alias. </param>
@@ -584,6 +660,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Watchlists_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityInsights/watchlists</description>
         /// </item>
         /// </list>
         /// </summary>

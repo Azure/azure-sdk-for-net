@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Management/managementGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
@@ -63,6 +67,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Management/managementGroups</description>
         /// </item>
         /// </list>
         /// </summary>

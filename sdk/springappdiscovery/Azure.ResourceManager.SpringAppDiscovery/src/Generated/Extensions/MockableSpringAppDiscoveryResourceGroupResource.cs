@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="springbootsitesName"> The springbootsites name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites</description>
         /// </item>
         /// </list>
         /// </summary>

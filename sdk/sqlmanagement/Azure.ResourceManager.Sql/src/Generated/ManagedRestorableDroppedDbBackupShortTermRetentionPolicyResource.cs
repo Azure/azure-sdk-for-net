@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,6 +174,10 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +216,10 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

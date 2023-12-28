@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Azure region to hit Api. </param>
@@ -103,6 +107,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent</description>
         /// </item>
         /// </list>
         /// </summary>

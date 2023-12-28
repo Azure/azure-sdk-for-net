@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>

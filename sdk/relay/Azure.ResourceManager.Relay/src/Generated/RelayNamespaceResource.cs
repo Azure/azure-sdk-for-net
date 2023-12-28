@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>Namespaces_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/authorizationRules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/authorizationRules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,6 +178,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>HybridConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/hybridConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hybridConnectionName"> The hybrid connection name. </param>
@@ -192,6 +204,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HybridConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/hybridConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +239,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>WCFRelays_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/wcfRelays</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="relayName"> The relay name. </param>
@@ -245,6 +265,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WCFRelays_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/wcfRelays</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +300,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The PrivateEndpointConnection name. </param>
@@ -298,6 +326,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,6 +361,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
@@ -352,6 +388,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces/privateLinkResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The PrivateLinkResource name. </param>
@@ -374,6 +414,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,6 +451,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -438,6 +486,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,6 +525,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>Namespaces_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -506,6 +562,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -541,6 +601,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>Namespaces_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters for updating a namespace resource. </param>
@@ -574,6 +638,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -629,6 +697,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -683,6 +755,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -732,6 +808,10 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -780,6 +860,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -832,6 +916,10 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Relay/namespaces</description>
         /// </item>
         /// </list>
         /// </summary>

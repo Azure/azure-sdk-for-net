@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Quantum
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quantum/workspaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +115,10 @@ namespace Azure.ResourceManager.Quantum
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quantum/workspaces</description>
         /// </item>
         /// </list>
         /// <item>
@@ -142,6 +150,10 @@ namespace Azure.ResourceManager.Quantum
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quantum/workspaces</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -169,6 +181,10 @@ namespace Azure.ResourceManager.Quantum
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quantum/workspaces</description>
         /// </item>
         /// </list>
         /// <item>

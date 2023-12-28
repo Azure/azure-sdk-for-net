@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>Metadata_GetEntity</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/metadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
@@ -77,6 +81,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Metadata_GetEntity</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/metadata</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,6 +116,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>Event_GetByTenantIdAndTrackingId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/events</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
@@ -132,6 +144,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/events</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +181,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>EmergingIssues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/emergingIssues</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
@@ -185,6 +205,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmergingIssues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/emergingIssues</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/reservationOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/reservationOrders</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
@@ -118,6 +126,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Reservation_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/reservationOrders/reservations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +156,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <term>Operation Id</term>
         /// <description>Reservation_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/reservationOrders/reservations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -168,6 +184,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Calculate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/reservationOrders</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +222,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationOrder_Calculate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/reservationOrders</description>
         /// </item>
         /// </list>
         /// </summary>

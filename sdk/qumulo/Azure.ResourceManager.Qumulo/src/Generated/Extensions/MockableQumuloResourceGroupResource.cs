@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// <term>Operation Id</term>
         /// <description>FileSystems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Qumulo.Storage/fileSystems</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileSystems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Qumulo.Storage/fileSystems</description>
         /// </item>
         /// </list>
         /// </summary>

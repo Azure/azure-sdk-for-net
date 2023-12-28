@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the Redis cache. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
         /// </item>
         /// </list>
         /// </summary>

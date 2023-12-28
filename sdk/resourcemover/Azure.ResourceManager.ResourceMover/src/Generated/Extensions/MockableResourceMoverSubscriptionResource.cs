@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +78,10 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>

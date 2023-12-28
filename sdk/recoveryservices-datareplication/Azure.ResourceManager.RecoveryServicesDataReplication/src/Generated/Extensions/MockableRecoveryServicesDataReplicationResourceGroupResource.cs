@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Fabric_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataReplication/replicationFabrics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fabricName"> The fabric name. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fabric_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataReplication/replicationFabrics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +123,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <term>Operation Id</term>
         /// <description>Vault_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataReplication/replicationVaults</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
@@ -137,6 +149,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataReplication/replicationVaults</description>
         /// </item>
         /// </list>
         /// </summary>

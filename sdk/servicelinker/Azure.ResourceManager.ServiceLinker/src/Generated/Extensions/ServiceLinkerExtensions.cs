@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceLinker/linkers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -87,6 +91,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceLinker/linkers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -155,6 +163,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceLinker/linkers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -184,6 +196,10 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceLinker/linkers</description>
         /// </item>
         /// </list>
         /// <item>

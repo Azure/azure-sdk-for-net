@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota request ID. </param>
@@ -90,6 +94,10 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -161,6 +173,10 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -193,6 +209,10 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,6 +249,10 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota request ID. </param>
@@ -263,6 +287,10 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +328,10 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
         /// </item>
         /// </list>
         /// </summary>

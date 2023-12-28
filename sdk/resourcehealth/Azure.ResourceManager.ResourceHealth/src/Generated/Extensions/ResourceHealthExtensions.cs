@@ -600,6 +600,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/events</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -631,6 +635,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/events</description>
         /// </item>
         /// </list>
         /// <item>
@@ -741,6 +749,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>Metadata_GetEntity</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/metadata</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -770,6 +782,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Metadata_GetEntity</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/metadata</description>
         /// </item>
         /// </list>
         /// <item>
@@ -818,6 +834,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>Event_GetByTenantIdAndTrackingId</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/events</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -849,6 +869,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/events</description>
         /// </item>
         /// </list>
         /// <item>
@@ -899,6 +923,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>EmergingIssues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/emergingIssues</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -927,6 +955,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmergingIssues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceHealth/emergingIssues</description>
         /// </item>
         /// </list>
         /// <item>

@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +147,10 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -168,6 +180,10 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter">
@@ -196,6 +212,10 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,6 +248,10 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> Quota Request ID. </param>
@@ -258,6 +282,10 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,6 +319,10 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
         /// </item>
         /// </list>
         /// </summary>

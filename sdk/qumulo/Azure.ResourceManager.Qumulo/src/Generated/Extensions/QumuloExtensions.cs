@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <term>Operation Id</term>
         /// <description>FileSystems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Qumulo.Storage/fileSystems</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -110,6 +114,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileSystems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Qumulo.Storage/fileSystems</description>
         /// </item>
         /// </list>
         /// <item>
@@ -141,6 +149,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <term>Operation Id</term>
         /// <description>FileSystems_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Qumulo.Storage/fileSystems</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +180,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FileSystems_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Qumulo.Storage/fileSystems</description>
         /// </item>
         /// </list>
         /// <item>

@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>InstancePools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/instancePools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
@@ -89,6 +93,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InstancePools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/instancePools</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +129,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>ServerTrustGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/serverTrustGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -144,6 +156,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerTrustGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/serverTrustGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +197,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_GetByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/longTermRetentionServers/longTermRetentionDatabases/longTermRetentionBackups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -206,6 +226,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_GetByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/longTermRetentionServers/longTermRetentionDatabases/longTermRetentionBackups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,6 +269,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/longTermRetentionManagedInstances/longTermRetentionDatabases/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -270,6 +298,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_GetByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/longTermRetentionManagedInstances/longTermRetentionDatabases/longTermRetentionManagedInstanceBackups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +336,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/virtualClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualClusterName"> The name of the virtual cluster. </param>
@@ -326,6 +362,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/virtualClusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,6 +398,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>InstanceFailoverGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/instanceFailoverGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -381,6 +425,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InstanceFailoverGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/instanceFailoverGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,6 +461,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -436,6 +488,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,6 +524,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
@@ -491,6 +551,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers</description>
         /// </item>
         /// </list>
         /// </summary>

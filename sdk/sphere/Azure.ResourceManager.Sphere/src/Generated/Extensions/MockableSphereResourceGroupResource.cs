@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Catalogs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureSphere/catalogs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Sphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Catalogs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.AzureSphere/catalogs</description>
         /// </item>
         /// </list>
         /// </summary>

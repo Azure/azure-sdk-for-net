@@ -196,6 +196,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +229,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
         /// </item>
         /// </list>
         /// <item>
@@ -256,6 +264,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -283,6 +295,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
         /// </item>
         /// </list>
         /// <item>
@@ -312,6 +328,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -339,6 +359,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
         /// </item>
         /// </list>
         /// <item>

@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>TemplateSpecs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Resources/templateSpecs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
@@ -78,6 +82,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TemplateSpecs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Resources/templateSpecs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,6 +118,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>DeploymentScripts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Resources/deploymentScripts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptName"> Name of the deployment script. </param>
@@ -132,6 +144,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeploymentScripts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Resources/deploymentScripts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +179,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>Deployments_GetAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Resources/deployments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
@@ -185,6 +205,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Resources/deployments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +240,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Solutions/applications</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The name of the managed application. </param>
@@ -238,6 +266,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Solutions/applications</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +301,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Solutions/applicationDefinitions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
@@ -291,6 +327,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Solutions/applicationDefinitions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,6 +362,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>JitRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Solutions/jitRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jitRequestName"> The name of the JIT request. </param>
@@ -344,6 +388,10 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JitRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Solutions/jitRequests</description>
         /// </item>
         /// </list>
         /// </summary>

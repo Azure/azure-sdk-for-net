@@ -109,6 +109,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworkMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkMappingName"> Network mapping name. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworkMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkMappingName"> Network mapping name. </param>
@@ -154,6 +162,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +198,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks</description>
         /// </item>
         /// </list>
         /// </summary>

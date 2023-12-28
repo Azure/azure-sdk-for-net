@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults</description>
         /// </item>
         /// </list>
         /// </summary>

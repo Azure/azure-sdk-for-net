@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimits</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerId"> Azure resource provider ID. </param>
@@ -91,6 +95,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimits</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerId"> Azure resource provider ID. </param>
@@ -152,6 +164,10 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests</description>
         /// </item>
         /// </list>
         /// </summary>

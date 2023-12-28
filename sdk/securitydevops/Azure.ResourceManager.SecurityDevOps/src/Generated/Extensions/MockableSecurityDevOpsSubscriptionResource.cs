@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsConnector_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +82,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsConnector_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,6 +109,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,6 +134,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors</description>
         /// </item>
         /// </list>
         /// </summary>

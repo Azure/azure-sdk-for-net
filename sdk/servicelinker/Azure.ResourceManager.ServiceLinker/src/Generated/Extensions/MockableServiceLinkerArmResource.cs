@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceLinker/linkers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkerName"> The name Linker resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ServiceLinker.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Linker_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceLinker/linkers</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Help/diagnostics</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -95,6 +99,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Help/diagnostics</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>Solution_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Help/solutions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -151,6 +163,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Solution_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Help/solutions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +200,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <term>Operation Id</term>
         /// <description>Troubleshooters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Help/troubleshooters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -207,6 +227,10 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Troubleshooters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Help/troubleshooters</description>
         /// </item>
         /// </list>
         /// </summary>

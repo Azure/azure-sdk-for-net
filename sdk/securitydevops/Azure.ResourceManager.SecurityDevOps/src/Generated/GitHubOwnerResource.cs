@@ -108,6 +108,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors/owners/repos</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
@@ -131,6 +135,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors/owners/repos</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
@@ -153,6 +161,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors/owners</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +198,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors/owners</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +233,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors/owners</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,6 +275,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors/owners</description>
         /// </item>
         /// </list>
         /// </summary>

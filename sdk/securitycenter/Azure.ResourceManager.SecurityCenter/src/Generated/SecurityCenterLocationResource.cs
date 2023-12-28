@@ -134,6 +134,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Tasks_GetSubscriptionLevelTask</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/tasks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
@@ -156,6 +160,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_GetSubscriptionLevelTask</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/tasks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,6 +195,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AdaptiveApplicationControls_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/applicationWhitelistings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> Name of an application control machine group. </param>
@@ -209,6 +221,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AdaptiveApplicationControls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/applicationWhitelistings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,6 +256,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/alerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -263,6 +283,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Alerts_GetSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/alerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -285,6 +309,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,6 +345,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,6 +470,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>JitNetworkAccessPolicies_ListByRegion</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/jitNetworkAccessPolicies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -459,6 +495,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JitNetworkAccessPolicies_ListByRegion</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Security/locations/jitNetworkAccessPolicies</description>
         /// </item>
         /// </list>
         /// </summary>

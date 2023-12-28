@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>

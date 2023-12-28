@@ -65,6 +65,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -103,6 +107,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +151,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
@@ -175,6 +187,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +225,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_ListByRedisResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -231,6 +251,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_ListByRedisResource</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -252,6 +276,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +312,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
@@ -314,6 +346,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,6 +383,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis/patchSchedules</description>
         /// </item>
         /// </list>
         /// </summary>

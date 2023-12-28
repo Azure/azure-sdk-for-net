@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/extendedInformation</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/extendedInformation</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/extendedInformation</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +210,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/extendedInformation</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> Details of ResourceExtendedInfo. </param>
@@ -231,6 +247,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/extendedInformation</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +289,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.RecoveryServices/vaults/extendedInformation</description>
         /// </item>
         /// </list>
         /// </summary>

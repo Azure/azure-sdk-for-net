@@ -119,6 +119,10 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <term>Operation Id</term>
         /// <description>TrafficControllerInterface_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceNetworking/trafficControllers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -148,6 +152,10 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrafficControllerInterface_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceNetworking/trafficControllers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -179,6 +187,10 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <term>Operation Id</term>
         /// <description>TrafficControllerInterface_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceNetworking/trafficControllers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -206,6 +218,10 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrafficControllerInterface_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceNetworking/trafficControllers</description>
         /// </item>
         /// </list>
         /// <item>

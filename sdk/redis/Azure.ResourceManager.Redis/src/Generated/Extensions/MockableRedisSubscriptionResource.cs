@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <term>Operation Id</term>
         /// <description>Redis_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is 'Microsoft.Cache/redis'. </param>
@@ -93,6 +97,10 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <term>Operation Id</term>
         /// <description>Redis_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -149,6 +161,10 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redis</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quantum/workspaces</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quantum/workspaces</description>
         /// </item>
         /// </list>
         /// </summary>

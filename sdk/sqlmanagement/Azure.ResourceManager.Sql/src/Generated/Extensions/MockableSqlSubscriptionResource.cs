@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/deletedServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -121,6 +125,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/deletedServers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,6 +162,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>SubscriptionUsages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/usages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -177,6 +189,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubscriptionUsages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/usages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,6 +226,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>TimeZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/timeZones</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The <see cref="AzureLocation"/> to use. </param>
@@ -233,6 +253,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TimeZones_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/timeZones</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +294,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/longTermRetentionServers/longTermRetentionDatabases/longTermRetentionBackups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -295,6 +323,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/longTermRetentionServers/longTermRetentionDatabases/longTermRetentionBackups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -334,6 +366,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/longTermRetentionManagedInstances/longTermRetentionDatabases/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The location of the database. </param>
@@ -359,6 +395,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LongTermRetentionManagedInstanceBackups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/longTermRetentionManagedInstances/longTermRetentionDatabases/longTermRetentionManagedInstanceBackups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -386,6 +426,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedServers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/deletedServers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -407,6 +451,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/locations/deletedServers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,6 +478,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>InstancePools_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/instancePools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -451,6 +503,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InstancePools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/instancePools</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,6 +594,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>SyncGroups_ListSyncDatabaseIds</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers/databases/syncGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
@@ -560,6 +620,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SyncGroups_ListSyncDatabaseIds</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers/databases/syncGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -804,6 +868,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/virtualClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -826,6 +894,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/virtualClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -847,6 +919,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedInstances_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -871,6 +947,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/managedInstances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -893,6 +973,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -928,6 +1012,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name availability request parameters. </param>
@@ -962,6 +1050,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
@@ -984,6 +1076,10 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers</description>
         /// </item>
         /// </list>
         /// </summary>

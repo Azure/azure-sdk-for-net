@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootsites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootsites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,6 +113,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootservers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/springbootservers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +145,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootservers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/springbootservers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The springbootsites name. </param>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootapps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/springbootapps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The springbootsites name. </param>
@@ -186,6 +206,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootapps_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/springbootapps</description>
         /// </item>
         /// </list>
         /// </summary>

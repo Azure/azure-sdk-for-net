@@ -136,6 +136,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redisEnterprise</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,6 +161,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RedisEnterprise_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Cache/redisEnterprise</description>
         /// </item>
         /// </list>
         /// </summary>

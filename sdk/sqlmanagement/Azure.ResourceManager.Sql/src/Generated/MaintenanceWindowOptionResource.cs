@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindowOptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers/databases/maintenanceWindowOptions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
@@ -136,6 +140,10 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Sql/servers/databases/maintenanceWindowOptions</description>
         /// </item>
         /// </list>
         /// </summary>

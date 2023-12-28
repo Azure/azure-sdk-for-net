@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceFabric/managedClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceFabric/managedClusters</description>
         /// </item>
         /// </list>
         /// </summary>

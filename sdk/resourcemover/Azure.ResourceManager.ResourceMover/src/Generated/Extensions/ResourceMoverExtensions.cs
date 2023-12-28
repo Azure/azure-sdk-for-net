@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// <item>
@@ -166,6 +174,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -193,6 +205,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// <item>

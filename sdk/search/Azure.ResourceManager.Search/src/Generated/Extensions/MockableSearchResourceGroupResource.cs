@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
@@ -78,6 +82,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
         /// </item>
         /// </list>
         /// </summary>

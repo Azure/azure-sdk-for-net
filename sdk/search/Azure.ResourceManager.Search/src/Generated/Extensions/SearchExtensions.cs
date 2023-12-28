@@ -120,6 +120,10 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -150,6 +154,10 @@ namespace Azure.ResourceManager.Search
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -182,6 +190,10 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -210,6 +222,10 @@ namespace Azure.ResourceManager.Search
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -240,6 +256,10 @@ namespace Azure.ResourceManager.Search
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -268,6 +288,10 @@ namespace Azure.ResourceManager.Search
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
         /// </item>
         /// </list>
         /// <item>

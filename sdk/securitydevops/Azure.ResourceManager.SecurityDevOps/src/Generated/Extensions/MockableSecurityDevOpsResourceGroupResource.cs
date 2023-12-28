@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsConnector_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsConnector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/azureDevOpsConnectors</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.SecurityDevOps/gitHubConnectors</description>
         /// </item>
         /// </list>
         /// </summary>

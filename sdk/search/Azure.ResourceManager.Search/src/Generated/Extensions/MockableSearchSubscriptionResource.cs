@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -87,6 +91,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -109,6 +117,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +156,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Search/searchServices</description>
         /// </item>
         /// </list>
         /// </summary>

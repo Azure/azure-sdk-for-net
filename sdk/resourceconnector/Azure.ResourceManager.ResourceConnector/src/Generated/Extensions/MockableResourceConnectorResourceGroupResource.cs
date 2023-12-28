@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceConnector/appliances</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Appliances name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ResourceConnector/appliances</description>
         /// </item>
         /// </list>
         /// </summary>

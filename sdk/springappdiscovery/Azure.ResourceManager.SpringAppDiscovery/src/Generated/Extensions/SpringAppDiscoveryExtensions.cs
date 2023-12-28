@@ -157,6 +157,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -186,6 +190,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites</description>
         /// </item>
         /// </list>
         /// <item>
@@ -217,6 +225,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -245,6 +257,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -272,6 +288,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootservers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/springbootservers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -303,6 +323,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootservers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/springbootservers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -333,6 +357,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootapps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/springbootapps</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -362,6 +390,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootapps_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.OffAzureSpringBoot/springbootsites/springbootapps</description>
         /// </item>
         /// </list>
         /// <item>

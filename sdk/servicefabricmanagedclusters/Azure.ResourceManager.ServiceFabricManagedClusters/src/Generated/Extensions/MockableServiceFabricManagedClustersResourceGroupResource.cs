@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceFabric/managedClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ServiceFabric/managedClusters</description>
         /// </item>
         /// </list>
         /// </summary>

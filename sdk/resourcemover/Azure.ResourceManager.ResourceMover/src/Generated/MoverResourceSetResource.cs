@@ -115,6 +115,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections/moveResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
@@ -138,6 +142,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections/moveResources</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
@@ -160,6 +168,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,6 +205,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,6 +240,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -259,6 +279,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The <see cref="MoverResourceSetPatch"/> to use. </param>
@@ -292,6 +316,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Prepare</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,6 +356,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Prepare</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -362,6 +394,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_InitiateMove</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -398,6 +434,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_InitiateMove</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -432,6 +472,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Commit</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,6 +512,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Commit</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -502,6 +550,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Discard</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,6 +590,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Discard</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -573,6 +629,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ResolveDependencies</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -607,6 +667,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ResolveDependencies</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -640,6 +704,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_BulkRemove</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -676,6 +744,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_BulkRemove</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -711,6 +783,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ListRequiredFor</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceId"> The sourceId for which the api is invoked. </param>
@@ -744,6 +820,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ListRequiredFor</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Migrate/moveCollections</description>
         /// </item>
         /// </list>
         /// </summary>

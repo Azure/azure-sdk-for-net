@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/usages</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -87,6 +91,10 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/usages</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,6 +133,10 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotas</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -153,6 +165,10 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotas</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,6 +207,10 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -214,6 +234,10 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QuotaRequestStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Quota/quotaRequests</description>
         /// </item>
         /// </list>
         /// </summary>
