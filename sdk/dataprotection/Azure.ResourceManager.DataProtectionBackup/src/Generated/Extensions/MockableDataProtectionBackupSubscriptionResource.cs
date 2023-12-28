@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupVaults_GetInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataProtection/backupVaults</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupVaults_GetInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataProtection/backupVaults</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,6 +186,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetResourcesInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataProtection/resourceGuards</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,6 +211,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetResourcesInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataProtection/resourceGuards</description>
         /// </item>
         /// </list>
         /// </summary>

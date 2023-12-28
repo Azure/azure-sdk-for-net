@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Datadog/monitors/singleSignOnConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +137,10 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Datadog/monitors/singleSignOnConfigurations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +172,10 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Datadog/monitors/singleSignOnConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +214,10 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Datadog/monitors/singleSignOnConfigurations</description>
         /// </item>
         /// </list>
         /// </summary>

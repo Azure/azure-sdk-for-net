@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/serverGroupsv2</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +82,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/serverGroupsv2</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -99,6 +107,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/serverGroupsv2</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +145,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DBforPostgreSQL/serverGroupsv2</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerInstance/containerGroups</description>
         /// </item>
         /// </list>
         /// </summary>

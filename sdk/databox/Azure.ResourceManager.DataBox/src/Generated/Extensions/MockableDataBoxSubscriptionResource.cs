@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBox/jobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBox/jobs</description>
         /// </item>
         /// </list>
         /// </summary>

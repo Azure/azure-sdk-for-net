@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Datadog/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Datadog/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

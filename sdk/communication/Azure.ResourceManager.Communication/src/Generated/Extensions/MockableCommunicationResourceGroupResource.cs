@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/communicationServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/communicationServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>EmailServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/emailServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/emailServices</description>
         /// </item>
         /// </list>
         /// </summary>

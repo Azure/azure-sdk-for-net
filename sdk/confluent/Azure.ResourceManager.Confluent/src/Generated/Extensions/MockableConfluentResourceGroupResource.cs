@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Confluent/organizations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
@@ -83,6 +87,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Confluent/organizations</description>
         /// </item>
         /// </list>
         /// </summary>

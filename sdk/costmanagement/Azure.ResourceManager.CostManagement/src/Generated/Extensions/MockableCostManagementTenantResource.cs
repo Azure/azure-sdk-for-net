@@ -115,6 +115,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Views_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/views</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="viewName"> View name. </param>
@@ -137,6 +141,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Views_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/views</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +176,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Scheduled action name. </param>
@@ -190,6 +202,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -958,6 +974,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_ListExternal</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/alerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -984,6 +1004,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_ListExternal</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/alerts</description>
         /// </item>
         /// </list>
         /// </summary>

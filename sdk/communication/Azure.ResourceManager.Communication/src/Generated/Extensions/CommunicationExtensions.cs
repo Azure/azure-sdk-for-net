@@ -177,6 +177,10 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/communicationServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -206,6 +210,10 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/communicationServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -254,6 +262,10 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>EmailServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/emailServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -283,6 +295,10 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/emailServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -314,6 +330,10 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/communicationServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -341,6 +361,10 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/communicationServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -370,6 +394,10 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/communicationServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -397,6 +425,10 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/communicationServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -426,6 +458,10 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/emailServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -453,6 +489,10 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/emailServices</description>
         /// </item>
         /// </list>
         /// <item>
@@ -482,6 +522,10 @@ namespace Azure.ResourceManager.Communication
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListVerifiedExchangeOnlineDomains</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/emailServices</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -509,6 +553,10 @@ namespace Azure.ResourceManager.Communication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailServices_ListVerifiedExchangeOnlineDomains</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Communication/emailServices</description>
         /// </item>
         /// </list>
         /// <item>

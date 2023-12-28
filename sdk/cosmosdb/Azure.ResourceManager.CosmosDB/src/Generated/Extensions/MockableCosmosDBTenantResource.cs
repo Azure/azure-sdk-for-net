@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_CheckNameExists</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DocumentDB/databaseAccounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -88,6 +92,10 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DocumentDB/databaseAccounts</description>
         /// </item>
         /// </list>
         /// </summary>

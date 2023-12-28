@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/sqlMigrationServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,6 +93,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/sqlMigrationServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,6 +164,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,6 +190,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,6 +215,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/services</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,6 +254,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/services</description>
         /// </item>
         /// </list>
         /// </summary>

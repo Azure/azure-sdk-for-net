@@ -140,6 +140,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/integrationRuntimes</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationRuntimeName"> The integration runtime name. </param>
@@ -163,6 +167,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/integrationRuntimes</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +203,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>LinkedServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/linkedservices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedServiceName"> The linked service name. </param>
@@ -218,6 +230,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LinkedServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/linkedservices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,6 +266,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Datasets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/datasets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
@@ -273,6 +293,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datasets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/datasets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +329,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Pipelines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/pipelines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
@@ -328,6 +356,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pipelines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/pipelines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,6 +392,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The trigger name. </param>
@@ -383,6 +419,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -415,6 +455,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/dataflows</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
@@ -438,6 +482,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataFlows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/dataflows</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,6 +518,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedVirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/managedVirtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
@@ -493,6 +545,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedVirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/managedVirtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -525,6 +581,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>CredentialOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/credentials</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialName"> Credential name. </param>
@@ -548,6 +608,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CredentialOperations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/credentials</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -580,6 +644,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/privateEndpointConnections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
@@ -603,6 +671,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/privateEndpointConnections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -635,6 +707,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>GlobalParameters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/globalParameters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="globalParameterName"> The global parameter name. </param>
@@ -657,6 +733,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GlobalParameters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/globalParameters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -688,6 +768,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/adfcdcs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="changeDataCaptureName"> The change data capture name. </param>
@@ -712,6 +796,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/adfcdcs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="changeDataCaptureName"> The change data capture name. </param>
@@ -735,6 +823,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -769,6 +861,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -801,6 +897,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -836,6 +936,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -869,6 +973,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -904,6 +1012,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The parameters for updating a factory. </param>
@@ -937,6 +1049,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_GetGitHubAccessToken</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -972,6 +1088,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_GetGitHubAccessToken</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Get GitHub access token request definition. </param>
@@ -1006,6 +1126,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_GetDataPlaneAccess</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policy"> Data Plane user access policy definition. </param>
@@ -1039,6 +1163,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_GetDataPlaneAccess</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1458,6 +1586,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/triggers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters to filter the triggers. </param>
@@ -1482,6 +1614,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_QueryByFactory</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories/triggers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1932,6 +2068,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1985,6 +2125,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2040,6 +2184,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2089,6 +2237,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2137,6 +2289,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2189,6 +2345,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>

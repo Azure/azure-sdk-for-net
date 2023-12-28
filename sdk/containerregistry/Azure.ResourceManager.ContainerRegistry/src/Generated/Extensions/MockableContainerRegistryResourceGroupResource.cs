@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerRegistry/registries</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerRegistry/registries</description>
         /// </item>
         /// </list>
         /// </summary>

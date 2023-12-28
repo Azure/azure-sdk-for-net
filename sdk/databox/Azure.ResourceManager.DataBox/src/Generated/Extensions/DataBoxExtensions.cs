@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.DataBox
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBox/jobs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -112,6 +116,10 @@ namespace Azure.ResourceManager.DataBox
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBox/jobs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -320,6 +328,10 @@ namespace Azure.ResourceManager.DataBox
         /// <term>Operation Id</term>
         /// <description>Jobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBox/jobs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -348,6 +360,10 @@ namespace Azure.ResourceManager.DataBox
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBox/jobs</description>
         /// </item>
         /// </list>
         /// <item>

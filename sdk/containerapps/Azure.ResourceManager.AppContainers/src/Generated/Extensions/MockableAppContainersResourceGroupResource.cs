@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/connectedEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectedEnvironmentName"> Name of the connectedEnvironment. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/connectedEnvironments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/containerApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerAppName"> Name of the Container App. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/containerApps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/managedEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentName"> Name of the Environment. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/managedEnvironments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +237,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/jobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> Job Name. </param>
@@ -235,6 +263,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/jobs</description>
         /// </item>
         /// </list>
         /// </summary>

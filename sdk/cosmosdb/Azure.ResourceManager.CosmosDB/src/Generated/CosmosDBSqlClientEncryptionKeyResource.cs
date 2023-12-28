@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetClientEncryptionKey</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetClientEncryptionKey</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,6 +174,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlResources_CreateUpdateClientEncryptionKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +216,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlResources_CreateUpdateClientEncryptionKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_GetDiagnosticRemoteSupportSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticRemoteSupportSettings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_GetDiagnosticRemoteSupportSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticRemoteSupportSettings</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +171,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_UpdateDiagnosticRemoteSupportSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticRemoteSupportSettings</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +213,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettings_UpdateDiagnosticRemoteSupportSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/diagnosticRemoteSupportSettings</description>
         /// </item>
         /// </list>
         /// </summary>

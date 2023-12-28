@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataLakeAnalytics/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataLakeAnalytics/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -109,6 +117,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataLakeAnalytics/accounts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +156,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataLakeAnalytics/accounts</description>
         /// </item>
         /// </list>
         /// </summary>

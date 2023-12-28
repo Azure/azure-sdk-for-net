@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Confluent/organizations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +115,10 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Confluent/organizations</description>
         /// </item>
         /// </list>
         /// <item>
@@ -314,6 +322,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Confluent/organizations</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -341,6 +353,10 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Confluent/organizations</description>
         /// </item>
         /// </list>
         /// <item>

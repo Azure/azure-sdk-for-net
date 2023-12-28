@@ -151,6 +151,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineExtensionImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/publishers/artifacttypes/types/versions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of a supported Azure region. </param>
@@ -176,6 +180,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineExtensionImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/publishers/artifacttypes/types/versions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +219,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>SharedGalleries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/sharedGalleries</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -234,6 +246,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/sharedGalleries</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +282,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunityGalleries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/communityGalleries</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Resource location. </param>
@@ -289,6 +309,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/communityGalleries</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,6 +346,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/cloudServiceOsVersions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Name of the location that the OS versions pertain to. </param>
@@ -345,6 +373,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/cloudServiceOsVersions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +410,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/cloudServiceOsFamilies</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Name of the location that the OS families pertain to. </param>
@@ -401,6 +437,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceOperatingSystems_GetOSFamily</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/locations/cloudServiceOsFamilies</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -516,6 +556,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachineScaleSets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which VM scale sets under the subscription are queried. </param>
@@ -538,6 +582,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachineScaleSets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -562,6 +610,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachineScaleSets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -584,6 +636,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSets_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachineScaleSets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -605,6 +661,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -629,6 +689,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachines</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which virtual machines under the subscription are queried. </param>
@@ -651,6 +715,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -676,6 +744,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachines</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1338,6 +1410,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/availabilitySets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. Allowed values are 'instanceView'. </param>
@@ -1360,6 +1436,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/availabilitySets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1384,6 +1464,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>ProximityPlacementGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/proximityPlacementGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1405,6 +1489,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProximityPlacementGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/proximityPlacementGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1428,6 +1516,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DedicatedHostGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/hostGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1449,6 +1541,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHostGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/hostGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1472,6 +1568,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>SshPublicKeys_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/sshPublicKeys</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1493,6 +1593,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SshPublicKeys_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/sshPublicKeys</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1516,6 +1620,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Images_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/images</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1537,6 +1645,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/images</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1560,6 +1672,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>RestorePointCollections_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/restorePointCollections</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1581,6 +1697,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorePointCollections_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/restorePointCollections</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1604,6 +1724,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/capacityReservationGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
@@ -1626,6 +1750,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/capacityReservationGroups</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1806,6 +1934,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineRunCommands_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachines/runCommands</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
@@ -1829,6 +1961,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineRunCommands_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachines/runCommands</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
@@ -1851,6 +1987,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineRunCommands_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachines/runCommands</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1888,6 +2028,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineRunCommands_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/virtualMachines/runCommands</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which run commands is queried. </param>
@@ -1924,6 +2068,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Disks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/disks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1945,6 +2093,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Disks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/disks</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1968,6 +2120,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DiskAccesses_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/diskAccesses</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1989,6 +2145,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskAccesses_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/diskAccesses</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2012,6 +2172,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>DiskEncryptionSets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/diskEncryptionSets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2033,6 +2197,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskEncryptionSets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/diskEncryptionSets</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2056,6 +2224,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2077,6 +2249,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2148,6 +2324,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>Galleries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/galleries</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2169,6 +2349,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Galleries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/galleries</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2192,6 +2376,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudServices_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/cloudServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2213,6 +2401,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServices_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Compute/cloudServices</description>
         /// </item>
         /// </list>
         /// </summary>

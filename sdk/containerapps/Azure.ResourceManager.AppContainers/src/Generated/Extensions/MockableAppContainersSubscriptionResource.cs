@@ -164,6 +164,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/connectedEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,6 +189,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/connectedEnvironments</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +216,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/containerApps</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -229,6 +241,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerApps_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/containerApps</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,6 +268,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/jobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -273,6 +293,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/jobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +320,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/managedEnvironments</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,6 +345,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.App/managedEnvironments</description>
         /// </item>
         /// </list>
         /// </summary>

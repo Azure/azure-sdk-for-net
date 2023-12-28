@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Exports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/exports</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -108,6 +112,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Exports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/exports</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +150,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Views_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/views</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -165,6 +177,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Views_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/views</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +214,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/alerts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -220,6 +240,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/alerts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,6 +276,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -275,6 +303,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
         /// </item>
         /// </list>
         /// </summary>

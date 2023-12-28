@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +115,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerInstance/containerGroups</description>
         /// </item>
         /// </list>
         /// <item>
@@ -204,6 +212,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -231,6 +243,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerInstance/containerGroups</description>
         /// </item>
         /// </list>
         /// <item>

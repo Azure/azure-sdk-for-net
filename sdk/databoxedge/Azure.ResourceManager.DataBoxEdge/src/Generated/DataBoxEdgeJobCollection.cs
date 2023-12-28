@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The job name. </param>
@@ -97,6 +101,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +143,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The job name. </param>
@@ -170,6 +182,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The job name. </param>
@@ -204,6 +220,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +261,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices/jobs</description>
         /// </item>
         /// </list>
         /// </summary>

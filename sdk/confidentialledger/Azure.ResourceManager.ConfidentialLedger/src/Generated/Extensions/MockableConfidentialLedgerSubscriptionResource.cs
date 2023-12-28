@@ -132,6 +132,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>Ledger_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
@@ -154,6 +158,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/ledgers</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,6 +186,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/managedCCFs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
@@ -200,6 +212,10 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/managedCCFs</description>
         /// </item>
         /// </list>
         /// </summary>

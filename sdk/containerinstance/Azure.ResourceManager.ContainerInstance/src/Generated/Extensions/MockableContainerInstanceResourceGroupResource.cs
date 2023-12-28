@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerInstance/containerGroups</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -83,6 +87,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerInstance/containerGroups</description>
         /// </item>
         /// </list>
         /// </summary>

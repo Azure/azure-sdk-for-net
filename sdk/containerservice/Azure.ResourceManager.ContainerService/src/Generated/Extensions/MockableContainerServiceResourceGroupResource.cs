@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/managedClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/managedClusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
@@ -129,6 +141,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterSnapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/managedclustersnapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
@@ -182,6 +202,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterSnapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/managedclustersnapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +237,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
@@ -235,6 +263,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// </summary>

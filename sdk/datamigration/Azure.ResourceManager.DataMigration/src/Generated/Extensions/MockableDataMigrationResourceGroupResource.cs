@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlDb_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/databaseMigrations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlDBInstanceName"> The <see cref="string"/> to use. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlDb_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/databaseMigrations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,6 +121,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlMi_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/databaseMigrations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
@@ -138,6 +150,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlMi_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/databaseMigrations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +188,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlVm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/databaseMigrations</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
@@ -197,6 +217,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlVm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/databaseMigrations</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,6 +255,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/sqlMigrationServices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
@@ -253,6 +281,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/sqlMigrationServices</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +316,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/services</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the service. </param>
@@ -306,6 +342,10 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataMigration/services</description>
         /// </item>
         /// </list>
         /// </summary>

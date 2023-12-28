@@ -166,6 +166,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Datadog/monitors</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,6 +191,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Datadog/monitors</description>
         /// </item>
         /// </list>
         /// </summary>

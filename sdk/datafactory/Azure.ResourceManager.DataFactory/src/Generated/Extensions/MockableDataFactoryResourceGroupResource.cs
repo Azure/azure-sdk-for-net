@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="factoryName"> The factory name. </param>
@@ -77,6 +81,10 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataFactory/factories</description>
         /// </item>
         /// </list>
         /// </summary>

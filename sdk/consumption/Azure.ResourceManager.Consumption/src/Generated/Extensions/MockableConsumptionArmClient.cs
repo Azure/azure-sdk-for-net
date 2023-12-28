@@ -96,6 +96,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <term>Operation Id</term>
         /// <description>Budgets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Consumption/budgets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -119,6 +123,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Budgets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.Consumption/budgets</description>
         /// </item>
         /// </list>
         /// </summary>

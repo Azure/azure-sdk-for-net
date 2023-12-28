@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/managedClusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -91,6 +95,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/managedClusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,6 +122,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/snapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +147,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/snapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,6 +174,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusterSnapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/managedclustersnapshots</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +199,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusterSnapshots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/managedclustersnapshots</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,6 +272,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>Fleets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,6 +297,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/fleets</description>
         /// </item>
         /// </list>
         /// </summary>

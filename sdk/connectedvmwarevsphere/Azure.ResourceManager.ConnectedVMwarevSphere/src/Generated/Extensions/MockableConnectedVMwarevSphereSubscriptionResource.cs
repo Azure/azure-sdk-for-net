@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourcePools_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/resourcePools</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,6 +102,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourcePools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/resourcePools</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +129,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/clusters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,6 +154,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/clusters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +181,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Hosts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/hosts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,6 +206,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hosts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/hosts</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +233,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/datastores</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,6 +258,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/datastores</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,6 +285,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VCenters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/vcenters</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,6 +310,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VCenters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/vcenters</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +337,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,6 +362,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,6 +389,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,6 +414,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualNetworks</description>
         /// </item>
         /// </list>
         /// </summary>

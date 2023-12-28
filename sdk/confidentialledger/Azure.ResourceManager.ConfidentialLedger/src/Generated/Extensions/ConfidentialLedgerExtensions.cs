@@ -101,6 +101,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>Ledger_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +134,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Ledger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/ledgers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -178,6 +186,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/managedCCFs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -207,6 +219,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/managedCCFs</description>
         /// </item>
         /// </list>
         /// <item>
@@ -294,6 +310,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>Ledger_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -322,6 +342,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/ledgers</description>
         /// </item>
         /// </list>
         /// <item>
@@ -352,6 +376,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/managedCCFs</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -380,6 +408,10 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConfidentialLedger/managedCCFs</description>
         /// </item>
         /// </list>
         /// <item>

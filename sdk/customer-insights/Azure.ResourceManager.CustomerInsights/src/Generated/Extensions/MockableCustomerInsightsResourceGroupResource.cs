@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Hubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CustomerInsights/hubs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hubName"> The name of the hub. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CustomerInsights/hubs</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>VmInstanceHybridIdentityMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/hybridIdentityMetadata</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +133,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VmInstanceHybridIdentityMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/hybridIdentityMetadata</description>
         /// </item>
         /// </list>
         /// </summary>

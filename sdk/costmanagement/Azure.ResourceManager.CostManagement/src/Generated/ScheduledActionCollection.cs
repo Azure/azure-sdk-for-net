@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CreateOrUpdateByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -95,6 +99,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CreateOrUpdateByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +146,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Scheduled action name. </param>
@@ -174,6 +186,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,6 +228,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ListByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
@@ -235,6 +255,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_ListByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
@@ -257,6 +281,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,6 +321,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Scheduled action name. </param>
@@ -327,6 +359,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,6 +400,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.CostManagement/scheduledActions</description>
         /// </item>
         /// </list>
         /// </summary>

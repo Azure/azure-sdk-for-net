@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deviceName"> The device name. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBoxEdge/dataBoxEdgeDevices</description>
         /// </item>
         /// </list>
         /// </summary>

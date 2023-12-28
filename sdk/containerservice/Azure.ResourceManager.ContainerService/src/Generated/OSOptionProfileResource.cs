@@ -100,6 +100,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetOSOptions</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/locations/osOptions</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
@@ -132,6 +136,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetOSOptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ContainerService/locations/osOptions</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -289,6 +289,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>ResourcePools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/resourcePools</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -318,6 +322,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourcePools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/resourcePools</description>
         /// </item>
         /// </list>
         /// <item>
@@ -366,6 +374,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/clusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -395,6 +407,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/clusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -443,6 +459,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Hosts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/hosts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -472,6 +492,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/hosts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -520,6 +544,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/datastores</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -549,6 +577,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/datastores</description>
         /// </item>
         /// </list>
         /// <item>
@@ -597,6 +629,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>VCenters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/vcenters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -626,6 +662,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VCenters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/vcenters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -674,6 +714,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -703,6 +747,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -751,6 +799,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -780,6 +832,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualNetworks</description>
         /// </item>
         /// </list>
         /// <item>
@@ -811,6 +867,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>ResourcePools_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/resourcePools</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -838,6 +898,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourcePools_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/resourcePools</description>
         /// </item>
         /// </list>
         /// <item>
@@ -867,6 +931,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/clusters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -894,6 +962,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/clusters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -923,6 +995,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Hosts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/hosts</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -950,6 +1026,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Hosts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/hosts</description>
         /// </item>
         /// </list>
         /// <item>
@@ -979,6 +1059,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/datastores</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1006,6 +1090,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/datastores</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1035,6 +1123,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>VCenters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/vcenters</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1062,6 +1154,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VCenters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/vcenters</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1091,6 +1187,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1118,6 +1218,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineTemplates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1147,6 +1251,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualNetworks</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1174,6 +1282,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.ConnectedVMwarevSphere/virtualNetworks</description>
         /// </item>
         /// </list>
         /// <item>

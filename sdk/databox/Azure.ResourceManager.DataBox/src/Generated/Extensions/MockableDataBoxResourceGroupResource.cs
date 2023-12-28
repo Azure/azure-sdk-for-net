@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBox/jobs</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataBox/jobs</description>
         /// </item>
         /// </list>
         /// </summary>

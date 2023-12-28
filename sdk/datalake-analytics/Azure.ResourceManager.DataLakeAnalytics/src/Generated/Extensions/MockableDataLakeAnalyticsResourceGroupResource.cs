@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataLakeAnalytics/accounts</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Data Lake Analytics account. </param>
@@ -76,6 +80,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// <description>Microsoft.DataLakeAnalytics/accounts</description>
         /// </item>
         /// </list>
         /// </summary>
