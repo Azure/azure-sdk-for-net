@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataShare
     /// Please note <see cref="DataShareTriggerData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ScheduledTrigger"/>.
     /// </summary>
-    public partial class DataShareTriggerData : ResourceData
+    public abstract partial class DataShareTriggerData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="DataShareTriggerData"/>. </summary>
-        public DataShareTriggerData()
+        protected DataShareTriggerData()
         {
         }
 
