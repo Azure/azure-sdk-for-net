@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
+            return new SynapseIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeAuthKeys"/>. </summary>
@@ -1714,7 +1714,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDatabaseData"/> instance for mocking. </returns>
         public static SynapseDatabaseData SynapseDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
-            return new UnknownDatabase(id, name, resourceType, systemData, location, kind);
+            return new SynapseDatabaseData(id, name, resourceType, systemData, location, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDataConnectionData"/>. </summary>
@@ -1727,7 +1727,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDataConnectionData"/> instance for mocking. </returns>
         public static SynapseDataConnectionData SynapseDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
-            return new UnknownDataConnection(id, name, resourceType, systemData, location, kind);
+            return new SynapseDataConnectionData(id, name, resourceType, systemData, location, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SynapseDataConnectionValidationListResult"/>. </summary>

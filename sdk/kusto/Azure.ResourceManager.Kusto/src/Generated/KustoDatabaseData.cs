@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Kusto
     /// Please note <see cref="KustoDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="KustoReadOnlyFollowingDatabase"/> and <see cref="KustoReadWriteDatabase"/>.
     /// </summary>
-    public abstract partial class KustoDatabaseData : ResourceData
+    public partial class KustoDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="KustoDatabaseData"/>. </summary>
-        protected KustoDatabaseData()
+        public KustoDatabaseData()
         {
         }
 

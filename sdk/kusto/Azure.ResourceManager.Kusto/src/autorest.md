@@ -262,6 +262,10 @@ acronym-mapping:
   Etag: ETag|etag
   Db: DB
 
+suppress-abstract-base-class:
+- KustoDatabaseData
+- KustoDataConnectionData
+
 directive:
   - from: kusto.json
     where: $
