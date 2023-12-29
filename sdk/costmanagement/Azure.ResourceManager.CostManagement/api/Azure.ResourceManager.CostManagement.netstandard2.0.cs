@@ -642,9 +642,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties Properties { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.OperationStatusType? Status { get { throw null; } }
     }
-    public partial class BenefitUtilizationSummary : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class BenefitUtilizationSummary : Azure.ResourceManager.Models.ResourceData
     {
-        public BenefitUtilizationSummary() { }
+        protected BenefitUtilizationSummary() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BenefitUtilizationSummaryReportSchema : System.IEquatable<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema>

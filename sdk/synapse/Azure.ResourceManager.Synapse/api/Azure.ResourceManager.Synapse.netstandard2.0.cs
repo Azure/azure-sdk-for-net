@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseDatabaseData : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class SynapseDatabaseData : Azure.ResourceManager.Models.ResourceData
     {
-        public SynapseDatabaseData() { }
+        protected SynapseDatabaseData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
     }
     public partial class SynapseDatabasePrincipalAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDatabasePrincipalAssignmentResource>, System.Collections.IEnumerable
@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.Synapse
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Synapse.SynapseDataConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.SynapseDataConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SynapseDataConnectionData : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class SynapseDataConnectionData : Azure.ResourceManager.Models.ResourceData
     {
-        public SynapseDataConnectionData() { }
+        protected SynapseDataConnectionData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
     }
     public partial class SynapseDataConnectionResource : Azure.ResourceManager.ArmResource
@@ -3632,9 +3632,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate? AutoUpdate { get { throw null; } set { } }
         public string UpdateDelayOffset { get { throw null; } set { } }
     }
-    public partial class SynapseIntegrationRuntimeProperties
+    public abstract partial class SynapseIntegrationRuntimeProperties
     {
-        public SynapseIntegrationRuntimeProperties() { }
+        protected SynapseIntegrationRuntimeProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string Description { get { throw null; } set { } }
     }
@@ -3704,9 +3704,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeStatus
+    public abstract partial class SynapseIntegrationRuntimeStatus
     {
-        internal SynapseIntegrationRuntimeStatus() { }
+        protected SynapseIntegrationRuntimeStatus() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string DataFactoryName { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState? State { get { throw null; } }

@@ -4372,9 +4372,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         protected MachineLearningDatastoreCredentials() { }
     }
-    public partial class MachineLearningDatastoreProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceBase
+    public abstract partial class MachineLearningDatastoreProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceBase
     {
-        public MachineLearningDatastoreProperties(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials credentials) { }
+        protected MachineLearningDatastoreProperties(Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials credentials) { }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningDatastoreCredentials Credentials { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.IntellectualProperty IntellectualProperty { get { throw null; } set { } }
         public bool? IsDefault { get { throw null; } }
@@ -4412,9 +4412,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Tags { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
     }
-    public partial class MachineLearningDataVersionProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningAssetBase
+    public abstract partial class MachineLearningDataVersionProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningAssetBase
     {
-        public MachineLearningDataVersionProperties(System.Uri dataUri) { }
+        protected MachineLearningDataVersionProperties(System.Uri dataUri) { }
         public System.Uri DataUri { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.IntellectualProperty IntellectualProperty { get { throw null; } set { } }
         public string Stage { get { throw null; } set { } }
@@ -5099,9 +5099,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningJobPatch() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.MachineLearning.Models.MachineLearningWebhook> NotificationSettingWebhooks { get { throw null; } set { } }
     }
-    public partial class MachineLearningJobProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceBase
+    public abstract partial class MachineLearningJobProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceBase
     {
-        public MachineLearningJobProperties() { }
+        protected MachineLearningJobProperties() { }
         public Azure.Core.ResourceIdentifier ComponentId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ComputeId { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -5461,9 +5461,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningOnlineDeploymentPatch() { }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningSkuPatch Sku { get { throw null; } set { } }
     }
-    public partial class MachineLearningOnlineDeploymentProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointDeploymentProperties
+    public abstract partial class MachineLearningOnlineDeploymentProperties : Azure.ResourceManager.MachineLearning.Models.MachineLearningEndpointDeploymentProperties
     {
-        public MachineLearningOnlineDeploymentProperties() { }
+        protected MachineLearningOnlineDeploymentProperties() { }
         public bool? AppInsightsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.DataCollector DataCollector { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningEgressPublicNetworkAccessType? EgressPublicNetworkAccess { get { throw null; } set { } }

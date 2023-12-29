@@ -798,9 +798,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         protected ManagedServicePlacementPolicy() { }
     }
-    public partial class ManagedServiceProperties : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties
+    public abstract partial class ManagedServiceProperties : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceBaseProperties
     {
-        public ManagedServiceProperties(string serviceTypeName, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme partitionDescription) { }
+        protected ManagedServiceProperties(string serviceTypeName, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme partitionDescription) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme PartitionDescription { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string ServiceDnsName { get { throw null; } set { } }
