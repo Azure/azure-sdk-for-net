@@ -4169,22 +4169,14 @@
        "$id": "519",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
-       "Description": "",
+       "Description": "The API version to use for this operation.",
        "Type": {
         "$id": "520",
-        "Name": "String",
+        "Name": "string",
         "Kind": "String",
         "IsNullable": false
        },
        "Location": "Query",
-       "IsRequired": true,
-       "IsApiVersion": true,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "IsResourceParameter": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Client",
        "DefaultValue": {
         "$id": "521",
         "Type": {
@@ -4194,7 +4186,15 @@
          "IsNullable": false
         },
         "Value": "2023-11-01"
-       }
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
        "$id": "523",
@@ -4443,15 +4443,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "548",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "549",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "548",
+       "$id": "550",
        "Name": "distributionPolicyId",
        "NameInRequest": "distributionPolicyId",
        "Description": "Id of a distribution policy.",
        "Type": {
-        "$id": "549",
+        "$id": "551",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4467,11 +4488,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "550",
+       "$id": "552",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "551",
+        "$id": "553",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4486,9 +4507,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "552",
+        "$id": "554",
         "Type": {
-         "$ref": "551"
+         "$ref": "553"
         },
         "Value": "application/json"
        }
@@ -4496,7 +4517,7 @@
      ],
      "Responses": [
       {
-       "$id": "553",
+       "$id": "555",
        "StatusCodes": [
         200
        ],
@@ -4506,24 +4527,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "554",
+         "$id": "556",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "555",
+          "$id": "557",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "556",
+         "$id": "558",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "557",
+          "$id": "559",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -4545,7 +4566,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "558",
+     "$id": "560",
      "Name": "listDistributionPolicies",
      "ResourceName": "DistributionPolicy",
      "Summary": "Retrieves existing distribution policies.",
@@ -4556,15 +4577,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "561",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "562",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "559",
+       "$id": "563",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "560",
+        "$id": "564",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -4580,11 +4622,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "561",
+       "$id": "565",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "562",
+        "$id": "566",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4599,9 +4641,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "563",
+        "$id": "567",
         "Type": {
-         "$ref": "562"
+         "$ref": "566"
         },
         "Value": "application/json"
        }
@@ -4609,7 +4651,7 @@
      ],
      "Responses": [
       {
-       "$id": "564",
+       "$id": "568",
        "StatusCodes": [
         200
        ],
@@ -4630,7 +4672,7 @@
      "Path": "/routing/distributionPolicies",
      "BufferResponse": true,
      "Paging": {
-      "$id": "565",
+      "$id": "569",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -4638,7 +4680,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "566",
+     "$id": "570",
      "Name": "deleteDistributionPolicy",
      "ResourceName": "DistributionPolicy",
      "Summary": "Delete a distribution policy by Id.",
@@ -4648,15 +4690,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "571",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "572",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "567",
+       "$id": "573",
        "Name": "distributionPolicyId",
        "NameInRequest": "distributionPolicyId",
        "Description": "Id of a distribution policy.",
        "Type": {
-        "$id": "568",
+        "$id": "574",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4672,11 +4735,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "569",
+       "$id": "575",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "570",
+        "$id": "576",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4691,9 +4754,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "571",
+        "$id": "577",
         "Type": {
-         "$ref": "570"
+         "$ref": "576"
         },
         "Value": "application/json"
        }
@@ -4701,7 +4764,7 @@
      ],
      "Responses": [
       {
-       "$id": "572",
+       "$id": "578",
        "StatusCodes": [
         204
        ],
@@ -4719,7 +4782,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "573",
+     "$id": "579",
      "Name": "upsertClassificationPolicy",
      "ResourceName": "ClassificationPolicy",
      "Summary": "Creates or updates a classification policy.",
@@ -4730,15 +4793,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "580",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "581",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "574",
+       "$id": "582",
        "Name": "classificationPolicyId",
        "NameInRequest": "classificationPolicyId",
        "Description": "Id of a classification policy.",
        "Type": {
-        "$id": "575",
+        "$id": "583",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4754,15 +4838,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "576",
+       "$id": "584",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "577",
+        "$id": "585",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "578",
+         "$id": "586",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -4772,9 +4856,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "579",
+        "$id": "587",
         "Type": {
-         "$ref": "577"
+         "$ref": "585"
         },
         "Value": "application/merge-patch+json"
        },
@@ -4788,12 +4872,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "580",
+       "$id": "588",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "581",
+        "$id": "589",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -4809,12 +4893,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "582",
+       "$id": "590",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "583",
+        "$id": "591",
         "Name": "utcDateTime",
         "Kind": "DateTimeRFC7231",
         "IsNullable": false
@@ -4830,7 +4914,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "584",
+       "$id": "592",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -4848,11 +4932,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "585",
+       "$id": "593",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "586",
+        "$id": "594",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -4867,9 +4951,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "587",
+        "$id": "595",
         "Type": {
-         "$ref": "586"
+         "$ref": "594"
         },
         "Value": "application/json"
        }
@@ -4877,7 +4961,7 @@
      ],
      "Responses": [
       {
-       "$id": "588",
+       "$id": "596",
        "StatusCodes": [
         201
        ],
@@ -4887,24 +4971,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "589",
+         "$id": "597",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "590",
+          "$id": "598",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "591",
+         "$id": "599",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "592",
+          "$id": "600",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -4917,7 +5001,7 @@
        ]
       },
       {
-       "$id": "593",
+       "$id": "601",
        "StatusCodes": [
         200
        ],
@@ -4927,24 +5011,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "594",
+         "$id": "602",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "595",
+          "$id": "603",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "596",
+         "$id": "604",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "597",
+          "$id": "605",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -4969,7 +5053,7 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "598",
+     "$id": "606",
      "Name": "getClassificationPolicy",
      "ResourceName": "ClassificationPolicy",
      "Summary": "Retrieves an existing classification policy by Id.",
@@ -4979,15 +5063,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "607",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "608",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "599",
+       "$id": "609",
        "Name": "classificationPolicyId",
        "NameInRequest": "classificationPolicyId",
        "Description": "Id of a classification policy.",
        "Type": {
-        "$id": "600",
+        "$id": "610",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5003,11 +5108,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "601",
+       "$id": "611",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "602",
+        "$id": "612",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5022,9 +5127,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "603",
+        "$id": "613",
         "Type": {
-         "$ref": "602"
+         "$ref": "612"
         },
         "Value": "application/json"
        }
@@ -5032,7 +5137,7 @@
      ],
      "Responses": [
       {
-       "$id": "604",
+       "$id": "614",
        "StatusCodes": [
         200
        ],
@@ -5042,24 +5147,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "605",
+         "$id": "615",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "606",
+          "$id": "616",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "607",
+         "$id": "617",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "608",
+          "$id": "618",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -5081,7 +5186,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "609",
+     "$id": "619",
      "Name": "listClassificationPolicies",
      "ResourceName": "ClassificationPolicy",
      "Summary": "Retrieves existing classification policies.",
@@ -5092,15 +5197,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "620",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "621",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "610",
+       "$id": "622",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "611",
+        "$id": "623",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -5116,11 +5242,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "612",
+       "$id": "624",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "613",
+        "$id": "625",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5135,9 +5261,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "614",
+        "$id": "626",
         "Type": {
-         "$ref": "613"
+         "$ref": "625"
         },
         "Value": "application/json"
        }
@@ -5145,7 +5271,7 @@
      ],
      "Responses": [
       {
-       "$id": "615",
+       "$id": "627",
        "StatusCodes": [
         200
        ],
@@ -5166,7 +5292,7 @@
      "Path": "/routing/classificationPolicies",
      "BufferResponse": true,
      "Paging": {
-      "$id": "616",
+      "$id": "628",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -5174,7 +5300,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "617",
+     "$id": "629",
      "Name": "deleteClassificationPolicy",
      "ResourceName": "ClassificationPolicy",
      "Summary": "Delete a classification policy by Id.",
@@ -5184,15 +5310,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "630",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "631",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "618",
+       "$id": "632",
        "Name": "classificationPolicyId",
        "NameInRequest": "classificationPolicyId",
        "Description": "Id of a classification policy.",
        "Type": {
-        "$id": "619",
+        "$id": "633",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5208,11 +5355,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "620",
+       "$id": "634",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "621",
+        "$id": "635",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5227,9 +5374,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "622",
+        "$id": "636",
         "Type": {
-         "$ref": "621"
+         "$ref": "635"
         },
         "Value": "application/json"
        }
@@ -5237,7 +5384,7 @@
      ],
      "Responses": [
       {
-       "$id": "623",
+       "$id": "637",
        "StatusCodes": [
         204
        ],
@@ -5255,7 +5402,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "624",
+     "$id": "638",
      "Name": "upsertExceptionPolicy",
      "ResourceName": "ExceptionPolicy",
      "Summary": "Creates or updates a exception policy.",
@@ -5266,15 +5413,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "639",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "640",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "625",
+       "$id": "641",
        "Name": "exceptionPolicyId",
        "NameInRequest": "exceptionPolicyId",
        "Description": "Id of an exception policy.",
        "Type": {
-        "$id": "626",
+        "$id": "642",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5290,15 +5458,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "627",
+       "$id": "643",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "628",
+        "$id": "644",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "629",
+         "$id": "645",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -5308,9 +5476,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "630",
+        "$id": "646",
         "Type": {
-         "$ref": "628"
+         "$ref": "644"
         },
         "Value": "application/merge-patch+json"
        },
@@ -5324,12 +5492,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "631",
+       "$id": "647",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "632",
+        "$id": "648",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5345,12 +5513,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "633",
+       "$id": "649",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "634",
+        "$id": "650",
         "Name": "utcDateTime",
         "Kind": "DateTimeRFC7231",
         "IsNullable": false
@@ -5366,7 +5534,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "635",
+       "$id": "651",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -5374,161 +5542,6 @@
         "$ref": "137"
        },
        "Location": "Body",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "636",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "637",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "638",
-        "Type": {
-         "$ref": "637"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "639",
-       "StatusCodes": [
-        201
-       ],
-       "BodyType": {
-        "$ref": "137"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [
-        {
-         "$id": "640",
-         "Name": "ETag",
-         "NameInResponse": "etagHeader",
-         "Description": "The entity tag for the response.",
-         "Type": {
-          "$id": "641",
-          "Name": "string",
-          "Kind": "String",
-          "IsNullable": false
-         }
-        },
-        {
-         "$id": "642",
-         "Name": "Last-Modified",
-         "NameInResponse": "lastModifiedTimestamp",
-         "Description": "The last modified timestamp.",
-         "Type": {
-          "$id": "643",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
-          "IsNullable": false
-         }
-        }
-       ],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      },
-      {
-       "$id": "644",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "137"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [
-        {
-         "$id": "645",
-         "Name": "ETag",
-         "NameInResponse": "etagHeader",
-         "Description": "The entity tag for the response.",
-         "Type": {
-          "$id": "646",
-          "Name": "string",
-          "Kind": "String",
-          "IsNullable": false
-         }
-        },
-        {
-         "$id": "647",
-         "Name": "Last-Modified",
-         "NameInResponse": "lastModifiedTimestamp",
-         "Description": "The last modified timestamp.",
-         "Type": {
-          "$id": "648",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
-          "IsNullable": false
-         }
-        }
-       ],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/routing/exceptionPolicies/{exceptionPolicyId}",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false
-    },
-    {
-     "$id": "649",
-     "Name": "getExceptionPolicy",
-     "ResourceName": "ExceptionPolicy",
-     "Summary": "Retrieves an existing exception policy by Id.",
-     "Description": "Retrieves an existing exception policy by Id.",
-     "Parameters": [
-      {
-       "$ref": "517"
-      },
-      {
-       "$ref": "519"
-      },
-      {
-       "$id": "650",
-       "Name": "exceptionPolicyId",
-       "NameInRequest": "exceptionPolicyId",
-       "Description": "Id of an exception policy.",
-       "Type": {
-        "$id": "651",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
        "IsRequired": true,
        "IsApiVersion": false,
        "IsResourceParameter": false,
@@ -5570,7 +5583,7 @@
       {
        "$id": "655",
        "StatusCodes": [
-        200
+        201
        ],
        "BodyType": {
         "$ref": "137"
@@ -5606,6 +5619,182 @@
        "ContentTypes": [
         "application/json"
        ]
+      },
+      {
+       "$id": "660",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "137"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "661",
+         "Name": "ETag",
+         "NameInResponse": "etagHeader",
+         "Description": "The entity tag for the response.",
+         "Type": {
+          "$id": "662",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "663",
+         "Name": "Last-Modified",
+         "NameInResponse": "lastModifiedTimestamp",
+         "Description": "The last modified timestamp.",
+         "Type": {
+          "$id": "664",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/routing/exceptionPolicies/{exceptionPolicyId}",
+     "RequestMediaTypes": [
+      "application/merge-patch+json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "665",
+     "Name": "getExceptionPolicy",
+     "ResourceName": "ExceptionPolicy",
+     "Summary": "Retrieves an existing exception policy by Id.",
+     "Description": "Retrieves an existing exception policy by Id.",
+     "Parameters": [
+      {
+       "$ref": "517"
+      },
+      {
+       "$id": "666",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "667",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "668",
+       "Name": "exceptionPolicyId",
+       "NameInRequest": "exceptionPolicyId",
+       "Description": "Id of an exception policy.",
+       "Type": {
+        "$id": "669",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "670",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "671",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "672",
+        "Type": {
+         "$ref": "671"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "673",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "137"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "674",
+         "Name": "ETag",
+         "NameInResponse": "etagHeader",
+         "Description": "The entity tag for the response.",
+         "Type": {
+          "$id": "675",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "676",
+         "Name": "Last-Modified",
+         "NameInResponse": "lastModifiedTimestamp",
+         "Description": "The last modified timestamp.",
+         "Type": {
+          "$id": "677",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
       }
      ],
      "HttpMethod": "GET",
@@ -5617,7 +5806,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "660",
+     "$id": "678",
      "Name": "listExceptionPolicies",
      "ResourceName": "ExceptionPolicy",
      "Summary": "Retrieves existing exception policies.",
@@ -5628,15 +5817,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "679",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "680",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "661",
+       "$id": "681",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "662",
+        "$id": "682",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -5652,11 +5862,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "663",
+       "$id": "683",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "664",
+        "$id": "684",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5671,9 +5881,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "665",
+        "$id": "685",
         "Type": {
-         "$ref": "664"
+         "$ref": "684"
         },
         "Value": "application/json"
        }
@@ -5681,7 +5891,7 @@
      ],
      "Responses": [
       {
-       "$id": "666",
+       "$id": "686",
        "StatusCodes": [
         200
        ],
@@ -5702,7 +5912,7 @@
      "Path": "/routing/exceptionPolicies",
      "BufferResponse": true,
      "Paging": {
-      "$id": "667",
+      "$id": "687",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -5710,7 +5920,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "668",
+     "$id": "688",
      "Name": "deleteExceptionPolicy",
      "ResourceName": "ExceptionPolicy",
      "Summary": "Deletes a exception policy by Id.",
@@ -5720,15 +5930,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "689",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "690",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "669",
+       "$id": "691",
        "Name": "exceptionPolicyId",
        "NameInRequest": "exceptionPolicyId",
        "Description": "Id of an exception policy.",
        "Type": {
-        "$id": "670",
+        "$id": "692",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5744,11 +5975,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "671",
+       "$id": "693",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "672",
+        "$id": "694",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5763,9 +5994,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "673",
+        "$id": "695",
         "Type": {
-         "$ref": "672"
+         "$ref": "694"
         },
         "Value": "application/json"
        }
@@ -5773,7 +6004,7 @@
      ],
      "Responses": [
       {
-       "$id": "674",
+       "$id": "696",
        "StatusCodes": [
         204
        ],
@@ -5791,7 +6022,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "675",
+     "$id": "697",
      "Name": "upsertQueue",
      "ResourceName": "RouterQueue",
      "Summary": "Creates or updates a queue.",
@@ -5802,15 +6033,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "698",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "699",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "676",
+       "$id": "700",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "Id of a queue.",
        "Type": {
-        "$id": "677",
+        "$id": "701",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5826,15 +6078,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "678",
+       "$id": "702",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "679",
+        "$id": "703",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "680",
+         "$id": "704",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -5844,9 +6096,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "681",
+        "$id": "705",
         "Type": {
-         "$ref": "679"
+         "$ref": "703"
         },
         "Value": "application/merge-patch+json"
        },
@@ -5860,12 +6112,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "682",
+       "$id": "706",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "683",
+        "$id": "707",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -5881,12 +6133,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "684",
+       "$id": "708",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "685",
+        "$id": "709",
         "Name": "utcDateTime",
         "Kind": "DateTimeRFC7231",
         "IsNullable": false
@@ -5902,7 +6154,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "686",
+       "$id": "710",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -5920,11 +6172,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "687",
+       "$id": "711",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "688",
+        "$id": "712",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -5939,9 +6191,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "689",
+        "$id": "713",
         "Type": {
-         "$ref": "688"
+         "$ref": "712"
         },
         "Value": "application/json"
        }
@@ -5949,7 +6201,7 @@
      ],
      "Responses": [
       {
-       "$id": "690",
+       "$id": "714",
        "StatusCodes": [
         201
        ],
@@ -5959,24 +6211,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "691",
+         "$id": "715",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "692",
+          "$id": "716",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "693",
+         "$id": "717",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "694",
+          "$id": "718",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -5989,7 +6241,7 @@
        ]
       },
       {
-       "$id": "695",
+       "$id": "719",
        "StatusCodes": [
         200
        ],
@@ -5999,24 +6251,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "696",
+         "$id": "720",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "697",
+          "$id": "721",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "698",
+         "$id": "722",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "699",
+          "$id": "723",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -6041,7 +6293,7 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "700",
+     "$id": "724",
      "Name": "getQueue",
      "ResourceName": "RouterQueue",
      "Summary": "Retrieves an existing queue by Id.",
@@ -6051,15 +6303,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "725",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "726",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "701",
+       "$id": "727",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "Id of a queue.",
        "Type": {
-        "$id": "702",
+        "$id": "728",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6075,11 +6348,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "703",
+       "$id": "729",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "704",
+        "$id": "730",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6094,9 +6367,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "705",
+        "$id": "731",
         "Type": {
-         "$ref": "704"
+         "$ref": "730"
         },
         "Value": "application/json"
        }
@@ -6104,7 +6377,7 @@
      ],
      "Responses": [
       {
-       "$id": "706",
+       "$id": "732",
        "StatusCodes": [
         200
        ],
@@ -6114,24 +6387,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "707",
+         "$id": "733",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "708",
+          "$id": "734",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "709",
+         "$id": "735",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "710",
+          "$id": "736",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -6153,7 +6426,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "711",
+     "$id": "737",
      "Name": "listQueues",
      "ResourceName": "RouterQueue",
      "Summary": "Retrieves existing queues.",
@@ -6164,15 +6437,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "738",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "739",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "712",
+       "$id": "740",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "713",
+        "$id": "741",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -6188,11 +6482,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "714",
+       "$id": "742",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "715",
+        "$id": "743",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6207,9 +6501,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "716",
+        "$id": "744",
         "Type": {
-         "$ref": "715"
+         "$ref": "743"
         },
         "Value": "application/json"
        }
@@ -6217,7 +6511,7 @@
      ],
      "Responses": [
       {
-       "$id": "717",
+       "$id": "745",
        "StatusCodes": [
         200
        ],
@@ -6238,7 +6532,7 @@
      "Path": "/routing/queues",
      "BufferResponse": true,
      "Paging": {
-      "$id": "718",
+      "$id": "746",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -6246,7 +6540,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "719",
+     "$id": "747",
      "Name": "deleteQueue",
      "ResourceName": "RouterQueue",
      "Summary": "Deletes a queue by Id.",
@@ -6256,15 +6550,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "748",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "749",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "720",
+       "$id": "750",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "Id of a queue.",
        "Type": {
-        "$id": "721",
+        "$id": "751",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6280,11 +6595,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "722",
+       "$id": "752",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "723",
+        "$id": "753",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6299,9 +6614,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "724",
+        "$id": "754",
         "Type": {
-         "$ref": "723"
+         "$ref": "753"
         },
         "Value": "application/json"
        }
@@ -6309,7 +6624,7 @@
      ],
      "Responses": [
       {
-       "$id": "725",
+       "$id": "755",
        "StatusCodes": [
         204
        ],
@@ -6328,17 +6643,17 @@
     }
    ],
    "Protocol": {
-    "$id": "726"
+    "$id": "756"
    },
    "Creatable": true
   },
   {
-   "$id": "727",
+   "$id": "757",
    "Name": "JobRouterClient",
    "Description": "",
    "Operations": [
     {
-     "$id": "728",
+     "$id": "758",
      "Name": "upsertJob",
      "ResourceName": "RouterJob",
      "Summary": "Creates or updates a router job.",
@@ -6349,15 +6664,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "759",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "760",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "729",
+       "$id": "761",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "Id of a job.",
        "Type": {
-        "$id": "730",
+        "$id": "762",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6373,15 +6709,15 @@
        "Kind": "Method"
       },
       {
-       "$id": "731",
+       "$id": "763",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Description": "This request has a JSON Merge Patch body.",
        "Type": {
-        "$id": "732",
+        "$id": "764",
         "Name": "Literal",
         "LiteralValueType": {
-         "$id": "733",
+         "$id": "765",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -6391,9 +6727,9 @@
        },
        "Location": "Header",
        "DefaultValue": {
-        "$id": "734",
+        "$id": "766",
         "Type": {
-         "$ref": "732"
+         "$ref": "764"
         },
         "Value": "application/merge-patch+json"
        },
@@ -6407,12 +6743,12 @@
        "Kind": "Constant"
       },
       {
-       "$id": "735",
+       "$id": "767",
        "Name": "ifMatch",
        "NameInRequest": "If-Match",
        "Description": "The request should only proceed if an entity matches this string.",
        "Type": {
-        "$id": "736",
+        "$id": "768",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6428,12 +6764,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "737",
+       "$id": "769",
        "Name": "ifUnmodifiedSince",
        "NameInRequest": "If-Unmodified-Since",
        "Description": "The request should only proceed if the entity was not modified after this time.",
        "Type": {
-        "$id": "738",
+        "$id": "770",
         "Name": "utcDateTime",
         "Kind": "DateTimeRFC7231",
         "IsNullable": false
@@ -6449,7 +6785,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "739",
+       "$id": "771",
        "Name": "resource",
        "NameInRequest": "resource",
        "Description": "The resource instance.",
@@ -6467,11 +6803,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "740",
+       "$id": "772",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "741",
+        "$id": "773",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6486,9 +6822,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "742",
+        "$id": "774",
         "Type": {
-         "$ref": "741"
+         "$ref": "773"
         },
         "Value": "application/json"
        }
@@ -6496,7 +6832,7 @@
      ],
      "Responses": [
       {
-       "$id": "743",
+       "$id": "775",
        "StatusCodes": [
         201
        ],
@@ -6506,24 +6842,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "744",
+         "$id": "776",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "745",
+          "$id": "777",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "746",
+         "$id": "778",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "747",
+          "$id": "779",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -6536,7 +6872,7 @@
        ]
       },
       {
-       "$id": "748",
+       "$id": "780",
        "StatusCodes": [
         200
        ],
@@ -6546,24 +6882,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "749",
+         "$id": "781",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "750",
+          "$id": "782",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "751",
+         "$id": "783",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "752",
+          "$id": "784",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -6588,7 +6924,7 @@
      "GenerateConvenienceMethod": false
     },
     {
-     "$id": "753",
+     "$id": "785",
      "Name": "getJob",
      "ResourceName": "RouterJob",
      "Summary": "Retrieves an existing job by Id.",
@@ -6598,15 +6934,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "786",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "787",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "754",
+       "$id": "788",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "Id of a job.",
        "Type": {
-        "$id": "755",
+        "$id": "789",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6622,11 +6979,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "756",
+       "$id": "790",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "757",
+        "$id": "791",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6641,9 +6998,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "758",
+        "$id": "792",
         "Type": {
-         "$ref": "757"
+         "$ref": "791"
         },
         "Value": "application/json"
        }
@@ -6651,7 +7008,7 @@
      ],
      "Responses": [
       {
-       "$id": "759",
+       "$id": "793",
        "StatusCodes": [
         200
        ],
@@ -6661,24 +7018,24 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "760",
+         "$id": "794",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "761",
+          "$id": "795",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "762",
+         "$id": "796",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "763",
+          "$id": "797",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -6700,7 +7057,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "764",
+     "$id": "798",
      "Name": "deleteJob",
      "ResourceName": "RouterJob",
      "Summary": "Deletes a job and all of its traces.",
@@ -6710,15 +7067,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "799",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "800",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "765",
+       "$id": "801",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "Id of a job.",
        "Type": {
-        "$id": "766",
+        "$id": "802",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6734,11 +7112,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "767",
+       "$id": "803",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "768",
+        "$id": "804",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6753,9 +7131,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "769",
+        "$id": "805",
         "Type": {
-         "$ref": "768"
+         "$ref": "804"
         },
         "Value": "application/json"
        }
@@ -6763,7 +7141,7 @@
      ],
      "Responses": [
       {
-       "$id": "770",
+       "$id": "806",
        "StatusCodes": [
         204
        ],
@@ -6781,7 +7159,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "771",
+     "$id": "807",
      "Name": "reclassifyJob",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Reclassify a job.",
@@ -6792,15 +7170,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "808",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "809",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "772",
+       "$id": "810",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "Id of a job.",
        "Type": {
-        "$id": "773",
+        "$id": "811",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6816,7 +7215,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "774",
+       "$id": "812",
        "Name": "options",
        "NameInRequest": "options",
        "Description": "Request object for reclassifying a job.",
@@ -6834,11 +7233,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "775",
+       "$id": "813",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "776",
+        "$id": "814",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6853,19 +7252,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "777",
+        "$id": "815",
         "Type": {
-         "$ref": "776"
+         "$ref": "814"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "778",
+       "$id": "816",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "779",
+        "$id": "817",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6880,9 +7279,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "780",
+        "$id": "818",
         "Type": {
-         "$ref": "779"
+         "$ref": "817"
         },
         "Value": "application/json"
        }
@@ -6890,7 +7289,7 @@
      ],
      "Responses": [
       {
-       "$id": "781",
+       "$id": "819",
        "StatusCodes": [
         200
        ],
@@ -6917,7 +7316,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "782",
+     "$id": "820",
      "Name": "cancelJob",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Submits request to cancel an existing job by Id while supplying free-form cancellation reason.",
@@ -6928,15 +7327,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "821",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "822",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "783",
+       "$id": "823",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "Id of a job.",
        "Type": {
-        "$id": "784",
+        "$id": "824",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -6952,7 +7372,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "785",
+       "$id": "825",
        "Name": "options",
        "NameInRequest": "options",
        "Description": "Request model for cancelling job.",
@@ -6970,11 +7390,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "786",
+       "$id": "826",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "787",
+        "$id": "827",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -6989,19 +7409,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "788",
+        "$id": "828",
         "Type": {
-         "$ref": "787"
+         "$ref": "827"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "789",
+       "$id": "829",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "790",
+        "$id": "830",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7016,9 +7436,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "791",
+        "$id": "831",
         "Type": {
-         "$ref": "790"
+         "$ref": "830"
         },
         "Value": "application/json"
        }
@@ -7026,7 +7446,7 @@
      ],
      "Responses": [
       {
-       "$id": "792",
+       "$id": "832",
        "StatusCodes": [
         200
        ],
@@ -7053,7 +7473,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "793",
+     "$id": "833",
      "Name": "completeJob",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Completes an assigned job.",
@@ -7064,15 +7484,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "834",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "835",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "794",
+       "$id": "836",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "Id of a job.",
        "Type": {
-        "$id": "795",
+        "$id": "837",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7088,12 +7529,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "796",
+       "$id": "838",
        "Name": "assignmentId",
        "NameInRequest": "assignmentId",
        "Description": "Id of a job assignment.",
        "Type": {
-        "$id": "797",
+        "$id": "839",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7109,7 +7550,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "798",
+       "$id": "840",
        "Name": "options",
        "NameInRequest": "options",
        "Description": "Request model for completing job.",
@@ -7118,496 +7559,6 @@
        },
        "Location": "Body",
        "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "799",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "800",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "801",
-        "Type": {
-         "$ref": "800"
-        },
-        "Value": "application/json"
-       }
-      },
-      {
-       "$id": "802",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Type": {
-        "$id": "803",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": true,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "804",
-        "Type": {
-         "$ref": "803"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "805",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "265"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:complete",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
-    },
-    {
-     "$id": "806",
-     "Name": "closeJob",
-     "ResourceName": "JobRouterRestClient",
-     "Summary": "Closes a completed job.",
-     "Description": "Closes a completed job.",
-     "Accessibility": "internal",
-     "Parameters": [
-      {
-       "$ref": "517"
-      },
-      {
-       "$ref": "519"
-      },
-      {
-       "$id": "807",
-       "Name": "jobId",
-       "NameInRequest": "jobId",
-       "Description": "Id of a job.",
-       "Type": {
-        "$id": "808",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "809",
-       "Name": "assignmentId",
-       "NameInRequest": "assignmentId",
-       "Description": "Id of a job assignment.",
-       "Type": {
-        "$id": "810",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "811",
-       "Name": "options",
-       "NameInRequest": "options",
-       "Description": "Request model for closing job.",
-       "Type": {
-        "$ref": "266"
-       },
-       "Location": "Body",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "812",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "813",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "814",
-        "Type": {
-         "$ref": "813"
-        },
-        "Value": "application/json"
-       }
-      },
-      {
-       "$id": "815",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Type": {
-        "$id": "816",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": true,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "817",
-        "Type": {
-         "$ref": "816"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "818",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "273"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:close",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
-    },
-    {
-     "$id": "819",
-     "Name": "listJobs",
-     "ResourceName": "RouterJob",
-     "Summary": "Retrieves list of jobs based on filter parameters.",
-     "Description": "Retrieves list of jobs based on filter parameters.",
-     "Accessibility": "internal",
-     "Parameters": [
-      {
-       "$ref": "517"
-      },
-      {
-       "$ref": "519"
-      },
-      {
-       "$id": "820",
-       "Name": "maxpagesize",
-       "NameInRequest": "maxpagesize",
-       "Description": "Number of objects to return per page.",
-       "Type": {
-        "$id": "821",
-        "Name": "int32",
-        "Kind": "Int32",
-        "IsNullable": false
-       },
-       "Location": "Query",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "822",
-       "Name": "status",
-       "NameInRequest": "status",
-       "Description": "If specified, filter jobs by status.",
-       "Type": {
-        "$ref": "58"
-       },
-       "Location": "Query",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "823",
-       "Name": "queueId",
-       "NameInRequest": "queueId",
-       "Description": "If specified, filter jobs by queue.",
-       "Type": {
-        "$id": "824",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Query",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "825",
-       "Name": "channelId",
-       "NameInRequest": "channelId",
-       "Description": "If specified, filter jobs by channel.",
-       "Type": {
-        "$id": "826",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Query",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "827",
-       "Name": "classificationPolicyId",
-       "NameInRequest": "classificationPolicyId",
-       "Description": "If specified, filter jobs by classificationPolicy.",
-       "Type": {
-        "$id": "828",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Query",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "829",
-       "Name": "scheduledBefore",
-       "NameInRequest": "scheduledBefore",
-       "Description": "If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore].",
-       "Type": {
-        "$id": "830",
-        "Name": "utcDateTime",
-        "Kind": "DateTime",
-        "IsNullable": false
-       },
-       "Location": "Query",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "831",
-       "Name": "scheduledAfter",
-       "NameInRequest": "scheduledAfter",
-       "Description": "If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf).",
-       "Type": {
-        "$id": "832",
-        "Name": "utcDateTime",
-        "Kind": "DateTime",
-        "IsNullable": false
-       },
-       "Location": "Query",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "833",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "834",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "835",
-        "Type": {
-         "$ref": "834"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "836",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "274"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/routing/jobs",
-     "BufferResponse": true,
-     "Paging": {
-      "$id": "837",
-      "NextLinkName": "nextLink",
-      "ItemName": "value"
-     },
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
-    },
-    {
-     "$id": "838",
-     "Name": "getQueuePosition",
-     "ResourceName": "JobRouterRestClient",
-     "Summary": "Gets a job's position details.",
-     "Description": "Gets a job's position details.",
-     "Parameters": [
-      {
-       "$ref": "517"
-      },
-      {
-       "$ref": "519"
-      },
-      {
-       "$id": "839",
-       "Name": "jobId",
-       "NameInRequest": "jobId",
-       "Description": "Id of the job.",
-       "Type": {
-        "$id": "840",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
        "IsApiVersion": false,
        "IsResourceParameter": false,
        "IsContentType": false,
@@ -7642,11 +7593,564 @@
         },
         "Value": "application/json"
        }
+      },
+      {
+       "$id": "844",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "845",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "846",
+        "Type": {
+         "$ref": "845"
+        },
+        "Value": "application/json"
+       }
       }
      ],
      "Responses": [
       {
-       "$id": "844",
+       "$id": "847",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "265"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:complete",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "848",
+     "Name": "closeJob",
+     "ResourceName": "JobRouterRestClient",
+     "Summary": "Closes a completed job.",
+     "Description": "Closes a completed job.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "517"
+      },
+      {
+       "$id": "849",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "850",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "851",
+       "Name": "jobId",
+       "NameInRequest": "jobId",
+       "Description": "Id of a job.",
+       "Type": {
+        "$id": "852",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "853",
+       "Name": "assignmentId",
+       "NameInRequest": "assignmentId",
+       "Description": "Id of a job assignment.",
+       "Type": {
+        "$id": "854",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "855",
+       "Name": "options",
+       "NameInRequest": "options",
+       "Description": "Request model for closing job.",
+       "Type": {
+        "$ref": "266"
+       },
+       "Location": "Body",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "856",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "857",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "858",
+        "Type": {
+         "$ref": "857"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "859",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "860",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "861",
+        "Type": {
+         "$ref": "860"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "862",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "273"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/routing/jobs/{jobId}/assignments/{assignmentId}:close",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "863",
+     "Name": "listJobs",
+     "ResourceName": "RouterJob",
+     "Summary": "Retrieves list of jobs based on filter parameters.",
+     "Description": "Retrieves list of jobs based on filter parameters.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "517"
+      },
+      {
+       "$id": "864",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "865",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "866",
+       "Name": "maxpagesize",
+       "NameInRequest": "maxpagesize",
+       "Description": "Number of objects to return per page.",
+       "Type": {
+        "$id": "867",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "868",
+       "Name": "status",
+       "NameInRequest": "status",
+       "Description": "If specified, filter jobs by status.",
+       "Type": {
+        "$ref": "58"
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "869",
+       "Name": "queueId",
+       "NameInRequest": "queueId",
+       "Description": "If specified, filter jobs by queue.",
+       "Type": {
+        "$id": "870",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "871",
+       "Name": "channelId",
+       "NameInRequest": "channelId",
+       "Description": "If specified, filter jobs by channel.",
+       "Type": {
+        "$id": "872",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "873",
+       "Name": "classificationPolicyId",
+       "NameInRequest": "classificationPolicyId",
+       "Description": "If specified, filter jobs by classificationPolicy.",
+       "Type": {
+        "$id": "874",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "875",
+       "Name": "scheduledBefore",
+       "NameInRequest": "scheduledBefore",
+       "Description": "If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore].",
+       "Type": {
+        "$id": "876",
+        "Name": "utcDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "877",
+       "Name": "scheduledAfter",
+       "NameInRequest": "scheduledAfter",
+       "Description": "If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf).",
+       "Type": {
+        "$id": "878",
+        "Name": "utcDateTime",
+        "Kind": "DateTime",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "879",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "880",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "881",
+        "Type": {
+         "$ref": "880"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "882",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "274"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/routing/jobs",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "883",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "884",
+     "Name": "getQueuePosition",
+     "ResourceName": "JobRouterRestClient",
+     "Summary": "Gets a job's position details.",
+     "Description": "Gets a job's position details.",
+     "Parameters": [
+      {
+       "$ref": "517"
+      },
+      {
+       "$id": "885",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "886",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "887",
+       "Name": "jobId",
+       "NameInRequest": "jobId",
+       "Description": "Id of the job.",
+       "Type": {
+        "$id": "888",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "889",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "890",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "891",
+        "Type": {
+         "$ref": "890"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "892",
        "StatusCodes": [
         200
        ],
@@ -7670,7 +8174,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "845",
+     "$id": "893",
      "Name": "unassignJob",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Unassign a job.",
@@ -7681,15 +8185,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "894",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "895",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "846",
+       "$id": "896",
        "Name": "jobId",
        "NameInRequest": "jobId",
        "Description": "Id of a job.",
        "Type": {
-        "$id": "847",
+        "$id": "897",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7705,12 +8230,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "848",
+       "$id": "898",
        "Name": "assignmentId",
        "NameInRequest": "assignmentId",
        "Description": "Id of a job assignment.",
        "Type": {
-        "$id": "849",
+        "$id": "899",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7726,7 +8251,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "850",
+       "$id": "900",
        "Name": "options",
        "NameInRequest": "options",
        "Description": "Request body for unassign route.",
@@ -7744,11 +8269,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "851",
+       "$id": "901",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "852",
+        "$id": "902",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7763,19 +8288,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "853",
+        "$id": "903",
         "Type": {
-         "$ref": "852"
+         "$ref": "902"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "854",
+       "$id": "904",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "855",
+        "$id": "905",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -7790,9 +8315,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "856",
+        "$id": "906",
         "Type": {
-         "$ref": "855"
+         "$ref": "905"
         },
         "Value": "application/json"
        }
@@ -7800,7 +8325,7 @@
      ],
      "Responses": [
       {
-       "$id": "857",
+       "$id": "907",
        "StatusCodes": [
         200
        ],
@@ -7827,7 +8352,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "858",
+     "$id": "908",
      "Name": "acceptJobOffer",
      "ResourceName": "JobRouterRestClient",
      "Summary": "Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already.",
@@ -7837,15 +8362,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "909",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "910",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "859",
+       "$id": "911",
        "Name": "workerId",
        "NameInRequest": "workerId",
        "Description": "Id of a worker.",
        "Type": {
-        "$id": "860",
+        "$id": "912",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -7859,593 +8405,12 @@
        "SkipUrlEncoding": false,
        "Explode": false,
        "Kind": "Method"
-      },
-      {
-       "$id": "861",
-       "Name": "offerId",
-       "NameInRequest": "offerId",
-       "Description": "Id of an offer.",
-       "Type": {
-        "$id": "862",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "863",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "864",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "865",
-        "Type": {
-         "$ref": "864"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "866",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "298"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "POST",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/routing/workers/{workerId}/offers/{offerId}:accept",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
-    },
-    {
-     "$id": "867",
-     "Name": "declineJobOffer",
-     "ResourceName": "JobRouterRestClient",
-     "Summary": "Declines an offer to work on a job.",
-     "Description": "Declines an offer to work on a job.",
-     "Accessibility": "internal",
-     "Parameters": [
-      {
-       "$ref": "517"
-      },
-      {
-       "$ref": "519"
-      },
-      {
-       "$id": "868",
-       "Name": "workerId",
-       "NameInRequest": "workerId",
-       "Description": "Id of a worker.",
-       "Type": {
-        "$id": "869",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "870",
-       "Name": "offerId",
-       "NameInRequest": "offerId",
-       "Description": "Id of an offer.",
-       "Type": {
-        "$id": "871",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "872",
-       "Name": "options",
-       "NameInRequest": "options",
-       "Description": "Request model for declining offer.",
-       "Type": {
-        "$ref": "305"
-       },
-       "Location": "Body",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "873",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "874",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "875",
-        "Type": {
-         "$ref": "874"
-        },
-        "Value": "application/json"
-       }
-      },
-      {
-       "$id": "876",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Type": {
-        "$id": "877",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": true,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "878",
-        "Type": {
-         "$ref": "877"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "879",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "308"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "POST",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/routing/workers/{workerId}/offers/{offerId}:decline",
-     "RequestMediaTypes": [
-      "application/json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
-    },
-    {
-     "$id": "880",
-     "Name": "getQueueStatistics",
-     "ResourceName": "JobRouterRestClient",
-     "Summary": "Retrieves a queue's statistics.",
-     "Description": "Retrieves a queue's statistics.",
-     "Parameters": [
-      {
-       "$ref": "517"
-      },
-      {
-       "$ref": "519"
-      },
-      {
-       "$id": "881",
-       "Name": "queueId",
-       "NameInRequest": "queueId",
-       "Description": "Id of the queue to retrieve statistics.",
-       "Type": {
-        "$id": "882",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "883",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "884",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "885",
-        "Type": {
-         "$ref": "884"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "886",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "309"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "RequestBodyMediaType": "None",
-     "Uri": "{endpoint}",
-     "Path": "/routing/queues/{queueId}/statistics",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true
-    },
-    {
-     "$id": "887",
-     "Name": "upsertWorker",
-     "ResourceName": "RouterWorker",
-     "Summary": "Creates or updates a worker.",
-     "Description": "Creates or updates a worker.",
-     "Accessibility": "internal",
-     "Parameters": [
-      {
-       "$ref": "517"
-      },
-      {
-       "$ref": "519"
-      },
-      {
-       "$id": "888",
-       "Name": "workerId",
-       "NameInRequest": "workerId",
-       "Description": "Id of a worker.",
-       "Type": {
-        "$id": "889",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Path",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "890",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Description": "This request has a JSON Merge Patch body.",
-       "Type": {
-        "$id": "891",
-        "Name": "Literal",
-        "LiteralValueType": {
-         "$id": "892",
-         "Name": "String",
-         "Kind": "String",
-         "IsNullable": false
-        },
-        "Value": "application/merge-patch+json",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "DefaultValue": {
-        "$id": "893",
-        "Type": {
-         "$ref": "891"
-        },
-        "Value": "application/merge-patch+json"
-       },
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant"
-      },
-      {
-       "$id": "894",
-       "Name": "ifMatch",
-       "NameInRequest": "If-Match",
-       "Description": "The request should only proceed if an entity matches this string.",
-       "Type": {
-        "$id": "895",
-        "Name": "string",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "896",
-       "Name": "ifUnmodifiedSince",
-       "NameInRequest": "If-Unmodified-Since",
-       "Description": "The request should only proceed if the entity was not modified after this time.",
-       "Type": {
-        "$id": "897",
-        "Name": "utcDateTime",
-        "Kind": "DateTimeRFC7231",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsRequired": false,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "898",
-       "Name": "resource",
-       "NameInRequest": "resource",
-       "Description": "The resource instance.",
-       "Type": {
-        "$ref": "320"
-       },
-       "Location": "Body",
-       "IsRequired": true,
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Method"
-      },
-      {
-       "$id": "899",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "900",
-        "Name": "String",
-        "Kind": "String",
-        "IsNullable": false
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsResourceParameter": false,
-       "IsContentType": false,
-       "IsRequired": true,
-       "IsEndpoint": false,
-       "SkipUrlEncoding": false,
-       "Explode": false,
-       "Kind": "Constant",
-       "DefaultValue": {
-        "$id": "901",
-        "Type": {
-         "$ref": "900"
-        },
-        "Value": "application/json"
-       }
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "902",
-       "StatusCodes": [
-        201
-       ],
-       "BodyType": {
-        "$ref": "320"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [
-        {
-         "$id": "903",
-         "Name": "ETag",
-         "NameInResponse": "etagHeader",
-         "Description": "The entity tag for the response.",
-         "Type": {
-          "$id": "904",
-          "Name": "string",
-          "Kind": "String",
-          "IsNullable": false
-         }
-        },
-        {
-         "$id": "905",
-         "Name": "Last-Modified",
-         "NameInResponse": "lastModifiedTimestamp",
-         "Description": "The last modified timestamp.",
-         "Type": {
-          "$id": "906",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
-          "IsNullable": false
-         }
-        }
-       ],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      },
-      {
-       "$id": "907",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "320"
-       },
-       "BodyMediaType": "Json",
-       "Headers": [
-        {
-         "$id": "908",
-         "Name": "ETag",
-         "NameInResponse": "etagHeader",
-         "Description": "The entity tag for the response.",
-         "Type": {
-          "$id": "909",
-          "Name": "string",
-          "Kind": "String",
-          "IsNullable": false
-         }
-        },
-        {
-         "$id": "910",
-         "Name": "Last-Modified",
-         "NameInResponse": "lastModifiedTimestamp",
-         "Description": "The last modified timestamp.",
-         "Type": {
-          "$id": "911",
-          "Name": "utcDateTime",
-          "Kind": "DateTime",
-          "IsNullable": false
-         }
-        }
-       ],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
-     "Path": "/routing/workers/{workerId}",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false
-    },
-    {
-     "$id": "912",
-     "Name": "getWorker",
-     "ResourceName": "RouterWorker",
-     "Summary": "Retrieves an existing worker by Id.",
-     "Description": "Retrieves an existing worker by Id.",
-     "Parameters": [
-      {
-       "$ref": "517"
-      },
-      {
-       "$ref": "519"
       },
       {
        "$id": "913",
-       "Name": "workerId",
-       "NameInRequest": "workerId",
-       "Description": "Id of a worker.",
+       "Name": "offerId",
+       "NameInRequest": "offerId",
+       "Description": "Id of an offer.",
        "Type": {
         "$id": "914",
         "Name": "string",
@@ -8497,29 +8462,694 @@
         200
        ],
        "BodyType": {
+        "$ref": "298"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/routing/workers/{workerId}/offers/{offerId}:accept",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "919",
+     "Name": "declineJobOffer",
+     "ResourceName": "JobRouterRestClient",
+     "Summary": "Declines an offer to work on a job.",
+     "Description": "Declines an offer to work on a job.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "517"
+      },
+      {
+       "$id": "920",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "921",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "922",
+       "Name": "workerId",
+       "NameInRequest": "workerId",
+       "Description": "Id of a worker.",
+       "Type": {
+        "$id": "923",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "924",
+       "Name": "offerId",
+       "NameInRequest": "offerId",
+       "Description": "Id of an offer.",
+       "Type": {
+        "$id": "925",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "926",
+       "Name": "options",
+       "NameInRequest": "options",
+       "Description": "Request model for declining offer.",
+       "Type": {
+        "$ref": "305"
+       },
+       "Location": "Body",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "927",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "928",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "929",
+        "Type": {
+         "$ref": "928"
+        },
+        "Value": "application/json"
+       }
+      },
+      {
+       "$id": "930",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Type": {
+        "$id": "931",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "932",
+        "Type": {
+         "$ref": "931"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "933",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "308"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/routing/workers/{workerId}/offers/{offerId}:decline",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "934",
+     "Name": "getQueueStatistics",
+     "ResourceName": "JobRouterRestClient",
+     "Summary": "Retrieves a queue's statistics.",
+     "Description": "Retrieves a queue's statistics.",
+     "Parameters": [
+      {
+       "$ref": "517"
+      },
+      {
+       "$id": "935",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "936",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "937",
+       "Name": "queueId",
+       "NameInRequest": "queueId",
+       "Description": "Id of the queue to retrieve statistics.",
+       "Type": {
+        "$id": "938",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "939",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "940",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "941",
+        "Type": {
+         "$ref": "940"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "942",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "309"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/routing/queues/{queueId}/statistics",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "943",
+     "Name": "upsertWorker",
+     "ResourceName": "RouterWorker",
+     "Summary": "Creates or updates a worker.",
+     "Description": "Creates or updates a worker.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "517"
+      },
+      {
+       "$id": "944",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "945",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "946",
+       "Name": "workerId",
+       "NameInRequest": "workerId",
+       "Description": "Id of a worker.",
+       "Type": {
+        "$id": "947",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "948",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "This request has a JSON Merge Patch body.",
+       "Type": {
+        "$id": "949",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "950",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "application/merge-patch+json",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "951",
+        "Type": {
+         "$ref": "949"
+        },
+        "Value": "application/merge-patch+json"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "952",
+       "Name": "ifMatch",
+       "NameInRequest": "If-Match",
+       "Description": "The request should only proceed if an entity matches this string.",
+       "Type": {
+        "$id": "953",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "954",
+       "Name": "ifUnmodifiedSince",
+       "NameInRequest": "If-Unmodified-Since",
+       "Description": "The request should only proceed if the entity was not modified after this time.",
+       "Type": {
+        "$id": "955",
+        "Name": "utcDateTime",
+        "Kind": "DateTimeRFC7231",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "956",
+       "Name": "resource",
+       "NameInRequest": "resource",
+       "Description": "The resource instance.",
+       "Type": {
+        "$ref": "320"
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "957",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "958",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "959",
+        "Type": {
+         "$ref": "958"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "960",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
         "$ref": "320"
        },
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "919",
+         "$id": "961",
          "Name": "ETag",
          "NameInResponse": "etagHeader",
          "Description": "The entity tag for the response.",
          "Type": {
-          "$id": "920",
+          "$id": "962",
           "Name": "string",
           "Kind": "String",
           "IsNullable": false
          }
         },
         {
-         "$id": "921",
+         "$id": "963",
          "Name": "Last-Modified",
          "NameInResponse": "lastModifiedTimestamp",
          "Description": "The last modified timestamp.",
          "Type": {
-          "$id": "922",
+          "$id": "964",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      },
+      {
+       "$id": "965",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "320"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "966",
+         "Name": "ETag",
+         "NameInResponse": "etagHeader",
+         "Description": "The entity tag for the response.",
+         "Type": {
+          "$id": "967",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "968",
+         "Name": "Last-Modified",
+         "NameInResponse": "lastModifiedTimestamp",
+         "Description": "The last modified timestamp.",
+         "Type": {
+          "$id": "969",
+          "Name": "utcDateTime",
+          "Kind": "DateTime",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/routing/workers/{workerId}",
+     "RequestMediaTypes": [
+      "application/merge-patch+json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false
+    },
+    {
+     "$id": "970",
+     "Name": "getWorker",
+     "ResourceName": "RouterWorker",
+     "Summary": "Retrieves an existing worker by Id.",
+     "Description": "Retrieves an existing worker by Id.",
+     "Parameters": [
+      {
+       "$ref": "517"
+      },
+      {
+       "$id": "971",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "972",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "973",
+       "Name": "workerId",
+       "NameInRequest": "workerId",
+       "Description": "Id of a worker.",
+       "Type": {
+        "$id": "974",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "975",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "976",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "977",
+        "Type": {
+         "$ref": "976"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "978",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "320"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "979",
+         "Name": "ETag",
+         "NameInResponse": "etagHeader",
+         "Description": "The entity tag for the response.",
+         "Type": {
+          "$id": "980",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "981",
+         "Name": "Last-Modified",
+         "NameInResponse": "lastModifiedTimestamp",
+         "Description": "The last modified timestamp.",
+         "Type": {
+          "$id": "982",
           "Name": "utcDateTime",
           "Kind": "DateTime",
           "IsNullable": false
@@ -8541,7 +9171,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "923",
+     "$id": "983",
      "Name": "deleteWorker",
      "ResourceName": "RouterWorker",
      "Summary": "Deletes a worker and all of its traces.",
@@ -8551,15 +9181,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "984",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "985",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "924",
+       "$id": "986",
        "Name": "workerId",
        "NameInRequest": "workerId",
        "Description": "Id of a worker.",
        "Type": {
-        "$id": "925",
+        "$id": "987",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8575,11 +9226,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "926",
+       "$id": "988",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "927",
+        "$id": "989",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -8594,9 +9245,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "928",
+        "$id": "990",
         "Type": {
-         "$ref": "927"
+         "$ref": "989"
         },
         "Value": "application/json"
        }
@@ -8604,7 +9255,7 @@
      ],
      "Responses": [
       {
-       "$id": "929",
+       "$id": "991",
        "StatusCodes": [
         204
        ],
@@ -8622,7 +9273,7 @@
      "GenerateConvenienceMethod": true
     },
     {
-     "$id": "930",
+     "$id": "992",
      "Name": "listWorkers",
      "ResourceName": "RouterWorker",
      "Summary": "Retrieves existing workers.",
@@ -8633,15 +9284,36 @@
        "$ref": "517"
       },
       {
-       "$ref": "519"
+       "$id": "993",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "994",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "521"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
       },
       {
-       "$id": "931",
+       "$id": "995",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
        "Description": "Number of objects to return per page.",
        "Type": {
-        "$id": "932",
+        "$id": "996",
         "Name": "int32",
         "Kind": "Int32",
         "IsNullable": false
@@ -8657,7 +9329,7 @@
        "Kind": "Method"
       },
       {
-       "$id": "933",
+       "$id": "997",
        "Name": "state",
        "NameInRequest": "state",
        "Description": "If specified, select workers by worker state.",
@@ -8675,12 +9347,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "934",
+       "$id": "998",
        "Name": "channelId",
        "NameInRequest": "channelId",
        "Description": "If specified, select workers who have a channel configuration with this channel.",
        "Type": {
-        "$id": "935",
+        "$id": "999",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8696,12 +9368,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "936",
+       "$id": "1000",
        "Name": "queueId",
        "NameInRequest": "queueId",
        "Description": "If specified, select workers who are assigned to this queue.",
        "Type": {
-        "$id": "937",
+        "$id": "1001",
         "Name": "string",
         "Kind": "String",
         "IsNullable": false
@@ -8717,12 +9389,12 @@
        "Kind": "Method"
       },
       {
-       "$id": "938",
+       "$id": "1002",
        "Name": "hasCapacity",
        "NameInRequest": "hasCapacity",
        "Description": "If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false.",
        "Type": {
-        "$id": "939",
+        "$id": "1003",
         "Name": "boolean",
         "Kind": "Boolean",
         "IsNullable": false
@@ -8738,11 +9410,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "940",
+       "$id": "1004",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "941",
+        "$id": "1005",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -8757,9 +9429,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "942",
+        "$id": "1006",
         "Type": {
-         "$ref": "941"
+         "$ref": "1005"
         },
         "Value": "application/json"
        }
@@ -8767,7 +9439,7 @@
      ],
      "Responses": [
       {
-       "$id": "943",
+       "$id": "1007",
        "StatusCodes": [
         200
        ],
@@ -8788,7 +9460,7 @@
      "Path": "/routing/workers",
      "BufferResponse": true,
      "Paging": {
-      "$id": "944",
+      "$id": "1008",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -8797,7 +9469,7 @@
     }
    ],
    "Protocol": {
-    "$id": "945"
+    "$id": "1009"
    },
    "Creatable": true
   }
