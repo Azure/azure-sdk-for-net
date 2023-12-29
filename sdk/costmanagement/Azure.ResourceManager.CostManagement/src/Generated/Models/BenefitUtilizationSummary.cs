@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// Please note <see cref="BenefitUtilizationSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="IncludedQuantityUtilizationSummary"/> and <see cref="SavingsPlanUtilizationSummary"/>.
     /// </summary>
-    public abstract partial class BenefitUtilizationSummary : ResourceData
+    public partial class BenefitUtilizationSummary : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummary"/>. </summary>
-        protected BenefitUtilizationSummary()
+        public BenefitUtilizationSummary()
         {
         }
 

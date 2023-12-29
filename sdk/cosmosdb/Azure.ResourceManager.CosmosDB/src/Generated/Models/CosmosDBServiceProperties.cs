@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// Please note <see cref="CosmosDBServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DataTransferServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/> and <see cref="SqlDedicatedGatewayServiceProperties"/>.
     /// </summary>
-    public abstract partial class CosmosDBServiceProperties
+    public partial class CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/>. </summary>
-        protected CosmosDBServiceProperties()
+        public CosmosDBServiceProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }

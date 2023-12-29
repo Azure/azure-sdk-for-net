@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.BenefitUtilizationSummary"/> instance for mocking. </returns>
         public static BenefitUtilizationSummary BenefitUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new UnknownBenefitUtilizationSummary(id, name, resourceType, systemData, kind);
+            return new BenefitUtilizationSummary(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BenefitUtilizationSummariesOperationStatus"/>. </summary>
