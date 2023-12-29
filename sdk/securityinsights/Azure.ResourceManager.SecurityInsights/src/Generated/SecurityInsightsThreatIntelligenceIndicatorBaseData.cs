@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SecurityInsights
     /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
     /// </summary>
-    public abstract partial class SecurityInsightsThreatIntelligenceIndicatorBaseData : ResourceData
+    public partial class SecurityInsightsThreatIntelligenceIndicatorBaseData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/>. </summary>
-        protected SecurityInsightsThreatIntelligenceIndicatorBaseData()
+        public SecurityInsightsThreatIntelligenceIndicatorBaseData()
         {
         }
 

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningDatastoreProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningAzureBlobDatastore"/>, <see cref="MachineLearningAzureDataLakeGen1Datastore"/>, <see cref="MachineLearningAzureDataLakeGen2Datastore"/>, <see cref="MachineLearningAzureFileDatastore"/>, <see cref="HdfsDatastore"/> and <see cref="OneLakeDatastore"/>.
     /// </summary>
-    public abstract partial class MachineLearningDatastoreProperties : MachineLearningResourceBase
+    public partial class MachineLearningDatastoreProperties : MachineLearningResourceBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreProperties"/>. </summary>
         /// <param name="credentials">
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
-        protected MachineLearningDatastoreProperties(MachineLearningDatastoreCredentials credentials)
+        public MachineLearningDatastoreProperties(MachineLearningDatastoreCredentials credentials)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
 

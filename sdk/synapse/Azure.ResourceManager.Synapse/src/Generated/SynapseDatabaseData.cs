@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Synapse
     /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SynapseReadOnlyFollowingDatabase"/> and <see cref="SynapseReadWriteDatabase"/>.
     /// </summary>
-    public abstract partial class SynapseDatabaseData : ResourceData
+    public partial class SynapseDatabaseData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="SynapseDatabaseData"/>. </summary>
-        protected SynapseDatabaseData()
+        public SynapseDatabaseData()
         {
         }
 

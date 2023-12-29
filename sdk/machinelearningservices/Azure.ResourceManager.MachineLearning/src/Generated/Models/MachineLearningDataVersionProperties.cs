@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
     /// </summary>
-    public abstract partial class MachineLearningDataVersionProperties : MachineLearningAssetBase
+    public partial class MachineLearningDataVersionProperties : MachineLearningAssetBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/>. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        protected MachineLearningDataVersionProperties(Uri dataUri)
+        public MachineLearningDataVersionProperties(Uri dataUri)
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 

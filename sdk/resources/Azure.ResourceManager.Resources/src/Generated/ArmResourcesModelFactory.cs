@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new UnknownArmDeploymentScript(id, name, resourceType, systemData, identity, location, tags, kind);
+            return new ArmDeploymentScriptData(id, name, resourceType, systemData, identity, location, tags, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentScriptManagedIdentity"/>. </summary>

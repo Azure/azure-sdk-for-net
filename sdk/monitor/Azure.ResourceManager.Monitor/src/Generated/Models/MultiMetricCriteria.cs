@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Monitor.Models
     /// Please note <see cref="MultiMetricCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="DynamicMetricCriteria"/> and <see cref="MetricCriteria"/>.
     /// </summary>
-    public abstract partial class MultiMetricCriteria
+    public partial class MultiMetricCriteria
     {
         /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
-        protected MultiMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
+        public MultiMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(metricName, nameof(metricName));
