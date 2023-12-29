@@ -299,6 +299,9 @@ override-operation-name:
   ExposureControl_QueryFeatureValuesByFactory: GetExposureControlFeatures
   IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints: GetOutboundNetworkDependencies
 
+suppress-abstract-base-class:
+- DataFactoryDatasetProperties
+
 directive:
   - from: datafactory.json
     where: $.parameters

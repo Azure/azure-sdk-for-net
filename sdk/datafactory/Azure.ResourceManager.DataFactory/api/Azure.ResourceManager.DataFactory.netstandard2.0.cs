@@ -2181,9 +2181,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryDatasetDebugInfo(Azure.ResourceManager.DataFactory.Models.DataFactoryDatasetProperties properties) { }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryDatasetProperties Properties { get { throw null; } }
     }
-    public abstract partial class DataFactoryDatasetProperties
+    public partial class DataFactoryDatasetProperties
     {
-        protected DataFactoryDatasetProperties(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) { }
+        public DataFactoryDatasetProperties(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
