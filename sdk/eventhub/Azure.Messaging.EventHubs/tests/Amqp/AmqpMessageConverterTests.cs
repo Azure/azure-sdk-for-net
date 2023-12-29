@@ -1650,15 +1650,15 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(convertedMessage.Header.Durable, Is.EqualTo(sourceMessage.Header.Durable), "The durable flag should match.");
             Assert.That(convertedMessage.Header.FirstAcquirer, Is.EqualTo(sourceMessage.Header.FirstAcquirer), "The first acquirer flag should match.");
             Assert.That(convertedMessage.Header.Priority, Is.EqualTo(sourceMessage.Header.Priority), "The priority should match.");
-            Assert.That(convertedMessage.Header.TimeToLive, Is.EqualTo(sourceMessage.Properties.AbsoluteExpiryTime - sourceMessage.Properties.CreationTime), "The time to live should be the difference of AbsoluteExpiryTime and CreationTime.");
+            Assert.That(convertedMessage.Header.TimeToLive, Is.EqualTo(sourceMessage.Header.TimeToLive), "The time to live should match.");
 
             // Properties
 
-            Assert.That(convertedMessage.Properties.AbsoluteExpiryTime, Is.EqualTo(sourceMessage.Properties.AbsoluteExpiryTime), "The expiry time should match.");
+            Assert.That(convertedMessage.Properties.AbsoluteExpiryTime!.Value.UtcDateTime, Is.EqualTo(tempMessage.Properties.CreationTime + sourceMessage.Header.TimeToLive), "The expiry time should be based on creation time and TimeToLive.");
             Assert.That(convertedMessage.Properties.ContentEncoding, Is.EqualTo(sourceMessage.Properties.ContentEncoding), "The content encoding should match.");
             Assert.That(convertedMessage.Properties.ContentType, Is.EqualTo(sourceMessage.Properties.ContentType), "The content type should match.");
             Assert.That(convertedMessage.Properties.CorrelationId, Is.EqualTo(sourceMessage.Properties.CorrelationId), "The correlation identifier should match.");
-            Assert.That(convertedMessage.Properties.CreationTime, Is.EqualTo(sourceMessage.Properties.CreationTime), "The creation time should match.");
+            Assert.That(convertedMessage.Properties.CreationTime!.Value.UtcDateTime, Is.EqualTo(tempMessage.Properties.CreationTime), "The creation time should match the computed creation time.");
             Assert.That(convertedMessage.Properties.GroupId, Is.EqualTo(sourceMessage.Properties.GroupId), "The group identifier should match.");
             Assert.That(convertedMessage.Properties.GroupSequence, Is.EqualTo(sourceMessage.Properties.GroupSequence), "The group sequence should match.");
             Assert.That(convertedMessage.Properties.MessageId, Is.EqualTo(sourceMessage.Properties.MessageId), "The message identifier should match.");
