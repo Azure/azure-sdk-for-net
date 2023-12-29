@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="SecurityAlertSimulatorRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>.
     /// </summary>
-    public partial class SecurityAlertSimulatorRequestProperties
+    public abstract partial class SecurityAlertSimulatorRequestProperties
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>
-        public SecurityAlertSimulatorRequestProperties()
+        protected SecurityAlertSimulatorRequestProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
