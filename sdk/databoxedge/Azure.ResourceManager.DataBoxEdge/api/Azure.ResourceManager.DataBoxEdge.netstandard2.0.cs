@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleAddonResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class DataBoxEdgeRoleAddonData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataBoxEdgeRoleAddonData : Azure.ResourceManager.Models.ResourceData
     {
-        protected DataBoxEdgeRoleAddonData() { }
+        public DataBoxEdgeRoleAddonData() { }
     }
     public partial class DataBoxEdgeRoleAddonResource : Azure.ResourceManager.ArmResource
     {
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeRoleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class DataBoxEdgeRoleData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataBoxEdgeRoleData : Azure.ResourceManager.Models.ResourceData
     {
-        protected DataBoxEdgeRoleData() { }
+        public DataBoxEdgeRoleData() { }
     }
     public partial class DataBoxEdgeRoleResource : Azure.ResourceManager.ArmResource
     {
@@ -554,9 +554,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeTriggerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class DataBoxEdgeTriggerData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataBoxEdgeTriggerData : Azure.ResourceManager.Models.ResourceData
     {
-        protected DataBoxEdgeTriggerData() { }
+        public DataBoxEdgeTriggerData() { }
     }
     public partial class DataBoxEdgeTriggerResource : Azure.ResourceManager.ArmResource
     {

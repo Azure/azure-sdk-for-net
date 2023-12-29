@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareSynchronizationSettingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class DataShareSynchronizationSettingData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataShareSynchronizationSettingData : Azure.ResourceManager.Models.ResourceData
     {
-        protected DataShareSynchronizationSettingData() { }
+        public DataShareSynchronizationSettingData() { }
     }
     public partial class DataShareSynchronizationSettingResource : Azure.ResourceManager.ArmResource
     {
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.DataShareTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.DataShareTriggerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class DataShareTriggerData : Azure.ResourceManager.Models.ResourceData
+    public partial class DataShareTriggerData : Azure.ResourceManager.Models.ResourceData
     {
-        protected DataShareTriggerData() { }
+        public DataShareTriggerData() { }
     }
     public partial class DataShareTriggerResource : Azure.ResourceManager.ArmResource
     {
@@ -358,9 +358,9 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ShareDataSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class ShareDataSetData : Azure.ResourceManager.Models.ResourceData
+    public partial class ShareDataSetData : Azure.ResourceManager.Models.ResourceData
     {
-        protected ShareDataSetData() { }
+        public ShareDataSetData() { }
     }
     public partial class ShareDataSetMappingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>, System.Collections.IEnumerable
     {
@@ -379,9 +379,9 @@ namespace Azure.ResourceManager.DataShare
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class ShareDataSetMappingData : Azure.ResourceManager.Models.ResourceData
+    public partial class ShareDataSetMappingData : Azure.ResourceManager.Models.ResourceData
     {
-        protected ShareDataSetMappingData() { }
+        public ShareDataSetMappingData() { }
     }
     public partial class ShareDataSetMappingResource : Azure.ResourceManager.ArmResource
     {

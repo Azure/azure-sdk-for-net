@@ -410,9 +410,9 @@ namespace Azure.ResourceManager.Network
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Network.BaseAdminRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BaseAdminRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class BaseAdminRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class BaseAdminRuleData : Azure.ResourceManager.Models.ResourceData
     {
-        protected BaseAdminRuleData() { }
+        public BaseAdminRuleData() { }
         public Azure.ETag? ETag { get { throw null; } }
     }
     public partial class BaseAdminRuleResource : Azure.ResourceManager.ArmResource

@@ -2926,7 +2926,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.BaseAdminRuleData"/> instance for mocking. </returns>
         public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new UnknownBaseAdminRule(id, name, resourceType, systemData, kind, etag);
+            return new BaseAdminRuleData(id, name, resourceType, systemData, kind, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.NetworkProfileData"/>. </summary>

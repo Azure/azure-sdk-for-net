@@ -1577,9 +1577,9 @@ namespace Azure.ResourceManager.SecurityCenter
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityCenter.SecuritySettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityCenter.SecuritySettingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class SecuritySettingData : Azure.ResourceManager.Models.ResourceData
+    public partial class SecuritySettingData : Azure.ResourceManager.Models.ResourceData
     {
-        protected SecuritySettingData() { }
+        public SecuritySettingData() { }
     }
     public partial class SecuritySettingResource : Azure.ResourceManager.ArmResource
     {
@@ -3144,9 +3144,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatusCode left, Azure.ResourceManager.SecurityCenter.Models.ExtensionOperationStatusCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ExternalSecuritySolution : Azure.ResourceManager.Models.ResourceData
+    public partial class ExternalSecuritySolution : Azure.ResourceManager.Models.ResourceData
     {
-        protected ExternalSecuritySolution() { }
+        public ExternalSecuritySolution() { }
         public Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolutionKind? Kind { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
     }
@@ -4134,9 +4134,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecurityAlertSimulatorContent() { }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorRequestProperties Properties { get { throw null; } set { } }
     }
-    public abstract partial class SecurityAlertSimulatorRequestProperties
+    public partial class SecurityAlertSimulatorRequestProperties
     {
-        protected SecurityAlertSimulatorRequestProperties() { }
+        public SecurityAlertSimulatorRequestProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
     public enum SecurityAlertsSuppressionRuleState

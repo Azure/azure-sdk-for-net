@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.SecurityInsights
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class SecurityInsightsAlertRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class SecurityInsightsAlertRuleData : Azure.ResourceManager.Models.ResourceData
     {
-        protected SecurityInsightsAlertRuleData() { }
+        public SecurityInsightsAlertRuleData() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
     }
     public partial class SecurityInsightsAlertRuleResource : Azure.ResourceManager.ArmResource
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.SecurityInsights
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class SecurityInsightsAlertRuleTemplateData : Azure.ResourceManager.Models.ResourceData
+    public partial class SecurityInsightsAlertRuleTemplateData : Azure.ResourceManager.Models.ResourceData
     {
-        protected SecurityInsightsAlertRuleTemplateData() { }
+        public SecurityInsightsAlertRuleTemplateData() { }
     }
     public partial class SecurityInsightsAlertRuleTemplateResource : Azure.ResourceManager.ArmResource
     {
@@ -255,9 +255,9 @@ namespace Azure.ResourceManager.SecurityInsights
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class SecurityInsightsDataConnectorData : Azure.ResourceManager.Models.ResourceData
+    public partial class SecurityInsightsDataConnectorData : Azure.ResourceManager.Models.ResourceData
     {
-        protected SecurityInsightsDataConnectorData() { }
+        public SecurityInsightsDataConnectorData() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
     }
     public partial class SecurityInsightsDataConnectorResource : Azure.ResourceManager.ArmResource
@@ -474,9 +474,9 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public abstract partial class SecurityInsightsThreatIntelligenceIndicatorBaseData : Azure.ResourceManager.Models.ResourceData
+    public partial class SecurityInsightsThreatIntelligenceIndicatorBaseData : Azure.ResourceManager.Models.ResourceData
     {
-        protected SecurityInsightsThreatIntelligenceIndicatorBaseData() { }
+        public SecurityInsightsThreatIntelligenceIndicatorBaseData() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
     }
     public partial class SecurityInsightsThreatIntelligenceIndicatorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource>, System.Collections.IEnumerable
@@ -634,9 +634,9 @@ namespace Azure.ResourceManager.SecurityInsights
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class SecurityMLAnalyticsSettingData : Azure.ResourceManager.Models.ResourceData
+    public partial class SecurityMLAnalyticsSettingData : Azure.ResourceManager.Models.ResourceData
     {
-        protected SecurityMLAnalyticsSettingData() { }
+        public SecurityMLAnalyticsSettingData() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
     }
     public partial class SecurityMLAnalyticsSettingResource : Azure.ResourceManager.ArmResource
@@ -1502,9 +1502,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string HostIPAddressEntityId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> IPAddressEntityIds { get { throw null; } }
     }
-    public abstract partial class SecurityInsightsEntity : Azure.ResourceManager.Models.ResourceData
+    public partial class SecurityInsightsEntity : Azure.ResourceManager.Models.ResourceData
     {
-        protected SecurityInsightsEntity() { }
+        public SecurityInsightsEntity() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityInsightsEntityKind : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind>

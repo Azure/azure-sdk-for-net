@@ -3312,9 +3312,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceSize? InstanceSize { get { throw null; } set { } }
         public Azure.ResourceManager.CosmosDB.Models.CosmosDBServiceType? ServiceType { get { throw null; } set { } }
     }
-    public abstract partial class CosmosDBServiceProperties
+    public partial class CosmosDBServiceProperties
     {
-        protected CosmosDBServiceProperties() { }
+        public CosmosDBServiceProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? InstanceCount { get { throw null; } set { } }

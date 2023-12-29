@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmDeploymentScriptResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class ArmDeploymentScriptData : Azure.ResourceManager.Models.ResourceData
+    public partial class ArmDeploymentScriptData : Azure.ResourceManager.Models.ResourceData
     {
-        protected ArmDeploymentScriptData(Azure.Core.AzureLocation location) { }
+        public ArmDeploymentScriptData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }

@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.Kusto
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Kusto.KustoDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class KustoDatabaseData : Azure.ResourceManager.Models.ResourceData
+    public partial class KustoDatabaseData : Azure.ResourceManager.Models.ResourceData
     {
-        protected KustoDatabaseData() { }
+        public KustoDatabaseData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
     }
     public partial class KustoDatabasePrincipalAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Kusto.KustoDatabasePrincipalAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoDatabasePrincipalAssignmentResource>, System.Collections.IEnumerable
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.Kusto
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Kusto.KustoDataConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoDataConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public abstract partial class KustoDataConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class KustoDataConnectionData : Azure.ResourceManager.Models.ResourceData
     {
-        protected KustoDataConnectionData() { }
+        public KustoDataConnectionData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
     }
     public partial class KustoDataConnectionResource : Azure.ResourceManager.ArmResource

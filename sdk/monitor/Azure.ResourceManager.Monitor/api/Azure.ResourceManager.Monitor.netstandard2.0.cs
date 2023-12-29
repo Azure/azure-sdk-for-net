@@ -1895,9 +1895,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.Core.ResourceIdentifier ActionGroupId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> WebHookProperties { get { throw null; } }
     }
-    public abstract partial class MetricAlertCriteria
+    public partial class MetricAlertCriteria
     {
-        protected MetricAlertCriteria() { }
+        public MetricAlertCriteria() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
     }
     public partial class MetricAlertMultipleResourceMultipleMetricCriteria : Azure.ResourceManager.Monitor.Models.MetricAlertCriteria
@@ -2710,9 +2710,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public MonitorWorkspaceResourcePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public abstract partial class MultiMetricCriteria
+    public partial class MultiMetricCriteria
     {
-        protected MultiMetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation) { }
+        public MultiMetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricDimension> Dimensions { get { throw null; } }
         public string MetricName { get { throw null; } set { } }

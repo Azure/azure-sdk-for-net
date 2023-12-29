@@ -2785,9 +2785,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string AccountUrl { get { throw null; } set { } }
         public string Filesystem { get { throw null; } set { } }
     }
-    public abstract partial class Dataset
+    public partial class Dataset
     {
-        protected Dataset(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference linkedServiceName) { }
+        public Dataset(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference linkedServiceName) { }
         public System.Collections.Generic.IDictionary<string, object> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<object> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
