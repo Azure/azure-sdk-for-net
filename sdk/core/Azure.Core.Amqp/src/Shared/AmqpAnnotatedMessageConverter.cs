@@ -298,11 +298,6 @@ namespace Azure.Core.Amqp.Shared
                 {
                     message.Header.DeliveryCount = source.Header.DeliveryCount;
                 }
-
-                if (source.Header.Ttl.HasValue)
-                {
-                    message.Header.TimeToLive = TimeSpan.FromMilliseconds(source.Header.Ttl.Value);
-                }
             }
 
             // Properties
@@ -311,10 +306,20 @@ namespace Azure.Core.Amqp.Shared
             {
                 if (source.Properties.AbsoluteExpiryTime.HasValue)
                 {
-                    message.Properties.AbsoluteExpiryTime =
-                        source.Properties.AbsoluteExpiryTime >= DateTimeOffset.MaxValue.UtcDateTime
-                            ? DateTimeOffset.MaxValue
-                            : source.Properties.AbsoluteExpiryTime;
+                    DateTimeOffset absoluteExpiryTime = source.Properties.AbsoluteExpiryTime >= DateTimeOffset.MaxValue.UtcDateTime
+                        ? DateTimeOffset.MaxValue
+                        : source.Properties.AbsoluteExpiryTime.Value;
+
+                    message.Properties.AbsoluteExpiryTime = absoluteExpiryTime;
+
+                    // AbsoluteExpiryTime overwrites ttl coming in the header.
+                    // TTL in the header is a uint that stores the number of milliseconds.
+                    // Therefore the max TTL it can support is about 49 days (Uint32.MaxValue milliseconds)
+
+                    if (source.Properties.CreationTime.HasValue)
+                    {
+                        message.Header.TimeToLive = absoluteExpiryTime- source.Properties.CreationTime.Value;
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(source.Properties.ContentEncoding.Value))

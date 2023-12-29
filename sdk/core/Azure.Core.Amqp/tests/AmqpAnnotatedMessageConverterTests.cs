@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Azure.Core.Amqp.Shared;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Core.Amqp.Tests
@@ -120,6 +122,23 @@ namespace Azure.Core.Amqp.Tests
                 }
             }
             AssertCommonProperties(message, time);
+        }
+
+        [Test]
+        public void TimeToLiveIsSetBasedOnAbsoluteExpiryTime()
+        {
+            var amqpMessage =
+                AmqpAnnotatedMessageConverter.ToAmqpMessage(new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5)));
+
+            amqpMessage.Properties.CreationTime = DateTime.UtcNow;
+            amqpMessage.Properties.AbsoluteExpiryTime = DateTime.MaxValue;
+            amqpMessage.Header.Ttl = (uint) TimeSpan.FromDays(49).Milliseconds;
+
+            var annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
+
+            // The expected TTL will disregard the TTL set on the header and instead calculate it based on expiry time and creation time.
+            var expectedTtl = amqpMessage.Properties.AbsoluteExpiryTime - amqpMessage.Properties.CreationTime;
+            Assert.AreEqual(expectedTtl, annotatedMessage.Header.TimeToLive);
         }
 
         private static void AssertCommonProperties(AmqpAnnotatedMessage message, DateTimeOffset time)
