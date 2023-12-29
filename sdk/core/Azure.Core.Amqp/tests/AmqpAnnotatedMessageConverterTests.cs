@@ -165,7 +165,8 @@ namespace Azure.Core.Amqp.Tests
             Assert.IsTrue(message.Header.Durable);
             Assert.IsTrue(message.Header.FirstAcquirer);
             Assert.AreEqual(1, message.Header.Priority);
-            Assert.AreEqual(TimeSpan.FromSeconds(60), message.Header.TimeToLive);
+            // TTL is based on AbsoluteExpiryTime and CreationTime
+            Assert.AreEqual(message.Properties.AbsoluteExpiryTime - message.Properties.CreationTime, message.Header.TimeToLive);
             // because AMQP only has millisecond resolution, allow for up to a 1ms difference when round-tripping
             Assert.That(time, Is.EqualTo(message.Properties.AbsoluteExpiryTime.Value).Within(1).Milliseconds);
             Assert.AreEqual("compress", message.Properties.ContentEncoding);
