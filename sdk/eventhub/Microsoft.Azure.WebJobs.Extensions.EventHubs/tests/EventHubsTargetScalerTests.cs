@@ -58,24 +58,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
-        [TestCase(10, 9, 100, 10)]
-        [TestCase(9, 10, 100, 10)] // Throttle scale down
-        [TestCase(9, 10, 179, 10)] // Throttle scale down
-        [TestCase(9, 10, 180, 9)] // Allow scale down
-        [TestCase(9, 10, 181, 9)] // Allow scale down
-        public void ThrottleScaleDownIfNecessaryInternal_ReturnsExpected(int currentTarget, int previousTarget, int secondsSinceLastScaleUp, int expectedTarget)
-        {
-            TargetScalerResult currrentResult = new TargetScalerResult() { TargetWorkerCount = currentTarget };
-            TargetScalerResult previousResult = new TargetScalerResult() { TargetWorkerCount = previousTarget };
-
-            DateTime lastScaleUp = DateTime.UtcNow.AddSeconds(-secondsSinceLastScaleUp);
-
-            TargetScalerResult finalResult = EventHubsTargetScaler.ThrottleScaleDownIfNecessaryInternal(currrentResult, previousResult, lastScaleUp, _loggerFactory.CreateLogger<EventHubsTargetScalerTests>());
-
-            Assert.AreEqual(finalResult.TargetWorkerCount, expectedTarget);
-        }
-
-        [Test]
         // Using default concurrency of 10.
         [TestCase(10, 10, 10, 1)]
         [TestCase(20, 10, 10, 2)]

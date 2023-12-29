@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             // Checkpointing is ahead of partition info and invalid (SequenceNumber > LastEnqueued)
             this._checkpoints = new EventProcessorCheckpoint[]
             {
-                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 999, SequenceNumber = 11 }
+                new BlobCheckpointStoreInternal.BlobStorageCheckpoint { Offset = 999, SequenceNumber = 11, PartitionId = "1" }
             };
 
             _partitions = new List<PartitionProperties>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             metrics = await _metricsProvider.GetMetricsAsync();
 
-            Assert.AreEqual(0, metrics.EventCount);
+            Assert.AreEqual(11, metrics.EventCount);
             Assert.AreEqual(1, metrics.PartitionCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
         }

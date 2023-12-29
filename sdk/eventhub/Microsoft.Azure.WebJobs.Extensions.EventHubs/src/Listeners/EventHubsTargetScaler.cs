@@ -15,17 +15,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
 {
     internal class EventHubsTargetScaler : ITargetScaler
     {
-        // Throttle scale in requests if last scale out time was within ThrottleScaleDownIntervalInSeconds.
-        private const int ThrottleScaleDownIntervalInSeconds = 180;
-
         private readonly string _functionId;
         private readonly IEventHubConsumerClient _client;
         private readonly ILogger _logger;
         private readonly EventHubMetricsProvider _metricsProvider;
         private readonly EventHubOptions _options;
-
-        private DateTime _lastScaleUpTime;
-        private TargetScalerResult _lastTargetScalerResult;
+        private readonly TargetScaleThrottler _metricsStats;
 
         public EventHubsTargetScaler(string functionId,
             IEventHubConsumerClient client,
@@ -39,10 +34,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             _metricsProvider = metricsProvider;
             _options = options;
 
-            _lastScaleUpTime = DateTime.MinValue;
-            _lastTargetScalerResult = new TargetScalerResult();
-
             TargetScalerDescriptor = new TargetScalerDescriptor(_functionId);
+            _metricsStats = new TargetScaleThrottler(_logger);
         }
 
         public TargetScalerDescriptor TargetScalerDescriptor { get; }
@@ -55,35 +48,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             int partitionCount = latestMetric.PartitionCount;
 
             TargetScalerResult currentResult = GetScaleResultInternal(context, eventCount, partitionCount);
-            currentResult = ThrottleScaleDownIfNecessaryInternal(currentResult, _lastTargetScalerResult, _lastScaleUpTime, _logger);
-
-            if (GetChangeWorkerCount(currentResult, _lastTargetScalerResult) > 0)
-            {
-                _lastScaleUpTime = DateTime.UtcNow;
-            }
-
-            _lastTargetScalerResult = currentResult;
+            currentResult = _metricsStats.ThrottleIfNeeded(currentResult, latestMetric, DateTime.Now);
 
             return currentResult;
         }
 
-        internal static TargetScalerResult ThrottleScaleDownIfNecessaryInternal(TargetScalerResult currentResult, TargetScalerResult previousResult, DateTime lastScaleUpTime, ILogger logger)
-        {
-            int changeWorkerCount = GetChangeWorkerCount(currentResult, previousResult);
-
-            if (changeWorkerCount < 0 && (DateTime.UtcNow - lastScaleUpTime).TotalSeconds < ThrottleScaleDownIntervalInSeconds)
-            {
-                logger.LogInformation($"Throttling scale down, since last scale up time was within {ThrottleScaleDownIntervalInSeconds} seconds. (LastScaleUpTime: '{lastScaleUpTime}', LastTargetWorkerRequest: '{previousResult.TargetWorkerCount}')");
-
-                return previousResult;
-            }
-            else
-            {
-                return currentResult;
-            }
-        }
-
-        internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, long eventCount, int partitionCount)
+        internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context,long eventCount, int partitionCount)
         {
             int desiredConcurrency = GetDesiredConcurrencyInternal(context);
 
@@ -194,11 +164,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                     return sortedValidWorkerCountList[~i - 1];
                 }
             }
-        }
-
-        private static int GetChangeWorkerCount(TargetScalerResult currentResult, TargetScalerResult previousResult)
-        {
-            return currentResult.TargetWorkerCount - previousResult.TargetWorkerCount;
         }
     }
 }

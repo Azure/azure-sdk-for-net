@@ -19,5 +19,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// The number of partitions.
         /// </summary>
         public int PartitionCount { get; set; }
+
+        public Dictionary<string, long?> CheckpointSequences { get; set; }
     }
 }

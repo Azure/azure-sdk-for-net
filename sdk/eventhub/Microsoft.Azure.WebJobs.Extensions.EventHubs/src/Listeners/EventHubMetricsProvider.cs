@@ -90,6 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         private EventHubsTriggerMetrics CreateTriggerMetrics(List<PartitionProperties> partitionRuntimeInfo, EventProcessorCheckpoint[] checkpoints, bool alwaysLog = false)
         {
             long totalUnprocessedEventCount = 0;
+            Dictionary<string, long?> checkpointSequences = new Dictionary<string, long?>();
 
             DateTime utcNow = DateTime.UtcNow;
             bool logPartitionInfo = alwaysLog ? true : utcNow >= _nextPartitionLogTime;
@@ -113,6 +114,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                     || (checkpoint != null && checkpoint.Offset == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
                 {
                     long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionProperties, checkpoint);
+                    if (checkpoint != null)
+                    {
+                        checkpointSequences[checkpoint.PartitionId] = checkpoint.SequenceNumber;
+                    }
                     totalUnprocessedEventCount += partitionUnprocessedEventCount;
                 }
             }
@@ -135,7 +140,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             {
                 Timestamp = DateTime.UtcNow,
                 PartitionCount = partitionRuntimeInfo.Count,
-                EventCount = totalUnprocessedEventCount
+                EventCount = totalUnprocessedEventCount,
+                CheckpointSequences = checkpointSequences
             };
         }
 
