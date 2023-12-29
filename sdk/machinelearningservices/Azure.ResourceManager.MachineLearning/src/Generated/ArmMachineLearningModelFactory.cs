@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new MachineLearningDatastoreProperties(description, properties, tags, credentials, datastoreType, intellectualProperty, isDefault);
+            return new UnknownDatastore(description, properties, tags, credentials, datastoreType, intellectualProperty, isDefault);
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearning.MachineLearningFeatureSetContainerData"/>. </summary>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             secretsConfiguration ??= new Dictionary<string, SecretConfiguration>();
             services ??= new Dictionary<string, MachineLearningJobService>();
 
-            return new MachineLearningJobProperties(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status);
+            return new UnknownJobBase(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningJobService"/>. </summary>
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningOnlineDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, dataCollector, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
+            return new UnknownOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, dataCollector, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDeploymentLogs"/>. </summary>
