@@ -93,14 +93,9 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                         AssessmentMode = AssessmentModeType.ImageDefault,
                         PatchMode = PatchModeType.Manual,
                     },
-                    LinuxConfiguration = new OSProfileLinuxConfiguration()
-                    {
-                        AssessmentMode = AssessmentModeType.ImageDefault,
-                        PatchMode = PatchModeType.Manual,
-                    },
                 },
                 ParentClusterResourceId = new ResourceIdentifier("{AzureStackHCIResourceId}"),
-                PrivateLinkScopeResourceId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.HybridCompute/privateLinkScopes/privateLinkScopeName"),
+                PrivateLinkScopeResourceId = new ResourceIdentifier("/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.HybridCompute/privateLinkScopes/" + scopeName),
             };
             HybridComputeMachineResource result = await hybridComputeMachine.UpdateAsync(patch);
 
