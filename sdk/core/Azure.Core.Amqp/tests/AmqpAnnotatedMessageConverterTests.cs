@@ -125,20 +125,34 @@ namespace Azure.Core.Amqp.Tests
         }
 
         [Test]
-        public void TimeToLiveIsSetBasedOnAbsoluteExpiryTime()
+        public void TimeToLiveIsSetBasedOnAbsoluteExpiryTimeIfSet()
         {
             var amqpMessage =
                 AmqpAnnotatedMessageConverter.ToAmqpMessage(new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5)));
 
             amqpMessage.Properties.CreationTime = DateTime.UtcNow;
             amqpMessage.Properties.AbsoluteExpiryTime = DateTime.MaxValue;
-            amqpMessage.Header.Ttl = (uint) TimeSpan.FromDays(49).Milliseconds;
+            amqpMessage.Header.Ttl = (uint) TimeSpan.FromDays(49).TotalMilliseconds;
 
             var annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
 
             // The expected TTL will disregard the TTL set on the header and instead calculate it based on expiry time and creation time.
             var expectedTtl = amqpMessage.Properties.AbsoluteExpiryTime - amqpMessage.Properties.CreationTime;
             Assert.AreEqual(expectedTtl, annotatedMessage.Header.TimeToLive);
+        }
+
+        [Test]
+        public void TimeToLiveIsRespectedWhenNoAbsoluteExpiryTimePresent()
+        {
+            var amqpMessage =
+                AmqpAnnotatedMessageConverter.ToAmqpMessage(new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5)));
+
+            amqpMessage.Properties.CreationTime = DateTime.UtcNow;
+            amqpMessage.Header.Ttl = (uint) TimeSpan.FromDays(49).TotalMilliseconds;
+
+            var annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
+
+            Assert.AreEqual(TimeSpan.FromDays(49), annotatedMessage.Header.TimeToLive);
         }
 
         private static void AssertCommonProperties(AmqpAnnotatedMessage message, DateTimeOffset time)

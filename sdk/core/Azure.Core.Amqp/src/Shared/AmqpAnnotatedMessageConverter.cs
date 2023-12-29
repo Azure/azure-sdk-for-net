@@ -298,6 +298,11 @@ namespace Azure.Core.Amqp.Shared
                 {
                     message.Header.DeliveryCount = source.Header.DeliveryCount;
                 }
+
+                if (source.Header.Ttl.HasValue)
+                {
+                    message.Header.TimeToLive = TimeSpan.FromMilliseconds(source.Header.Ttl.Value);
+                }
             }
 
             // Properties
