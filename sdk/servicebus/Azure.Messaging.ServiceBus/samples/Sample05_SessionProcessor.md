@@ -98,10 +98,14 @@ async Task SessionInitializingHandler(ProcessSessionEventArgs args)
 
 async Task SessionClosingHandler(ProcessSessionEventArgs args)
 {
-    // We may want to clear the session state when no more messages are available for the session. This is entirely
-    // dependent on the application scenario and we may instead want the state to persist in case additional messages
-    // come in for the session.
-    await args.SetSessionStateAsync(null);
+    // We may want to clear the session state when no more messages are available for the session or when some known terminal message
+    // has been received. This is entirely dependent on the application scenario.
+    BinaryData sessionState = await args.GetSessionStateAsync();
+    if (sessionState.ToString() ==
+        "Some state that indicates the final message was received for the session")
+    {
+        await args.SetSessionStateAsync(null);
+    }
 }
 
 // start processing
