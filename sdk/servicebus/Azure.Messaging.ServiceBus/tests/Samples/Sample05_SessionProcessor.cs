@@ -124,7 +124,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await processor.StartProcessingAsync();
 
                 // since the processing happens in the background, we add a Console.ReadKey to allow the processing to continue until a key is pressed.
-                // Console.ReadKey();
+                Console.ReadKey();
                 #endregion
                 #endregion
             }
