@@ -430,7 +430,7 @@ async Task SessionClosingHandler(ProcessSessionEventArgs args)
 await processor.StartProcessingAsync();
 
 // since the processing happens in the background, we add a Console.ReadKey to allow the processing to continue until a key is pressed.
-// Console.ReadKey();
+Console.ReadKey();
 ```
 
 The below code snippet shows you the session variation of the receiver. Please note that creating a session receiver is an async operation because the library will need to get a lock on the session by connecting to the service first.
