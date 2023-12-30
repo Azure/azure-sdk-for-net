@@ -1947,7 +1947,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(readMessage.Properties.ContentEncoding, Is.EqualTo(message.Properties.ContentEncoding), "The content encoding should match.");
                 Assert.That(readMessage.Properties.ContentType, Is.EqualTo(message.Properties.ContentType), "The content type should match.");
                 Assert.That(readMessage.Properties.CorrelationId, Is.EqualTo(message.Properties.CorrelationId), "The correlation identifier should match.");
-                // The creation time is overridden based on the current time when TimeToLive is set.
                 Assert.That(readMessage.Properties.CreationTime, Is.EqualTo(readMessage.Properties.AbsoluteExpiryTime - message.Header.TimeToLive), "The creation time should be equal to the difference of the expiry time and time to live.");
                 Assert.That(readMessage.Properties.GroupId, Is.EqualTo(message.Properties.GroupId), "The group identifier should match.");
                 Assert.That(readMessage.Properties.GroupSequence, Is.EqualTo(message.Properties.GroupSequence), "The group sequence should match.");
