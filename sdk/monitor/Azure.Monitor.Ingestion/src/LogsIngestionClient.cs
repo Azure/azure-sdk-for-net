@@ -132,9 +132,11 @@ namespace Azure.Monitor.Ingestion
                     tempWriter.WriteEndArray();
                     tempWriter.Flush();
                     yield return new BatchedLogs(new List<object> { log }, BinaryData.FromBytes(tempArrayBuffer.WrittenMemory));
+                    continue;
                 }
+
                 // if adding this entry makes stream > 1 Mb send current stream now
-                else if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
+                if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
                 {
                     writer.WriteEndArray();
                     writer.Flush();
@@ -147,16 +149,11 @@ namespace Azure.Monitor.Ingestion
                     writer.WriteStartArray();
                     // reset log list
                     currentLogList = new List<object>();
-                    // add current log to memory and currentLogList
-                    WriteMemory(writer, memory);
-                    currentLogList.Add(log);
                 }
-                else
-                {
-                    // Add entry to existing stream and update logList
-                    WriteMemory(writer, memory);
-                    currentLogList.Add(log);
-                }
+
+                // Add entry to new or existing stream and update logList
+                WriteMemory(writer, memory);
+                currentLogList.Add(log);
             }
 
             // last log, send batch if anything
