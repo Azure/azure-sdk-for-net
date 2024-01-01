@@ -106,14 +106,10 @@ namespace Azure.Monitor.Ingestion
             ArrayBufferWriter<byte> arrayBuffer = new ArrayBufferWriter<byte>(SingleUploadThreshold);
             Utf8JsonWriter writer = new Utf8JsonWriter(arrayBuffer);
             writer.WriteStartArray();
-            int entryCount = 0;
             List<object> currentLogList = new List<object>();
-            var logEntriesList = logEntries.ToList();
-            int logEntriesCount = logEntriesList.Count;
-            foreach (var log in logEntriesList)
+            foreach (var log in logEntries)
             {
                 BinaryData entry;
-                bool isLastEntry = (entryCount + 1 == logEntriesCount);
                 // If log is already BinaryData, no need to serialize it
                 if (log is BinaryData d)
                     entry = d;
@@ -154,30 +150,21 @@ namespace Azure.Monitor.Ingestion
                     // add current log to memory and currentLogList
                     WriteMemory(writer, memory);
                     currentLogList.Add(log);
-
-                    // if this is the last log, send batch now
-                    if (isLastEntry)
-                    {
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
-                    }
                 }
                 else
                 {
                     // Add entry to existing stream and update logList
                     WriteMemory(writer, memory);
                     currentLogList.Add(log);
-
-                    // if this is the last log, send batch now
-                    if (isLastEntry)
-                    {
-                        writer.WriteEndArray();
-                        writer.Flush();
-                        yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
-                    }
                 }
-                entryCount++;
+            }
+
+            // last log, send batch if anything
+            if (currentLogList.Count > 0)
+            {
+                writer.WriteEndArray();
+                writer.Flush();
+                yield return new BatchedLogs(currentLogList, BinaryData.FromBytes(arrayBuffer.WrittenMemory));
             }
         }
 
