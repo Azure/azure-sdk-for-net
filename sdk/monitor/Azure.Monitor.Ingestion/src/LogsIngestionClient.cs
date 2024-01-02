@@ -121,8 +121,8 @@ namespace Azure.Monitor.Ingestion
                     entry = options.Serializer.Serialize(log);
 
                 var memory = entry.ToMemory();
-                // if single log is > 1 Mb send to be gzipped by itself
-                if (memory.Length > SingleUploadThreshold)
+                // if single log (as an array) is >= 1 Mb send to be gzipped by itself
+                if ((memory.Length + 2) >= SingleUploadThreshold)
                 {
                     // Create tempArrayBufferWriter (unsized to store log) and tempWriter for individual log
                     ArrayBufferWriter<byte> tempArrayBuffer = new ArrayBufferWriter<byte>();
@@ -135,8 +135,8 @@ namespace Azure.Monitor.Ingestion
                     continue;
                 }
 
-                // if adding this entry makes stream > 1 Mb send current stream now
-                if ((writer.BytesPending + memory.Length + 1) >= SingleUploadThreshold)
+                // if adding this entry (and array end) would make stream > 1 Mb send current stream now
+                if ((writer.BytesPending + memory.Length + 1) > SingleUploadThreshold)
                 {
                     writer.WriteEndArray();
                     writer.Flush();
@@ -151,12 +151,12 @@ namespace Azure.Monitor.Ingestion
                     currentLogList = new List<object>();
                 }
 
-                // Add entry to new or existing stream and update logList
+                // Add entry to stream and update logList
                 WriteMemory(writer, memory);
                 currentLogList.Add(log);
             }
 
-            // last log, send batch if anything
+            // no more logs, send existing stream and LogList if anything
             if (currentLogList.Count > 0)
             {
                 writer.WriteEndArray();
