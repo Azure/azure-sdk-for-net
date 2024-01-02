@@ -107,7 +107,7 @@ public partial class RetryPolicy
                 Debug.Assert(delayCount == httpMessage.RetryNumber);
 
                 Response? response = httpMessage.HasResponse ? httpMessage.Response : default;
-                return _strategy.GetNextDelay(response, delayCount);
+                return _strategy.GetNextDelay(response, delayCount + 1);
             }
 
             protected override void OnDelayComplete(PipelineMessage message)

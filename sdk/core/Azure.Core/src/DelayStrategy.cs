@@ -11,13 +11,12 @@ namespace Azure.Core
     /// </summary>
     public abstract class DelayStrategy
     {
-        private const double DefaultJitterFactor = 0.2;
+        internal const double DefaultJitterFactor = 0.2;
 
         private readonly Random _random = new ThreadSafeRandom();
         private readonly double _minJitterFactor;
         private readonly double _maxJitterFactor;
         private readonly TimeSpan _maxDelay;
-        internal const double DefaultJitterFactor = 0.2;
 
         /// <summary>
         /// Constructs a new instance of <see cref="DelayStrategy"/>. This constructor can be used by derived classes to customize the jitter factor and max delay.

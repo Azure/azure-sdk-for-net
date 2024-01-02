@@ -156,6 +156,5 @@ namespace Azure.Core.Pipeline
         {
             cancellationToken.WaitHandle.WaitOne(time);
         }
-                message.RetryNumber);
     }
 }
