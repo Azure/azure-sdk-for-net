@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Resources
     /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureCliScript"/> and <see cref="AzurePowerShellScript"/>.
     /// </summary>
-    public partial class ArmDeploymentScriptData : ResourceData
+    public abstract partial class ArmDeploymentScriptData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptData"/>. </summary>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
-        public ArmDeploymentScriptData(AzureLocation location)
+        protected ArmDeploymentScriptData(AzureLocation location)
         {
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();

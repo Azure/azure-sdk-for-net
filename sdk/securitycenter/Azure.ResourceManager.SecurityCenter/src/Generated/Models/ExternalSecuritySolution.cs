@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Please note <see cref="ExternalSecuritySolution"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AadExternalSecuritySolution"/>, <see cref="AtaExternalSecuritySolution"/> and <see cref="CefExternalSecuritySolution"/>.
     /// </summary>
-    public partial class ExternalSecuritySolution : ResourceData
+    public abstract partial class ExternalSecuritySolution : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolution"/>. </summary>
-        public ExternalSecuritySolution()
+        protected ExternalSecuritySolution()
         {
         }
 

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.SecurityCenter
     /// Please note <see cref="SecuritySettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityAlertSyncSettings"/> and <see cref="DataExportSettings"/>.
     /// </summary>
-    public partial class SecuritySettingData : ResourceData
+    public abstract partial class SecuritySettingData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="SecuritySettingData"/>. </summary>
-        public SecuritySettingData()
+        protected SecuritySettingData()
         {
         }
 
