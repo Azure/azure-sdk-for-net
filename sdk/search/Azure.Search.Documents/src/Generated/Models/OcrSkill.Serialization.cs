@@ -40,6 +40,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("detectOrientation");
                 }
             }
+            if (Optional.IsDefined(LineEnding))
+            {
+                writer.WritePropertyName("lineEnding"u8);
+                writer.WriteStringValue(LineEnding.Value.ToString());
+            }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
@@ -82,6 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             Optional<OcrSkillLanguage?> defaultLanguageCode = default;
             Optional<bool?> detectOrientation = default;
+            Optional<LineEnding> lineEnding = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -108,6 +114,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     detectOrientation = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("lineEnding"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lineEnding = new LineEnding(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -151,7 +166,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation));
+            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation), Optional.ToNullable(lineEnding));
         }
     }
 }

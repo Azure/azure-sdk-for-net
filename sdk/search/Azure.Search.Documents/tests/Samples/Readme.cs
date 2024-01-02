@@ -215,10 +215,10 @@ namespace Azure.Search.Documents.Tests.Samples
 
             OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
             string description = "Very popular hotel in town.";
-            EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { description });
+            EmbeddingsOptions embeddingsOptions = new(description);
 
-            Embeddings embeddings = await openAIClient.GetEmbeddingsAsync(embeddingsOptions);
-            ReadOnlyMemory<float> descriptionVector = embeddings.Data[0].Embedding;
+            Embeddings embeddings = await openAIClient.GetEmbeddingsAsync("EmbeddingsModelName", embeddingsOptions);
+            IReadOnlyList<float> descriptionVector = embeddings.Data[0].Embedding;
             #endregion
         }
 

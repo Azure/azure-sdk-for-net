@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Create
             // Create the search index
-            string indexName = "products";
+            string indexName = "Products";
 #if !SNIPPET
             indexName = Recording.Random.GetName();
 #endif

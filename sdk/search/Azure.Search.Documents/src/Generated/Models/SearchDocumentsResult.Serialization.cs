@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Models
             Optional<long> odataCount = default;
             Optional<double> searchCoverage = default;
             Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
-            Optional<IReadOnlyList<QueryAnswerResult>> searchAnswers = default;
+            Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
             Optional<SearchOptions> searchNextPageParameters = default;
+            Optional<SemanticPartialResponseReason> searchSemanticPartialResponseReason = default;
+            Optional<SemanticPartialResponseType> searchSemanticPartialResponseType = default;
             IReadOnlyList<SearchResult> value = default;
             Optional<string> odataNextLink = default;
-            Optional<SemanticErrorReason> searchSemanticPartialResponseReason = default;
-            Optional<SemanticSearchResultsType> searchSemanticPartialResponseType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -82,10 +82,10 @@ namespace Azure.Search.Documents.Models
                         searchAnswers = null;
                         continue;
                     }
-                    List<QueryAnswerResult> array = new List<QueryAnswerResult>();
+                    List<AnswerResult> array = new List<AnswerResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item));
+                        array.Add(AnswerResult.DeserializeAnswerResult(item));
                     }
                     searchAnswers = array;
                     continue;
@@ -97,6 +97,24 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("@search.semanticPartialResponseReason"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSemanticPartialResponseReason = new SemanticPartialResponseReason(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("@search.semanticPartialResponseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSemanticPartialResponseType = new SemanticPartialResponseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -114,26 +132,8 @@ namespace Azure.Search.Documents.Models
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@search.semanticPartialResponseReason"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    searchSemanticPartialResponseReason = new SemanticErrorReason(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("@search.semanticPartialResponseType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    searchSemanticPartialResponseType = new SemanticSearchResultsType(property.Value.GetString());
-                    continue;
-                }
             }
-            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, value, odataNextLink.Value, Optional.ToNullable(searchSemanticPartialResponseReason), Optional.ToNullable(searchSemanticPartialResponseType));
+            return new SearchDocumentsResult(Optional.ToNullable(odataCount), Optional.ToNullable(searchCoverage), Optional.ToDictionary(searchFacets), Optional.ToList(searchAnswers), searchNextPageParameters.Value, Optional.ToNullable(searchSemanticPartialResponseReason), Optional.ToNullable(searchSemanticPartialResponseType), value, odataNextLink.Value);
         }
     }
 }
