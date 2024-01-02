@@ -37,6 +37,8 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         Assert.AreEqual(2, observations.Count);
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual(200, message.Response!.Status);
     }
 
     [Test]
@@ -61,6 +63,8 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual(500, message.Response!.Status);
     }
 
     [Test]
@@ -88,6 +92,8 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         {
             Assert.AreEqual("Transport:Transport", observations[index++]);
         }
+
+        Assert.AreEqual(500, message.Response!.Status);
     }
 
     [Test]
@@ -107,6 +113,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         Assert.AreEqual(maxRetryCount, delay.CompletionCount);
+        Assert.AreEqual(500, message.Response!.Status);
     }
 
     [Test]
@@ -137,6 +144,8 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         {
             Assert.AreEqual("Transport:Transport", observations[index++]);
         }
+
+        Assert.AreEqual(501, message.Response!.Status);
     }
 
     [Test]
@@ -182,11 +191,6 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
                     Assert.AreSame(retriableException, retryPolicy.LastException);
                     retryPolicy.Reset();
                     break;
-                case 3:
-                    Assert.IsTrue(retryPolicy.ShouldRetryCalled);
-                    Assert.IsNull(retryPolicy.LastException);
-                    retryPolicy.Reset();
-                    break;
                 default:
                     throw new InvalidOperationException();
             }
@@ -194,6 +198,10 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
 
         PipelineMessage message = pipeline.CreateMessage();
         await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        // Validate last iteration through retry policy handling, i.e. after 200 response
+        Assert.IsFalse(retryPolicy.ShouldRetryCalled);
+        Assert.IsNull(retryPolicy.LastException);
 
         List<string> observations = ObservablePolicy.GetData(message);
 
@@ -204,5 +212,152 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual(200, message.Response!.Status);
+    }
+
+    [Test]
+    public async Task CallbacksAreCalledForErrorResponseAndException()
+    {
+        Exception retriableException = new IOException();
+
+        MockRetryPolicy retryPolicy = new MockRetryPolicy();
+        RetriableTransport transport = new RetriableTransport("Transport", responseFactory);
+
+        int responseFactory(int i)
+            => i switch
+            {
+                0 => 500,
+                1 => throw retriableException,
+                2 => 200,
+                _ => throw new InvalidOperationException(),
+            };
+
+        PipelineOptions options = new()
+        {
+            RetryPolicy = retryPolicy,
+            Transport = transport,
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        // Validate the state of the retry policy at the transport.
+        transport.OnSendingRequest = i =>
+        {
+            switch (i)
+            {
+                case 0:
+                    Assert.IsTrue(retryPolicy.OnSendingRequestCalled);
+                    Assert.IsFalse(retryPolicy.OnRequestSentCalled);
+                    Assert.IsNull(retryPolicy.LastException);
+                    break;
+                case 1:
+                    Assert.IsTrue(retryPolicy.OnSendingRequestCalled);
+                    Assert.IsTrue(retryPolicy.OnRequestSentCalled);
+                    Assert.IsNull(retryPolicy.LastException);
+                    retryPolicy.Reset();
+                    break;
+                case 2:
+                    Assert.IsTrue(retryPolicy.OnSendingRequestCalled);
+                    Assert.IsTrue(retryPolicy.OnRequestSentCalled);
+                    Assert.AreSame(retriableException, retryPolicy.LastException);
+                    retryPolicy.Reset();
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+        };
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        // Validate last iteration through retry policy handling, i.e. after 200 response
+        Assert.IsFalse(retryPolicy.OnSendingRequestCalled);
+        Assert.IsTrue(retryPolicy.OnRequestSentCalled);
+        Assert.IsNull(retryPolicy.LastException);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+
+        // We visited the transport three times due to retries
+        Assert.AreEqual(3, observations.Count);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual(200, message.Response!.Status);
+    }
+
+    [Test]
+    public async Task RetriesWithPolly()
+    {
+        PipelineOptions options = new()
+        {
+            RetryPolicy = new PollyRetryPolicy(),
+            Transport = new RetriableTransport("Transport", new int[] { 429, 200 })
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+
+        // We visited the transport twice due to retries
+        Assert.AreEqual(2, observations.Count);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual(200, message.Response!.Status);
+    }
+
+    [Test]
+    public void RethrowsAggregateExceptionAfterMaxRetryCount()
+    {
+        List<Exception> exceptions = new() {
+            new IOException(),
+            new IOException(),
+            new IOException(),
+            new IOException() };
+
+        MockRetryPolicy retryPolicy = new MockRetryPolicy();
+        RetriableTransport transport = new RetriableTransport("Transport", responseFactory);
+
+        int responseFactory(int i)
+            => i switch
+            {
+                0 => throw exceptions[i],
+                1 => throw exceptions[i],
+                2 => throw exceptions[i],
+                3 => throw exceptions[i],
+                _ => throw new InvalidOperationException(),
+            };
+
+        PipelineOptions options = new()
+        {
+            RetryPolicy = retryPolicy,
+            Transport = transport,
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        AggregateException? exception = Assert.ThrowsAsync<AggregateException>(async ()
+            => await pipeline.SendSyncOrAsync(message, IsAsync));
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+
+        // We visited the transport four times due to retries
+        Assert.AreEqual(4, observations.Count);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        StringAssert.StartsWith("Retry failed after 4 tries.", exception!.Message);
+        CollectionAssert.AreEqual(exceptions, exception.InnerExceptions);
     }
 }
