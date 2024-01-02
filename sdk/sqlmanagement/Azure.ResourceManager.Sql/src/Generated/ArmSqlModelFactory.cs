@@ -3894,7 +3894,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> The state of the server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', 1.0', '1.1', '1.2', '1.3'. </param>
+        /// <param name="minTlsVersion"> Minimal TLS version. Allowed values: 'None', 1.0', '1.1', '1.2', '1.3'. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
         /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
@@ -3905,12 +3905,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
         /// <returns> A new <see cref="Sql.SqlServerData"/> instance for mocking. </returns>
-        public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, MinimalTlsVersion? minimalTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
+        public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, MinimalTlsVersion? minTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<SqlServerPrivateEndpointConnection>();
 
-            return new SqlServerData(id, name, resourceType, systemData, tags, location, identity, kind, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minimalTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, isIPv6Enabled, externalGovernanceStatus);
+            return new SqlServerData(id, name, resourceType, systemData, tags, location, identity, kind, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, isIPv6Enabled, externalGovernanceStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlServerPrivateEndpointConnection"/>. </summary>
