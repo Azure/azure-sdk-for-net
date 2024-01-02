@@ -17,7 +17,5 @@ extends:
         Location: 'westcentralus'
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
-      China:
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live
