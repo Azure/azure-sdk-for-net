@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class AzureVmWorkloadSapHanaHSRProtectableItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSapHanaHsrProtectableItem : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureVmWorkloadSapHanaHSRProtectableItem DeserializeAzureVmWorkloadSapHanaHSRProtectableItem(JsonElement element)
+        internal static VmWorkloadSapHanaHsrProtectableItem DeserializeVmWorkloadSapHanaHsrProtectableItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new AzureVmWorkloadSapHanaHSRProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value, Optional.ToNullable(isProtectable));
+            return new VmWorkloadSapHanaHsrProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, parentUniqueName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(isAutoProtected), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subprotectableitemcount), prebackupvalidation.Value, Optional.ToNullable(isProtectable));
         }
     }
 }

@@ -45,8 +45,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         private FetchTieringCostRestOperations _fetchTieringCostRestClient;
         private ClientDiagnostics _getTieringCostOperationResultClientDiagnostics;
         private GetTieringCostOperationResultRestOperations _getTieringCostOperationResultRestClient;
-        private ClientDiagnostics _tieringCostOperationStatusClientDiagnostics;
-        private TieringCostOperationStatusRestOperations _tieringCostOperationStatusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesBackupResourceGroupResource"/> class for mocking. </summary>
         protected MockableRecoveryServicesBackupResourceGroupResource()
@@ -84,8 +82,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         private FetchTieringCostRestOperations FetchTieringCostRestClient => _fetchTieringCostRestClient ??= new FetchTieringCostRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics GetTieringCostOperationResultClientDiagnostics => _getTieringCostOperationResultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private GetTieringCostOperationResultRestOperations GetTieringCostOperationResultRestClient => _getTieringCostOperationResultRestClient ??= new GetTieringCostOperationResultRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics TieringCostOperationStatusClientDiagnostics => _tieringCostOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private TieringCostOperationStatusRestOperations TieringCostOperationStatusRestClient => _tieringCostOperationStatusRestClient ??= new TieringCostOperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -1436,80 +1432,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
             try
             {
                 var response = GetTieringCostOperationResultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status of async operations of tiering cost
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/operationsStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TieringCostOperationStatus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatus>> GetTieringCostOperationStatuAsync(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = TieringCostOperationStatusClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetTieringCostOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = await TieringCostOperationStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the status of async operations of tiering cost
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupTieringCost/default/operationsStatus/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TieringCostOperationStatus_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatus> GetTieringCostOperationStatu(string vaultName, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = TieringCostOperationStatusClientDiagnostics.CreateScope("MockableRecoveryServicesBackupResourceGroupResource.GetTieringCostOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = TieringCostOperationStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

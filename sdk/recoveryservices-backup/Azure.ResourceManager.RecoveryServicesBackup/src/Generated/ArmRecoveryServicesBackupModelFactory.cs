@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="properties">
         /// WorkloadProtectableItemResource properties
         /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="AzureVmWorkloadSapHanaHSRProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
+        /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>
@@ -501,33 +501,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static UnlockDeleteResult UnlockDeleteResult(DateTimeOffset? unlockDeleteExpireOn = null)
         {
             return new UnlockDeleteResult(unlockDeleteExpireOn);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
-        /// <param name="id"> ID of the operation. </param>
-        /// <param name="name"> Name of the operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="startOn"> Operation start time. Format: ISO-8601. </param>
-        /// <param name="endOn"> Operation end time. Format: ISO-8601. </param>
-        /// <param name="error"> Error information related to this operation. </param>
-        /// <param name="properties">
-        /// Additional information associated with this operation.
-        /// Please note <see cref="OperationStatusExtendedInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.OperationStatusJobExtendedInfo"/>, <see cref="Models.OperationStatusJobsExtendedInfo"/>, <see cref="Models.OperationStatusProvisionIlrExtendedInfo"/> and <see cref="Models.OperationStatusValidateOperationExtendedInfo"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(string id = null, string name = null, OperationStatusValue? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, OperationStatusError error = null, OperationStatusExtendedInfo properties = null)
-        {
-            return new OperationStatus(id, name, status, startOn, endOn, error, properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusError"/>. </summary>
-        /// <param name="code"> Error code of the operation failure. </param>
-        /// <param name="message"> Error message displayed if the operation failure. </param>
-        /// <returns> A new <see cref="Models.OperationStatusError"/> instance for mocking. </returns>
-        public static OperationStatusError OperationStatusError(string code = null, string message = null)
-        {
-            return new OperationStatusError(code, message);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FileshareProtectedItem"/>. </summary>
@@ -1115,61 +1088,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static InquiryValidation InquiryValidation(string status = null, BackupErrorDetail errorDetail = null, string additionalDetail = null, BinaryData protectableItemCount = null)
         {
             return new InquiryValidation(status, errorDetail, additionalDetail, protectableItemCount);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClientScriptForConnect"/>. </summary>
-        /// <param name="scriptContent"> File content of the client script for file / folder restore. </param>
-        /// <param name="scriptExtension"> File extension of the client script for file / folder restore - .ps1 , .sh , etc. </param>
-        /// <param name="osType"> OS type - Windows, Linux etc. for which this file / folder restore client script works. </param>
-        /// <param name="uri"> URL of Executable from where to source the content. If this is not null then ScriptContent should not be used. </param>
-        /// <param name="scriptNameSuffix">
-        /// Mandatory suffix that should be added to the name of script that is given for download to user.
-        /// If its null or empty then , ignore it.
-        /// </param>
-        /// <returns> A new <see cref="Models.ClientScriptForConnect"/> instance for mocking. </returns>
-        public static ClientScriptForConnect ClientScriptForConnect(string scriptContent = null, string scriptExtension = null, string osType = null, Uri uri = null, string scriptNameSuffix = null)
-        {
-            return new ClientScriptForConnect(scriptContent, scriptExtension, osType, uri, scriptNameSuffix);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusJobExtendedInfo"/>. </summary>
-        /// <param name="jobId"> ID of the job created for this protected item. </param>
-        /// <returns> A new <see cref="Models.OperationStatusJobExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusJobExtendedInfo OperationStatusJobExtendedInfo(string jobId = null)
-        {
-            return new OperationStatusJobExtendedInfo("OperationStatusJobExtendedInfo", jobId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusJobsExtendedInfo"/>. </summary>
-        /// <param name="jobIds"> IDs of the jobs created for the protected item. </param>
-        /// <param name="failedJobsError"> Stores all the failed jobs along with the corresponding error codes. </param>
-        /// <returns> A new <see cref="Models.OperationStatusJobsExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusJobsExtendedInfo OperationStatusJobsExtendedInfo(IEnumerable<string> jobIds = null, IReadOnlyDictionary<string, string> failedJobsError = null)
-        {
-            jobIds ??= new List<string>();
-            failedJobsError ??= new Dictionary<string, string>();
-
-            return new OperationStatusJobsExtendedInfo("OperationStatusJobsExtendedInfo", jobIds?.ToList(), failedJobsError);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusProvisionIlrExtendedInfo"/>. </summary>
-        /// <param name="recoveryTargetClientScripts"> Target details for file / folder restore. </param>
-        /// <returns> A new <see cref="Models.OperationStatusProvisionIlrExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusProvisionIlrExtendedInfo OperationStatusProvisionIlrExtendedInfo(IEnumerable<ClientScriptForConnect> recoveryTargetClientScripts = null)
-        {
-            recoveryTargetClientScripts ??= new List<ClientScriptForConnect>();
-
-            return new OperationStatusProvisionIlrExtendedInfo("OperationStatusProvisionILRExtendedInfo", recoveryTargetClientScripts != null ? new InstantItemRecoveryTarget(recoveryTargetClientScripts?.ToList()) : null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusValidateOperationExtendedInfo"/>. </summary>
-        /// <param name="validateOperationResponseValidationResults"> Gets the validation operation response. </param>
-        /// <returns> A new <see cref="Models.OperationStatusValidateOperationExtendedInfo"/> instance for mocking. </returns>
-        public static OperationStatusValidateOperationExtendedInfo OperationStatusValidateOperationExtendedInfo(IEnumerable<BackupErrorDetail> validateOperationResponseValidationResults = null)
-        {
-            validateOperationResponseValidationResults ??= new List<BackupErrorDetail>();
-
-            return new OperationStatusValidateOperationExtendedInfo("OperationStatusValidateOperationExtendedInfo", validateOperationResponseValidationResults != null ? new ValidateOperationResponse(validateOperationResponseValidationResults?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TieringCostRehydrationInfo"/>. </summary>

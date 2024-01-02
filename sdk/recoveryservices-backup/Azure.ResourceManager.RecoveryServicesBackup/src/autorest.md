@@ -103,7 +103,7 @@ rename-mapping:
   AzureVmWorkloadSAPHanaDatabaseWorkloadItem: VmWorkloadSapHanaDatabaseWorkloadItem
   AzureVmWorkloadSAPHanaDBInstance: VmWorkloadSapHanaDBInstance
   AzureVmWorkloadSAPHanaDBInstanceProtectedItem: VmWorkloadSapHanaDBInstanceProtectedItem
-  AzureVmWorkloadSAPHanaHSR: VmWorkloadSapHanaHsr
+  AzureVmWorkloadSAPHanaHSRProtectableItem: VmWorkloadSapHanaHsrProtectableItem
   AzureVmWorkloadSAPHanaSystemProtectableItem: VmWorkloadSapHanaSystemProtectableItem
   AzureVmWorkloadSAPHanaSystemWorkloadItem: VmWorkloadSapHanaSystemWorkloadItem
   AzureVmWorkloadSQLAvailabilityGroupProtectableItem: VmWorkloadSqlAvailabilityGroupProtectableItem
@@ -381,6 +381,7 @@ directive:
   - remove-operation: BackupOperationResults_Get
   - remove-operation: BackupOperationStatuses_Get
   - remove-operation: ProtectionPolicyOperationStatuses_Get
+  - remove-operation: TieringCostOperationStatus_Get
   - from: bms.json
     where: $.definitions
     transform: >
