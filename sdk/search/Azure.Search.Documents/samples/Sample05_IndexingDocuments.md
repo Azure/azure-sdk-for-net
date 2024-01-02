@@ -73,7 +73,7 @@ We'll use `FieldBuilder` to do the heavy lifting and create our search index:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Create
 // Create the search index
-string indexName = "Products";
+string indexName = "products";
 await indexClient.CreateIndexAsync(
     new SearchIndex(indexName)
     {

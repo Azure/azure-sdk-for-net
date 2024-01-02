@@ -14,7 +14,7 @@ string vectorSearchHnswConfig = "my-hsnw-vector-config";
 string modelName = "text-embedding-ada-002";
 int modelDimensions = 1536;
 
-string indexName = "Hotel";
+string indexName = "hotel";
 SearchIndex searchIndex = new(indexName)
 {
     Fields =

@@ -262,7 +262,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
             string modelName = "text-embedding-ada-002";
             int modelDimensions = 1536;
 
-            string indexName = "Hotel";
+            string indexName = "hotel";
 #if !SNIPPET
             indexName = name;
 #endif

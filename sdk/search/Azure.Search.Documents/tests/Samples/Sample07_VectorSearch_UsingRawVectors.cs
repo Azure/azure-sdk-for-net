@@ -244,7 +244,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
             int modelDimensions = 1536;
 
-            string indexName = "Hotel";
+            string indexName = "hotel";
 #if !SNIPPET
             indexName = name;
 #endif
