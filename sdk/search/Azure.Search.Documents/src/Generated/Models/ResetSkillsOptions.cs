@@ -13,10 +13,17 @@ namespace Azure.Search.Documents.Models
     /// <summary> The SkillNames. </summary>
     public partial class ResetSkillsOptions
     {
-        /// <summary> Initializes a new instance of ResetSkillsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResetSkillsOptions"/>. </summary>
         public ResetSkillsOptions()
         {
             SkillNames = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResetSkillsOptions"/>. </summary>
+        /// <param name="skillNames"> the names of skills to be reset. </param>
+        internal ResetSkillsOptions(IList<string> skillNames)
+        {
+            SkillNames = skillNames;
         }
 
         /// <summary> the names of skills to be reset. </summary>

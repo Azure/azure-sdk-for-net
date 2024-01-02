@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The AML skill allows you to extend AI enrichment with a custom Azure Machine Learning (AML) model. Once an AML model is trained and deployed, an AML skill integrates it into AI enrichment. </summary>
     public partial class AzureMachineLearningSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of AzureMachineLearningSkill. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningSkill"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>

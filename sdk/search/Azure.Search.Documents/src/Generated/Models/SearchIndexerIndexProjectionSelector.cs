@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Description for what data to store in the designated search index. </summary>
     public partial class SearchIndexerIndexProjectionSelector
     {
-        /// <summary> Initializes a new instance of SearchIndexerIndexProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionSelector"/>. </summary>
         /// <param name="targetIndexName"> Name of the search index to project to. Must have a key field with the 'keyword' analyzer set. </param>
         /// <param name="parentKeyFieldName"> Name of the field in the search index to map the parent document's key value to. Must be a string field that is filterable and not the key field. </param>
         /// <param name="sourceContext"> Source context for the projections. Represents the cardinality at which the document will be split into multiple sub documents. </param>
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Mappings = mappings.ToList();
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerIndexProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjectionSelector"/>. </summary>
         /// <param name="targetIndexName"> Name of the search index to project to. Must have a key field with the 'keyword' analyzer set. </param>
         /// <param name="parentKeyFieldName"> Name of the field in the search index to map the parent document's key value to. Must be a string field that is filterable and not the key field. </param>
         /// <param name="sourceContext"> Source context for the projections. Represents the cardinality at which the document will be split into multiple sub documents. </param>

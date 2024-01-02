@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Response from a List Datasources request. If successful, it includes the full definitions of all datasources. </summary>
     internal partial class ListDataSourcesResult
     {
-        /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListDataSourcesResult"/>. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSources"/> is null. </exception>
         internal ListDataSourcesResult(IEnumerable<SearchIndexerDataSourceConnection> dataSources)
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             DataSources = dataSources.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListDataSourcesResult"/>. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
         internal ListDataSourcesResult(IReadOnlyList<SearchIndexerDataSourceConnection> dataSources)
         {

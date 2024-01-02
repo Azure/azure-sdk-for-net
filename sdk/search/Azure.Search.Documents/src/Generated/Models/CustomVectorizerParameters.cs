@@ -14,13 +14,13 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains the parameters specific to generating vector embeddings via a custom endpoint. </summary>
     public partial class CustomVectorizerParameters
     {
-        /// <summary> Initializes a new instance of CustomVectorizerParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomVectorizerParameters"/>. </summary>
         public CustomVectorizerParameters()
         {
             HttpHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CustomVectorizerParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomVectorizerParameters"/>. </summary>
         /// <param name="uri"> The uri for the Web API. </param>
         /// <param name="httpHeaders"> The headers required to make the http request. </param>
         /// <param name="httpMethod"> The method for the http request. </param>

@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class DataChangeDetectionPolicy
     {
-        /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/>. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
         internal DataChangeDetectionPolicy(string oDataType)
         {

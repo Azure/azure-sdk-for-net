@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains the parameters specific to using an Azure Open AI service for vectorization at query time. </summary>
     public partial class AzureOpenAIVectorizer : VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of AzureOpenAIVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureOpenAIVectorizer(string name) : base(name)
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Kind = VectorSearchVectorizerKind.AzureOpenAI;
         }
 
-        /// <summary> Initializes a new instance of AzureOpenAIVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         /// <param name="azureOpenAIParameters"> Contains the parameters specific to Azure Open AI embedding vectorization. </param>

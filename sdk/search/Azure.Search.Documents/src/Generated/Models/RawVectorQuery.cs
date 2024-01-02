@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.Models
     /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
     public partial class RawVectorQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of RawVectorQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawVectorQuery"/>. </summary>
         public RawVectorQuery()
         {
             Vector = new ChangeTrackingList<float>();
             Kind = VectorQueryKind.Vector;
         }
 
-        /// <summary> Initializes a new instance of RawVectorQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="RawVectorQuery"/>. </summary>
         /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>

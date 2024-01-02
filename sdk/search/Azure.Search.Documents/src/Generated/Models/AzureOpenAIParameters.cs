@@ -12,12 +12,12 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains the parameters specific to using an Azure Open AI service for vectorization at query time. </summary>
     public partial class AzureOpenAIParameters
     {
-        /// <summary> Initializes a new instance of AzureOpenAIParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIParameters"/>. </summary>
         public AzureOpenAIParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureOpenAIParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIParameters"/>. </summary>
         /// <param name="resourceUri"> The resource uri for your Azure Open AI resource. </param>
         /// <param name="deploymentId"> ID of your Azure Open AI model deployment on the designated resource. </param>
         /// <param name="apiKey"> API key for the designated Azure Open AI resource. </param>

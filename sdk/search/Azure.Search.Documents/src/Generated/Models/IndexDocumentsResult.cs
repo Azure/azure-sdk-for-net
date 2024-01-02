@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> Response containing the status of operations for all documents in the indexing request. </summary>
     public partial class IndexDocumentsResult
     {
-        /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexDocumentsResult"/>. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal IndexDocumentsResult(IEnumerable<IndexingResult> results)
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexDocumentsResult"/>. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
         internal IndexDocumentsResult(IReadOnlyList<IndexingResult> results)
         {
