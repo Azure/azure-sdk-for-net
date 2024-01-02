@@ -66,23 +66,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Host);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Host))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, Host);
             writer.WritePropertyName("username"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Username))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, Username);
             writer.WritePropertyName("password"u8);
             JsonSerializer.Serialize(writer, Password);
             if (Optional.IsDefined(UseEncryptedEndpoints))
@@ -132,8 +118,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData host = default;
-            BinaryData username = default;
+            DataFactoryElement<string> host = default;
+            DataFactoryElement<string> username = default;
             DataFactorySecretBaseDefinition password = default;
             Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
             Optional<DataFactoryElement<bool>> useHostVerification = default;
@@ -208,12 +194,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("host"u8))
                         {
-                            host = BinaryData.FromString(property0.Value.GetRawText());
+                            host = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("username"u8))
                         {
-                            username = BinaryData.FromString(property0.Value.GetRawText());
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))

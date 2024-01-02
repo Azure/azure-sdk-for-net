@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object describing the location and semantic content of a document. </summary>
     public partial class AnalyzedDocument
     {
-        /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzedDocument"/>. </summary>
         /// <param name="documentType"> Document type. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of AnalyzedDocument. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzedDocument"/>. </summary>
         /// <param name="documentType"> Document type. </param>
         /// <param name="boundingRegions"> Bounding regions covering the document. </param>
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>

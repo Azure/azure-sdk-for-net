@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Parameters describes the request to regenerate access keys. </summary>
     public partial class RegenerateCommunicationServiceKeyContent
     {
-        /// <summary> Initializes a new instance of RegenerateCommunicationServiceKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegenerateCommunicationServiceKeyContent"/>. </summary>
         public RegenerateCommunicationServiceKeyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegenerateCommunicationServiceKeyContent"/>. </summary>
+        /// <param name="keyType"> The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive). </param>
+        internal RegenerateCommunicationServiceKeyContent(CommunicationServiceKeyType? keyType)
+        {
+            KeyType = keyType;
         }
 
         /// <summary> The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive). </summary>

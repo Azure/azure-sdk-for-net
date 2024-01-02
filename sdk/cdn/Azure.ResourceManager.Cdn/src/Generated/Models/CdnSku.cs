@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// </summary>
     public partial class CdnSku
     {
-        /// <summary> Initializes a new instance of CdnSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnSku"/>. </summary>
         public CdnSku()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnSku"/>. </summary>
         /// <param name="name"> Name of the pricing tier. </param>
         internal CdnSku(CdnSkuName? name)
         {

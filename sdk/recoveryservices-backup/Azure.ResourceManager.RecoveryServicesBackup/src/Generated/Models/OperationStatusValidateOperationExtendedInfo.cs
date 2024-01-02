@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Operation status extended info for ValidateOperation action. </summary>
     public partial class OperationStatusValidateOperationExtendedInfo : OperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of OperationStatusValidateOperationExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusValidateOperationExtendedInfo"/>. </summary>
         internal OperationStatusValidateOperationExtendedInfo()
         {
             ObjectType = "OperationStatusValidateOperationExtendedInfo";
         }
 
-        /// <summary> Initializes a new instance of OperationStatusValidateOperationExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusValidateOperationExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="validateOperationResponse"> Gets the validation operation response. </param>
         internal OperationStatusValidateOperationExtendedInfo(string objectType, ValidateOperationResponse validateOperationResponse) : base(objectType)

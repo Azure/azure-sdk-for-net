@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings that determines the validation flow of users using ContainerApp Service Authentication/Authorization. </summary>
     public partial class ContainerAppGlobalValidation
     {
-        /// <summary> Initializes a new instance of ContainerAppGlobalValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppGlobalValidation"/>. </summary>
         public ContainerAppGlobalValidation()
         {
             ExcludedPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppGlobalValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppGlobalValidation"/>. </summary>
         /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
         /// <param name="redirectToProvider">
         /// The default authentication provider to use when multiple providers are configured.

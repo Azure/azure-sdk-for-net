@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A list of servers. </summary>
     internal partial class MySqlServerListResult
     {
-        /// <summary> Initializes a new instance of MySqlServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerListResult"/>. </summary>
         internal MySqlServerListResult()
         {
             Value = new ChangeTrackingList<MySqlServerData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerListResult"/>. </summary>
         /// <param name="value"> The list of servers. </param>
         internal MySqlServerListResult(IReadOnlyList<MySqlServerData> value)
         {

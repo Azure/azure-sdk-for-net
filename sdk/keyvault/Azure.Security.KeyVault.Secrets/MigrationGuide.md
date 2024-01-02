@@ -14,6 +14,7 @@ Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those ne
   - [Setting secrets](#setting-secrets)
   - [Getting secrets](#getting-secrets)
   - [Listing secrets](#listing-secrets)
+  - [Listing secret versions](#listing-secret-versions)
   - [Deleting secrets](#deleting-secrets)
   - [Managing shared access signatures](#managing-shared-access-signatures)
 - [Additional samples](#additional-samples)
@@ -184,6 +185,45 @@ await foreach (SecretProperties item in client.GetPropertiesOfSecretsAsync())
 foreach (SecretProperties item in client.GetPropertiesOfSecrets())
 {
     KeyVaultSecret secret = client.GetSecret(item.Name);
+}
+```
+
+### Listing secret versions
+
+Previously in `Microsoft.Azure.KeyVault`, you could list secret versions' properties using the `KeyVaultClient` and a specific Key Vault endpoint:
+
+```C# Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
+IPage<SecretItem> page = await client.GetSecretVersionsAsync("https://myvault.vault.azure.net", "secret-name");
+foreach (SecretItem item in page)
+{
+    SecretIdentifier secretId = item.Identifier;
+    SecretBundle secret = await client.GetSecretAsync(secretId.Vault, secretId.Name, secretId.Version);
+}
+
+while (page.NextPageLink != null)
+{
+    page = await client.GetSecretVersionsNextAsync(page.NextPageLink);
+    foreach (SecretItem item in page)
+    {
+        SecretIdentifier secretId = item.Identifier;
+        SecretBundle secret = await client.GetSecretAsync(secretId.Vault, secretId.Name, secretId.Version);
+    }
+}
+```
+
+Now in `Azure.Security.KeyVault.Secrets`, you list secret versions' properties in the Key Vault you specified when constructing the `SecretClient`. This returns an enumerable that enumerates all secret versions across any number of pages. If you want to enumerate pages, call the `AsPages` method on the returned enumerable.
+
+```C# Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
+// List all secrets asynchronously.
+await foreach (SecretProperties item in client.GetPropertiesOfSecretVersionsAsync("secret-name"))
+{
+    KeyVaultSecret secret = await client.GetSecretAsync(item.Name, item.Version);
+}
+
+// List all secrets synchronously.
+foreach (SecretProperties item in client.GetPropertiesOfSecretVersions("secret-name"))
+{
+    KeyVaultSecret secret = client.GetSecret(item.Name, item.Version);
 }
 ```
 

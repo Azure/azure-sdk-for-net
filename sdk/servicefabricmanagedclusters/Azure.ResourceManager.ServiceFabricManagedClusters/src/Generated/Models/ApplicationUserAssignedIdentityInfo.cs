@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The ApplicationUserAssignedIdentityInfo. </summary>
     public partial class ApplicationUserAssignedIdentityInfo
     {
-        /// <summary> Initializes a new instance of ApplicationUserAssignedIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationUserAssignedIdentityInfo"/>. </summary>
         /// <param name="name"> The friendly name of user assigned identity. </param>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="principalId"/> is null. </exception>

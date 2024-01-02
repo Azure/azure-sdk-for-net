@@ -18,12 +18,12 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            string kind = default;
+            RouterRuleKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RouterRuleKind(property.Value.GetString());
                     continue;
                 }
             }

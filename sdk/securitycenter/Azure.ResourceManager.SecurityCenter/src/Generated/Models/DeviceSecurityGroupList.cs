@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of device security groups. </summary>
     internal partial class DeviceSecurityGroupList
     {
-        /// <summary> Initializes a new instance of DeviceSecurityGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupList"/>. </summary>
         internal DeviceSecurityGroupList()
         {
             Value = new ChangeTrackingList<DeviceSecurityGroupData>();
         }
 
-        /// <summary> Initializes a new instance of DeviceSecurityGroupList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupList"/>. </summary>
         /// <param name="value"> List of device security group objects. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         internal DeviceSecurityGroupList(IReadOnlyList<DeviceSecurityGroupData> value, string nextLink)

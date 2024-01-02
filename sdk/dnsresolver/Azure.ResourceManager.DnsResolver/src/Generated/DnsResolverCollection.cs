@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DnsResolver
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DnsResolverResource" /> and their operations.
-    /// Each <see cref="DnsResolverResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DnsResolverCollection" /> instance call the GetDnsResolvers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DnsResolverResource"/> and their operations.
+    /// Each <see cref="DnsResolverResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DnsResolverCollection"/> instance call the GetDnsResolvers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DnsResolverCollection : ArmCollection, IEnumerable<DnsResolverResource>, IAsyncEnumerable<DnsResolverResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsResolverResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsResolverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsResolverResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);

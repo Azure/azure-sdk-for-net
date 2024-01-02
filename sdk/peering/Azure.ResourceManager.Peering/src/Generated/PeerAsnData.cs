@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeerAsnData : ResourceData
     {
-        /// <summary> Initializes a new instance of PeerAsnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerAsnData"/>. </summary>
         public PeerAsnData()
         {
             PeerContactDetail = new ChangeTrackingList<PeerAsnContactDetail>();
         }
 
-        /// <summary> Initializes a new instance of PeerAsnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerAsnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

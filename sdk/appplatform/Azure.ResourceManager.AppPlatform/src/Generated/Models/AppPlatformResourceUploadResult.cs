@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Resource upload definition payload. </summary>
     public partial class AppPlatformResourceUploadResult
     {
-        /// <summary> Initializes a new instance of AppPlatformResourceUploadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformResourceUploadResult"/>. </summary>
         internal AppPlatformResourceUploadResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformResourceUploadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformResourceUploadResult"/>. </summary>
         /// <param name="relativePath"> Source relative path. </param>
         /// <param name="uploadUri"> Upload URL. </param>
         internal AppPlatformResourceUploadResult(string relativePath, Uri uploadUri)

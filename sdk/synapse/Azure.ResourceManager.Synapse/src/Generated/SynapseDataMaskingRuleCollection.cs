@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseDataMaskingRuleResource" /> and their operations.
-    /// Each <see cref="SynapseDataMaskingRuleResource" /> in the collection will belong to the same instance of <see cref="SynapseDataMaskingPolicyResource" />.
-    /// To get a <see cref="SynapseDataMaskingRuleCollection" /> instance call the GetSynapseDataMaskingRules method from an instance of <see cref="SynapseDataMaskingPolicyResource" />.
+    /// A class representing a collection of <see cref="SynapseDataMaskingRuleResource"/> and their operations.
+    /// Each <see cref="SynapseDataMaskingRuleResource"/> in the collection will belong to the same instance of <see cref="SynapseDataMaskingPolicyResource"/>.
+    /// To get a <see cref="SynapseDataMaskingRuleCollection"/> instance call the GetSynapseDataMaskingRules method from an instance of <see cref="SynapseDataMaskingPolicyResource"/>.
     /// </summary>
     public partial class SynapseDataMaskingRuleCollection : ArmCollection, IEnumerable<SynapseDataMaskingRuleResource>, IAsyncEnumerable<SynapseDataMaskingRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseDataMaskingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseDataMaskingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseDataMaskingRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseDataMaskingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseDataMaskingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseDataMaskingRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridConnectivityModelFactory
     {
-        /// <summary> Initializes a new instance of EndpointResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivity.EndpointResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             return new EndpointResourceData(id, name, resourceType, systemData, endpointType, resourceId, provisioningState, createdBy, createdByType, createdOn, lastModifiedBy, lastModifiedByType, lastModifiedOn);
         }
 
-        /// <summary> Initializes a new instance of TargetResourceEndpointAccess. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TargetResourceEndpointAccess"/>. </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
         /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>

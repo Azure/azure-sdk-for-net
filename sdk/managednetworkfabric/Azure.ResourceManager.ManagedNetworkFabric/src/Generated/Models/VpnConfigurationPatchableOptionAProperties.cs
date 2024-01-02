@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> option A properties. </summary>
     public partial class VpnConfigurationPatchableOptionAProperties : OptionAProperties
     {
-        /// <summary> Initializes a new instance of VpnConfigurationPatchableOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableOptionAProperties"/>. </summary>
         public VpnConfigurationPatchableOptionAProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnConfigurationPatchableOptionAProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnConfigurationPatchableOptionAProperties"/>. </summary>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan Id.Example : 501. </param>
         /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>

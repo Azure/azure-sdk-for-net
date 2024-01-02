@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto database script operation response. </summary>
     internal partial class ScriptListResult
     {
-        /// <summary> Initializes a new instance of ScriptListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptListResult"/>. </summary>
         internal ScriptListResult()
         {
             Value = new ChangeTrackingList<KustoScriptData>();
         }
 
-        /// <summary> Initializes a new instance of ScriptListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptListResult"/>. </summary>
         /// <param name="value"> The list of Kusto scripts. </param>
         internal ScriptListResult(IReadOnlyList<KustoScriptData> value)
         {

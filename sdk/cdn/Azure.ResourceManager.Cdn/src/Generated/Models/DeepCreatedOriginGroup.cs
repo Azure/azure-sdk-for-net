@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The origin group for CDN content which is added when creating a CDN endpoint. Traffic is sent to the origins within the origin group based on origin health. </summary>
     public partial class DeepCreatedOriginGroup
     {
-        /// <summary> Initializes a new instance of DeepCreatedOriginGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeepCreatedOriginGroup"/>. </summary>
         /// <param name="name"> Origin group name which must be unique within the endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeepCreatedOriginGroup(string name)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of DeepCreatedOriginGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeepCreatedOriginGroup"/>. </summary>
         /// <param name="name"> Origin group name which must be unique within the endpoint. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
         /// <param name="origins"> The source of the content being delivered via CDN within given origin group. </param>

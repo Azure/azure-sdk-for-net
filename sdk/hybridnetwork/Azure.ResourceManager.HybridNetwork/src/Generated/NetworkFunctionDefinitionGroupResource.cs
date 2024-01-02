@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A Class representing a NetworkFunctionDefinitionGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFunctionDefinitionGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFunctionDefinitionGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PublisherResource" /> using the GetNetworkFunctionDefinitionGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFunctionDefinitionGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFunctionDefinitionGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PublisherResource"/> using the GetNetworkFunctionDefinitionGroup method.
     /// </summary>
     public partial class NetworkFunctionDefinitionGroupResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly NetworkFunctionDefinitionGroupsRestOperations _networkFunctionDefinitionGroupRestClient;
         private readonly NetworkFunctionDefinitionGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/networkFunctionDefinitionGroups";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFunctionDefinitionGroupResource"/> class for mocking. </summary>
         protected NetworkFunctionDefinitionGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFunctionDefinitionGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFunctionDefinitionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFunctionDefinitionGroupResource(ArmClient client, NetworkFunctionDefinitionGroupData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/networkFunctionDefinitionGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

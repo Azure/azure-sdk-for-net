@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a TemplateSpecVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TemplateSpecVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTemplateSpecVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TemplateSpecResource" /> using the GetTemplateSpecVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TemplateSpecVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTemplateSpecVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TemplateSpecResource"/> using the GetTemplateSpecVersion method.
     /// </summary>
     public partial class TemplateSpecVersionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Resources
         private readonly TemplateSpecVersionsRestOperations _templateSpecVersionRestClient;
         private readonly TemplateSpecVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/templateSpecs/versions";
+
         /// <summary> Initializes a new instance of the <see cref="TemplateSpecVersionResource"/> class for mocking. </summary>
         protected TemplateSpecVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TemplateSpecVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TemplateSpecVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TemplateSpecVersionResource(ArmClient client, TemplateSpecVersionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/templateSpecs/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

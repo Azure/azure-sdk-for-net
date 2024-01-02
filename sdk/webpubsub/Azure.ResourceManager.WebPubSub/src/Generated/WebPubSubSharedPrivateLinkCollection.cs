@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebPubSubSharedPrivateLinkResource" /> and their operations.
-    /// Each <see cref="WebPubSubSharedPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="WebPubSubResource" />.
-    /// To get a <see cref="WebPubSubSharedPrivateLinkCollection" /> instance call the GetWebPubSubSharedPrivateLinks method from an instance of <see cref="WebPubSubResource" />.
+    /// A class representing a collection of <see cref="WebPubSubSharedPrivateLinkResource"/> and their operations.
+    /// Each <see cref="WebPubSubSharedPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="WebPubSubResource"/>.
+    /// To get a <see cref="WebPubSubSharedPrivateLinkCollection"/> instance call the GetWebPubSubSharedPrivateLinks method from an instance of <see cref="WebPubSubResource"/>.
     /// </summary>
     public partial class WebPubSubSharedPrivateLinkCollection : ArmCollection, IEnumerable<WebPubSubSharedPrivateLinkResource>, IAsyncEnumerable<WebPubSubSharedPrivateLinkResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebPubSubSharedPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebPubSubSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSubSharedPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebPubSubSharedPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebPubSubSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSubSharedPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

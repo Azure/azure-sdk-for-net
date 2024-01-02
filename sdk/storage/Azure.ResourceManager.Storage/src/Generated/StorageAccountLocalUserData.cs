@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class StorageAccountLocalUserData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageAccountLocalUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountLocalUserData"/>. </summary>
         public StorageAccountLocalUserData()
         {
             PermissionScopes = new ChangeTrackingList<StoragePermissionScope>();
             SshAuthorizedKeys = new ChangeTrackingList<StorageSshPublicKey>();
         }
 
-        /// <summary> Initializes a new instance of StorageAccountLocalUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountLocalUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

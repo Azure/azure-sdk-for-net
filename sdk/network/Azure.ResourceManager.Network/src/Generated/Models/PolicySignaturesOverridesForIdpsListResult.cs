@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes an object containing an array with a single item. </summary>
     internal partial class PolicySignaturesOverridesForIdpsListResult
     {
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsListResult"/>. </summary>
         internal PolicySignaturesOverridesForIdpsListResult()
         {
             Value = new ChangeTrackingList<PolicySignaturesOverridesForIdpsData>();
         }
 
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsListResult"/>. </summary>
         /// <param name="value"> Describes a list consisting exactly one item describing the policy's signature override status. </param>
         internal PolicySignaturesOverridesForIdpsListResult(IReadOnlyList<PolicySignaturesOverridesForIdpsData> value)
         {

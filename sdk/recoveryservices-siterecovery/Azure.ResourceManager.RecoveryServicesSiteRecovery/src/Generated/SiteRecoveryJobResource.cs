@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a SiteRecoveryJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteRecoveryJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteRecoveryJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSiteRecoveryJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteRecoveryJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteRecoveryJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSiteRecoveryJob method.
     /// </summary>
     public partial class SiteRecoveryJobResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationJobsRestOperations _siteRecoveryJobReplicationJobsRestClient;
         private readonly SiteRecoveryJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationJobs";
+
         /// <summary> Initializes a new instance of the <see cref="SiteRecoveryJobResource"/> class for mocking. </summary>
         protected SiteRecoveryJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteRecoveryJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteRecoveryJobResource(ArmClient client, SiteRecoveryJobData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationJobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

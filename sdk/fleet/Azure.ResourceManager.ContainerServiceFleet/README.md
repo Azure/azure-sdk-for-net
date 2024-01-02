@@ -1,4 +1,4 @@
-# Microsoft Azure Database Fleet Manager management client library for .NET
+# Microsoft Azure Kubernetes Fleet Manager management client library for .NET
 
 Microsoft Azure Kubernetes Fleet Manager (Fleet) enables multi-cluster and at-scale scenarios for Azure Kubernetes Service (AKS) clusters. A Fleet resource creates a cluster that can be used to manage other member clusters.
 
@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Kubernetes Fleet Manager management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.ContainerServiceFleet --prerelease
+dotnet add package Azure.ResourceManager.ContainerServiceFleet
 ```
 
 ### Prerequisites

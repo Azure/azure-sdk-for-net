@@ -5,13 +5,21 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the proximity placement group. </summary>
     public partial class ProximityPlacementGroupPatch : ComputeResourcePatch
     {
-        /// <summary> Initializes a new instance of ProximityPlacementGroupPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupPatch"/>. </summary>
         public ProximityPlacementGroupPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal ProximityPlacementGroupPatch(IDictionary<string, string> tags) : base(tags)
         {
         }
     }

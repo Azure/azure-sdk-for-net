@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> List of HostPool definitions. </summary>
     internal partial class HostPoolList
     {
-        /// <summary> Initializes a new instance of HostPoolList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolList"/>. </summary>
         internal HostPoolList()
         {
             Value = new ChangeTrackingList<HostPoolData>();
         }
 
-        /// <summary> Initializes a new instance of HostPoolList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolList"/>. </summary>
         /// <param name="value"> List of HostPool definitions. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         internal HostPoolList(IReadOnlyList<HostPoolData> value, string nextLink)

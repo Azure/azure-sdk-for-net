@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExperimentResource> GetExperimentsAsync(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExperimentRestClient.CreateListAllRequest(Id.SubscriptionId, running, continuationToken);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <param name="running"> Optional value that indicates whether to filter results based on if the Experiment is currently running. If null, then the results will not be filtered. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExperimentResource> GetExperiments(bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ExperimentRestClient.CreateListAllRequest(Id.SubscriptionId, running, continuationToken);

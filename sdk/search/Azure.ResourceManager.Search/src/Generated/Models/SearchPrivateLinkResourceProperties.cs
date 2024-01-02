@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Describes the properties of a supported private link resource for the Azure Cognitive Search service. For a given API version, this represents the 'supported' groupIds when creating a shared private link resource. </summary>
     public partial class SearchPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of SearchPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkResourceProperties"/>. </summary>
         internal SearchPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Search.Models
             ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>();
         }
 
-        /// <summary> Initializes a new instance of SearchPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="requiredMembers"> The list of required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> The list of required DNS zone names of the private link resource. </param>

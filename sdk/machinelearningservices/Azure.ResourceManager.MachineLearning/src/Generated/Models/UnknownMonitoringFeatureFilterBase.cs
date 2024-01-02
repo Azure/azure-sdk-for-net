@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The UnknownMonitoringFeatureFilterBase. </summary>
     internal partial class UnknownMonitoringFeatureFilterBase : MonitoringFeatureFilterBase
     {
-        /// <summary> Initializes a new instance of UnknownMonitoringFeatureFilterBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMonitoringFeatureFilterBase"/>. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
         internal UnknownMonitoringFeatureFilterBase(MonitoringFeatureFilterType filterType) : base(filterType)
         {

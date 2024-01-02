@@ -10,10 +10,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> ApplyRecoveryPoint input specific to InMageAzureV2 provider. </summary>
     public partial class InMageAzureV2ApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ApplyRecoveryPointContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ApplyRecoveryPointContent"/>. </summary>
         public InMageAzureV2ApplyRecoveryPointContent()
         {
             InstanceType = "InMageAzureV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ApplyRecoveryPointContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        internal InMageAzureV2ApplyRecoveryPointContent(string instanceType) : base(instanceType)
+        {
+            InstanceType = instanceType ?? "InMageAzureV2";
         }
     }
 }

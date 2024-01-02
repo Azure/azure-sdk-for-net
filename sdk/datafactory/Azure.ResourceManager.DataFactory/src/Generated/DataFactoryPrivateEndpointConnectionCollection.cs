@@ -21,9 +21,9 @@ using Azure.ResourceManager.DataFactory.Models;
 namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataFactoryPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="DataFactoryPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="DataFactoryResource" />.
-    /// To get a <see cref="DataFactoryPrivateEndpointConnectionCollection" /> instance call the GetDataFactoryPrivateEndpointConnections method from an instance of <see cref="DataFactoryResource" />.
+    /// A class representing a collection of <see cref="DataFactoryPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="DataFactoryPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DataFactoryResource"/>.
+    /// To get a <see cref="DataFactoryPrivateEndpointConnectionCollection"/> instance call the GetDataFactoryPrivateEndpointConnections method from an instance of <see cref="DataFactoryResource"/>.
     /// </summary>
     public partial class DataFactoryPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<DataFactoryPrivateEndpointConnectionResource>, IAsyncEnumerable<DataFactoryPrivateEndpointConnectionResource>
     {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
-        /// <param name="content"> The DataFactoryPrivateEndpointConnectionCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> to use. </param>
         /// <param name="ifMatch"> ETag of the private endpoint connection entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
-        /// <param name="content"> The DataFactoryPrivateEndpointConnectionCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataFactoryPrivateEndpointConnectionCreateOrUpdateContent"/> to use. </param>
         /// <param name="ifMatch"> ETag of the private endpoint connection entity.  Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryPrivateEndpointConnectionprivateEndPointConnectionsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

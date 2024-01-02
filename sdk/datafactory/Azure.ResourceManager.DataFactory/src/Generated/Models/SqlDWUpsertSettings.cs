@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Sql DW upsert option settings. </summary>
     public partial class SqlDWUpsertSettings
     {
-        /// <summary> Initializes a new instance of SqlDWUpsertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWUpsertSettings"/>. </summary>
         public SqlDWUpsertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlDWUpsertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWUpsertSettings"/>. </summary>
         /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
         /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
         internal SqlDWUpsertSettings(DataFactoryElement<string> interimSchemaName, DataFactoryElement<IList<string>> keys)

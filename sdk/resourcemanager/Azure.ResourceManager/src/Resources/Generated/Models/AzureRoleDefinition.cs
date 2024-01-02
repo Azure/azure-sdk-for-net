@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Role definition properties. </summary>
     public partial class AzureRoleDefinition
     {
-        /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureRoleDefinition"/>. </summary>
         internal AzureRoleDefinition()
         {
             Permissions = new ChangeTrackingList<Permission>();
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureRoleDefinition"/>. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="isServiceRole"> If this is a service role. </param>

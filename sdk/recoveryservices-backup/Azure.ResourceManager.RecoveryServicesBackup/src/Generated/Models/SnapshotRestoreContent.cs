@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Encapsulates information regarding snapshot recovery for SAP Hana. </summary>
     public partial class SnapshotRestoreContent
     {
-        /// <summary> Initializes a new instance of SnapshotRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotRestoreContent"/>. </summary>
         public SnapshotRestoreContent()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotRestoreContent"/>. </summary>
         /// <param name="skipAttachAndMount"></param>
         /// <param name="logPointInTimeForDBRecovery"></param>
         internal SnapshotRestoreContent(bool? skipAttachAndMount, string logPointInTimeForDBRecovery)

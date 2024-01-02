@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class MigrateMySqlStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of MigrateMySqlStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlStatusData"/>. </summary>
         public MigrateMySqlStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

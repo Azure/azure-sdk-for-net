@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Details of estimated savings. </summary>
     public partial class ConsumptionCalculatedSavingsProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionCalculatedSavingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCalculatedSavingsProperties"/>. </summary>
         internal ConsumptionCalculatedSavingsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionCalculatedSavingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCalculatedSavingsProperties"/>. </summary>
         /// <param name="onDemandCost"> The cost without reservation. </param>
         /// <param name="overageCost"> The difference between total reservation cost and reservation cost. </param>
         /// <param name="quantity"> The quantity for calculated savings. </param>

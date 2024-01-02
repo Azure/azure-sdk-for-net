@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Status of Arc Extension for a particular node in HCI Cluster. </summary>
     public partial class PerNodeExtensionState
     {
-        /// <summary> Initializes a new instance of PerNodeExtensionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerNodeExtensionState"/>. </summary>
         internal PerNodeExtensionState()
         {
         }
 
-        /// <summary> Initializes a new instance of PerNodeExtensionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerNodeExtensionState"/>. </summary>
         /// <param name="name"> Name of the node in HCI Cluster. </param>
         /// <param name="extension"> Fully qualified resource ID for the particular Arc Extension on this node. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>

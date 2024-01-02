@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Maintenance update on a resource. </summary>
     public partial class MaintenanceUpdate
     {
-        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdate"/>. </summary>
         internal MaintenanceUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdate"/>. </summary>
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>

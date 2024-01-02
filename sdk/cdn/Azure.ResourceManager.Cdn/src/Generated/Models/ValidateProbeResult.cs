@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Output of the validate probe API. </summary>
     public partial class ValidateProbeResult
     {
-        /// <summary> Initializes a new instance of ValidateProbeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateProbeResult"/>. </summary>
         internal ValidateProbeResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateProbeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateProbeResult"/>. </summary>
         /// <param name="isValid"> Indicates whether the probe URL is accepted or not. </param>
         /// <param name="errorCode"> Specifies the error code when the probe url is not accepted. </param>
         /// <param name="message"> The detailed error message describing why the probe URL is not accepted. </param>

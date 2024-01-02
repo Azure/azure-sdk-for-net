@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The SynapsePrivateEndpointConnectionForPrivateLinkHubListResult. </summary>
     internal partial class SynapsePrivateEndpointConnectionForPrivateLinkHubListResult
     {
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionForPrivateLinkHubListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubListResult"/>. </summary>
         internal SynapsePrivateEndpointConnectionForPrivateLinkHubListResult()
         {
             Value = new ChangeTrackingList<SynapsePrivateEndpointConnectionForPrivateLinkHubData>();
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionForPrivateLinkHubListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal SynapsePrivateEndpointConnectionForPrivateLinkHubListResult(IReadOnlyList<SynapsePrivateEndpointConnectionForPrivateLinkHubData> value, string nextLink)

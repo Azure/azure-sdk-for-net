@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the restorable database accounts and their properties. </summary>
     internal partial class RestorableDatabaseAccountsListResult
     {
-        /// <summary> Initializes a new instance of RestorableDatabaseAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountsListResult"/>. </summary>
         internal RestorableDatabaseAccountsListResult()
         {
             Value = new ChangeTrackingList<RestorableCosmosDBAccountData>();
         }
 
-        /// <summary> Initializes a new instance of RestorableDatabaseAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDatabaseAccountsListResult"/>. </summary>
         /// <param name="value"> List of restorable database accounts and their properties. </param>
         internal RestorableDatabaseAccountsListResult(IReadOnlyList<RestorableCosmosDBAccountData> value)
         {

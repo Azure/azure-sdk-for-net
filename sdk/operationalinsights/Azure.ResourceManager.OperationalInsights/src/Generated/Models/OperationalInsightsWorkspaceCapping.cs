@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The daily volume cap for ingestion. </summary>
     public partial class OperationalInsightsWorkspaceCapping
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceCapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceCapping"/>. </summary>
         public OperationalInsightsWorkspaceCapping()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceCapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceCapping"/>. </summary>
         /// <param name="dailyQuotaInGB"> The workspace daily quota for ingestion. </param>
         /// <param name="quotaNextResetTime"> The time when the quota will be rest. </param>
         /// <param name="dataIngestionStatus"> The status of data ingestion for this workspace. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExpressRouteCrossConnectionPeeringResource" /> and their operations.
-    /// Each <see cref="ExpressRouteCrossConnectionPeeringResource" /> in the collection will belong to the same instance of <see cref="ExpressRouteCrossConnectionResource" />.
-    /// To get an <see cref="ExpressRouteCrossConnectionPeeringCollection" /> instance call the GetExpressRouteCrossConnectionPeerings method from an instance of <see cref="ExpressRouteCrossConnectionResource" />.
+    /// A class representing a collection of <see cref="ExpressRouteCrossConnectionPeeringResource"/> and their operations.
+    /// Each <see cref="ExpressRouteCrossConnectionPeeringResource"/> in the collection will belong to the same instance of <see cref="ExpressRouteCrossConnectionResource"/>.
+    /// To get an <see cref="ExpressRouteCrossConnectionPeeringCollection"/> instance call the GetExpressRouteCrossConnectionPeerings method from an instance of <see cref="ExpressRouteCrossConnectionResource"/>.
     /// </summary>
     public partial class ExpressRouteCrossConnectionPeeringCollection : ArmCollection, IEnumerable<ExpressRouteCrossConnectionPeeringResource>, IAsyncEnumerable<ExpressRouteCrossConnectionPeeringResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionPeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionPeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCrossConnectionPeeringResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCrossConnectionPeeringRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCrossConnectionPeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteCrossConnectionPeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCrossConnectionPeeringResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCrossConnectionPeeringRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

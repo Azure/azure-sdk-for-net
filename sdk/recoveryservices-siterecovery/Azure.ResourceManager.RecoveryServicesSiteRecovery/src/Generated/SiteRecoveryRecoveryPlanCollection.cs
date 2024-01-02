@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteRecoveryRecoveryPlanResource" /> and their operations.
-    /// Each <see cref="SiteRecoveryRecoveryPlanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SiteRecoveryRecoveryPlanCollection" /> instance call the GetSiteRecoveryRecoveryPlans method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryRecoveryPlanResource"/> and their operations.
+    /// Each <see cref="SiteRecoveryRecoveryPlanResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SiteRecoveryRecoveryPlanCollection"/> instance call the GetSiteRecoveryRecoveryPlans method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SiteRecoveryRecoveryPlanCollection : ArmCollection, IEnumerable<SiteRecoveryRecoveryPlanResource>, IAsyncEnumerable<SiteRecoveryRecoveryPlanResource>
     {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryRecoveryPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteRecoveryRecoveryPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryRecoveryPlanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryRecoveryPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteRecoveryRecoveryPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryRecoveryPlanResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);

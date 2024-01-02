@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Request parameters for tiering cost info for policy. </summary>
     public partial class FetchTieringCostSavingsInfoForPolicyContent : FetchTieringCostInfoContent
     {
-        /// <summary> Initializes a new instance of FetchTieringCostSavingsInfoForPolicyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForPolicyContent"/>. </summary>
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
         /// <param name="policyName"> Name of the backup policy for which the cost savings information is requested. </param>
@@ -24,6 +24,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
             PolicyName = policyName;
             ObjectType = "FetchTieringCostSavingsInfoForPolicyRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForPolicyContent"/>. </summary>
+        /// <param name="sourceTierType"> Source tier for the request. </param>
+        /// <param name="targetTierType"> target tier for the request. </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="policyName"> Name of the backup policy for which the cost savings information is requested. </param>
+        internal FetchTieringCostSavingsInfoForPolicyContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, string policyName) : base(sourceTierType, targetTierType, objectType)
+        {
+            PolicyName = policyName;
+            ObjectType = objectType ?? "FetchTieringCostSavingsInfoForPolicyRequest";
         }
 
         /// <summary> Name of the backup policy for which the cost savings information is requested. </summary>

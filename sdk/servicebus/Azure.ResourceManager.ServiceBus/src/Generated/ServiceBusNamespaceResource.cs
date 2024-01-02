@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusNamespaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusNamespaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetServiceBusNamespace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusNamespaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusNamespaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServiceBusNamespace method.
     /// </summary>
     public partial class ServiceBusNamespaceResource : ArmResource
     {
@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly DisasterRecoveryConfigsRestOperations _serviceBusDisasterRecoveryDisasterRecoveryConfigsRestClient;
         private readonly ServiceBusNamespaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespaceResource"/> class for mocking. </summary>
         protected ServiceBusNamespaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusNamespaceResource(ArmClient client, ServiceBusNamespaceData data) : this(client, data.Id)
@@ -78,9 +81,6 @@ namespace Azure.ResourceManager.ServiceBus
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary> Gets an object representing a ServiceBusNetworkRuleSetResource along with the instance operations that can be performed on it in the ServiceBusNamespace. </summary>
-        /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource"/> object. </returns>
         public virtual ServiceBusNetworkRuleSetResource GetServiceBusNetworkRuleSet()
         {
             return new ServiceBusNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

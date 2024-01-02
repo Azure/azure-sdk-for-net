@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Search.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SearchServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SearchServiceResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SearchServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SearchServiceResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SearchServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SearchServiceResource"/> object. </returns>
         public virtual SearchServiceResource GetSearchServiceResource(ResourceIdentifier id)
         {
             SearchServiceResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Search.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SearchPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SearchPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SearchPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SearchPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SearchPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SearchPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SearchPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SearchPrivateEndpointConnectionResource"/> object. </returns>
         public virtual SearchPrivateEndpointConnectionResource GetSearchPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             SearchPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Search.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SharedSearchServicePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SharedSearchServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedSearchServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SharedSearchServicePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SharedSearchServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedSearchServicePrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SharedSearchServicePrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SharedSearchServicePrivateLinkResource"/> object. </returns>
         public virtual SharedSearchServicePrivateLinkResource GetSharedSearchServicePrivateLinkResource(ResourceIdentifier id)
         {
             SharedSearchServicePrivateLinkResource.ValidateResourceId(id);

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing an ArmApplicationDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArmApplicationDefinitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArmApplicationDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetArmApplicationDefinition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArmApplicationDefinitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArmApplicationDefinitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetArmApplicationDefinition method.
     /// </summary>
     public partial class ArmApplicationDefinitionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Resources
         private readonly ApplicationDefinitionsRestOperations _armApplicationDefinitionApplicationDefinitionsRestClient;
         private readonly ArmApplicationDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Solutions/applicationDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="ArmApplicationDefinitionResource"/> class for mocking. </summary>
         protected ArmApplicationDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArmApplicationDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArmApplicationDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArmApplicationDefinitionResource(ArmClient client, ArmApplicationDefinitionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Solutions/applicationDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

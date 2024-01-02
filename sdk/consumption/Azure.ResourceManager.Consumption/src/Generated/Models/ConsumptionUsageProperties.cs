@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Details about historical usage data that has been used for computing the recommendation. </summary>
     public partial class ConsumptionUsageProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionUsageProperties"/>. </summary>
         internal ConsumptionUsageProperties()
         {
             UsageData = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionUsageProperties"/>. </summary>
         /// <param name="firstConsumptionDate"> The first usage date used for looking back for computing the recommendation. </param>
         /// <param name="lastConsumptionDate"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="lookBackUnitType"> What the usage data values represent ex: virtual machine instance. </param>

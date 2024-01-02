@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the BillingCustomerResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="BillingCustomerConsumptionResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Billing/billingAccounts/customers.
+    /// You can only construct a <see cref="BillingCustomerConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Billing/billingAccounts/customers.
     /// </summary>
     public partial class BillingCustomerConsumptionResource : ArmResource
     {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConsumptionLotSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionLotSummary> GetLotsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _lotsRestClient.CreateListByCustomerRequest(Id.Parent.Name, Id.Name, filter);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="filter"> May be used to filter the lots by Status, Source etc. The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. Tag filter is a key value pair string where key and value is separated by a colon (:). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConsumptionLotSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConsumptionLotSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionLotSummary> GetLots(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _lotsRestClient.CreateListByCustomerRequest(Id.Parent.Name, Id.Name, filter);

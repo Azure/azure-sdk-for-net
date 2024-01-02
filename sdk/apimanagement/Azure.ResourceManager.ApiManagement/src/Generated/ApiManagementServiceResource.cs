@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetApiManagementService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApiManagementService method.
     /// </summary>
     public partial class ApiManagementServiceResource : ArmResource
     {
@@ -74,12 +74,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly TenantConfigurationRestOperations _tenantConfigurationRestClient;
         private readonly ApiManagementServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementServiceResource"/> class for mocking. </summary>
         protected ApiManagementServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementServiceResource(ArmClient client, ApiManagementServiceData data) : this(client, data.Id)
@@ -135,9 +138,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -1154,21 +1154,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets an object representing a ApiManagementPortalSignInSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
-        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSetting()
         {
             return new ApiManagementPortalSignInSettingResource(Client, Id.AppendChildResource("portalsettings", "signin"));
         }
 
         /// <summary> Gets an object representing a ApiManagementPortalSignUpSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
-        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSetting()
         {
             return new ApiManagementPortalSignUpSettingResource(Client, Id.AppendChildResource("portalsettings", "signup"));
         }
 
         /// <summary> Gets an object representing a ApiManagementPortalDelegationSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
-        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
         public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSetting()
         {
             return new ApiManagementPortalDelegationSettingResource(Client, Id.AppendChildResource("portalsettings", "delegation"));
@@ -1816,7 +1816,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
@@ -1842,7 +1842,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedApis"> Include not tagged APIs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetApisByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
@@ -1940,7 +1940,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementContentType" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementContentType"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementContentType> GetContentTypesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1962,7 +1962,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementContentType" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementContentType"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementContentType> GetContentTypes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2201,7 +2201,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApiManagementContentItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementContentItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementContentItem> GetContentItemsAsync(string contentTypeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -2228,7 +2228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="contentTypeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApiManagementContentItem" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementContentItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementContentItem> GetContentItems(string contentTypeId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -2552,7 +2552,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableApiManagementServiceSkuResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailableApiManagementServiceSkuResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2574,7 +2574,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableApiManagementServiceSkuResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailableApiManagementServiceSkuResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableApiManagementServiceSkuResult> GetAvailableApiManagementServiceSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2878,7 +2878,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkStatusContractWithLocation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkStatusContractWithLocation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkStatusContractWithLocation> GetNetworkStatusesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2899,7 +2899,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkStatusContractWithLocation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkStatusContractWithLocation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkStatusContractWithLocation> GetNetworkStatuses(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -2982,7 +2982,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundNetworkDependenciesEndpointsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -3003,7 +3003,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OutboundEnvironmentEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundNetworkDependenciesEndpointsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -3025,7 +3025,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="scope"> Policy scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyDescriptionContractData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PolicyDescriptionContractData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyDescriptionContractData> GetPolicyDescriptionsAsync(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
@@ -3047,7 +3047,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="scope"> Policy scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyDescriptionContractData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PolicyDescriptionContractData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyDescriptionContractData> GetPolicyDescriptions(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
@@ -3068,7 +3068,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PortalSettingsContractData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PortalSettingsContractData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PortalSettingsContractData> GetPortalSettingsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServicePortalSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -3089,7 +3089,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PortalSettingsContractData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PortalSettingsContractData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PortalSettingsContractData> GetPortalSettings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServicePortalSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -3114,7 +3114,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedProducts"> Include not tagged Products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetProductsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
@@ -3140,7 +3140,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedProducts"> Include not tagged Products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetProductsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
@@ -3165,7 +3165,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
-        /// <returns> An async collection of <see cref="QuotaCounterContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QuotaCounterContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaCounterContract> GetQuotaByCounterKeysAsync(string quotaCounterKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
@@ -3191,7 +3191,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuotaCounterContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QuotaCounterContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaCounterContract> GetQuotaByCounterKeys(string quotaCounterKey, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
@@ -3218,7 +3218,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="QuotaCounterContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QuotaCounterContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaCounterContract> UpdateQuotaByCounterKeysAsync(string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
@@ -3246,7 +3246,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="QuotaCounterContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="QuotaCounterContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaCounterContract> UpdateQuotaByCounterKeys(string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
@@ -3422,7 +3422,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RegionContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RegionContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RegionContract> GetRegionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -3444,7 +3444,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RegionContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RegionContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RegionContract> GetRegions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -3471,7 +3471,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByApiAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3500,7 +3500,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByApi(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3529,7 +3529,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3558,7 +3558,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByUser(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3587,7 +3587,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByOperationAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3616,7 +3616,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByOperation(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3645,7 +3645,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByProductAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3674,7 +3674,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByProduct(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3702,7 +3702,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByGeoAsync(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3730,7 +3730,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByGeo(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3759,7 +3759,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsBySubscriptionAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3788,7 +3788,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsBySubscription(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3818,7 +3818,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByTimeAsync(string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3848,7 +3848,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="orderBy"> OData order by query option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByTime(string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3876,7 +3876,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RequestReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RequestReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RequestReportRecordContract> GetReportsByRequestAsync(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3903,7 +3903,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="RequestReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RequestReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RequestReportRecordContract> GetReportsByRequest(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -3929,7 +3929,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetTagResourcesAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tagResourceRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
@@ -3954,7 +3954,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetTagResources(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tagResourceRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);

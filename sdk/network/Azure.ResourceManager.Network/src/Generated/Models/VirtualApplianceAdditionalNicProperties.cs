@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Virtual Appliance Additional NIC properties. </summary>
     public partial class VirtualApplianceAdditionalNicProperties
     {
-        /// <summary> Initializes a new instance of VirtualApplianceAdditionalNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceAdditionalNicProperties"/>. </summary>
         public VirtualApplianceAdditionalNicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceAdditionalNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceAdditionalNicProperties"/>. </summary>
         /// <param name="name"> Name of additional nic. </param>
         /// <param name="hasPublicIP"> Flag (true or false) for Intent for Public Ip on additional nic. </param>
         internal VirtualApplianceAdditionalNicProperties(string name, bool? hasPublicIP)

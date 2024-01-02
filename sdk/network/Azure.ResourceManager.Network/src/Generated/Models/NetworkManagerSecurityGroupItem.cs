@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network manager security group item. </summary>
     public partial class NetworkManagerSecurityGroupItem
     {
-        /// <summary> Initializes a new instance of NetworkManagerSecurityGroupItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerSecurityGroupItem"/>. </summary>
         /// <param name="networkGroupId"> Network manager group Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupId"/> is null. </exception>
         public NetworkManagerSecurityGroupItem(ResourceIdentifier networkGroupId)

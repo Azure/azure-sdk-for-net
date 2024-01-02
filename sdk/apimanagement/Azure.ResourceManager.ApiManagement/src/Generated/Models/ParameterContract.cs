@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Operation parameters details. </summary>
     public partial class ParameterContract
     {
-        /// <summary> Initializes a new instance of ParameterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
         /// <param name="name"> Parameter name. </param>
         /// <param name="parameterContractType"> Parameter type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameterContractType"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Examples = new ChangeTrackingDictionary<string, ParameterExampleContract>();
         }
 
-        /// <summary> Initializes a new instance of ParameterContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterContract"/>. </summary>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
         /// <param name="parameterContractType"> Parameter type. </param>

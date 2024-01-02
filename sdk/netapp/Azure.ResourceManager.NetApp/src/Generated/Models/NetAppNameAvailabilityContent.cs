@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Resource name availability request content. </summary>
     public partial class NetAppNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of NetAppNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>

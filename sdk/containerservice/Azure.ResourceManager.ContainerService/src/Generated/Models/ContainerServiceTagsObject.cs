@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class ContainerServiceTagsObject
     {
-        /// <summary> Initializes a new instance of ContainerServiceTagsObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTagsObject"/>. </summary>
         public ContainerServiceTagsObject()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTagsObject"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal ContainerServiceTagsObject(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

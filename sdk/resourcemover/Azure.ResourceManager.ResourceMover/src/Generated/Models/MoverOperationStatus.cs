@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Operation status REST resource. </summary>
     public partial class MoverOperationStatus
     {
-        /// <summary> Initializes a new instance of MoverOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationStatus"/>. </summary>
         internal MoverOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationStatus"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="status"> Status of the operation. ARM expects the terminal status to be one of Succeeded/ Failed/ Canceled. All other values imply that the operation is still running. </param>

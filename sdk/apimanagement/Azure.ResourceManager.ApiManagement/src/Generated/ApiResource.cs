@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an Api along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApi method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApi method.
     /// </summary>
     public partial class ApiResource : ArmResource
     {
@@ -47,12 +47,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly OperationRestOperations _operationRestClient;
         private readonly ApiData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis";
+
         /// <summary> Initializes a new instance of the <see cref="ApiResource"/> class for mocking. </summary>
         protected ApiResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiResource(ArmClient client, ApiData data) : this(client, data.Id)
@@ -79,9 +82,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiRevisionContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiRevisionContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiRevisionContract> GetApiRevisionsByServiceAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiRevisionContract" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiRevisionContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiRevisionContract> GetApiRevisionsByService(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRevisionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementProductResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementProductResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementProductResource> GetApiProductsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiProductRestClient.CreateListByApisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementProductResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementProductResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementProductResource> GetApiProducts(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiProductRestClient.CreateListByApisRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedOperations"> Include not tagged Operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetOperationsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedOperations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, includeNotTaggedOperations);
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="includeNotTaggedOperations"> Include not tagged Operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetOperationsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedOperations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, includeNotTaggedOperations);

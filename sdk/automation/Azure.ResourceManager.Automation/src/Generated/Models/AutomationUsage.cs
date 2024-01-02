@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of Usage. </summary>
     public partial class AutomationUsage
     {
-        /// <summary> Initializes a new instance of AutomationUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationUsage"/>. </summary>
         internal AutomationUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationUsage"/>. </summary>
         /// <param name="id"> Gets or sets the id of the resource. </param>
         /// <param name="name"> Gets or sets the usage counter name. </param>
         /// <param name="unit"> Gets or sets the usage unit name. </param>

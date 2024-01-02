@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a DefaultSecurityRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DefaultSecurityRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDefaultSecurityRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityGroupResource" /> using the GetDefaultSecurityRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DefaultSecurityRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDefaultSecurityRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityGroupResource"/> using the GetDefaultSecurityRule method.
     /// </summary>
     public partial class DefaultSecurityRuleResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly DefaultSecurityRulesRestOperations _defaultSecurityRuleRestClient;
         private readonly SecurityRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups/defaultSecurityRules";
+
         /// <summary> Initializes a new instance of the <see cref="DefaultSecurityRuleResource"/> class for mocking. </summary>
         protected DefaultSecurityRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DefaultSecurityRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DefaultSecurityRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DefaultSecurityRuleResource(ArmClient client, SecurityRuleData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups/defaultSecurityRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

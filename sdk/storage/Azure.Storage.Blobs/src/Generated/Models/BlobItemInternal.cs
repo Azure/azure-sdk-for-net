@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An Azure Storage blob. </summary>
     internal partial class BlobItemInternal
     {
-        /// <summary> Initializes a new instance of BlobItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="snapshot"></param>
@@ -34,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
             OrMetadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of BlobItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="snapshot"></param>

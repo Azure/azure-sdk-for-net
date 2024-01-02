@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> and their operations.
-    /// Each <see cref="CosmosDBForPostgreSqlClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CosmosDBForPostgreSqlClusterCollection" /> instance call the GetCosmosDBForPostgreSqlClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> and their operations.
+    /// Each <see cref="CosmosDBForPostgreSqlClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CosmosDBForPostgreSqlClusterCollection"/> instance call the GetCosmosDBForPostgreSqlClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CosmosDBForPostgreSqlClusterCollection : ArmCollection, IEnumerable<CosmosDBForPostgreSqlClusterResource>, IAsyncEnumerable<CosmosDBForPostgreSqlClusterResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBForPostgreSqlClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBForPostgreSqlClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

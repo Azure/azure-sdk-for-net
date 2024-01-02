@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Modern charge summary. </summary>
     public partial class ConsumptionModernChargeSummary : ConsumptionChargeSummary
     {
-        /// <summary> Initializes a new instance of ConsumptionModernChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/>. </summary>
         public ConsumptionModernChargeSummary()
         {
             Kind = ChargeSummaryKind.Modern;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

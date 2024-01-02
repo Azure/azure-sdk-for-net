@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The ApplicationTypeVersionsCleanupPolicy. </summary>
     internal partial class ApplicationTypeVersionsCleanupPolicy
     {
-        /// <summary> Initializes a new instance of ApplicationTypeVersionsCleanupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationTypeVersionsCleanupPolicy"/>. </summary>
         /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
         public ApplicationTypeVersionsCleanupPolicy(long maxUnusedVersionsToKeep)
         {

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     /// <summary>
     /// A Class representing a StreamingJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStreamingJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetStreamingJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StreamingJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStreamingJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStreamingJob method.
     /// </summary>
     public partial class StreamingJobResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.StreamAnalytics
         private readonly StreamingJobsRestOperations _streamingJobRestClient;
         private readonly StreamingJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingJobResource"/> class for mocking. </summary>
         protected StreamingJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StreamingJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StreamingJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StreamingJobResource(ArmClient client, StreamingJobData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.StreamAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StreamAnalytics/streamingjobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

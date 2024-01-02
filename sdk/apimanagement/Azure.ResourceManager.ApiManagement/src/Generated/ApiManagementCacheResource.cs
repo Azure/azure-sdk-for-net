@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementCache along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementCacheResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementCacheResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementCache method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementCacheResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementCacheResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementCache method.
     /// </summary>
     public partial class ApiManagementCacheResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly CacheRestOperations _apiManagementCacheCacheRestClient;
         private readonly ApiManagementCacheData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/caches";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementCacheResource"/> class for mocking. </summary>
         protected ApiManagementCacheResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementCacheResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementCacheResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementCacheResource(ArmClient client, ApiManagementCacheData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/caches";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

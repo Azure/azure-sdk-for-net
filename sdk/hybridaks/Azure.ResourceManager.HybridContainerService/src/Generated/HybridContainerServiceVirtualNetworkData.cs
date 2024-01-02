@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class HybridContainerServiceVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridContainerServiceVirtualNetworkData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HybridContainerServiceVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

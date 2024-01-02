@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The connection information for the virtual machine. </summary>
     public partial class LabVirtualMachineConnectionProfile
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineConnectionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineConnectionProfile"/>. </summary>
         internal LabVirtualMachineConnectionProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineConnectionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineConnectionProfile"/>. </summary>
         /// <param name="privateIPAddress"> The private IP address of the virtual machine. </param>
         /// <param name="sshAuthority"> Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine. </param>
         /// <param name="sshInBrowserUri"> URL for connecting via SSH protocol to the virtual machine in browser. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Web activity. </summary>
     public partial class WebActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of WebActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="uri"> Web activity target endpoint and path. Type: string (or Expression with resultType string). </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "WebActivity";
         }
 
-        /// <summary> Initializes a new instance of WebActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

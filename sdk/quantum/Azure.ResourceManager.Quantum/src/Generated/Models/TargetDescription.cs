@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about a Target. A target is the component that can process a specific type of Job. </summary>
     public partial class TargetDescription
     {
-        /// <summary> Initializes a new instance of TargetDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetDescription"/>. </summary>
         internal TargetDescription()
         {
             AcceptedDataFormats = new ChangeTrackingList<string>();
             AcceptedContentEncodings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TargetDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetDescription"/>. </summary>
         /// <param name="id"> Unique target id. </param>
         /// <param name="name"> Display name of this target. </param>
         /// <param name="description"> A description about this target. </param>

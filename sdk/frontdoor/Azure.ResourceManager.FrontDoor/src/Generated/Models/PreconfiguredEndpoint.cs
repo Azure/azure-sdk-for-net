@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the properties of a preconfigured endpoint. </summary>
     public partial class PreconfiguredEndpoint : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PreconfiguredEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/>. </summary>
         /// <param name="location"> The location. </param>
         public PreconfiguredEndpoint(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PreconfiguredEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreconfiguredEndpoint"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

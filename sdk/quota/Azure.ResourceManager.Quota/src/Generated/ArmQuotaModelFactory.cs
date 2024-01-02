@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmQuotaModelFactory
     {
-        /// <summary> Initializes a new instance of CurrentUsagesBaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.CurrentUsagesBaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new CurrentUsagesBaseData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of QuotaUsagesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaUsagesProperties"/>. </summary>
         /// <param name="usages"> The quota limit properties for this resource. </param>
         /// <param name="unit"> The units for the quota usage, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaUsagesProperties(usages, unit, name, resourceTypeName, quotaPeriod, isQuotaApplicable, properties);
         }
 
-        /// <summary> Initializes a new instance of QuotaUsagesObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaUsagesObject"/>. </summary>
         /// <param name="value"> The usages value. </param>
         /// <param name="usagesType"> The quota or usages limit types. </param>
         /// <returns> A new <see cref="Models.QuotaUsagesObject"/> instance for mocking. </returns>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaUsagesObject(value, usagesType);
         }
 
-        /// <summary> Initializes a new instance of QuotaRequestResourceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaRequestResourceName"/>. </summary>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         /// <returns> A new <see cref="Models.QuotaRequestResourceName"/> instance for mocking. </returns>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaRequestResourceName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of ServiceErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceErrorDetail"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <returns> A new <see cref="Models.ServiceErrorDetail"/> instance for mocking. </returns>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new ServiceErrorDetail(code, message);
         }
 
-        /// <summary> Initializes a new instance of CurrentQuotaLimitBaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.CurrentQuotaLimitBaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new CurrentQuotaLimitBaseData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of QuotaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaProperties"/>. </summary>
         /// <param name="limit">
         /// Resource quota limit properties.
         /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaProperties(limit, unit, name, resourceTypeName, quotaPeriod, isQuotaApplicable, properties);
         }
 
-        /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Quota.QuotaRequestDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaRequestDetailData(id, name, resourceType, systemData, provisioningState, message, error, requestSubmitOn, value?.ToList());
         }
 
-        /// <summary> Initializes a new instance of QuotaSubRequestDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaSubRequestDetail"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceTypeName"> Resource type for which the quota properties were requested. </param>
         /// <param name="unit"> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaSubRequestDetail(name, resourceTypeName, unit, provisioningState, message, subRequestId, limit);
         }
 
-        /// <summary> Initializes a new instance of QuotaOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaOperationResult"/>. </summary>
         /// <param name="name"></param>
         /// <param name="display"></param>
         /// <param name="origin"></param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaOperationResult(name, display, origin);
         }
 
-        /// <summary> Initializes a new instance of QuotaOperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaOperationDisplay"/>. </summary>
         /// <param name="provider"> Provider name. </param>
         /// <param name="resource"> Resource name. </param>
         /// <param name="operation"> Operation name. </param>

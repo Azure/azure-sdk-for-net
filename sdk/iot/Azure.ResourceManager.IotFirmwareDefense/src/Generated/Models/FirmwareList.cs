@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> List of firmwares. </summary>
     internal partial class FirmwareList
     {
-        /// <summary> Initializes a new instance of FirmwareList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareList"/>. </summary>
         internal FirmwareList()
         {
             Value = new ChangeTrackingList<FirmwareData>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareList"/>. </summary>
         /// <param name="value"> The list of firmwares. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
         internal FirmwareList(IReadOnlyList<FirmwareData> value, string nextLink)

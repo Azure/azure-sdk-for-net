@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing a LogAnalyticsQueryPack along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogAnalyticsQueryPackResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogAnalyticsQueryPackResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetLogAnalyticsQueryPack method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogAnalyticsQueryPackResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogAnalyticsQueryPackResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLogAnalyticsQueryPack method.
     /// </summary>
     public partial class LogAnalyticsQueryPackResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly QueriesRestOperations _logAnalyticsQueryQueriesRestClient;
         private readonly LogAnalyticsQueryPackData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/queryPacks";
+
         /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryPackResource"/> class for mocking. </summary>
         protected LogAnalyticsQueryPackResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogAnalyticsQueryPackResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryPackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogAnalyticsQueryPackResource(ArmClient client, LogAnalyticsQueryPackData data) : this(client, data.Id)
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/queryPacks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="skipToken"> Base64 encoded token used to fetch the next page of items. Default is null. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="querySearchProperties"/> is null. </exception>
-        /// <returns> An async collection of <see cref="LogAnalyticsQueryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogAnalyticsQueryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogAnalyticsQueryResource> SearchQueriesAsync(LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(querySearchProperties, nameof(querySearchProperties));
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="skipToken"> Base64 encoded token used to fetch the next page of items. Default is null. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="querySearchProperties"/> is null. </exception>
-        /// <returns> A collection of <see cref="LogAnalyticsQueryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogAnalyticsQueryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogAnalyticsQueryResource> SearchQueries(LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(querySearchProperties, nameof(querySearchProperties));

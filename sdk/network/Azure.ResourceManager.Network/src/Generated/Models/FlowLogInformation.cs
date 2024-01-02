@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Information on the configuration of flow log and traffic analytics (optional) . </summary>
     public partial class FlowLogInformation
     {
-        /// <summary> Initializes a new instance of FlowLogInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             Enabled = enabled;
         }
 
-        /// <summary> Initializes a new instance of FlowLogInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>

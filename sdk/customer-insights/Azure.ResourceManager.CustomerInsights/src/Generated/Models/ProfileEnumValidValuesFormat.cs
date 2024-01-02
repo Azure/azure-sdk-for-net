@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Valid enum values in case of an enum property. </summary>
     public partial class ProfileEnumValidValuesFormat
     {
-        /// <summary> Initializes a new instance of ProfileEnumValidValuesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileEnumValidValuesFormat"/>. </summary>
         public ProfileEnumValidValuesFormat()
         {
             LocalizedValueNames = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ProfileEnumValidValuesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileEnumValidValuesFormat"/>. </summary>
         /// <param name="value"> The integer value of the enum member. </param>
         /// <param name="localizedValueNames"> Localized names of the enum member. </param>
         internal ProfileEnumValidValuesFormat(int? value, IDictionary<string, string> localizedValueNames)

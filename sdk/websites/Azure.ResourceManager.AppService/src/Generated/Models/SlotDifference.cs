@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A setting difference between two deployment slots of an app. </summary>
     public partial class SlotDifference : ResourceData
     {
-        /// <summary> Initializes a new instance of SlotDifference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotDifference"/>. </summary>
         public SlotDifference()
         {
         }
 
-        /// <summary> Initializes a new instance of SlotDifference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotDifference"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

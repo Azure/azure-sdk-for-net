@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownConnectionInfo. </summary>
     internal partial class UnknownConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of UnknownConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>

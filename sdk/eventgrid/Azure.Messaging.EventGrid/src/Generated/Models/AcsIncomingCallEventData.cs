@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.IncomingCall event. </summary>
     public partial class AcsIncomingCallEventData
     {
-        /// <summary> Initializes a new instance of AcsIncomingCallEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
         internal AcsIncomingCallEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsIncomingCallEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
         /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
         /// <param name="serverCallId"> The Id of the server call. </param>

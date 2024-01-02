@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing a RoleAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RoleAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRoleAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetRoleAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRoleAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleAssignment method.
     /// </summary>
     public partial class RoleAssignmentResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleAssignmentsRestOperations _roleAssignmentRestClient;
         private readonly RoleAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="RoleAssignmentResource"/> class for mocking. </summary>
         protected RoleAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RoleAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleAssignmentResource(ArmClient client, RoleAssignmentData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

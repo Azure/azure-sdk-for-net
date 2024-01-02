@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Tags object for patch operations. </summary>
     public partial class OrbitalSpacecraftTags
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftTags"/>. </summary>
         public OrbitalSpacecraftTags()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalSpacecraftTags"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal OrbitalSpacecraftTags(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudCloudServicesNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudCloudServicesNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudCloudServicesNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkCloudCloudServicesNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudCloudServicesNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudCloudServicesNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkCloudCloudServicesNetwork method.
     /// </summary>
     public partial class NetworkCloudCloudServicesNetworkResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly CloudServicesNetworksRestOperations _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient;
         private readonly NetworkCloudCloudServicesNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/cloudServicesNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudCloudServicesNetworkResource"/> class for mocking. </summary>
         protected NetworkCloudCloudServicesNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudCloudServicesNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudCloudServicesNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudCloudServicesNetworkResource(ArmClient client, NetworkCloudCloudServicesNetworkData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/cloudServicesNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

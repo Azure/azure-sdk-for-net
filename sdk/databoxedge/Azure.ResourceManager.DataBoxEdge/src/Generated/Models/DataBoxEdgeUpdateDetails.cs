@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Update Specific attributes. </summary>
     public partial class DataBoxEdgeUpdateDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeUpdateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateDetails"/>. </summary>
         internal DataBoxEdgeUpdateDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeUpdateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateDetails"/>. </summary>
         /// <param name="updateTitle"> Title of the Update. </param>
         /// <param name="updateSizeInBytes"> Size of the update(In Bytes). </param>
         /// <param name="updateType"> Type of the Update. </param>

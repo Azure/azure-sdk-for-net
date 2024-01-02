@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Operation status. </summary>
     public partial class OperationStatus
     {
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         internal OperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         /// <param name="id"> ID of the operation. </param>
         /// <param name="name"> Name of the operation. </param>
         /// <param name="status"> Operation status. </param>

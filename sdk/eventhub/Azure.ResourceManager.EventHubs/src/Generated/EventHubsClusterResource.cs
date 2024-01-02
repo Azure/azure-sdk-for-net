@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEventHubsCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEventHubsCluster method.
     /// </summary>
     public partial class EventHubsClusterResource : ArmResource
     {
@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.EventHubs
         private readonly ConfigurationRestOperations _configurationRestClient;
         private readonly EventHubsClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/clusters";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsClusterResource"/> class for mocking. </summary>
         protected EventHubsClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsClusterResource(ArmClient client, EventHubsClusterData data) : this(client, data.Id)
@@ -74,9 +77,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/clusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubResource> GetNamespacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubResource> GetNamespaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class DiskEncryptionSetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DiskEncryptionSetData(AzureLocation location) : base(location)
         {
             PreviousKeys = new ChangeTrackingList<KeyForDiskEncryptionSet>();
         }
 
-        /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

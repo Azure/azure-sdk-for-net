@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Routing rules for ramp up testing. This rule allows to redirect static traffic % to a slot or to gradually change routing % based on performance. </summary>
     public partial class RampUpRule
     {
-        /// <summary> Initializes a new instance of RampUpRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RampUpRule"/>. </summary>
         public RampUpRule()
         {
         }
 
-        /// <summary> Initializes a new instance of RampUpRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RampUpRule"/>. </summary>
         /// <param name="actionHostName"> Hostname of a slot to which the traffic will be redirected if decided to. E.g. myapp-stage.azurewebsites.net. </param>
         /// <param name="reroutePercentage"> Percentage of the traffic which will be redirected to &lt;code&gt;ActionHostName&lt;/code&gt;. </param>
         /// <param name="changeStep">

@@ -14,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The SpatialAnalysisPersonDistanceZoneEvents. </summary>
     public partial class SpatialAnalysisPersonDistanceZoneEvents
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonDistanceZoneEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonDistanceZoneEvents"/>. </summary>
         /// <param name="zone">
         /// The named zone.
         /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,7 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = new ChangeTrackingList<SpatialAnalysisPersonDistanceEvent>();
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonDistanceZoneEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonDistanceZoneEvents"/>. </summary>
         /// <param name="zone">
         /// The named zone.
         /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

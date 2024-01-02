@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The bulk collections response. The response contains two lists that indicate for each collection whether the operation succeeded or failed. </summary>
     public partial class BulkCollectionsActionResult
     {
-        /// <summary> Initializes a new instance of BulkCollectionsActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionResult"/>. </summary>
         internal BulkCollectionsActionResult()
         {
             Succeeded = new ChangeTrackingList<PrivateStoreCollectionDetails>();
             Failed = new ChangeTrackingList<PrivateStoreCollectionDetails>();
         }
 
-        /// <summary> Initializes a new instance of BulkCollectionsActionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkCollectionsActionResult"/>. </summary>
         /// <param name="succeeded"> Succeeded collections. </param>
         /// <param name="failed"> Failed collections. </param>
         internal BulkCollectionsActionResult(IReadOnlyList<PrivateStoreCollectionDetails> succeeded, IReadOnlyList<PrivateStoreCollectionDetails> failed)

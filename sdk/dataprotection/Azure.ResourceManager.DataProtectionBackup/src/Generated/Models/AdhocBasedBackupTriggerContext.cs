@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Adhoc trigger context. </summary>
     public partial class AdhocBasedBackupTriggerContext : DataProtectionBackupTriggerContext
     {
-        /// <summary> Initializes a new instance of AdhocBasedBackupTriggerContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTriggerContext"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="adhocBackupRetention"> Tagging Criteria containing retention tag for adhoc backup. </param>
         internal AdhocBasedBackupTriggerContext(string objectType, AdhocBasedBackupTaggingCriteria adhocBackupRetention) : base(objectType)

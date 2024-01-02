@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridTopic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridTopicResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridTopicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEventGridTopic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridTopicResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridTopicResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEventGridTopic method.
     /// </summary>
     public partial class EventGridTopicResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly TopicsRestOperations _eventGridTopicTopicsRestClient;
         private readonly EventGridTopicData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topics";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridTopicResource"/> class for mocking. </summary>
         protected EventGridTopicResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridTopicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridTopicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridTopicResource(ArmClient client, EventGridTopicData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -143,6 +143,61 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Response<TopicEventSubscriptionResource> GetTopicEventSubscription(string eventSubscriptionName, CancellationToken cancellationToken = default)
         {
             return GetTopicEventSubscriptions().Get(eventSubscriptionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TopicNetworkSecurityPerimeterConfigurationResources in the EventGridTopic. </summary>
+        /// <returns> An object representing collection of TopicNetworkSecurityPerimeterConfigurationResources and their operations over a TopicNetworkSecurityPerimeterConfigurationResource. </returns>
+        public virtual TopicNetworkSecurityPerimeterConfigurationCollection GetTopicNetworkSecurityPerimeterConfigurations()
+        {
+            return GetCachedClient(client => new TopicNetworkSecurityPerimeterConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific network security perimeter configuration with a topic or domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
+        /// <param name="associationName"> Association name to association network security perimeter resource to profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TopicNetworkSecurityPerimeterConfigurationResource>> GetTopicNetworkSecurityPerimeterConfigurationAsync(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
+        {
+            return await GetTopicNetworkSecurityPerimeterConfigurations().GetAsync(perimeterGuid, associationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific network security perimeter configuration with a topic or domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{resourceType}/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
+        /// <param name="associationName"> Association name to association network security perimeter resource to profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="perimeterGuid"/> or <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TopicNetworkSecurityPerimeterConfigurationResource> GetTopicNetworkSecurityPerimeterConfiguration(string perimeterGuid, string associationName, CancellationToken cancellationToken = default)
+        {
+            return GetTopicNetworkSecurityPerimeterConfigurations().Get(perimeterGuid, associationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventGridTopicPrivateEndpointConnectionResources in the EventGridTopic. </summary>

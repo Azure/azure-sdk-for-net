@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Error information associated with operation status call. </summary>
     public partial class OperationStatusError
     {
-        /// <summary> Initializes a new instance of OperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusError"/>. </summary>
         internal OperationStatusError()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusError"/>. </summary>
         /// <param name="code"> Error code of the operation failure. </param>
         /// <param name="message"> Error message displayed if the operation failure. </param>
         internal OperationStatusError(string code, string message)

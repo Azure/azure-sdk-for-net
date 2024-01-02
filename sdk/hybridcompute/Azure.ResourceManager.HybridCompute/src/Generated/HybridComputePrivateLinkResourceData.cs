@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class HybridComputePrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkResourceData"/>. </summary>
         public HybridComputePrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

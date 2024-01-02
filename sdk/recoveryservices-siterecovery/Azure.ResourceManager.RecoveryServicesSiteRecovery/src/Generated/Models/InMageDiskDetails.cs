@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMware/Physical specific Disk Details. </summary>
     public partial class InMageDiskDetails
     {
-        /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageDiskDetails"/>. </summary>
         internal InMageDiskDetails()
         {
             VolumeList = new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>();
         }
 
-        /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="diskSizeInMB"> The disk size in MB. </param>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// </summary>
     public partial class StreamingJobOutputData : StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamingJobOutputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputData"/>. </summary>
         public StreamingJobOutputData()
         {
             LastOutputEventTimestamps = new ChangeTrackingList<LastOutputEventTimestamp>();
         }
 
-        /// <summary> Initializes a new instance of StreamingJobOutputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

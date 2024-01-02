@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.MachineLearningCompute
 {
     /// <summary>
     /// A Class representing an OperationalizationCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalizationClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalizationClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetOperationalizationCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalizationClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalizationClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOperationalizationCluster method.
     /// </summary>
     public partial class OperationalizationClusterResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.MachineLearningCompute
         private readonly OperationalizationClustersRestOperations _operationalizationClusterRestClient;
         private readonly OperationalizationClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningCompute/operationalizationClusters";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalizationClusterResource"/> class for mocking. </summary>
         protected OperationalizationClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalizationClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalizationClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalizationClusterResource(ArmClient client, OperationalizationClusterData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningCompute/operationalizationClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -123,6 +123,9 @@
   <data name="Ex_Context_Null" xml:space="preserve">
     <value>ListenerFactoryContext is null</value>
   </data>
+  <data name="Ex_Empty_Json" xml:space="preserve">
+    <value>JSON is null or empty.</value>
+  </data>
   <data name="Ex_Event_Missing" xml:space="preserve">
     <value>Cannot determine the event from payload, please check that the incoming payload is a valid JSON string and contains the event type.</value>
   </data>
@@ -153,14 +156,14 @@
   <data name="Ex_Invalid_JsonPath" xml:space="preserve">
     <value>Cannot find json path set value</value>
   </data>
-  <data name="Ex_Invalid_Payload" xml:space="preserve">
-    <value>Invalid Payload detected.</value>
+  <data name="Ex_Invalid_JsonPayload" xml:space="preserve">
+    <value>Invalid Json Payload</value>
   </data>
   <data name="Ex_Invalid_Response" xml:space="preserve">
     <value>Response validation failed, see inner exceptions.</value>
   </data>
   <data name="Ex_Invalid_Return" xml:space="preserve">
-    <value>Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return.</value>
+    <value>Return type is invalid, please return either an AuthEventResponse, HttpResponse, HttpResponseMessage or string in your function return</value>
   </data>
   <data name="Ex_Invalid_SchemaVersion" xml:space="preserve">
     <value>Invalid version on Schema</value>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2023-11-07)
+
+### Breaking Changes
+- Renamed the `IsMsaPassthroughEnabled` property on `SharedTokenCacheCredentialBrokerOptions` to `IsLegacyMsaPassthroughEnabled`.
 
 ## 1.0.0-beta.5 (2023-10-19)
 

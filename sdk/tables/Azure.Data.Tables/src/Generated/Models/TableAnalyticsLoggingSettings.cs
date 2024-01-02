@@ -14,7 +14,7 @@ namespace Azure.Data.Tables.Models
     /// <summary> Azure Analytics Logging settings. </summary>
     public partial class TableAnalyticsLoggingSettings
     {
-        /// <summary> Initializes a new instance of TableAnalyticsLoggingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableAnalyticsLoggingSettings"/>. </summary>
         /// <param name="version"> The version of Analytics to configure. </param>
         /// <param name="delete"> Indicates whether all delete requests should be logged. </param>
         /// <param name="read"> Indicates whether all read requests should be logged. </param>

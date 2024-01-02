@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing an IotSecurityAggregatedRecommendation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IotSecurityAggregatedRecommendationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIotSecurityAggregatedRecommendationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionAnalyticsModelResource" /> using the GetIotSecurityAggregatedRecommendation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotSecurityAggregatedRecommendationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotSecurityAggregatedRecommendationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotSecuritySolutionAnalyticsModelResource"/> using the GetIotSecurityAggregatedRecommendation method.
     /// </summary>
     public partial class IotSecurityAggregatedRecommendationResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly IotSecuritySolutionsAnalyticsRecommendationRestOperations _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient;
         private readonly IotSecurityAggregatedRecommendationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
+
         /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class for mocking. </summary>
         protected IotSecurityAggregatedRecommendationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IotSecurityAggregatedRecommendationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotSecurityAggregatedRecommendationResource(ArmClient client, IotSecurityAggregatedRecommendationData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

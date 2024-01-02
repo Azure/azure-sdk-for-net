@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The folder that this notebook is in. If not specified, this notebook will appear at the root level. </summary>
     public partial class NotebookFolder
     {
-        /// <summary> Initializes a new instance of NotebookFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookFolder"/>. </summary>
         public NotebookFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of NotebookFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this notebook is in. </param>
         internal NotebookFolder(string name)
         {

@@ -16,9 +16,7 @@
 
 #nullable enable
 
-using System;
 using System.Globalization;
-using System.Threading;
 
 namespace OpenTelemetry.Internal;
 

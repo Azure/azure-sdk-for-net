@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EmailServiceResource" /> and their operations.
-    /// Each <see cref="EmailServiceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="EmailServiceResourceCollection" /> instance call the GetEmailServiceResources method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="EmailServiceResource"/> and their operations.
+    /// Each <see cref="EmailServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="EmailServiceResourceCollection"/> instance call the GetEmailServiceResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EmailServiceResourceCollection : ArmCollection, IEnumerable<EmailServiceResource>, IAsyncEnumerable<EmailServiceResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EmailServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EmailServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EmailServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EmailServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

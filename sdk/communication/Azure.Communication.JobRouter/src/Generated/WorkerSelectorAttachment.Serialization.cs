@@ -23,10 +23,10 @@ namespace Azure.Communication.JobRouter
                 switch (discriminator.GetString())
                 {
                     case "conditional": return ConditionalWorkerSelectorAttachment.DeserializeConditionalWorkerSelectorAttachment(element);
-                    case "pass-through": return PassThroughWorkerSelectorAttachment.DeserializePassThroughWorkerSelectorAttachment(element);
-                    case "rule-engine": return RuleEngineWorkerSelectorAttachment.DeserializeRuleEngineWorkerSelectorAttachment(element);
+                    case "passThrough": return PassThroughWorkerSelectorAttachment.DeserializePassThroughWorkerSelectorAttachment(element);
+                    case "ruleEngine": return RuleEngineWorkerSelectorAttachment.DeserializeRuleEngineWorkerSelectorAttachment(element);
                     case "static": return StaticWorkerSelectorAttachment.DeserializeStaticWorkerSelectorAttachment(element);
-                    case "weighted-allocation-worker-selector": return WeightedAllocationWorkerSelectorAttachment.DeserializeWeightedAllocationWorkerSelectorAttachment(element);
+                    case "weightedAllocation": return WeightedAllocationWorkerSelectorAttachment.DeserializeWeightedAllocationWorkerSelectorAttachment(element);
                 }
             }
             return UnknownWorkerSelectorAttachment.DeserializeUnknownWorkerSelectorAttachment(element);

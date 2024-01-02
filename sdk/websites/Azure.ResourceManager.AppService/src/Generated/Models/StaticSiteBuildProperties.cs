@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Build properties for the static site. </summary>
     public partial class StaticSiteBuildProperties
     {
-        /// <summary> Initializes a new instance of StaticSiteBuildProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildProperties"/>. </summary>
         public StaticSiteBuildProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticSiteBuildProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteBuildProperties"/>. </summary>
         /// <param name="appLocation"> The path to the app code within the repository. </param>
         /// <param name="apiLocation"> The path to the api code within the repository. </param>
         /// <param name="appArtifactLocation"> Deprecated: The path of the app artifacts after building (deprecated in favor of OutputLocation). </param>

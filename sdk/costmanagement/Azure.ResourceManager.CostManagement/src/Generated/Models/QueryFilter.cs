@@ -13,11 +13,24 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The filter expression to be used in the export. </summary>
     public partial class QueryFilter
     {
-        /// <summary> Initializes a new instance of QueryFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryFilter"/>. </summary>
         public QueryFilter()
         {
             And = new ChangeTrackingList<QueryFilter>();
             Or = new ChangeTrackingList<QueryFilter>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryFilter"/>. </summary>
+        /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
+        /// <param name="or"> The logical "OR" expression. Must have at least 2 items. </param>
+        /// <param name="dimensions"> Has comparison expression for a dimension. </param>
+        /// <param name="tags"> Has comparison expression for a tag. </param>
+        internal QueryFilter(IList<QueryFilter> and, IList<QueryFilter> or, QueryComparisonExpression dimensions, QueryComparisonExpression tags)
+        {
+            And = and;
+            Or = or;
+            Dimensions = dimensions;
+            Tags = tags;
         }
 
         /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>

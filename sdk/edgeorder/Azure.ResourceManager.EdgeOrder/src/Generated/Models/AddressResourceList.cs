@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Address Resource Collection. </summary>
     internal partial class AddressResourceList
     {
-        /// <summary> Initializes a new instance of AddressResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressResourceList"/>. </summary>
         internal AddressResourceList()
         {
             Value = new ChangeTrackingList<EdgeOrderAddressData>();
         }
 
-        /// <summary> Initializes a new instance of AddressResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressResourceList"/>. </summary>
         /// <param name="value"> List of address resources. </param>
         /// <param name="nextLink"> Link for the next set of job resources. </param>
         internal AddressResourceList(IReadOnlyList<EdgeOrderAddressData> value, string nextLink)

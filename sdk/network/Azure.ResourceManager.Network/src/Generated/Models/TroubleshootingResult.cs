@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Troubleshooting information gained from specified resource. </summary>
     public partial class TroubleshootingResult
     {
-        /// <summary> Initializes a new instance of TroubleshootingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingResult"/>. </summary>
         internal TroubleshootingResult()
         {
             Results = new ChangeTrackingList<TroubleshootingDetails>();
         }
 
-        /// <summary> Initializes a new instance of TroubleshootingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshootingResult"/>. </summary>
         /// <param name="startOn"> The start time of the troubleshooting. </param>
         /// <param name="endOn"> The end time of the troubleshooting. </param>
         /// <param name="code"> The result code of the troubleshooting. </param>

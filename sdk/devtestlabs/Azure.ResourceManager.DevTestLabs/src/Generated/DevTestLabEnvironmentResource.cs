@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabEnvironmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource" /> using the GetDevTestLabEnvironment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabEnvironmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabEnvironmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabUserResource"/> using the GetDevTestLabEnvironment method.
     /// </summary>
     public partial class DevTestLabEnvironmentResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly EnvironmentsRestOperations _devTestLabEnvironmentEnvironmentsRestClient;
         private readonly DevTestLabEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/environments";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabEnvironmentResource"/> class for mocking. </summary>
         protected DevTestLabEnvironmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabEnvironmentResource(ArmClient client, DevTestLabEnvironmentData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/users/environments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

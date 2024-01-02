@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiPolicyResource" /> and their operations.
-    /// Each <see cref="ApiPolicyResource" /> in the collection will belong to the same instance of <see cref="ApiResource" />.
-    /// To get an <see cref="ApiPolicyCollection" /> instance call the GetApiPolicies method from an instance of <see cref="ApiResource" />.
+    /// A class representing a collection of <see cref="ApiPolicyResource"/> and their operations.
+    /// Each <see cref="ApiPolicyResource"/> in the collection will belong to the same instance of <see cref="ApiResource"/>.
+    /// To get an <see cref="ApiPolicyCollection"/> instance call the GetApiPolicies method from an instance of <see cref="ApiResource"/>.
     /// </summary>
     public partial class ApiPolicyCollection : ArmCollection, IEnumerable<ApiPolicyResource>, IAsyncEnumerable<ApiPolicyResource>
     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiPolicyRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiPolicyRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

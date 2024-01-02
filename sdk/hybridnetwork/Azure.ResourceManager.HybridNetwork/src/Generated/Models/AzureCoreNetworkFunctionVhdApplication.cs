@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure core network function vhd application definition. </summary>
     public partial class AzureCoreNetworkFunctionVhdApplication : AzureCoreNetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of AzureCoreNetworkFunctionVhdApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionVhdApplication"/>. </summary>
         public AzureCoreNetworkFunctionVhdApplication()
         {
             ArtifactType = AzureCoreArtifactType.VhdImageFile;
         }
 
-        /// <summary> Initializes a new instance of AzureCoreNetworkFunctionVhdApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionVhdApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>

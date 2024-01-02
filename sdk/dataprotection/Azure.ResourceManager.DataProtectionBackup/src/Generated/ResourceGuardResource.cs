@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
     /// A Class representing a ResourceGuard along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGuardResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGuardResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGuard method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGuardResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceGuardResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetResourceGuard method.
     /// </summary>
     public partial class ResourceGuardResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly ResourceGuardsRestOperations _resourceGuardRestClient;
         private readonly ResourceGuardData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/resourceGuards";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGuardResource"/> class for mocking. </summary>
         protected ResourceGuardResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGuardResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGuardResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceGuardResource(ArmClient client, ResourceGuardData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/resourceGuards";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteObjectsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteObjects(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyObjectsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyObjects(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinObjectsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinObjects(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemObjectsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemObjects(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyObjectsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyObjects(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemObjectsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemObjects(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="requestName"> The String to use. </param>
+        /// <param name="requestName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> MAB workload-specific backup item. </summary>
     public partial class MabFileFolderProtectedItem : BackupGenericProtectedItem
     {
-        /// <summary> Initializes a new instance of MabFileFolderProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabFileFolderProtectedItem"/>. </summary>
         public MabFileFolderProtectedItem()
         {
             ProtectedItemType = "MabFileFolderProtectedItem";
         }
 
-        /// <summary> Initializes a new instance of MabFileFolderProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabFileFolderProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

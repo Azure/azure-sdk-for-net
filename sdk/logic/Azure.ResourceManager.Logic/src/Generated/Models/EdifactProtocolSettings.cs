@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement protocol settings. </summary>
     public partial class EdifactProtocolSettings
     {
-        /// <summary> Initializes a new instance of EdifactProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The EDIFACT validation settings. </param>
         /// <param name="framingSettings"> The EDIFACT framing settings. </param>
         /// <param name="envelopeSettings"> The EDIFACT envelope settings. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic.Models
             EdifactDelimiterOverrides = new ChangeTrackingList<EdifactDelimiterOverride>();
         }
 
-        /// <summary> Initializes a new instance of EdifactProtocolSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactProtocolSettings"/>. </summary>
         /// <param name="validationSettings"> The EDIFACT validation settings. </param>
         /// <param name="framingSettings"> The EDIFACT framing settings. </param>
         /// <param name="envelopeSettings"> The EDIFACT envelope settings. </param>

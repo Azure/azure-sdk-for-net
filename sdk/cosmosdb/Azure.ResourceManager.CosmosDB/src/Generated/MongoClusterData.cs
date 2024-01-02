@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class MongoClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MongoClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public MongoClusterData(AzureLocation location) : base(location)
         {
             NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
         }
 
-        /// <summary> Initializes a new instance of MongoClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

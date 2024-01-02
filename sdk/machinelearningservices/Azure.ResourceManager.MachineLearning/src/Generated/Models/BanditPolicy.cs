@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Defines an early termination policy based on slack criteria, and a frequency and delay interval for evaluation. </summary>
     public partial class BanditPolicy : MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of BanditPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BanditPolicy"/>. </summary>
         public BanditPolicy()
         {
             PolicyType = EarlyTerminationPolicyType.Bandit;
         }
 
-        /// <summary> Initializes a new instance of BanditPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BanditPolicy"/>. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>

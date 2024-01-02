@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class ArtifactAccessCredential
     {
-        /// <summary> Initializes a new instance of ArtifactAccessCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactAccessCredential"/>. </summary>
         protected ArtifactAccessCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactAccessCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactAccessCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
         internal ArtifactAccessCredential(CredentialType credentialType)
         {

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of DataBoxValidationInputResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputResult"/>. </summary>
         protected DataBoxValidationInputResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxValidationInputResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationInputResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         internal DataBoxValidationInputResult(DataBoxValidationInputDiscriminator validationType, ResponseError error)

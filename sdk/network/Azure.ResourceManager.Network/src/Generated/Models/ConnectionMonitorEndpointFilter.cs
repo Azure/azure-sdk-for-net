@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the connection monitor endpoint filter. </summary>
     public partial class ConnectionMonitorEndpointFilter
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilter"/>. </summary>
         public ConnectionMonitorEndpointFilter()
         {
             Items = new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpointFilter"/>. </summary>
         /// <param name="filterType"> The behavior of the endpoint filter. Currently only 'Include' is supported. </param>
         /// <param name="items"> List of items in the filter. </param>
         internal ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? filterType, IList<ConnectionMonitorEndpointFilterItem> items)

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define an exchange peering facility. </summary>
     public partial class ExchangePeeringFacility
     {
-        /// <summary> Initializes a new instance of ExchangePeeringFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePeeringFacility"/>. </summary>
         public ExchangePeeringFacility()
         {
         }
 
-        /// <summary> Initializes a new instance of ExchangePeeringFacility. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExchangePeeringFacility"/>. </summary>
         /// <param name="exchangeName"> The name of the exchange peering facility. </param>
         /// <param name="bandwidthInMbps"> The bandwidth of the connection between Microsoft and the exchange peering facility. </param>
         /// <param name="microsoftIPv4Address"> The IPv4 address of Microsoft at the exchange peering facility. </param>

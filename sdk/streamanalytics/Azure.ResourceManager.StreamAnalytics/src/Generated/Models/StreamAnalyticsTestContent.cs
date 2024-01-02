@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A stream analytics input. </summary>
     public partial class StreamAnalyticsTestContent
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsTestContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsTestContent"/>. </summary>
         /// <param name="input"> The stream analytics input to test. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public StreamAnalyticsTestContent(StreamingJobInputData input)

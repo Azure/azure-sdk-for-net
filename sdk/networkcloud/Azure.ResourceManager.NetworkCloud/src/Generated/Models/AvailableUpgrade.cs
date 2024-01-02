@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AvailableUpgrade represents an upgrade available for a Kubernetes cluster. </summary>
     public partial class AvailableUpgrade
     {
-        /// <summary> Initializes a new instance of AvailableUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableUpgrade"/>. </summary>
         internal AvailableUpgrade()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableUpgrade"/>. </summary>
         /// <param name="availabilityLifecycle"> The version lifecycle indicator. </param>
         /// <param name="version"> The version available for upgrading. </param>
         internal AvailableUpgrade(AvailabilityLifecycle? availabilityLifecycle, string version)

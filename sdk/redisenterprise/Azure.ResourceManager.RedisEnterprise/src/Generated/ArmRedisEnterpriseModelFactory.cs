@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRedisEnterpriseModelFactory
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseOperationStatus"/>. </summary>
         /// <param name="id"> The operation's unique id. </param>
         /// <param name="name"> The operation's name. </param>
         /// <param name="startOn"> The start time of the operation. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseOperationStatus(id, name, startOn, endOn, status, error != null ? new ErrorResponse(error) : null);
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseClusterData(id, name, resourceType, systemData, tags, location, sku, zones?.ToList(), identity, minimumTlsVersion, customerManagedKeyEncryption != null ? new ClusterPropertiesEncryption(customerManagedKeyEncryption) : null, hostName, provisioningState, resourceState, redisVersion, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterprisePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseDatabaseData(id, name, resourceType, systemData, clientProtocol, port, provisioningState, resourceState, clusteringPolicy, evictionPolicy, persistence, modules?.ToList(), geoReplication);
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseModule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseModule"/>. </summary>
         /// <param name="name"> The name of the module, e.g. 'RedisBloom', 'RediSearch', 'RedisTimeSeries'. </param>
         /// <param name="args"> Configuration options for the module, e.g. 'ERROR_RATE 0.01 INITIAL_SIZE 400'. </param>
         /// <param name="version"> The version of the module, e.g. '1.0'. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseModule(name, args, version);
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseLinkedDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseLinkedDatabase"/>. </summary>
         /// <param name="id"> Resource ID of a database resource to link with this database. </param>
         /// <param name="state"> State of the link between the database resources. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseLinkedDatabase"/> instance for mocking. </returns>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseLinkedDatabase(id, state);
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseDataAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseDataAccessKeys"/>. </summary>
         /// <param name="primaryKey"> The current primary key that clients can use to authenticate. </param>
         /// <param name="secondaryKey"> The current secondary key that clients can use to authenticate. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseDataAccessKeys"/> instance for mocking. </returns>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseDataAccessKeys(primaryKey, secondaryKey);
         }
 
-        /// <summary> Initializes a new instance of RedisEnterprisePrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterprisePrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterprisePrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseRegionSkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseRegionSkuDetail"/>. </summary>
         /// <param name="resourceType"> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </param>
         /// <param name="locationInfo"> Details about location and its capabilities. </param>
         /// <param name="skuDetailsName"> Details about available skus. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseRegionSkuDetail(resourceType, locationInfo, skuDetailsName != null ? new SkuDetail(skuDetailsName) : null);
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseLocationInfo"/>. </summary>
         /// <param name="location"> Location name. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseLocationInfo"/> instance for mocking. </returns>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseLocationInfo(location, capabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseCapability"/>. </summary>
         /// <param name="name"> Feature name. </param>
         /// <param name="value"> Indicates whether feature is supported or not. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseCapability"/> instance for mocking. </returns>

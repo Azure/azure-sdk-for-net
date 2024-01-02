@@ -104,7 +104,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
             // Specify the clinical trial registry source as ClinicalTrials.Gov
             registryFilters.Sources.Add(ClinicalTrialSource.ClinicaltrialsGov);
             // Limit the clinical trial to a certain location, in this case California, USA
-            registryFilters.FacilityLocations.Add(new GeographicLocation("United States") { State = "Arizona" , City = "Gilbert" });
+            registryFilters.FacilityLocations.Add(new GeographicLocation("United States") { State = "Arizona", City = "Gilbert" });
             // Limit the trial to a specific study type, interventional
             registryFilters.StudyTypes.Add(ClinicalTrialStudyType.Interventional);
 
@@ -118,12 +118,12 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
             #endregion
 
             #region Snippet:HealthInsightsClinicalMatchingMatchTrials
-            TrialMatcherResult trialMatcherResult = default;
+            TrialMatcherResults matcherResults = default;
             try
             {
                 // Using ClinicalMatchingClient + MatchTrials
-                Operation<TrialMatcherResult> operation = clinicalMatchingClient.MatchTrials(WaitUntil.Completed, trialMatcherData);
-                trialMatcherResult = operation.Value;
+                Operation<TrialMatcherResults> operation = clinicalMatchingClient.MatchTrials(WaitUntil.Completed, trialMatcherData);
+                matcherResults = operation.Value;
             }
             catch (Exception ex)
             {
@@ -134,30 +134,18 @@ namespace Azure.Health.Insights.ClinicalMatching.Tests.Samples
 
             #region Snippet:HealthInsightsTrialMatcherMatchTrialsViewResults
             // View the match trials (eligible/ineligible)
-            if (trialMatcherResult.Status == JobStatus.Succeeded)
+            foreach (TrialMatcherPatientResult patientResult in matcherResults.Patients)
             {
-                TrialMatcherResults matcherResults = trialMatcherResult.Results;
-                foreach (TrialMatcherPatientResult patientResult in matcherResults.Patients)
+                Console.WriteLine($"Inferences of Patient {patientResult.Id}");
+                foreach (TrialMatcherInference tmInferences in patientResult.Inferences)
                 {
-                    Console.WriteLine($"Inferences of Patient {patientResult.Id}");
-                    foreach (TrialMatcherInference tmInferences in patientResult.Inferences)
-                    {
-                        Console.WriteLine($"Trial Id {tmInferences.Id}");
-                        Console.WriteLine($"Type: {tmInferences.Type.ToString()}  Value: {tmInferences.Value}");
-                        Console.WriteLine($"Description {tmInferences.Description}");
-                    }
+                    Console.WriteLine($"Trial Id {tmInferences.Id}");
+                    Console.WriteLine($"Type: {tmInferences.Type.ToString()}  Value: {tmInferences.Value}");
+                    Console.WriteLine($"Description {tmInferences.Description}");
                 }
             }
-            else
-            {
-                IReadOnlyList<ResponseError> matcherErrors = trialMatcherResult.Errors;
-                foreach (ResponseError error in matcherErrors)
-                {
-                    Console.WriteLine($"{error.Code} : {error.Message}");
-                }
-            }
-
-            #endregion
         }
+
+        #endregion
     }
 }

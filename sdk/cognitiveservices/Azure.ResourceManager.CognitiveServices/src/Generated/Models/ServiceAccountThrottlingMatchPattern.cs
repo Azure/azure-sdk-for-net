@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The ServiceAccountThrottlingMatchPattern. </summary>
     public partial class ServiceAccountThrottlingMatchPattern
     {
-        /// <summary> Initializes a new instance of ServiceAccountThrottlingMatchPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingMatchPattern"/>. </summary>
         internal ServiceAccountThrottlingMatchPattern()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountThrottlingMatchPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingMatchPattern"/>. </summary>
         /// <param name="path"></param>
         /// <param name="method"></param>
         internal ServiceAccountThrottlingMatchPattern(string path, string method)

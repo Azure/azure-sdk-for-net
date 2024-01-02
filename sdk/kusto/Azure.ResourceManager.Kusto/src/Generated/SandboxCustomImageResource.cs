@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a SandboxCustomImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SandboxCustomImageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSandboxCustomImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource" /> using the GetSandboxCustomImage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SandboxCustomImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSandboxCustomImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource"/> using the GetSandboxCustomImage method.
     /// </summary>
     public partial class SandboxCustomImageResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Kusto
         private readonly SandboxCustomImagesRestOperations _sandboxCustomImageRestClient;
         private readonly SandboxCustomImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/sandboxCustomImages";
+
         /// <summary> Initializes a new instance of the <see cref="SandboxCustomImageResource"/> class for mocking. </summary>
         protected SandboxCustomImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SandboxCustomImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SandboxCustomImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SandboxCustomImageResource(ArmClient client, SandboxCustomImageData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/sandboxCustomImages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

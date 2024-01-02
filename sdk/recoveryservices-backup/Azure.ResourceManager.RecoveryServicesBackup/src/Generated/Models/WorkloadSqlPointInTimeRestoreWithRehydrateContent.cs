@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> AzureWorkload SQL-specific restore with integrated rehydration of recovery point. </summary>
     public partial class WorkloadSqlPointInTimeRestoreWithRehydrateContent : WorkloadSqlPointInTimeRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreWithRehydrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>. </summary>
         public WorkloadSqlPointInTimeRestoreWithRehydrateContent()
         {
             ObjectType = "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlPointInTimeRestoreWithRehydrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>

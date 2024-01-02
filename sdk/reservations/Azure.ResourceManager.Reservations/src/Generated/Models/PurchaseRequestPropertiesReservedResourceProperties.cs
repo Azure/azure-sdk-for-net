@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
     internal partial class PurchaseRequestPropertiesReservedResourceProperties
     {
-        /// <summary> Initializes a new instance of PurchaseRequestPropertiesReservedResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchaseRequestPropertiesReservedResourceProperties"/>. </summary>
         public PurchaseRequestPropertiesReservedResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PurchaseRequestPropertiesReservedResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchaseRequestPropertiesReservedResourceProperties"/>. </summary>
         /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
         internal PurchaseRequestPropertiesReservedResourceProperties(InstanceFlexibility? instanceFlexibility)
         {

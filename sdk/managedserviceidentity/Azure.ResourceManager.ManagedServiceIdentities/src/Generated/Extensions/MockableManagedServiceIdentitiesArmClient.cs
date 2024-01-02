@@ -38,18 +38,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
 
         /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public virtual SystemAssignedIdentityResource GetSystemAssignedIdentity(ResourceIdentifier scope)
         {
             return new SystemAssignedIdentityResource(Client, scope.AppendProviderResource("Microsoft.ManagedIdentity", "identities", "default"));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SystemAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SystemAssignedIdentityResource.CreateResourceIdentifier" /> to create a <see cref="SystemAssignedIdentityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SystemAssignedIdentityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SystemAssignedIdentityResource.CreateResourceIdentifier" /> to create a <see cref="SystemAssignedIdentityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public virtual SystemAssignedIdentityResource GetSystemAssignedIdentityResource(ResourceIdentifier id)
         {
             SystemAssignedIdentityResource.ValidateResourceId(id);
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="UserAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserAssignedIdentityResource.CreateResourceIdentifier" /> to create an <see cref="UserAssignedIdentityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="UserAssignedIdentityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UserAssignedIdentityResource.CreateResourceIdentifier" /> to create an <see cref="UserAssignedIdentityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserAssignedIdentityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="UserAssignedIdentityResource"/> object. </returns>
         public virtual UserAssignedIdentityResource GetUserAssignedIdentityResource(ResourceIdentifier id)
         {
             UserAssignedIdentityResource.ValidateResourceId(id);
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FederatedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FederatedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="FederatedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FederatedIdentityCredentialResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FederatedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="FederatedIdentityCredentialResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FederatedIdentityCredentialResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FederatedIdentityCredentialResource"/> object. </returns>
         public virtual FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(ResourceIdentifier id)
         {
             FederatedIdentityCredentialResource.ValidateResourceId(id);

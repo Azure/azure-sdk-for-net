@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
     /// A Class representing a FirmwareWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirmwareWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFirmwareWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFirmwareWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FirmwareWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFirmwareWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFirmwareWorkspace method.
     /// </summary>
     public partial class FirmwareWorkspaceResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         private readonly WorkspacesRestOperations _firmwareWorkspaceWorkspacesRestClient;
         private readonly FirmwareWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="FirmwareWorkspaceResource"/> class for mocking. </summary>
         protected FirmwareWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FirmwareWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirmwareWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FirmwareWorkspaceResource(ArmClient client, FirmwareWorkspaceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

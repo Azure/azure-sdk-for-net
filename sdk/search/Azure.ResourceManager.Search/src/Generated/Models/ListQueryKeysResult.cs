@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Response containing the query API keys for a given Azure Cognitive Search service. </summary>
     internal partial class ListQueryKeysResult
     {
-        /// <summary> Initializes a new instance of ListQueryKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueryKeysResult"/>. </summary>
         internal ListQueryKeysResult()
         {
             Value = new ChangeTrackingList<SearchServiceQueryKey>();
         }
 
-        /// <summary> Initializes a new instance of ListQueryKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueryKeysResult"/>. </summary>
         /// <param name="value"> The query keys for the Azure Cognitive Search service. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of query keys. Returned when the total number of requested query keys exceed maximum page size. </param>
         internal ListQueryKeysResult(IReadOnlyList<SearchServiceQueryKey> value, string nextLink)

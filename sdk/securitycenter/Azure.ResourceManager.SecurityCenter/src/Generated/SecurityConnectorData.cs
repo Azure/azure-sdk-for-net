@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityConnectorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SecurityConnectorData(AzureLocation location) : base(location)
         {
             Offerings = new ChangeTrackingList<SecurityCenterCloudOffering>();
         }
 
-        /// <summary> Initializes a new instance of SecurityConnectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

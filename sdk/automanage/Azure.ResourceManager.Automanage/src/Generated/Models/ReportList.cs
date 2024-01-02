@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> The response of the list report operation. </summary>
     internal partial class ReportList
     {
-        /// <summary> Initializes a new instance of ReportList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportList"/>. </summary>
         internal ReportList()
         {
             Value = new ChangeTrackingList<AutomanageConfigurationProfileAssignmentReportData>();
         }
 
-        /// <summary> Initializes a new instance of ReportList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportList"/>. </summary>
         /// <param name="value"> Result of the list report operation. </param>
         internal ReportList(IReadOnlyList<AutomanageConfigurationProfileAssignmentReportData> value)
         {

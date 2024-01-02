@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The definition of a parameter that can be passed to a custom action of a Gallery Application Version. </summary>
     public partial class GalleryApplicationCustomActionParameter
     {
-        /// <summary> Initializes a new instance of GalleryApplicationCustomActionParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationCustomActionParameter"/>. </summary>
         /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public GalleryApplicationCustomActionParameter(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationCustomActionParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationCustomActionParameter"/>. </summary>
         /// <param name="name"> The name of the custom action.  Must be unique within the Gallery Application Version. </param>
         /// <param name="isRequired"> Indicates whether this parameter must be passed when running the custom action. </param>
         /// <param name="parameterType"> Specifies the type of the custom action parameter. Possible values are: String, ConfigurationDataBlob or LogOutputBlob. </param>

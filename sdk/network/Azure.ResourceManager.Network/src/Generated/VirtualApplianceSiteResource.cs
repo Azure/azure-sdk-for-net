@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VirtualApplianceSite along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualApplianceSiteResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualApplianceSiteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkVirtualApplianceResource" /> using the GetVirtualApplianceSite method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualApplianceSiteResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualApplianceSiteResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkVirtualApplianceResource"/> using the GetVirtualApplianceSite method.
     /// </summary>
     public partial class VirtualApplianceSiteResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualApplianceSitesRestOperations _virtualApplianceSiteRestClient;
         private readonly VirtualApplianceSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkVirtualAppliances/virtualApplianceSites";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualApplianceSiteResource"/> class for mocking. </summary>
         protected VirtualApplianceSiteResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualApplianceSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualApplianceSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualApplianceSiteResource(ArmClient client, VirtualApplianceSiteData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkVirtualAppliances/virtualApplianceSites";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

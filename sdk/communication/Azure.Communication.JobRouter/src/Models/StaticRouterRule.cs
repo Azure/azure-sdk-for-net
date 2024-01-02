@@ -9,8 +9,8 @@ namespace Azure.Communication.JobRouter
 {
     public partial class StaticRouterRule : IUtf8JsonSerializable
     {
-        /// <summary> The static value this rule always returns. </summary>
-        public RouterValue Value { get; set; }
+        /// <summary> The static value this rule always returns. Values must be primitive values - number, string, boolean. </summary>
+        public RouterValue Value { get; internal set; }
 
         [CodeGenMember("Value")]
         internal BinaryData _value {
@@ -25,8 +25,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of StaticRule. </summary>
-        /// <param name="value"> The static value this rule always returns. </param>
-        public StaticRouterRule(RouterValue value) : this("static-rule", BinaryData.FromObjectAsJson(value.Value))
+        /// <param name="value"> The static value this rule always returns. Values must be primitive values - number, string, boolean. </param>
+        public StaticRouterRule(RouterValue value) : this(RouterRuleKind.Static, BinaryData.FromObjectAsJson(value.Value))
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteObjectValue(_value.ToObjectFromJson<object>());
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

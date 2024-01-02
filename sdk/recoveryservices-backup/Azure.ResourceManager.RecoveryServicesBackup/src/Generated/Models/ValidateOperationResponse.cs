@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for validate operation response. </summary>
     internal partial class ValidateOperationResponse
     {
-        /// <summary> Initializes a new instance of ValidateOperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateOperationResponse"/>. </summary>
         internal ValidateOperationResponse()
         {
             ValidationResults = new ChangeTrackingList<BackupErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of ValidateOperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateOperationResponse"/>. </summary>
         /// <param name="validationResults"> Gets the validation result. </param>
         internal ValidateOperationResponse(IReadOnlyList<BackupErrorDetail> validationResults)
         {

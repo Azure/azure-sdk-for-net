@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Active message associated with project. </summary>
     public partial class JobStatusMessage
     {
-        /// <summary> Initializes a new instance of JobStatusMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStatusMessage"/>. </summary>
         internal JobStatusMessage()
         {
         }
 
-        /// <summary> Initializes a new instance of JobStatusMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStatusMessage"/>. </summary>
         /// <param name="code"> Service-defined message code. </param>
         /// <param name="createdOn"> Time in UTC at which the message was created. </param>
         /// <param name="level"> Severity level of message. </param>

@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for connect to MySQL type source. </summary>
     public partial class ConnectToSourceNonSqlTaskOutput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceNonSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceNonSqlTaskOutput"/>. </summary>
         internal ConnectToSourceNonSqlTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceNonSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceNonSqlTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="sourceServerBrandVersion"> Server brand version. </param>
         /// <param name="serverProperties"> Server properties. </param>

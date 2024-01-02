@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A request to check whether the specified name for a resource is available. </summary>
     public partial class SqlNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of SqlNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SqlNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Sql.Models
 
             Name = name;
             ResourceType = SqlNameAvailabilityResourceType.MicrosoftSqlServers;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        internal SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Gets the name. </summary>

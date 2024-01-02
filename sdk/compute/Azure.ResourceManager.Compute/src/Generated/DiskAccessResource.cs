@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A Class representing a DiskAccess along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiskAccessResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiskAccessResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDiskAccess method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskAccessResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiskAccessResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDiskAccess method.
     /// </summary>
     public partial class DiskAccessResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Compute
         private readonly DiskAccessesRestOperations _diskAccessRestClient;
         private readonly DiskAccessData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/diskAccesses";
+
         /// <summary> Initializes a new instance of the <see cref="DiskAccessResource"/> class for mocking. </summary>
         protected DiskAccessResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiskAccessResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiskAccessResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiskAccessResource(ArmClient client, DiskAccessData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/diskAccesses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComputePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ComputePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

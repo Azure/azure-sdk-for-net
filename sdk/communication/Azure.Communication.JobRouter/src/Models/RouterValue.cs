@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
-    /// Generic value wrapper.
+    /// Generic value wrapper. Values must be primitive values - number, string, boolean.
     /// </summary>
     public class RouterValue : IEquatable<RouterValue>
     {

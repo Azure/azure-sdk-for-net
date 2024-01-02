@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Target resource. </summary>
     public partial class TargetResource
     {
-        /// <summary> Initializes a new instance of TargetResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetResource"/>. </summary>
         internal TargetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetResource"/>. </summary>
         /// <param name="id"> The ID of the resource. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The object representing the state of the migration between the backup policies. </summary>
     public partial class BackupPolicyMigrationState
     {
-        /// <summary> Initializes a new instance of BackupPolicyMigrationState. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPolicyMigrationState"/>. </summary>
         public BackupPolicyMigrationState()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupPolicyMigrationState. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPolicyMigrationState"/>. </summary>
         /// <param name="status"> Describes the status of migration between backup policy types. </param>
         /// <param name="targetType"> Describes the target backup policy type of the backup policy migration. </param>
         /// <param name="startOn"> Time at which the backup policy migration started (ISO-8601 format). </param>

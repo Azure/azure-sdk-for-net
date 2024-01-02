@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Etcd configuration. </summary>
     public partial class DataBoxEdgeEtcdInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeEtcdInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeEtcdInfo"/>. </summary>
         internal DataBoxEdgeEtcdInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeEtcdInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeEtcdInfo"/>. </summary>
         /// <param name="etcdInfoType"> Etcd type. </param>
         /// <param name="version"> Etcd version. </param>
         internal DataBoxEdgeEtcdInfo(string etcdInfoType, string version)

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing an ArcSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArcSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArcSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource" /> using the GetArcSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArcSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArcSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetArcSetting method.
     /// </summary>
     public partial class ArcSettingResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Hci
         private readonly ArcSettingsRestOperations _arcSettingRestClient;
         private readonly ArcSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/arcSettings";
+
         /// <summary> Initializes a new instance of the <see cref="ArcSettingResource"/> class for mocking. </summary>
         protected ArcSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArcSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArcSettingResource(ArmClient client, ArcSettingData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/arcSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Control Plane Apis version constraint for the API Management service. </summary>
     internal partial class ApiVersionConstraint
     {
-        /// <summary> Initializes a new instance of ApiVersionConstraint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionConstraint"/>. </summary>
         public ApiVersionConstraint()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiVersionConstraint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionConstraint"/>. </summary>
         /// <param name="minApiVersion"> Limit control plane API calls to API Management service with version equal to or newer than this value. </param>
         internal ApiVersionConstraint(string minApiVersion)
         {

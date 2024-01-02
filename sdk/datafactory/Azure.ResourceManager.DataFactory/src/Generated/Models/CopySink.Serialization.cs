@@ -95,6 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FileSystemSink": return FileSystemSink.DeserializeFileSystemSink(element);
                     case "InformixSink": return InformixSink.DeserializeInformixSink(element);
                     case "JsonSink": return JsonSink.DeserializeJsonSink(element);
+                    case "LakeHouseTableSink": return LakeHouseTableSink.DeserializeLakeHouseTableSink(element);
                     case "MicrosoftAccessSink": return MicrosoftAccessSink.DeserializeMicrosoftAccessSink(element);
                     case "MongoDbAtlasSink": return MongoDBAtlasSink.DeserializeMongoDBAtlasSink(element);
                     case "MongoDbV2Sink": return MongoDBV2Sink.DeserializeMongoDBV2Sink(element);

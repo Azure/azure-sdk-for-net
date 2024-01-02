@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetWorkflowRunAsync(Guid,RequestContext)">
+      <example>
+This sample shows how to call GetWorkflowRunAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
+
+Response response = await client.GetWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("actionDag").ToString());
+Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString());
+Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
+]]></code>
+This sample shows how to call GetWorkflowRunAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
+
+Response response = await client.GetWorkflowRunAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("workflowId").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("requestor").ToString());
+Console.WriteLine(result.GetProperty("userRequestId").ToString());
+Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+Console.WriteLine(result.GetProperty("runPayload").GetProperty("payload").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("cancelTime").ToString());
+Console.WriteLine(result.GetProperty("cancelComment").ToString());
+Console.WriteLine(result.GetProperty("actionDag").ToString());
+Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString());
+Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
+]]></code></example>
+    </member>
+    <member name="GetWorkflowRun(Guid,RequestContext)">
+      <example>
+This sample shows how to call GetWorkflowRun and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
+
+Response response = client.GetWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("actionDag").ToString());
+Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString());
+Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
+]]></code>
+This sample shows how to call GetWorkflowRun with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
+
+Response response = client.GetWorkflowRun(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("workflowId").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("requestor").ToString());
+Console.WriteLine(result.GetProperty("userRequestId").ToString());
+Console.WriteLine(result.GetProperty("runPayload").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("runPayload").GetProperty("targetValue").ToString());
+Console.WriteLine(result.GetProperty("runPayload").GetProperty("payload").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("cancelTime").ToString());
+Console.WriteLine(result.GetProperty("cancelComment").ToString());
+Console.WriteLine(result.GetProperty("actionDag").ToString());
+Console.WriteLine(result.GetProperty("detail").GetProperty("runInput").ToString());
+Console.WriteLine(result.GetProperty("detail").GetProperty("actions").ToString());
+]]></code></example>
+    </member>
+    <member name="CancelAsync(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CancelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CancelAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call CancelAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    comment = "<comment>",
+});
+Response response = await client.CancelAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Cancel(Guid,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Cancel.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.Cancel(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Cancel with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+WorkflowRunClient client = new WorkflowRunClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    comment = "<comment>",
+});
+Response response = client.Cancel(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>

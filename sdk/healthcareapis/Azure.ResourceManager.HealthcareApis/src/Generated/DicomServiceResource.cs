@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// A Class representing a DicomService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DicomServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDicomServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource" /> using the GetDicomService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DicomServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDicomServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HealthcareApisWorkspaceResource"/> using the GetDicomService method.
     /// </summary>
     public partial class DicomServiceResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly DicomServicesRestOperations _dicomServiceRestClient;
         private readonly DicomServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/dicomservices";
+
         /// <summary> Initializes a new instance of the <see cref="DicomServiceResource"/> class for mocking. </summary>
         protected DicomServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DicomServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DicomServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DicomServiceResource(ArmClient client, DicomServiceData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/dicomservices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

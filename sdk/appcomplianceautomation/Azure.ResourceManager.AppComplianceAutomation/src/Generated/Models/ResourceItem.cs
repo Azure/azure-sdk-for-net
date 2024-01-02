@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Resource Id. </summary>
     public partial class ResourceItem
     {
-        /// <summary> Initializes a new instance of ResourceItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceItem"/>. </summary>
         internal ResourceItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceItem"/>. </summary>
         /// <param name="subscriptionId"> The subscription Id of this resource. </param>
         /// <param name="resourceGroup"> The resource group name of this resource. </param>
         /// <param name="resourceType"> The resource type of this resource. </param>

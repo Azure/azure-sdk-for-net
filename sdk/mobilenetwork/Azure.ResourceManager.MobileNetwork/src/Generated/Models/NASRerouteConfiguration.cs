@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Configuration enabling NAS reroute. </summary>
     internal partial class NASRerouteConfiguration
     {
-        /// <summary> Initializes a new instance of NASRerouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NASRerouteConfiguration"/>. </summary>
         /// <param name="macroMmeGroupId"> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </param>
         public NASRerouteConfiguration(int macroMmeGroupId)
         {

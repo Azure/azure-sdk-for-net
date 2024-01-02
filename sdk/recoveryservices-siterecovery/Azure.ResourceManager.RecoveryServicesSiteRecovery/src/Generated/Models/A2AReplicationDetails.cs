@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A provider specific settings. </summary>
     public partial class A2AReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AReplicationDetails"/>. </summary>
         internal A2AReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<A2AProtectedDiskDetails>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="initialPrimaryZone"> The initial primary availability zone. </param>

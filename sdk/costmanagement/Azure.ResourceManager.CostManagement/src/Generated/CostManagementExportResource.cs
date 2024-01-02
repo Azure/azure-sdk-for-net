@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
     /// A Class representing a CostManagementExport along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CostManagementExportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCostManagementExportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetCostManagementExport method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CostManagementExportResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCostManagementExportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCostManagementExport method.
     /// </summary>
     public partial class CostManagementExportResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.CostManagement
         private readonly ExportsRestOperations _costManagementExportExportsRestClient;
         private readonly CostManagementExportData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/exports";
+
         /// <summary> Initializes a new instance of the <see cref="CostManagementExportResource"/> class for mocking. </summary>
         protected CostManagementExportResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CostManagementExportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementExportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CostManagementExportResource(ArmClient client, CostManagementExportData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CostManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/exports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExportRun" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExportRun"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExportRun> GetExecutionHistoryAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateGetExecutionHistoryRequest(Id.Parent, Id.Name);
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExportRun" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExportRun"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExportRun> GetExecutionHistory(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateGetExecutionHistoryRequest(Id.Parent, Id.Name);

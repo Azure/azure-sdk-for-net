@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> General information regarding the current resource. </summary>
     internal partial class ServiceResourceDetails
     {
-        /// <summary> Initializes a new instance of ServiceResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> is null. </exception>
         internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels)
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             CustomDocumentModels = customDocumentModels;
         }
 
-        /// <summary> Initializes a new instance of ServiceResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
         internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels, ResourceQuotaDetails customNeuralDocumentModelBuilds)

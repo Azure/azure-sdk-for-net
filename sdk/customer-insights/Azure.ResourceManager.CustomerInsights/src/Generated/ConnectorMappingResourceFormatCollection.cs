@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectorMappingResourceFormatResource" /> and their operations.
-    /// Each <see cref="ConnectorMappingResourceFormatResource" /> in the collection will belong to the same instance of <see cref="ConnectorResourceFormatResource" />.
-    /// To get a <see cref="ConnectorMappingResourceFormatCollection" /> instance call the GetConnectorMappingResourceFormats method from an instance of <see cref="ConnectorResourceFormatResource" />.
+    /// A class representing a collection of <see cref="ConnectorMappingResourceFormatResource"/> and their operations.
+    /// Each <see cref="ConnectorMappingResourceFormatResource"/> in the collection will belong to the same instance of <see cref="ConnectorResourceFormatResource"/>.
+    /// To get a <see cref="ConnectorMappingResourceFormatCollection"/> instance call the GetConnectorMappingResourceFormats method from an instance of <see cref="ConnectorResourceFormatResource"/>.
     /// </summary>
     public partial class ConnectorMappingResourceFormatCollection : ArmCollection, IEnumerable<ConnectorMappingResourceFormatResource>, IAsyncEnumerable<ConnectorMappingResourceFormatResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectorMappingResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConnectorMappingResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectorMappingResourceFormatResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectorMappingResourceFormatConnectorMappingsRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectorMappingResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectorMappingResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectorMappingResourceFormatResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectorMappingResourceFormatConnectorMappingsRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

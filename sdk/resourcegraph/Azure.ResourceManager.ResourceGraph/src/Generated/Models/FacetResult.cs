@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> Successfully executed facet containing additional statistics on the response of a query. </summary>
     public partial class FacetResult : Facet
     {
-        /// <summary> Initializes a new instance of FacetResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="totalRecords"> Number of total records in the facet results. </param>
         /// <param name="count"> Number of records returned in the facet response. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             ResultType = "FacetResult";
         }
 
-        /// <summary> Initializes a new instance of FacetResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="totalRecords"> Number of total records in the facet results. </param>

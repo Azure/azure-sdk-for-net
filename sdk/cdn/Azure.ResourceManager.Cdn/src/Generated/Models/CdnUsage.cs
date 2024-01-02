@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Output of check resource usage API. </summary>
     public partial class CdnUsage
     {
-        /// <summary> Initializes a new instance of CdnUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
         internal CdnUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
         /// <param name="resourceType"> Resource type for which the usage is provided. </param>
         /// <param name="unit"> Unit of the usage. e.g. count. </param>
         /// <param name="currentValue"> Actual value of usage on the specified resource type. </param>

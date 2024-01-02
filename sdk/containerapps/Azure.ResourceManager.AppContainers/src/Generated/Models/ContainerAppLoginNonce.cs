@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the nonce used in the login flow. </summary>
     public partial class ContainerAppLoginNonce
     {
-        /// <summary> Initializes a new instance of ContainerAppLoginNonce. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLoginNonce"/>. </summary>
         public ContainerAppLoginNonce()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppLoginNonce. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLoginNonce"/>. </summary>
         /// <param name="validateNonce"> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="nonceExpirationInterval"> The time after the request is made when the nonce should expire. </param>
         internal ContainerAppLoginNonce(bool? validateNonce, string nonceExpirationInterval)

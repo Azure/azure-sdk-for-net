@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class IPAllocationData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of IPAllocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAllocationData"/>. </summary>
         public IPAllocationData()
         {
             AllocationTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of IPAllocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAllocationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

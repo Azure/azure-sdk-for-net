@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Operation status extended info for list of jobs. </summary>
     public partial class OperationStatusJobsExtendedInfo : OperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of OperationStatusJobsExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusJobsExtendedInfo"/>. </summary>
         internal OperationStatusJobsExtendedInfo()
         {
             JobIds = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "OperationStatusJobsExtendedInfo";
         }
 
-        /// <summary> Initializes a new instance of OperationStatusJobsExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusJobsExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="jobIds"> IDs of the jobs created for the protected item. </param>
         /// <param name="failedJobsError"> Stores all the failed jobs along with the corresponding error codes. </param>

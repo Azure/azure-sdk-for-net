@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseMigrationSqlDBResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseMigrationSqlDBResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlDBResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseMigrationSqlDBResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseMigrationSqlDBResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlDBResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationSqlDBResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DatabaseMigrationSqlDBResource"/> object. </returns>
         public virtual DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(ResourceIdentifier id)
         {
             DatabaseMigrationSqlDBResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseMigrationSqlMIResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseMigrationSqlMIResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlMIResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseMigrationSqlMIResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseMigrationSqlMIResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlMIResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationSqlMIResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DatabaseMigrationSqlMIResource"/> object. </returns>
         public virtual DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(ResourceIdentifier id)
         {
             DatabaseMigrationSqlMIResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseMigrationSqlVmResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseMigrationSqlVmResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseMigrationSqlVmResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseMigrationSqlVmResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlVmResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationSqlVmResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DatabaseMigrationSqlVmResource"/> object. </returns>
         public virtual DatabaseMigrationSqlVmResource GetDatabaseMigrationSqlVmResource(ResourceIdentifier id)
         {
             DatabaseMigrationSqlVmResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SqlMigrationServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="SqlMigrationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SqlMigrationServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SqlMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="SqlMigrationServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SqlMigrationServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SqlMigrationServiceResource"/> object. </returns>
         public virtual SqlMigrationServiceResource GetSqlMigrationServiceResource(ResourceIdentifier id)
         {
             SqlMigrationServiceResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataMigrationServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataMigrationServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMigrationServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataMigrationServiceResource"/> object. </returns>
         public virtual DataMigrationServiceResource GetDataMigrationServiceResource(ResourceIdentifier id)
         {
             DataMigrationServiceResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceProjectTaskResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceProjectTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceProjectTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceProjectTaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceProjectTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceProjectTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceProjectTaskResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ServiceProjectTaskResource"/> object. </returns>
         public virtual ServiceProjectTaskResource GetServiceProjectTaskResource(ResourceIdentifier id)
         {
             ServiceProjectTaskResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceServiceTaskResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceServiceTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceServiceTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceServiceTaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceServiceTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceServiceTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceServiceTaskResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ServiceServiceTaskResource"/> object. </returns>
         public virtual ServiceServiceTaskResource GetServiceServiceTaskResource(ResourceIdentifier id)
         {
             ServiceServiceTaskResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
         public virtual ProjectResource GetProjectResource(ResourceIdentifier id)
         {
             ProjectResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectFileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="ProjectFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProjectFileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="ProjectFileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectFileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProjectFileResource"/> object. </returns>
         public virtual ProjectFileResource GetProjectFileResource(ResourceIdentifier id)
         {
             ProjectFileResource.ValidateResourceId(id);

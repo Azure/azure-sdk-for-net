@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteCircuitAuthorization along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteCircuitAuthorizationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteCircuitAuthorizationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitResource" /> using the GetExpressRouteCircuitAuthorization method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteCircuitAuthorizationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteCircuitAuthorizationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRouteCircuitResource"/> using the GetExpressRouteCircuitAuthorization method.
     /// </summary>
     public partial class ExpressRouteCircuitAuthorizationResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRouteCircuitAuthorizationsRestOperations _expressRouteCircuitAuthorizationRestClient;
         private readonly ExpressRouteCircuitAuthorizationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/authorizations";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitAuthorizationResource"/> class for mocking. </summary>
         protected ExpressRouteCircuitAuthorizationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteCircuitAuthorizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitAuthorizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteCircuitAuthorizationResource(ArmClient client, ExpressRouteCircuitAuthorizationData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteCircuits/authorizations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

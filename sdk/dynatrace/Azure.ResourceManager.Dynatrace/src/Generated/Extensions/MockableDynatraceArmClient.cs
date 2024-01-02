@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DynatraceMonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynatraceMonitorResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DynatraceMonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DynatraceMonitorResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DynatraceMonitorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DynatraceMonitorResource"/> object. </returns>
         public virtual DynatraceMonitorResource GetDynatraceMonitorResource(ResourceIdentifier id)
         {
             DynatraceMonitorResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DynatraceTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynatraceTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DynatraceTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DynatraceTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DynatraceTagRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DynatraceTagRuleResource"/> object. </returns>
         public virtual DynatraceTagRuleResource GetDynatraceTagRuleResource(ResourceIdentifier id)
         {
             DynatraceTagRuleResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DynatraceSingleSignOnResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynatraceSingleSignOnResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceSingleSignOnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DynatraceSingleSignOnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DynatraceSingleSignOnResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceSingleSignOnResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DynatraceSingleSignOnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DynatraceSingleSignOnResource"/> object. </returns>
         public virtual DynatraceSingleSignOnResource GetDynatraceSingleSignOnResource(ResourceIdentifier id)
         {
             DynatraceSingleSignOnResource.ValidateResourceId(id);

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The metastore specification for Spark cluster. </summary>
     public partial class SparkMetastoreSpec
     {
-        /// <summary> Initializes a new instance of SparkMetastoreSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkMetastoreSpec"/>. </summary>
         /// <param name="dbServerHost"> The database server host. </param>
         /// <param name="dbName"> The database name. </param>
         /// <param name="dbUserName"> The database user name. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             KeyVaultId = keyVaultId;
         }
 
-        /// <summary> Initializes a new instance of SparkMetastoreSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkMetastoreSpec"/>. </summary>
         /// <param name="dbServerHost"> The database server host. </param>
         /// <param name="dbName"> The database name. </param>
         /// <param name="dbUserName"> The database user name. </param>

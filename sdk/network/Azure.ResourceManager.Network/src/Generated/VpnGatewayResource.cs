@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VpnGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VpnGatewayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVpnGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVpnGateway method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VpnGatewayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVpnGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVpnGateway method.
     /// </summary>
     public partial class VpnGatewayResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Network
         private readonly VpnGatewaysRestOperations _vpnGatewayRestClient;
         private readonly VpnGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/vpnGateways";
+
         /// <summary> Initializes a new instance of the <see cref="VpnGatewayResource"/> class for mocking. </summary>
         protected VpnGatewayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VpnGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VpnGatewayResource(ArmClient client, VpnGatewayData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/vpnGateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -91,7 +91,10 @@ namespace Azure.Monitor.Query
         /// <summary> **Lists the metric values for a resource**. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// </param>
         /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="top">
@@ -135,7 +138,10 @@ namespace Azure.Monitor.Query
         /// <summary> **Lists the metric values for a resource**. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// </param>
         /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="top">

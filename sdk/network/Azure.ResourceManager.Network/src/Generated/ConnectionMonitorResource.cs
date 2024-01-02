@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a ConnectionMonitor along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConnectionMonitorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConnectionMonitorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkWatcherResource" /> using the GetConnectionMonitor method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectionMonitorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConnectionMonitorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkWatcherResource"/> using the GetConnectionMonitor method.
     /// </summary>
     public partial class ConnectionMonitorResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Network
         private readonly ConnectionMonitorsRestOperations _connectionMonitorRestClient;
         private readonly ConnectionMonitorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkWatchers/connectionMonitors";
+
         /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorResource"/> class for mocking. </summary>
         protected ConnectionMonitorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConnectionMonitorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConnectionMonitorResource(ArmClient client, ConnectionMonitorData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkWatchers/connectionMonitors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

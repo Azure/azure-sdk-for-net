@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListNetworkVirtualAppliances API service call. </summary>
     internal partial class NetworkVirtualApplianceListResult
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceListResult"/>. </summary>
         internal NetworkVirtualApplianceListResult()
         {
             Value = new ChangeTrackingList<NetworkVirtualApplianceData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceListResult"/>. </summary>
         /// <param name="value"> List of Network Virtual Appliances. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
         internal NetworkVirtualApplianceListResult(IReadOnlyList<NetworkVirtualApplianceData> value, string nextLink)

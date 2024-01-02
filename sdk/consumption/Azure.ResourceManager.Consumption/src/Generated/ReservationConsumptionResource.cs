@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Consumption
 {
     /// <summary>
     /// A class extending from the ReservationResource in Azure.ResourceManager.Consumption along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="ReservationConsumptionResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Capacity/reservationorders/reservations.
+    /// You can only construct a <see cref="ReservationConsumptionResource"/> from a <see cref="ResourceIdentifier"/> with a resource type of Microsoft.Capacity/reservationorders/reservations.
     /// </summary>
     public partial class ReservationConsumptionResource : ArmResource
     {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationSummary> GetReservationSummariesAsync(ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, grain, filter);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="grain"> Can be daily or monthly. </param>
         /// <param name="filter"> Required only for daily grain. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConsumptionReservationSummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationSummary> GetReservationSummaries(ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, grain, filter);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationDetail> GetReservationDetailsAsync(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConsumptionReservationDetail" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationDetail> GetReservationDetails(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(filter, nameof(filter));

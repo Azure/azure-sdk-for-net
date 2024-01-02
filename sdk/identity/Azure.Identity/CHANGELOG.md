@@ -7,8 +7,15 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Claims from the `TokenRequestContext` are now correctly sent through to MSAL in `ConfidentialClient` credentials. [#40451](https://github.com/Azure/azure-sdk-for-net/issues/40451).
 
 ### Other Changes
+
+## 1.10.4 (2023-11-13)
+
+### Other Changes
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
 
 ## 1.10.3 (2023-10-18)
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine network interface configurations. </summary>
     public partial class VirtualMachineNetworkInterfaceConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfiguration"/>. </summary>
         /// <param name="name"> The network interface configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineNetworkInterfaceConfiguration(string name)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             IPConfigurations = new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceConfiguration"/>. </summary>
         /// <param name="name"> The network interface configuration name. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>

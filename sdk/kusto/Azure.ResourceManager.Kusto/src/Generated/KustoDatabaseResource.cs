@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// A Class representing a KustoDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="KustoDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetKustoDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource" /> using the GetKustoDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="KustoDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetKustoDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="KustoClusterResource"/> using the GetKustoDatabase method.
     /// </summary>
     public partial class KustoDatabaseResource : ArmResource
     {
@@ -49,12 +49,15 @@ namespace Azure.ResourceManager.Kusto
         private readonly DataConnectionsRestOperations _kustoDataConnectionDataConnectionsRestClient;
         private readonly KustoDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases";
+
         /// <summary> Initializes a new instance of the <see cref="KustoDatabaseResource"/> class for mocking. </summary>
         protected KustoDatabaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "KustoDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="KustoDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal KustoDatabaseResource(ArmClient client, KustoDatabaseData data) : this(client, data.Id)
@@ -86,9 +89,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/databases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> GetPrincipalsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> GetPrincipals(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateListPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToAdd"/> is null. </exception>
-        /// <returns> An async collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> AddPrincipalsAsync(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToAdd"/> is null. </exception>
-        /// <returns> A collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> AddPrincipals(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToRemove"/> is null. </exception>
-        /// <returns> An async collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoDatabasePrincipal> RemovePrincipalsAsync(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToRemove"/> is null. </exception>
-        /// <returns> A collection of <see cref="KustoDatabasePrincipal" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoDatabasePrincipal> RemovePrincipals(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));

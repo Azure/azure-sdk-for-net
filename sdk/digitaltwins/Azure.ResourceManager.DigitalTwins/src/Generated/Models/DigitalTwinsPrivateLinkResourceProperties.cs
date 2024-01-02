@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The properties for a group information object. </summary>
     public partial class DigitalTwinsPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateLinkResourceProperties"/>. </summary>
         internal DigitalTwinsPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>

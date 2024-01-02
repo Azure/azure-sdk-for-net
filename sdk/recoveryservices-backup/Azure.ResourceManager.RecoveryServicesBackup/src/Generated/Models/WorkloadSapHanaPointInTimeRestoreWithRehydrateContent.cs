@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> AzureWorkload SAP Hana-specific restore with integrated rehydration of recovery point. </summary>
     public partial class WorkloadSapHanaPointInTimeRestoreWithRehydrateContent : WorkloadSapHanaPointInTimeRestoreContent
     {
-        /// <summary> Initializes a new instance of WorkloadSapHanaPointInTimeRestoreWithRehydrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>. </summary>
         public WorkloadSapHanaPointInTimeRestoreWithRehydrateContent()
         {
             ObjectType = "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest";
         }
 
-        /// <summary> Initializes a new instance of WorkloadSapHanaPointInTimeRestoreWithRehydrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM ID of the VM on which workload that was running is being recovered. </param>

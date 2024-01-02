@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHubsNamespaceAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsNamespaceAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsNamespaceAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsNamespaceAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubsNamespaceAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubsNamespaceAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHubsNamespaceAuthorizationRule method.
     /// </summary>
     public partial class EventHubsNamespaceAuthorizationRuleResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventHubs
         private readonly NamespacesRestOperations _eventHubsNamespaceAuthorizationRuleNamespacesRestClient;
         private readonly EventHubsAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubsNamespaceAuthorizationRuleResource"/> class for mocking. </summary>
         protected EventHubsNamespaceAuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubsNamespaceAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsNamespaceAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsNamespaceAuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

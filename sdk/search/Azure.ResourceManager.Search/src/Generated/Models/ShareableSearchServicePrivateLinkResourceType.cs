@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Describes an resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>
     public partial class ShareableSearchServicePrivateLinkResourceType
     {
-        /// <summary> Initializes a new instance of ShareableSearchServicePrivateLinkResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareableSearchServicePrivateLinkResourceType"/>. </summary>
         internal ShareableSearchServicePrivateLinkResourceType()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareableSearchServicePrivateLinkResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareableSearchServicePrivateLinkResourceType"/>. </summary>
         /// <param name="name"> The name of the resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </param>
         /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </param>
         internal ShareableSearchServicePrivateLinkResourceType(string name, ShareableSearchServicePrivateLinkResourceProperties properties)

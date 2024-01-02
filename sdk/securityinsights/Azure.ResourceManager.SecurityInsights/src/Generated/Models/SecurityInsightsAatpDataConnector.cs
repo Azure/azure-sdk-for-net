@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents AATP (Azure Advanced Threat Protection) data connector. </summary>
     public partial class SecurityInsightsAatpDataConnector : SecurityInsightsDataConnectorData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAatpDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAatpDataConnector"/>. </summary>
         public SecurityInsightsAatpDataConnector()
         {
             Kind = DataConnectorKind.AzureAdvancedThreatProtection;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAatpDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAatpDataConnector"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

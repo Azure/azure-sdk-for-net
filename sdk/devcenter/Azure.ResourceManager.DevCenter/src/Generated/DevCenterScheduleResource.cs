@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a DevCenterSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterPoolResource" /> using the GetDevCenterSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterPoolResource"/> using the GetDevCenterSchedule method.
     /// </summary>
     public partial class DevCenterScheduleResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DevCenter
         private readonly SchedulesRestOperations _devCenterScheduleSchedulesRestClient;
         private readonly DevCenterScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/pools/schedules";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterScheduleResource"/> class for mocking. </summary>
         protected DevCenterScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevCenterScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterScheduleResource(ArmClient client, DevCenterScheduleData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/pools/schedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

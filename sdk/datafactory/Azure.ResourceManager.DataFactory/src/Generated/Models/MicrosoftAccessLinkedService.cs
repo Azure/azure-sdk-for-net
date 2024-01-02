@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Microsoft Access linked service. </summary>
     public partial class MicrosoftAccessLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of MicrosoftAccessLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/>. </summary>
         /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public MicrosoftAccessLinkedService(DataFactoryElement<string> connectionString)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "MicrosoftAccess";
         }
 
-        /// <summary> Initializes a new instance of MicrosoftAccessLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Subscription
     /// </summary>
     public partial class TenantPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of TenantPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyData"/>. </summary>
         internal TenantPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

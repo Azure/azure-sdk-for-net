@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ScheduledActionResource" /> and their operations.
-    /// Each <see cref="ScheduledActionResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ScheduledActionCollection" /> instance call the GetScheduledActions method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ScheduledActionResource"/> and their operations.
+    /// Each <see cref="ScheduledActionResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ScheduledActionCollection"/> instance call the GetScheduledActions method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ScheduledActionCollection : ArmCollection, IEnumerable<ScheduledActionResource>, IAsyncEnumerable<ScheduledActionResource>
     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScheduledActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScheduledActionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledActionRestClient.CreateListByScopeRequest(Id, filter);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="filter"> May be used to filter scheduled actions by properties/viewId. Supported operator is 'eq'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScheduledActionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledActionRestClient.CreateListByScopeRequest(Id, filter);

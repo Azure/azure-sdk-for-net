@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Describes an available Cognitive Services SKU. </summary>
     public partial class AvailableCognitiveServicesSku
     {
-        /// <summary> Initializes a new instance of AvailableCognitiveServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableCognitiveServicesSku"/>. </summary>
         internal AvailableCognitiveServicesSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Restrictions = new ChangeTrackingList<CognitiveServicesSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of AvailableCognitiveServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableCognitiveServicesSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of Cognitive Services account. </param>

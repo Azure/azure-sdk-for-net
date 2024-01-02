@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ServiceLinker
 {
     /// <summary>
     /// A Class representing a LinkerResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LinkerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLinkerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetLinkerResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LinkerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLinkerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetLinkerResource method.
     /// </summary>
     public partial class LinkerResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.ServiceLinker
         private readonly LinkerRestOperations _linkerResourceLinkerRestClient;
         private readonly LinkerResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/linkers";
+
         /// <summary> Initializes a new instance of the <see cref="LinkerResource"/> class for mocking. </summary>
         protected LinkerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LinkerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LinkerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LinkerResource(ArmClient client, LinkerResourceData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ServiceLinker
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceLinker/linkers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

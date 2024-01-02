@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> The list of configurations. </summary>
     internal partial class ProductConfigurations
     {
-        /// <summary> Initializes a new instance of ProductConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductConfigurations"/>. </summary>
         internal ProductConfigurations()
         {
             Value = new ChangeTrackingList<ProductConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of ProductConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductConfigurations"/>. </summary>
         /// <param name="value"> List of configurations. </param>
         /// <param name="nextLink"> Link for the next set of configurations. </param>
         internal ProductConfigurations(IReadOnlyList<ProductConfiguration> value, string nextLink)

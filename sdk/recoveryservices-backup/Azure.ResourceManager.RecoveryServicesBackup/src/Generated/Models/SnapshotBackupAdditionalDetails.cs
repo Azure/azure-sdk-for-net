@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Snapshot Backup related fields for WorkloadType SaPHanaSystem. </summary>
     public partial class SnapshotBackupAdditionalDetails
     {
-        /// <summary> Initializes a new instance of SnapshotBackupAdditionalDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotBackupAdditionalDetails"/>. </summary>
         public SnapshotBackupAdditionalDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotBackupAdditionalDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotBackupAdditionalDetails"/>. </summary>
         /// <param name="instantRpRetentionRangeInDays"></param>
         /// <param name="instantRPDetails"></param>
         /// <param name="userAssignedManagedIdentityDetails"></param>

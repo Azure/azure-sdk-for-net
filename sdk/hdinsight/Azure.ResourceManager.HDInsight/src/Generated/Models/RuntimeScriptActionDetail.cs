@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The execution details of a script action. </summary>
     public partial class RuntimeScriptActionDetail : RuntimeScriptAction
     {
-        /// <summary> Initializes a new instance of RuntimeScriptActionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeScriptActionDetail"/>. </summary>
         /// <param name="name"> The name of the script action. </param>
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="roles"> The list of roles where script will be executed. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             ExecutionSummary = new ChangeTrackingList<ScriptActionExecutionSummary>();
         }
 
-        /// <summary> Initializes a new instance of RuntimeScriptActionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeScriptActionDetail"/>. </summary>
         /// <param name="name"> The name of the script action. </param>
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="parameters"> The parameters for the script. </param>

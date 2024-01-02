@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownRestoreRequest. </summary>
     internal partial class UnknownRestoreRequest : RestoreContent
     {
-        /// <summary> Initializes a new instance of UnknownRestoreRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRestoreRequest"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal UnknownRestoreRequest(string objectType) : base(objectType)
         {

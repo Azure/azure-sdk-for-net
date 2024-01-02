@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DynatraceMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DynatraceMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceMonitorResource> GetDynatraceMonitorsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DynatraceMonitorMonitorsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DynatraceMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DynatraceMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceMonitorResource> GetDynatraceMonitors(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DynatraceMonitorMonitorsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);

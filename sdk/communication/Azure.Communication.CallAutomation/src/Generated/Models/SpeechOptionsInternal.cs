@@ -10,9 +10,16 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Options for continuous speech recognition. </summary>
     internal partial class SpeechOptionsInternal
     {
-        /// <summary> Initializes a new instance of SpeechOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpeechOptionsInternal"/>. </summary>
         public SpeechOptionsInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpeechOptionsInternal"/>. </summary>
+        /// <param name="endSilenceTimeoutInMs"> The length of end silence when user stops speaking and cogservice send response. </param>
+        internal SpeechOptionsInternal(long? endSilenceTimeoutInMs)
+        {
+            EndSilenceTimeoutInMs = endSilenceTimeoutInMs;
         }
 
         /// <summary> The length of end silence when user stops speaking and cogservice send response. </summary>

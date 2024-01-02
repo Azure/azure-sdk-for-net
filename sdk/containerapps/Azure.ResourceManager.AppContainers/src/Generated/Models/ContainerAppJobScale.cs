@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Scaling configurations for event driven jobs. </summary>
     public partial class ContainerAppJobScale
     {
-        /// <summary> Initializes a new instance of ContainerAppJobScale. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobScale"/>. </summary>
         public ContainerAppJobScale()
         {
             Rules = new ChangeTrackingList<ContainerAppJobScaleRule>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobScale. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobScale"/>. </summary>
         /// <param name="pollingIntervalInSeconds"> Interval to check each event source in seconds. Defaults to 30s. </param>
         /// <param name="minExecutions"> Minimum number of job executions that are created for a trigger, default 0. </param>
         /// <param name="maxExecutions"> Maximum number of job executions that are created for a trigger, default 100. </param>

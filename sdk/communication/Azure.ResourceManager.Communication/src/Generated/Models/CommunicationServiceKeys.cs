@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> A class representing the access keys of a CommunicationService. </summary>
     public partial class CommunicationServiceKeys
     {
-        /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceKeys"/>. </summary>
         internal CommunicationServiceKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationServiceKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationServiceKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> CommunicationService connection string constructed via the primaryKey. </param>

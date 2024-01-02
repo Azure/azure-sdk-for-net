@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AlertProcessingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AlertProcessingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertProcessingRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

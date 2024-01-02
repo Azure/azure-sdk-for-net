@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
             Optional<string> classificationPolicyId = default;
             Optional<IDictionary<string, BinaryData>> labelsToUpsert = default;
             Optional<string> id = default;
-            string kind = default;
+            ExceptionActionKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationPolicyId"u8))
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new ExceptionActionKind(property.Value.GetString());
                     continue;
                 }
             }

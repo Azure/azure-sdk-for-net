@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a RelationshipLinkResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RelationshipLinkResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRelationshipLinkResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetRelationshipLinkResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelationshipLinkResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRelationshipLinkResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetRelationshipLinkResourceFormat method.
     /// </summary>
     public partial class RelationshipLinkResourceFormatResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly RelationshipLinksRestOperations _relationshipLinkResourceFormatRelationshipLinksRestClient;
         private readonly RelationshipLinkResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/relationshipLinks";
+
         /// <summary> Initializes a new instance of the <see cref="RelationshipLinkResourceFormatResource"/> class for mocking. </summary>
         protected RelationshipLinkResourceFormatResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RelationshipLinkResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelationshipLinkResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RelationshipLinkResourceFormatResource(ArmClient client, RelationshipLinkResourceFormatData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/relationshipLinks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

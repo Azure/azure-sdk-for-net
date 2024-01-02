@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing a MySqlPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MySqlPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMySqlPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource" /> using the GetMySqlPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlServerResource"/> using the GetMySqlPrivateEndpointConnection method.
     /// </summary>
     public partial class MySqlPrivateEndpointConnectionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.MySql
         private readonly PrivateEndpointConnectionsRestOperations _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly MySqlPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected MySqlPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MySqlPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlPrivateEndpointConnectionResource(ArmClient client, MySqlPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.MySql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/servers/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

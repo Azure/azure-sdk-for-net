@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCosmosDBForPostgreSqlModelFactory
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlClusterData(id, name, resourceType, systemData, tags, location, administratorLogin, administratorLoginPassword, provisioningState, state, postgresqlVersion, citusVersion, maintenanceWindow, preferredPrimaryZone, isShardsOnCoordinatorEnabled, isHAEnabled, coordinatorServerEdition, coordinatorStorageQuotaInMb, coordinatorVCores, isCoordinatorPublicIPAccessEnabled, nodeServerEdition, nodeCount, nodeStorageQuotaInMb, nodeVCores, isNodePublicIPAccessEnabled, serverNames?.ToList(), sourceResourceId, sourceLocation, pointInTimeUTC, readReplicas?.ToList(), earliestRestoreOn, privateEndpointConnections?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerNameItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBForPostgreSqlServerNameItem"/>. </summary>
         /// <param name="name"> The name of a server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
         /// <returns> A new <see cref="Models.CosmosDBForPostgreSqlServerNameItem"/> instance for mocking. </returns>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlServerNameItem(name, fullyQualifiedDomainName);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlSimplePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBForPostgreSqlSimplePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlSimplePrivateEndpointConnection(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), privateLinkServiceConnectionState);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlClusterServerData(id, name, resourceType, systemData, serverEdition, storageQuotaInMb, vCores, isHAEnabled, isPublicIPAccessEnabled, isReadOnly, administratorLogin, fullyQualifiedDomainName, role, state, haState, availabilityZone, postgresqlVersion, citusVersion);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlServerConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlServerConfigurationData(id, name, resourceType, systemData, value, source, description, defaultValue, dataType, allowedValues, isRestartRequired, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlConfigurationData(id, name, resourceType, systemData, description, dataType, allowedValues, isRestartRequired, serverRoleGroupConfigurations?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerRoleGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBForPostgreSqlServerRoleGroupConfiguration"/>. </summary>
         /// <param name="role"> The role of servers in the server role group. </param>
         /// <param name="value"> Value of the configuration. </param>
         /// <param name="defaultValue"> Default value of the configuration. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlServerRoleGroupConfiguration(role, value, defaultValue, source);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlRoleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlRoleData(id, name, resourceType, systemData, password, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBForPostgreSqlClusterNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="isNameAvailable"> Indicates whether the cluster name is available. </param>
         /// <param name="name"> Name of the cluster. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlClusterNameAvailabilityResult(message, isNameAvailable, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             return new CosmosDBForPostgreSqlPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSql.CosmosDBForPostgreSqlPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Top level error object that contains all relevant information. </summary>
     internal partial class AdditionalInfoErrorResponseError
     {
-        /// <summary> Initializes a new instance of AdditionalInfoErrorResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponseError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of AdditionalInfoErrorResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponseError"/>. </summary>
         /// <param name="additionalInfo"> Additional information about the error. </param>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>

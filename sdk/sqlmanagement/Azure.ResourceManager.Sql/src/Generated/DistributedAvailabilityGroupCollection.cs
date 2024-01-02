@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DistributedAvailabilityGroupResource" /> and their operations.
-    /// Each <see cref="DistributedAvailabilityGroupResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
-    /// To get a <see cref="DistributedAvailabilityGroupCollection" /> instance call the GetDistributedAvailabilityGroups method from an instance of <see cref="ManagedInstanceResource" />.
+    /// A class representing a collection of <see cref="DistributedAvailabilityGroupResource"/> and their operations.
+    /// Each <see cref="DistributedAvailabilityGroupResource"/> in the collection will belong to the same instance of <see cref="ManagedInstanceResource"/>.
+    /// To get a <see cref="DistributedAvailabilityGroupCollection"/> instance call the GetDistributedAvailabilityGroups method from an instance of <see cref="ManagedInstanceResource"/>.
     /// </summary>
     public partial class DistributedAvailabilityGroupCollection : ArmCollection, IEnumerable<DistributedAvailabilityGroupResource>, IAsyncEnumerable<DistributedAvailabilityGroupResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DistributedAvailabilityGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DistributedAvailabilityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DistributedAvailabilityGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _distributedAvailabilityGroupRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DistributedAvailabilityGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DistributedAvailabilityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DistributedAvailabilityGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _distributedAvailabilityGroupRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

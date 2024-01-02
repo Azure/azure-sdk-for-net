@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Base resource under Microsoft.DataProtection provider namespace. </summary>
     public partial class ResourceGuardProtectedObjectData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceGuardProtectedObjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProtectedObjectData"/>. </summary>
         internal ResourceGuardProtectedObjectData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProtectedObjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProtectedObjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

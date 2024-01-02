@@ -10,12 +10,12 @@ namespace Azure.Maps.Search.Models
     /// <summary> POI category. </summary>
     public partial class PointOfInterestCategorySet
     {
-        /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategorySet"/>. </summary>
         internal PointOfInterestCategorySet()
         {
         }
 
-        /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategorySet"/>. </summary>
         /// <param name="id"> Category ID. </param>
         internal PointOfInterestCategorySet(int? id)
         {

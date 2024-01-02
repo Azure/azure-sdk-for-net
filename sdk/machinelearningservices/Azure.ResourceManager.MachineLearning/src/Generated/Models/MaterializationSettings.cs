@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MaterializationSettings. </summary>
     public partial class MaterializationSettings
     {
-        /// <summary> Initializes a new instance of MaterializationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializationSettings"/>. </summary>
         public MaterializationSettings()
         {
             SparkConfiguration = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MaterializationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializationSettings"/>. </summary>
         /// <param name="notification"> Specifies the notification details. </param>
         /// <param name="resource"> Specifies the compute resource settings. </param>
         /// <param name="schedule"> Specifies the schedule details. </param>

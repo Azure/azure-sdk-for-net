@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A Class representing a BackupResourceEncryptionConfigExtended along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupResourceEncryptionConfigExtendedResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBackupResourceEncryptionConfigExtendedResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupResourceEncryptionConfigExtended method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupResourceEncryptionConfigExtendedResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBackupResourceEncryptionConfigExtendedResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupResourceEncryptionConfigExtended method.
     /// </summary>
     public partial class BackupResourceEncryptionConfigExtendedResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupResourceEncryptionConfigsRestOperations _backupResourceEncryptionConfigExtendedBackupResourceEncryptionConfigsRestClient;
         private readonly BackupResourceEncryptionConfigExtendedData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupEncryptionConfigs";
+
         /// <summary> Initializes a new instance of the <see cref="BackupResourceEncryptionConfigExtendedResource"/> class for mocking. </summary>
         protected BackupResourceEncryptionConfigExtendedResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupResourceEncryptionConfigExtendedResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupResourceEncryptionConfigExtendedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BackupResourceEncryptionConfigExtendedResource(ArmClient client, BackupResourceEncryptionConfigExtendedData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupEncryptionConfigs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

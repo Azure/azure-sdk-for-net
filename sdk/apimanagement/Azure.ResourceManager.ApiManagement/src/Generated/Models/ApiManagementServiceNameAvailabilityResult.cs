@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Response of the CheckNameAvailability operation. </summary>
     public partial class ApiManagementServiceNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityResult"/>. </summary>
         internal ApiManagementServiceNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> True if the name is available and can be used to create a new API Management service; otherwise false. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that &lt;resourceName&gt; is already in use, and direct them to select a different name. </param>
         /// <param name="reason"> Invalid indicates the name provided does not match the resource provider’s naming requirements (incorrect length, unsupported characters, etc.)  AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>

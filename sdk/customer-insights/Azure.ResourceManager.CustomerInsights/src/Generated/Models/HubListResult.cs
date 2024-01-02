@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Response of list hub operation. </summary>
     internal partial class HubListResult
     {
-        /// <summary> Initializes a new instance of HubListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubListResult"/>. </summary>
         internal HubListResult()
         {
             Value = new ChangeTrackingList<HubData>();
         }
 
-        /// <summary> Initializes a new instance of HubListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
         internal HubListResult(IReadOnlyList<HubData> value, string nextLink)

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Service level objectives for performance tier. </summary>
     public partial class MySqlPerformanceTierServiceLevelObjectives
     {
-        /// <summary> Initializes a new instance of MySqlPerformanceTierServiceLevelObjectives. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTierServiceLevelObjectives"/>. </summary>
         internal MySqlPerformanceTierServiceLevelObjectives()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlPerformanceTierServiceLevelObjectives. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlPerformanceTierServiceLevelObjectives"/>. </summary>
         /// <param name="id"> ID for the service level objective. </param>
         /// <param name="edition"> Edition of the performance tier. </param>
         /// <param name="vCores"> vCore associated with the service level objective. </param>

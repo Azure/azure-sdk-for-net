@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Settings which determine whether to read watermark events. </summary>
     internal partial class StreamingJobInputWatermarkProperties
     {
-        /// <summary> Initializes a new instance of StreamingJobInputWatermarkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputWatermarkProperties"/>. </summary>
         public StreamingJobInputWatermarkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobInputWatermarkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputWatermarkProperties"/>. </summary>
         /// <param name="watermarkMode"> The input watermark mode. </param>
         internal StreamingJobInputWatermarkProperties(StreamingJobInputWatermarkMode? watermarkMode)
         {

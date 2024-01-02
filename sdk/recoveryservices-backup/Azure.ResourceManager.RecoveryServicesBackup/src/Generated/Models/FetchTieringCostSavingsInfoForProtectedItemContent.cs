@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Request parameters for tiering cost info for protected item. </summary>
     public partial class FetchTieringCostSavingsInfoForProtectedItemContent : FetchTieringCostInfoContent
     {
-        /// <summary> Initializes a new instance of FetchTieringCostSavingsInfoForProtectedItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForProtectedItemContent"/>. </summary>
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
         /// <param name="containerName"> Name of the protected item container. </param>
@@ -27,6 +27,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ContainerName = containerName;
             ProtectedItemName = protectedItemName;
             ObjectType = "FetchTieringCostSavingsInfoForProtectedItemRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForProtectedItemContent"/>. </summary>
+        /// <param name="sourceTierType"> Source tier for the request. </param>
+        /// <param name="targetTierType"> target tier for the request. </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="containerName"> Name of the protected item container. </param>
+        /// <param name="protectedItemName"> Name of the protectedItemName. </param>
+        internal FetchTieringCostSavingsInfoForProtectedItemContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, string containerName, string protectedItemName) : base(sourceTierType, targetTierType, objectType)
+        {
+            ContainerName = containerName;
+            ProtectedItemName = protectedItemName;
+            ObjectType = objectType ?? "FetchTieringCostSavingsInfoForProtectedItemRequest";
         }
 
         /// <summary> Name of the protected item container. </summary>

@@ -107,7 +107,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterWorkers_Async
 
-            AsyncPageable<RouterWorker> workers = routerClient.GetWorkersAsync();
+            AsyncPageable<RouterWorker> workers = routerClient.GetWorkersAsync(null, null);
             await foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
             {
                 foreach (RouterWorker? workerPaged in asPage.Values)
@@ -117,7 +117,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             }
 
             // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-            workers = routerClient.GetWorkersAsync(channelId: "Voip", state: RouterWorkerStateSelector.All);
+            workers = routerClient.GetWorkersAsync(channelId: "Voip", state: RouterWorkerStateSelector.All, queueId: null, hasCapacity: null, cancellationToken: default);
 
             await foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
             {

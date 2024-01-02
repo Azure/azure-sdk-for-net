@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Gateway token request contract properties. </summary>
     public partial class GatewayTokenRequestContract
     {
-        /// <summary> Initializes a new instance of GatewayTokenRequestContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayTokenRequestContract"/>. </summary>
         /// <param name="keyType"> The Key to be used to generate gateway token. </param>
         /// <param name="expiry">
         /// The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.

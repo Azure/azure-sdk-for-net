@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
     public partial class ContainerAppLogin
     {
-        /// <summary> Initializes a new instance of ContainerAppLogin. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogin"/>. </summary>
         public ContainerAppLogin()
         {
             AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppLogin. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogin"/>. </summary>
         /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
         /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="allowedExternalRedirectUrls">

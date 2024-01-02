@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solutions Diagnostic. </summary>
     public partial class SolutionsDiagnostic
     {
-        /// <summary> Initializes a new instance of SolutionsDiagnostic. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsDiagnostic"/>. </summary>
         public SolutionsDiagnostic()
         {
             RequiredParameters = new ChangeTrackingList<string>();
             Insights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
-        /// <summary> Initializes a new instance of SolutionsDiagnostic. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsDiagnostic"/>. </summary>
         /// <param name="solutionId"> Solution Id to identify single Solutions Diagnostic. </param>
         /// <param name="status"> Denotes the status of the diagnostic resource. </param>
         /// <param name="statusDetails"> Details of the status. </param>

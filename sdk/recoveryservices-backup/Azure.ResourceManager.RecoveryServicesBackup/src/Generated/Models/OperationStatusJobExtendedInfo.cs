@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Operation status job extended info. </summary>
     public partial class OperationStatusJobExtendedInfo : OperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of OperationStatusJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusJobExtendedInfo"/>. </summary>
         internal OperationStatusJobExtendedInfo()
         {
             ObjectType = "OperationStatusJobExtendedInfo";
         }
 
-        /// <summary> Initializes a new instance of OperationStatusJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusJobExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="jobId"> ID of the job created for this protected item. </param>
         internal OperationStatusJobExtendedInfo(string objectType, string jobId) : base(objectType)

@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningOnlineEndpointResource" /> and their operations.
-    /// Each <see cref="MachineLearningOnlineEndpointResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningOnlineEndpointCollection" /> instance call the GetMachineLearningOnlineEndpoints method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningOnlineEndpointResource"/> and their operations.
+    /// Each <see cref="MachineLearningOnlineEndpointResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningOnlineEndpointCollection"/> instance call the GetMachineLearningOnlineEndpoints method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningOnlineEndpointCollection : ArmCollection, IEnumerable<MachineLearningOnlineEndpointResource>, IAsyncEnumerable<MachineLearningOnlineEndpointResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningOnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningOnlineEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningOnlineEndpointResource> GetAllAsync(MachineLearningOnlineEndpointCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningOnlineEndpointCollectionGetAllOptions();
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningOnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningOnlineEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningOnlineEndpointResource> GetAll(MachineLearningOnlineEndpointCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningOnlineEndpointCollectionGetAllOptions();

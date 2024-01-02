@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the Machine Extension Target Version Properties. </summary>
     public partial class ExtensionTargetProperties
     {
-        /// <summary> Initializes a new instance of ExtensionTargetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionTargetProperties"/>. </summary>
         public ExtensionTargetProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionTargetProperties"/>. </summary>
+        /// <param name="targetVersion"> Properties for the specified Extension to Upgrade. </param>
+        internal ExtensionTargetProperties(string targetVersion)
+        {
+            TargetVersion = targetVersion;
         }
 
         /// <summary> Properties for the specified Extension to Upgrade. </summary>

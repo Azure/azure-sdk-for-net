@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Trigger that runs every time the selected Blob container changes. </summary>
     public partial class DataFactoryBlobTrigger : MultiplePipelineTrigger
     {
-        /// <summary> Initializes a new instance of DataFactoryBlobTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/>. </summary>
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             TriggerType = "BlobTrigger";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryBlobTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

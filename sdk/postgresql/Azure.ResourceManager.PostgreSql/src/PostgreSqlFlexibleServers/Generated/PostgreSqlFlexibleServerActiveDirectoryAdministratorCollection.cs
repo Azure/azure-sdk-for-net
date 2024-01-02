@@ -21,9 +21,9 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource" /> and their operations.
-    /// Each <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource" />.
-    /// To get a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection" /> instance call the GetPostgreSqlFlexibleServerActiveDirectoryAdministrators method from an instance of <see cref="PostgreSqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> and their operations.
+    /// Each <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection"/> instance call the GetPostgreSqlFlexibleServerActiveDirectoryAdministrators method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorCollection : ArmCollection, IEnumerable<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>, IAsyncEnumerable<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerActiveDirectoryAdministratorAdministratorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

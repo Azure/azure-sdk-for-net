@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
             string password = Environment.GetEnvironmentVariable("Password");
 
             TokenCredential usernamePasswordCredential = new UsernamePasswordCredential(clientId,tenantId, username,password, null);
-            var client = new PurviewWorkflowServiceClient(endpoint, usernamePasswordCredential);
+            var client = new ApprovalClient(endpoint, usernamePasswordCredential);
 
             #region Snippet:Azure_Analytics_Purview_Workflows_ApproveWorkflowTask
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 
             string request = "{\"comment\":\"Thanks!\"}";
 
-            Response approveResult = await client.ApproveApprovalTaskAsync(taskId, RequestContent.Create(request));
+            Response approveResult = await client.ApproveAsync(taskId, RequestContent.Create(request));
 
             #endregion
 

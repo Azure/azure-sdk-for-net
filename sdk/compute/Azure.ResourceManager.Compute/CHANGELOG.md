@@ -1,14 +1,20 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2023-12-29)
 
 ### Features Added
 
-### Breaking Changes
+- Compute RP to `2023-09-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
 
-### Bugs Fixed
+## 1.2.1 (2023-11-21)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.2.0 (2023-09-15)
 

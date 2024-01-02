@@ -66,14 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Endpoint);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Endpoint))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, Endpoint);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (Optional.IsDefined(Username))
@@ -143,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData endpoint = default;
+            DataFactoryElement<string> endpoint = default;
             ServiceNowAuthenticationType authenticationType = default;
             Optional<DataFactoryElement<string>> username = default;
             Optional<DataFactorySecretBaseDefinition> password = default;
@@ -222,7 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("endpoint"u8))
                         {
-                            endpoint = BinaryData.FromString(property0.Value.GetRawText());
+                            endpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))

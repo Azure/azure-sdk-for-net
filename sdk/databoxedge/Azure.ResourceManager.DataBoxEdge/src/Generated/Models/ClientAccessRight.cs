@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The mapping between a particular client IP and the type of access client has on the NFS share. </summary>
     public partial class ClientAccessRight
     {
-        /// <summary> Initializes a new instance of ClientAccessRight. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientAccessRight"/>. </summary>
         /// <param name="client"> IP of the client. </param>
         /// <param name="accessPermission"> Type of access to be allowed for the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>

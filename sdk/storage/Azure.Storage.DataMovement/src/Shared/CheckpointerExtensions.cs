@@ -78,6 +78,14 @@ namespace Azure.Storage.DataMovement
             writer.Write(length);
         }
 
+        /// <summary>
+        /// Reads a length and offset pair.
+        /// </summary>
+        internal static (int Offset, int Length) ReadVariableLengthFieldInfo(this BinaryReader reader)
+        {
+            return (reader.ReadInt32(), reader.ReadInt32());
+        }
+
         internal static void WritePaddedString(this BinaryWriter writer, string value, int setSizeInBytes)
         {
             byte[] valueBytes = Encoding.UTF8.GetBytes(value);
@@ -89,6 +97,67 @@ namespace Azure.Storage.DataMovement
                 char[] paddingArray = new char[padding];
                 writer.Write(paddingArray);
             }
+        }
+
+        /// <summary>
+        /// Writes a boolean plus int32 to represent a nulable int.
+        /// </summary>
+        internal static void Write(this BinaryWriter writer, int? value)
+        {
+            writer.Write(value.HasValue);
+            writer.Write(value ?? 0);
+        }
+
+        /// <summary>
+        /// Reads a boolean plus int32 as a nullable int.
+        /// </summary>
+        internal static int? ReadNullableInt32(this BinaryReader reader)
+        {
+            bool hasValue = reader.ReadBoolean();
+            int value = reader.ReadInt32();
+            return hasValue ? value : default;
+        }
+
+        /// <summary>
+        /// Writes a boolean plus int64 to represent a nulable long.
+        /// </summary>
+        internal static void Write(this BinaryWriter writer, long? value)
+        {
+            writer.Write(value.HasValue);
+            writer.Write(value ?? 0L);
+        }
+
+        /// <summary>
+        /// Reads a boolean plus int64 as a nullable long.
+        /// </summary>
+        internal static long? ReadNullableInt64(this BinaryReader reader)
+        {
+            bool hasValue = reader.ReadBoolean();
+            long value = reader.ReadInt64();
+            return hasValue ? value : default;
+        }
+
+        /// <summary>
+        /// Writes a boolean plus two int64s to represent a nullable DateTimeOffset.
+        /// The first long is datetime ticks and the second is offset ticks.
+        /// </summary>
+        internal static void Write(this BinaryWriter writer, DateTimeOffset? value)
+        {
+            writer.Write(value.HasValue);
+            writer.Write(value?.Ticks ?? 0L);
+            writer.Write(value?.Offset.Ticks ?? 0L);
+        }
+
+        /// <summary>
+        /// Reads a boolean plus two int64s as a nullable DateTimeOffset.
+        /// The first long is datetime ticks and the second is offset ticks.
+        /// </summary>
+        internal static DateTimeOffset? ReadNullableDateTimeOffset(this BinaryReader reader)
+        {
+            bool hasValue = reader.ReadBoolean();
+            long valueTicks = reader.ReadInt64();
+            long valueOffsetTicks = reader.ReadInt64();
+            return hasValue ? new DateTimeOffset(valueTicks, new TimeSpan(valueOffsetTicks)) : default;
         }
 
         internal static string ReadPaddedString(this BinaryReader reader, int numBytes)

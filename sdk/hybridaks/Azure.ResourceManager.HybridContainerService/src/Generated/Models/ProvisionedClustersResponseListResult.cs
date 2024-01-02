@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The ProvisionedClustersResponseListResult. </summary>
     internal partial class ProvisionedClustersResponseListResult
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersResponseListResult"/>. </summary>
         internal ProvisionedClustersResponseListResult()
         {
             Value = new ChangeTrackingList<ProvisionedClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersResponseListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         internal ProvisionedClustersResponseListResult(IReadOnlyList<ProvisionedClusterData> value, string nextLink)

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The DataImport. </summary>
     public partial class DataImport : MachineLearningDataVersionProperties
     {
-        /// <summary> Initializes a new instance of DataImport. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImport"/>. </summary>
         /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public DataImport(Uri dataUri) : base(dataUri)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataType = MachineLearningDataType.UriFolder;
         }
 
-        /// <summary> Initializes a new instance of DataImport. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImport"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>

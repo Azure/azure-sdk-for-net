@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmLoadTestingModelFactory
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestingQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingQuotaData(id, name, resourceType, systemData, limit, usage, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaBucketContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LoadTestingQuotaBucketContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingQuotaBucketContent(id, name, resourceType, systemData, currentUsage, currentQuota, newQuota, dimensions);
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LoadTestingQuotaAvailabilityResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingQuotaAvailabilityResult(id, name, resourceType, systemData, isAvailable, availabilityStatus);
         }
 
-        /// <summary> Initializes a new instance of LoadTestingResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestingResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingResourceData(id, name, resourceType, systemData, tags, location, identity, description, provisioningState, dataPlaneUri, encryption);
         }
 
-        /// <summary> Initializes a new instance of LoadTestingOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LoadTestingOutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service that Azure Load Testing connects to. </param>
         /// <param name="endpoints"> The endpoints for this service to which the Batch service makes outbound calls. </param>
         /// <returns> A new <see cref="Models.LoadTestingOutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingOutboundEnvironmentEndpoint(category, endpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LoadTestingEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LoadTestingEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </param>
         /// <param name="description"> Human-readable supplemental information about the dependency and when it is applicable. </param>
         /// <param name="endpointDetails"> The list of connection details for this endpoint. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingEndpointDependency(domainName, description, endpointDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LoadTestingEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LoadTestingEndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <returns> A new <see cref="Models.LoadTestingEndpointDetail"/> instance for mocking. </returns>
         public static LoadTestingEndpointDetail LoadTestingEndpointDetail(int? port = null)

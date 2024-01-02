@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of JobResponse objects with a next link. </summary>
     internal partial class IotHubJobInfoListResult
     {
-        /// <summary> Initializes a new instance of IotHubJobInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubJobInfoListResult"/>. </summary>
         internal IotHubJobInfoListResult()
         {
             Value = new ChangeTrackingList<IotHubJobInfo>();
         }
 
-        /// <summary> Initializes a new instance of IotHubJobInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubJobInfoListResult"/>. </summary>
         /// <param name="value"> The array of JobResponse objects. </param>
         /// <param name="nextLink"> The next link. </param>
         internal IotHubJobInfoListResult(IReadOnlyList<IotHubJobInfo> value, string nextLink)

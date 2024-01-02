@@ -1,8 +1,107 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.13 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.12 (2023-12-15)
+
+Like beta.11, beta.12 is another release that brings further refinements and fixes. It remains based on the `2023-12-01-preview` service API version for Azure OpenAI and does not add any new service capabilities.
+
+### Features Added
+
+**Updates for using streaming tool calls:**
+
+- A new .NET-specific `StreamingToolCallUpdate` type has been added to better represent streaming tool call updates
+  when using chat tools.
+  - This new type includes an explicit `ToolCallIndex` property, reflecting `index` in the REST schema, to allow
+    resilient deserialization of parallel function tool calling.
+- A convenience constructor has been added for `ChatRequestAssistantMessage` that can automatically populate from a prior
+  `ChatResponseMessage` when using non-streaming chat completions.
+- A public constructor has been added for `ChatCompletionsFunctionToolCall` to allow more intuitive reconstruction of
+  `ChatCompletionsToolCall` instances for use in `ChatRequestAssistantMessage` instances made from streaming responses.
+
+**Other additions:**
+
+- To facilitate reuse of user message contents, `ChatRequestUserMessage` now provides a public `Content` property (`string`) as well as a public `MultimodalContentItems` property (`IList<ChatMessageContentItem`).
+  - `Content` is the conventional plain-text content and will be populated as non-null when the a `ChatRequestUserMessage()` constructor accepting a string is used to instantiate the message.
+  - `MultimodalContentItems` is the new compound content type, currently only usable with `gpt-4-vision-preview`, that allows hybrid use of text and image references. It will be populated when an appropriate `ChatRequestUserMessage()` constructor accepting a collection of `ChatMessageContentItem` instances is used.
+  - `Role` is also restored to common visibility to `ChatRequestUserMessage`.
+
+### Breaking Changes
+
+- The type of `ToolCallUpdate` on `StreamingChatCompletionsUpdate` has been changed from the non-streaming
+  `ChatCompletionsToolCall` to the new `StreamingToolCallUpdate` type. The conversion is straightforward:
+  - `ToolCallUpdate.Id` remains unchanged.
+  - Instead of casting `ToolCallUpdate` to `ChatCompletionsFunctionToolCall`, cast it to `StreamingToolCallUpdate`.
+  - Update cast instance use of `functionToolCallUpdate.Arguments` to accumulate `functionToolCallUpdate.ArgumentsUpdate`.
+- Removed the parameterized constructor of the `ChatCompletionsOptions` class that only received the messages as a parameter in favor of the parameterized constructor that receives the deployment name as well. This makes it consistent with the implementation of other Options classes.
+- Removed the setter of the `Input` property of the `EmbeddingsOptions` class as per the guidelines for collection properties.
+
+### Bugs fixed
+
+- [[QUERY] Azure.AI.OpenAI_1.0.0-beta.10 no longer exposes message content on base ChatRequestMessage](https://github.com/Azure/azure-sdk-for-net/issues/40634)
+- [[BUG] Null Reference Exception in OpenAIClient.GetChatCompletionsAsync](https://github.com/Azure/azure-sdk-for-net/issues/40810)
+
+## 1.0.0-beta.11 (2023-12-07)
+
+This is a fast-following bug fix update to address some of the biggest issues reported by the community. Thank you
+sharing your experiences!
+
+### Breaking Changes
+
+- The type of `ChatCompletionsOptions.ToolChoice` has been updated from `BinaryData` to a new `ChatCompletionsToolChoice` type. Please use `ChatCompletionsToolChoice.None`, `ChatCompletionsToolChoice.Auto`, or provide a reference to a function or function tool definition to migrate.
+
+### Bugs Fixed
+
+- `ChatCompletionsOptions.ResponseFormat` now serializes correctly and will not result in "not of type 'object" errors
+- `ChatCompletionsOptions.FunctionCall` is fixed to again work with `FunctionDefinition.None` and `FunctionDefinition.Auto` instead of resulting in not finding a named "none" or "auto" function
+- `ChatCompletionsOptions.ToolChoice` previously defaulted to a `BinaryData` type and has now been corrected to use a custom `ChatCompletionsToolChoice` type that parallels `FunctionDefinition` for older function calling.
+
+## 1.0.0-beta.10 (2023-12-06)
+
+Following OpenAI's November Dev Day and Microsoft's 2023 Ignite conference, this update brings a slew of new
+features and changes to the SDK.
+
+### Features Added
+
+- `-1106` model feature support for `gpt-35-turbo` and `gpt-4-turbo`, including use of `seed`, `system_fingerprint`,
+    parallel function calling via tools, "JSON mode" for guaranteed function outputs, and more
+- `dall-e-3` image generation capabilities via `GetImageGenerations`, featuring higher model quality, automatic prompt
+    revisions by `gpt-4`, and customizable quality/style settings
+- Greatly expanded "On Your Data" capabilities in Azure OpenAI, including many new data source options and authentication
+    mechanisms
+- Early support for `gpt-4-vision-preview`, which allows the hybrid use of text and images as input to enable scenarios
+    like "describe this image for me"
+- Support for Azure enhancements to `gpt-4-vision-preview` results that include grounding and OCR features
+
+### Breaking Changes
+
+`ChatMessage` changes:
+
+- The singular `ChatMessage` type has been replaced by `ChatRequestMessage` and `ChatResponseMessage`, the former of
+    which is an abstract, polymorphic type with concrete derivations like `ChatRequestSystemMessage` and
+    `ChatRequestUserMessage`. This requires conversion from old `ChatMessages` into the new types. While this is
+    usually a straightforward string replacement, converting a response message into a request message (e.g. when
+    propagating an assistant response to continue the conversation) will require creating a new instance of the
+    appropriate request message with the response message's data. See the examples for details.
+
+Dall-e-3:
+
+- Azure OpenAI now uses `dall-e-3` model deployments for its image generation API and such a valid deployment must
+    be provided into the options for the `GetImageGenerations` method to receive results.
+
+### Other changes
+
+- Audio transcription and translation (via `GetAudioTranscription()` and `GetAudioTranslation()` now allow specification of an optional `Filename` in addition to the binary audio data. This is used purely as an identifier and does not functionally alter the transcription/translation behavior in any way.
+
+## 1.0.0-beta.9 (2023-11-06)
 
 ### Breaking Changes
 
@@ -92,10 +191,6 @@ Replaced the `SearchKey` and `EmbeddingKey` properties of the `AzureCognitiveSea
 new `SetSearchKey` and `SetEmbeddingKey` methods respectively. These methods simplify the configuration of the Azure Cognitive
 Search chat extension by receiving a plain string instead of an `AzureKeyCredential`, promote more sensible key and secret
 management, and align with the Azure SDK guidelines.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.8 (2023-09-21)
 

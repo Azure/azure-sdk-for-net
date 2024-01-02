@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Certificate provisioning state. </summary>
     public partial class MobileNetworkCertificateProvisioning
     {
-        /// <summary> Initializes a new instance of MobileNetworkCertificateProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkCertificateProvisioning"/>. </summary>
         internal MobileNetworkCertificateProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkCertificateProvisioning. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkCertificateProvisioning"/>. </summary>
         /// <param name="state"> The certificate's provisioning state. </param>
         /// <param name="reason"> Reason for certificate provisioning failure. </param>
         internal MobileNetworkCertificateProvisioning(CertificateProvisioningState? state, string reason)

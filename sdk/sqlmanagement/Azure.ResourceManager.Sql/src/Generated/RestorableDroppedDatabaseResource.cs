@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a RestorableDroppedDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RestorableDroppedDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRestorableDroppedDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource" /> using the GetRestorableDroppedDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RestorableDroppedDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRestorableDroppedDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetRestorableDroppedDatabase method.
     /// </summary>
     public partial class RestorableDroppedDatabaseResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Sql
         private readonly RestorableDroppedDatabasesRestOperations _restorableDroppedDatabaseRestClient;
         private readonly RestorableDroppedDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/restorableDroppedDatabases";
+
         /// <summary> Initializes a new instance of the <see cref="RestorableDroppedDatabaseResource"/> class for mocking. </summary>
         protected RestorableDroppedDatabaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RestorableDroppedDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RestorableDroppedDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RestorableDroppedDatabaseResource(ArmClient client, RestorableDroppedDatabaseData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/restorableDroppedDatabases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

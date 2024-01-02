@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Request parameters for fetching cost info of rehydration. </summary>
     public partial class FetchTieringCostInfoForRehydrationContent : FetchTieringCostInfoContent
     {
-        /// <summary> Initializes a new instance of FetchTieringCostInfoForRehydrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostInfoForRehydrationContent"/>. </summary>
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
         /// <param name="containerName"> Name of the protected item container. </param>
@@ -32,6 +32,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointId = recoveryPointId;
             RehydrationPriority = rehydrationPriority;
             ObjectType = "FetchTieringCostInfoForRehydrationRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostInfoForRehydrationContent"/>. </summary>
+        /// <param name="sourceTierType"> Source tier for the request. </param>
+        /// <param name="targetTierType"> target tier for the request. </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="containerName"> Name of the protected item container. </param>
+        /// <param name="protectedItemName"> Name of the protectedItemName. </param>
+        /// <param name="recoveryPointId"> ID of the backup copy for rehydration cost info needs to be fetched. </param>
+        /// <param name="rehydrationPriority"> Rehydration Priority. </param>
+        internal FetchTieringCostInfoForRehydrationContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, string containerName, string protectedItemName, string recoveryPointId, RehydrationPriority rehydrationPriority) : base(sourceTierType, targetTierType, objectType)
+        {
+            ContainerName = containerName;
+            ProtectedItemName = protectedItemName;
+            RecoveryPointId = recoveryPointId;
+            RehydrationPriority = rehydrationPriority;
+            ObjectType = objectType ?? "FetchTieringCostInfoForRehydrationRequest";
         }
 
         /// <summary> Name of the protected item container. </summary>

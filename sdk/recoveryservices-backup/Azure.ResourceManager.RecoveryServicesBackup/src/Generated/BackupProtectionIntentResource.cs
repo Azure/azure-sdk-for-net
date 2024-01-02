@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A Class representing a BackupProtectionIntent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupProtectionIntentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBackupProtectionIntentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupProtectionIntent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupProtectionIntentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBackupProtectionIntentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupProtectionIntent method.
     /// </summary>
     public partial class BackupProtectionIntentResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly ProtectionIntentRestOperations _backupProtectionIntentProtectionIntentRestClient;
         private readonly BackupProtectionIntentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent";
+
         /// <summary> Initializes a new instance of the <see cref="BackupProtectionIntentResource"/> class for mocking. </summary>
         protected BackupProtectionIntentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupProtectionIntentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupProtectionIntentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BackupProtectionIntentResource(ArmClient client, BackupProtectionIntentData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> A request. </summary>
     public partial class LogicWorkflowRequest
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequest"/>. </summary>
         public LogicWorkflowRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequest"/>. </summary>
         /// <param name="headers"> A list of all the headers attached to the request. </param>
         /// <param name="uri"> The destination for the request. </param>
         /// <param name="method"> The HTTP method used for the request. </param>

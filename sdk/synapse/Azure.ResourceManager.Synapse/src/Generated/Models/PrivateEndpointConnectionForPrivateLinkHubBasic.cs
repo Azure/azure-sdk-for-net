@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
     public partial class PrivateEndpointConnectionForPrivateLinkHubBasic
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionForPrivateLinkHubBasic"/>. </summary>
         internal PrivateEndpointConnectionForPrivateLinkHubBasic()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionForPrivateLinkHubBasic"/>. </summary>
         /// <param name="id"></param>
         /// <param name="properties"> Properties of a private endpoint connection. </param>
         internal PrivateEndpointConnectionForPrivateLinkHubBasic(string id, SynapsePrivateEndpointConnectionProperties properties)

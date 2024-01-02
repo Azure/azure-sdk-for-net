@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing an UpdateRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="UpdateRunResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetUpdateRunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="UpdateResource" /> using the GetUpdateRun method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="UpdateRunResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetUpdateRunResource method.
+    /// Otherwise you can get one from its parent resource <see cref="UpdateResource"/> using the GetUpdateRun method.
     /// </summary>
     public partial class UpdateRunResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Hci
         private readonly UpdateRunsRestOperations _updateRunRestClient;
         private readonly UpdateRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/updates/updateRuns";
+
         /// <summary> Initializes a new instance of the <see cref="UpdateRunResource"/> class for mocking. </summary>
         protected UpdateRunResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "UpdateRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="UpdateRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal UpdateRunResource(ArmClient client, UpdateRunData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/updates/updateRuns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

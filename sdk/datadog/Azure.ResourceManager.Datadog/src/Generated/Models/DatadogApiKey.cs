@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> The DatadogApiKey. </summary>
     public partial class DatadogApiKey
     {
-        /// <summary> Initializes a new instance of DatadogApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogApiKey"/>. </summary>
         /// <param name="key"> The value of the API key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public DatadogApiKey(string key)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Datadog.Models
             Key = key;
         }
 
-        /// <summary> Initializes a new instance of DatadogApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogApiKey"/>. </summary>
         /// <param name="createdBy"> The user that created the API key. </param>
         /// <param name="name"> The name of the API key. </param>
         /// <param name="key"> The value of the API key. </param>

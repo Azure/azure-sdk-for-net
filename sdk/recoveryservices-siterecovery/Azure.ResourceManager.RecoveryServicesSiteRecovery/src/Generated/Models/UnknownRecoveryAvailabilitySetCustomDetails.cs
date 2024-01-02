@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownRecoveryAvailabilitySetCustomDetails. </summary>
     internal partial class UnknownRecoveryAvailabilitySetCustomDetails : RecoveryAvailabilitySetCustomDetails
     {
-        /// <summary> Initializes a new instance of UnknownRecoveryAvailabilitySetCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryAvailabilitySetCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         internal UnknownRecoveryAvailabilitySetCustomDetails(string resourceType) : base(resourceType)
         {

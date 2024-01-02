@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The Sku. </summary>
     public partial class PurviewAccountSku
     {
-        /// <summary> Initializes a new instance of PurviewAccountSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountSku"/>. </summary>
         internal PurviewAccountSku()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountSku"/>. </summary>
         /// <param name="capacity"> Gets or sets the sku capacity. </param>
         /// <param name="name"> Gets or sets the sku name. </param>
         internal PurviewAccountSku(int? capacity, PurviewAccountSkuName? name)

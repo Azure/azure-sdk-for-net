@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The List WorkspaceQuotasByVMFamily operation response. </summary>
     internal partial class ListWorkspaceQuotas
     {
-        /// <summary> Initializes a new instance of ListWorkspaceQuotas. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListWorkspaceQuotas"/>. </summary>
         internal ListWorkspaceQuotas()
         {
             Value = new ChangeTrackingList<MachineLearningResourceQuota>();
         }
 
-        /// <summary> Initializes a new instance of ListWorkspaceQuotas. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListWorkspaceQuotas"/>. </summary>
         /// <param name="value"> The list of Workspace Quotas by VM Family. </param>
         /// <param name="nextLink"> The URI to fetch the next page of workspace quota information by VM Family. Call ListNext() with this to fetch the next page of Workspace Quota information. </param>
         internal ListWorkspaceQuotas(IReadOnlyList<MachineLearningResourceQuota> value, string nextLink)

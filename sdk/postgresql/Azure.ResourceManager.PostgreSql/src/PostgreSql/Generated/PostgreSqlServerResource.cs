@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// A Class representing a PostgreSqlServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPostgreSqlServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPostgreSqlServer method.
     /// </summary>
     public partial class PostgreSqlServerResource : ArmResource
     {
@@ -50,12 +50,15 @@ namespace Azure.ResourceManager.PostgreSql
         private readonly ServerBasedPerformanceTierRestOperations _serverBasedPerformanceTierRestClient;
         private readonly PostgreSqlServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlServerResource"/> class for mocking. </summary>
         protected PostgreSqlServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlServerResource(ArmClient client, PostgreSqlServerData data) : this(client, data.Id)
@@ -84,9 +87,6 @@ namespace Azure.ResourceManager.PostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/servers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary> Gets an object representing a PostgreSqlServerAdministratorResource along with the instance operations that can be performed on it in the PostgreSqlServer. </summary>
-        /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource"/> object. </returns>
         public virtual PostgreSqlServerAdministratorResource GetPostgreSqlServerAdministrator()
         {
             return new PostgreSqlServerAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlLogFile" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlLogFile"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlLogFile> GetLogFilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlLogFile" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlLogFile"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlLogFile> GetLogFiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetServerBasedPerformanceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlPerformanceTierProperties> GetServerBasedPerformanceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The String to use. </param>
+        /// <param name="operationId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The String to use. </param>
+        /// <param name="operationId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>

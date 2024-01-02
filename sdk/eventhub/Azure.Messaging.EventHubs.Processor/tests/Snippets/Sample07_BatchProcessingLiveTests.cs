@@ -144,8 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                     await UpdateCheckpointAsync(
                         partition.PartitionId,
-                        lastEvent.Offset,
-                        lastEvent.SequenceNumber,
+                        CheckpointPosition.FromEvent(lastEvent),
                         cancellationToken);
                 }
                 catch (Exception ex)

@@ -15,13 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class FetchTieringCostInfoContent
     {
-        /// <summary> Initializes a new instance of FetchTieringCostInfoContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostInfoContent"/>. </summary>
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
         protected FetchTieringCostInfoContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType)
         {
             SourceTierType = sourceTierType;
             TargetTierType = targetTierType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostInfoContent"/>. </summary>
+        /// <param name="sourceTierType"> Source tier for the request. </param>
+        /// <param name="targetTierType"> target tier for the request. </param>
+        /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        internal FetchTieringCostInfoContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType)
+        {
+            SourceTierType = sourceTierType;
+            TargetTierType = targetTierType;
+            ObjectType = objectType;
         }
 
         /// <summary> Source tier for the request. </summary>

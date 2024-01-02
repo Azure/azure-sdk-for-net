@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The ProvisionedClustersResponseExtendedLocation. </summary>
     public partial class ProvisionedClustersResponseExtendedLocation
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersResponseExtendedLocation"/>. </summary>
         public ProvisionedClustersResponseExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersResponseExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersResponseExtendedLocation"/>. </summary>
         /// <param name="provisionedClustersResponseExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         internal ProvisionedClustersResponseExtendedLocation(string provisionedClustersResponseExtendedLocationType, string name)

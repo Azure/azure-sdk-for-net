@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the move collection properties. </summary>
     public partial class MoverResourceSetProperties
     {
-        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetProperties"/>. </summary>
         public MoverResourceSetProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetProperties"/>. </summary>
         /// <param name="sourceLocation"> Gets or sets the source region. </param>
         /// <param name="targetLocation"> Gets or sets the target region. </param>
         /// <param name="moveLocation"> Gets or sets the move region which indicates the region where the VM Regional to Zonal move will be conducted. </param>

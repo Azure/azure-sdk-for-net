@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of an artifact parameter. </summary>
     public partial class DevTestLabArtifactParameter
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactParameter"/>. </summary>
         public DevTestLabArtifactParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactParameter"/>. </summary>
         /// <param name="name"> The name of the artifact parameter. </param>
         /// <param name="value"> The value of the artifact parameter. </param>
         internal DevTestLabArtifactParameter(string name, string value)

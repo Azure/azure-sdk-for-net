@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class DataCollectionEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataCollectionEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataCollectionEndpointData(AzureLocation location) : base(location)
         {
             PrivateLinkScopedResources = new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

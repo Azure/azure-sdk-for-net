@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Gremlin databases and their properties. </summary>
     internal partial class GremlinDatabaseListResult
     {
-        /// <summary> Initializes a new instance of GremlinDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseListResult"/>. </summary>
         internal GremlinDatabaseListResult()
         {
             Value = new ChangeTrackingList<GremlinDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of GremlinDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseListResult"/>. </summary>
         /// <param name="value"> List of Gremlin databases and their properties. </param>
         internal GremlinDatabaseListResult(IReadOnlyList<GremlinDatabaseData> value)
         {

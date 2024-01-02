@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Agreement Terms definition. </summary>
     public partial class ConfluentAgreement : ResourceData
     {
-        /// <summary> Initializes a new instance of ConfluentAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentAgreement"/>. </summary>
         public ConfluentAgreement()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfluentAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentAgreement"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

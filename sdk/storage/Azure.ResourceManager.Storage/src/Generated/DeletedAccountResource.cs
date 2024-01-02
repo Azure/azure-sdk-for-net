@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Storage
 {
     /// <summary>
     /// A Class representing a DeletedAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeletedAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeletedAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetDeletedAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeletedAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeletedAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeletedAccount method.
     /// </summary>
     public partial class DeletedAccountResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Storage
         private readonly DeletedAccountsRestOperations _deletedAccountRestClient;
         private readonly DeletedAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Storage/locations/deletedAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedAccountResource"/> class for mocking. </summary>
         protected DeletedAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeletedAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeletedAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeletedAccountResource(ArmClient client, DeletedAccountData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Storage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Storage/locations/deletedAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

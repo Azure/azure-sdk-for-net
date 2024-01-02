@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Response parameters for tiering cost info for savings. </summary>
     public partial class TieringCostSavingInfo : TieringCostInfo
     {
-        /// <summary> Initializes a new instance of TieringCostSavingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TieringCostSavingInfo"/>. </summary>
         /// <param name="sourceTierSizeReductionInBytes"> Source tier size reduction in bytes after moving all the recommended backup points to target tier. </param>
         /// <param name="targetTierSizeIncreaseInBytes"> Target tier size increase in bytes after moving all the recommended backup points to target tier. </param>
         /// <param name="retailSourceTierCostPerGBPerMonth"> Source tier retail cost per GB per month. </param>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "TieringCostSavingInfo";
         }
 
-        /// <summary> Initializes a new instance of TieringCostSavingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TieringCostSavingInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="sourceTierSizeReductionInBytes"> Source tier size reduction in bytes after moving all the recommended backup points to target tier. </param>
         /// <param name="targetTierSizeIncreaseInBytes"> Target tier size increase in bytes after moving all the recommended backup points to target tier. </param>

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,14 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FilePattern);
-#else
-                using (JsonDocument document = JsonDocument.Parse(FilePattern))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, FilePattern);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatWriteSettingsType);
@@ -52,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<BinaryData> filePattern = default;
+            Optional<DataFactoryElement<string>> filePattern = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -64,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    filePattern = BinaryData.FromString(property.Value.GetRawText());
+                    filePattern = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

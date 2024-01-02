@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Subscription list operation response. </summary>
     internal partial class SubscriptionsResponse
     {
-        /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsResponse"/>. </summary>
         internal SubscriptionsResponse()
         {
             Value = new ChangeTrackingList<MarketplaceSubscription>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionsResponse"/>. </summary>
         /// <param name="value"> An array of subscriptions. </param>
         /// <param name="skipToken"> The skip token to retrieve the next page. </param>
         /// <param name="count"> Number of subscriptions on the page. </param>

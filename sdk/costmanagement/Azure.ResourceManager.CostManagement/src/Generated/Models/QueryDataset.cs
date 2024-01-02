@@ -13,11 +13,26 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of data present in the query. </summary>
     public partial class QueryDataset
     {
-        /// <summary> Initializes a new instance of QueryDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryDataset"/>. </summary>
         public QueryDataset()
         {
             Aggregation = new ChangeTrackingDictionary<string, QueryAggregation>();
             Grouping = new ChangeTrackingList<QueryGrouping>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryDataset"/>. </summary>
+        /// <param name="granularity"> The granularity of rows in the query. </param>
+        /// <param name="configuration"> Has configuration information for the data in the export. The configuration will be ignored if aggregation and grouping are provided. </param>
+        /// <param name="aggregation"> Dictionary of aggregation expression to use in the query. The key of each item in the dictionary is the alias for the aggregated column. Query can have up to 2 aggregation clauses. </param>
+        /// <param name="grouping"> Array of group by expression to use in the query. Query can have up to 2 group by clauses. </param>
+        /// <param name="filter"> The filter expression to use in the query. Please reference our Query API REST documentation for how to properly format the filter. </param>
+        internal QueryDataset(GranularityType? granularity, QueryDatasetConfiguration configuration, IDictionary<string, QueryAggregation> aggregation, IList<QueryGrouping> grouping, QueryFilter filter)
+        {
+            Granularity = granularity;
+            Configuration = configuration;
+            Aggregation = aggregation;
+            Grouping = grouping;
+            Filter = filter;
         }
 
         /// <summary> The granularity of rows in the query. </summary>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExpressRouteCircuitAuthorizationResource" /> and their operations.
-    /// Each <see cref="ExpressRouteCircuitAuthorizationResource" /> in the collection will belong to the same instance of <see cref="ExpressRouteCircuitResource" />.
-    /// To get an <see cref="ExpressRouteCircuitAuthorizationCollection" /> instance call the GetExpressRouteCircuitAuthorizations method from an instance of <see cref="ExpressRouteCircuitResource" />.
+    /// A class representing a collection of <see cref="ExpressRouteCircuitAuthorizationResource"/> and their operations.
+    /// Each <see cref="ExpressRouteCircuitAuthorizationResource"/> in the collection will belong to the same instance of <see cref="ExpressRouteCircuitResource"/>.
+    /// To get an <see cref="ExpressRouteCircuitAuthorizationCollection"/> instance call the GetExpressRouteCircuitAuthorizations method from an instance of <see cref="ExpressRouteCircuitResource"/>.
     /// </summary>
     public partial class ExpressRouteCircuitAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteCircuitAuthorizationResource>, IAsyncEnumerable<ExpressRouteCircuitAuthorizationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteCircuitAuthorizationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteCircuitAuthorizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteCircuitAuthorizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCircuitAuthorizationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCircuitAuthorizationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteCircuitAuthorizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteCircuitAuthorizationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCircuitAuthorizationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

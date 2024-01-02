@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     /// <summary>
     /// A Class representing a DigitalTwinsDescription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DigitalTwinsDescriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDigitalTwinsDescriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDigitalTwinsDescription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DigitalTwinsDescriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDigitalTwinsDescriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDigitalTwinsDescription method.
     /// </summary>
     public partial class DigitalTwinsDescriptionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly DigitalTwinsRestOperations _digitalTwinsDescriptionDigitalTwinsRestClient;
         private readonly DigitalTwinsDescriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances";
+
         /// <summary> Initializes a new instance of the <see cref="DigitalTwinsDescriptionResource"/> class for mocking. </summary>
         protected DigitalTwinsDescriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DigitalTwinsDescriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DigitalTwinsDescriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DigitalTwinsDescriptionResource(ArmClient client, DigitalTwinsDescriptionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

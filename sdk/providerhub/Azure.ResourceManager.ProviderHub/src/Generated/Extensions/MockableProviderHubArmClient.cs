@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CustomRolloutResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomRolloutResource.CreateResourceIdentifier" /> to create a <see cref="CustomRolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CustomRolloutResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CustomRolloutResource.CreateResourceIdentifier" /> to create a <see cref="CustomRolloutResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomRolloutResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CustomRolloutResource"/> object. </returns>
         public virtual CustomRolloutResource GetCustomRolloutResource(ResourceIdentifier id)
         {
             CustomRolloutResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DefaultRolloutResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DefaultRolloutResource.CreateResourceIdentifier" /> to create a <see cref="DefaultRolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DefaultRolloutResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DefaultRolloutResource.CreateResourceIdentifier" /> to create a <see cref="DefaultRolloutResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DefaultRolloutResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DefaultRolloutResource"/> object. </returns>
         public virtual DefaultRolloutResource GetDefaultRolloutResource(ResourceIdentifier id)
         {
             DefaultRolloutResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NotificationRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NotificationRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="NotificationRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NotificationRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NotificationRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="NotificationRegistrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NotificationRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NotificationRegistrationResource"/> object. </returns>
         public virtual NotificationRegistrationResource GetNotificationRegistrationResource(ResourceIdentifier id)
         {
             NotificationRegistrationResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ProviderRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProviderRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ProviderRegistrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProviderRegistrationResource"/> object. </returns>
         public virtual ProviderRegistrationResource GetProviderRegistrationResource(ResourceIdentifier id)
         {
             ProviderRegistrationResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ResourceTypeRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceTypeRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceTypeRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceTypeRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeRegistrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceTypeRegistrationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ResourceTypeRegistrationResource"/> object. </returns>
         public virtual ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(ResourceIdentifier id)
         {
             ResourceTypeRegistrationResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ResourceTypeSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceTypeSkuResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceTypeSkuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceTypeSkuResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceTypeSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ResourceTypeSkuResource"/> object. </returns>
         public virtual ResourceTypeSkuResource GetResourceTypeSkuResource(ResourceIdentifier id)
         {
             ResourceTypeSkuResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NestedResourceTypeFirstSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeFirstSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NestedResourceTypeFirstSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeFirstSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource"/> object. </returns>
         public virtual NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(ResourceIdentifier id)
         {
             NestedResourceTypeFirstSkuResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NestedResourceTypeSecondSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NestedResourceTypeSecondSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeSecondSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NestedResourceTypeSecondSkuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NestedResourceTypeSecondSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeSecondSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource"/> object. </returns>
         public virtual NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(ResourceIdentifier id)
         {
             NestedResourceTypeSecondSkuResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NestedResourceTypeThirdSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NestedResourceTypeThirdSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeThirdSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NestedResourceTypeThirdSkuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NestedResourceTypeThirdSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeThirdSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource"/> object. </returns>
         public virtual NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(ResourceIdentifier id)
         {
             NestedResourceTypeThirdSkuResource.ValidateResourceId(id);

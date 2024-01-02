@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class StorageAccountCustomDetails
     {
-        /// <summary> Initializes a new instance of StorageAccountCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCustomDetails"/>. </summary>
         protected StorageAccountCustomDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
         internal StorageAccountCustomDetails(string resourceType)
         {

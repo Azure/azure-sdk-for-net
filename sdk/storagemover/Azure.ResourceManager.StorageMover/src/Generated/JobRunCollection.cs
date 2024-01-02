@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageMover
 {
     /// <summary>
-    /// A class representing a collection of <see cref="JobRunResource" /> and their operations.
-    /// Each <see cref="JobRunResource" /> in the collection will belong to the same instance of <see cref="JobDefinitionResource" />.
-    /// To get a <see cref="JobRunCollection" /> instance call the GetJobRuns method from an instance of <see cref="JobDefinitionResource" />.
+    /// A class representing a collection of <see cref="JobRunResource"/> and their operations.
+    /// Each <see cref="JobRunResource"/> in the collection will belong to the same instance of <see cref="JobDefinitionResource"/>.
+    /// To get a <see cref="JobRunCollection"/> instance call the GetJobRuns method from an instance of <see cref="JobDefinitionResource"/>.
     /// </summary>
     public partial class JobRunCollection : ArmCollection, IEnumerable<JobRunResource>, IAsyncEnumerable<JobRunResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobRunResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="JobRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JobRunResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobRunResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="JobRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JobRunResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobRunRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

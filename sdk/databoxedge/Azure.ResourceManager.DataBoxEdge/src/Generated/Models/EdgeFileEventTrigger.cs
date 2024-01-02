@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Trigger details. </summary>
     public partial class EdgeFileEventTrigger : DataBoxEdgeTriggerData
     {
-        /// <summary> Initializes a new instance of EdgeFileEventTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeFileEventTrigger"/>. </summary>
         /// <param name="sourceInfo"> File event source details. </param>
         /// <param name="sinkInfo"> Role sink info. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceInfo"/> or <paramref name="sinkInfo"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Kind = TriggerEventType.FileEvent;
         }
 
-        /// <summary> Initializes a new instance of EdgeFileEventTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeFileEventTrigger"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

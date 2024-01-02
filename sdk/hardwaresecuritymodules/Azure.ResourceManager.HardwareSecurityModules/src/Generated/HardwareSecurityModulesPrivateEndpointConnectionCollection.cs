@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="CloudHsmClusterResource" />.
-    /// To get a <see cref="HardwareSecurityModulesPrivateEndpointConnectionCollection" /> instance call the GetHardwareSecurityModulesPrivateEndpointConnections method from an instance of <see cref="CloudHsmClusterResource" />.
+    /// A class representing a collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="CloudHsmClusterResource"/>.
+    /// To get a <see cref="HardwareSecurityModulesPrivateEndpointConnectionCollection"/> instance call the GetHardwareSecurityModulesPrivateEndpointConnections method from an instance of <see cref="CloudHsmClusterResource"/>.
     /// </summary>
     public partial class HardwareSecurityModulesPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<HardwareSecurityModulesPrivateEndpointConnectionResource>, IAsyncEnumerable<HardwareSecurityModulesPrivateEndpointConnectionResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HardwareSecurityModulesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HardwareSecurityModulesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HardwareSecurityModulesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hardwareSecurityModulesPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

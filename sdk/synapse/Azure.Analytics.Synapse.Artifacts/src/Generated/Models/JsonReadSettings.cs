@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Json read settings. </summary>
     public partial class JsonReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of JsonReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonReadSettings"/>. </summary>
         public JsonReadSettings()
         {
             Type = "JsonReadSettings";
         }
 
-        /// <summary> Initializes a new instance of JsonReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">

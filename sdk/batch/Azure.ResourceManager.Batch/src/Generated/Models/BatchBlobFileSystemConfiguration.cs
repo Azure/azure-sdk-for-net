@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Information used to connect to an Azure Storage Container using Blobfuse. </summary>
     public partial class BatchBlobFileSystemConfiguration
     {
-        /// <summary> Initializes a new instance of BatchBlobFileSystemConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchBlobFileSystemConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage Account name. </param>
         /// <param name="containerName"> The Azure Blob Storage Container name. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             RelativeMountPath = relativeMountPath;
         }
 
-        /// <summary> Initializes a new instance of BatchBlobFileSystemConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchBlobFileSystemConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage Account name. </param>
         /// <param name="containerName"> The Azure Blob Storage Container name. </param>
         /// <param name="accountKey"> This property is mutually exclusive with both sasKey and identity; exactly one must be specified. </param>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class ScalingPlanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScalingPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="timeZone"> Timezone of the scaling plan. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             HostPoolReferences = new ChangeTrackingList<ScalingHostPoolReference>();
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

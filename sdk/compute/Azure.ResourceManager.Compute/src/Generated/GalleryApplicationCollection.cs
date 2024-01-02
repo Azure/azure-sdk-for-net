@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GalleryApplicationResource" /> and their operations.
-    /// Each <see cref="GalleryApplicationResource" /> in the collection will belong to the same instance of <see cref="GalleryResource" />.
-    /// To get a <see cref="GalleryApplicationCollection" /> instance call the GetGalleryApplications method from an instance of <see cref="GalleryResource" />.
+    /// A class representing a collection of <see cref="GalleryApplicationResource"/> and their operations.
+    /// Each <see cref="GalleryApplicationResource"/> in the collection will belong to the same instance of <see cref="GalleryResource"/>.
+    /// To get a <see cref="GalleryApplicationCollection"/> instance call the GetGalleryApplications method from an instance of <see cref="GalleryResource"/>.
     /// </summary>
     public partial class GalleryApplicationCollection : ArmCollection, IEnumerable<GalleryApplicationResource>, IAsyncEnumerable<GalleryApplicationResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GalleryApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GalleryApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GalleryApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

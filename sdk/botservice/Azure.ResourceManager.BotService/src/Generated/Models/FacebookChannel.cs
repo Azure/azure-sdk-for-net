@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Facebook channel definition. </summary>
     public partial class FacebookChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of FacebookChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacebookChannel"/>. </summary>
         public FacebookChannel()
         {
             ChannelName = "FacebookChannel";
         }
 
-        /// <summary> Initializes a new instance of FacebookChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacebookChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

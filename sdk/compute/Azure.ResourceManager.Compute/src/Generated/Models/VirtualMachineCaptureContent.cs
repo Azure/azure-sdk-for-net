@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Capture Virtual Machine parameters. </summary>
     public partial class VirtualMachineCaptureContent
     {
-        /// <summary> Initializes a new instance of VirtualMachineCaptureContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureContent"/>. </summary>
         /// <param name="vhdPrefix"> The captured virtual hard disk's name prefix. </param>
         /// <param name="destinationContainerName"> The destination container name. </param>
         /// <param name="overwriteVhds"> Specifies whether to overwrite the destination virtual hard disk, in case of conflict. </param>

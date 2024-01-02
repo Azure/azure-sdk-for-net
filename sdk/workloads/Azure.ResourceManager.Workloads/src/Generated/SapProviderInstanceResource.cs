@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
     /// A Class representing a SapProviderInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SapProviderInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSapProviderInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SapMonitorResource" /> using the GetSapProviderInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapProviderInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSapProviderInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SapMonitorResource"/> using the GetSapProviderInstance method.
     /// </summary>
     public partial class SapProviderInstanceResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Workloads
         private readonly ProviderInstancesRestOperations _sapProviderInstanceProviderInstancesRestClient;
         private readonly SapProviderInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors/providerInstances";
+
         /// <summary> Initializes a new instance of the <see cref="SapProviderInstanceResource"/> class for mocking. </summary>
         protected SapProviderInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SapProviderInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SapProviderInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SapProviderInstanceResource(ArmClient client, SapProviderInstanceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Workloads
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors/providerInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

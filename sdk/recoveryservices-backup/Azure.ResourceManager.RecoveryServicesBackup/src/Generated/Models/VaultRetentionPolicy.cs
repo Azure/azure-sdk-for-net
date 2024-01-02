@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Vault retention policy for AzureFileShare. </summary>
     public partial class VaultRetentionPolicy
     {
-        /// <summary> Initializes a new instance of VaultRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultRetentionPolicy"/>. </summary>
         /// <param name="vaultRetention">
         /// Base class for retention policy.
         /// Please note <see cref="BackupRetentionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

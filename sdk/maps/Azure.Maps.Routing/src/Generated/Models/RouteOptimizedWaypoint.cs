@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Optimized way point object. </summary>
     public partial class RouteOptimizedWaypoint
     {
-        /// <summary> Initializes a new instance of RouteOptimizedWaypoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteOptimizedWaypoint"/>. </summary>
         internal RouteOptimizedWaypoint()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteOptimizedWaypoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteOptimizedWaypoint"/>. </summary>
         /// <param name="providedIndex"> Way point index provided by the user. </param>
         /// <param name="optimizedIndex"> Optimized way point index from the system. </param>
         internal RouteOptimizedWaypoint(int? providedIndex, int? optimizedIndex)

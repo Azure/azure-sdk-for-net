@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotHubCertificateDescriptionResource" /> and their operations.
-    /// Each <see cref="IotHubCertificateDescriptionResource" /> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource" />.
-    /// To get an <see cref="IotHubCertificateDescriptionCollection" /> instance call the GetIotHubCertificateDescriptions method from an instance of <see cref="IotHubDescriptionResource" />.
+    /// A class representing a collection of <see cref="IotHubCertificateDescriptionResource"/> and their operations.
+    /// Each <see cref="IotHubCertificateDescriptionResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
+    /// To get an <see cref="IotHubCertificateDescriptionCollection"/> instance call the GetIotHubCertificateDescriptions method from an instance of <see cref="IotHubDescriptionResource"/>.
     /// </summary>
     public partial class IotHubCertificateDescriptionCollection : ArmCollection, IEnumerable<IotHubCertificateDescriptionResource>, IAsyncEnumerable<IotHubCertificateDescriptionResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.IotHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubCertificateDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotHubCertificateDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubCertificateDescriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubCertificateDescriptionCertificatesRestClient.CreateListByIotHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.IotHub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubCertificateDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubCertificateDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubCertificateDescriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubCertificateDescriptionCertificatesRestClient.CreateListByIotHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

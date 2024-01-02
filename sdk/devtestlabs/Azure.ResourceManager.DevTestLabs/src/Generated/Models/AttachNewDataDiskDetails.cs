@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties to attach new disk to the Virtual Machine. </summary>
     public partial class AttachNewDataDiskDetails
     {
-        /// <summary> Initializes a new instance of AttachNewDataDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachNewDataDiskDetails"/>. </summary>
         public AttachNewDataDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AttachNewDataDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachNewDataDiskDetails"/>. </summary>
         /// <param name="diskSizeGiB"> Size of the disk to be attached in Gibibytes. </param>
         /// <param name="diskName"> The name of the disk to be attached. </param>
         /// <param name="diskType"> The storage type for the disk (i.e. Standard, Premium). </param>

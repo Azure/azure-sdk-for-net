@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataStoreSettings
     {
-        /// <summary> Initializes a new instance of DataStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/>. </summary>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         protected DataStoreSettings(DataStoreType dataStoreType)
         {
             DataStoreType = dataStoreType;
         }
 
-        /// <summary> Initializes a new instance of DataStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         internal DataStoreSettings(string objectType, DataStoreType dataStoreType)

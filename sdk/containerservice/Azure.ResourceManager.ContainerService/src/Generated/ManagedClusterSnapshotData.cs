@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ManagedClusterSnapshotData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedClusterSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSnapshotData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedClusterSnapshotData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

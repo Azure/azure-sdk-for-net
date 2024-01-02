@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AmlFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AmlFileSystemResource> GetAmlFileSystemsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFileSystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AmlFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AmlFileSystemResource> GetAmlFileSystems(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AmlFileSystemamlFilesystemsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheSku> GetStorageCacheSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheSku> GetStorageCacheSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheUsageModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheUsageModel> GetUsageModelsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheUsageModel"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheUsageModel> GetUsageModels(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheUsage> GetStorageCacheUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheUsage> GetStorageCacheUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageCacheResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageCacheResource> GetStorageCachesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageCacheResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageCacheResource> GetStorageCaches(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageCacheCachesRestClient.CreateListRequest(Id.SubscriptionId);

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Security profile for the container service cluster. </summary>
     public partial class ManagedClusterSecurityProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfile"/>. </summary>
         public ManagedClusterSecurityProfile()
         {
             CustomCATrustCertificates = new ChangeTrackingList<byte[]>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfile"/>. </summary>
         /// <param name="defender"> Microsoft Defender settings for the security profile. </param>
         /// <param name="azureKeyVaultKms"> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </param>
         /// <param name="workloadIdentity"> [Workload Identity](https://azure.github.io/azure-workload-identity/docs/) settings for the security profile. </param>

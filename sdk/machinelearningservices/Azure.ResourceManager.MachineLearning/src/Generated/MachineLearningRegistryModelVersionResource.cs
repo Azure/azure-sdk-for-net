@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningRegistryModelVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningRegistryModelVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningRegistryModelVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryModelContainerResource" /> using the GetMachineLearningRegistryModelVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryModelVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningRegistryModelVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryModelContainerResource"/> using the GetMachineLearningRegistryModelVersion method.
     /// </summary>
     public partial class MachineLearningRegistryModelVersionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly RegistryModelVersionsRestOperations _machineLearningRegistryModelVersionRegistryModelVersionsRestClient;
         private readonly MachineLearningModelVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/models/versions";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryModelVersionResource"/> class for mocking. </summary>
         protected MachineLearningRegistryModelVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningRegistryModelVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryModelVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningRegistryModelVersionResource(ArmClient client, MachineLearningModelVersionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/models/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

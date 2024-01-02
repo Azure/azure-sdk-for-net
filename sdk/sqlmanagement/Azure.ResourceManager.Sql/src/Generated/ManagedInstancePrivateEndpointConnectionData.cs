@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstancePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateEndpointConnectionData"/>. </summary>
         public ManagedInstancePrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

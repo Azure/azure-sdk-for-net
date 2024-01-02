@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The effective RouteMap route configured on the connection resource. </summary>
     public partial class EffectiveRouteMapRoute
     {
-        /// <summary> Initializes a new instance of EffectiveRouteMapRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveRouteMapRoute"/>. </summary>
         internal EffectiveRouteMapRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of EffectiveRouteMapRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveRouteMapRoute"/>. </summary>
         /// <param name="prefix"> The address prefix of the route. </param>
         /// <param name="bgpCommunities"> BGP communities of the route. </param>
         /// <param name="asPath"> The ASPath of this route. </param>

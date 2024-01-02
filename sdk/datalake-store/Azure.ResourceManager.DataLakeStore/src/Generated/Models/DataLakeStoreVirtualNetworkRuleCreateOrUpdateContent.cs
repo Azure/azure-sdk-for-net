@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to create a new virtual network rule. </summary>
     public partial class DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent"/>. </summary>
         /// <param name="subnetId"> The resource identifier for the subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         public DataLakeStoreVirtualNetworkRuleCreateOrUpdateContent(ResourceIdentifier subnetId)

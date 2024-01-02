@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthcareApisIotFhirDestinationResource" /> and their operations.
-    /// Each <see cref="HealthcareApisIotFhirDestinationResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisIotConnectorResource" />.
-    /// To get a <see cref="HealthcareApisIotFhirDestinationCollection" /> instance call the GetHealthcareApisIotFhirDestinations method from an instance of <see cref="HealthcareApisIotConnectorResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisIotFhirDestinationResource"/> and their operations.
+    /// Each <see cref="HealthcareApisIotFhirDestinationResource"/> in the collection will belong to the same instance of <see cref="HealthcareApisIotConnectorResource"/>.
+    /// To get a <see cref="HealthcareApisIotFhirDestinationCollection"/> instance call the GetHealthcareApisIotFhirDestinations method from an instance of <see cref="HealthcareApisIotConnectorResource"/>.
     /// </summary>
     public partial class HealthcareApisIotFhirDestinationCollection : ArmCollection, IEnumerable<HealthcareApisIotFhirDestinationResource>, IAsyncEnumerable<HealthcareApisIotFhirDestinationResource>
     {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisIotFhirDestinationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthcareApisIotFhirDestinationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthcareApisIotFhirDestinationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotFhirDestinationFhirDestinationsRestClient.CreateListByIotConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisIotFhirDestinationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthcareApisIotFhirDestinationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthcareApisIotFhirDestinationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisIotFhirDestinationFhirDestinationsRestClient.CreateListByIotConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

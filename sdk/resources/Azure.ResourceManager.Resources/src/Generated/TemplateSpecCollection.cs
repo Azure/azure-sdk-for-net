@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TemplateSpecResource" /> and their operations.
-    /// Each <see cref="TemplateSpecResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="TemplateSpecCollection" /> instance call the GetTemplateSpecs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="TemplateSpecResource"/> and their operations.
+    /// Each <see cref="TemplateSpecResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="TemplateSpecCollection"/> instance call the GetTemplateSpecs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class TemplateSpecCollection : ArmCollection, IEnumerable<TemplateSpecResource>, IAsyncEnumerable<TemplateSpecResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TemplateSpecResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TemplateSpecResource> GetAllAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TemplateSpecResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TemplateSpecResource> GetAll(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
             Core.HttpMessage FirstPageRequest(int? pageSizeHint) => _templateSpecRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);

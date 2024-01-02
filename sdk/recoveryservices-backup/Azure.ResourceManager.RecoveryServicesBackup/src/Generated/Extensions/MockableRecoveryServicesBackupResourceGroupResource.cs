@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="resourceGuardProxyName"> The String to use. </param>
+        /// <param name="resourceGuardProxyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="resourceGuardProxyName"> The String to use. </param>
+        /// <param name="resourceGuardProxyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupProtectionIntentResource> GetBackupProtectionIntentsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BackupProtectionIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupProtectionIntentResource> GetBackupProtectionIntents(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupManagementUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BackupManagementUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupManagementUsage> GetBackupUsageSummariesAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupManagementUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BackupManagementUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupManagementUsage> GetBackupUsageSummaries(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupProtectedItemResource> GetBackupProtectedItemsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectedItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BackupProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupProtectedItemResource> GetBackupProtectedItems(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -919,12 +919,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The String to use. </param>
+        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProtectableContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProtectableContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectableContainerResource> GetProtectableContainersAsync(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -949,12 +949,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The String to use. </param>
+        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="fabricName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ProtectableContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProtectableContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectableContainerResource> GetProtectableContainers(string vaultName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WorkloadProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadProtectableItemResource> GetBackupProtectableItemsAsync(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> A collection of <see cref="WorkloadProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadProtectableItemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadProtectableItemResource> GetBackupProtectableItems(string vaultName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupProtectionContainerResource> GetBackupProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupProtectionContainerResource> GetBackupProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainersAsync(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
-        /// <returns> A collection of <see cref="BackupProtectionContainerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BackupProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupProtectionContainerResource> GetSoftDeletedProtectionContainers(string vaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -1385,7 +1385,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The String to use. </param>
+        /// <param name="operationId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
@@ -1422,7 +1422,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The String to use. </param>
+        /// <param name="operationId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
@@ -1459,7 +1459,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The String to use. </param>
+        /// <param name="operationId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>
@@ -1496,7 +1496,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="operationId"> The String to use. </param>
+        /// <param name="operationId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="operationId"/> is null. </exception>

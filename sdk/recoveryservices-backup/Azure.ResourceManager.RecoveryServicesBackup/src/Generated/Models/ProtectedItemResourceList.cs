@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> List of ProtectedItem resources. </summary>
     internal partial class ProtectedItemResourceList
     {
-        /// <summary> Initializes a new instance of ProtectedItemResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectedItemResourceList"/>. </summary>
         internal ProtectedItemResourceList()
         {
             Value = new ChangeTrackingList<BackupProtectedItemData>();
         }
 
-        /// <summary> Initializes a new instance of ProtectedItemResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectedItemResourceList"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         internal ProtectedItemResourceList(IReadOnlyList<BackupProtectedItemData> value, string nextLink)

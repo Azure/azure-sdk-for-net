@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricControllerData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkFabricControllerData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             TenantInternetGatewayIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricControllerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

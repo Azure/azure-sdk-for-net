@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class PublisherData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PublisherData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

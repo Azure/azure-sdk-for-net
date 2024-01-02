@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Response for check name availability API. Resource provider will set availability as true | false. </summary>
     public partial class RecoveryServicesNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of RecoveryServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesNameAvailabilityResult"/>. </summary>
         internal RecoveryServicesNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"></param>
         /// <param name="reason"></param>
         /// <param name="message"></param>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiDiagnostic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiDiagnosticResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiDiagnosticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiResource" /> using the GetApiDiagnostic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiDiagnosticResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiDiagnosticResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiResource"/> using the GetApiDiagnostic method.
     /// </summary>
     public partial class ApiDiagnosticResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiDiagnosticRestOperations _apiDiagnosticRestClient;
         private readonly DiagnosticContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/diagnostics";
+
         /// <summary> Initializes a new instance of the <see cref="ApiDiagnosticResource"/> class for mocking. </summary>
         protected ApiDiagnosticResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiDiagnosticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiDiagnosticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiDiagnosticResource(ArmClient client, DiagnosticContractData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/diagnostics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Custom hostname configuration. </summary>
     public partial class HostnameConfiguration
     {
-        /// <summary> Initializes a new instance of HostnameConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostnameConfiguration"/>. </summary>
         /// <param name="hostnameType"> Hostname type. </param>
         /// <param name="hostName"> Hostname to configure on the Api Management service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             HostName = hostName;
         }
 
-        /// <summary> Initializes a new instance of HostnameConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostnameConfiguration"/>. </summary>
         /// <param name="hostnameType"> Hostname type. </param>
         /// <param name="hostName"> Hostname to configure on the Api Management service. </param>
         /// <param name="keyVaultSecretUri"> Url to the KeyVault Secret containing the Ssl Certificate. If absolute Url containing version is provided, auto-update of ssl certificate will not work. This requires Api Management service to be configured with aka.ms/apimmsi. The secret should be of type *application/x-pkcs12*. </param>

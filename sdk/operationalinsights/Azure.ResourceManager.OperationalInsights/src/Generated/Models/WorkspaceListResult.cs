@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list workspaces operation response. </summary>
     internal partial class WorkspaceListResult
     {
-        /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
         internal WorkspaceListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
         /// <param name="value"> A list of workspaces. </param>
         internal WorkspaceListResult(IReadOnlyList<OperationalInsightsWorkspaceData> value)
         {

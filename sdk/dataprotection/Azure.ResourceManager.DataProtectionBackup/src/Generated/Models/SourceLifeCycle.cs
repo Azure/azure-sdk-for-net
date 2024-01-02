@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Source LifeCycle. </summary>
     public partial class SourceLifeCycle
     {
-        /// <summary> Initializes a new instance of SourceLifeCycle. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceLifeCycle"/>. </summary>
         /// <param name="deleteAfter">
         /// Delete Option
         /// Please note <see cref="DataProtectionBackupDeleteSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             TargetDataStoreCopySettings = new ChangeTrackingList<TargetCopySetting>();
         }
 
-        /// <summary> Initializes a new instance of SourceLifeCycle. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceLifeCycle"/>. </summary>
         /// <param name="deleteAfter">
         /// Delete Option
         /// Please note <see cref="DataProtectionBackupDeleteSetting"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

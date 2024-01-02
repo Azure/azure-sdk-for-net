@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class FileWorkspaceDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of FileWorkspaceDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileWorkspaceDetailData"/>. </summary>
         public FileWorkspaceDetailData()
         {
         }
 
-        /// <summary> Initializes a new instance of FileWorkspaceDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileWorkspaceDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

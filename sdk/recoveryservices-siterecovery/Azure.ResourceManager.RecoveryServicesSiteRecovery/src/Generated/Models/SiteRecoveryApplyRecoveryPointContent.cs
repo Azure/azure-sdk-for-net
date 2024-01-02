@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input to apply recovery point. </summary>
     public partial class SiteRecoveryApplyRecoveryPointContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryApplyRecoveryPointContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplyRecoveryPointContent"/>. </summary>
         /// <param name="properties"> The input properties to apply recovery point. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryApplyRecoveryPointContent(SiteRecoveryApplyRecoveryPointProperties properties)

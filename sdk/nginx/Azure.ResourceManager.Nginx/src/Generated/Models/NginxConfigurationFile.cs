@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxConfigurationFile. </summary>
     public partial class NginxConfigurationFile
     {
-        /// <summary> Initializes a new instance of NginxConfigurationFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationFile"/>. </summary>
         public NginxConfigurationFile()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxConfigurationFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxConfigurationFile"/>. </summary>
         /// <param name="content"></param>
         /// <param name="virtualPath"></param>
         internal NginxConfigurationFile(string content, string virtualPath)

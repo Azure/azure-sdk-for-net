@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
     /// A Class representing a WebPubSubSharedPrivateLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebPubSubSharedPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebPubSubSharedPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource" /> using the GetWebPubSubSharedPrivateLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebPubSubSharedPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebPubSubSharedPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource"/> using the GetWebPubSubSharedPrivateLink method.
     /// </summary>
     public partial class WebPubSubSharedPrivateLinkResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.WebPubSub
         private readonly WebPubSubSharedPrivateLinkResourcesRestOperations _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient;
         private readonly WebPubSubSharedPrivateLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="WebPubSubSharedPrivateLinkResource"/> class for mocking. </summary>
         protected WebPubSubSharedPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebPubSubSharedPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubSharedPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebPubSubSharedPrivateLinkResource(ArmClient client, WebPubSubSharedPrivateLinkData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.WebPubSub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

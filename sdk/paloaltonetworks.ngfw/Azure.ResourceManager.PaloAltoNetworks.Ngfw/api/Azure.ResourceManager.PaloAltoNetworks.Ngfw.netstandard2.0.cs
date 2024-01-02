@@ -1096,6 +1096,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.AllowEgressNatType EnableEgressNat { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkType NetworkType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.IPAddressInfo> PublicIPs { get { throw null; } }
+        public System.Collections.Generic.IList<string> TrustedRanges { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVnetConfiguration VnetConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallVwanConfiguration VwanConfiguration { get { throw null; } set { } }
     }

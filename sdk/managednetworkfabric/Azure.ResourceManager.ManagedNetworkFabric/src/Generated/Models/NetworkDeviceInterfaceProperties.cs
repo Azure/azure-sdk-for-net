@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network device interface properties. </summary>
     public partial class NetworkDeviceInterfaceProperties
     {
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceProperties"/>. </summary>
         public NetworkDeviceInterfaceProperties()
         {
             SupportedConnectorTypes = new ChangeTrackingList<SupportedConnectorProperties>();
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceProperties"/>. </summary>
         /// <param name="identifier"> Interface identifier. Example: HundredGigE0/0. </param>
         /// <param name="interfaceType"> Interface type. </param>
         /// <param name="supportedConnectorTypes"> List of supported connector types. </param>

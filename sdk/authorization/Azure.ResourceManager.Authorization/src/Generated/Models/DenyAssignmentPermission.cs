@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Deny assignment permissions. </summary>
     public partial class DenyAssignmentPermission
     {
-        /// <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentPermission"/>. </summary>
         internal DenyAssignmentPermission()
         {
             Actions = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Authorization.Models
             NotDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentPermission"/>. </summary>
         /// <param name="actions"> Actions to which the deny assignment does not grant access. </param>
         /// <param name="notActions"> Actions to exclude from that the deny assignment does not grant access. </param>
         /// <param name="dataActions"> Data actions to which the deny assignment does not grant access. </param>

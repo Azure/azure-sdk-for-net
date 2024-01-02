@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Rule of type application. </summary>
     public partial class ApplicationRule : FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of ApplicationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationRule"/>. </summary>
         public ApplicationRule()
         {
             SourceAddresses = new ChangeTrackingList<string>();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             RuleType = FirewallPolicyRuleType.ApplicationRule;
         }
 
-        /// <summary> Initializes a new instance of ApplicationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>

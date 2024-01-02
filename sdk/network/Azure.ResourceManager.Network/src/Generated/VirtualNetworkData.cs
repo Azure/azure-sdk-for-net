@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VirtualNetworkData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkData"/>. </summary>
         public VirtualNetworkData()
         {
             Subnets = new ChangeTrackingList<SubnetData>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
             FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

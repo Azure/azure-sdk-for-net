@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A private container registry. </summary>
     public partial class BatchVmContainerRegistry
     {
-        /// <summary> Initializes a new instance of BatchVmContainerRegistry. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmContainerRegistry"/>. </summary>
         public BatchVmContainerRegistry()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchVmContainerRegistry. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchVmContainerRegistry"/>. </summary>
         /// <param name="userName"> The user name to log into the registry server. </param>
         /// <param name="password"> The password to log into the registry server. </param>
         /// <param name="registryServer"> If omitted, the default is "docker.io". </param>

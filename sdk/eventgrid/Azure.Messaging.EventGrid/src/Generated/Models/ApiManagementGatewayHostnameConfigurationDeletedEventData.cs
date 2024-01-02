@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayHostnameConfigurationDeleted event. </summary>
     public partial class ApiManagementGatewayHostnameConfigurationDeletedEventData
     {
-        /// <summary> Initializes a new instance of ApiManagementGatewayHostnameConfigurationDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayHostnameConfigurationDeletedEventData"/>. </summary>
         internal ApiManagementGatewayHostnameConfigurationDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayHostnameConfigurationDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayHostnameConfigurationDeletedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;GatewayName&gt;/hostnameConfigurations/&lt;ResourceName&gt;`. </param>
         internal ApiManagementGatewayHostnameConfigurationDeletedEventData(string resourceUri)
         {

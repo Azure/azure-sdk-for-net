@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedMongoDBCollectionResourceInfo. </summary>
     public partial class ExtendedMongoDBCollectionResourceInfo : MongoDBCollectionResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedMongoDBCollectionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         public ExtendedMongoDBCollectionResourceInfo(string collectionName) : base(collectionName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(collectionName, nameof(collectionName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedMongoDBCollectionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedMongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>

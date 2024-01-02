@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NotificationHubNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId);

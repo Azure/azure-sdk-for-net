@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the restorable SQL resources. </summary>
     internal partial class RestorableSqlResourcesListResult
     {
-        /// <summary> Initializes a new instance of RestorableSqlResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlResourcesListResult"/>. </summary>
         internal RestorableSqlResourcesListResult()
         {
             Value = new ChangeTrackingList<RestorableSqlResourceData>();
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlResourcesListResult"/>. </summary>
         /// <param name="value"> List of restorable SQL resources, including the database and collection names. </param>
         internal RestorableSqlResourcesListResult(IReadOnlyList<RestorableSqlResourceData> value)
         {

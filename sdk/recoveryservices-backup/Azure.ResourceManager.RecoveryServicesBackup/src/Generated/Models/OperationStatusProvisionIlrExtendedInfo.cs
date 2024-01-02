@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Operation status extended info for ILR provision action. </summary>
     public partial class OperationStatusProvisionIlrExtendedInfo : OperationStatusExtendedInfo
     {
-        /// <summary> Initializes a new instance of OperationStatusProvisionIlrExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusProvisionIlrExtendedInfo"/>. </summary>
         internal OperationStatusProvisionIlrExtendedInfo()
         {
             ObjectType = "OperationStatusProvisionILRExtendedInfo";
         }
 
-        /// <summary> Initializes a new instance of OperationStatusProvisionIlrExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatusProvisionIlrExtendedInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryTarget"> Target details for file / folder restore. </param>
         internal OperationStatusProvisionIlrExtendedInfo(string objectType, InstantItemRecoveryTarget recoveryTarget) : base(objectType)

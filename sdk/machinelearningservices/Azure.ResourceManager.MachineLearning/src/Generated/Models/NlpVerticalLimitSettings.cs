@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Job execution constraints. </summary>
     public partial class NlpVerticalLimitSettings
     {
-        /// <summary> Initializes a new instance of NlpVerticalLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpVerticalLimitSettings"/>. </summary>
         public NlpVerticalLimitSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of NlpVerticalLimitSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NlpVerticalLimitSettings"/>. </summary>
         /// <param name="maxConcurrentTrials"> Maximum Concurrent AutoML iterations. </param>
         /// <param name="maxNodes"> Maximum nodes to use for the experiment. </param>
         /// <param name="maxTrials"> Number of AutoML iterations. </param>

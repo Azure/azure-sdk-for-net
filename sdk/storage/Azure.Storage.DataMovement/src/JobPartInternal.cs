@@ -128,6 +128,7 @@ namespace Azure.Storage.DataMovement
 
         private List<Task<bool>> _chunkTasks;
         private List<TaskCompletionSource<bool>> _chunkTaskSources;
+        protected bool _queueingTasks = false;
 
         /// <summary>
         /// Array pools for reading from streams to upload
@@ -168,7 +169,6 @@ namespace Azure.Storage.DataMovement
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
-            _createMode = createMode;
             _failureType = JobPartFailureType.None;
             _checkpointer = checkpointer;
             _progressTracker = progressTracker;
@@ -189,6 +189,9 @@ namespace Azure.Storage.DataMovement
             _transferChunkSize = Math.Min(
                 transferChunkSize ?? DataMovementConstants.DefaultChunkSize,
                 _destinationResource.MaxSupportedChunkSize);
+            // Set the default create mode
+            _createMode = createMode == StorageResourceCreationPreference.Default ?
+                StorageResourceCreationPreference.FailIfExists : createMode;
 
             Length = length;
             _chunkTasks = new List<Task<bool>>();
@@ -292,7 +295,7 @@ namespace Azure.Storage.DataMovement
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
                         _dataTransfer.Id,
-                        JobPartStatus,
+                        JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
                     nameof(JobPartInternal),
@@ -358,7 +361,7 @@ namespace Azure.Storage.DataMovement
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new TransferStatusEventArgs(
                         _dataTransfer.Id,
-                        JobPartStatus,
+                        JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
                     nameof(JobPartInternal),
@@ -375,13 +378,13 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArg(Exception ex)
         {
-            if (ex is not OperationCanceledException
-                && ex is not TaskCanceledException)
+            if (ex is not OperationCanceledException &&
+                ex is not TaskCanceledException &&
+                !ex.Message.Contains("The request was canceled."))
             {
                 SetFailureType(ex.Message);
                 if (TransferFailedEventHandler != null)
                 {
-                    // TODO: change to RaiseAsync
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
                             _dataTransfer.Id,
@@ -404,7 +407,7 @@ namespace Azure.Storage.DataMovement
                     await PartTransferStatusEventHandler.RaiseAsync(
                         new TransferStatusEventArgs(
                             _dataTransfer.Id,
-                            JobPartStatus,
+                            JobPartStatus.DeepCopy(),
                             false,
                             _cancellationToken),
                         nameof(JobPartInternal),
@@ -413,9 +416,30 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
             }
-            // Trigger job cancellation if the failed handler is enabled
-            await TriggerCancellationAsync().ConfigureAwait(false);
-            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+
+            try
+            {
+                // Trigger job cancellation if the failed handler is enabled
+                await TriggerCancellationAsync().ConfigureAwait(false);
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            }
+            catch (Exception cancellationException)
+            {
+                // If an exception is thrown while trying to clean up,
+                // raise the failed event and prevent the transfer from hanging
+                await TransferFailedEventHandler.RaiseAsync(
+                    new TransferItemFailedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        cancellationException,
+                        false,
+                        _cancellationToken),
+                    nameof(JobPartInternal),
+                    nameof(TransferFailedEventHandler),
+                    ClientDiagnostics)
+                    .ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -535,15 +559,15 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CheckAndUpdateCancellationStateAsync()
         {
-            if (_chunkTasks.All((Task task) => (task.IsCompleted)))
+            if (JobPartStatus.State == DataTransferState.Pausing ||
+                JobPartStatus.State == DataTransferState.Stopping)
             {
-                if (JobPartStatus.State == DataTransferState.Pausing)
+                if (!_queueingTasks && _chunkTasks.All((Task task) => (task.IsCompleted)))
                 {
-                    await OnTransferStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
-                }
-                else if (JobPartStatus.State == DataTransferState.Stopping)
-                {
-                    await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                    DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
+                        DataTransferState.Paused :
+                        DataTransferState.Completed;
+                    await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }
         }

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> A reference to a related private endpoint connection. </summary>
     public partial class AppConfigurationPrivateEndpointConnectionReference : ResourceData
     {
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionReference"/>. </summary>
         internal AppConfigurationPrivateEndpointConnectionReference()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationPrivateEndpointConnectionReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationPrivateEndpointConnectionReference"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

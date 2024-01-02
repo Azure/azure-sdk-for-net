@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Cluster Identity details. </summary>
     public partial class HciClusterIdentityResult
     {
-        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterIdentityResult"/>. </summary>
         internal HciClusterIdentityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HciClusterIdentityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterIdentityResult"/>. </summary>
         /// <param name="aadClientId"></param>
         /// <param name="aadTenantId"></param>
         /// <param name="aadServicePrincipalObjectId"></param>

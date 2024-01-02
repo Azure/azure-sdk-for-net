@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> AzureFileShare Restore Request. </summary>
     public partial class FileShareRestoreContent : RestoreContent
     {
-        /// <summary> Initializes a new instance of FileShareRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRestoreContent"/>. </summary>
         public FileShareRestoreContent()
         {
             RestoreFileSpecs = new ChangeTrackingList<RestoreFileSpecs>();
             ObjectType = "AzureFileShareRestoreRequest";
         }
 
-        /// <summary> Initializes a new instance of FileShareRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Source storage account ARM Id. </param>

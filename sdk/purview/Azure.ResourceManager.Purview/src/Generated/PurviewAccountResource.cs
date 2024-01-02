@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Purview
 {
     /// <summary>
     /// A Class representing a PurviewAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PurviewAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPurviewAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPurviewAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PurviewAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPurviewAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPurviewAccount method.
     /// </summary>
     public partial class PurviewAccountResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Purview
         private readonly AccountsRestOperations _purviewAccountAccountsRestClient;
         private readonly PurviewAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="PurviewAccountResource"/> class for mocking. </summary>
         protected PurviewAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PurviewAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PurviewAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PurviewAccountResource(ArmClient client, PurviewAccountData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Purview
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

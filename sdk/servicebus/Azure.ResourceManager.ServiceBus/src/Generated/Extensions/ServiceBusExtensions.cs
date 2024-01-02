@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusNamespaceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusNamespaceResource"/> object. </returns>
         public static ServiceBusNamespaceResource GetServiceBusNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusNamespaceResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource"/> object. </returns>
         public static ServiceBusNetworkRuleSetResource GetServiceBusNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusNetworkRuleSetResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusPrivateEndpointConnectionResource"/> object. </returns>
         public static ServiceBusPrivateEndpointConnectionResource GetServiceBusPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusPrivateEndpointConnectionResource(id);
         }
 
@@ -93,9 +102,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryResource"/> object. </returns>
         public static ServiceBusDisasterRecoveryResource GetServiceBusDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusDisasterRecoveryResource(id);
         }
 
@@ -109,9 +121,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MigrationConfigurationResource"/> object. </returns>
         public static MigrationConfigurationResource GetMigrationConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetMigrationConfigurationResource(id);
         }
 
@@ -125,9 +140,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusNamespaceAuthorizationRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusNamespaceAuthorizationRuleResource"/> object. </returns>
         public static ServiceBusNamespaceAuthorizationRuleResource GetServiceBusNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusNamespaceAuthorizationRuleResource(id);
         }
 
@@ -141,9 +159,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusQueueAuthorizationRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusQueueAuthorizationRuleResource"/> object. </returns>
         public static ServiceBusQueueAuthorizationRuleResource GetServiceBusQueueAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusQueueAuthorizationRuleResource(id);
         }
 
@@ -157,9 +178,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusTopicAuthorizationRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusTopicAuthorizationRuleResource"/> object. </returns>
         public static ServiceBusTopicAuthorizationRuleResource GetServiceBusTopicAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusTopicAuthorizationRuleResource(id);
         }
 
@@ -173,9 +197,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> object. </returns>
         public static ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusDisasterRecoveryAuthorizationRuleResource(id);
         }
 
@@ -189,9 +216,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusQueueResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusQueueResource"/> object. </returns>
         public static ServiceBusQueueResource GetServiceBusQueueResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusQueueResource(id);
         }
 
@@ -205,9 +235,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusTopicResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusTopicResource"/> object. </returns>
         public static ServiceBusTopicResource GetServiceBusTopicResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusTopicResource(id);
         }
 
@@ -221,9 +254,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusRuleResource"/> object. </returns>
         public static ServiceBusRuleResource GetServiceBusRuleResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusRuleResource(id);
         }
 
@@ -237,9 +273,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceBusSubscriptionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceBusSubscriptionResource"/> object. </returns>
         public static ServiceBusSubscriptionResource GetServiceBusSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableServiceBusArmClient(client).GetServiceBusSubscriptionResource(id);
         }
 
@@ -251,9 +290,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ServiceBusNamespaceResources and their operations over a ServiceBusNamespaceResource. </returns>
         public static ServiceBusNamespaceCollection GetServiceBusNamespaces(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableServiceBusResourceGroupResource(resourceGroupResource).GetServiceBusNamespaces();
         }
 
@@ -277,11 +319,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ServiceBusNamespaceResource>> GetServiceBusNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableServiceBusResourceGroupResource(resourceGroupResource).GetServiceBusNamespaceAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -305,11 +349,13 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ServiceBusNamespaceResource> GetServiceBusNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableServiceBusResourceGroupResource(resourceGroupResource).GetServiceBusNamespace(namespaceName, cancellationToken);
         }
 
@@ -332,9 +378,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ServiceBusNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceBusNamespaceResource> GetServiceBusNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableServiceBusSubscriptionResource(subscriptionResource).GetServiceBusNamespacesAsync(cancellationToken);
         }
 
@@ -357,9 +406,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ServiceBusNamespaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceBusNamespaceResource> GetServiceBusNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableServiceBusSubscriptionResource(subscriptionResource).GetServiceBusNamespaces(cancellationToken);
         }
 
@@ -383,9 +435,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ServiceBusNameAvailabilityResult>> CheckServiceBusNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableServiceBusSubscriptionResource(subscriptionResource).CheckServiceBusNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -409,9 +463,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Parameters to check availability of the given namespace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ServiceBusNameAvailabilityResult> CheckServiceBusNamespaceNameAvailability(this SubscriptionResource subscriptionResource, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableServiceBusSubscriptionResource(subscriptionResource).CheckServiceBusNamespaceNameAvailability(content, cancellationToken);
         }
     }

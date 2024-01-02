@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Troubleshooter step. </summary>
     public partial class SelfHelpStep
     {
-        /// <summary> Initializes a new instance of SelfHelpStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpStep"/>. </summary>
         internal SelfHelpStep()
         {
             Inputs = new ChangeTrackingList<StepInput>();
             Insights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpStep. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpStep"/>. </summary>
         /// <param name="id"> Unique step id. </param>
         /// <param name="title"> Step title. </param>
         /// <param name="description"> Step description. </param>

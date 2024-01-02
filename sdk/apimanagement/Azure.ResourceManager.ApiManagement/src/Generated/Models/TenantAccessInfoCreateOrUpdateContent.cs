@@ -10,9 +10,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Tenant access information update parameters. </summary>
     public partial class TenantAccessInfoCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoCreateOrUpdateContent"/>. </summary>
         public TenantAccessInfoCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoCreateOrUpdateContent"/>. </summary>
+        /// <param name="principalId"> Principal (User) Identifier. </param>
+        /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="secondaryKey"> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
+        internal TenantAccessInfoCreateOrUpdateContent(string principalId, string primaryKey, string secondaryKey, bool? isDirectAccessEnabled)
+        {
+            PrincipalId = principalId;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
+            IsDirectAccessEnabled = isDirectAccessEnabled;
         }
 
         /// <summary> Principal (User) Identifier. </summary>

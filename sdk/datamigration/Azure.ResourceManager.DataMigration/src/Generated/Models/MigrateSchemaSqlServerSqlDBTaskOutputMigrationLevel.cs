@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel. </summary>
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel : MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         internal MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel()
         {
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
         /// <param name="state"> Overall state of the schema migration. </param>

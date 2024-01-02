@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationCredentialData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialData"/>. </summary>
         public AutomationCredentialData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
     /// A Class representing a NetAppAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetAppAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetAppAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetAppAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetAppAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetAppAccount method.
     /// </summary>
     public partial class NetAppAccountResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.NetApp
         private readonly VolumeGroupsRestOperations _netAppVolumeGroupVolumeGroupsRestClient;
         private readonly NetAppAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts";
+
         /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class for mocking. </summary>
         protected NetAppAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetAppAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetAppAccountResource(ArmClient client, NetAppAccountData data) : this(client, data.Id)
@@ -73,9 +76,6 @@ namespace Azure.ResourceManager.NetApp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppVolumeGroupResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppVolumeGroupResult" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppVolumeGroupResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

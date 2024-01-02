@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerJobExecutionStepResource" /> and their operations.
-    /// Each <see cref="SqlServerJobExecutionStepResource" /> in the collection will belong to the same instance of <see cref="SqlServerJobExecutionResource" />.
-    /// To get a <see cref="SqlServerJobExecutionStepCollection" /> instance call the GetSqlServerJobExecutionSteps method from an instance of <see cref="SqlServerJobExecutionResource" />.
+    /// A class representing a collection of <see cref="SqlServerJobExecutionStepResource"/> and their operations.
+    /// Each <see cref="SqlServerJobExecutionStepResource"/> in the collection will belong to the same instance of <see cref="SqlServerJobExecutionResource"/>.
+    /// To get a <see cref="SqlServerJobExecutionStepCollection"/> instance call the GetSqlServerJobExecutionSteps method from an instance of <see cref="SqlServerJobExecutionResource"/>.
     /// </summary>
     public partial class SqlServerJobExecutionStepCollection : ArmCollection, IEnumerable<SqlServerJobExecutionStepResource>, IAsyncEnumerable<SqlServerJobExecutionStepResource>
     {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobExecutionStepResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerJobExecutionStepResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobExecutionStepResource> GetAllAsync(SqlServerJobExecutionStepCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SqlServerJobExecutionStepCollectionGetAllOptions();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionStepResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobExecutionStepResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobExecutionStepResource> GetAll(SqlServerJobExecutionStepCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SqlServerJobExecutionStepCollectionGetAllOptions();

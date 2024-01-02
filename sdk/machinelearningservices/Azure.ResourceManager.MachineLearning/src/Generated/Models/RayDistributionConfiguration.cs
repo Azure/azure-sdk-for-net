@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Ray distribution configuration. </summary>
     public partial class RayDistributionConfiguration : MachineLearningDistributionConfiguration
     {
-        /// <summary> Initializes a new instance of RayDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RayDistributionConfiguration"/>. </summary>
         public RayDistributionConfiguration()
         {
             DistributionType = DistributionType.Ray;
         }
 
-        /// <summary> Initializes a new instance of RayDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RayDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         /// <param name="address"> The address of Ray head node. </param>
         /// <param name="dashboardPort"> The port to bind the dashboard server to. </param>

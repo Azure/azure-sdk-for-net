@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
     public partial class AutomationKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of AutomationKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationKeyVaultProperties"/>. </summary>
         public AutomationKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationKeyVaultProperties"/>. </summary>
         /// <param name="keyvaultUri"> The URI of the key vault key used to encrypt data. </param>
         /// <param name="keyName"> The name of key used to encrypt data. </param>
         /// <param name="keyVersion"> The key version of the key used to encrypt data. </param>

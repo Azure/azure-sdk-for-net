@@ -10,9 +10,20 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to execute a time series query over events. Exactly one of "getEvents", "getSeries" or "aggregateSeries" must be set. </summary>
     internal partial class QueryRequest
     {
-        /// <summary> Initializes a new instance of QueryRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         public QueryRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
+        /// <param name="getEvents"> Get Events query. Allows to retrieve raw events for a given Time Series ID and search span. </param>
+        /// <param name="getSeries"> Get Series query. Allows to retrieve time series of calculated variable values from events for a given Time Series ID and search span. </param>
+        /// <param name="aggregateSeries"> Aggregate Series query. Allows to calculate an aggregated time series from events for a given Time Series ID and search span. </param>
+        internal QueryRequest(GetEvents getEvents, GetSeries getSeries, AggregateSeries aggregateSeries)
+        {
+            GetEvents = getEvents;
+            GetSeries = getSeries;
+            AggregateSeries = aggregateSeries;
         }
 
         /// <summary> Get Events query. Allows to retrieve raw events for a given Time Series ID and search span. </summary>

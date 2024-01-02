@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The sensitivity label. </summary>
     public partial class SensitivityLabel
     {
-        /// <summary> Initializes a new instance of SensitivityLabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivityLabel"/>. </summary>
         public SensitivityLabel()
         {
         }
 
-        /// <summary> Initializes a new instance of SensitivityLabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SensitivityLabel"/>. </summary>
         /// <param name="displayName"> The name of the sensitivity label. </param>
         /// <param name="description"> The description of the sensitivity label. </param>
         /// <param name="rank"> The rank of the sensitivity label. </param>

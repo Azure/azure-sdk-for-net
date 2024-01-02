@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class ContentKeyPolicyPlayReadyContentKeyLocation
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyContentKeyLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyContentKeyLocation"/>. </summary>
         protected ContentKeyPolicyPlayReadyContentKeyLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyContentKeyLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyContentKeyLocation"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal ContentKeyPolicyPlayReadyContentKeyLocation(string odataType)
         {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Weekly recurrence object. </summary>
     public partial class AlertProcessingRuleWeeklyRecurrence : AlertProcessingRuleRecurrence
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleWeeklyRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleWeeklyRecurrence"/>. </summary>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="daysOfWeek"/> is null. </exception>
         public AlertProcessingRuleWeeklyRecurrence(IEnumerable<AlertsManagementDayOfWeek> daysOfWeek)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             RecurrenceType = RecurrenceType.Weekly;
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleWeeklyRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleWeeklyRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>

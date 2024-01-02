@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Error response of an operation failure. </summary>
     public partial class AutomationResponseError
     {
-        /// <summary> Initializes a new instance of AutomationResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationResponseError"/>. </summary>
         public AutomationResponseError()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationResponseError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
         internal AutomationResponseError(string code, string message)

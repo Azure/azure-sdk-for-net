@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="functionAppUri"> URL for custom azure function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public FunctionRouterRule(Uri functionAppUri)
-            : this("azure-function-rule", functionAppUri, null)
+            : this(RouterRuleKind.Function, functionAppUri, null)
         {
             Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
         }
@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteObjectValue(Credential);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

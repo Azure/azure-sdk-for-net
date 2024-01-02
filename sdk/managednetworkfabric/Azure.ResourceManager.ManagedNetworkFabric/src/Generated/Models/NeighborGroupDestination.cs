@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
     public partial class NeighborGroupDestination
     {
-        /// <summary> Initializes a new instance of NeighborGroupDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeighborGroupDestination"/>. </summary>
         public NeighborGroupDestination()
         {
             IPv4Addresses = new ChangeTrackingList<IPAddress>();
             IPv6Addresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NeighborGroupDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeighborGroupDestination"/>. </summary>
         /// <param name="ipv4Addresses"> Array of IPv4 Addresses. </param>
         /// <param name="ipv6Addresses"> Array of IPv6 Addresses. </param>
         internal NeighborGroupDestination(IList<IPAddress> ipv4Addresses, IList<string> ipv6Addresses)

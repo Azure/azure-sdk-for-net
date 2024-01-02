@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
     /// A Class representing an EdgeOrderItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EdgeOrderItemResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEdgeOrderItemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEdgeOrderItem method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeOrderItemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEdgeOrderItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEdgeOrderItem method.
     /// </summary>
     public partial class EdgeOrderItemResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.EdgeOrder
         private readonly EdgeOrderManagementRestOperations _edgeOrderItemRestClient;
         private readonly EdgeOrderItemData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/orderItems";
+
         /// <summary> Initializes a new instance of the <see cref="EdgeOrderItemResource"/> class for mocking. </summary>
         protected EdgeOrderItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EdgeOrderItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeOrderItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeOrderItemResource(ArmClient client, EdgeOrderItemData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.EdgeOrder
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/orderItems";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

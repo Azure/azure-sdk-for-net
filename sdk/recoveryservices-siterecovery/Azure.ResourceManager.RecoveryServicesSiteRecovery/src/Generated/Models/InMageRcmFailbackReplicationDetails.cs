@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcmFailback provider specific details. </summary>
     public partial class InMageRcmFailbackReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReplicationDetails"/>. </summary>
         internal InMageRcmFailbackReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "InMageRcmFailback";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmFailbackReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
         /// <param name="internalIdentifier"> The virtual machine internal identifier. </param>
         /// <param name="azureVirtualMachineId"> The ARM Id of the azure VM. </param>

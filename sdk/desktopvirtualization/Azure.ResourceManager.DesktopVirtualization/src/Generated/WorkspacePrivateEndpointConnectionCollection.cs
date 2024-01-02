@@ -21,9 +21,9 @@ using Azure.ResourceManager.DesktopVirtualization.Models;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkspacePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="WorkspacePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="VirtualWorkspaceResource" />.
-    /// To get a <see cref="WorkspacePrivateEndpointConnectionCollection" /> instance call the GetWorkspacePrivateEndpointConnections method from an instance of <see cref="VirtualWorkspaceResource" />.
+    /// A class representing a collection of <see cref="WorkspacePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="WorkspacePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="VirtualWorkspaceResource"/>.
+    /// To get a <see cref="WorkspacePrivateEndpointConnectionCollection"/> instance call the GetWorkspacePrivateEndpointConnections method from an instance of <see cref="VirtualWorkspaceResource"/>.
     /// </summary>
     public partial class WorkspacePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<WorkspacePrivateEndpointConnectionResource>, IAsyncEnumerable<WorkspacePrivateEndpointConnectionResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkspacePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkspacePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspacePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkspacePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkspacePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

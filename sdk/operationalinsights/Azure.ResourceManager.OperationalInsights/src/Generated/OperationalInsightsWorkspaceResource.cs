@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing an OperationalInsightsWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OperationalInsightsWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOperationalInsightsWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetOperationalInsightsWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OperationalInsightsWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOperationalInsightsWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOperationalInsightsWorkspace method.
     /// </summary>
     public partial class OperationalInsightsWorkspaceResource : ArmResource
     {
@@ -58,12 +58,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly WorkspacePurgeRestOperations _workspacePurgeRestClient;
         private readonly OperationalInsightsWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="OperationalInsightsWorkspaceResource"/> class for mocking. </summary>
         protected OperationalInsightsWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OperationalInsightsWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OperationalInsightsWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OperationalInsightsWorkspaceResource(ArmClient client, OperationalInsightsWorkspaceData data) : this(client, data.Id)
@@ -100,9 +103,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsIntelligencePack" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsIntelligencePack"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsIntelligencePack> GetIntelligencePacksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsIntelligencePack" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsIntelligencePack"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsIntelligencePack> GetIntelligencePacks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsManagementGroup" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsManagementGroup"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsManagementGroup> GetManagementGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsManagementGroup" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsManagementGroup"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsManagementGroup> GetManagementGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1052,7 +1052,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsUsageMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsUsageMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsUsageMetric> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsUsageMetric" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsUsageMetric"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsUsageMetric> GetUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsAvailableServiceTier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsAvailableServiceTier"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsAvailableServiceTier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsAvailableServiceTier"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1198,7 +1198,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsSearchSchemaValue" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsSearchSchemaValue"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsSearchSchemaValue> GetSchemasAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1219,7 +1219,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsSearchSchemaValue" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsSearchSchemaValue"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsSearchSchemaValue> GetSchemas(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Slack channel. </summary>
     public partial class SlackChannelProperties
     {
-        /// <summary> Initializes a new instance of SlackChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlackChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         public SlackChannelProperties(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of SlackChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlackChannelProperties"/>. </summary>
         /// <param name="clientId"> The Slack client id. </param>
         /// <param name="clientSecret"> The Slack client secret. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="verificationToken"> The Slack verification token. Value only returned through POST to the action Channel List API, otherwise empty. </param>

@@ -22,7 +22,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The optional ack-id
         /// </summary>
-        public ulong? AckId { get; }
+        public long? AckId { get; }
 
         /// <summary>
         /// Optional. If set to true, this message is not echoed back to the same connection.
@@ -47,7 +47,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <param name="dataType">Type of the data</param>
         /// <param name="ackId">The optional ack-id</param>
         /// <param name="noEcho">Optional. If set to true, this message is not echoed back to the same connection.</param>
-        public SendToGroupMessage(string group, BinaryData data, WebPubSubDataType dataType, ulong? ackId, bool noEcho)
+        public SendToGroupMessage(string group, BinaryData data, WebPubSubDataType dataType, long? ackId, bool noEcho)
         {
             Group = group;
             AckId = ackId;

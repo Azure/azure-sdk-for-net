@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> IoT Security solution analytics severity metrics. </summary>
     public partial class IotSeverityMetrics
     {
-        /// <summary> Initializes a new instance of IotSeverityMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSeverityMetrics"/>. </summary>
         internal IotSeverityMetrics()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSeverityMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSeverityMetrics"/>. </summary>
         /// <param name="high"> Count of high severity alerts/recommendations. </param>
         /// <param name="medium"> Count of medium severity alerts/recommendations. </param>
         /// <param name="low"> Count of low severity alerts/recommendations. </param>

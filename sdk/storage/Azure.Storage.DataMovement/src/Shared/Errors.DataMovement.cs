@@ -87,11 +87,6 @@ namespace Azure.Storage
                 $"Checkpointer Value: {checkpointerValue}\n" +
                 $"New Value: {passedValue}");
 
-        public static ArgumentException MismatchResumeCreateMode(bool checkpointerValue, StorageResourceCreationPreference passedValue)
-            => new ArgumentException($"Mismatch Value to Resume Job: The value to overwrite / create files when they exist does not match the stored value in the transfer checkpointer. Please ensure the value passed to resume the transfer matches the value in order to prevent overwriting or failing files.\n" +
-                $"Checkpointer Value to overwrite was set to {checkpointerValue.ToString()}.\n" +
-                $"The value passed in was {passedValue.ToString()}");
-
         public static InvalidOperationException SingleDownloadLengthMismatch(long expectedLength, long actualLength)
             => new InvalidOperationException($"Download length {actualLength} did not match expected length {expectedLength}.");
 

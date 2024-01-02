@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Information describing the identities associated with this application. </summary>
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
         /// <param name="identityType"> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </param>
         public PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType identityType)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             IdentityType = identityType;
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
         /// <param name="userAssignedIdentities"> represents user assigned identities map. </param>
         /// <param name="identityType"> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </param>
         /// <param name="tenantId"> Tenant id of the server. </param>

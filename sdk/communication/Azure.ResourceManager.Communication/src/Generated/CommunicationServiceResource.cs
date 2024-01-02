@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// A Class representing a CommunicationServiceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommunicationServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCommunicationServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCommunicationServiceResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunicationServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommunicationServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCommunicationServiceResource method.
     /// </summary>
     public partial class CommunicationServiceResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Communication
         private readonly CommunicationServicesRestOperations _communicationServiceResourceCommunicationServicesRestClient;
         private readonly CommunicationServiceResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/communicationServices";
+
         /// <summary> Initializes a new instance of the <see cref="CommunicationServiceResource"/> class for mocking. </summary>
         protected CommunicationServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CommunicationServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommunicationServiceResource(ArmClient client, CommunicationServiceResourceData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Communication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/communicationServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

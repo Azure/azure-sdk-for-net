@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Google BigQuery service dataset. </summary>
     public partial class GoogleBigQueryObjectDataset : Dataset
     {
-        /// <summary> Initializes a new instance of GoogleBigQueryObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryObjectDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public GoogleBigQueryObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "GoogleBigQueryObject";
         }
 
-        /// <summary> Initializes a new instance of GoogleBigQueryObjectDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryObjectDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

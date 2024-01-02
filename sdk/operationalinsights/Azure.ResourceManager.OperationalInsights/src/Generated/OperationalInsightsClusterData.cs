@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsClusterData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
         public OperationalInsightsClusterData(AzureLocation location) : base(location)
         {
             AssociatedWorkspaces = new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsClusterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

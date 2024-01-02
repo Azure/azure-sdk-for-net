@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Client script details for file / folder restore. </summary>
     public partial class ClientScriptForConnect
     {
-        /// <summary> Initializes a new instance of ClientScriptForConnect. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientScriptForConnect"/>. </summary>
         internal ClientScriptForConnect()
         {
         }
 
-        /// <summary> Initializes a new instance of ClientScriptForConnect. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientScriptForConnect"/>. </summary>
         /// <param name="scriptContent"> File content of the client script for file / folder restore. </param>
         /// <param name="scriptExtension"> File extension of the client script for file / folder restore - .ps1 , .sh , etc. </param>
         /// <param name="osType"> OS type - Windows, Linux etc. for which this file / folder restore client script works. </param>

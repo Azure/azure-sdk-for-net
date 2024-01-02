@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageConfigurationProfileVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageConfigurationProfileVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageConfigurationProfileVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomanageConfigurationProfileResource" /> using the GetAutomanageConfigurationProfileVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageConfigurationProfileVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageConfigurationProfileVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomanageConfigurationProfileResource"/> using the GetAutomanageConfigurationProfileVersion method.
     /// </summary>
     public partial class AutomanageConfigurationProfileVersionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly ConfigurationProfilesVersionsRestOperations _automanageConfigurationProfileVersionConfigurationProfilesVersionsRestClient;
         private readonly AutomanageConfigurationProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfiles/versions";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileVersionResource"/> class for mocking. </summary>
         protected AutomanageConfigurationProfileVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageConfigurationProfileVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageConfigurationProfileVersionResource(ArmClient client, AutomanageConfigurationProfileData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfiles/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Target details for file / folder restore. </summary>
     internal partial class InstantItemRecoveryTarget
     {
-        /// <summary> Initializes a new instance of InstantItemRecoveryTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstantItemRecoveryTarget"/>. </summary>
         internal InstantItemRecoveryTarget()
         {
             ClientScripts = new ChangeTrackingList<ClientScriptForConnect>();
         }
 
-        /// <summary> Initializes a new instance of InstantItemRecoveryTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstantItemRecoveryTarget"/>. </summary>
         /// <param name="clientScripts"> List of client scripts. </param>
         internal InstantItemRecoveryTarget(IReadOnlyList<ClientScriptForConnect> clientScripts)
         {

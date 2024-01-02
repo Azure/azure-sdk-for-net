@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServices
 {
     /// <summary>
     /// A Class representing a RecoveryServicesPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RecoveryServicesPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRecoveryServicesPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RecoveryServicesVaultResource" /> using the GetRecoveryServicesPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoveryServicesPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRecoveryServicesPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RecoveryServicesVaultResource"/> using the GetRecoveryServicesPrivateLinkResource method.
     /// </summary>
     public partial class RecoveryServicesPrivateLinkResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.RecoveryServices
         private readonly PrivateLinkResourcesRestOperations _recoveryServicesPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly RecoveryServicesPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="RecoveryServicesPrivateLinkResource"/> class for mocking. </summary>
         protected RecoveryServicesPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RecoveryServicesPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RecoveryServicesPrivateLinkResource(ArmClient client, RecoveryServicesPrivateLinkResourceData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

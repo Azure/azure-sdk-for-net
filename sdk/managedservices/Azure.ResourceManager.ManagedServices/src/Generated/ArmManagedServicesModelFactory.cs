@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmManagedServicesModelFactory
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServices.ManagedServicesRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesRegistrationData(id, name, resourceType, systemData, properties, plan);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationProperties"/>. </summary>
         /// <param name="description"> The description of the registration definition. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, managedByTenantId, provisioningState, manageeTenantId, manageeTenantName, managedByTenantName);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServices.ManagedServicesRegistrationAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesRegistrationAssignmentData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentProperties"/>. </summary>
         /// <param name="registrationId"> The fully qualified path of the registration definition. </param>
         /// <param name="provisioningState"> The current provisioning state of the registration assignment. </param>
         /// <param name="registrationDefinition"> The registration definition associated with the registration assignment. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesRegistrationAssignmentProperties(registrationId, provisioningState, registrationDefinition);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesRegistrationAssignmentRegistrationData(id, name, resourceType, systemData, properties, plan);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationProperties"/>. </summary>
         /// <param name="description"> The description of the registration definition. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesRegistrationAssignmentRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, provisioningState, manageeTenantId, manageeTenantName, managedByTenantId, managedByTenantName);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServices.ManagedServicesMarketplaceRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesMarketplaceRegistrationData(id, name, resourceType, systemData, properties, plan);
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedServicesMarketplaceRegistrationProperties"/>. </summary>
         /// <param name="managedByTenantId"> The identifier of the managedBy tenant. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>

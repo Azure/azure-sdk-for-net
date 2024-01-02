@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppSubvolumeInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppSubvolumeInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoData"/>. </summary>
         public NetAppSubvolumeInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppSubvolumeInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

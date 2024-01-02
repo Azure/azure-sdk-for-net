@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Telephony channel definition. </summary>
     public partial class TelephonyChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of TelephonyChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyChannel"/>. </summary>
         public TelephonyChannel()
         {
             ChannelName = "TelephonyChannel";
         }
 
-        /// <summary> Initializes a new instance of TelephonyChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TelephonyChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

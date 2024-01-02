@@ -12,6 +12,8 @@ namespace Azure.Identity.Tests
     {
         protected IdentityRecordedTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
+            // TODO: enable after new KeyValue is released (after Dec 2023)
+            TestDiagnostics = false;
             InitializeRecordingSettings();
         }
 

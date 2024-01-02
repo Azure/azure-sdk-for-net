@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL database resource object. </summary>
     public partial class RestorableSqlDatabasePropertiesResourceDatabase : CosmosDBSqlDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of RestorableSqlDatabasePropertiesResourceDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public RestorableSqlDatabasePropertiesResourceDatabase(string databaseName) : base(databaseName)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(databaseName, nameof(databaseName));
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlDatabasePropertiesResourceDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>

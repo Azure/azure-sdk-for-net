@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> resource sku. </param>
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ElasticSan
             PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ElasticSanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

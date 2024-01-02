@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataTransferJobGetResultResource" /> and their operations.
-    /// Each <see cref="DataTransferJobGetResultResource" /> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource" />.
-    /// To get a <see cref="DataTransferJobGetResultCollection" /> instance call the GetDataTransferJobGetResults method from an instance of <see cref="CosmosDBAccountResource" />.
+    /// A class representing a collection of <see cref="DataTransferJobGetResultResource"/> and their operations.
+    /// Each <see cref="DataTransferJobGetResultResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="DataTransferJobGetResultCollection"/> instance call the GetDataTransferJobGetResults method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
     public partial class DataTransferJobGetResultCollection : ArmCollection, IEnumerable<DataTransferJobGetResultResource>, IAsyncEnumerable<DataTransferJobGetResultResource>
     {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> Name of the Data Transfer Job. </param>
-        /// <param name="content"> The DataTransferJobGetResultCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataTransferJobGetResultCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobName"> Name of the Data Transfer Job. </param>
-        /// <param name="content"> The DataTransferJobGetResultCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataTransferJobGetResultCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataTransferJobGetResultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataTransferJobGetResultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataTransferJobGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTransferJobGetResultDataTransferJobsRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataTransferJobGetResultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataTransferJobGetResultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataTransferJobGetResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataTransferJobGetResultDataTransferJobsRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

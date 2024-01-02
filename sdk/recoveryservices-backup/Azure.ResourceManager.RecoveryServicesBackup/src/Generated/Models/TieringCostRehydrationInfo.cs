@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Response parameters for tiering cost info for rehydration. </summary>
     public partial class TieringCostRehydrationInfo : TieringCostInfo
     {
-        /// <summary> Initializes a new instance of TieringCostRehydrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TieringCostRehydrationInfo"/>. </summary>
         /// <param name="rehydrationSizeInBytes"> Rehydration size in bytes. </param>
         /// <param name="retailRehydrationCostPerGBPerMonth"> Source tier to target tier rehydration cost per GB per month. </param>
         internal TieringCostRehydrationInfo(long rehydrationSizeInBytes, double retailRehydrationCostPerGBPerMonth)
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ObjectType = "TieringCostRehydrationInfo";
         }
 
-        /// <summary> Initializes a new instance of TieringCostRehydrationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TieringCostRehydrationInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="rehydrationSizeInBytes"> Rehydration size in bytes. </param>
         /// <param name="retailRehydrationCostPerGBPerMonth"> Source tier to target tier rehydration cost per GB per month. </param>

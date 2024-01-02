@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UserAssignedManagedIdentityDetails. </summary>
     public partial class UserAssignedManagedIdentityDetails
     {
-        /// <summary> Initializes a new instance of UserAssignedManagedIdentityDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedManagedIdentityDetails"/>. </summary>
         public UserAssignedManagedIdentityDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of UserAssignedManagedIdentityDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedManagedIdentityDetails"/>. </summary>
         /// <param name="identityArmId"></param>
         /// <param name="identityName"></param>
         /// <param name="userAssignedIdentityProperties"> User assigned identity properties. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MobileNetworkSimResource" /> and their operations.
-    /// Each <see cref="MobileNetworkSimResource" /> in the collection will belong to the same instance of <see cref="MobileNetworkSimGroupResource" />.
-    /// To get a <see cref="MobileNetworkSimCollection" /> instance call the GetMobileNetworkSims method from an instance of <see cref="MobileNetworkSimGroupResource" />.
+    /// A class representing a collection of <see cref="MobileNetworkSimResource"/> and their operations.
+    /// Each <see cref="MobileNetworkSimResource"/> in the collection will belong to the same instance of <see cref="MobileNetworkSimGroupResource"/>.
+    /// To get a <see cref="MobileNetworkSimCollection"/> instance call the GetMobileNetworkSims method from an instance of <see cref="MobileNetworkSimGroupResource"/>.
     /// </summary>
     public partial class MobileNetworkSimCollection : ArmCollection, IEnumerable<MobileNetworkSimResource>, IAsyncEnumerable<MobileNetworkSimResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkSimResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkSimResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkSimResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimSimsRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkSimResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkSimResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkSimResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimSimsRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

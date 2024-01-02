@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Manager Deployment Status. </summary>
     public partial class NetworkManagerDeploymentStatus
     {
-        /// <summary> Initializes a new instance of NetworkManagerDeploymentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatus"/>. </summary>
         internal NetworkManagerDeploymentStatus()
         {
             ConfigurationIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerDeploymentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatus"/>. </summary>
         /// <param name="commitOn"> Commit Time. </param>
         /// <param name="region"> Region Name. </param>
         /// <param name="deploymentState"> Deployment Status. </param>

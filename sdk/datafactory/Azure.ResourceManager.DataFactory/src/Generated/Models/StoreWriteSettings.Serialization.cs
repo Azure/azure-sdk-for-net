@@ -30,14 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CopyBehavior);
-#else
-                using (JsonDocument document = JsonDocument.Parse(CopyBehavior))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, CopyBehavior);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -69,6 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureDataLakeStoreWriteSettings": return AzureDataLakeStoreWriteSettings.DeserializeAzureDataLakeStoreWriteSettings(element);
                     case "AzureFileStorageWriteSettings": return AzureFileStorageWriteSettings.DeserializeAzureFileStorageWriteSettings(element);
                     case "FileServerWriteSettings": return FileServerWriteSettings.DeserializeFileServerWriteSettings(element);
+                    case "LakeHouseWriteSettings": return LakeHouseWriteSettings.DeserializeLakeHouseWriteSettings(element);
                     case "SftpWriteSettings": return SftpWriteSettings.DeserializeSftpWriteSettings(element);
                 }
             }

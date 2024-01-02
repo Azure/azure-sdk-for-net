@@ -1,7 +1,8 @@
 # Azure Identity Brokered Authentication client library for .NET
- The library extends the Azure.Identity library to provide authentication broker support. It includes the necessary dependencies, and provides the `InteractiveBrowserCredentialBrokerOptions` class. This options class can be used to create an `InteractiveBrowserCredential` capable of using the system authentication broker in lieu of the system browser when available.
 
-  [Source code][source] | [Package (nuget)][package] | [API reference documentation][identity_api_docs] | [Microsoft Entra ID documentation][aad_doc]
+The library extends the Azure.Identity library to provide authentication broker support. It includes the necessary dependencies and provides the `InteractiveBrowserCredentialBrokerOptions` class. This options class can be used to create an `InteractiveBrowserCredential` capable of using the system authentication broker in lieu of an embedded web view or the system browser.
+
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][identity_api_docs] | [Microsoft Entra ID documentation][aad_doc]
 
 ## Getting started
 
@@ -10,7 +11,7 @@
 Install the Azure Identity client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Identity.Broker --prerelease
+dotnet add package Azure.Identity.Broker
 ```
 
 ### Prerequisites
@@ -19,6 +20,24 @@ dotnet add package Azure.Identity.Broker --prerelease
 ### Authenticate the client
 
 ## Key concepts
+
+This package enables authentication broker support via `InteractiveBrowserCredentialBrokerOptions`, in combination with `InteractiveBrowserCredential` in the `Azure.Identity` package.
+
+### Parent window handles
+
+When authenticating interactively via `InteractiveBrowserCredential` constructed with the `InteractiveBrowserCredentialBrokerOptions`, a parent window handle is required to ensure that the authentication dialog is shown correctly over the requesting window. In the context of graphical user interfaces on devices, a window handle is a unique identifier that the operating system assigns to each window. For the Windows operating system, this handle is an integer value that serves as a reference to a specific window.
+
+### Microsoft account (MSA) passthrough
+
+Microsoft accounts (MSA) are personal accounts created by users to access Microsoft services. MSA passthrough is a legacy configuration which enables users to get tokens to resources which normally don't accept MSA logins. This feature is only available to first-party applications. Users authenticating with an application that is configured to use MSA passthrough can set the `InteractiveBrowserCredentialBrokerOptions.IsLegacyMsaPassthroughEnabled` property to `true` to allow these personal accounts to be listed by WAM.
+
+## Redirect URIs
+
+Microsoft Entra applications rely on redirect URIs to determine where to send the authentication response after a user has logged in. To enable brokered authentication through WAM, a redirect URI matching the following pattern should be registered to the application:
+
+```
+ms-appx-web://Microsoft.AAD.BrokerPlugin/{client_id}
+```
 
 ## Examples
 

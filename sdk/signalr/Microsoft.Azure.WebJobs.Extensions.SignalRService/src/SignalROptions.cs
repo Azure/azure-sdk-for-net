@@ -12,6 +12,8 @@ using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+#nullable enable
+
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     /// <summary>
@@ -22,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     /// </remarks>
     public class SignalROptions : IOptionsFormatter
     {
-        private IHubProtocol _messagePackHubProtocol;
+        private IHubProtocol? _messagePackHubProtocol;
 
         /// <summary>
         /// Gets the list of SignalR service.
@@ -37,12 +39,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Gets or sets the JSON object serializer.
         /// </summary>
-        public ObjectSerializer JsonObjectSerializer { get; set; }
+        public ObjectSerializer? JsonObjectSerializer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the retry options.
+        /// </summary>
+        public ServiceManagerRetryOptions? RetryOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timespan for HttpClient timeout.
+        /// </summary>
+        public TimeSpan? HttpClientTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets the MessagePack hub <see cref="IHubProtocol"/>. Defaults to null and MessagePack hub protocol is not used.
         /// </summary>
-        public IHubProtocol MessagePackHubProtocol
+        public IHubProtocol? MessagePackHubProtocol
         {
             get => _messagePackHubProtocol; set
             {

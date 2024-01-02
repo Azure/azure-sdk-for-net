@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> NetworkSecurityPerimeter related information. </summary>
     public partial class EventHubsNetworkSecurityPerimeter
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeter"/>. </summary>
         internal EventHubsNetworkSecurityPerimeter()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeter"/>. </summary>
         /// <param name="id"> Fully qualified identifier of the resource. </param>
         /// <param name="perimeterGuid"> Guid of the resource. </param>
         /// <param name="location"> Location of the resource. </param>

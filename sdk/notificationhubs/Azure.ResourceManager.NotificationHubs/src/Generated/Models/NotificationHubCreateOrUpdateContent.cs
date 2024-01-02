@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Parameters supplied to the CreateOrUpdate NotificationHub operation. </summary>
     public partial class NotificationHubCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NotificationHubCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public NotificationHubCreateOrUpdateContent(AzureLocation location) : base(location)
         {
             AuthorizationRules = new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>();
         }
 
-        /// <summary> Initializes a new instance of NotificationHubCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

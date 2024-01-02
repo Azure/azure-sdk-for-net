@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlFlexibleServerBackupData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupData"/>. </summary>
         public PostgreSqlFlexibleServerBackupData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

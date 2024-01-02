@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> project = default;
             Optional<DataFactoryElement<string>> additionalProjects = default;
-            Optional<DataFactoryElement<string>> requestGoogleDriveScope = default;
+            Optional<DataFactoryElement<bool>> requestGoogleDriveScope = default;
             GoogleBigQueryAuthenticationType authenticationType = default;
             Optional<DataFactorySecretBaseDefinition> refreshToken = default;
             Optional<DataFactoryElement<string>> clientId = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            requestGoogleDriveScope = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            requestGoogleDriveScope = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"u8))

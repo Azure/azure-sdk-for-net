@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LocalRulestackRuleResource" /> and their operations.
-    /// Each <see cref="LocalRulestackRuleResource" /> in the collection will belong to the same instance of <see cref="LocalRulestackResource" />.
-    /// To get a <see cref="LocalRulestackRuleCollection" /> instance call the GetLocalRulestackRules method from an instance of <see cref="LocalRulestackResource" />.
+    /// A class representing a collection of <see cref="LocalRulestackRuleResource"/> and their operations.
+    /// Each <see cref="LocalRulestackRuleResource"/> in the collection will belong to the same instance of <see cref="LocalRulestackResource"/>.
+    /// To get a <see cref="LocalRulestackRuleCollection"/> instance call the GetLocalRulestackRules method from an instance of <see cref="LocalRulestackResource"/>.
     /// </summary>
     public partial class LocalRulestackRuleCollection : ArmCollection, IEnumerable<LocalRulestackRuleResource>, IAsyncEnumerable<LocalRulestackRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocalRulestackRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LocalRulestackRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalRulestackRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LocalRulestackRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRuleLocalRulesRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

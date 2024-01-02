@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanOrderResource" /> and their operations.
-    /// Each <see cref="BillingBenefitsSavingsPlanOrderResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingBenefitsSavingsPlanOrderCollection" /> instance call the GetBillingBenefitsSavingsPlanOrders method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanOrderResource"/> and their operations.
+    /// Each <see cref="BillingBenefitsSavingsPlanOrderResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingBenefitsSavingsPlanOrderCollection"/> instance call the GetBillingBenefitsSavingsPlanOrders method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingBenefitsSavingsPlanOrderCollection : ArmCollection, IEnumerable<BillingBenefitsSavingsPlanOrderResource>, IAsyncEnumerable<BillingBenefitsSavingsPlanOrderResource>
     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanOrderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingBenefitsSavingsPlanOrderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListRequest();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanOrderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingBenefitsSavingsPlanOrderResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient.CreateListRequest();

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Validation result for config server settings. </summary>
     public partial class ConfigServerSettingsValidateResult
     {
-        /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerSettingsValidateResult"/>. </summary>
         internal ConfigServerSettingsValidateResult()
         {
             Details = new ChangeTrackingList<ConfigServerSettingsErrorRecord>();
         }
 
-        /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerSettingsValidateResult"/>. </summary>
         /// <param name="isValid"> Indicate if the config server settings are valid. </param>
         /// <param name="details"> The detail validation results. </param>
         internal ConfigServerSettingsValidateResult(bool? isValid, IReadOnlyList<ConfigServerSettingsErrorRecord> details)

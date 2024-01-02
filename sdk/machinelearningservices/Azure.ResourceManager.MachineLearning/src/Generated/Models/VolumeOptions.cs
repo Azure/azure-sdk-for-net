@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The VolumeOptions. </summary>
     internal partial class VolumeOptions
     {
-        /// <summary> Initializes a new instance of VolumeOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeOptions"/>. </summary>
         public VolumeOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of VolumeOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeOptions"/>. </summary>
         /// <param name="nocopy"> Indicate whether volume is nocopy. </param>
         internal VolumeOptions(bool? nocopy)
         {

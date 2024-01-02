@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Reservations.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationDetailResource.CreateResourceIdentifier" /> to create a <see cref="ReservationDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReservationDetailResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationDetailResource.CreateResourceIdentifier" /> to create a <see cref="ReservationDetailResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationDetailResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReservationDetailResource"/> object. </returns>
         public virtual ReservationDetailResource GetReservationDetailResource(ResourceIdentifier id)
         {
             ReservationDetailResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Reservations.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationOrderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationOrderResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReservationOrderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationOrderResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationOrderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReservationOrderResource"/> object. </returns>
         public virtual ReservationOrderResource GetReservationOrderResource(ResourceIdentifier id)
         {
             ReservationOrderResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Reservations.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationQuotaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationQuotaResource.CreateResourceIdentifier" /> to create a <see cref="ReservationQuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReservationQuotaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReservationQuotaResource.CreateResourceIdentifier" /> to create a <see cref="ReservationQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationQuotaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReservationQuotaResource"/> object. </returns>
         public virtual ReservationQuotaResource GetReservationQuotaResource(ResourceIdentifier id)
         {
             ReservationQuotaResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Reservations.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="QuotaRequestDetailResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="QuotaRequestDetailResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
+        /// <returns> Returns a <see cref="QuotaRequestDetailResource"/> object. </returns>
         public virtual QuotaRequestDetailResource GetQuotaRequestDetailResource(ResourceIdentifier id)
         {
             QuotaRequestDetailResource.ValidateResourceId(id);

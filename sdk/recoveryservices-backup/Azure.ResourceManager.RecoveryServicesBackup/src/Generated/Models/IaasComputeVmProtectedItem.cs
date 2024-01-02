@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload-specific backup item representing the Azure Resource Manager VM. </summary>
     public partial class IaasComputeVmProtectedItem : IaasVmProtectedItem
     {
-        /// <summary> Initializes a new instance of IaasComputeVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasComputeVmProtectedItem"/>. </summary>
         public IaasComputeVmProtectedItem()
         {
             ProtectedItemType = "Microsoft.Compute/virtualMachines";
         }
 
-        /// <summary> Initializes a new instance of IaasComputeVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasComputeVmProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>

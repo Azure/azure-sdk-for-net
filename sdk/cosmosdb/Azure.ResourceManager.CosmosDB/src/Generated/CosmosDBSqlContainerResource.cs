@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBSqlContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBSqlContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBSqlContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBSqlDatabaseResource" /> using the GetCosmosDBSqlContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBSqlContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBSqlContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBSqlDatabaseResource"/> using the GetCosmosDBSqlContainer method.
     /// </summary>
     public partial class CosmosDBSqlContainerResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly SqlResourcesRestOperations _cosmosDBSqlContainerSqlResourcesRestClient;
         private readonly CosmosDBSqlContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlContainerResource"/> class for mocking. </summary>
         protected CosmosDBSqlContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBSqlContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBSqlContainerResource(ArmClient client, CosmosDBSqlContainerData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets an object representing a CosmosDBSqlContainerThroughputSettingResource along with the instance operations that can be performed on it in the CosmosDBSqlContainer. </summary>
-        /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource"/> object. </returns>
         public virtual CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSetting()
         {
             return new CosmosDBSqlContainerThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));

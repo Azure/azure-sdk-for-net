@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MobileNetworkSliceResource" /> and their operations.
-    /// Each <see cref="MobileNetworkSliceResource" /> in the collection will belong to the same instance of <see cref="MobileNetworkResource" />.
-    /// To get a <see cref="MobileNetworkSliceCollection" /> instance call the GetMobileNetworkSlices method from an instance of <see cref="MobileNetworkResource" />.
+    /// A class representing a collection of <see cref="MobileNetworkSliceResource"/> and their operations.
+    /// Each <see cref="MobileNetworkSliceResource"/> in the collection will belong to the same instance of <see cref="MobileNetworkResource"/>.
+    /// To get a <see cref="MobileNetworkSliceCollection"/> instance call the GetMobileNetworkSlices method from an instance of <see cref="MobileNetworkResource"/>.
     /// </summary>
     public partial class MobileNetworkSliceCollection : ArmCollection, IEnumerable<MobileNetworkSliceResource>, IAsyncEnumerable<MobileNetworkSliceResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkSliceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkSliceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkSliceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSliceSlicesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkSliceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkSliceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkSliceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSliceSlicesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

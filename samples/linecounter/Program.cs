@@ -1,31 +1,39 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+using LineCounter;
+using Microsoft.Extensions.Azure;
 
-namespace LineCounter
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+// Messaging libraries still require feature flag.
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices(
-                    services =>
-                    {
-                        services.AddSingleton<IHostedService, LineCounterService>();
-                    })
-                .ConfigureAppConfiguration(builder => builder.AddUserSecrets(typeof(Program).Assembly))
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddAzureClients(
+    c => {
+        c.ConfigureDefaults(builder.Configuration.GetSection("Defaults"));
+
+        c.AddBlobServiceClient(builder.Configuration.GetSection("Blob"));
+        c.AddEventHubProducerClient(builder.Configuration.GetSection("Uploads")).WithName("Uploads");
+
+        c.AddEventHubProducerClient(builder.Configuration.GetSection("Results")).WithName("Results");
+        c.AddEventGridPublisherClient(builder.Configuration.GetSection("Notification"));
+    });
+
+builder.Services.AddSingleton<IHostedService, LineCounterService>();
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+
+
+var app = builder.Build();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

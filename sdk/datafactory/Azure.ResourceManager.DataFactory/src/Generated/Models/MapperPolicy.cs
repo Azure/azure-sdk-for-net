@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> CDC Policy. </summary>
     public partial class MapperPolicy
     {
-        /// <summary> Initializes a new instance of MapperPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperPolicy"/>. </summary>
         public MapperPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperPolicy"/>. </summary>
         /// <param name="mode"> Mode of running the CDC: batch vs continuous. </param>
         /// <param name="recurrence"> Defines the frequency and interval for running the CDC for batch mode. </param>
         internal MapperPolicy(string mode, MapperPolicyRecurrence recurrence)

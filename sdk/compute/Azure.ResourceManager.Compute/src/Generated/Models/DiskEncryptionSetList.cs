@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List disk encryption set operation response. </summary>
     internal partial class DiskEncryptionSetList
     {
-        /// <summary> Initializes a new instance of DiskEncryptionSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetList"/>. </summary>
         /// <param name="value"> A list of disk encryption sets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskEncryptionSetList(IEnumerable<DiskEncryptionSetData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiskEncryptionSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetList"/>. </summary>
         /// <param name="value"> A list of disk encryption sets. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disk encryption sets. Call ListNext() with this to fetch the next page of disk encryption sets. </param>
         internal DiskEncryptionSetList(IReadOnlyList<DiskEncryptionSetData> value, string nextLink)
