@@ -844,4 +844,4 @@
 /sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims @JieZhou000
 
 # PRLabel: %Spring App Discovery
-/sdk/springappdisovery/Azure.ResourceManager.*/                    @sunkun99
+/sdk/springappdiscovery/Azure.ResourceManager.*/                    @sunkun99
