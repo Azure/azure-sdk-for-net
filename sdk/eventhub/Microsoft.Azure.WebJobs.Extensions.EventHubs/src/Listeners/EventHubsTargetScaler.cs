@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             int partitionCount = latestMetric.PartitionCount;
 
             TargetScalerResult currentResult = GetScaleResultInternal(context, eventCount, partitionCount);
-            currentResult = _metricsStats.ThrottleIfNeeded(currentResult, latestMetric, DateTime.Now);
+            currentResult = _metricsStats.ThrottleIfNeeded(currentResult, latestMetric, DateTime.UtcNow);
 
             return currentResult;
         }
