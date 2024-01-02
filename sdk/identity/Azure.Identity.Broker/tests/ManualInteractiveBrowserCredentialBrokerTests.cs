@@ -35,6 +35,7 @@ namespace Azure.Identity.Broker.Tests
         }
 
         [Test]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task GetPopToken()
         {
             using var logger = AzureEventSourceListener.CreateConsoleLogger();
@@ -75,7 +76,6 @@ namespace Azure.Identity.Broker.Tests
                 AccessToken token = isAsync ? await cred.GetTokenAsync(context).ConfigureAwait(false) : cred.GetToken(context);
                 Console.WriteLine("got token");
                 evt.Set();
-                // });
             });
 
             Thread thread2 = new Thread(async () =>
@@ -95,7 +95,6 @@ namespace Azure.Identity.Broker.Tests
                 AccessToken token = isAsync ? await cred.GetTokenAsync(context).ConfigureAwait(false) : cred.GetToken(context);
                 Console.WriteLine("got token");
                 thread.Start();
-                // });
             });
 #pragma warning disable CA1416 // Validate platform compatibility
             thread.SetApartmentState(ApartmentState.STA);
