@@ -141,22 +141,6 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBox(name, projectName, poolName, hibernateSupport, provisioningState, actionState, powerState, uniqueId, error, location, osType, userId, hardwareProfile, storageProfile, imageReference, createdTime, localAdministratorStatus);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevCenterOperationDetails"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the operation status. </param>
-        /// <param name="name"> The operation id name. </param>
-        /// <param name="status"> Provisioning state of the resource. </param>
-        /// <param name="resourceId"> The id of the resource. </param>
-        /// <param name="startTime"> The start time of the operation. </param>
-        /// <param name="endTime"> The end time of the operation. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
-        /// <param name="error"> Operation Error message. </param>
-        /// <returns> A new <see cref="Models.DevCenterOperationDetails"/> instance for mocking. </returns>
-        public static DevCenterOperationDetails DevCenterOperationDetails(string id = null, string name = null, DevCenterOperationStatus status = default, string resourceId = null, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, float? percentComplete = null, BinaryData properties = null, ResponseError error = null)
-        {
-            return new DevCenterOperationDetails(id, name, status, resourceId, startTime, endTime, percentComplete, properties, error);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.RemoteConnection"/>. </summary>
         /// <param name="webUri"> URL to open a browser based RDP session. </param>
         /// <param name="rdpConnectionUri"> Link to open a Remote Desktop session. </param>
