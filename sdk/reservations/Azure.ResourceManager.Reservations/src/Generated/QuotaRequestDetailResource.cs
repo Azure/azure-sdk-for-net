@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Reservations
         private readonly QuotaRequestStatusRestOperations _quotaRequestDetailQuotaRequestStatusRestClient;
         private readonly QuotaRequestDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests";
+
         /// <summary> Initializes a new instance of the <see cref="QuotaRequestDetailResource"/> class for mocking. </summary>
         protected QuotaRequestDetailResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Reservations
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimitsRequests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

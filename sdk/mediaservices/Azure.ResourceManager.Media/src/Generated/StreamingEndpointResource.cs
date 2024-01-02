@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Media
         private readonly StreamingEndpointsRestOperations _streamingEndpointRestClient;
         private readonly StreamingEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/streamingEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="StreamingEndpointResource"/> class for mocking. </summary>
         protected StreamingEndpointResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Media
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Media/mediaservices/streamingEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

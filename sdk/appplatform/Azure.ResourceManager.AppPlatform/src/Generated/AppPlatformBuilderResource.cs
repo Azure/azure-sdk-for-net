@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BuildServiceBuilderRestOperations _appPlatformBuilderBuildServiceBuilderRestClient;
         private readonly AppPlatformBuilderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builders";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBuilderResource"/> class for mocking. </summary>
         protected AppPlatformBuilderResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

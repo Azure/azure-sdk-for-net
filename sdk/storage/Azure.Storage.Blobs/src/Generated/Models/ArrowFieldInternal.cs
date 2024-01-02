@@ -23,6 +23,19 @@ namespace Azure.Storage.Blobs.Models
             Type = type;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <param name="precision"></param>
+        /// <param name="scale"></param>
+        internal ArrowFieldInternal(string type, string name, int? precision, int? scale)
+        {
+            Type = type;
+            Name = name;
+            Precision = precision;
+            Scale = scale;
+        }
+
         /// <summary> Gets the type. </summary>
         public string Type { get; }
         /// <summary> Gets or sets the name. </summary>

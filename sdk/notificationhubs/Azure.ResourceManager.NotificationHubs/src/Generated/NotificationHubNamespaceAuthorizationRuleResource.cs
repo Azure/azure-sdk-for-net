@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.NotificationHubs
         private readonly NamespacesRestOperations _notificationHubNamespaceAuthorizationRuleNamespacesRestClient;
         private readonly NotificationHubAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NotificationHubs/namespaces/AuthorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="NotificationHubNamespaceAuthorizationRuleResource"/> class for mocking. </summary>
         protected NotificationHubNamespaceAuthorizationRuleResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.NotificationHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NotificationHubs/namespaces/AuthorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

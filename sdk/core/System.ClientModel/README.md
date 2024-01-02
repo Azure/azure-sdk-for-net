@@ -9,7 +9,7 @@ it will be installed for you when you install one of the client libraries using 
 
 ### Install the package
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/).
+Install the client library for .NET with [NuGet](https://www.nuget.org/packages/System.ClientModel).
 
 ```dotnetcli
 dotnet add package System.ClientModel --prerelease

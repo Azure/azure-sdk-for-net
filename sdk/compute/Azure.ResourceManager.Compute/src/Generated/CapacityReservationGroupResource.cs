@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute
         private readonly CapacityReservationGroupsRestOperations _capacityReservationGroupRestClient;
         private readonly CapacityReservationGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/capacityReservationGroups";
+
         /// <summary> Initializes a new instance of the <see cref="CapacityReservationGroupResource"/> class for mocking. </summary>
         protected CapacityReservationGroupResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/capacityReservationGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to update a capacity reservation group. When updating a capacity reservation group, only tags may be modified.
+        /// The operation to update a capacity reservation group. When updating a capacity reservation group, only tags and sharing profile may be modified.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to update a capacity reservation group. When updating a capacity reservation group, only tags may be modified.
+        /// The operation to update a capacity reservation group. When updating a capacity reservation group, only tags and sharing profile may be modified.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

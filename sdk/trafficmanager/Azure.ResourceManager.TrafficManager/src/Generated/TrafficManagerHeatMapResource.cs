@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.TrafficManager
         private readonly HeatMapRestOperations _trafficManagerHeatMapHeatMapRestClient;
         private readonly TrafficManagerHeatMapData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/heatMaps";
+
         /// <summary> Initializes a new instance of the <see cref="TrafficManagerHeatMapResource"/> class for mocking. </summary>
         protected TrafficManagerHeatMapResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.TrafficManager
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/heatMaps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

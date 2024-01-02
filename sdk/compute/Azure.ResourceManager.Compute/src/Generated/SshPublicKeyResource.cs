@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute
         private readonly SshPublicKeysRestOperations _sshPublicKeyRestClient;
         private readonly SshPublicKeyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/sshPublicKeys";
+
         /// <summary> Initializes a new instance of the <see cref="SshPublicKeyResource"/> class for mocking. </summary>
         protected SshPublicKeyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/sshPublicKeys";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -305,14 +305,15 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> Parameters supplied to generate the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SshPublicKeyGenerateKeyPairResult>> GenerateKeyPairAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SshPublicKeyGenerateKeyPairResult>> GenerateKeyPairAsync(SshGenerateKeyPairInputContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyResource.GenerateKeyPair");
             scope.Start();
             try
             {
-                var response = await _sshPublicKeyRestClient.GenerateKeyPairAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _sshPublicKeyRestClient.GenerateKeyPairAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -335,14 +336,15 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> Parameters supplied to generate the SSH public key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SshPublicKeyGenerateKeyPairResult> GenerateKeyPair(CancellationToken cancellationToken = default)
+        public virtual Response<SshPublicKeyGenerateKeyPairResult> GenerateKeyPair(SshGenerateKeyPairInputContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _sshPublicKeyClientDiagnostics.CreateScope("SshPublicKeyResource.GenerateKeyPair");
             scope.Start();
             try
             {
-                var response = _sshPublicKeyRestClient.GenerateKeyPair(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _sshPublicKeyRestClient.GenerateKeyPair(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

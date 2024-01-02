@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Network
         private readonly PrivateEndpointsRestOperations _privateEndpointRestClient;
         private readonly PrivateEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/privateEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="PrivateEndpointResource"/> class for mocking. </summary>
         protected PrivateEndpointResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/privateEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

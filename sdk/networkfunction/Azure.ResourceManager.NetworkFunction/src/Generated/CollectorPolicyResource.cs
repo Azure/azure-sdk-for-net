@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.NetworkFunction
         private readonly CollectorPoliciesRestOperations _collectorPolicyRestClient;
         private readonly CollectorPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkFunction/azureTrafficCollectors/collectorPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="CollectorPolicyResource"/> class for mocking. </summary>
         protected CollectorPolicyResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkFunction
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkFunction/azureTrafficCollectors/collectorPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

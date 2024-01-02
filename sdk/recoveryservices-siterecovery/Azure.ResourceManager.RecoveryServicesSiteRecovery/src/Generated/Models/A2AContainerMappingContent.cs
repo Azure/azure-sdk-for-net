@@ -18,6 +18,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
+        /// <summary> Initializes a new instance of <see cref="A2AContainerMappingContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
+        /// <param name="automationAccountArmId"> The automation account arm id. </param>
+        /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
+        internal A2AContainerMappingContent(string instanceType, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, ResourceIdentifier automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType) : base(instanceType)
+        {
+            AgentAutoUpdateStatus = agentAutoUpdateStatus;
+            AutomationAccountArmId = automationAccountArmId;
+            AutomationAccountAuthenticationType = automationAccountAuthenticationType;
+            InstanceType = instanceType ?? "A2A";
+        }
+
         /// <summary> A value indicating whether the auto update is enabled. </summary>
         public SiteRecoveryAgentAutoUpdateStatus? AgentAutoUpdateStatus { get; set; }
         /// <summary> The automation account arm id. </summary>

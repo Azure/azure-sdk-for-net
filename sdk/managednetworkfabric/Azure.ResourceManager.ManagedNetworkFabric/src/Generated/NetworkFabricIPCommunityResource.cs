@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly IpCommunitiesRestOperations _networkFabricIPCommunityIPCommunitiesRestClient;
         private readonly NetworkFabricIPCommunityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/ipCommunities";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricIPCommunityResource"/> class for mocking. </summary>
         protected NetworkFabricIPCommunityResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/ipCommunities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualHubInboundRoutesContent"/>. </summary>
+        /// <param name="resourceUri"> The connection resource whose inbound routes are being requested. </param>
+        /// <param name="connectionType"> The type of the specified connection resource like ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </param>
+        internal VirtualHubInboundRoutesContent(Uri resourceUri, string connectionType)
+        {
+            ResourceUri = resourceUri;
+            ConnectionType = connectionType;
+        }
+
         /// <summary> The connection resource whose inbound routes are being requested. </summary>
         public Uri ResourceUri { get; set; }
         /// <summary> The type of the specified connection resource like ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </summary>

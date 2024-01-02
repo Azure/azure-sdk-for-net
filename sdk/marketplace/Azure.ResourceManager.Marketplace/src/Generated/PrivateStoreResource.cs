@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Marketplace
         private readonly MarketplaceRPServiceRestOperations _defaultRestClient;
         private readonly PrivateStoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores";
+
         /// <summary> Initializes a new instance of the <see cref="PrivateStoreResource"/> class for mocking. </summary>
         protected PrivateStoreResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.Marketplace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

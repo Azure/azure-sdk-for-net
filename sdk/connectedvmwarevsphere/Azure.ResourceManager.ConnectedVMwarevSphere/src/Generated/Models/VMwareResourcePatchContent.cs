@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="VMwareResourcePatchContent"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal VMwareResourcePatchContent(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

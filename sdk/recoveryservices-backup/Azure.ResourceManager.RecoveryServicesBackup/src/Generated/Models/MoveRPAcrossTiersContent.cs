@@ -15,6 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MoveRPAcrossTiersContent"/>. </summary>
+        /// <param name="objectType"> Gets the class type. </param>
+        /// <param name="sourceTierType"> Source tier from where RP needs to be moved. </param>
+        /// <param name="targetTierType"> Target tier where RP needs to be moved. </param>
+        internal MoveRPAcrossTiersContent(string objectType, RecoveryPointTierType? sourceTierType, RecoveryPointTierType? targetTierType)
+        {
+            ObjectType = objectType;
+            SourceTierType = sourceTierType;
+            TargetTierType = targetTierType;
+        }
+
         /// <summary> Gets the class type. </summary>
         public string ObjectType { get; set; }
         /// <summary> Source tier from where RP needs to be moved. </summary>

@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Automation.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the resource. </param>
+        /// <param name="vmResourceId"> Azure Resource Manager Id for a virtual machine. </param>
+        internal HybridRunbookWorkerCreateOrUpdateContent(string name, ResourceIdentifier vmResourceId)
+        {
+            Name = name;
+            VmResourceId = vmResourceId;
+        }
+
         /// <summary> Gets or sets the name of the resource. </summary>
         public string Name { get; set; }
         /// <summary> Azure Resource Manager Id for a virtual machine. </summary>

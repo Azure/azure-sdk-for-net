@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly BigDataPoolsRestOperations _synapseBigDataPoolInfoBigDataPoolsRestClient;
         private readonly SynapseBigDataPoolInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/bigDataPools";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseBigDataPoolInfoResource"/> class for mocking. </summary>
         protected SynapseBigDataPoolInfoResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/bigDataPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

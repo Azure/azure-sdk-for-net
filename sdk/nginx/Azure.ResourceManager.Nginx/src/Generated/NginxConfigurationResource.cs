@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Nginx
         private readonly ConfigurationsRestOperations _nginxConfigurationConfigurationsRestClient;
         private readonly NginxConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments/configurations";
+
         /// <summary> Initializes a new instance of the <see cref="NginxConfigurationResource"/> class for mocking. </summary>
         protected NginxConfigurationResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Nginx
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments/configurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

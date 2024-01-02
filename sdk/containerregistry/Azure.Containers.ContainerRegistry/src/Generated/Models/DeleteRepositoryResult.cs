@@ -20,6 +20,15 @@ namespace Azure.Containers.ContainerRegistry
             DeletedTags = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeleteRepositoryResult"/>. </summary>
+        /// <param name="deletedManifests"> SHA of the deleted image. </param>
+        /// <param name="deletedTags"> Tag of the deleted image. </param>
+        internal DeleteRepositoryResult(IReadOnlyList<string> deletedManifests, IReadOnlyList<string> deletedTags)
+        {
+            DeletedManifests = deletedManifests;
+            DeletedTags = deletedTags;
+        }
+
         /// <summary> SHA of the deleted image. </summary>
         public IReadOnlyList<string> DeletedManifests { get; }
         /// <summary> Tag of the deleted image. </summary>

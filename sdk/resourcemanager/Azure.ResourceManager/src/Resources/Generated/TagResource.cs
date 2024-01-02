@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Resources
         private readonly TagsRestOperations _tagResourceTagsRestClient;
         private readonly TagResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tags";
+
         /// <summary> Initializes a new instance of the <see cref="TagResource"/> class for mocking. </summary>
         protected TagResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tags";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

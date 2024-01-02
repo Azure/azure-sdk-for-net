@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute
         private readonly GalleryApplicationsRestOperations _galleryApplicationRestClient;
         private readonly GalleryApplicationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/applications";
+
         /// <summary> Initializes a new instance of the <see cref="GalleryApplicationResource"/> class for mocking. </summary>
         protected GalleryApplicationResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/applications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

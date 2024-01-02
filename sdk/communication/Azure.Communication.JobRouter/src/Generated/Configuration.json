@@ -6,6 +6,5 @@
     "../../TempTypeSpecFiles/Communication.JobRouter/node_modules/@autorest/csharp/Generator.Shared",
     "../../TempTypeSpecFiles/Communication.JobRouter/node_modules/@autorest/csharp/Azure.Core.Shared"
   ],
-  "use-overloads-between-protocol-and-convenience": true,
   "model-namespace": false
 }

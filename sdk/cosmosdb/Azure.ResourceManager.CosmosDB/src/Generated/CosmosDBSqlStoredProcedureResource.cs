@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly SqlResourcesRestOperations _cosmosDBSqlStoredProcedureSqlResourcesRestClient;
         private readonly CosmosDBSqlStoredProcedureData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBSqlStoredProcedureResource"/> class for mocking. </summary>
         protected CosmosDBSqlStoredProcedureResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/storedProcedures";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

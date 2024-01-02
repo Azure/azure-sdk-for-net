@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.DefenderEasm
         private readonly TasksRestOperations _tasksRestClient;
         private readonly EasmWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Easm/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="EasmWorkspaceResource"/> class for mocking. </summary>
         protected EasmWorkspaceResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.DefenderEasm
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Easm/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

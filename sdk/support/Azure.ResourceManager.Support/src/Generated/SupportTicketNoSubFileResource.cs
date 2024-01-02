@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Support
         private readonly FilesNoSubscriptionRestOperations _supportTicketNoSubFileFilesNoSubscriptionRestClient;
         private readonly SupportFileDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubFileResource"/> class for mocking. </summary>
         protected SupportTicketNoSubFileResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces/files";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

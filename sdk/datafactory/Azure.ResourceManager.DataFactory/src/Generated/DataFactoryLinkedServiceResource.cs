@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataFactory
         private readonly LinkedServicesRestOperations _dataFactoryLinkedServiceLinkedServicesRestClient;
         private readonly DataFactoryLinkedServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/linkedservices";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryLinkedServiceResource"/> class for mocking. </summary>
         protected DataFactoryLinkedServiceResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/linkedservices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

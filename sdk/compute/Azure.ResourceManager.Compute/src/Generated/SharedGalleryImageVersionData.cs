@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionData"/>. </summary>
         internal SharedGalleryImageVersionData()
         {
+            ArtifactTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionData"/>. </summary>
@@ -30,12 +32,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
-        internal SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile) : base(name, location, uniqueId)
+        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
+        internal SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, uniqueId)
         {
             PublishedOn = publishedOn;
             EndOfLifeOn = endOfLifeOn;
             IsExcludedFromLatest = isExcludedFromLatest;
             StorageProfile = storageProfile;
+            ArtifactTags = artifactTags;
         }
 
         /// <summary> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
@@ -46,6 +50,8 @@ namespace Azure.ResourceManager.Compute
         public bool? IsExcludedFromLatest { get; }
         /// <summary> Describes the storage profile of the image version. </summary>
         public SharedGalleryImageVersionStorageProfile StorageProfile { get; }
+        /// <summary> The artifact tags of a shared gallery resource. </summary>
+        public IReadOnlyDictionary<string, string> ArtifactTags { get; }
         /// <summary> The resource identifier. </summary>
         public ResourceIdentifier Id { get; internal set; }
     }

@@ -20,15 +20,19 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceCosmosDbConfiguration"/>. </summary>
         /// <param name="offerThroughput"> The provisioned throughput for the backing database. </param>
         /// <param name="keyVaultKeyUri"> The URI of the customer-managed key for the backing database. </param>
-        internal HealthcareApisServiceCosmosDbConfiguration(int? offerThroughput, Uri keyVaultKeyUri)
+        /// <param name="crossTenantCmkApplicationId"> The multi-tenant application id used to enable CMK access for services in a data sovereign region. </param>
+        internal HealthcareApisServiceCosmosDbConfiguration(int? offerThroughput, Uri keyVaultKeyUri, Guid? crossTenantCmkApplicationId)
         {
             OfferThroughput = offerThroughput;
             KeyVaultKeyUri = keyVaultKeyUri;
+            CrossTenantCmkApplicationId = crossTenantCmkApplicationId;
         }
 
         /// <summary> The provisioned throughput for the backing database. </summary>
         public int? OfferThroughput { get; set; }
         /// <summary> The URI of the customer-managed key for the backing database. </summary>
         public Uri KeyVaultKeyUri { get; set; }
+        /// <summary> The multi-tenant application id used to enable CMK access for services in a data sovereign region. </summary>
+        public Guid? CrossTenantCmkApplicationId { get; set; }
     }
 }

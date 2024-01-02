@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Compute
         private readonly DisksRestOperations _managedDiskDisksRestClient;
         private readonly ManagedDiskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/disks";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedDiskResource"/> class for mocking. </summary>
         protected ManagedDiskResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/disks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

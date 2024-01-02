@@ -25,6 +25,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SasUriList = sasUriList.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupStoreDetails"/>. </summary>
+        /// <param name="sasUriList"> List of SAS uri of storage containers where backup data is to be streamed/copied. </param>
+        internal PostgreSqlFlexibleServerBackupStoreDetails(IList<string> sasUriList)
+        {
+            SasUriList = sasUriList;
+        }
+
         /// <summary> List of SAS uri of storage containers where backup data is to be streamed/copied. </summary>
         public IList<string> SasUriList { get; }
     }

@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Communication
         private readonly CommunicationServicesRestOperations _communicationServiceResourceCommunicationServicesRestClient;
         private readonly CommunicationServiceResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/communicationServices";
+
         /// <summary> Initializes a new instance of the <see cref="CommunicationServiceResource"/> class for mocking. </summary>
         protected CommunicationServiceResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Communication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/communicationServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -23,6 +23,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ReturnReason = returnReason;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemReturnContent"/>. </summary>
+        /// <param name="returnAddress"> customer return address. </param>
+        /// <param name="returnReason"> Return Reason. </param>
+        /// <param name="serviceTag"> Service tag (located on the bottom-right corner of the device). </param>
+        /// <param name="isShippingBoxRequired"> Shipping Box required. </param>
+        internal EdgeOrderItemReturnContent(EdgeOrderItemAddressProperties returnAddress, string returnReason, string serviceTag, bool? isShippingBoxRequired)
+        {
+            ReturnAddress = returnAddress;
+            ReturnReason = returnReason;
+            ServiceTag = serviceTag;
+            IsShippingBoxRequired = isShippingBoxRequired;
+        }
+
         /// <summary> customer return address. </summary>
         public EdgeOrderItemAddressProperties ReturnAddress { get; set; }
         /// <summary> Return Reason. </summary>

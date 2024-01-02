@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SubAssessmentsRestOperations _securitySubAssessmentSubAssessmentsRestClient;
         private readonly SecuritySubAssessmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/subAssessments";
+
         /// <summary> Initializes a new instance of the <see cref="SecuritySubAssessmentResource"/> class for mocking. </summary>
         protected SecuritySubAssessmentResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/subAssessments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

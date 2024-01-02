@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly LocalRulestacksRestOperations _localRulestackRestClient;
         private readonly LocalRulestackData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks";
+
         /// <summary> Initializes a new instance of the <see cref="LocalRulestackResource"/> class for mocking. </summary>
         protected LocalRulestackResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

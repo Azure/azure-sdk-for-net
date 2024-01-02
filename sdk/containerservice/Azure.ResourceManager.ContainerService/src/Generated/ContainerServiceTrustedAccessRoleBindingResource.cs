@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ContainerService
         private readonly TrustedAccessRoleBindingsRestOperations _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient;
         private readonly ContainerServiceTrustedAccessRoleBindingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> class for mocking. </summary>
         protected ContainerServiceTrustedAccessRoleBindingResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

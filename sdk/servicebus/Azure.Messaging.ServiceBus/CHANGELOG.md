@@ -8,9 +8,21 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 7.17.1 (2023-12-04)
+
+### Bugs Fixed
+
 - Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
+- Updated the `ServiceBusMessage` constructor that takes a `ServiceBusReceivedMessage` to no longer copy over the 
+  `x-opt-partition-id` key as this is meant to apply only to the original message.
+- Drain excess credits when attempting to receive using sessions to ensure FIFO ordering.
 
 ### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
+- Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
 
 ## 7.17.0 (2023-11-14)
 

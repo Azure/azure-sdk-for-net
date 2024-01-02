@@ -20,6 +20,21 @@ namespace Azure.ResourceManager.HealthBot.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="HealthBotPatch"/>. </summary>
+        /// <param name="properties"> Properties of Azure Health Bot. </param>
+        /// <param name="tags"> Tags for a Azure Health Bot. </param>
+        /// <param name="sku"> SKU of the Azure Health Bot. </param>
+        /// <param name="identity"> The identity of the Azure Health Bot. </param>
+        /// <param name="location"></param>
+        internal HealthBotPatch(HealthBotProperties properties, IDictionary<string, string> tags, HealthBotSku sku, ManagedServiceIdentity identity, AzureLocation? location)
+        {
+            Properties = properties;
+            Tags = tags;
+            Sku = sku;
+            Identity = identity;
+            Location = location;
+        }
+
         /// <summary> Properties of Azure Health Bot. </summary>
         public HealthBotProperties Properties { get; set; }
         /// <summary> Tags for a Azure Health Bot. </summary>

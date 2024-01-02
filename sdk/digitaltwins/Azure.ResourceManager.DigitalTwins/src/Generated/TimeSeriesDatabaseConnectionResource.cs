@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DigitalTwins
         private readonly TimeSeriesDatabaseConnectionsRestOperations _timeSeriesDatabaseConnectionRestClient;
         private readonly TimeSeriesDatabaseConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/timeSeriesDatabaseConnections";
+
         /// <summary> Initializes a new instance of the <see cref="TimeSeriesDatabaseConnectionResource"/> class for mocking. </summary>
         protected TimeSeriesDatabaseConnectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DigitalTwins
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DigitalTwins/digitalTwinsInstances/timeSeriesDatabaseConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

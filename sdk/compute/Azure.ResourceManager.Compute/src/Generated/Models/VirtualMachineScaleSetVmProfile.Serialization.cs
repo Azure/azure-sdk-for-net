@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -127,6 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
             Optional<WritableSubResource> serviceArtifactReference = default;
             Optional<ComputeSecurityPostureReference> securityPostureReference = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"u8))
@@ -274,8 +276,17 @@ namespace Azure.ResourceManager.Compute.Models
                     securityPostureReference = ComputeSecurityPostureReference.DeserializeComputeSecurityPostureReference(property.Value);
                     continue;
                 }
+                if (property.NameEquals("timeCreated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeCreated = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value, serviceArtifactReference, securityPostureReference.Value);
+            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value, serviceArtifactReference, securityPostureReference.Value, Optional.ToNullable(timeCreated));
         }
     }
 }
