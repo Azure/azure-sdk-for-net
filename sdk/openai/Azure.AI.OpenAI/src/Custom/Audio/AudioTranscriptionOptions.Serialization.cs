@@ -11,7 +11,8 @@ namespace Azure.AI.OpenAI;
 public partial class AudioTranscriptionOptions
 {
     // CUSTOM CODE NOTE:
-    //   This handles serialization of multipart/form-data requests, which isn't automatically generated.
+    // Implement custom serialization code to compose a request with Content-Type:
+    // multipart/form-data, which currently cannot be auto-generated.
 
     internal virtual RequestContent ToRequestContent()
     {

@@ -30,24 +30,18 @@ namespace Azure.AI.OpenAI
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
-        /// <param name="systemFingerprint">
-        /// Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that
-        /// might impact determinism.
-        /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="choices"/>, <paramref name="systemFingerprint"/> or <paramref name="usage"/> is null. </exception>
-        internal ChatCompletions(string id, DateTimeOffset created, IEnumerable<ChatChoice> choices, string systemFingerprint, CompletionsUsage usage)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="choices"/> or <paramref name="usage"/> is null. </exception>
+        internal ChatCompletions(string id, DateTimeOffset created, IEnumerable<ChatChoice> choices, CompletionsUsage usage)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(choices, nameof(choices));
-            Argument.AssertNotNull(systemFingerprint, nameof(systemFingerprint));
             Argument.AssertNotNull(usage, nameof(usage));
 
             Id = id;
             Created = created;
             Choices = choices.ToList();
             PromptFilterResults = new ChangeTrackingList<ContentFilterResultsForPrompt>();
-            SystemFingerprint = systemFingerprint;
             Usage = usage;
         }
 

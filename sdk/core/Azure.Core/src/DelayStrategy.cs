@@ -17,6 +17,7 @@ namespace Azure.Core
         private readonly double _minJitterFactor;
         private readonly double _maxJitterFactor;
         private readonly TimeSpan _maxDelay;
+        internal const double DefaultJitterFactor = 0.2;
 
         /// <summary>
         /// Constructs a new instance of <see cref="DelayStrategy"/>. This constructor can be used by derived classes to customize the jitter factor and max delay.
@@ -85,10 +86,14 @@ namespace Azure.Core
 
         private TimeSpan ApplyJitter(TimeSpan delay)
         {
-            int min = (int)(delay.TotalMilliseconds * _minJitterFactor);
-            int max = (int)(delay.TotalMilliseconds * _maxJitterFactor);
+            // get a random double between 0 and 1
+            double randomDouble = _random.NextDouble();
 
-            return TimeSpan.FromMilliseconds(_random.Next(min, max));
+            // scale the double by the jitter range and then add it to the min
+            randomDouble = randomDouble * (_maxJitterFactor - _minJitterFactor) + _minJitterFactor;
+
+            // apply the jitter to the delay
+            return TimeSpan.FromMilliseconds(delay.TotalMilliseconds * randomDouble);
         }
 
         /// <summary>

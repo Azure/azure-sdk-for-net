@@ -1,5 +1,15 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0 (2023-12-01)
 ### Breaking Changes
 - Change type of `AckId` and `SequenceId` from `ulong` to `long`
