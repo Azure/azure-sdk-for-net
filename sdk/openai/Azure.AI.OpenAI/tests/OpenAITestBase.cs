@@ -411,9 +411,9 @@ namespace Azure.AI.OpenAI.Tests
 
             [Scenario.VisionPreview] = new()
             {
-                AzureResourceName = string.Empty,
+                AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
                 AzureResourceLocation = AzureLocation.SwedenCentral,
-                AzureDeploymentName = string.Empty,
+                AzureDeploymentName = "gpt-4-vision-preview",
                 NonAzureModelName = "gpt-4-vision-preview",
             }
         };
