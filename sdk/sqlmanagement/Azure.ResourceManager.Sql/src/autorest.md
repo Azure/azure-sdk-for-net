@@ -342,6 +342,7 @@ rename-mapping:
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
   FailoverGroupUpdate.properties.databases: FailoverDatabases
   Server.properties.minimalTlsVersion: minTlsVersion
+  ServerUpdate.properties.minimalTlsVersion: minTlsVersion
 
 # mgmt-debug: 
 #  show-serialized-names: true
