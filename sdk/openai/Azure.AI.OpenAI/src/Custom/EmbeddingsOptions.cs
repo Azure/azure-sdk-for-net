@@ -10,15 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
+// CUSTOM CODE NOTE:
+// Suppress the parameterized constructor that only receives the input strings in favor of a custom
+// parameterized constructor that receives the deployment name as well.
+
 [CodeGenSuppress("EmbeddingsOptions", typeof(IEnumerable<string>))]
 public partial class EmbeddingsOptions
 {
     // CUSTOM CODE NOTE:
-    //   These additions facilitate the use of an "init" pattern via a public default constructor and usable
-    //   setters.
+    // Add custom doc comment.
 
     /// <summary>
-    /// Gets or sets the deployment name to use for an embeddings request.
+    /// The deployment name to use for an embeddings request.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -30,23 +33,21 @@ public partial class EmbeddingsOptions
     /// appropriate name of the model (example: gpt-4).
     /// </para>
     /// </remarks>
-    [CodeGenMember("InternalNonAzureModelName")]
     public string DeploymentName { get; set; }
 
-    /// <summary>
+    // CUSTOM CODE NOTE:
+    // Add a parameterized constructor that receives the deployment name as a parameter in addition
+    // to the other required properties.
+
+    /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
+    /// <param name="deploymentName"> The deployment name to use for an embeddings request. </param>
+    /// <param name="input">
     /// Input texts to get embeddings for, encoded as a an array of strings.
     /// Each input must not exceed 2048 tokens in length.
     ///
     /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
     /// as we have observed inferior results when newlines are present.
-    /// </summary>
-    public IList<string> Input { get; set; } = new ChangeTrackingList<string>();
-
-    /// <summary>
-    /// Creates a new instance of <see cref="EmbeddingsOptions"/>.
-    /// </summary>
-    /// <param name="deploymentName"> The deployment name to use for embeddings. </param>
-    /// <param name="input"> The collection of inputs to run an embeddings operation across. </param>
+    /// </param>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="deploymentName"/> or <paramref name="input"/> is null.
     /// </exception>
@@ -62,9 +63,12 @@ public partial class EmbeddingsOptions
         Input = input.ToList();
     }
 
-    /// <summary>
-    /// Creates a new instance of <see cref="EmbeddingsOptions"/>.
-    /// </summary>
+    // CUSTOM CODE NOTE:
+    // Add a public default constructor to allow for an "init" pattern using property setters.
+
+    /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
     public EmbeddingsOptions()
-    {}
+    {
+        Input = new ChangeTrackingList<string>();
+    }
 }

@@ -821,6 +821,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 returnedSessionState = await receiver.GetSessionStateAsync();
                 returnedSessionStateString = returnedSessionState.ToString();
                 Assert.AreEqual(sessionStateString, returnedSessionStateString);
+
+                // Can clear the session state by setting to null
+                await receiver.SetSessionStateAsync(null);
+                Assert.IsNull(await receiver.GetSessionStateAsync());
             }
         }
 

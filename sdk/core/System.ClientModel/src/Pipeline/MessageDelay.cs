@@ -55,7 +55,7 @@ public class MessageDelay
     protected virtual TimeSpan GetDelayCore(PipelineMessage message, int delayCount)
     {
         // Default implementation is exponential backoff
-        return TimeSpan.FromMilliseconds((1 << delayCount) * _initialDelay.TotalMilliseconds);
+        return TimeSpan.FromMilliseconds((1 << (delayCount - 1)) * _initialDelay.TotalMilliseconds);
     }
 
     protected virtual void OnDelayComplete(PipelineMessage message) { }

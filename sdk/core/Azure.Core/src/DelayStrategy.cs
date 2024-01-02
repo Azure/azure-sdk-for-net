@@ -11,7 +11,7 @@ namespace Azure.Core
     /// </summary>
     public abstract class DelayStrategy
     {
-        private const double DefaultJitterFactor = 0.2;
+        internal const double DefaultJitterFactor = 0.2;
 
         private readonly Random _random = new ThreadSafeRandom();
         private readonly double _minJitterFactor;
@@ -85,10 +85,14 @@ namespace Azure.Core
 
         private TimeSpan ApplyJitter(TimeSpan delay)
         {
-            int min = (int)(delay.TotalMilliseconds * _minJitterFactor);
-            int max = (int)(delay.TotalMilliseconds * _maxJitterFactor);
+            // get a random double between 0 and 1
+            double randomDouble = _random.NextDouble();
 
-            return TimeSpan.FromMilliseconds(_random.Next(min, max));
+            // scale the double by the jitter range and then add it to the min
+            randomDouble = randomDouble * (_maxJitterFactor - _minJitterFactor) + _minJitterFactor;
+
+            // apply the jitter to the delay
+            return TimeSpan.FromMilliseconds(delay.TotalMilliseconds * randomDouble);
         }
 
         /// <summary>
