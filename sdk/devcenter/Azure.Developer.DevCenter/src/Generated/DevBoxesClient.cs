@@ -1817,7 +1817,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1858,7 +1858,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1932,7 +1932,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBoxAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> StartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual async Task<Operation> StartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1943,7 +1943,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1977,7 +1977,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBox(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> StartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual Operation StartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -1988,7 +1988,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2065,7 +2065,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBoxAsync(WaitUntil,string,string,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> StopDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate, RequestContext context)
+        public virtual async Task<Operation> StopDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -2076,7 +2076,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2111,7 +2111,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBox(WaitUntil,string,string,string,bool?,RequestContext)']/*" />
-        public virtual Operation<BinaryData> StopDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate, RequestContext context)
+        public virtual Operation StopDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -2122,7 +2122,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2196,7 +2196,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='RestartDevBoxAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> RestartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual async Task<Operation> RestartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -2207,7 +2207,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2241,7 +2241,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='RestartDevBox(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> RestartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context)
+        public virtual Operation RestartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -2252,7 +2252,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

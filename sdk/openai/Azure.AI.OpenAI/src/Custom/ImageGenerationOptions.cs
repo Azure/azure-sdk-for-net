@@ -8,12 +8,9 @@ namespace Azure.AI.OpenAI;
 public partial class ImageGenerationOptions
 {
     // CUSTOM CODE NOTE:
-    //   These changes facilitate "init" style use of the options type via a public default constructor and
-    //   accessible setters.
-
-    /// <summary> Initializes a new instance of ImageGenerationOptions. </summary>
-    public ImageGenerationOptions()
-    {}
+    // - Add a setter to this required property to allow for an "init" pattern when using the public
+    //   default constructor.
+    // - Add custom doc comment.
 
     /// <summary>
     /// Gets or sets the description used to influence the generation of requested images.
@@ -25,7 +22,15 @@ public partial class ImageGenerationOptions
     public string Prompt { get; set; }
 
     // CUSTOM CODE NOTE:
-    //   We suppress the ResponseFormat field as it'll be handled by unique method signatures
-    //   for the differing response types (separate URL and b64 methods)
+    // Mark the `response_format` property as internal. This functionality will be handled by unique
+    // method signatures for the different response types (i.e. blob URL versus base64 methods).
+
     internal ImageGenerationResponseFormat? ResponseFormat { get; set; }
+
+    // CUSTOM CODE NOTE:
+    // Add a public default constructor to allow for an "init" pattern using property setters.
+
+    /// <summary> Initializes a new instance of <see cref="ImageGenerationOptions"/>. </summary>
+    public ImageGenerationOptions()
+    { }
 }

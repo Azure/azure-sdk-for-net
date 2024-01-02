@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("safetyProfile"u8);
                 writer.WriteObjectValue(SafetyProfile);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

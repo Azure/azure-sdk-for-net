@@ -8,12 +8,15 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
+// CUSTOM CODE NOTE:
+// Suppress the parameterized constructor that only receives the audio data in favor of a custom
+// parameterized constructor that receives the deployment name as well.
 [CodeGenSuppress("AudioTranscriptionOptions", typeof(BinaryData))]
 public partial class AudioTranscriptionOptions
 {
     // CUSTOM CODE NOTE:
-    //   These additions facilitate the use of an "init" pattern via a public default constructor and usable
-    //   setters.
+    // Add a setter to this required property to allow for an "init" pattern when using the public
+    // default constructor.
 
     /// <summary>
     /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
@@ -34,8 +37,11 @@ public partial class AudioTranscriptionOptions
     /// </summary>
     public BinaryData AudioData { get; set; }
 
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
     /// <summary>
-    /// Gets or sets the deployment name to use for a transcription request.
+    /// The deployment name to use for audio transcription.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -47,14 +53,18 @@ public partial class AudioTranscriptionOptions
     /// appropriate name of the model (example: gpt-4).
     /// </para>
     /// </remarks>
-    [CodeGenMember("InternalNonAzureModelName")]
     public string DeploymentName { get; set; }
 
-    /// <summary>
-    /// Creates a new instance of <see cref="AudioTranscriptionOptions"/>.
-    /// </summary>
+    // CUSTOM CODE NOTE:
+    // Add a parameterized constructor that receives the deployment name as a parameter in addition
+    // to the other required properties.
+
+    /// <summary> Initializes a new instance of <see cref="AudioTranscriptionOptions"/>. </summary>
     /// <param name="deploymentName"> The deployment name to use for audio transcription. </param>
-    /// <param name="audioData"> The audio data to transcribe. </param>
+    /// <param name="audioData">
+    /// The audio data to transcribe.This must be the binary content of a file in one of the supported media formats:
+    /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+    /// </param>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="deploymentName"/> or <paramref name="audioData"/> is null.
     /// </exception>
@@ -70,7 +80,10 @@ public partial class AudioTranscriptionOptions
         AudioData = audioData;
     }
 
-    /// <summary> Initializes a new instance of AudioTranscriptionOptions. </summary>
+    // CUSTOM CODE NOTE:
+    // Add a public default constructor to allow for an "init" pattern using property setters.
+
+    /// <summary> Initializes a new instance of <see cref="AudioTranscriptionOptions"/>. </summary>
     public AudioTranscriptionOptions()
     { }
 }
