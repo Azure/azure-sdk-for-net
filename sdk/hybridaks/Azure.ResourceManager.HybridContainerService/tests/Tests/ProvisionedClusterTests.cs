@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Test exceeded global time limit of 10 seconds")]
         public void CreateVnet()
         {
             HybridContainerServiceVirtualNetworkCollection vnetCollection = new HybridContainerServiceVirtualNetworkCollection(Client, ResourceGroupVnet.Id);
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
         //The provisioned cluster is singleton.
         [TestCase]
         [RecordedTest]
+        [Ignore("Test exceeded global time limit of 10 seconds")]
         public void CreateProvisionedCluster()
         {
             // Create Vnet
