@@ -180,19 +180,103 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         Assert.Greater(reqNum, requestCount);
     }
 
-    //[Test]
-    //public async Task TimesOutResponseBuffering()
-    //{
-    //}
+    [Test]
+    public void TimesOutResponseBuffering()
+    {
+        var testDoneTcs = new CancellationTokenSource();
+        PipelineOptions options = new()
+        {
+            NetworkTimeout = TimeSpan.FromMilliseconds(500),
+            RetryPolicy = new RequestRetryPolicy(maxRetries: 0, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
 
-    //[Test]
-    //public async Task TimesOutBodyBuffering()
-    //{
-    //}
+        using TestServer testServer = new TestServer(
+            async _ =>
+            {
+                await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+            });
 
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        ResponseBufferingPolicy.SetBufferResponse(message, true);
+
+        var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
+        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
+
+        testDoneTcs.Cancel();
+    }
+
+    [Test]
+    public void TimesOutBodyBuffering()
+    {
+        var testDoneTcs = new CancellationTokenSource();
+        PipelineOptions options = new()
+        {
+            NetworkTimeout = TimeSpan.FromMilliseconds(500),
+            RetryPolicy = new RequestRetryPolicy(maxRetries: 0, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
+        };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                context.Response.StatusCode = 200;
+                context.Response.Headers.ContentLength = 10;
+                await context.Response.WriteAsync("1");
+                await context.Response.Body.FlushAsync();
+
+                await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+            });
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        ResponseBufferingPolicy.SetBufferResponse(message, true);
+
+        var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
+        Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
+
+        testDoneTcs.Cancel();
+    }
+
+    // TODO: Hangs.  Fix?
     //[Test]
     //public async Task TimesOutNonBufferedBodyReads()
     //{
+    //    var testDoneTcs = new CancellationTokenSource();
+
+    //    PipelineOptions options = new()
+    //    {
+    //        NetworkTimeout = TimeSpan.FromMilliseconds(500),
+    //    };
+    //    ClientPipeline pipeline = ClientPipeline.Create(options);
+
+    //    using TestServer testServer = new TestServer(
+    //        async context =>
+    //        {
+    //            context.Response.StatusCode = 200;
+    //            context.Response.Headers.Add("Connection", "close");
+    //            await context.Response.WriteAsync("1");
+    //            await context.Response.Body.FlushAsync();
+
+    //            await Task.Delay(Timeout.Infinite, testDoneTcs.Token);
+    //        });
+
+    //    using PipelineMessage message = pipeline.CreateMessage();
+    //    message.Request.Uri = testServer.Address;
+    //    ResponseBufferingPolicy.SetBufferResponse(message, false);
+
+    //    await pipeline.SendSyncOrAsync(message, IsAsync);
+
+    //    Assert.AreEqual(message.Response!.Status, 200);
+    //    var responseContentStream = message.Response.ContentStream;
+    //    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
+    //    var buffer = new byte[10];
+    //    Assert.AreEqual(1, await responseContentStream!.ReadAsync(buffer, 0, 1));
+    //    var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
+    //    Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
+
+    //    testDoneTcs.Cancel();
     //}
 
     #endregion
@@ -264,7 +348,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         testDoneTcs.Cancel();
     }
 
-    // TODO: This hangs!  Solve it?
+    // TODO: Hangs. Resolve?
     //[Test]
     //public async Task DoesntRetryClientCancellation()
     //{
