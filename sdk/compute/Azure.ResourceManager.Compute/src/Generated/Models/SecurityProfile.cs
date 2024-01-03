@@ -19,11 +19,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum api-version: 2020-12-01. </param>
         /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </param>
-        internal SecurityProfile(UefiSettings uefiSettings, bool? encryptionAtHost, SecurityType? securityType)
+        /// <param name="encryptionIdentity"> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </param>
+        /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. Minimum api-version: 2023-09-01. </param>
+        internal SecurityProfile(UefiSettings uefiSettings, bool? encryptionAtHost, SecurityType? securityType, EncryptionIdentity encryptionIdentity, ProxyAgentSettings proxyAgentSettings)
         {
             UefiSettings = uefiSettings;
             EncryptionAtHost = encryptionAtHost;
             SecurityType = securityType;
+            EncryptionIdentity = encryptionIdentity;
+            ProxyAgentSettings = proxyAgentSettings;
         }
 
         /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum api-version: 2020-12-01. </summary>
@@ -32,5 +36,21 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EncryptionAtHost { get; set; }
         /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </summary>
         public SecurityType? SecurityType { get; set; }
+        /// <summary> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </summary>
+        internal EncryptionIdentity EncryptionIdentity { get; set; }
+        /// <summary> Specifies ARM Resource ID of one of the user identities associated with the VM. </summary>
+        public string UserAssignedIdentityResourceId
+        {
+            get => EncryptionIdentity is null ? default : EncryptionIdentity.UserAssignedIdentityResourceId;
+            set
+            {
+                if (EncryptionIdentity is null)
+                    EncryptionIdentity = new EncryptionIdentity();
+                EncryptionIdentity.UserAssignedIdentityResourceId = value;
+            }
+        }
+
+        /// <summary> Specifies ProxyAgent settings while creating the virtual machine. Minimum api-version: 2023-09-01. </summary>
+        public ProxyAgentSettings ProxyAgentSettings { get; set; }
     }
 }
