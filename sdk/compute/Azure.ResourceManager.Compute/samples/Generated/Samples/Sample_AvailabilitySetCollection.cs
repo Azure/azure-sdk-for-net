@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateAnAvailabilitySet()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_Create.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_Create.json
             // this example is just showing the usage of "AvailabilitySets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AvailabilitySetGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_AvailabilitySetGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_AvailabilitySetGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AvailabilitySetGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_AvailabilitySetGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_AvailabilitySetGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_AvailabilitySetListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_List_MaximumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_AvailabilitySetListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-07-01/examples/availabilitySetExamples/AvailabilitySet_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2023-09-01/examples/availabilitySetExamples/AvailabilitySet_List_MinimumSet_Gen.json
             // this example is just showing the usage of "AvailabilitySets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

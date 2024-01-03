@@ -209,7 +209,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga @kinelski @heaths
+/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/                     @assafi
@@ -642,6 +642,9 @@
 # ServiceLabel: %Network - Private Link %Service Attention
 #/<NotInRepo>/                                                     @privlinksuppgithub
 
+# PRLabel: %Nginx
+/sdk/nginx/                                                        @spencerofwiti @bangbingsyb
+
 # ServiceLabel: %Notification Hub %Service Attention
 /sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/ @tjsomasundaram
 
@@ -842,3 +845,6 @@
 
 # ServiceLabel: %Cognitive - Content Safety %Service Attention
 /sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims @JieZhou000
+
+# PRLabel: %Spring App Discovery
+/sdk/springappdiscovery/Azure.ResourceManager.*/                    @sunkun99

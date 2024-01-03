@@ -123,7 +123,8 @@
     "vnet",
     "westcentralus",
     "westus",
-    "xunit"
+    "xunit",
+    "miscs"
   ],
   "overrides": [
     {

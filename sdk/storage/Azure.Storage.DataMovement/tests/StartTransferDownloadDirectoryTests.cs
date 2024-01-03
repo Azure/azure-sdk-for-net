@@ -162,7 +162,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventRaised,
+                cancellationTokenSource.Token);
 
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
@@ -309,11 +312,16 @@ namespace Azure.Storage.DataMovement.Tests
                 new BlobStorageResourceContainer(source.Container);
             StorageResourceContainer destinationResource =
                 new LocalDirectoryStorageResourceContainer(destination.DirectoryPath);
+            DataTransferOptions options = new();
+            TestEventsRaised testEventsRaised = new(options);
 
-            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
 
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(tokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                tokenSource.Token);
 
             IEnumerable<string> destinationFiles = FileUtil.ListFileNamesRecursive(destination.DirectoryPath)
                 .Select(f => f.Substring(destination.DirectoryPath.Length + 1).Replace("\\", "/"));
@@ -395,7 +403,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
@@ -431,7 +442,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
@@ -470,7 +484,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
@@ -501,7 +518,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -537,7 +557,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -576,7 +599,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -616,7 +642,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
