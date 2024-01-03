@@ -3,3 +3,4 @@ options:
     save-inputs: false
     clear-output-folder: true
     namespace: System.ClientModel.Clients
+    use-model-reader-writer: true

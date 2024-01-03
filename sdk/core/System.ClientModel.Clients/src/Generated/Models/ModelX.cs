@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,11 +25,12 @@ namespace System.ClientModel.Clients.Models
         /// <summary> Initializes a new instance of <see cref="ModelX"/>. </summary>
         /// <param name="kind"> The kind. </param>
         /// <param name="name"> The name property. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fields"> Optional list. </param>
         /// <param name="nullProperty"> Nullable integer. </param>
         /// <param name="keyValuePairs"> Optional dictionary. </param>
         /// <param name="xProperty"> The XProperty property. </param>
-        internal ModelX(string kind, string name, IList<string> fields, int? nullProperty, IDictionary<string, string> keyValuePairs, int xProperty) : base(kind, name)
+        internal ModelX(string kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> fields, int? nullProperty, IDictionary<string, string> keyValuePairs, int xProperty) : base(kind, name, serializedAdditionalRawData)
         {
             Fields = fields;
             NullProperty = nullProperty;

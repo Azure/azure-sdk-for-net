@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace System.ClientModel.Clients.Models
 {
     /// <summary> The ModelY in the discriminated set. </summary>
@@ -19,8 +22,9 @@ namespace System.ClientModel.Clients.Models
         /// <summary> Initializes a new instance of <see cref="ModelY"/>. </summary>
         /// <param name="kind"> The kind. </param>
         /// <param name="name"> The name property. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="yProperty"> The YProperty property. </param>
-        internal ModelY(string kind, string name, string yProperty) : base(kind, name)
+        internal ModelY(string kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string yProperty) : base(kind, name, serializedAdditionalRawData)
         {
             YProperty = yProperty;
         }

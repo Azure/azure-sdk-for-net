@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +26,7 @@ namespace System.ClientModel.Clients.Models
             fields ??= new List<string>();
             keyValuePairs ??= new Dictionary<string, string>();
 
-            return new ModelWithPersistableOnly(name, fields?.ToList(), nullProperty, keyValuePairs, xProperty);
+            return new ModelWithPersistableOnly(name, fields?.ToList(), nullProperty, keyValuePairs, xProperty, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ModelX"/>. </summary>
@@ -40,7 +41,7 @@ namespace System.ClientModel.Clients.Models
             fields ??= new List<string>();
             keyValuePairs ??= new Dictionary<string, string>();
 
-            return new ModelX("X", name, fields?.ToList(), nullProperty, keyValuePairs, xProperty);
+            return new ModelX("X", name, serializedAdditionalRawData: null, fields?.ToList(), nullProperty, keyValuePairs, xProperty);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ModelY"/>. </summary>
@@ -49,7 +50,7 @@ namespace System.ClientModel.Clients.Models
         /// <returns> A new <see cref="Models.ModelY"/> instance for mocking. </returns>
         public static ModelY ModelY(string name = null, string yProperty = null)
         {
-            return new ModelY("Y", name, yProperty);
+            return new ModelY("Y", name, serializedAdditionalRawData: null, yProperty);
         }
     }
 }

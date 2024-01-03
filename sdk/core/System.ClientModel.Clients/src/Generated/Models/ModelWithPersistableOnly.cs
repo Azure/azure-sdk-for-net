@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace System.ClientModel.Clients.Models
     /// <summary> The ModelWithPersistableOnly. </summary>
     public partial class ModelWithPersistableOnly
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ModelWithPersistableOnly"/>. </summary>
         public ModelWithPersistableOnly()
         {
@@ -26,13 +59,15 @@ namespace System.ClientModel.Clients.Models
         /// <param name="nullProperty"> The nullable property. </param>
         /// <param name="keyValuePairs"> The key value pairs property. </param>
         /// <param name="xProperty"> The x property. </param>
-        internal ModelWithPersistableOnly(string name, IList<string> fields, int? nullProperty, IDictionary<string, string> keyValuePairs, int xProperty)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelWithPersistableOnly(string name, IList<string> fields, int? nullProperty, IDictionary<string, string> keyValuePairs, int xProperty, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Fields = fields;
             NullProperty = nullProperty;
             KeyValuePairs = keyValuePairs;
             XProperty = xProperty;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name. </summary>
