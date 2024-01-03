@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DataShare
     /// Please note <see cref="DataShareSynchronizationSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ScheduledSynchronizationSetting"/>.
     /// </summary>
-    public partial class DataShareSynchronizationSettingData : ResourceData
+    public abstract partial class DataShareSynchronizationSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="DataShareSynchronizationSettingData"/>. </summary>
-        public DataShareSynchronizationSettingData()
+        protected DataShareSynchronizationSettingData()
         {
         }
 
