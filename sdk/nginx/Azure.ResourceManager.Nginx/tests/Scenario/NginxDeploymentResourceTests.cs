@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment2 = await nginxDeployment.AddTagAsync("Counter", "1");
 
             Assert.AreEqual(nginxDeployment2.Data.Tags["Counter"], "1");
-            await Task.Delay(TimeSpan.FromMinutes(2));
+            await Delay(TimeSpan.FromMinutes(2).Milliseconds);
             NginxDeploymentResource nginxDeployment3 = await nginxDeployment.RemoveTagAsync("Counter");
 
             Assert.IsFalse(nginxDeployment3.Data.Tags.ContainsKey("Counter"));
