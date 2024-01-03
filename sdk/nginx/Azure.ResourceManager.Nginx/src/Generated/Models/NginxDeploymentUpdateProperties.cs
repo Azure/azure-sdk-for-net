@@ -18,10 +18,14 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
         /// <param name="enableDiagnosticsSupport"></param>
         /// <param name="logging"></param>
-        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging)
+        /// <param name="scalingProperties"></param>
+        /// <param name="userProfile"></param>
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile)
         {
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
             Logging = logging;
+            ScalingProperties = scalingProperties;
+            UserProfile = userProfile;
         }
 
         /// <summary> Gets or sets the enable diagnostics support. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="sku"></param>
         /// <param name="location"></param>
         /// <param name="properties"></param>
-        internal NginxDeploymentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ResourceSku sku, AzureLocation? location, NginxDeploymentUpdateProperties properties)
+        internal NginxDeploymentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NginxResourceSku sku, AzureLocation? location, NginxDeploymentUpdateProperties properties)
         {
             Identity = identity;
             Tags = tags;
