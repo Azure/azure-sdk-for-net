@@ -9,6 +9,7 @@ csharp: true
 library-name: HybridCompute
 namespace: Azure.ResourceManager.HybridCompute
 require: https://github.com/Azure/azure-rest-api-specs/blob/f6278b35fb38d62aadb7a4327a876544d5d7e1e4/specification/hybridcompute/resource-manager/readme.md
+#tag: package-preview-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
