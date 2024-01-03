@@ -32,16 +32,4 @@ public static class MockSyncAsyncExtensions
             delay.Delay(message, default);
         }
     }
-
-    //public static async Task ShouldRetryCoreSyncOrAsync(this MockRetryPolicy policy, PipelineMessage message, Exception? exception, bool isAsync)
-    //{
-    //    if (isAsync)
-    //    {
-    //        await policy.ShouldRetryAsync(message, default).ConfigureAwait(false);
-    //    }
-    //    else
-    //    {
-    //        policy.ShouldRetry(message, default);
-    //    }
-    //}
 }
