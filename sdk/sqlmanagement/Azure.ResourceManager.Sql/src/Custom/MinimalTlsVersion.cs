@@ -46,23 +46,5 @@ namespace Azure.ResourceManager.Sql
         /// <summary> 1.3. </summary>
 		[CodeGenMember("One3")]
         public static MinimalTlsVersion Tls1_3 { get; } = new MinimalTlsVersion(Tls1_3Value);
-        /// <summary> Determines if two <see cref="MinimalTlsVersion"/> values are the same. </summary>
-        public static bool operator ==(MinimalTlsVersion left, MinimalTlsVersion right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="MinimalTlsVersion"/> values are not the same. </summary>
-        public static bool operator !=(MinimalTlsVersion left, MinimalTlsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MinimalTlsVersion"/>. </summary>
-        public static implicit operator MinimalTlsVersion(string value) => new MinimalTlsVersion(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MinimalTlsVersion other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(MinimalTlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
 	}
 }
