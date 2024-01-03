@@ -104,6 +104,16 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>AvailabilitySets_Get</description>
         /// </item>
+        /// <item>
+        /// GET
+        /// </item>
+        /// <item>
+        /// 2023-01-01
+        /// </item>
+        /// <item>
+        /// <term>Resource Type</term>
+        /// Microsoft.Compute/AvailabilitySets or <see cref="AvailabilitySetResource.ResourceType"/>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -125,12 +135,15 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        // client.SetApiVersion(AvailabilitySetResource.ResourceType, "2023-10-01");
+        // client.SetApiVersion("Microsoft.Compute/availabilitySets", "2023-10-01");
+
         /// <summary>
         /// Retrieves information about an availability set.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}/start</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

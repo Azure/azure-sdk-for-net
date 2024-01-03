@@ -13,6 +13,10 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.ClientModel\src\System.ClientModel.csproj" />
+  </ItemGroup>
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace System.ClientModel.Clients.Models
 {
     /// <summary> The InputAdditionalPropertiesModelStruct. </summary>
-    public partial class ModelAsStruct
+    public readonly partial struct ModelAsStruct
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,7 +43,7 @@ namespace System.ClientModel.Clients.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ModelAsStruct"/>. </summary>
         /// <param name="id"> The id property. </param>
@@ -62,11 +62,11 @@ namespace System.ClientModel.Clients.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ModelAsStruct"/> for deserialization. </summary>
-        internal ModelAsStruct()
+        public ModelAsStruct()
         {
         }
 
         /// <summary> The id property. </summary>
-        public int Id { get; set; }
+        public int Id { get; }
     }
 }

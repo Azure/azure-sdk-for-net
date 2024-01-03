@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using System.ClientModel.Clients.Models;
 using System.Linq;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {

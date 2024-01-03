@@ -89,12 +89,9 @@ namespace System.ClientModel.Clients
 
         /// <param name="body"> The <see cref="ModelAsStruct"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/ModelReaderWriterTestsClient.xml" path="doc/members/member[@name='Op1Async(ModelAsStruct,CancellationToken)']/*" />
         public virtual async Task<Response<ModelAsStruct>> Op1Async(ModelAsStruct body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body.ToRequestContent();
             Response response = await Op1Async(content, context).ConfigureAwait(false);
@@ -103,12 +100,9 @@ namespace System.ClientModel.Clients
 
         /// <param name="body"> The <see cref="ModelAsStruct"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/ModelReaderWriterTestsClient.xml" path="doc/members/member[@name='Op1(ModelAsStruct,CancellationToken)']/*" />
         public virtual Response<ModelAsStruct> Op1(ModelAsStruct body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body.ToRequestContent();
             Response response = Op1(content, context);

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.ClientModel.Clients.Models;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {

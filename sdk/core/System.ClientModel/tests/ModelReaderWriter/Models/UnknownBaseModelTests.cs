@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 using System.Linq;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.ClientModel.Clients.Models;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {

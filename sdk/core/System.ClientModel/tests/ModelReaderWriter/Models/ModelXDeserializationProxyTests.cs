@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using System.ClientModel.Clients.Models;
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.Text;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models

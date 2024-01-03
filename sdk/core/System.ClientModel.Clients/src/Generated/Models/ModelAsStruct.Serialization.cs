@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace System.ClientModel.Clients.Models
 {
-    public partial class ModelAsStruct : IUtf8JsonSerializable, IJsonModel<ModelAsStruct>
+    public partial struct ModelAsStruct : IUtf8JsonSerializable, IJsonModel<ModelAsStruct>, IJsonModel<object>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -59,14 +59,14 @@ namespace System.ClientModel.Clients.Models
             return DeserializeModelAsStruct(document.RootElement, options);
         }
 
+        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ModelAsStruct>)this).Write(writer, options);
+
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ModelAsStruct>)this).Create(ref reader, options);
+
         internal static ModelAsStruct DeserializeModelAsStruct(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
             int id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -117,6 +117,12 @@ namespace System.ClientModel.Clients.Models
 
         string IPersistableModel<ModelAsStruct>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options) => ((IPersistableModel<ModelAsStruct>)this).Write(options);
+
+        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options) => ((IPersistableModel<ModelAsStruct>)this).Create(data, options);
+
+        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ModelAsStruct>)this).GetFormatFromOptions(options);
+
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ModelAsStruct FromResponse(Response response)
@@ -126,7 +132,7 @@ namespace System.ClientModel.Clients.Models
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);
