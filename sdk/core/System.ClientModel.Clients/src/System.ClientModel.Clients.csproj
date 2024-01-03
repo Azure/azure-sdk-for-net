@@ -5,6 +5,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0001;AZC0008</NoWarn>
     <SpecRepoRoot>../</SpecRepoRoot>
   </PropertyGroup>
 
@@ -13,9 +14,7 @@
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
-  <!-- <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-  </ItemGroup> -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+  </ItemGroup>
 </Project>

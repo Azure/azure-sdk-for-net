@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="Op1Async(ModelAsStruct,CancellationToken)">
+      <example>
+This sample shows how to call Op1Async.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+ModelAsStruct body = new ModelAsStruct(1234);
+Response<ModelAsStruct> response = await client.Op1Async(body);
+]]></code>
+This sample shows how to call Op1Async with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+ModelAsStruct body = new ModelAsStruct(1234);
+Response<ModelAsStruct> response = await client.Op1Async(body);
+]]></code></example>
+    </member>
+    <member name="Op1(ModelAsStruct,CancellationToken)">
+      <example>
+This sample shows how to call Op1.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+ModelAsStruct body = new ModelAsStruct(1234);
+Response<ModelAsStruct> response = client.Op1(body);
+]]></code>
+This sample shows how to call Op1 with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+ModelAsStruct body = new ModelAsStruct(1234);
+Response<ModelAsStruct> response = client.Op1(body);
+]]></code></example>
+    </member>
+    <member name="Op1Async(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Op1Async and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = 1234,
+});
+Response response = await client.Op1Async(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call Op1Async with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = 1234,
+});
+Response response = await client.Op1Async(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="Op1(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Op1 and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = 1234,
+});
+Response response = client.Op1(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code>
+This sample shows how to call Op1 with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    id = 1234,
+});
+Response response = client.Op1(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+]]></code></example>
+    </member>
+    <member name="Op2Async(ModelWithPersistableOnly,CancellationToken)">
+      <example>
+This sample shows how to call Op2Async.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+ModelWithPersistableOnly body = new ModelWithPersistableOnly();
+Response<ModelWithPersistableOnly> response = await client.Op2Async(body);
+]]></code>
+This sample shows how to call Op2Async with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+ModelWithPersistableOnly body = new ModelWithPersistableOnly
+{
+    Name = "<name>",
+    Fields = { "<fields>" },
+    NullProperty = 1234,
+    KeyValuePairs =
+    {
+        ["key"] = "<keyValuePairs>"
+    },
+};
+Response<ModelWithPersistableOnly> response = await client.Op2Async(body);
+]]></code></example>
+    </member>
+    <member name="Op2(ModelWithPersistableOnly,CancellationToken)">
+      <example>
+This sample shows how to call Op2.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+ModelWithPersistableOnly body = new ModelWithPersistableOnly();
+Response<ModelWithPersistableOnly> response = client.Op2(body);
+]]></code>
+This sample shows how to call Op2 with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+ModelWithPersistableOnly body = new ModelWithPersistableOnly
+{
+    Name = "<name>",
+    Fields = { "<fields>" },
+    NullProperty = 1234,
+    KeyValuePairs =
+    {
+        ["key"] = "<keyValuePairs>"
+    },
+};
+Response<ModelWithPersistableOnly> response = client.Op2(body);
+]]></code></example>
+    </member>
+    <member name="Op2Async(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Op2Async and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.Op2Async(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("xProperty").ToString());
+]]></code>
+This sample shows how to call Op2Async with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "<name>",
+    fields = new object[]
+    {
+        "<fields>"
+    },
+    nullProperty = 1234,
+    keyValuePairs = new
+    {
+        key = "<keyValuePairs>",
+    },
+});
+Response response = await client.Op2Async(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("fields")[0].ToString());
+Console.WriteLine(result.GetProperty("nullProperty").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("xProperty").ToString());
+]]></code></example>
+    </member>
+    <member name="Op2(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Op2 and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.Op2(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("xProperty").ToString());
+]]></code>
+This sample shows how to call Op2 with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    name = "<name>",
+    fields = new object[]
+    {
+        "<fields>"
+    },
+    nullProperty = 1234,
+    keyValuePairs = new
+    {
+        key = "<keyValuePairs>",
+    },
+});
+Response response = client.Op2(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("fields")[0].ToString());
+Console.WriteLine(result.GetProperty("nullProperty").ToString());
+Console.WriteLine(result.GetProperty("keyValuePairs").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("xProperty").ToString());
+]]></code></example>
+    </member>
+    <member name="Op3Async(BaseModel,CancellationToken)">
+      <example>
+This sample shows how to call Op3Async.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+BaseModel body = new ModelX();
+Response<BaseModel> response = await client.Op3Async(body);
+]]></code>
+This sample shows how to call Op3Async with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+BaseModel body = new ModelX
+{
+    Fields = { "<fields>" },
+    NullProperty = 1234,
+    KeyValuePairs =
+    {
+        ["key"] = "<keyValuePairs>"
+    },
+    Name = "<name>",
+};
+Response<BaseModel> response = await client.Op3Async(body);
+]]></code></example>
+    </member>
+    <member name="Op3(BaseModel,CancellationToken)">
+      <example>
+This sample shows how to call Op3.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+BaseModel body = new ModelX();
+Response<BaseModel> response = client.Op3(body);
+]]></code>
+This sample shows how to call Op3 with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+BaseModel body = new ModelX
+{
+    Fields = { "<fields>" },
+    NullProperty = 1234,
+    KeyValuePairs =
+    {
+        ["key"] = "<keyValuePairs>"
+    },
+    Name = "<name>",
+};
+Response<BaseModel> response = client.Op3(body);
+]]></code></example>
+    </member>
+    <member name="Op3Async(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Op3Async and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    kind = "X",
+});
+Response response = await client.Op3Async(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+]]></code>
+This sample shows how to call Op3Async with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    fields = new object[]
+    {
+        "<fields>"
+    },
+    nullProperty = 1234,
+    keyValuePairs = new
+    {
+        key = "<keyValuePairs>",
+    },
+    kind = "X",
+    name = "<name>",
+});
+Response response = await client.Op3Async(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="Op3(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Op3 and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    kind = "X",
+});
+Response response = client.Op3(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+]]></code>
+This sample shows how to call Op3 with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelReaderWriterTestsClient client = new ModelReaderWriterTestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    fields = new object[]
+    {
+        "<fields>"
+    },
+    nullProperty = 1234,
+    keyValuePairs = new
+    {
+        key = "<keyValuePairs>",
+    },
+    kind = "X",
+    name = "<name>",
+});
+Response response = client.Op3(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>
