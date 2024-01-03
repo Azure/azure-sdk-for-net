@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             Optional<string> state = default;
             Optional<string> fullyQualifiedDomainName = default;
             Optional<IReadOnlyList<SqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
-            Optional<MinimalTlsVersion> minimalTlsVersion = default;
+            Optional<Models.MinimalTlsVersion> minimalTlsVersion = default;
             Optional<ServerNetworkAccessFlag> publicNetworkAccess = default;
             Optional<ServerWorkspaceFeature> workspaceFeature = default;
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            minimalTlsVersion = new MinimalTlsVersion(property0.Value.GetString());
+                            minimalTlsVersion = new Models.MinimalTlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
