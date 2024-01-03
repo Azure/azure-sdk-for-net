@@ -38,11 +38,6 @@ namespace Azure.ResourceManager.HybridContainerService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
-            {
-                writer.WritePropertyName("count"u8);
-                writer.WriteNumberValue(Count.Value);
-            }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
@@ -53,66 +48,30 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxCount))
-            {
-                writer.WritePropertyName("maxCount"u8);
-                writer.WriteNumberValue(MaxCount.Value);
-            }
-            if (Optional.IsDefined(MaxPods))
-            {
-                writer.WritePropertyName("maxPods"u8);
-                writer.WriteNumberValue(MaxPods.Value);
-            }
-            if (Optional.IsDefined(MinCount))
-            {
-                writer.WritePropertyName("minCount"u8);
-                writer.WriteNumberValue(MinCount.Value);
-            }
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(NodeLabels))
-            {
-                writer.WritePropertyName("nodeLabels"u8);
-                writer.WriteStartObject();
-                foreach (var item in NodeLabels)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(NodeTaints))
-            {
-                writer.WritePropertyName("nodeTaints"u8);
-                writer.WriteStartArray();
-                foreach (var item in NodeTaints)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
+            }
+            if (Optional.IsDefined(OSSku))
+            {
+                writer.WritePropertyName("osSKU"u8);
+                writer.WriteStringValue(OSSku.Value.ToString());
             }
             if (Optional.IsDefined(NodeImageVersion))
             {
                 writer.WritePropertyName("nodeImageVersion"u8);
                 writer.WriteStringValue(NodeImageVersion);
             }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
             if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
-            }
-            if (Optional.IsDefined(CloudProviderProfile))
-            {
-                writer.WritePropertyName("cloudProviderProfile"u8);
-                writer.WriteObjectValue(CloudProviderProfile);
             }
             if (Optional.IsDefined(Status))
             {
@@ -129,27 +88,21 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 return null;
             }
-            Optional<AgentPoolExtendedLocation> extendedLocation = default;
+            Optional<HybridContainerServiceExtendedLocation> extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<int> count = default;
             Optional<IList<string>> availabilityZones = default;
-            Optional<int> maxCount = default;
-            Optional<int> maxPods = default;
-            Optional<int> minCount = default;
-            Optional<Mode> mode = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
-            Optional<OSType> osType = default;
+            Optional<HybridContainerServiceOSType> osType = default;
+            Optional<HybridContainerServiceOSSku> ossku = default;
             Optional<string> nodeImageVersion = default;
+            Optional<int> count = default;
             Optional<string> vmSize = default;
-            Optional<CloudProviderProfile> cloudProviderProfile = default;
-            Optional<AgentPoolProvisioningState> provisioningState = default;
-            Optional<AgentPoolProvisioningStatusStatus> status = default;
+            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
+            Optional<AgentPoolProvisioningStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -158,7 +111,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         continue;
                     }
-                    extendedLocation = AgentPoolExtendedLocation.DeserializeAgentPoolExtendedLocation(property.Value);
+                    extendedLocation = HybridContainerServiceExtendedLocation.DeserializeHybridContainerServiceExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -213,15 +166,6 @@ namespace Azure.ResourceManager.HybridContainerService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("count"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            count = property0.Value.GetInt32();
-                            continue;
-                        }
                         if (property0.NameEquals("availabilityZones"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -236,77 +180,22 @@ namespace Azure.ResourceManager.HybridContainerService
                             availabilityZones = array;
                             continue;
                         }
-                        if (property0.NameEquals("maxCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("maxPods"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxPods = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("minCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("mode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            mode = new Mode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeLabels"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            nodeLabels = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("nodeTaints"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            nodeTaints = array;
-                            continue;
-                        }
                         if (property0.NameEquals("osType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            osType = new OSType(property0.Value.GetString());
+                            osType = new HybridContainerServiceOSType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("osSKU"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ossku = new HybridContainerServiceOSSku(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("nodeImageVersion"u8))
@@ -314,18 +203,18 @@ namespace Azure.ResourceManager.HybridContainerService
                             nodeImageVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vmSize"u8))
-                        {
-                            vmSize = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("cloudProviderProfile"u8))
+                        if (property0.NameEquals("count"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            cloudProviderProfile = CloudProviderProfile.DeserializeCloudProviderProfile(property0.Value);
+                            count = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("vmSize"u8))
+                        {
+                            vmSize = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -334,7 +223,7 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            provisioningState = new AgentPoolProvisioningState(property0.Value.GetString());
+                            provisioningState = new HybridContainerServiceResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -343,14 +232,14 @@ namespace Azure.ResourceManager.HybridContainerService
                             {
                                 continue;
                             }
-                            status = AgentPoolProvisioningStatusStatus.DeserializeAgentPoolProvisioningStatusStatus(property0.Value);
+                            status = AgentPoolProvisioningStatus.DeserializeAgentPoolProvisioningStatus(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new HybridContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(count), Optional.ToList(availabilityZones), Optional.ToNullable(maxCount), Optional.ToNullable(maxPods), Optional.ToNullable(minCount), Optional.ToNullable(mode), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), Optional.ToNullable(osType), nodeImageVersion.Value, vmSize.Value, cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value);
+            return new HybridContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToList(availabilityZones), Optional.ToNullable(osType), Optional.ToNullable(ossku), nodeImageVersion.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(provisioningState), status.Value);
         }
     }
 }

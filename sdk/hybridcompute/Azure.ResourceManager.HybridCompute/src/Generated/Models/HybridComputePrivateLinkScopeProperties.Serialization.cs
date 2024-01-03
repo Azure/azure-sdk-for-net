@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
+            Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
             Optional<string> provisioningState = default;
             Optional<string> privateLinkScopeId = default;
             Optional<IReadOnlyList<PrivateEndpointConnectionDataModel>> privateEndpointConnections = default;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
+                    publicNetworkAccess = new HybridComputePublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Nginx
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<NginxDeploymentProperties> properties = default;
-            Optional<ResourceSku> sku = default;
+            Optional<NginxResourceSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = NginxResourceSku.DeserializeNginxResourceSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HybridCompute;
-using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
             return await GetHybridComputeMachines().GetAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
         }
