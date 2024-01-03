@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The ResourceSku. </summary>
-    internal partial class ResourceSku
+    /// <summary> The NginxResourceSku. </summary>
+    internal partial class NginxResourceSku
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxResourceSku"/>. </summary>
         /// <param name="name"> Name of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResourceSku(string name)
+        public NginxResourceSku(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 

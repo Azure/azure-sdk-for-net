@@ -10,32 +10,35 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class ResourceSku : IUtf8JsonSerializable
+    internal partial class NginxDeploymentUserProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(PreferredEmail))
+            {
+                writer.WritePropertyName("preferredEmail"u8);
+                writer.WriteStringValue(PreferredEmail);
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceSku DeserializeResourceSku(JsonElement element)
+        internal static NginxDeploymentUserProfile DeserializeNginxDeploymentUserProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
+            Optional<string> preferredEmail = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("preferredEmail"u8))
                 {
-                    name = property.Value.GetString();
+                    preferredEmail = property.Value.GetString();
                     continue;
                 }
             }
-            return new ResourceSku(name);
+            return new NginxDeploymentUserProfile(preferredEmail.Value);
         }
     }
 }

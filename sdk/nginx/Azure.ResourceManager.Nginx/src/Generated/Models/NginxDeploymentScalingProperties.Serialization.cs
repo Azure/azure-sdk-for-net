@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class NginxNetworkInterfaceConfiguration : IUtf8JsonSerializable
+    internal partial class NginxDeploymentScalingProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("subnetId"u8);
-                writer.WriteStringValue(SubnetId);
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteNumberValue(Capacity.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static NginxNetworkInterfaceConfiguration DeserializeNginxNetworkInterfaceConfiguration(JsonElement element)
+        internal static NginxDeploymentScalingProperties DeserializeNginxDeploymentScalingProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetId = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("subnetId"u8))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subnetId = new ResourceIdentifier(property.Value.GetString());
+                    capacity = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new NginxNetworkInterfaceConfiguration(subnetId.Value);
+            return new NginxDeploymentScalingProperties(Optional.ToNullable(capacity));
         }
     }
 }
