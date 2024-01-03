@@ -127,22 +127,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         public void ThrowsIfUnknownFormat()
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions("x");
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(ModelInstance, options));
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write((IPersistableModel<object>)ModelInstance, options));
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IPersistableModel<object>)ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
             if (ModelInstance is IJsonModel<T> jsonModel)
             {
-                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
-                Assert.Throws<InvalidOperationException>(() => ((IJsonModel<object>)jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));
+                Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
+                Assert.Throws<FormatException>(() => ((IJsonModel<object>)jsonModel).Write(new Utf8JsonWriter(new MemoryStream()), options));
                 bool gotException = false;
                 try
                 {
                     Utf8JsonReader reader = default;
                     jsonModel.Create(ref reader, options);
                 }
-                catch (InvalidOperationException)
+                catch (FormatException)
                 {
                     gotException = true;
                 }
@@ -157,7 +157,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                     Utf8JsonReader reader = default;
                     ((IJsonModel<object>)jsonModel).Create(ref reader, options);
                 }
-                catch (InvalidOperationException)
+                catch (FormatException)
                 {
                     gotException = true;
                 }
