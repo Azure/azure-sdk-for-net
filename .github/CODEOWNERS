@@ -307,6 +307,9 @@
 # PRLabel: %Confidential Ledger
 /sdk/confidentialledger/                                           @christothes @PallabPaul
 
+# ServiceLabel: %Confidential Ledger
+#/<NotInRepo>/                                                     @PallabPaul
+
 # ServiceLabel: %Consumption %Service Attention
 /sdk/consumption/Microsoft.Azure.Management.Consumption/           @ms-premp
 
