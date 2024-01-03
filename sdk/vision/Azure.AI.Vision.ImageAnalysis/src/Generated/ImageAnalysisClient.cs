@@ -101,7 +101,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromBufferAsync(IEnumerable<string> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromBufferAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
@@ -145,7 +145,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromBuffer(IEnumerable<string> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromBuffer(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
@@ -166,7 +166,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromBufferAsync(IEnumerable{string},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromBufferAsync(IEnumerable{VisualFeaturesImpl},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -205,7 +205,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromBufferAsync(IEnumerable<string> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
+        internal virtual async Task<Response> AnalyzeFromBufferAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
@@ -234,7 +234,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromBuffer(IEnumerable{string},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromBuffer(IEnumerable{VisualFeaturesImpl},BinaryData,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -273,7 +273,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromBuffer(IEnumerable<string> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
+        internal virtual Response AnalyzeFromBuffer(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
@@ -325,7 +325,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<string> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
@@ -369,7 +369,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
-        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<string> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
+        internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
@@ -390,7 +390,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromUrlAsync(IEnumerable{string},ImageUrl,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromUrlAsync(IEnumerable{VisualFeaturesImpl},ImageUrl,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -429,7 +429,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> AnalyzeFromUrlAsync(IEnumerable<string> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
+        internal virtual async Task<Response> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
@@ -458,7 +458,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeFromUrl(IEnumerable{string},ImageUrl,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeFromUrl(IEnumerable{VisualFeaturesImpl},ImageUrl,string,bool?,IEnumerable{float},string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -497,7 +497,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response AnalyzeFromUrl(IEnumerable<string> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
+        internal virtual Response AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(content, nameof(content));
@@ -516,7 +516,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
         }
 
-        internal HttpMessage CreateAnalyzeFromBufferRequest(IEnumerable<string> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
+        internal HttpMessage CreateAnalyzeFromBufferRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -553,7 +553,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeFromUrlRequest(IEnumerable<string> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
+        internal HttpMessage CreateAnalyzeFromUrlRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
