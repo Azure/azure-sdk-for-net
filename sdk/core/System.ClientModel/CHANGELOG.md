@@ -1,5 +1,17 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Initial release of client building block types, including Pipeline, Message, and Options types.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0 (2024-01-03)
 
 ### Features Added
