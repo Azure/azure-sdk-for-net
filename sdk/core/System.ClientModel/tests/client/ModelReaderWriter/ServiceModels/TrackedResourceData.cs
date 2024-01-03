@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager
 {

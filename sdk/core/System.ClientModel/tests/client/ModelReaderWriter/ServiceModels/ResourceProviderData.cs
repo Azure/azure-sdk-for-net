@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
@@ -15,6 +17,24 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     /// </summary>
     public partial class ResourceProviderData
     {
+        public static implicit operator BinaryContent(ResourceProviderData resourceProviderData)
+        {
+            if (resourceProviderData == null)
+            {
+                return null;
+            }
+
+            return BinaryContent.Create(resourceProviderData, ModelReaderWriterHelper.WireOptions);
+        }
+
+        public static explicit operator ResourceProviderData(ClientResult result)
+        {
+            if (result is null) throw new ArgumentNullException(nameof(result));
+
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
+            return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
+        }
+
         /// <summary> Initializes a new instance of ProviderData. </summary>
         public ResourceProviderData()
         {
