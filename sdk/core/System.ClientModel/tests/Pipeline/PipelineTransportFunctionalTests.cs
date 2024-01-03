@@ -4,6 +4,8 @@
 using Azure.Core.TestFramework;
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
@@ -94,6 +96,30 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
     }
 
     [Test]
+    public async Task RequestHeaderHostSetFromUri()
+    {
+        HostString? host = null;
+        string uri = string.Empty;
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                uri = context.Request.GetDisplayUrl();
+                host = context.Request.GetTypedHeaders().Host;
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "GET";
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(testServer.Address.ToString(), uri);
+        Assert.AreEqual(testServer.Address.Host + ":" + testServer.Address.Port, host.ToString());
+    }
+
+    [Test]
     [TestCaseSource(nameof(RequestMethods))]
     public async Task RequestHeaderContentLengthSetWhenNoContent(string method, bool hasContent)
     {
@@ -157,6 +183,57 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
         Assert.Null(contentType);
+    }
+
+    [Test]
+    public async Task SettingRequestHeaderOverridesDefaultContentLength()
+    {
+        long contentLength = 0;
+        using TestServer testServer = new TestServer(
+            context => contentLength = context.Request.ContentLength!.Value);
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "POST";
+        message.Request.Content = null;
+
+        message.Request.Content = new InvalidSizeContent();
+        message.Request.Headers.Add("Content-Length", "50");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.True(message.Request.Content.TryComputeLength(out var cl));
+        Assert.AreEqual(10, cl);
+        Assert.AreEqual(50, contentLength);
+    }
+
+    [Test]
+    public async Task CanSetRequestHeaderContentLengthOverMaxInt()
+    {
+        long contentLength = 0;
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                contentLength = context.Request.ContentLength!.Value;
+                context.Abort();
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "POST";
+        message.Request.Content = null;
+
+        message.Request.Content = new InvalidSizeContent();
+        message.Request.Headers.Add("Content-Length", long.MaxValue.ToString());
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(long.MaxValue, contentLength);
+        Assert.Greater(contentLength, int.MaxValue);
     }
 
     [Test]
@@ -267,6 +344,31 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
         }
 
         public bool IsDisposed { get; set; }
+    }
+
+    private class InvalidSizeContent : BinaryContent
+    {
+        private static readonly BinaryContent _innerContent = BinaryContent.Create(BinaryData.FromBytes(new byte[50]));
+
+        public override void Dispose()
+        {
+        }
+
+        public override bool TryComputeLength(out long length)
+        {
+            length = 10;
+            return true;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellation)
+        {
+            _innerContent.WriteTo(stream, cancellation);
+        }
+
+        public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        {
+            return _innerContent.WriteToAsync(stream, cancellation);
+        }
     }
 
     #endregion
