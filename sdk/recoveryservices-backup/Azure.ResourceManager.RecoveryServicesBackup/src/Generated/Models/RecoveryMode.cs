@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InvalidValue = "Invalid";
         private const string FileRecoveryValue = "FileRecovery";
         private const string WorkloadRecoveryValue = "WorkloadRecovery";
+        private const string SnapshotAttachValue = "SnapshotAttach";
+        private const string RecoveryUsingSnapshotValue = "RecoveryUsingSnapshot";
+        private const string SnapshotAttachAndRecoverValue = "SnapshotAttachAndRecover";
 
         /// <summary> Invalid. </summary>
         public static RecoveryMode Invalid { get; } = new RecoveryMode(InvalidValue);
@@ -32,6 +35,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static RecoveryMode FileRecovery { get; } = new RecoveryMode(FileRecoveryValue);
         /// <summary> WorkloadRecovery. </summary>
         public static RecoveryMode WorkloadRecovery { get; } = new RecoveryMode(WorkloadRecoveryValue);
+        /// <summary> SnapshotAttach. </summary>
+        public static RecoveryMode SnapshotAttach { get; } = new RecoveryMode(SnapshotAttachValue);
+        /// <summary> RecoveryUsingSnapshot. </summary>
+        public static RecoveryMode RecoveryUsingSnapshot { get; } = new RecoveryMode(RecoveryUsingSnapshotValue);
+        /// <summary> SnapshotAttachAndRecover. </summary>
+        public static RecoveryMode SnapshotAttachAndRecover { get; } = new RecoveryMode(SnapshotAttachAndRecoverValue);
         /// <summary> Determines if two <see cref="RecoveryMode"/> values are the same. </summary>
         public static bool operator ==(RecoveryMode left, RecoveryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryMode"/> values are not the same. </summary>

@@ -927,9 +927,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public Azure.ResourceManager.HybridNetwork.Models.AzureArcKubernetesArtifactProfile ArtifactProfile { get { throw null; } set { } }
         public Azure.ResourceManager.HybridNetwork.Models.AzureArcKubernetesDeployMappingRuleProfile DeployParametersMappingRuleProfile { get { throw null; } set { } }
     }
-    public partial class AzureArcKubernetesNetworkFunctionApplication : Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionApplication
+    public abstract partial class AzureArcKubernetesNetworkFunctionApplication : Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionApplication
     {
-        public AzureArcKubernetesNetworkFunctionApplication() { }
+        protected AzureArcKubernetesNetworkFunctionApplication() { }
     }
     public partial class AzureArcKubernetesNetworkFunctionTemplate : Azure.ResourceManager.HybridNetwork.Models.ContainerizedNetworkFunctionTemplate
     {
@@ -955,9 +955,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public AzureCoreArmTemplateDeployMappingRuleProfile() { }
         public string TemplateParameters { get { throw null; } set { } }
     }
-    public partial class AzureCoreNetworkFunctionApplication : Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionApplication
+    public abstract partial class AzureCoreNetworkFunctionApplication : Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionApplication
     {
-        public AzureCoreNetworkFunctionApplication() { }
+        protected AzureCoreNetworkFunctionApplication() { }
     }
     public partial class AzureCoreNetworkFunctionArmTemplateApplication : Azure.ResourceManager.HybridNetwork.Models.AzureCoreNetworkFunctionApplication
     {
@@ -1016,9 +1016,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public AzureOperatorNexusImageDeployMappingRuleProfile() { }
         public string ImageMappingRuleUserConfiguration { get { throw null; } set { } }
     }
-    public partial class AzureOperatorNexusNetworkFunctionApplication : Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionApplication
+    public abstract partial class AzureOperatorNexusNetworkFunctionApplication : Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionApplication
     {
-        public AzureOperatorNexusNetworkFunctionApplication() { }
+        protected AzureOperatorNexusNetworkFunctionApplication() { }
     }
     public partial class AzureOperatorNexusNetworkFunctionArmTemplateApplication : Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusNetworkFunctionApplication
     {

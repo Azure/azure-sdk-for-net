@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Regional data boundary values.
-    /// Serialized Name: RegionalDataBoundary
-    /// </summary>
+    /// <summary> Regional data boundary values. </summary>
     public readonly partial struct RegionalDataBoundary : IEquatable<RegionalDataBoundary>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Sphere.Models
         private const string NoneValue = "None";
         private const string EUValue = "EU";
 
-        /// <summary>
-        /// No data boundary
-        /// Serialized Name: RegionalDataBoundary.None
-        /// </summary>
+        /// <summary> No data boundary. </summary>
         public static RegionalDataBoundary None { get; } = new RegionalDataBoundary(NoneValue);
-        /// <summary>
-        /// EU data boundary
-        /// Serialized Name: RegionalDataBoundary.EU
-        /// </summary>
+        /// <summary> EU data boundary. </summary>
         public static RegionalDataBoundary EU { get; } = new RegionalDataBoundary(EUValue);
         /// <summary> Determines if two <see cref="RegionalDataBoundary"/> values are the same. </summary>
         public static bool operator ==(RegionalDataBoundary left, RegionalDataBoundary right) => left.Equals(right);

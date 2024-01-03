@@ -9,11 +9,9 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Azure.Search.Documents.Indexes.Models;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -55,10 +53,19 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets { get; internal set; }
 
-        /// <summary>
-        /// Gets the semantic search result.
-        /// </summary>
-        public SemanticSearchResults SemanticSearch { get; internal set; }
+        /// <summary> The answers query results for the search operation;
+        /// <c>null</c> if the <see cref="SearchOptions.QueryAnswer"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
+        public IList<AnswerResult> Answers { get; internal set; }
+
+        /// <summary> The captions query results for the search operation;
+        /// <c>null</c> if the <see cref="SearchOptions.QueryCaption"/> parameter was not specified or set to <see cref="QueryCaptionType.None"/>. </summary>
+        public IList<CaptionResult> Captions { get; internal set; }
+
+        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
+        public SemanticPartialResponseReason? SemanticPartialResponseReason { get; internal set; }
+
+        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
+        public SemanticPartialResponseType? SemanticPartialResponseType { get; internal set; }
 
         /// <summary>
         /// Gets the first (server side) page of search result values.
@@ -185,7 +192,6 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
             SearchResults<T> results = new SearchResults<T>();
-            results.SemanticSearch = new SemanticSearchResults();
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.ODataCountKeyJson.EncodedUtf8Bytes) &&
@@ -238,25 +244,33 @@ namespace Azure.Search.Documents.Models
                 {
                     results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
                 }
-                else if (prop.NameEquals(Constants.SearchSemanticErrorReasonKeyJson.EncodedUtf8Bytes) &&
+                else if (prop.NameEquals(Constants.SearchSemanticPartialResponseReasonKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.SemanticSearch.ErrorReason = new SemanticErrorReason(prop.Value.GetString());
+                    results.SemanticPartialResponseReason = new SemanticPartialResponseReason(prop.Value.GetString());
                 }
-                else if (prop.NameEquals(Constants.SearchSemanticSearchResultsTypeKeyJson.EncodedUtf8Bytes) &&
+                else if (prop.NameEquals(Constants.SearchSemanticPartialResponseTypeKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.SemanticSearch.ResultsType = new SemanticSearchResultsType(prop.Value.GetString());
+                    results.SemanticPartialResponseType = new SemanticPartialResponseType(prop.Value.GetString());
                 }
                 else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    List<QueryAnswerResult> answerResults = new List<QueryAnswerResult>();
+                    results.Answers = new List<AnswerResult>();
                     foreach (JsonElement answerValue in prop.Value.EnumerateArray())
                     {
-                        answerResults.Add(QueryAnswerResult.DeserializeQueryAnswerResult(answerValue));
+                        results.Answers.Add(AnswerResult.DeserializeAnswerResult(answerValue));
                     }
-                    results.SemanticSearch.Answers = answerResults;
+                }
+                else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    results.Captions = new List<CaptionResult>();
+                    foreach (JsonElement captionValue in prop.Value.EnumerateArray())
+                    {
+                        results.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
+                    }
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
@@ -275,22 +289,6 @@ namespace Azure.Search.Documents.Models
             }
             return results;
         }
-    }
-
-    /// <summary>
-    /// Semantic search results from an index.
-    /// </summary>
-    public class SemanticSearchResults
-    {
-        /// <summary> The answers query results for the search operation;
-        /// <c>null</c> if the <see cref="QueryAnswer.AnswerType"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
-        public IReadOnlyList<QueryAnswerResult> Answers { get; internal set; }
-
-        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
-        public SemanticErrorReason? ErrorReason { get; internal set; }
-
-        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
-        public SemanticSearchResultsType? ResultsType { get; internal set; }
     }
 
     /// <summary>
@@ -340,10 +338,11 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets => _results.Facets;
 
-        /// <summary>
-        /// Semantic search results from an index.
-        /// </summary>
-        public SemanticSearchResults SemanticSearch => _results.SemanticSearch;
+        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
+        public SemanticPartialResponseReason? SemanticPartialResponseReason => _results.SemanticPartialResponseReason;
+
+        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
+        public SemanticPartialResponseType? SemanticPartialResponseType => _results.SemanticPartialResponseType;
 
         /// <inheritdoc />
         public override IReadOnlyList<SearchResult<T>> Values =>
