@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task ChatCompletionsContentFilterCategories(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.ChatCompletions);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
             var requestOptions = new ChatCompletionsOptions()
             {
                 DeploymentName = deploymentOrModelName,
