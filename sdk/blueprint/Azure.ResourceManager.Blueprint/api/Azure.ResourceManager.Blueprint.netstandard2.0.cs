@@ -1,8 +1,8 @@
 namespace Azure.ResourceManager.Blueprint
 {
-    public partial class ArtifactData : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class ArtifactData : Azure.ResourceManager.Models.ResourceData
     {
-        public ArtifactData() { }
+        protected ArtifactData() { }
     }
     public partial class AssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.AssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.AssignmentResource>, System.Collections.IEnumerable
     {
