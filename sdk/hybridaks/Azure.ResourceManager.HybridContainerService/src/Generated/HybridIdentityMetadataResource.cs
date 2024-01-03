@@ -25,13 +25,10 @@ namespace Azure.ResourceManager.HybridContainerService
     public partial class HybridIdentityMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridIdentityMetadataResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        /// <param name="hybridIdentityMetadataResourceName"> The hybridIdentityMetadataResourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName)
+        /// <param name="connectedClusterResourceUri"> The connectedClusterResourceUri. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}";
+            var resourceId = $"{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -40,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService
         private readonly HybridIdentityMetadataData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusters/hybridIdentityMetadata";
+        public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusterInstances/hybridIdentityMetadata";
 
         /// <summary> Initializes a new instance of the <see cref="HybridIdentityMetadataResource"/> class for mocking. </summary>
         protected HybridIdentityMetadataResource()
@@ -95,7 +92,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -110,7 +107,7 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.GetAsync(Id.Parent.Parent, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
@@ -127,7 +124,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -142,7 +139,7 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Get(Id.Parent.Parent, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridIdentityMetadataResource(Client, response.Value), response.GetRawResponse());
@@ -159,7 +156,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -175,8 +172,8 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation(response);
+                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.DeleteAsync(Id.Parent.Parent, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridContainerServiceArmOperation(_hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateDeleteRequest(Id.Parent.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -193,7 +190,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -209,8 +206,8 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation(response);
+                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Delete(Id.Parent.Parent, cancellationToken);
+                var operation = new HybridContainerServiceArmOperation(_hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics, Pipeline, _hybridIdentityMetadataHybridIdentityMetadataRestClient.CreateDeleteRequest(Id.Parent.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -227,7 +224,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -239,15 +236,15 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="data"> The <see cref="HybridIdentityMetadataData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HybridIdentityMetadataResource>> UpdateAsync(WaitUntil waitUntil, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridIdentityMetadataResource>> CreateOrUpdateAsync(WaitUntil waitUntil, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataResource.Update");
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridIdentityMetadataHybridIdentityMetadataRestClient.PutAsync(Id.Parent.Parent, data, cancellationToken).ConfigureAwait(false);
                 var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -265,7 +262,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/hybridIdentityMetadata/{hybridIdentityMetadataResourceName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -277,15 +274,15 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="data"> The <see cref="HybridIdentityMetadataData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HybridIdentityMetadataResource> Update(WaitUntil waitUntil, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridIdentityMetadataResource> CreateOrUpdate(WaitUntil waitUntil, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataResource.Update");
+            using var scope = _hybridIdentityMetadataHybridIdentityMetadataClientDiagnostics.CreateScope("HybridIdentityMetadataResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var response = _hybridIdentityMetadataHybridIdentityMetadataRestClient.Put(Id.Parent.Parent, data, cancellationToken);
                 var operation = new HybridContainerServiceArmOperation<HybridIdentityMetadataResource>(Response.FromValue(new HybridIdentityMetadataResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);

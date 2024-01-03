@@ -266,7 +266,7 @@ namespace Azure.Core.Pipeline
         {
             return _delayStrategy.GetNextDelay(
                 message.HasResponse ? message.Response : default,
-                message.RetryNumber);
+                message.RetryNumber + 1);
         }
     }
 }

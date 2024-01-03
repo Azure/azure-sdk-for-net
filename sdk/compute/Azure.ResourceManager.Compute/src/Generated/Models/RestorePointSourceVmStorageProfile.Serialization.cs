@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Optional<RestorePointSourceVmOSDisk> osDisk = default;
             Optional<IList<RestorePointSourceVmDataDisk>> dataDisks = default;
+            Optional<DiskControllerType> diskControllerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
@@ -67,8 +68,17 @@ namespace Azure.ResourceManager.Compute.Models
                     dataDisks = array;
                     continue;
                 }
+                if (property.NameEquals("diskControllerType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskControllerType = new DiskControllerType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new RestorePointSourceVmStorageProfile(osDisk.Value, Optional.ToList(dataDisks));
+            return new RestorePointSourceVmStorageProfile(osDisk.Value, Optional.ToList(dataDisks), Optional.ToNullable(diskControllerType));
         }
     }
 }

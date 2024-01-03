@@ -349,6 +349,9 @@ prepend-rp-prefix:
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
 
+suppress-abstract-base-class:
+- CosmosDBServiceProperties
+
 directive:
 # The notebook is offline due to security issues
 - from: notebook.json

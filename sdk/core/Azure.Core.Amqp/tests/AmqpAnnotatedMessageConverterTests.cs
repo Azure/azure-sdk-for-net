@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Azure.Core.Amqp.Shared;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Core.Amqp.Tests
@@ -70,16 +72,15 @@ namespace Azure.Core.Amqp.Tests
         public void CanRoundTripDataMessage()
         {
             var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new ReadOnlyMemory<byte>[] { Encoding.UTF8.GetBytes("some data") }));
-            DateTimeOffset time = DateTimeOffset.Now.AddDays(1);
 
-            SetCommonProperties(message, time);
+            SetCommonProperties(message);
 
             message = AmqpAnnotatedMessage.FromBytes(message.ToBytes());
             Assert.AreEqual(AmqpMessageBodyType.Data, message.Body.BodyType);
             Assert.IsTrue(message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> body));
             Assert.AreEqual("some data", Encoding.UTF8.GetString(body.First().ToArray()));
 
-            AssertCommonProperties(message, time);
+            AssertCommonProperties(message);
         }
 
         [Test]
@@ -88,13 +89,13 @@ namespace Azure.Core.Amqp.Tests
         {
             var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(value));
             DateTimeOffset time = DateTimeOffset.Now.AddDays(1);
-            SetCommonProperties(message, time);
+            SetCommonProperties(message);
 
             message = AmqpAnnotatedMessage.FromBytes(message.ToBytes());
 
             Assert.IsTrue(message.Body.TryGetValue(out var receivedData));
             Assert.AreEqual(value, receivedData);
-            AssertCommonProperties(message, time);
+            AssertCommonProperties(message);
         }
 
         [Test]
@@ -102,8 +103,7 @@ namespace Azure.Core.Amqp.Tests
         public void CanRoundTripSequenceBodyMessages(IEnumerable<IList<object>> sequence)
         {
             var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromSequence(sequence));
-            DateTimeOffset time = DateTimeOffset.Now.AddDays(1);
-            SetCommonProperties(message, time);
+            SetCommonProperties(message);
 
             message = AmqpAnnotatedMessage.FromBytes(message.ToBytes());
 
@@ -119,10 +119,102 @@ namespace Azure.Core.Amqp.Tests
                     Assert.AreEqual(elem, innerEnum.Current);
                 }
             }
-            AssertCommonProperties(message, time);
+            AssertCommonProperties(message);
         }
 
-        private static void AssertCommonProperties(AmqpAnnotatedMessage message, DateTimeOffset time)
+        [Test]
+        public void TimeToLiveIsOverriddenOnReceivedMessageByAbsoluteExpiryTime()
+        {
+            var amqpMessage =
+                AmqpAnnotatedMessageConverter.ToAmqpMessage(new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5)));
+
+            amqpMessage.Properties.CreationTime = DateTime.UtcNow;
+            amqpMessage.Properties.AbsoluteExpiryTime = DateTime.MaxValue;
+            amqpMessage.Header.Ttl = (uint) TimeSpan.FromDays(49).TotalMilliseconds;
+
+            var annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
+
+            // The expected TTL will disregard the TTL set on the header and instead calculate it based on expiry time and creation time.
+            var expectedTtl = amqpMessage.Properties.AbsoluteExpiryTime - amqpMessage.Properties.CreationTime;
+            Assert.AreEqual(expectedTtl, annotatedMessage.Header.TimeToLive);
+        }
+
+        [Test]
+        public void TimeToLiveIsNotOverridenWhenNoAbsoluteExpiryTimePresent()
+        {
+            var amqpMessage =
+                AmqpAnnotatedMessageConverter.ToAmqpMessage(new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5)));
+
+            amqpMessage.Properties.CreationTime = DateTime.UtcNow;
+            amqpMessage.Header.Ttl = (uint) TimeSpan.FromDays(49).TotalMilliseconds;
+
+            var annotatedMessage = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
+
+            Assert.AreEqual(TimeSpan.FromDays(49), annotatedMessage.Header.TimeToLive);
+        }
+
+        [Test]
+        public void TimeToLiveRoundTripsCorrectlyWithGreaterThanMaxInt()
+        {
+            var input = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5))
+                {
+                    Header =
+                    {
+                        TimeToLive = TimeSpan.FromDays(100)
+                    }
+                };
+            var amqpMessage = AmqpAnnotatedMessageConverter.ToAmqpMessage(input);
+
+            Assert.AreEqual(uint.MaxValue, amqpMessage.Header.Ttl);
+            Assert.AreEqual(amqpMessage.Properties.CreationTime + TimeSpan.FromDays(100), amqpMessage.Properties.AbsoluteExpiryTime);
+
+            var output = AmqpAnnotatedMessageConverter.FromAmqpMessage(amqpMessage);
+
+            Assert.AreEqual(TimeSpan.FromDays(100), output.Header.TimeToLive);
+            Assert.AreEqual(amqpMessage.Properties.CreationTime, output.Properties.CreationTime!.Value.UtcDateTime);
+            Assert.AreEqual(amqpMessage.Properties.AbsoluteExpiryTime, output.Properties.AbsoluteExpiryTime!.Value.UtcDateTime);
+        }
+
+        [Test]
+        public void AbsoluteExpiryTimeAndCreationTimeNotSetWhenNoTtl()
+        {
+            var input = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5));
+            var amqpMessage = AmqpAnnotatedMessageConverter.ToAmqpMessage(input);
+
+            Assert.IsNull(amqpMessage.Header.Ttl);
+            Assert.IsNull(amqpMessage.Properties.CreationTime);
+            Assert.IsNull(amqpMessage.Properties.AbsoluteExpiryTime);
+        }
+
+        [Test]
+        public void AbsoluteExpiryTimeAndCreationTimeSetOnMessageWhenSetExplicitly()
+        {
+            var input = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5));
+            var now = DateTime.UtcNow;
+            input.Properties.CreationTime = now;
+            input.Properties.AbsoluteExpiryTime = now + TimeSpan.FromDays(1);
+            var amqpMessage = AmqpAnnotatedMessageConverter.ToAmqpMessage(input);
+
+            Assert.IsNull(amqpMessage.Header.Ttl);
+            Assert.AreEqual(now, amqpMessage.Properties.CreationTime);
+            Assert.AreEqual(now + TimeSpan.FromDays(1), amqpMessage.Properties.AbsoluteExpiryTime);
+        }
+
+        [Test]
+        public void AbsoluteExpiryTimeAndCreationTimeAreOverridenBasedOnTtlWhenSending()
+        {
+            var input = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(5));
+            var now = DateTimeOffset.UtcNow;
+            input.Properties.CreationTime = now;
+            input.Properties.AbsoluteExpiryTime = now + TimeSpan.FromDays(1);
+            input.Header.TimeToLive = TimeSpan.FromDays(7);
+            var amqpMessage = AmqpAnnotatedMessageConverter.ToAmqpMessage(input);
+
+            Assert.AreEqual(TimeSpan.FromDays(7).TotalMilliseconds, amqpMessage.Header.Ttl);
+            Assert.AreEqual(amqpMessage.Properties.CreationTime + TimeSpan.FromDays(7), amqpMessage.Properties.AbsoluteExpiryTime);
+        }
+
+        private static void AssertCommonProperties(AmqpAnnotatedMessage message)
         {
             Assert.AreEqual("applicationValue", message.ApplicationProperties["applicationKey"]);
             Assert.AreEqual("deliveryValue", message.DeliveryAnnotations["deliveryKey"]);
@@ -134,11 +226,12 @@ namespace Azure.Core.Amqp.Tests
             Assert.AreEqual(1, message.Header.Priority);
             Assert.AreEqual(TimeSpan.FromSeconds(60), message.Header.TimeToLive);
             // because AMQP only has millisecond resolution, allow for up to a 1ms difference when round-tripping
-            Assert.That(time, Is.EqualTo(message.Properties.AbsoluteExpiryTime.Value).Within(1).Milliseconds);
+            Assert.IsNotNull(message.Properties.CreationTime);
+            // AbsoluteExpiryTime is set based on TTL and CreationTime for outgoing messages
+            Assert.That(message.Properties.CreationTime + TimeSpan.FromSeconds(60), Is.EqualTo(message.Properties.AbsoluteExpiryTime.Value).Within(1).Milliseconds);
             Assert.AreEqual("compress", message.Properties.ContentEncoding);
             Assert.AreEqual("application/json", message.Properties.ContentType);
             Assert.AreEqual("correlationId", message.Properties.CorrelationId.ToString());
-            Assert.That(time, Is.EqualTo(message.Properties.CreationTime.Value).Within(1).Milliseconds);
             Assert.AreEqual("groupId", message.Properties.GroupId);
             Assert.AreEqual(5, message.Properties.GroupSequence);
             Assert.AreEqual("messageId", message.Properties.MessageId.ToString());
@@ -149,7 +242,7 @@ namespace Azure.Core.Amqp.Tests
             Assert.AreEqual("userId", Encoding.UTF8.GetString(message.Properties.UserId.Value.ToArray()));
         }
 
-        private static void SetCommonProperties(AmqpAnnotatedMessage message, DateTimeOffset time)
+        private static void SetCommonProperties(AmqpAnnotatedMessage message)
         {
             message.ApplicationProperties.Add("applicationKey", "applicationValue");
             message.DeliveryAnnotations.Add("deliveryKey", "deliveryValue");
@@ -160,11 +253,9 @@ namespace Azure.Core.Amqp.Tests
             message.Header.FirstAcquirer = true;
             message.Header.Priority = 1;
             message.Header.TimeToLive = TimeSpan.FromSeconds(60);
-            message.Properties.AbsoluteExpiryTime = time;
             message.Properties.ContentEncoding = "compress";
             message.Properties.ContentType = "application/json";
             message.Properties.CorrelationId = new AmqpMessageId("correlationId");
-            message.Properties.CreationTime = time;
             message.Properties.GroupId = "groupId";
             message.Properties.GroupSequence = 5;
             message.Properties.MessageId = new AmqpMessageId("messageId");

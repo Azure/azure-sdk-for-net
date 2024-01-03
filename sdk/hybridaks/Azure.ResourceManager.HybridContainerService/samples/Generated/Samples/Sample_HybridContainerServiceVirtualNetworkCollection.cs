@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/GetVirtualNetwork.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/GetVirtualNetwork.json
             // this example is just showing the usage of "virtualNetworks_Retrieve" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             HybridContainerServiceVirtualNetworkCollection collection = resourceGroupResource.GetHybridContainerServiceVirtualNetworks();
 
             // invoke the operation
-            string virtualNetworksName = "test-vnet-static";
-            HybridContainerServiceVirtualNetworkResource result = await collection.GetAsync(virtualNetworksName);
+            string virtualNetworkName = "test-vnet-static";
+            HybridContainerServiceVirtualNetworkResource result = await collection.GetAsync(virtualNetworkName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/GetVirtualNetwork.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/GetVirtualNetwork.json
             // this example is just showing the usage of "virtualNetworks_Retrieve" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             HybridContainerServiceVirtualNetworkCollection collection = resourceGroupResource.GetHybridContainerServiceVirtualNetworks();
 
             // invoke the operation
-            string virtualNetworksName = "test-vnet-static";
-            bool result = await collection.ExistsAsync(virtualNetworksName);
+            string virtualNetworkName = "test-vnet-static";
+            bool result = await collection.ExistsAsync(virtualNetworkName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetVirtualNetwork()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/GetVirtualNetwork.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/GetVirtualNetwork.json
             // this example is just showing the usage of "virtualNetworks_Retrieve" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             HybridContainerServiceVirtualNetworkCollection collection = resourceGroupResource.GetHybridContainerServiceVirtualNetworks();
 
             // invoke the operation
-            string virtualNetworksName = "test-vnet-static";
-            NullableResponse<HybridContainerServiceVirtualNetworkResource> response = await collection.GetIfExistsAsync(virtualNetworksName);
+            string virtualNetworkName = "test-vnet-static";
+            NullableResponse<HybridContainerServiceVirtualNetworkResource> response = await collection.GetIfExistsAsync(virtualNetworkName);
             HybridContainerServiceVirtualNetworkResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutVirtualNetwork()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/PutVirtualNetwork.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/PutVirtualNetwork.json
             // this example is just showing the usage of "virtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,23 +149,18 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
             HybridContainerServiceVirtualNetworkCollection collection = resourceGroupResource.GetHybridContainerServiceVirtualNetworks();
 
             // invoke the operation
-            string virtualNetworksName = "test-vnet-static";
+            string virtualNetworkName = "test-vnet-static";
             HybridContainerServiceVirtualNetworkData data = new HybridContainerServiceVirtualNetworkData(new AzureLocation("westus"))
             {
-                Properties = new VirtualNetworksProperties()
+                Properties = new HybridContainerServiceVirtualNetworkProperties()
                 {
-                    InfraVnetProfile = new VirtualNetworksPropertiesInfraVnetProfile()
+                    InfraVnetProfile = new InfraVnetProfile()
                     {
-                        Hci = new VirtualNetworksPropertiesInfraVnetProfileHci()
-                        {
-                            MocGroup = "target-group",
-                            MocLocation = "MocLocation",
-                            MocVnetName = "test-vnet",
-                        },
+                        VmwareSegmentName = "test-network",
                     },
                     VipPool =
 {
-new VirtualNetworksPropertiesVipPoolItem()
+new KubernetesVirtualIPItem()
 {
 EndIP = "192.168.0.50",
 StartIP = "192.168.0.10",
@@ -173,20 +168,27 @@ StartIP = "192.168.0.10",
 },
                     VmipPool =
 {
-new VirtualNetworksPropertiesVmipPoolItem()
+new VirtualMachineIPItem()
 {
 EndIP = "192.168.0.130",
 StartIP = "192.168.0.110",
 }
 },
+                    DnsServers =
+{
+"192.168.0.1"
+},
+                    Gateway = "192.168.0.1",
+                    IPAddressPrefix = "192.168.0.0/16",
+                    VlanId = 10,
                 },
-                ExtendedLocation = new VirtualNetworksExtendedLocation()
+                ExtendedLocation = new HybridContainerServiceExtendedLocation()
                 {
-                    VirtualNetworksExtendedLocationType = "CustomLocation",
+                    ExtendedLocationType = HybridContainerServiceExtendedLocationType.CustomLocation,
                     Name = "/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/resourcegroups/test-arcappliance-resgrp/providers/microsoft.extendedlocation/customlocations/testcustomlocation",
                 },
             };
-            ArmOperation<HybridContainerServiceVirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworksName, data);
+            ArmOperation<HybridContainerServiceVirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
             HybridContainerServiceVirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -201,7 +203,7 @@ StartIP = "192.168.0.110",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListVirtualNetworkByResourceGroup()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/ListVirtualNetworkByResourceGroup.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/ListVirtualNetworkByResourceGroup.json
             // this example is just showing the usage of "virtualNetworks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

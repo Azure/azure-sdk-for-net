@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridContainerService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
             ProvisionedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles = default;
             foreach (var property in element.EnumerateObject())
@@ -83,7 +83,11 @@ namespace Azure.ResourceManager.HybridContainerService
                     {
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new HybridContainerServiceResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("controlPlaneProfile"u8))
@@ -105,7 +109,7 @@ namespace Azure.ResourceManager.HybridContainerService
                     continue;
                 }
             }
-            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, provisioningState.Value, controlPlaneProfile, agentPoolProfiles);
+            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), controlPlaneProfile, agentPoolProfiles);
         }
     }
 }

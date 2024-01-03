@@ -29,7 +29,7 @@ public static partial class AzureOpenAIModelFactory
     public static ChatChoice ChatChoice(
         ChatResponseMessage message = null,
         int index = default,
-        CompletionsFinishReason finishReason = default,
+        CompletionsFinishReason? finishReason = null,
         ChatFinishDetails finishDetails = null,
         ChatResponseMessage deltaMessage = null,
         ContentFilterResultsForChoice contentFilterResults = null,
@@ -76,6 +76,10 @@ public static partial class AzureOpenAIModelFactory
         return new StreamingFunctionToolCallUpdate(id, toolCallIndex, functionName, functionArgumentsUpdate);
     }
 
+    // CUSTOM CODE NOTE:
+    // Because we customized one of the properties to be internal, this method cannot be
+    // auto-generated and must be added manually.
+
     /// <summary> Initializes a new instance of AudioTranscription. </summary>
     /// <param name="text"> Transcribed text. </param>
     /// <param name="language"> Language detected in the source audio file. </param>
@@ -86,6 +90,10 @@ public static partial class AzureOpenAIModelFactory
     {
         return new AudioTranscription(text, default, language, duration, segments);
     }
+
+    // CUSTOM CODE NOTE:
+    // Because we customized one of the properties to be internal, this method cannot be
+    // auto-generated and must be added manually.
 
     /// <summary> Initializes a new instance of AudioTranslation. </summary>
     /// <param name="text"> Translated text. </param>

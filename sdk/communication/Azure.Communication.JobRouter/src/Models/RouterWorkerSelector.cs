@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
@@ -10,18 +11,25 @@ namespace Azure.Communication.JobRouter
     public partial class RouterWorkerSelector : IUtf8JsonSerializable
     {
         /// <summary> Describes how long this label selector is valid for. </summary>
+        [CodeGenMember("ExpiresAfterSeconds")]
+        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteExpiresAfter), DeserializationValueHook = nameof(ReadExpiresAfter))]
         public TimeSpan? ExpiresAfter { get; set; }
 
-        [CodeGenMember("ExpiresAfterSeconds")]
-        internal double? _expiresAfterSeconds {
-            get
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void WriteExpiresAfter(Utf8JsonWriter writer)
+        {
+            writer.WriteNumberValue(ExpiresAfter.Value.TotalSeconds);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadExpiresAfter(JsonProperty property, ref Optional<TimeSpan> expiresAfter)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
             {
-                return ExpiresAfter?.TotalSeconds is null or 0 ? null : ExpiresAfter?.TotalSeconds;
+                return;
             }
-            set
-            {
-                ExpiresAfter = value != null ? TimeSpan.FromSeconds(value.Value) : null;
-            }
+            var value = property.Value.GetDouble();
+            expiresAfter = TimeSpan.FromSeconds(value);
         }
 
         [CodeGenMember("Value")]
@@ -66,10 +74,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(_value.ToObjectFromJson<object>());
             }
-            if (Optional.IsDefined(_expiresAfterSeconds))
+            if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
-                writer.WriteNumberValue(_expiresAfterSeconds.Value);
+                WriteExpiresAfter(writer);
             }
             if (Optional.IsDefined(Expedite))
             {

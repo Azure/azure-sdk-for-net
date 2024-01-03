@@ -3,38 +3,47 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     public partial class RouterQueueStatistics
     {
-        [CodeGenMember("EstimatedWaitTimeMinutes")]
-        internal IDictionary<string, double> _estimatedWaitTimeMinutes
-        {
-            get
-            {
-                return EstimatedWaitTimes != null && EstimatedWaitTimes.Count != 0
-                    ? EstimatedWaitTimes.ToDictionary(x => x.Key.ToString(), x => x.Value.TotalMinutes)
-                    : new ChangeTrackingDictionary<string, double>();
-            }
-            set
-            {
-                if (value != null && value.Count != 0)
-                {
-                    foreach (var estimatedWaitTime in value)
-                    {
-                        EstimatedWaitTimes[int.Parse(estimatedWaitTime.Key)] = TimeSpan.FromMinutes(estimatedWaitTime.Value);
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// The estimated wait time of this queue rounded up to the nearest minute, grouped
         /// by job priority
         /// </summary>
-        public IDictionary<int, TimeSpan> EstimatedWaitTimes { get; } = new Dictionary<int, TimeSpan>();
+        [CodeGenMember("EstimatedWaitTimeMinutes")]
+        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteEstimatedWaitTimes), DeserializationValueHook = nameof(ReadEstimatedWaitTimes))]
+        public IDictionary<int, TimeSpan> EstimatedWaitTimes { get; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void WriteEstimatedWaitTimes(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            foreach (var item in EstimatedWaitTimes)
+            {
+                writer.WritePropertyName(item.Key.ToString());
+                writer.WriteNumberValue(item.Value.TotalMinutes);
+            }
+            writer.WriteEndObject();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadEstimatedWaitTimes(JsonProperty property, ref Optional<IDictionary<int, TimeSpan>> estimatedWaitTimes)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            var result = new Dictionary<int, TimeSpan>();
+            foreach (var property0 in property.Value.EnumerateObject())
+            {
+                result.Add(int.Parse(property0.Name), TimeSpan.FromMinutes(property0.Value.GetDouble()));
+            }
+            estimatedWaitTimes = result;
+        }
     }
 }

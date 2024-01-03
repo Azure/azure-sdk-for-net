@@ -708,7 +708,8 @@ ChatCompletionsOptions chatCompletionsOptions = new()
 ```
 
 Chat Completions will then proceed as usual, though the model may report the more informative `finish_details` in lieu
-of `finish_reason`:
+of `finish_reason`; this will converge as `gpt-4-vision-preview` is updated but checking for either one is recommended
+in the interim:
 
 ```C# Snippet:GetResponseFromImages
 Response<ChatCompletions> chatResponse = await client.GetChatCompletionsAsync(chatCompletionsOptions);

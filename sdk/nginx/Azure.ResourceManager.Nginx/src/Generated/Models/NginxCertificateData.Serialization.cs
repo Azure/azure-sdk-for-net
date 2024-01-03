@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -23,19 +22,11 @@ namespace Azure.ResourceManager.Nginx
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
@@ -46,8 +37,7 @@ namespace Azure.ResourceManager.Nginx
                 return null;
             }
             Optional<NginxCertificateProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
-            AzureLocation location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -63,22 +53,12 @@ namespace Azure.ResourceManager.Nginx
                     properties = NginxCertificateProperties.DeserializeNginxCertificateProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
@@ -107,7 +87,7 @@ namespace Azure.ResourceManager.Nginx
                     continue;
                 }
             }
-            return new NginxCertificateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
+            return new NginxCertificateData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
         }
     }
 }
