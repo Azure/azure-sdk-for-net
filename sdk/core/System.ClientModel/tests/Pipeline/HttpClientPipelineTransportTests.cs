@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Pipeline;
 
+/// <summary>
+/// Tests the specific implementation of HttpClientPipelineTransport.
+/// </summary>
 public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 {
     public HttpClientPipelineTransportTests(bool isAsync) : base(isAsync)
@@ -21,7 +24,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task CanGetAndSetUri()
+    public async Task CanSetRequestUri()
     {
         Uri? requestUri = null;
         var mockHandler = new MockHttpClientHandler(
@@ -43,7 +46,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task DoesntDisposeContentWhenStreamIsReplaced()
+    public async Task ResponseContentNotDisposedWhenStreamIsReplaced()
     {
         DisposeTrackingHttpContent disposeTrackingContent = new DisposeTrackingHttpContent();
 
@@ -72,7 +75,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
     }
 
     [TestCaseSource(nameof(HeadersWithValuesAndType))]
-    public async Task SettingContentHeaderDoesNotSetContent(string headerName, string headerValue, bool contentHeader)
+    public async Task SettingRequestContentHeaderDoesNotSetContent(string headerName, string headerValue, bool contentHeader)
     {
         HttpContent? httpMessageContent = null;
 
@@ -95,7 +98,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
     }
 
     [TestCaseSource(nameof(HeadersWithValuesAndType))]
-    public async Task SettingContentStreamPreservesHeaders(string headerName, string headerValue, bool contentHeader)
+    public async Task SettingResponseContentStreamPreservesHeaders(string headerName, string headerValue, bool contentHeader)
     {
         var mockHandler = new MockHttpClientHandler(
             httpRequestMessage =>
