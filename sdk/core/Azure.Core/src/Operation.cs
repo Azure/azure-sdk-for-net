@@ -19,7 +19,7 @@ namespace Azure
         /// <summary>
         /// Gets an ID representing the operation that can be used to rehydrate the operation.
         /// </summary>
-        public virtual string RehydrationId => string.Empty;
+        public virtual string RehydrationId => Id;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
