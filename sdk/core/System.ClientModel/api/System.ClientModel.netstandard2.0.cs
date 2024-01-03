@@ -241,15 +241,6 @@ namespace System.ClientModel.Primitives
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
-    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
-    {
-        public ModelJsonConverter() { }
-        public ModelJsonConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public System.ClientModel.Primitives.ModelReaderWriterOptions Options { get { throw null; } }
-        public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
-    }
     public static partial class ModelReaderWriter
     {
         public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
