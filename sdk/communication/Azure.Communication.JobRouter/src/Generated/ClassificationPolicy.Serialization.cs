@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            string etag = default;
+            ETag etag = default;
             string id = default;
             Optional<string> name = default;
             Optional<string> fallbackQueueId = default;
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

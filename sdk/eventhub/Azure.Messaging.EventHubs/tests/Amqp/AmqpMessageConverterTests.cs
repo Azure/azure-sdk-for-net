@@ -1654,11 +1654,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Properties
 
-            Assert.That(convertedMessage.Properties.AbsoluteExpiryTime, Is.EqualTo(sourceMessage.Properties.AbsoluteExpiryTime), "The expiry time should match.");
+            Assert.That(convertedMessage.Properties.AbsoluteExpiryTime!.Value.UtcDateTime, Is.EqualTo(tempMessage.Properties.CreationTime + sourceMessage.Header.TimeToLive), "The expiry time should be based on creation time and TimeToLive.");
             Assert.That(convertedMessage.Properties.ContentEncoding, Is.EqualTo(sourceMessage.Properties.ContentEncoding), "The content encoding should match.");
             Assert.That(convertedMessage.Properties.ContentType, Is.EqualTo(sourceMessage.Properties.ContentType), "The content type should match.");
             Assert.That(convertedMessage.Properties.CorrelationId, Is.EqualTo(sourceMessage.Properties.CorrelationId), "The correlation identifier should match.");
-            Assert.That(convertedMessage.Properties.CreationTime, Is.EqualTo(sourceMessage.Properties.CreationTime), "The creation time should match.");
+            Assert.That(convertedMessage.Properties.CreationTime!.Value.UtcDateTime, Is.EqualTo(tempMessage.Properties.CreationTime), "The creation time should match the computed creation time.");
             Assert.That(convertedMessage.Properties.GroupId, Is.EqualTo(sourceMessage.Properties.GroupId), "The group identifier should match.");
             Assert.That(convertedMessage.Properties.GroupSequence, Is.EqualTo(sourceMessage.Properties.GroupSequence), "The group sequence should match.");
             Assert.That(convertedMessage.Properties.MessageId, Is.EqualTo(sourceMessage.Properties.MessageId), "The message identifier should match.");
@@ -1716,6 +1716,31 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(sourceValue.Count, Is.EqualTo(1), "The source sequence should have one embedded list.");
             Assert.That(convertedValue.Count, Is.EqualTo(1), "The converted sequence should have one embedded list.");
             Assert.That(convertedValue.First(), Is.EquivalentTo(sourceValue.First()), "The sequence embedded list should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
+        ///   method. Specifically, verifies that the TimeToLive property is respected when no AbsoluteExpiryTime is present.
+        /// </summary>
+        ///
+        [Test]
+        public void AnEventWithTimeToLiveCanBeTranslatedToItself()
+        {
+            var sourceValue = new Dictionary<string, string> { { "key", "value" } };
+            var sourceMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(sourceValue));
+            sourceMessage.Header.TimeToLive = TimeSpan.FromDays(2);
+            var sourceEvent = new EventData(sourceMessage);
+
+            var converter = new AmqpMessageConverter();
+            using var tempMessage = converter.CreateMessageFromEvent(sourceEvent);
+            var convertedEvent = converter.CreateEventFromMessage(tempMessage);
+            var convertedMessage = convertedEvent.GetRawAmqpMessage();
+
+            Assert.That(tempMessage, Is.Not.Null, "The temporary AMQP message should have been created.");
+            Assert.That(convertedEvent, Is.Not.Null, "The translated event should have been created.");
+            Assert.That(convertedMessage.Body.TryGetValue(out var convertedValue), Is.True, "The message should have a value body.");
+            Assert.That(convertedValue, Is.EquivalentTo(sourceValue), "The value body should match.");
+            Assert.That(convertedMessage.Header.TimeToLive, Is.EqualTo(sourceMessage.Header.TimeToLive));
         }
 
         /// <summary>

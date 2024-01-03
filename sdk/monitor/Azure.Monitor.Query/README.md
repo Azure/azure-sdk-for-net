@@ -101,6 +101,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
   - [Query metrics with options](#query-metrics-with-options)
+  - [Get metrics namespaces](#get-metrics-namespaces)
   - [Split a metric by dimension](#split-a-metric-by-dimension)
 - [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 
@@ -543,6 +544,22 @@ foreach (MetricTimeSeriesElement element in metric.TimeSeries)
         // 6/21/2022 12:29:00 AM +00:00 : 100
         Console.WriteLine($"{value.TimeStamp} : {value.Average}");
     }
+}
+```
+
+#### Get metrics namespaces
+
+To programmatically retrieve metrics namespaces, use the following code:
+    
+```C# Snippet:GetMetricsNamespaces
+string resourceId =
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+var client = new MetricsQueryClient(new DefaultAzureCredential());
+AsyncPageable<MetricNamespace> metricNamespaces = client.GetMetricNamespacesAsync(resourceId);
+
+await foreach (var metricNamespace in metricNamespaces)
+{
+    Console.WriteLine($"Metric namespace = {metricNamespace.Name}");
 }
 ```
 

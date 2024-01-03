@@ -9,6 +9,6 @@ namespace Azure.Identity.Broker
     {
         public SharedTokenCacheCredentialBrokerOptions() { }
         public SharedTokenCacheCredentialBrokerOptions(Azure.Identity.TokenCachePersistenceOptions tokenCacheOptions) { }
-        public bool? IsMsaPassthroughEnabled { get { throw null; } set { } }
+        public bool? IsLegacyMsaPassthroughEnabled { get { throw null; } set { } }
     }
 }

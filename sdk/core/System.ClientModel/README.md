@@ -2,6 +2,8 @@
 
 `System.ClientModel` provides shared primitives, abstractions, and helpers for .NET service client libraries.
 
+[Source code][source] | [Package (NuGet)][package]
+
 ## Getting started
 
 Typically, you will not need to install `System.ClientModel`.
@@ -9,10 +11,10 @@ it will be installed for you when you install one of the client libraries using 
 
 ### Install the package
 
-Install the client library for .NET with [NuGet](https://www.nuget.org/).
+Install the client library for .NET with [NuGet](https://www.nuget.org/packages/System.ClientModel).
 
 ```dotnetcli
-dotnet add package System.ClientModel --prerelease
+dotnet add package System.ClientModel
 ```
 
 ### Prerequisites
@@ -59,5 +61,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FAzure.Core%2FREADME.png)
 
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/System.ClientModel/src
+[package]: https://www.nuget.org/packages/System.ClientModel
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
