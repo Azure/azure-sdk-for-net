@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Test client code for use in System.ClientModel test libraries.</Description>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestSupportProject>true</IsTestSupportProject>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <SpecRepoRoot>../</SpecRepoRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <!-- <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+  </ItemGroup> -->
+</Project>

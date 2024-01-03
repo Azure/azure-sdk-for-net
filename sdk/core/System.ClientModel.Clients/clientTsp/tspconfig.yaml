@@ -1,0 +1,6 @@
+options:
+  "@azure-tools/typespec-csharp":
+    save-inputs: false
+    clear-output-folder: true
+    namespace: System.ClientModel.Clients
+    branded: false
