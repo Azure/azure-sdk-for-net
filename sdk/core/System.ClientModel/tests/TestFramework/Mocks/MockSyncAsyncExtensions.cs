@@ -21,6 +21,18 @@ public static class MockSyncAsyncExtensions
         }
     }
 
+    public static async Task ProcessSyncOrAsync(this HttpClientPipelineTransport transport, PipelineMessage message, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await transport.ProcessAsync(message).ConfigureAwait(false);
+        }
+        else
+        {
+            transport.Process(message);
+        }
+    }
+
     public static async Task DelaySyncOrAsync(this MessageDelay delay, PipelineMessage message, bool isAsync)
     {
         if (isAsync)
