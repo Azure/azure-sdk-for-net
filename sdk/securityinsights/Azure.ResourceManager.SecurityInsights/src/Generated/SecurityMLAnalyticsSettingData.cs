@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.SecurityInsights
     /// Please note <see cref="SecurityMLAnalyticsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AnomalySecurityMLAnalyticsSettings"/>.
     /// </summary>
-    public partial class SecurityMLAnalyticsSettingData : ResourceData
+    public abstract partial class SecurityMLAnalyticsSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingData"/>. </summary>
-        public SecurityMLAnalyticsSettingData()
+        protected SecurityMLAnalyticsSettingData()
         {
         }
 

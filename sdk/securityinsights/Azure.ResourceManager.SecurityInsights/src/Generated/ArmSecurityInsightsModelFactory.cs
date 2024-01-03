@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleData"/> instance for mocking. </returns>
         public static SecurityInsightsAlertRuleData SecurityInsightsAlertRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new SecurityInsightsAlertRuleData(id, name, resourceType, systemData, kind, etag);
+            return new UnknownAlertRule(id, name, resourceType, systemData, kind, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/>. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleTemplateData"/> instance for mocking. </returns>
         public static SecurityInsightsAlertRuleTemplateData SecurityInsightsAlertRuleTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new SecurityInsightsAlertRuleTemplateData(id, name, resourceType, systemData, kind);
+            return new UnknownAlertRuleTemplate(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsAutomationRuleData"/>. </summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsDataConnectorData"/> instance for mocking. </returns>
         public static SecurityInsightsDataConnectorData SecurityInsightsDataConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new SecurityInsightsDataConnectorData(id, name, resourceType, systemData, kind, etag);
+            return new UnknownDataConnector(id, name, resourceType, systemData, kind, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentData"/>. </summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="Models.SecurityInsightsEntity"/> instance for mocking. </returns>
         public static SecurityInsightsEntity SecurityInsightsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new SecurityInsightsEntity(id, name, resourceType, systemData, kind);
+            return new UnknownEntity(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsHuntingBookmark"/>. </summary>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityMLAnalyticsSettingData"/> instance for mocking. </returns>
         public static SecurityMLAnalyticsSettingData SecurityMLAnalyticsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new SecurityMLAnalyticsSettingData(id, name, resourceType, systemData, kind, etag);
+            return new UnknownSecurityMLAnalyticsSetting(id, name, resourceType, systemData, kind, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData"/>. </summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData"/> instance for mocking. </returns>
         public static SecurityInsightsThreatIntelligenceIndicatorBaseData SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new SecurityInsightsThreatIntelligenceIndicatorBaseData(id, name, resourceType, systemData, kind, etag);
+            return new UnknownThreatIntelligenceInformation(id, name, resourceType, systemData, kind, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsThreatIntelligenceIndicatorData"/>. </summary>

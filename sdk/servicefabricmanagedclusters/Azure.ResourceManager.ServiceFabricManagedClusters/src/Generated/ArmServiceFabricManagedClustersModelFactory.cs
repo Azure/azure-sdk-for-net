@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             servicePlacementPolicies ??= new List<ManagedServicePlacementPolicy>();
             scalingPolicies ??= new List<ManagedServiceScalingPolicy>();
 
-            return new ManagedServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName);
+            return new UnknownServiceResourceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/>. </summary>
