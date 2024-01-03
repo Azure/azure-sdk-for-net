@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             string privateEndpointConnectionName = "private-endpoint-connection-name";
             HybridComputePrivateEndpointConnectionData data = new HybridComputePrivateEndpointConnectionData()
             {
-                Properties = new PrivateEndpointConnectionProperties()
+                Properties = new HybridComputePrivateEndpointConnectionProperties()
                 {
                     ConnectionState = new HybridComputePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
                 },

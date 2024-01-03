@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,14 +23,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="LicenseProfileStorageModelEsuProperties"/>. </summary>
         /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
         /// <param name="esuKeys"> The list of ESU keys. </param>
-        internal LicenseProfileStorageModelEsuProperties(string assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys)
+        internal LicenseProfileStorageModelEsuProperties(Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys)
         {
             AssignedLicenseImmutableId = assignedLicenseImmutableId;
             EsuKeys = esuKeys;
         }
 
         /// <summary> The guid id of the license. </summary>
-        public string AssignedLicenseImmutableId { get; }
+        public Guid? AssignedLicenseImmutableId { get; }
         /// <summary> The list of ESU keys. </summary>
         public IReadOnlyList<EsuKey> EsuKeys { get; }
     }

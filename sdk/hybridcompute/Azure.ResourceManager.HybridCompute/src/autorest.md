@@ -21,17 +21,72 @@ modelerfour:
   # Mitigate the duplication schema named 'ErrorDetail'
   lenient-model-deduplication: true
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 prepend-rp-prefix:
-  - Location
+  - CloudMetadata
+  - ConfigurationExtension
+  - ConnectionDetail
+  - ExecutionState
+  - ExtensionValue
+  - IpAddress
+  - License
+  - LicenseDetails
+  - LicenseEdition
+  - LicenseState
+  - LicenseStatus
+  - LicenseTarget
+  - LicenseType
+  - LinuxParameters
   - Machine
   - MachineExtension
+  - NetworkInterface
+  - NetworkProfile
+  - OSProfile
+  - OsType
+  - PrivateEndpointConnectionProperties
+  - ProductFeature
+  - ProvisioningState
+  - PublicNetworkAccessType
   - ResourceUpdate
+  - Subnet
+  - ServiceStatus
+  - ServiceStatuses
+  - WindowsParameters
 
 rename-mapping:
+  AgentUpgrade.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
+  AgentUpgrade.lastAttemptTimestamp: LastAttemptedOn
+  ArcKindEnum.AVS: Avs
+  ArcKindEnum.HCI: Hci
+  ArcKindEnum.SCVMM: ScVmm
+  ArcKindEnum.EPS: Eps
+  ArcKindEnum.GCP: Gcp
+  ArcKindEnum.AWS: Aws
+  EsuServerType.Datacenter: DataCenter
+  ConnectionDetail.id: -|arm-id
+  LocationData: HybridComputeLocation
+  LicenseEdition.Datacenter: DataCenter
+  LicenseStatus.OOBGrace: OobGrace
+  LicenseStatus.OOTGrace: OotGrace
+  LicenseType.ESU: Esu
+  LicenseProfileMachineInstanceView.softwareAssurance.softwareAssuranceCustomer: IsSoftwareAssuranceCustomer
+  LicenseProfileProductType.WindowsIoTEnterprise: WindowsIotEnterprise
+  LicenseProfileStorageModelEsuProperties.assignedLicenseImmutableId: -|uuid
+  Machine.properties.adFqdn: ADFqdn
+  Machine.properties.mssqlDiscovered: MSSqlDiscovered
+  MachineAssessPatchesResult.rebootPending: IsRebootPending
+  OSProfileLinuxConfiguration: HybridComputeLinuxConfiguration
+  OSProfileWindowsConfiguration: HybridComputeWindowsConfiguration
+  PatchOperationStatus: MachineOperationStatus
+  PatchServiceUsed.YUM: Yum
+  PatchServiceUsed.APT: Apt
+  PrivateLinkScopeValidationDetails.id: -|arm-id
+  RunCommandManagedIdentity.clientId: -|uuid
+  RunCommandManagedIdentity.objectId: -|uuid
   StatusLevelTypes: HybridComputeStatusLevelType
   StatusTypes: HybridComputeStatusType
-  ServiceStatus: HybridComputeServiceStatus
-  ServiceStatuses: HybridComputeServiceStatuses
 
 format-by-name-rules:
   'tenantId': 'uuid'

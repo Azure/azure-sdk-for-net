@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
         /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
         /// <param name="linuxParameters"> Input for InstallPatches on a Linux VM, as directly received by the API. </param>
-        internal MachineInstallPatchesContent(TimeSpan maximumDuration, VmGuestPatchRebootSetting rebootSetting, WindowsParameters windowsParameters, LinuxParameters linuxParameters)
+        internal MachineInstallPatchesContent(TimeSpan maximumDuration, VmGuestPatchRebootSetting rebootSetting, HybridComputeWindowsParameters windowsParameters, HybridComputeLinuxParameters linuxParameters)
         {
             MaximumDuration = maximumDuration;
             RebootSetting = rebootSetting;
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Defines when it is acceptable to reboot a VM during a software update operation. </summary>
         public VmGuestPatchRebootSetting RebootSetting { get; }
         /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
-        public WindowsParameters WindowsParameters { get; set; }
+        public HybridComputeWindowsParameters WindowsParameters { get; set; }
         /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
-        public LinuxParameters LinuxParameters { get; set; }
+        public HybridComputeLinuxParameters LinuxParameters { get; set; }
     }
 }

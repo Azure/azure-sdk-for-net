@@ -4,7 +4,8 @@
 
 ### Features Added
 
-- Added run commands for hybrid machine
+- Upgraded api-version tag to 'package-preview-2023-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f6278b35fb38d62aadb7a4327a876544d5d7e1e4/specification/hybridcompute/resource-manager/readme.md.
+    - Added run commands for hybrid machine.
 
 ## 1.0.0-beta.6 (2023-11-29)
 
@@ -37,6 +38,7 @@
 ## 1.0.0-beta.3 (2023-04-17)
 
 ### Bugs Fixed
+
 - Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `AgentConfiguration`.
 
 ## 1.0.0-beta.2 (2023-02-17)

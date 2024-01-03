@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             HybridComputeMachinePatch patch = new HybridComputeMachinePatch()
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
-                LocationData = new LocationData("Redmond"),
-                OSProfile = new OSProfile()
+                LocationData = new HybridComputeLocation("Redmond"),
+                OSProfile = new HybridComputeOSProfile()
                 {
-                    WindowsConfiguration = new OSProfileWindowsConfiguration()
+                    WindowsConfiguration = new HybridComputeWindowsConfiguration()
                     {
                         AssessmentMode = AssessmentModeType.ImageDefault,
                         PatchMode = PatchModeType.Manual,
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
             MachineInstallPatchesContent content = new MachineInstallPatchesContent(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
             {
-                WindowsParameters = new WindowsParameters()
+                WindowsParameters = new HybridComputeWindowsParameters()
                 {
                     ClassificationsToInclude = {
                         VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Security
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
 
             HybridComputePrivateEndpointConnectionData data = new HybridComputePrivateEndpointConnectionData()
             {
-                Properties = new PrivateEndpointConnectionProperties()
+                Properties = new HybridComputePrivateEndpointConnectionProperties()
                 {
                     ConnectionState = new HybridComputePrivateLinkServiceConnectionStateProperty("Approved", "Approved by johndoe@contoso.com"),
                 },

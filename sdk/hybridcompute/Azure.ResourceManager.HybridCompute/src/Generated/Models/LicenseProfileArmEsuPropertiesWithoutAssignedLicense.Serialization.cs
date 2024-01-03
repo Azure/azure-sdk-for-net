@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<EsuServerType> serverType = default;
             Optional<EsuEligibility> esuEligibility = default;
             Optional<EsuKeyState> esuKeyState = default;
-            Optional<string> assignedLicenseImmutableId = default;
+            Optional<Guid> assignedLicenseImmutableId = default;
             Optional<IReadOnlyList<EsuKey>> esuKeys = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +62,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (property.NameEquals("assignedLicenseImmutableId"u8))
                 {
-                    assignedLicenseImmutableId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assignedLicenseImmutableId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("esuKeys"u8))
@@ -79,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new LicenseProfileArmEsuPropertiesWithoutAssignedLicense(assignedLicenseImmutableId.Value, Optional.ToList(esuKeys), Optional.ToNullable(serverType), Optional.ToNullable(esuEligibility), Optional.ToNullable(esuKeyState));
+            return new LicenseProfileArmEsuPropertiesWithoutAssignedLicense(Optional.ToNullable(assignedLicenseImmutableId), Optional.ToList(esuKeys), Optional.ToNullable(serverType), Optional.ToNullable(esuEligibility), Optional.ToNullable(esuKeyState));
         }
     }
 }

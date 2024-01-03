@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="startOn"> Script start time. </param>
         /// <param name="endOn"> Script end time. </param>
         /// <param name="statuses"> The  status information. </param>
-        internal MachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExtensionsResourceStatus> statuses)
+        internal MachineRunCommandInstanceView(HybridComputeExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExtensionsResourceStatus> statuses)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Script execution status. </summary>
-        public ExecutionState? ExecutionState { get; }
+        public HybridComputeExecutionState? ExecutionState { get; }
         /// <summary> Communicate script configuration errors or execution messages. </summary>
         public string ExecutionMessage { get; }
         /// <summary> Exit code returned from script execution. </summary>

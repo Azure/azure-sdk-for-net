@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetworkProfile>> GetNetworkProfileAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeNetworkProfile>> GetNetworkProfileAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _networkProfileClientDiagnostics.CreateScope("HybridComputeMachineResource.GetNetworkProfile");
             scope.Start();
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetworkProfile> GetNetworkProfile(CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeNetworkProfile> GetNetworkProfile(CancellationToken cancellationToken = default)
         {
             using var scope = _networkProfileClientDiagnostics.CreateScope("HybridComputeMachineResource.GetNetworkProfile");
             scope.Start();

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="serverType"> The type of the Esu servers. </param>
         /// <param name="esuEligibility"> Indicates the eligibility state of Esu. </param>
         /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
-        internal LicenseProfileArmEsuPropertiesWithoutAssignedLicense(string assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState) : base(assignedLicenseImmutableId, esuKeys)
+        internal LicenseProfileArmEsuPropertiesWithoutAssignedLicense(Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState) : base(assignedLicenseImmutableId, esuKeys)
         {
             ServerType = serverType;
             EsuEligibility = esuEligibility;

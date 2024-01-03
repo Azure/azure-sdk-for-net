@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             HybridComputeMachinePatch patch = new HybridComputeMachinePatch()
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
-                LocationData = new LocationData("Redmond"),
-                OSProfile = new OSProfile()
+                LocationData = new HybridComputeLocation("Redmond"),
+                OSProfile = new HybridComputeOSProfile()
                 {
-                    WindowsConfiguration = new OSProfileWindowsConfiguration()
+                    WindowsConfiguration = new HybridComputeWindowsConfiguration()
                     {
                         AssessmentMode = AssessmentModeType.ImageDefault,
                         PatchMode = PatchModeType.Manual,
                     },
-                    LinuxConfiguration = new OSProfileLinuxConfiguration()
+                    LinuxConfiguration = new HybridComputeLinuxConfiguration()
                     {
                         AssessmentMode = AssessmentModeType.ImageDefault,
                         PatchMode = PatchModeType.Manual,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // invoke the operation
             MachineInstallPatchesContent content = new MachineInstallPatchesContent(XmlConvert.ToTimeSpan("PT4H"), VmGuestPatchRebootSetting.IfRequired)
             {
-                WindowsParameters = new WindowsParameters()
+                WindowsParameters = new HybridComputeWindowsParameters()
                 {
                     ClassificationsToInclude =
 {
@@ -324,7 +324,7 @@ TargetVersion = "1.10",
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
             // invoke the operation
-            NetworkProfile result = await hybridComputeMachine.GetNetworkProfileAsync();
+            HybridComputeNetworkProfile result = await hybridComputeMachine.GetNetworkProfileAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

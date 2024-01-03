@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.HybridCompute.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AVSValue = "AVS";
-        private const string HCIValue = "HCI";
-        private const string ScvmmValue = "SCVMM";
+        private const string AvsValue = "AVS";
+        private const string HciValue = "HCI";
+        private const string ScVmmValue = "SCVMM";
         private const string VMwareValue = "VMware";
-        private const string EPSValue = "EPS";
-        private const string GCPValue = "GCP";
-        private const string AWSValue = "AWS";
+        private const string EpsValue = "EPS";
+        private const string GcpValue = "GCP";
+        private const string AwsValue = "AWS";
 
         /// <summary> AVS. </summary>
-        public static ArcKindEnum AVS { get; } = new ArcKindEnum(AVSValue);
+        public static ArcKindEnum Avs { get; } = new ArcKindEnum(AvsValue);
         /// <summary> HCI. </summary>
-        public static ArcKindEnum HCI { get; } = new ArcKindEnum(HCIValue);
+        public static ArcKindEnum Hci { get; } = new ArcKindEnum(HciValue);
         /// <summary> SCVMM. </summary>
-        public static ArcKindEnum Scvmm { get; } = new ArcKindEnum(ScvmmValue);
+        public static ArcKindEnum ScVmm { get; } = new ArcKindEnum(ScVmmValue);
         /// <summary> VMware. </summary>
         public static ArcKindEnum VMware { get; } = new ArcKindEnum(VMwareValue);
         /// <summary> EPS. </summary>
-        public static ArcKindEnum EPS { get; } = new ArcKindEnum(EPSValue);
+        public static ArcKindEnum Eps { get; } = new ArcKindEnum(EpsValue);
         /// <summary> GCP. </summary>
-        public static ArcKindEnum GCP { get; } = new ArcKindEnum(GCPValue);
+        public static ArcKindEnum Gcp { get; } = new ArcKindEnum(GcpValue);
         /// <summary> AWS. </summary>
-        public static ArcKindEnum AWS { get; } = new ArcKindEnum(AWSValue);
+        public static ArcKindEnum Aws { get; } = new ArcKindEnum(AwsValue);
         /// <summary> Determines if two <see cref="ArcKindEnum"/> values are the same. </summary>
         public static bool operator ==(ArcKindEnum left, ArcKindEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ArcKindEnum"/> values are not the same. </summary>

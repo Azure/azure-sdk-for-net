@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="dnsFqdn"> Specifies the DNS fully qualified display name. </param>
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
-        /// <param name="mssqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
+        /// <param name="msSqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="networkProfile"> Information about the network the machine is on. </param>
-        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, CloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, OSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, NetworkProfile networkProfile) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile) : base(id, name, resourceType, systemData, tags, location)
         {
             Resources = resources;
             Identity = identity;
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.HybridCompute
             OSSku = osSku;
             OSEdition = osEdition;
             DomainName = domainName;
-            AdFqdn = adFqdn;
+            ADFqdn = adFqdn;
             DnsFqdn = dnsFqdn;
             PrivateLinkScopeResourceId = privateLinkScopeResourceId;
             ParentClusterResourceId = parentClusterResourceId;
-            MssqlDiscovered = mssqlDiscovered;
+            MSSqlDiscovered = msSqlDiscovered;
             DetectedProperties = detectedProperties;
             NetworkProfile = networkProfile;
         }
@@ -116,13 +116,13 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
         public ArcKindEnum? Kind { get; set; }
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
-        public LocationData LocationData { get; set; }
+        public HybridComputeLocation LocationData { get; set; }
         /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
         public AgentConfiguration AgentConfiguration { get; }
         /// <summary> Statuses of dependent services that are reported back to ARM. </summary>
         public HybridComputeServiceStatuses ServiceStatuses { get; set; }
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
-        internal CloudMetadata CloudMetadata { get; set; }
+        internal HybridComputeCloudMetadata CloudMetadata { get; set; }
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
         public string CloudMetadataProvider
         {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
         public AgentUpgrade AgentUpgrade { get; set; }
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
-        public OSProfile OSProfile { get; set; }
+        public HybridComputeOSProfile OSProfile { get; set; }
         /// <summary> Specifies the License related properties for a machine. </summary>
         public LicenseProfileMachineInstanceView LicenseProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Specifies the Windows domain name. </summary>
         public string DomainName { get; }
         /// <summary> Specifies the AD fully qualified display name. </summary>
-        public string AdFqdn { get; }
+        public string ADFqdn { get; }
         /// <summary> Specifies the DNS fully qualified display name. </summary>
         public string DnsFqdn { get; }
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
         public ResourceIdentifier ParentClusterResourceId { get; set; }
         /// <summary> Specifies whether any MS SQL instance is discovered on the machine. </summary>
-        public string MssqlDiscovered { get; set; }
+        public string MSSqlDiscovered { get; set; }
         /// <summary> Detected properties from the machine. </summary>
         public IReadOnlyDictionary<string, string> DetectedProperties { get; }
         /// <summary> Information about the network the machine is on. </summary>
-        internal NetworkProfile NetworkProfile { get; }
+        internal HybridComputeNetworkProfile NetworkProfile { get; }
         /// <summary> The list of network interfaces. </summary>
-        public IReadOnlyList<NetworkInterface> NetworkInterfaces
+        public IReadOnlyList<HybridComputeNetworkInterface> NetworkInterfaces
         {
             get => NetworkProfile?.NetworkInterfaces;
         }

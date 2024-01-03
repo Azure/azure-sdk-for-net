@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         private const string WindowsServerValue = "WindowsServer";
-        private const string WindowsIoTEnterpriseValue = "WindowsIoTEnterprise";
+        private const string WindowsIotEnterpriseValue = "WindowsIoTEnterprise";
 
         /// <summary> WindowsServer. </summary>
         public static LicenseProfileProductType WindowsServer { get; } = new LicenseProfileProductType(WindowsServerValue);
         /// <summary> WindowsIoTEnterprise. </summary>
-        public static LicenseProfileProductType WindowsIoTEnterprise { get; } = new LicenseProfileProductType(WindowsIoTEnterpriseValue);
+        public static LicenseProfileProductType WindowsIotEnterprise { get; } = new LicenseProfileProductType(WindowsIotEnterpriseValue);
         /// <summary> Determines if two <see cref="LicenseProfileProductType"/> values are the same. </summary>
         public static bool operator ==(LicenseProfileProductType left, LicenseProfileProductType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LicenseProfileProductType"/> values are not the same. </summary>

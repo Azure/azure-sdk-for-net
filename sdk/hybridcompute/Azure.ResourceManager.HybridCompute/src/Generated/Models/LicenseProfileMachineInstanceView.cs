@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="LicenseProfileMachineInstanceView"/>. </summary>
         public LicenseProfileMachineInstanceView()
         {
-            ProductFeatures = new ChangeTrackingList<ProductFeature>();
+            ProductFeatures = new ChangeTrackingList<HybridComputeProductFeature>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LicenseProfileMachineInstanceView"/>. </summary>
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
         /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
         /// <param name="productFeatures"> The list of product features. </param>
-        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
-        internal LicenseProfileMachineInstanceView(LicenseStatus? licenseStatus, string licenseChannel, LicenseProfileMachineInstanceViewEsuProperties esuProfile, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? billingStartOn, DateTimeOffset? enrollmentOn, DateTimeOffset? disenrollmentOn, IList<ProductFeature> productFeatures, bool? softwareAssuranceCustomer)
+        /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
+        internal LicenseProfileMachineInstanceView(HybridComputeLicenseStatus? licenseStatus, string licenseChannel, LicenseProfileMachineInstanceViewEsuProperties esuProfile, LicenseProfileSubscriptionStatus? subscriptionStatus, LicenseProfileProductType? productType, DateTimeOffset? billingStartOn, DateTimeOffset? enrollmentOn, DateTimeOffset? disenrollmentOn, IList<HybridComputeProductFeature> productFeatures, bool? isSoftwareAssuranceCustomer)
         {
             LicenseStatus = licenseStatus;
             LicenseChannel = licenseChannel;
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             EnrollmentOn = enrollmentOn;
             DisenrollmentOn = disenrollmentOn;
             ProductFeatures = productFeatures;
-            SoftwareAssuranceCustomer = softwareAssuranceCustomer;
+            IsSoftwareAssuranceCustomer = isSoftwareAssuranceCustomer;
         }
 
         /// <summary> Indicates the license status of the OS. </summary>
-        public LicenseStatus? LicenseStatus { get; }
+        public HybridComputeLicenseStatus? LicenseStatus { get; }
         /// <summary> Indicates the license channel. </summary>
         public string LicenseChannel { get; }
         /// <summary> Properties for the Machine ESU profile. </summary>
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> The timestamp in UTC when the user disenrolled the feature. </summary>
         public DateTimeOffset? DisenrollmentOn { get; }
         /// <summary> The list of product features. </summary>
-        public IList<ProductFeature> ProductFeatures { get; }
+        public IList<HybridComputeProductFeature> ProductFeatures { get; }
         /// <summary> Specifies if this machine is licensed as part of a Software Assurance agreement. </summary>
-        public bool? SoftwareAssuranceCustomer { get; set; }
+        public bool? IsSoftwareAssuranceCustomer { get; set; }
     }
 }

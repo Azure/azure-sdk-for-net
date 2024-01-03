@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Contains clientId or objectId (use only one, not both) of a user-assigned managed identity that has access to storage blob used in Run Command. Use an empty RunCommandManagedIdentity object in case of system-assigned identity. Make sure the Azure storage blob exists in case of scriptUri, and managed identity has been given access to blob's container with 'Storage Blob Data Reader' role assignment with scriptUri blob and 'Storage Blob Data Contributor' for Append blobs(outputBlobUri, errorBlobUri). In case of user assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </summary>
@@ -18,15 +20,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="RunCommandManagedIdentity"/>. </summary>
         /// <param name="clientId"> Client Id (GUID value) of the user-assigned managed identity. ObjectId should not be used if this is provided. </param>
         /// <param name="objectId"> Object Id (GUID value) of the user-assigned managed identity. ClientId should not be used if this is provided. </param>
-        internal RunCommandManagedIdentity(string clientId, string objectId)
+        internal RunCommandManagedIdentity(Guid? clientId, Guid? objectId)
         {
             ClientId = clientId;
             ObjectId = objectId;
         }
 
         /// <summary> Client Id (GUID value) of the user-assigned managed identity. ObjectId should not be used if this is provided. </summary>
-        public string ClientId { get; set; }
+        public Guid? ClientId { get; set; }
         /// <summary> Object Id (GUID value) of the user-assigned managed identity. ClientId should not be used if this is provided. </summary>
-        public string ObjectId { get; set; }
+        public Guid? ObjectId { get; set; }
     }
 }

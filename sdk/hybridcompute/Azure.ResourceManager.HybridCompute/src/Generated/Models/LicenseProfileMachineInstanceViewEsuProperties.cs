@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -25,14 +26,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="esuKeyState"> Indicates whether there is an ESU Key currently active for the machine. </param>
         /// <param name="assignedLicense"> The assigned license resource. </param>
         /// <param name="licenseAssignmentState"> Describes the license assignment state (Assigned or NotAssigned). </param>
-        internal LicenseProfileMachineInstanceViewEsuProperties(string assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState, License assignedLicense, LicenseAssignmentState? licenseAssignmentState) : base(assignedLicenseImmutableId, esuKeys, serverType, esuEligibility, esuKeyState)
+        internal LicenseProfileMachineInstanceViewEsuProperties(Guid? assignedLicenseImmutableId, IReadOnlyList<EsuKey> esuKeys, EsuServerType? serverType, EsuEligibility? esuEligibility, EsuKeyState? esuKeyState, HybridComputeLicense assignedLicense, LicenseAssignmentState? licenseAssignmentState) : base(assignedLicenseImmutableId, esuKeys, serverType, esuEligibility, esuKeyState)
         {
             AssignedLicense = assignedLicense;
             LicenseAssignmentState = licenseAssignmentState;
         }
 
         /// <summary> The assigned license resource. </summary>
-        public License AssignedLicense { get; set; }
+        public HybridComputeLicense AssignedLicense { get; set; }
         /// <summary> Describes the license assignment state (Assigned or NotAssigned). </summary>
         public LicenseAssignmentState? LicenseAssignmentState { get; set; }
     }

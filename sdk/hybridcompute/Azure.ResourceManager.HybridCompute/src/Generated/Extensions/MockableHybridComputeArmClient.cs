@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExtensionValueResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtensionValueResource.CreateResourceIdentifier" /> to create an <see cref="ExtensionValueResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HybridComputeExtensionValueResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridComputeExtensionValueResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeExtensionValueResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtensionValueResource"/> object. </returns>
-        public virtual ExtensionValueResource GetExtensionValueResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeExtensionValueResource"/> object. </returns>
+        public virtual HybridComputeExtensionValueResource GetHybridComputeExtensionValueResource(ResourceIdentifier id)
         {
-            ExtensionValueResource.ValidateResourceId(id);
-            return new ExtensionValueResource(Client, id);
+            HybridComputeExtensionValueResource.ValidateResourceId(id);
+            return new HybridComputeExtensionValueResource(Client, id);
         }
 
         /// <summary>

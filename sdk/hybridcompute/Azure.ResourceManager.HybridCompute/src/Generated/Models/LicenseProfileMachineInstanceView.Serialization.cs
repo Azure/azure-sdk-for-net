@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
             writer.WritePropertyName("softwareAssurance"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftwareAssuranceCustomer))
+            if (Optional.IsDefined(IsSoftwareAssuranceCustomer))
             {
                 writer.WritePropertyName("softwareAssuranceCustomer"u8);
-                writer.WriteBooleanValue(SoftwareAssuranceCustomer.Value);
+                writer.WriteBooleanValue(IsSoftwareAssuranceCustomer.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<LicenseStatus> licenseStatus = default;
+            Optional<HybridComputeLicenseStatus> licenseStatus = default;
             Optional<string> licenseChannel = default;
             Optional<LicenseProfileMachineInstanceViewEsuProperties> esuProfile = default;
             Optional<LicenseProfileSubscriptionStatus> subscriptionStatus = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<DateTimeOffset> billingStartDate = default;
             Optional<DateTimeOffset> enrollmentDate = default;
             Optional<DateTimeOffset> disenrollmentDate = default;
-            Optional<IList<ProductFeature>> productFeatures = default;
+            Optional<IList<HybridComputeProductFeature>> productFeatures = default;
             Optional<bool> softwareAssuranceCustomer = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    licenseStatus = new LicenseStatus(property.Value.GetString());
+                    licenseStatus = new HybridComputeLicenseStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("licenseChannel"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             {
                                 continue;
                             }
-                            List<ProductFeature> array = new List<ProductFeature>();
+                            List<HybridComputeProductFeature> array = new List<HybridComputeProductFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProductFeature.DeserializeProductFeature(item));
+                                array.Add(HybridComputeProductFeature.DeserializeHybridComputeProductFeature(item));
                             }
                             productFeatures = array;
                             continue;

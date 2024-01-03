@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("parentClusterResourceId"u8);
                 writer.WriteStringValue(ParentClusterResourceId);
             }
-            if (Optional.IsDefined(MssqlDiscovered))
+            if (Optional.IsDefined(MSSqlDiscovered))
             {
                 writer.WritePropertyName("mssqlDiscovered"u8);
-                writer.WriteStringValue(MssqlDiscovered);
+                writer.WriteStringValue(MSSqlDiscovered);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.HybridCompute
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<LocationData> locationData = default;
+            Optional<HybridComputeLocation> locationData = default;
             Optional<AgentConfiguration> agentConfiguration = default;
             Optional<HybridComputeServiceStatuses> serviceStatuses = default;
-            Optional<CloudMetadata> cloudMetadata = default;
+            Optional<HybridComputeCloudMetadata> cloudMetadata = default;
             Optional<AgentUpgrade> agentUpgrade = default;
-            Optional<OSProfile> osProfile = default;
+            Optional<HybridComputeOSProfile> osProfile = default;
             Optional<LicenseProfileMachineInstanceView> licenseProfile = default;
             Optional<string> provisioningState = default;
             Optional<HybridComputeStatusType> status = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridCompute
             Optional<ResourceIdentifier> parentClusterResourceId = default;
             Optional<string> mssqlDiscovered = default;
             Optional<IReadOnlyDictionary<string, string>> detectedProperties = default;
-            Optional<NetworkProfile> networkProfile = default;
+            Optional<HybridComputeNetworkProfile> networkProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resources"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            locationData = LocationData.DeserializeLocationData(property0.Value);
+                            locationData = HybridComputeLocation.DeserializeHybridComputeLocation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentConfiguration"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            cloudMetadata = CloudMetadata.DeserializeCloudMetadata(property0.Value);
+                            cloudMetadata = HybridComputeCloudMetadata.DeserializeHybridComputeCloudMetadata(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("agentUpgrade"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            osProfile = OSProfile.DeserializeOSProfile(property0.Value);
+                            osProfile = HybridComputeOSProfile.DeserializeHybridComputeOSProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("licenseProfile"u8))
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
+                            networkProfile = HybridComputeNetworkProfile.DeserializeHybridComputeNetworkProfile(property0.Value);
                             continue;
                         }
                     }

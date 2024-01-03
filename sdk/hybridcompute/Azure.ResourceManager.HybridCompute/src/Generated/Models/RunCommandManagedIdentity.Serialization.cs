@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,12 +19,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             writer.WriteEndObject();
         }
@@ -34,22 +35,30 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> objectId = default;
+            Optional<Guid> clientId = default;
+            Optional<Guid> objectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
                 {
-                    clientId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("objectId"u8))
                 {
-                    objectId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    objectId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new RunCommandManagedIdentity(clientId.Value, objectId.Value);
+            return new RunCommandManagedIdentity(Optional.ToNullable(clientId), Optional.ToNullable(objectId));
         }
     }
 }

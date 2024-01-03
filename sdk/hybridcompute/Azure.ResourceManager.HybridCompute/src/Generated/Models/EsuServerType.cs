@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         private const string StandardValue = "Standard";
-        private const string DatacenterValue = "Datacenter";
+        private const string DataCenterValue = "Datacenter";
 
         /// <summary> Standard. </summary>
         public static EsuServerType Standard { get; } = new EsuServerType(StandardValue);
         /// <summary> Datacenter. </summary>
-        public static EsuServerType Datacenter { get; } = new EsuServerType(DatacenterValue);
+        public static EsuServerType DataCenter { get; } = new EsuServerType(DataCenterValue);
         /// <summary> Determines if two <see cref="EsuServerType"/> values are the same. </summary>
         public static bool operator ==(EsuServerType left, EsuServerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EsuServerType"/> values are not the same. </summary>

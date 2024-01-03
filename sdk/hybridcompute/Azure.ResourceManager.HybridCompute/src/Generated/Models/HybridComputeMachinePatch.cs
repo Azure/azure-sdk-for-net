@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
-        internal HybridComputeMachinePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ArcKindEnum? kind, LocationData locationData, OSProfile osProfile, CloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId) : base(tags)
+        internal HybridComputeMachinePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, HybridComputeOSProfile osProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, ResourceIdentifier parentClusterResourceId, ResourceIdentifier privateLinkScopeResourceId) : base(tags)
         {
             Identity = identity;
             Kind = kind;
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
         public ArcKindEnum? Kind { get; set; }
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
-        public LocationData LocationData { get; set; }
+        public HybridComputeLocation LocationData { get; set; }
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
-        public OSProfile OSProfile { get; set; }
+        public HybridComputeOSProfile OSProfile { get; set; }
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
-        internal CloudMetadata CloudMetadata { get; set; }
+        internal HybridComputeCloudMetadata CloudMetadata { get; set; }
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
         public string CloudMetadataProvider
         {
