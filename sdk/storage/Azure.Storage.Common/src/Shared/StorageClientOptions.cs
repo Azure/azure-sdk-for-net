@@ -131,7 +131,7 @@ namespace Azure.Storage
                 switch (expectContinue.Mode)
                 {
                     case ExpectContinueMode.ApplyOnThrottle:
-                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy()
+                        pipelineOptions.PerRetryPolicies.Add(new ExpectContinueOnThrottlePolicy()
                         {
                             ThrottleInterval = expectContinue.ThrottleInterval,
                             ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
