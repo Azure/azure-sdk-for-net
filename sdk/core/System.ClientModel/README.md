@@ -16,7 +16,7 @@ it will be installed for you when you install one of the client libraries using 
 Install the client library for .NET with [NuGet](https://www.nuget.org/packages/System.ClientModel).
 
 ```dotnetcli
-dotnet add package System.ClientModel --prerelease
+dotnet add package System.ClientModel
 ```
 
 ### Prerequisites
@@ -31,29 +31,11 @@ The `System.ClientModel` preview package provides a `KeyCredential` type for aut
 
 The main shared concepts of `System.ClientModel` include:
 
-- Configuring service clients (`RequestOptions`).
-- Accessing HTTP response details (`OutputMessage`, `OutputMessage<T>`).
+- Accessing HTTP response details (`ClientResult`, `ClientResult<T>`).
 - Exceptions for reporting errors from service requests in a consistent fashion (`ClientRequestException`).
 - Providing APIs to read and write models in different formats.
 
 ## Examples
-
-### Send a message using the MessagePipeline
-
-A rudimentary client implementation is as follows:
-
-```csharp
-KeyCredential credential = new KeyCredential(key);
-MessagePipeline pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(credential, "Authorization", "Bearer"));
-ClientMessage message = pipeline.CreateMessage(options, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
-MessageRequest request = message.Request;
-request.SetMethod("POST");
-var uri = new RequestUri();
-uri.Reset(new Uri("https://www.example.com/"));
-request.Uri = uri.ToUri();
-pipeline.Send(message);
-Console.WriteLine(message.Response.Status);
-```
 
 ### Read and write persistable models
 

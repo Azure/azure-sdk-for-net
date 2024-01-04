@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Initial release of client building block types, including Pipeline, Message, and Options types.
+- Initial release of convenience types in the System.ClientModel namespace, including `ClientResult<T>`, `KeyCredential`, and `ClientRequestException`.
 
 ### Breaking Changes
 
