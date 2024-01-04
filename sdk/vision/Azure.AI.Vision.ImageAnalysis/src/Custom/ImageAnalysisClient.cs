@@ -27,7 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
         public virtual Task<Response<ImageAnalysisResult>> AnalyzeAsync(BinaryData imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
-            => AnalyzeFromBufferAsync(visualFeatures.ToImplArray(), imageContent, options.language, options.genderNeutralCaption, options.smartCropsAspectRatios, options.modelVersion, cancellationToken);
+            => AnalyzeFromBufferAsync(visualFeatures.ToImplArray(), imageContent, options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
         public virtual Response<ImageAnalysisResult> Analyze(BinaryData imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
-            => AnalyzeFromBuffer(visualFeatures.ToImplArray(), imageContent, options.language, options.genderNeutralCaption, options.smartCropsAspectRatios, options.modelVersion, cancellationToken);
+            => AnalyzeFromBuffer(visualFeatures.ToImplArray(), imageContent, options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
@@ -47,7 +47,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ImageAnalysisResult>> AnalyzeAsync(Uri imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
-            => await AnalyzeFromUrlAsync(visualFeatures.ToImplArray(), new ImageUrl(imageContent), options.language, options.genderNeutralCaption, options.smartCropsAspectRatios, options.modelVersion, cancellationToken).ConfigureAwait(false);
+            => await AnalyzeFromUrlAsync(visualFeatures.ToImplArray(), new ImageUrl(imageContent), options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
@@ -57,6 +57,6 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
         public virtual Response<ImageAnalysisResult> Analyze(Uri imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
-            => AnalyzeFromUrl(visualFeatures.ToImplArray(), new ImageUrl(imageContent), options.language, options.genderNeutralCaption, options.smartCropsAspectRatios, options.modelVersion, cancellationToken);
+            => AnalyzeFromUrl(visualFeatures.ToImplArray(), new ImageUrl(imageContent), options.Language, options.GenderNeutralCaption, options.SmartCropsAspectRatios, options.ModelVersion, cancellationToken);
     }
 }

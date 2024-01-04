@@ -1,6 +1,6 @@
 # Azure Image Analysis client library for .NET
 
-The Azure.AI.Vision.ImageAnalysis service provides AI algorithms for processing images and returning information about their content. It enables you to extract one or more visual features from an image simultaneously, including getting a caption for the image, extracting text shown in the image (OCR), and detecting objects. For more information on the service and the supported visual features, see [Image Analysis overview][image_analysis_overview], and the [Concepts][image_analysis_concepts] page.
+The Azure.AI.Vision.ImageAnalysis client library provides AI algorithms for processing images and returning information about their content. It enables you to extract one or more visual features from an image simultaneously, including getting a caption for the image, extracting text shown in the image (OCR), and detecting objects. For more information on the service and the supported visual features, see [Image Analysis overview][image_analysis_overview], and the [Concepts][image_analysis_concepts] page.
 
 Use the Image Analysis client library to:
 * Authenticate against the service
@@ -9,7 +9,7 @@ Use the Image Analysis client library to:
 * Get the analysis result
 
 [Product documentation][image_analysis_overview] 
-| [Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)
+| [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)
 | [Vision Studio][vision_studio]
 | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.ai.vision.imageanalysis)
 | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Vision.ImageAnalysis/)
@@ -51,13 +51,13 @@ Here we are using enviornment variables to hold the endpoint and key for the Com
 
 Once you've initialized an `ImageAnalysisClient`, you need to select one or more visual features to analyze. The options are specified by the enum class `VisualFeatures`. The following features are supported:
 
-1. `VisualFeatures.Caption` ([Examples](#generate-an-image-caption-for-an-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample01_HellowWorld.md)): Generate a human-readable sentence that describes the content of an image.
-1. `VisualFeatures.Read` ([Examples](#extract-text-from-the-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)): Also known as Optical Character Recognition (OCR). Extract printed or handwritten text from images.
-1. `VisualFeatures.DenseCaptions` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample02_DenseCaptions.md)): Dense Captions provides more details by generating one-sentence captions for up to 10 different regions in the image, including one for the whole image. 
-1. `VisualFeatures.Tags` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample03_Tags.md)): Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in images.
-1. `VisualFeatures.Objects` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample04_Objects.md)): Object detection. This is similar to tagging, but focused on detecting physical objects in the image and returning their location.
-1. `VisualFeatures.SmartCrops` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample05_SmartCrops.md)): Used to find a representative sub-region of the image for thumbnail generation, with priority given to include faces.
-1. `VisualFeatures.People` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample06_People.md)): Locate people in the image and return their location.
+1. `VisualFeatures.Caption` ([Examples](#generate-an-image-caption-for-an-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample01_HellowWorld.md)): Generate a human-readable sentence that describes the content of an image.
+1. `VisualFeatures.Read` ([Examples](#extract-text-from-the-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)): Also known as Optical Character Recognition (OCR). Extract printed or handwritten text from images.
+1. `VisualFeatures.DenseCaptions` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample02_DenseCaptions.md)): Dense Captions provides more details by generating one-sentence captions for up to 10 different regions in the image, including one for the whole image. 
+1. `VisualFeatures.Tags` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample03_Tags.md)): Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in images.
+1. `VisualFeatures.Objects` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample04_Objects.md)): Object detection. This is similar to tagging, but focused on detecting physical objects in the image and returning their location.
+1. `VisualFeatures.SmartCrops` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample05_SmartCrops.md)): Used to find a representative sub-region of the image for thumbnail generation, with priority given to include faces.
+1. `VisualFeatures.People` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample06_People.md)): Locate people in the image and return their location.
 
 For more information about these features, see [Image Analysis overview][image_analysis_overview], and the [Concepts][image_analysis_concepts] page.
 
@@ -85,13 +85,13 @@ The following sections provide code snippets covering these common Image Analysi
 * [Extract text (OCR) from an image file](#extract-text-from-an-image-file)
 * [Extract text (OCR) from an image URL](#extract-text-from-an-image-url)
 
-These snippets use the synchronous `client` from [Create and authenticate the client](#create-and-authenticate-the-client).
+These snippets use the `client` from [Create and authenticate the client](#create-and-authenticate-the-client).
 
-See the [Samples](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) folder for fully working samples for all visual features, including asynchronous calls.
+See the [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) folder for fully working samples for all visual features, including asynchronous calls.
 
 ### Generate an image caption for an image file
 
-This example demonstrates how to generate a one-sentence caption for the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous (blocking) `Analyze` method call returns a `CaptionResult` object, which contains the generated caption and its confidence score in the range [0, 1]. By default, the caption may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `Analyze`.
+This example demonstrates how to generate a one-sentence caption for the image file [sample.jpg](https://aka.ms/azai/vision/image-analysis-sample.jpg) using the `ImageAnalysisClient`. The synchronous  `Analyze` method call returns a `CaptionResult` object, which contains the generated caption and its confidence score in the range [0, 1]. By default, the caption may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `Analyze`.
 
 Notes:
 * Caption is only available in some Azure regions. See [Prerequisites](#prerequisites).
@@ -101,7 +101,7 @@ Notes:
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get a caption for the image. This will be a synchronously (blocking) call.
+// Get a caption for the image.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Caption,
@@ -118,7 +118,7 @@ Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confi
 This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisGenerateCaptionFromUrl
-// Get a caption for the image. This will be a synchronously (blocking) call.
+// Get a caption for the image.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Caption,
@@ -138,7 +138,7 @@ This example demonstrates how to extract printed or hand-written text for the im
 // Load image to analyze into a stream
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Extract text (OCR) from an image stream. This will be a synchronously (blocking) call.
+// Extract text (OCR) from an image stream.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Read);
@@ -160,10 +160,10 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
 
 ### Extract text from an image URL
 
-This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
+This example demonstrates how to extract printed or hand-written text for a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg).
 
 ```C# Snippet:ImageAnalysisExtractTextFromUrl
-// Extract text (OCR) from an image stream. This will be a synchronously (blocking) call.
+// Extract text (OCR) from an image stream.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Read);
@@ -216,7 +216,7 @@ You can learn more about how to enable SDK logging [here](https://learn.microsof
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the Azure.AI.Vision.ImageAnalysis client library offers support for additional scenarios to help take advantage of the full feature set of the Azure.AI.Vision.ImageAnalysis service. In order to help explore some of these scenarios, the ImageAnalysis client library offers a project of samples to serve as an illustration for common scenarios. Please see the [samples README](https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) for details.
+Beyond the introductory scenarios discussed, the Azure Image Analysis client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Image Analysis service. In order to help explore some of these scenarios, the Image Analysis client library offers a project of samples to serve as an illustration for common scenarios. Please see the [samples README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) for details.
 
 ## Contributing
 
@@ -232,5 +232,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [image_analysis_overview]: https://learn.microsoft.com/azure/ai-services/computer-vision/overview-image-analysis?tabs=4-0
 [image_analysis_concepts]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40
 [vision_studio]: https://portal.vision.cognitive.azure.com/gallery/imageanalysis
-[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
+[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
 [samples]: https://github.com/azure-sdk-for-python/blob/rhurey/ia_initial/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples

@@ -59,7 +59,6 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             Recording.DisableRequestBodyRecording();
             if (Mode == RecordedTestMode.Playback)
             {
-                // TODO: Add data?
                 return new MemoryStream();
             }
 

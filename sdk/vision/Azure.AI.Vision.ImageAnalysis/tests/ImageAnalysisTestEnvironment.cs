@@ -21,8 +21,6 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             public const string CogServicesVisionKeyVariable = "VISION_KEY";
             public const string ImageInputPathVariable = "IMAGEANALYSIS_TEST_IMAGE_INPUT_PATH";
             public const string ImageInputUrlVariable = "IMAGEANALYSIS_TEST_IMAGE_INPUT_URL";
-
-            public static AzureLocation Location = AzureLocation.EastUS;
         }
 
         public string Endpoint => GetRecordedVariable(Constants.EndpointVariable);

@@ -20,7 +20,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
                 VisualFeatures.Caption,
-                new ImageAnalysisOptions { genderNeutralCaption = true });
+                new ImageAnalysisOptions { GenderNeutralCaption = true });
 
             Console.WriteLine($"Image analysis results:");
             Console.WriteLine($" Caption:");
@@ -37,7 +37,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.Caption,
-                new ImageAnalysisOptions { genderNeutralCaption = true });
+                new ImageAnalysisOptions { GenderNeutralCaption = true });
 
             Console.WriteLine($"Image analysis results:");
             Console.WriteLine($" Caption:");

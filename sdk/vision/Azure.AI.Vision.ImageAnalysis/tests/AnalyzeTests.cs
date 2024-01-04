@@ -32,7 +32,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             foreach (var testFeatures in new VisualFeatures[] { allFeatures, someFeatures })
             {
-                var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { smartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
+                var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
                 Assert.IsNotNull(result);
                 var iaResult = result.Value;
@@ -69,7 +69,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             foreach (var testFeatures in new VisualFeatures[] { allFeatures, someFeatures })
             {
                 using var fileStream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read);
-                var result = await client.AnalyzeAsync(BinaryData.FromStream(fileStream), testFeatures, new ImageAnalysisOptions { smartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
+                var result = await client.AnalyzeAsync(BinaryData.FromStream(fileStream), testFeatures, new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
                 Assert.IsNotNull(result);
                 var iaResult = result.Value;
@@ -94,7 +94,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             var testFeatures = VisualFeatures.Read;
 
-            var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { smartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
+            var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
             Assert.IsNotNull(result);
             var iaResult = result.Value;

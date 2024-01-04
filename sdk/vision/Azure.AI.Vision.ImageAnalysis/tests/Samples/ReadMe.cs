@@ -25,7 +25,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
                 VisualFeatures.Caption,
-                new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
+                new ImageAnalysisOptions { GenderNeutralCaption = true }); // Optional (default is false)
 
             // Print caption results to the console
             Console.WriteLine($"Image analysis results:");
@@ -44,7 +44,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.Caption,
-                new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
+                new ImageAnalysisOptions { GenderNeutralCaption = true }); // Optional (default is false)
 
             // Print caption results to the console
             Console.WriteLine($"Image analysis results:");
@@ -127,7 +127,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 if (e.Status == 400)
                 {
                     Console.WriteLine("Error analyzing image.");
-                    Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
+                    Console.WriteLine($"HTTP status code {e.Status}: {e.Message}");
                 }
                 else
                 {
