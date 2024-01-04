@@ -10,7 +10,7 @@ public abstract class PipelineResponse : IDisposable
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
-    private bool _isError = false;
+    //private bool _isError = false;
 
     /// <summary>
     /// Gets the HTTP status code.
@@ -63,13 +63,14 @@ public abstract class PipelineResponse : IDisposable
     /// an error code.
     /// </summary>
     // IsError must be virtual in order to maintain Azure.Core back-compatibility.
-    public bool IsError => _isError;
+    //public bool IsError => _isError;
+    public bool IsError { get; protected internal set; }
 
-    // We have to have a separate method for setting IsError so that the IsError
-    // setter doesn't become virtual when we make the getter virtual.
-    internal void SetIsError(bool isError) => SetIsErrorCore(isError);
+    //// We have to have a separate method for setting IsError so that the IsError
+    //// setter doesn't become virtual when we make the getter virtual.
+    //internal void SetIsError(bool isError) => SetIsErrorCore(isError);
 
-    protected virtual void SetIsErrorCore(bool isError) => _isError = isError;
+    //protected virtual void SetIsErrorCore(bool isError) => _isError = isError;
 
     #endregion
 
