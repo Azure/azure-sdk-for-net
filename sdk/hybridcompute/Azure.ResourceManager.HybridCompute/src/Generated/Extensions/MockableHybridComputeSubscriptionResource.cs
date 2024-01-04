@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ExtensionValueResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of HybridComputeExtensionValueResources in the SubscriptionResource. </summary>
         /// <param name="location"> The location of the Extension being received. </param>
         /// <param name="publisher"> The publisher of the Extension being received. </param>
         /// <param name="extensionType"> The extensionType of the Extension being received. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/> or <paramref name="extensionType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisher"/> or <paramref name="extensionType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ExtensionValueResources and their operations over a ExtensionValueResource. </returns>
-        public virtual ExtensionValueCollection GetExtensionValues(AzureLocation location, string publisher, string extensionType)
+        /// <returns> An object representing collection of HybridComputeExtensionValueResources and their operations over a HybridComputeExtensionValueResource. </returns>
+        public virtual HybridComputeExtensionValueCollection GetHybridComputeExtensionValues(AzureLocation location, string publisher, string extensionType)
         {
-            return new ExtensionValueCollection(Client, Id, location, publisher, extensionType);
+            return new HybridComputeExtensionValueCollection(Client, Id, location, publisher, extensionType);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtensionValueResource>> GetExtensionValueAsync(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeExtensionValueResource>> GetHybridComputeExtensionValueAsync(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
-            return await GetExtensionValues(location, publisher, extensionType).GetAsync(version, cancellationToken).ConfigureAwait(false);
+            return await GetHybridComputeExtensionValues(location, publisher, extensionType).GetAsync(version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtensionValueResource> GetExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeExtensionValueResource> GetHybridComputeExtensionValue(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
-            return GetExtensionValues(location, publisher, extensionType).Get(version, cancellationToken);
+            return GetHybridComputeExtensionValues(location, publisher, extensionType).Get(version, cancellationToken);
         }
 
         /// <summary>
