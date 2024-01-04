@@ -6,11 +6,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Developer.DevCenter.Models;
 using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
+    //[PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class EnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         private const string EnvName = "DevTestEnv";
@@ -20,7 +21,7 @@ namespace Azure.Developer.DevCenter.Tests
             InstrumentClient(new DeploymentEnvironmentsClient(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new AzureDeveloperDevCenterClientOptions())));
+                InstrumentClientOptions(new DevCenterClientOptions())));
 
         public EnvironmentsClientTests(bool isAsync) : base(isAsync)
         {
@@ -36,20 +37,16 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetCatalogsSucceeds()
         {
             var numberOfReturnedCatalogs = 0;
-            await foreach (BinaryData catalogData in _environmentsClient.GetCatalogsAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+            await foreach (DevCenterCatalog catalog in _environmentsClient.GetCatalogsAsync(
+                TestEnvironment.ProjectName))
             {
                 numberOfReturnedCatalogs++;
-                JsonElement catalogResponseData = JsonDocument.Parse(catalogData.ToStream()).RootElement;
 
-                if (!catalogResponseData.TryGetProperty("name", out var catalogNameJson))
+                string catalogName = catalog.Name;
+                if (string.IsNullOrWhiteSpace(catalogName))
                 {
                     FailDueToMissingProperty("name");
                 }
-
-                string catalogName = catalogNameJson.ToString();
                 Assert.AreEqual(TestEnvironment.CatalogName, catalogName);
             }
 
@@ -59,15 +56,15 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetCatalogSucceeds()
         {
-            Response getCatalogResponse = await _environmentsClient.GetCatalogAsync(TestEnvironment.ProjectName, TestEnvironment.CatalogName, TestEnvironment.context);
-            JsonElement getCatalogData = JsonDocument.Parse(getCatalogResponse.ContentStream).RootElement;
+            Response<DevCenterCatalog> getCatalogResponse = await _environmentsClient.GetCatalogAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.CatalogName);
 
-            if (!getCatalogData.TryGetProperty("name", out var catalogNameJson))
+            string catalogName = getCatalogResponse?.Value?.Name;
+            if (string.IsNullOrWhiteSpace(catalogName))
             {
                 FailDueToMissingProperty("name");
             }
-
-            string catalogName = catalogNameJson.ToString();
             Assert.AreEqual(TestEnvironment.CatalogName, catalogName);
         }
 
@@ -75,20 +72,16 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetEnvironmentTypesSucceeds()
         {
             var numberOfEnvTypes = 0;
-            await foreach (BinaryData envTypeData in _environmentsClient.GetEnvironmentTypesAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+            await foreach (DevCenterEnvironmentType envType in _environmentsClient.GetEnvironmentTypesAsync(TestEnvironment.ProjectName))
             {
                 numberOfEnvTypes++;
-                JsonElement envTypeResponseData = JsonDocument.Parse(envTypeData.ToStream()).RootElement;
 
-                if (!envTypeResponseData.TryGetProperty("name", out var envTypeNameJson))
+                string envTypeName = envType.Name;
+                if (string.IsNullOrWhiteSpace(envTypeName))
                 {
                     FailDueToMissingProperty("name");
                 }
 
-                string envTypeName = envTypeNameJson.ToString();
                 Assert.AreEqual(TestEnvironment.EnvironmentTypeName, envTypeName);
             }
 
@@ -99,17 +92,16 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetEnvironmentDefinitionsSucceeds()
         {
             var numberOfEnvDefinitions = 0;
-            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsAsync(TestEnvironment.ProjectName, TestEnvironment.maxCount, TestEnvironment.context))
+            await foreach (EnvironmentDefinition envDefinition in _environmentsClient.GetEnvironmentDefinitionsAsync(TestEnvironment.ProjectName))
             {
                 numberOfEnvDefinitions++;
-                JsonElement envDefinitionsResponseData = JsonDocument.Parse(envDefinitionsData.ToStream()).RootElement;
 
-                if (!envDefinitionsResponseData.TryGetProperty("name", out var envDefinitionsNameJson))
+                string envDefinitionsName = envDefinition.Name;
+                if (string.IsNullOrWhiteSpace(envDefinitionsName))
                 {
                     FailDueToMissingProperty("name");
                 }
 
-                string envDefinitionsName = envDefinitionsNameJson.ToString();
                 Console.WriteLine(envDefinitionsName);
             }
 
@@ -120,21 +112,18 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetEnvironmentDefinitionsByCatalogSucceeds()
         {
             var numberOfEnvDefinitions = 0;
-            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(
+            await foreach (EnvironmentDefinition envDefinition in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.CatalogName,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+                TestEnvironment.CatalogName))
             {
                 numberOfEnvDefinitions++;
-                JsonElement envDefinitionsResponseData = JsonDocument.Parse(envDefinitionsData.ToStream()).RootElement;
 
-                if (!envDefinitionsResponseData.TryGetProperty("name", out var envDefinitionsNameJson))
+                string envDefinitionsName = envDefinition.Name;
+                if (string.IsNullOrWhiteSpace(envDefinitionsName))
                 {
                     FailDueToMissingProperty("name");
                 }
 
-                string envDefinitionsName = envDefinitionsNameJson.ToString();
                 Console.WriteLine(envDefinitionsName);
             }
 
@@ -146,25 +135,23 @@ namespace Azure.Developer.DevCenter.Tests
         {
             await SetUpEnvironmentAsync();
 
-            Response getEnvResponse = await _environmentsClient.GetEnvironmentAsync(
+            Response<DevCenterEnvironment> getEnvResponse = await _environmentsClient.GetEnvironmentAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                EnvName,
-                TestEnvironment.context);
-            JsonElement getEnvData = JsonDocument.Parse(getEnvResponse.ContentStream).RootElement;
+                EnvName);
 
-            if (!getEnvData.TryGetProperty("name", out var envNameJson))
+            string envName = getEnvResponse?.Value?.Name;
+            if (string.IsNullOrWhiteSpace(envName))
             {
                 FailDueToMissingProperty("name");
             }
 
-            string envName = envNameJson.ToString();
             Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
 
             await DeleteEnvironmentAsync();
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetEnvironmentsSucceeds()
         {
             var numberOfEnvironments = await GetEnvironmentsAsync();
@@ -199,20 +186,16 @@ namespace Azure.Developer.DevCenter.Tests
         private async Task<int> GetAllEnvironmentsAsync()
         {
             var numberOfEnvironments = 0;
-            await foreach (BinaryData environmentsData in _environmentsClient.GetAllEnvironmentsAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+            await foreach (DevCenterEnvironment environment in _environmentsClient.GetAllEnvironmentsAsync(
+                TestEnvironment.ProjectName))
             {
                 numberOfEnvironments++;
-                JsonElement environmentsResponseData = JsonDocument.Parse(environmentsData.ToStream()).RootElement;
 
-                if (!environmentsResponseData.TryGetProperty("name", out var environmentNameJson))
+                string envName = environment.Name;
+                if (string.IsNullOrWhiteSpace(envName))
                 {
                     FailDueToMissingProperty("name");
                 }
-
-                string envName = environmentNameJson.ToString();
                 Console.WriteLine(envName);
             }
 
@@ -222,21 +205,17 @@ namespace Azure.Developer.DevCenter.Tests
         private async Task<int> GetEnvironmentsAsync()
         {
             var numberOfEnvironments = 0;
-            await foreach (BinaryData environmentsData in _environmentsClient.GetEnvironmentsAsync(
+            await foreach (DevCenterEnvironment environment in _environmentsClient.GetEnvironmentsAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+                TestEnvironment.MeUserId))
             {
                 numberOfEnvironments++;
-                JsonElement environmentsResponseData = JsonDocument.Parse(environmentsData.ToStream()).RootElement;
 
-                if (!environmentsResponseData.TryGetProperty("name", out var environmentNameJson))
+                string envName = environment.Name;
+                if (string.IsNullOrWhiteSpace(envName))
                 {
                     FailDueToMissingProperty("name");
                 }
-
-                string envName = environmentNameJson.ToString();
                 Console.WriteLine(envName);
             }
 
@@ -245,44 +224,39 @@ namespace Azure.Developer.DevCenter.Tests
 
         private async Task SetUpEnvironmentAsync()
         {
-            string envDefinitionsName = string.Empty;
+            string envDefinitionName = string.Empty;
 
-            await foreach (BinaryData envDefinitionsData in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(
+            await foreach (EnvironmentDefinition envDefinition in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.CatalogName,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+                TestEnvironment.CatalogName))
             {
-                JsonElement envDefinitionsResponseData = JsonDocument.Parse(envDefinitionsData.ToStream()).RootElement;
-
-                if (!envDefinitionsResponseData.TryGetProperty("name", out var envDefinitionsNameJson))
+                envDefinitionName = envDefinition.Name;
+                if (string.IsNullOrWhiteSpace(envDefinitionName))
                 {
                     FailDueToMissingProperty("name");
                 }
 
-                envDefinitionsName = envDefinitionsNameJson.ToString();
-                if (envDefinitionsName == "Sandbox") break;
+                if (envDefinitionName == "Sandbox") break;
             }
 
-            var content = new
-            {
-                environmentDefinitionName = envDefinitionsName,
-                catalogName = TestEnvironment.CatalogName,
-                environmentType = TestEnvironment.EnvironmentTypeName,
-            };
+            var environment = new DevCenterEnvironment
+            (
+                TestEnvironment.EnvironmentTypeName,
+                TestEnvironment.CatalogName,
+                envDefinitionName
+            );
 
-            Operation<BinaryData> environmentCreateOperation = await _environmentsClient.CreateOrUpdateEnvironmentAsync(
+            Operation<DevCenterEnvironment> environmentCreateOperation = await _environmentsClient.CreateOrUpdateEnvironmentAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 EnvName,
-                RequestContent.Create(content));
+                environment);
 
-            BinaryData environmentData = await environmentCreateOperation.WaitForCompletionAsync();
-            JsonElement environment = JsonDocument.Parse(environmentData.ToStream()).RootElement;
+            environment = await environmentCreateOperation.WaitForCompletionAsync();
 
-            var provisioningState = environment.GetProperty("provisioningState").ToString();
-            Assert.IsTrue(provisioningState.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
+            EnvironmentProvisioningState? provisioningState = environment.ProvisioningState;
+            Assert.IsTrue(provisioningState.Equals(EnvironmentProvisioningState.Succeeded));
         }
 
         private async Task DeleteEnvironmentAsync()

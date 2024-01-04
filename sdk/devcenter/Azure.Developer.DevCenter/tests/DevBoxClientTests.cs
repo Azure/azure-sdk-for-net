@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Developer.DevCenter.Models;
 using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
@@ -22,7 +23,7 @@ namespace Azure.Developer.DevCenter.Tests
             InstrumentClient(new DevBoxesClient(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new AzureDeveloperDevCenterClientOptions())));
+                InstrumentClientOptions(new DevCenterClientOptions())));
 
         public DevBoxClientTests(bool isAsync) : base(isAsync)
         {
@@ -56,9 +57,7 @@ namespace Azure.Developer.DevCenter.Tests
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                DevBoxName,
-                TestEnvironment.hibernate,
-                TestEnvironment.context);
+                DevBoxName);
 
             BinaryData devBoxData = devBoxStopOperation.GetRawResponse().Content;
             JsonElement devBox = JsonDocument.Parse(devBoxData).RootElement;
@@ -76,8 +75,7 @@ namespace Azure.Developer.DevCenter.Tests
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                DevBoxName,
-                TestEnvironment.context);
+                DevBoxName);
 
             devBoxData = devBoxStartOperation.GetRawResponse().Content;
             devBox = JsonDocument.Parse(devBoxData).RootElement;
@@ -94,55 +92,44 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetRemoteConnectionSucceeds()
         {
-            Response remoteConnectionResponse = await _devBoxesClient.GetRemoteConnectionAsync(
+            Response<RemoteConnection> remoteConnectionResponse = await _devBoxesClient.GetRemoteConnectionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                DevBoxName,
-                TestEnvironment.context);
-
-            JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
+                DevBoxName);
 
             // Check webUrl
-            if (!remoteConnectionData.TryGetProperty("webUrl", out var webUrlJson))
+            Uri webUrl = remoteConnectionResponse?.Value?.WebUri;
+            if (webUrl == null)
             {
                 FailDueToMissingProperty("webUrl");
             }
 
-            string uriString = webUrlJson.ToString();
+            Assert.AreEqual(webUrl.Scheme, Uri.UriSchemeHttps);
 
-            bool validConnectionUri = Uri.TryCreate(uriString, UriKind.Absolute, out Uri uriResult)
-                && uriResult.Scheme == Uri.UriSchemeHttps;
-
-            Assert.True(validConnectionUri);
-
-            // Check RDP connection string
-            if (!remoteConnectionData.TryGetProperty("rdpConnectionUrl", out var rdpConnectionUrlJson))
+            // Check RDP connection
+            Uri remoteConnectionUrl = remoteConnectionResponse?.Value?.RdpConnectionUri;
+            if (remoteConnectionUrl == null)
             {
                 FailDueToMissingProperty("rdpConnectionUrl");
             }
 
-            string rdpConnectionUrlString = rdpConnectionUrlJson.ToString();
-            Assert.False(string.IsNullOrEmpty(rdpConnectionUrlString));
-            Assert.True(rdpConnectionUrlString.StartsWith("ms-avd"));
+            Assert.AreEqual(remoteConnectionUrl.Scheme, "ms-avd");
         }
 
         [RecordedTest]
         public async Task GetDevBoxSucceeds()
         {
-            Response devBoxResponse = await _devBoxesClient.GetDevBoxAsync(
+            Response<DevBox> devBoxResponse = await _devBoxesClient.GetDevBoxAsync(
                TestEnvironment.ProjectName,
                TestEnvironment.MeUserId,
-               DevBoxName,
-               TestEnvironment.context);
+               DevBoxName);
 
-            JsonElement devBoxResponseData = JsonDocument.Parse(devBoxResponse.ContentStream).RootElement;
-
-            if (!devBoxResponseData.TryGetProperty("name", out var devBoxNameJson))
+            string devBoxName = devBoxResponse?.Value?.Name;
+            if (string.IsNullOrWhiteSpace(devBoxName))
             {
                 FailDueToMissingProperty("name");
             }
 
-            string devBoxName = devBoxNameJson.ToString();
             Assert.AreEqual(devBoxName, DevBoxName);
         }
 
@@ -151,22 +138,18 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetDevBoxesAsync(
+            await foreach (DevBox devBox in _devBoxesClient.GetDevBoxesAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId,
-                TestEnvironment.filter,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+                TestEnvironment.MeUserId))
             {
                 numberOfReturnedDevBoxes++;
-                JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
 
-                if (!devBoxResponseData.TryGetProperty("name", out var devBoxNameJson))
+                string devBoxName = devBox.Name;
+                if (string.IsNullOrWhiteSpace(devBoxName))
                 {
                     FailDueToMissingProperty("name");
                 }
 
-                string devBoxName = devBoxNameJson.ToString();
                 Assert.AreEqual(devBoxName, DevBoxName);
             }
 
@@ -178,20 +161,16 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesAsync(
-                TestEnvironment.filter,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+            await foreach (DevBox devBox in _devBoxesClient.GetAllDevBoxesAsync())
             {
                 numberOfReturnedDevBoxes++;
-                JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
 
-                if (!devBoxResponseData.TryGetProperty("name", out var devBoxNameJson))
+                string devBoxName = devBox.Name;
+                if (string.IsNullOrWhiteSpace(devBoxName))
                 {
                     FailDueToMissingProperty("name");
                 }
 
-                string devBoxName = devBoxNameJson.ToString();
                 Assert.AreEqual(devBoxName, DevBoxName);
             }
 
@@ -203,21 +182,16 @@ namespace Azure.Developer.DevCenter.Tests
         {
             int numberOfReturnedDevBoxes = 0;
 
-            await foreach (BinaryData devBoxData in _devBoxesClient.GetAllDevBoxesByUserAsync(
-                TestEnvironment.MeUserId,
-                TestEnvironment.filter,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+            await foreach (DevBox devBox in _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.MeUserId))
             {
                 numberOfReturnedDevBoxes++;
-                JsonElement devBoxResponseData = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
 
-                if (!devBoxResponseData.TryGetProperty("name", out var devBoxNameJson))
+                string devBoxName = devBox.Name;
+                if (string.IsNullOrWhiteSpace(devBoxName))
                 {
                     FailDueToMissingProperty("name");
                 }
 
-                string devBoxName = devBoxNameJson.ToString();
                 Assert.AreEqual(devBoxName, DevBoxName);
             }
 
@@ -227,19 +201,16 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetPoolSucceeds()
         {
-            Response getPoolResponse = await _devBoxesClient.GetPoolAsync(
+            Response<DevBoxPool> getPoolResponse = await _devBoxesClient.GetPoolAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.PoolName,
-                TestEnvironment.context);
+                TestEnvironment.PoolName);
 
-            JsonElement getPoolData = JsonDocument.Parse(getPoolResponse.ContentStream).RootElement;
-
-            if (!getPoolData.TryGetProperty("name", out var poolNameJson))
+            string poolName = getPoolResponse?.Value.Name;
+            if (string.IsNullOrWhiteSpace(poolName))
             {
                 FailDueToMissingProperty("name");
             }
 
-            string poolName = poolNameJson.ToString();
             Assert.AreEqual(poolName, TestEnvironment.PoolName);
         }
 
@@ -247,21 +218,15 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetPoolsSucceeds()
         {
             var numberOfReturnedPools = 0;
-            await foreach (BinaryData poolData in _devBoxesClient.GetPoolsAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.filter,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+            await foreach (DevBoxPool pool in _devBoxesClient.GetPoolsAsync(TestEnvironment.ProjectName))
             {
                 numberOfReturnedPools++;
-                JsonElement getPoolsResponseData = JsonDocument.Parse(poolData.ToStream()).RootElement;
 
-                if (!getPoolsResponseData.TryGetProperty("name", out var poolNameJson))
+                string poolName = pool.Name;
+                if (string.IsNullOrWhiteSpace(poolName))
                 {
                     FailDueToMissingProperty("name");
                 }
-
-                string poolName = poolNameJson.ToString();
                 Assert.AreEqual(poolName, TestEnvironment.PoolName);
             }
 
@@ -272,22 +237,17 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetSchedulesSucceeds()
         {
             var numberOfReturnedSchedules = 0;
-            await foreach (BinaryData scheduleData in _devBoxesClient.GetSchedulesAsync(
+            await foreach (DevBoxSchedule schedule in _devBoxesClient.GetSchedulesAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.PoolName,
-                TestEnvironment.filter,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+                TestEnvironment.PoolName))
             {
                 numberOfReturnedSchedules++;
-                JsonElement getSchedulesResponseData = JsonDocument.Parse(scheduleData.ToStream()).RootElement;
 
-                if (!getSchedulesResponseData.TryGetProperty("name", out var scheduleNameJson))
+                string scheduleName = schedule.Name;
+                if (string.IsNullOrWhiteSpace(scheduleName))
                 {
                     FailDueToMissingProperty("name");
                 }
-
-                string scheduleName = scheduleNameJson.ToString();
                 Assert.AreEqual("default", scheduleName);
             }
 
@@ -297,20 +257,17 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetScheduleSucceeds()
         {
-            Response getScheduleResponse = await _devBoxesClient.GetScheduleAsync(
+            Response<DevBoxSchedule> getScheduleResponse = await _devBoxesClient.GetScheduleAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.PoolName,
-                "default",
-                TestEnvironment.context);
+                "default");
 
-            JsonElement getScheduleData = JsonDocument.Parse(getScheduleResponse.ContentStream).RootElement;
-
-            if (!getScheduleData.TryGetProperty("name", out var scheduleNameJson))
+            string scheduleName = getScheduleResponse?.Value?.Name;
+            if (string.IsNullOrWhiteSpace(scheduleName))
             {
                 FailDueToMissingProperty("name");
             }
 
-            string scheduleName = scheduleNameJson.ToString();
             Assert.AreEqual("default", scheduleName);
         }
 
@@ -318,17 +275,18 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetActionsSucceeds()
         {
             var numberOfReturnedActions = 0;
-            await foreach (BinaryData actionsData in _devBoxesClient.GetDevBoxActionsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, DevBoxName, TestEnvironment.context))
+            await foreach (DevBoxAction devBoxAction in _devBoxesClient.GetDevBoxActionsAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                DevBoxName))
             {
                 numberOfReturnedActions++;
-                JsonElement getActionsResponseData = JsonDocument.Parse(actionsData.ToStream()).RootElement;
 
-                if (!getActionsResponseData.TryGetProperty("name", out var actionNameJson))
+                string actionName = devBoxAction.Name;
+                if (string.IsNullOrWhiteSpace(actionName))
                 {
                     FailDueToMissingProperty("name");
                 }
-
-                string actionName = actionNameJson.ToString();
                 Assert.AreEqual("schedule-default", actionName);
             }
 
@@ -338,21 +296,18 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetActionSucceeds()
         {
-            Response getActionResponse = await _devBoxesClient.GetDevBoxActionAsync(
+            Response<DevBoxAction> getActionResponse = await _devBoxesClient.GetDevBoxActionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
-                "schedule-default",
-                TestEnvironment.context);
+                "schedule-default");
 
-            JsonElement getActionData = JsonDocument.Parse(getActionResponse.ContentStream).RootElement;
-
-            if (!getActionData.TryGetProperty("name", out var actionNameJson))
+            string actionName = getActionResponse?.Value.Name;
+            if (string.IsNullOrWhiteSpace(actionName))
             {
                 FailDueToMissingProperty("name");
             }
 
-            string actionName = actionNameJson.ToString();
             Assert.AreEqual("schedule-default", actionName);
         }
 
@@ -375,26 +330,20 @@ namespace Azure.Developer.DevCenter.Tests
             string time = "2023-05-02T16:01:53.3821556Z";
             DateTimeOffset delayUntil = DateTimeOffset.Parse(time);
 
-            Response delayActionResponse = await _devBoxesClient.DelayActionAsync(
+            Response<DevBoxAction> delayActionResponse = await _devBoxesClient.DelayActionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
                 "schedule-default",
-                delayUntil,
-                TestEnvironment.context);
+                delayUntil);
 
-            JsonElement delayActionData = JsonDocument.Parse(delayActionResponse.ContentStream).RootElement;
-            if (!delayActionData.TryGetProperty("next", out var nextActionTimeJson))
+            DevBoxNextAction nextAction = delayActionResponse?.Value.NextAction;
+            if (nextAction == null)
             {
-                FailDueToMissingProperty("next");
+                FailDueToMissingProperty("nextAction");
             }
 
-            if (!nextActionTimeJson.TryGetProperty("scheduledTime", out var scheduledTimeJson))
-            {
-                FailDueToMissingProperty("scheduledTime");
-            }
-
-            Assert.AreEqual(time, scheduledTimeJson.ToString());
+            Assert.AreEqual(delayUntil, nextAction.ScheduledTime);
         }
 
         [RecordedTest]
@@ -404,18 +353,21 @@ namespace Azure.Developer.DevCenter.Tests
             DateTimeOffset delayUntil = DateTimeOffset.Parse("2023-05-02T16:01:53.3821556Z");
             var numberOfReturnedActions = 0;
 
-            await foreach (BinaryData actionsData in _devBoxesClient.DelayAllActionsAsync(TestEnvironment.ProjectName, TestEnvironment.MeUserId, DevBoxName, delayUntil, TestEnvironment.context))
+            await foreach (DevBoxActionDelayResult actionDelayResult in _devBoxesClient.DelayAllActionsAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                DevBoxName,
+                delayUntil))
             {
                 numberOfReturnedActions++;
-                JsonElement getActionsResponseData = JsonDocument.Parse(actionsData.ToStream()).RootElement;
 
-                if (!getActionsResponseData.TryGetProperty("result", out var actionResultJson))
+                DevBoxActionDelayStatus actionDelayStatus = actionDelayResult.Result;
+                if (actionDelayStatus == default)
                 {
-                    FailDueToMissingProperty("result");
+                    FailDueToMissingProperty("actionDelayStatus");
                 }
 
-                string actionResultName = actionResultJson.ToString();
-                Assert.AreEqual("Succeeded", actionResultName);
+                Assert.AreEqual(DevBoxActionDelayStatus.Succeeded, actionDelayStatus);
             }
 
             Assert.AreEqual(1, numberOfReturnedActions);
@@ -423,31 +375,30 @@ namespace Azure.Developer.DevCenter.Tests
 
         private async Task SetUpDevBoxAsync()
         {
-            var content = new
-            {
-                poolName = TestEnvironment.PoolName,
-            };
+            DevBox devBox = new DevBox
+            (
+                 TestEnvironment.PoolName
+            );
 
             // Create dev box
-            Operation<BinaryData> devBoxCreateOperation = await _devBoxesClient.CreateDevBoxAsync(
+            Operation<DevBox> devBoxCreateOperation = await _devBoxesClient.CreateDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
-                RequestContent.Create(content));
+                devBox);
 
-            BinaryData devBoxData = await devBoxCreateOperation.WaitForCompletionAsync();
-            JsonElement devBox = JsonDocument.Parse(devBoxData.ToStream()).RootElement;
-            string devBoxProvisioningState = devBox.GetProperty("provisioningState").ToString();
+            devBox = await devBoxCreateOperation.WaitForCompletionAsync();
+            DevBoxProvisioningState? devBoxProvisioningState = devBox.ProvisioningState;
 
             // Both states indicate successful provisioning
-            bool devBoxProvisionSucceeded = devBoxProvisioningState.Equals("Succeeded", StringComparison.OrdinalIgnoreCase) || devBoxProvisioningState.Equals("ProvisionedWithWarning", StringComparison.OrdinalIgnoreCase);
+            bool devBoxProvisionSucceeded = devBoxProvisioningState.Equals(DevBoxProvisioningState.Succeeded) || devBoxProvisioningState.Equals(DevBoxProvisioningState.ProvisionedWithWarning);
             Assert.IsTrue(devBoxProvisionSucceeded);
         }
 
         private void FailDueToMissingProperty(string propertyName)
         {
-            Assert.Fail($"The JSON response received from the service does not include the necessary property: {propertyName}");
+            Assert.Fail($"The response received from the service does not include the necessary property: {propertyName}");
         }
     }
 }

@@ -34,6 +34,12 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("actionType"u8))
                 {
+
+                    //UPDATE SERIALIZATION, CUSTOMIZE BEFORE GEN
+                    if (property.Value.ValueKind == JsonValueKind.Object)
+                    {
+                        continue;
+                    }
                     actionType = new DevBoxActionType(property.Value.GetString());
                     continue;
                 }

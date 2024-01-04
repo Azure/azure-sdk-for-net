@@ -5,6 +5,7 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Developer.DevCenter.Models;
 using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
@@ -18,7 +19,7 @@ namespace Azure.Developer.DevCenter.Tests
             InstrumentClient(new DevCenterClient(
                 TestEnvironment.Endpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new AzureDeveloperDevCenterClientOptions())));
+                InstrumentClientOptions(new DevCenterClientOptions())));
 
         public DevCenterClientTests(bool isAsync) : base(isAsync)
         {
@@ -34,20 +35,16 @@ namespace Azure.Developer.DevCenter.Tests
         public async Task GetProjectsSucceeds()
         {
             var numberOfReturnedProjects = 0;
-            await foreach (BinaryData projectData in _devCenterClient.GetProjectsAsync(
-                TestEnvironment.filter,
-                TestEnvironment.maxCount,
-                TestEnvironment.context))
+
+            await foreach (DevCenterProject item in _devCenterClient.GetProjectsAsync())
             {
                 numberOfReturnedProjects++;
-                JsonElement projectResponseData = JsonDocument.Parse(projectData.ToStream()).RootElement;
-
-                if (!projectResponseData.TryGetProperty("name", out var projectNameJson))
+                string projectName = item?.Name;
+                if (string.IsNullOrWhiteSpace(projectName))
                 {
-                    Assert.Fail($"The JSON response received from the service does not include the necessary property: {"name"}");
+                    Assert.Fail($"The response received from the service does not include the necessary property: {"name"}");
                 }
 
-                string projectName = projectNameJson.ToString();
                 Assert.AreEqual(TestEnvironment.ProjectName, projectName);
             }
 
@@ -57,16 +54,14 @@ namespace Azure.Developer.DevCenter.Tests
         [RecordedTest]
         public async Task GetProjectSucceeds()
         {
-            Response getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName, TestEnvironment.context);
+            Response<DevCenterProject> getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName);
 
-            JsonElement getProjectData = JsonDocument.Parse(getProjectResponse.ContentStream).RootElement;
-
-            if (!getProjectData.TryGetProperty("name", out var projectNameJson))
+            string projectName = getProjectResponse?.Value?.Name;
+            if (string.IsNullOrWhiteSpace(projectName))
             {
-                Assert.Fail($"The JSON response received from the service does not include the necessary property: {"name"}");
+                Assert.Fail($"The response received from the service does not include the necessary property: {"name"}");
             }
 
-            string projectName = projectNameJson.ToString();
             Assert.AreEqual(TestEnvironment.ProjectName, projectName);
         }
     }

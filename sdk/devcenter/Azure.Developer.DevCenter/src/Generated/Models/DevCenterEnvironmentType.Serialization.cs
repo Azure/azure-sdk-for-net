@@ -35,6 +35,11 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
+                    //UPDATE SERIALIZATION, CUSTOMIZE BEFORE GEN
+                    if (property.Value.ValueKind == JsonValueKind.Object)
+                    {
+                        continue;
+                    }
                     status = new EnvironmentTypeStatus(property.Value.GetString());
                     continue;
                 }

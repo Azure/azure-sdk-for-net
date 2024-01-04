@@ -31,9 +31,9 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Initializes a new instance of DevBoxesClient from DevCenterClient </summary>
-        public DevBoxesClient GetDevBoxesClient() => new DevBoxesClient(_endpoint, _tokenCredential, _options);
+        public virtual DevBoxesClient GetDevBoxesClient() => new DevBoxesClient(_endpoint, _tokenCredential, _options);
 
         /// <summary> Initializes a new instance of DeploymentEnvironmentsClient from DevCenterClient </summary>
-        public DeploymentEnvironmentsClient GetDeploymentEnvironmentsClient() => new DeploymentEnvironmentsClient(_endpoint, _tokenCredential, _options);
+        public virtual DeploymentEnvironmentsClient GetDeploymentEnvironmentsClient() => new DeploymentEnvironmentsClient(_endpoint, _tokenCredential, _options);
     }
 }
