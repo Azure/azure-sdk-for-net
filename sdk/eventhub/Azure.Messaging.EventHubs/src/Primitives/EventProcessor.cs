@@ -1776,11 +1776,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             // for partitions which are no longer owned.
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var ownedPartitions = new HashSet<string>(LoadBalancer.OwnedPartitionIds);
 
             foreach (var partitionId in ActivePartitionProcessors.Keys)
             {
-                if (!ownedPartitions.Contains(partitionId))
+                if (!LoadBalancer.IsPartitionOwned(partitionId))
                 {
                    // The partition is no longer owned.  Stopping may take longer than a load balancing cycle
                    // should run if event processing is active and chooses not to honor cancellation immediately, so
@@ -1797,7 +1796,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            foreach (var partitionId in ownedPartitions)
+            foreach (var partitionId in LoadBalancer.OwnedPartitionIds)
             {
                 var processorFound = ActivePartitionProcessors.TryGetValue(partitionId, out var partitionProcessor);
 
@@ -1807,7 +1806,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     // processing currently in flight.  Any time spent will be in the StopProcessingPartitionAsync handler, which
                     // is expected to run quickly.
 
-                    if ((processorFound) && (partitionProcessor.ProcessingTask.IsCompleted))
+                    if (processorFound)
                     {
                         await StopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken).ConfigureAwait(false);
                     }
