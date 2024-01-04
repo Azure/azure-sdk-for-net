@@ -99,7 +99,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
     [Test]
     [TestCaseSource(nameof(RequestMethods))]
-    public async Task RequestHeaderContentLengthIsSetWhenNoContent(string method, bool hasContent)
+    public async Task CanSetRequestHeaderContentLengthWhenNoContent(string method, bool hasContent)
     {
         HttpClientPipelineTransport transport = new();
 
@@ -583,7 +583,79 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
         CollectionAssert.Contains(response.Headers, new KeyValuePair<string, string>(headerName, joinedHeaderValues));
     }
 
+    [Test]
+    public async Task ResponseHeadersAreSplit()
+    {
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                context.Response.Headers.Add("Sync-Token", new[] { "A", "B" });
+                byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        using PipelineResponse response = message.Response!;
+
+        Assert.True(response.Headers.TryGetValues("Sync-Token", out IEnumerable<string>? tokens));
+        Assert.AreEqual(2, tokens!.Count());
+        CollectionAssert.AreEqual(new[] { "A", "B" }, tokens);
+    }
+
+    [Test]
+    public async Task ResponseHeadersAreNotSplit()
+    {
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                context.Response.Headers.Add("Sync-Token", "A,B");
+                byte[] buffer = Encoding.UTF8.GetBytes("Hello");
+                await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        using PipelineResponse response = message.Response!;
+
+        Assert.True(response.Headers.TryGetValues("Sync-Token", out IEnumerable<string>? tokens));
+        Assert.AreEqual(1, tokens!.Count());
+        CollectionAssert.AreEqual(new[] { "A,B" }, tokens);
+    }
+
     #endregion
+
+    [Test]
+    public void TransportExceptionsAreWrapped()
+    {
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                context.Abort();
+                return Task.CompletedTask;
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+
+        ClientRequestException? exception = Assert.ThrowsAsync<ClientRequestException>(async ()
+            => await transport.ProcessSyncOrAsync(message, IsAsync));
+
+        Assert.IsNotEmpty(exception!.Message);
+        Assert.AreEqual(0, exception.Status);
+    }
 
     #region Helpers
 
