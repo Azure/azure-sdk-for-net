@@ -105,7 +105,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
+    new ImageAnalysisOptions { genderNeutralCaption = true });
 
 // Print caption results to the console
 Console.WriteLine($"Image analysis results:");
