@@ -379,14 +379,16 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatMessageImageContentItem : Azure.AI.OpenAI.ChatMessageContentItem
     {
-        public ChatMessageImageContentItem(System.BinaryData imageData) { }
-        public ChatMessageImageContentItem(System.BinaryData imageData, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
+        public ChatMessageImageContentItem(System.BinaryData jpegImageData) { }
+        public ChatMessageImageContentItem(System.BinaryData jpegImageData, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
         public ChatMessageImageContentItem(System.BinaryData imageData, string imageDataFormat) { }
         public ChatMessageImageContentItem(System.BinaryData imageData, string imageDataFormat, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
         public ChatMessageImageContentItem(System.Uri imageUri) { }
         public ChatMessageImageContentItem(System.Uri imageUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
-        public System.BinaryData Data { get { throw null; } }
-        public System.Uri Url { get { throw null; } }
+        public Azure.AI.OpenAI.ChatMessageImageDetailLevel? DetailLevel { get { throw null; } }
+        public System.BinaryData ImageData { get { throw null; } }
+        public string ImageDataFormat { get { throw null; } }
+        public System.Uri ImageUri { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChatMessageImageDetailLevel : System.IEquatable<Azure.AI.OpenAI.ChatMessageImageDetailLevel>
