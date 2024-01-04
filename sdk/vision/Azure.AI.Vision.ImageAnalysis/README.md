@@ -4,8 +4,8 @@ The Azure.AI.Vision.ImageAnalysis client library provides AI algorithms for proc
 
 Use the Image Analysis client library to:
 * Authenticate against the service
-* Set what features you would like to extract
-* Upload an image for analysis, or send an image URL
+* Select which features you would like to extract
+* Upload an image for analysis, or provide an image URL
 * Get the analysis result
 
 [Product documentation][image_analysis_overview] 
@@ -63,11 +63,11 @@ For more information about these features, see [Image Analysis overview][image_a
 
 ### Analyze from image buffer or URL
 
-The `ImageAnalysisClient` a method `Analyze` that has two overloads:
+The `ImageAnalysisClient` contains an `Analyze` method that has two overloads:
 * `Analyze (BianryData ...`: Analyze an image from an input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object. The client will upload the image to the service as part of the REST request. 
 * `Analyze (Uri ...)`: Analyze an image from a publicly-accessible URL, via the `Uri` object. The client will send the image URL to the service. The service will download the image.
 
-The examples below show how to do both. The `Analyze` examples populate the input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object by loading an image from a file on disk.
+The examples below demonstrate both. The `Analyze` examples populate the input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object by loading an image from a file from disk.
 
 ### Supported image formats
 
@@ -105,7 +105,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
+    new ImageAnalysisOptions { genderNeutralCaption = true });
 
 // Print caption results to the console
 Console.WriteLine($"Image analysis results:");
@@ -153,7 +153,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
         Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
         foreach (DetectedTextWord word in line.Words)
         {
-            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
+            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.Confidence:F4}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
         }
     }
 ```
@@ -178,7 +178,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
         Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
         foreach (DetectedTextWord word in line.Words)
         {
-            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
+            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence:F4}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
         }
     }
 ```
@@ -186,7 +186,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
 
 ### Common errors
 
-When you interact with Image Analysis using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests. For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` error is returned, indicating a bad request.
+When you interact with Image Analysis using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests. For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` status is returned, indicating a bad request.
 
 ### Handling exceptions
 
