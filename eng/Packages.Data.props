@@ -65,7 +65,20 @@
     way to avoid issues is to ensure the version used is lower than
     the version used by PowerShell. In most cases it is adequate
     to check the dependencies in the latest version.
-    https://github.com/PowerShell/PowerShell/releases
+    - These tags give information for specific release versions: https://github.com/PowerShell/PowerShell/releases
+    - These files show the dependencies and versions:
+        - https://github.com/PowerShell/PowerShell/blob/master/tools/cgmanifest.json
+        - https://github.com/PowerShell/PowerShell/blob/master/src/System.Management.Automation/System.Management.Automation.csproj
+
+    For Functions, this file can be referenced: https://github.com/Azure/azure-functions-host/blob/dev/src/WebJobs.Script/runtimeassemblies.json
+      - If the assembly is not there or there is a resolutionPolicy of private,
+        there is no issue from the Functions perspective of upgrading the version.
+      - If the assembly is there and there is a resolutionPolicy of minorMatchOrLower
+        then the version needs to be less than or equal to the version listed here:
+        - https://github.com/Azure/azure-functions-host/blob/dev/test/WebJobs.Script.Tests/Microsoft.Azure.WebJobs.Script.WebHost.deps.json
+      - If resolutionPolicy is runtimeVersion, then the version needs to match the
+        version in the file below exactly:
+        - https://github.com/Azure/azure-functions-host/blob/dev/test/WebJobs.Script.Tests/Microsoft.Azure.WebJobs.Script.WebHost.deps.json
   -->
 
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
