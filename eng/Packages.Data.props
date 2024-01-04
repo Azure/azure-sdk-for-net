@@ -57,6 +57,15 @@
   <!--
     Dependency versions for Track 2, Azure.* libraries.
     Only packages that are approved dependencies should go here.
+
+    Prior to making any updates to this section, potential version
+    conflicts with PowerShell or Functions need to be investigated.
+    
+    For any common dependencies with PowerShell, the most straightforward
+    way to avoid issues is to ensure the version used is lower than
+    the version used by PowerShell. In most cases it is adequate
+    to check the dependencies in the latest version.
+    https://github.com/PowerShell/PowerShell/releases
   -->
 
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
