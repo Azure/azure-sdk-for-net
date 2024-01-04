@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ExtensionValueData>> value = default;
+            Optional<IReadOnlyList<HybridComputeExtensionValueData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    List<ExtensionValueData> array = new List<ExtensionValueData>();
+                    List<HybridComputeExtensionValueData> array = new List<HybridComputeExtensionValueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionValueData.DeserializeExtensionValueData(item));
+                        array.Add(HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(item));
                     }
                     value = array;
                     continue;

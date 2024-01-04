@@ -342,6 +342,11 @@ list-exception:
   - /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
   - /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
 
+suppress-abstract-base-class:
+- SecuritySettingData
+- ExternalSecuritySolution
+- SecurityAlertSimulatorRequestProperties
+
 directive:
   - rename-operation:
       from: SecurityConnectorApplication_Get

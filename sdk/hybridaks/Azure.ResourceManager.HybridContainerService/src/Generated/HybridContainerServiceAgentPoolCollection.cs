@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Creates the agent pool in the Hybrid AKS provisioned cluster
+        /// Creates the agent pool in the Hybrid AKS provisioned cluster instance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools/{agentPoolName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolOperationSource(Client), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, _hybridContainerServiceAgentPoolagentPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.CreateOrUpdateAsync(Id.Parent, agentPoolName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolOperationSource(Client), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, _hybridContainerServiceAgentPoolagentPoolRestClient.CreateCreateOrUpdateRequest(Id.Parent, agentPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Creates the agent pool in the Hybrid AKS provisioned cluster
+        /// Creates the agent pool in the Hybrid AKS provisioned cluster instance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools/{agentPoolName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolOperationSource(Client), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, _hybridContainerServiceAgentPoolagentPoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.CreateOrUpdate(Id.Parent, agentPoolName, data, cancellationToken);
+                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(new HybridContainerServiceAgentPoolOperationSource(Client), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, _hybridContainerServiceAgentPoolagentPoolRestClient.CreateCreateOrUpdateRequest(Id.Parent, agentPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the agent pool in the Hybrid AKS provisioned cluster
+        /// Gets the agent pool in the Hybrid AKS provisioned cluster instance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools/{agentPoolName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.Parent, agentPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, response.Value), response.GetRawResponse());
@@ -173,11 +173,11 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the agent pool in the Hybrid AKS provisioned cluster
+        /// Gets the agent pool in the Hybrid AKS provisioned cluster instance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools/{agentPoolName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, cancellationToken);
+                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.Parent, agentPoolName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, response.Value), response.GetRawResponse());
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the agent pools in the Hybrid AKS provisioned cluster
+        /// Gets the agent pools in the Hybrid AKS provisioned cluster instance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -226,16 +226,16 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="HybridContainerServiceAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridContainerServiceAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.Parent);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HybridContainerServiceAgentPoolResource(Client, HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(e)), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, "HybridContainerServiceAgentPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Gets the agent pools in the Hybrid AKS provisioned cluster
+        /// Gets the agent pools in the Hybrid AKS provisioned cluster instance
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="HybridContainerServiceAgentPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridContainerServiceAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.Parent);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new HybridContainerServiceAgentPoolResource(Client, HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(e)), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, "HybridContainerServiceAgentPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools/{agentPoolName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.Parent, agentPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools/{agentPoolName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, cancellationToken: cancellationToken);
+                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.Parent, agentPoolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools/{agentPoolName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hybridContainerServiceAgentPoolagentPoolRestClient.GetAsync(Id.Parent, agentPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<HybridContainerServiceAgentPoolResource>(response.GetRawResponse());
                 return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, response.Value), response.GetRawResponse());
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}/agentPools/{agentPoolName}</description>
+        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.HybridContainerService
             scope.Start();
             try
             {
-                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, agentPoolName, cancellationToken: cancellationToken);
+                var response = _hybridContainerServiceAgentPoolagentPoolRestClient.Get(Id.Parent, agentPoolName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<HybridContainerServiceAgentPoolResource>(response.GetRawResponse());
                 return Response.FromValue(new HybridContainerServiceAgentPoolResource(Client, response.Value), response.GetRawResponse());
