@@ -4,7 +4,7 @@ The Azure.AI.Vision.ImageAnalysis client library provides AI algorithms for proc
 
 Use the Image Analysis client library to:
 * Authenticate against the service
-* Set what features you would like to extract
+* Select which features you would like to extract
 * Upload an image for analysis, or send an image URL
 * Get the analysis result
 
