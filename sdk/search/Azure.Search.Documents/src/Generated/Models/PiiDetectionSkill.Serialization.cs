@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(MinPrecision))
+            if (Optional.IsDefined(MinimumPrecision))
             {
-                if (MinPrecision != null)
+                if (MinimumPrecision != null)
                 {
                     writer.WritePropertyName("minimumPrecision"u8);
-                    writer.WriteNumberValue(MinPrecision.Value);
+                    writer.WriteNumberValue(MinimumPrecision.Value);
                 }
                 else
                 {
@@ -45,12 +45,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maskingMode"u8);
                 writer.WriteStringValue(MaskingMode.Value.ToString());
             }
-            if (Optional.IsDefined(Mask))
+            if (Optional.IsDefined(MaskingCharacter))
             {
-                if (Mask != null)
+                if (MaskingCharacter != null)
                 {
                     writer.WritePropertyName("maskingCharacter"u8);
-                    writer.WriteStringValue(Mask);
+                    writer.WriteStringValue(MaskingCharacter);
                 }
                 else
                 {
