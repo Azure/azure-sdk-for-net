@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Initial release of client building block types, including Pipeline, Message, and Options types.
+
 ### Breaking Changes
 
 ### Bugs Fixed
