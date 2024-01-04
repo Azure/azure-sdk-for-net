@@ -153,7 +153,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
         Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
         foreach (DetectedTextWord word in line.Words)
         {
-            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
+            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.Confidence:F4}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
         }
     }
 ```
