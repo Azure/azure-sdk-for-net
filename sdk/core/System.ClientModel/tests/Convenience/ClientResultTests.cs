@@ -96,9 +96,9 @@ public class PipelineResponseTests
         // This tests simulates creation of the result returned from a HEAD request.
 
         PipelineResponse response = new MockPipelineResponse(500);
-        OptionalClientResult<bool> result = new MockErrorResult<bool>(response, new ClientRequestException(response));
+        OptionalClientResult<bool> result = new MockErrorResult<bool>(response, new ClientResultException(response));
 
-        Assert.Throws<ClientRequestException>(() => { bool b = result.Value; });
+        Assert.Throws<ClientResultException>(() => { bool b = result.Value; });
         Assert.IsFalse(result.HasValue);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }

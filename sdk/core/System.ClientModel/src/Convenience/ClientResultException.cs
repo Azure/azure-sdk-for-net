@@ -11,7 +11,7 @@ using System.Text;
 namespace System.ClientModel;
 
 [Serializable]
-public class ClientRequestException : Exception, ISerializable
+public class ClientResultException : Exception, ISerializable
 {
     private const string DefaultMessage = "Service request failed.";
 
@@ -27,7 +27,7 @@ public class ClientRequestException : Exception, ISerializable
         protected set => _status = value;
     }
 
-    public ClientRequestException(PipelineResponse response, string? message = default, Exception? innerException = default)
+    public ClientResultException(PipelineResponse response, string? message = default, Exception? innerException = default)
         : base(GetMessage(response, message), innerException)
     {
         ClientUtilities.AssertNotNull(response, nameof(response));
@@ -36,7 +36,7 @@ public class ClientRequestException : Exception, ISerializable
         _status = response.Status;
     }
 
-    public ClientRequestException(string message, Exception? innerException = default)
+    public ClientResultException(string message, Exception? innerException = default)
         : base(message, innerException)
     {
         _status = 0;
@@ -47,7 +47,7 @@ public class ClientRequestException : Exception, ISerializable
     /// </summary>
     /// <param name="info"></param>
     /// <param name="context"></param>
-    protected ClientRequestException(SerializationInfo info, StreamingContext context)
+    protected ClientResultException(SerializationInfo info, StreamingContext context)
         : base(info, context)
     {
         _status = info.GetInt32(nameof(Status));

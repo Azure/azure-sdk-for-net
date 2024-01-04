@@ -1,14 +1,5 @@
 namespace System.ClientModel
 {
-    public partial class ClientRequestException : System.Exception, System.Runtime.Serialization.ISerializable
-    {
-        public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response, string? message = null, System.Exception? innerException = null) { }
-        protected ClientRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public ClientRequestException(string message, System.Exception? innerException = null) { }
-        public int Status { get { throw null; } protected set { } }
-        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
-    }
     public abstract partial class ClientResult
     {
         protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
@@ -16,6 +7,15 @@ namespace System.ClientModel
         public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
+    }
+    public partial class ClientResultException : System.Exception, System.Runtime.Serialization.ISerializable
+    {
+        public ClientResultException(System.ClientModel.Primitives.PipelineResponse response, string? message = null, System.Exception? innerException = null) { }
+        protected ClientResultException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public ClientResultException(string message, System.Exception? innerException = null) { }
+        public int Status { get { throw null; } protected set { } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
     public abstract partial class ClientResult<T> : System.ClientModel.OptionalClientResult<T>
     {

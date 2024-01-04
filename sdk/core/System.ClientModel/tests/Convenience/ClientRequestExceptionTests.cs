@@ -8,14 +8,14 @@ using System.IO;
 
 namespace System.ClientModel.Tests.Exceptions;
 
-public class ClientRequestExceptionTests
+public class ClientResultExceptionTests
 {
     [Test]
     public void CanCreateFromResponse()
     {
         PipelineResponse response = new MockPipelineResponse(200, "MockReason");
 
-        ClientRequestException exception = new ClientRequestException(response);
+        ClientResultException exception = new ClientResultException(response);
 
         Assert.AreEqual(response.Status, exception.Status);
         Assert.AreEqual(response, exception.GetRawResponse());
@@ -30,7 +30,7 @@ public class ClientRequestExceptionTests
         PipelineResponse response = new MockPipelineResponse(200, "MockReason");
         string message = "Override Message";
 
-        ClientRequestException exception = new ClientRequestException(response, message);
+        ClientResultException exception = new ClientResultException(response, message);
 
         Assert.AreEqual(response.Status, exception.Status);
         Assert.AreEqual(response, exception.GetRawResponse());
@@ -42,7 +42,7 @@ public class ClientRequestExceptionTests
     {
         string message = "Override Message";
 
-        ClientRequestException exception = new ClientRequestException(message);
+        ClientResultException exception = new ClientResultException(message);
 
         Assert.AreEqual(0, exception.Status);
         Assert.IsNull(exception.GetRawResponse());
@@ -57,7 +57,7 @@ public class ClientRequestExceptionTests
         PipelineResponse response = new MockPipelineResponse(200, "MockReason");
         response.ContentStream = new UnbufferedStream(content);
 
-        ClientRequestException exception = new ClientRequestException(response);
+        ClientResultException exception = new ClientResultException(response);
 
         Assert.AreEqual(response.Status, exception.Status);
         Assert.AreEqual(response, exception.GetRawResponse());

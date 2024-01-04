@@ -32,7 +32,7 @@ The `System.ClientModel` preview package provides a `KeyCredential` type for aut
 The main shared concepts of `System.ClientModel` include:
 
 - Accessing HTTP response details (`ClientResult`, `ClientResult<T>`).
-- Exceptions for reporting errors from service requests in a consistent fashion (`ClientRequestException`).
+- Exceptions for reporting errors from service requests in a consistent fashion (`ClientResultException`).
 - Providing APIs to read and write models in different formats.
 
 ## Examples
@@ -61,7 +61,7 @@ OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(j
 
 ## Troubleshooting
 
-You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientRequestException` thrown from a pipeline's `Send` method.
+You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientResultException` thrown from a pipeline's `Send` method.
 
 ## Next steps
 

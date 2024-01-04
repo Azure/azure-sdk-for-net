@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Initial release of convenience types in the System.ClientModel namespace, including `ClientResult<T>`, `KeyCredential`, and `ClientRequestException`.
+- Initial release of convenience types in the System.ClientModel namespace, including `ClientResult<T>`, `KeyCredential`, and `ClientResultException`.
 
 ### Breaking Changes
 
