@@ -2003,11 +2003,10 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var stopContinuation = partitionProcessor.ProcessingTask.ContinueWith(async (task, state) =>
                 {
                     var innerPartition = default(TPartition);
+                    var (innerId, innerReason) = ((string, ProcessingStoppedReason))state;
 
                     try
                     {
-                        var (innerId, innerReason) = ((string, ProcessingStoppedReason))state;
-
                         // Await the processing task to ensure that any in-flight event processing
                         // has completed.
 
@@ -2032,18 +2031,11 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                         task.Dispose();
 
-                        // If the partition processor is being tracked, dispose it and remove it from the
-                        // tracking items.
-
-                        if (ActivePartitionProcessors.TryRemove(innerId, out var innerProcessor))
+                        innerPartition = ActivePartitionProcessors.TryGetValue(innerId, out var innerProcessor) switch
                         {
-                            innerPartition = innerProcessor.Partition;
-                            innerProcessor.Dispose();
-                        }
-                        else
-                        {
-                            innerPartition = new TPartition { PartitionId = innerId };
-                        }
+                            true => innerProcessor.Partition,
+                            _ => new TPartition { PartitionId = innerId }
+                        };
 
                         // Notify the handler of the now-closed partition, awaiting completion to allow for a more deterministic model
                         // for developers where the initialize and stop handlers will fire in a deterministic order and not interleave.
@@ -2074,11 +2066,20 @@ namespace Azure.Messaging.EventHubs.Primitives
                         // for observing or surfacing exceptions that may occur in the handler.
 
                         _ = InvokeOnProcessingErrorAsync(ex, innerPartition, Resources.OperationSurrenderOwnership, CancellationToken.None);
-                        Logger.EventProcessorPartitionProcessingStopError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                        Logger.EventProcessorPartitionProcessingStopError(innerId, Identifier, EventHubName, ConsumerGroup, ex.Message);
                     }
                     finally
                     {
-                        Logger.EventProcessorPartitionProcessingStopComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                        Logger.EventProcessorPartitionProcessingStopComplete(innerId, Identifier, EventHubName, ConsumerGroup);
+                    }
+
+                    // If the partition processor is still being tracked, dispose it and remove it from the
+                    // tracking items.  This is done last to ensure that any interested observers can await
+                    // the cleanup if desired.
+
+                    if (ActivePartitionProcessors.TryRemove(innerId, out var disposeProcessor))
+                    {
+                        disposeProcessor.Dispose();
                     }
                 }, (partitionId, reason), default, TaskContinuationOptions.RunContinuationsAsynchronously, TaskScheduler.Current);
 

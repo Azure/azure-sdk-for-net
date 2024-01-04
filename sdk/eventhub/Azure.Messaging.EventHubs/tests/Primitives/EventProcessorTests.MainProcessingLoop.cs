@@ -540,6 +540,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(ownedPartitions);
 
             mockLoadBalancer
+                .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
+                .Returns<string>(partition => ownedPartitions.Contains(partition));
+
+            mockLoadBalancer
                 .SetupSequence(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<EventProcessorPartitionOwnership>(new EventProcessorPartitionOwnership { PartitionId = firstPartiton }))
                 .Returns(() =>
@@ -669,6 +673,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLoadBalancer
                 .SetupGet(lb => lb.OwnedPartitionIds)
                 .Returns(ownedPartitions);
+
+            mockLoadBalancer
+                .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
+                .Returns<string>(partition => ownedPartitions.Contains(partition));
 
             mockLoadBalancer
                 .SetupSequence(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -930,6 +938,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLoadBalancer
                 .SetupGet(lb => lb.OwnedPartitionIds)
                 .Returns(ownedPartitions);
+
+            mockLoadBalancer
+                .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
+                .Returns<string>(partition => ownedPartitions.Contains(partition));
 
             mockLoadBalancer
                 .SetupSequence(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -1577,6 +1589,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(ownedPartitions);
 
             mockLoadBalancer
+                .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
+                .Returns<string>(partition => ownedPartitions.Contains(partition));
+
+            mockLoadBalancer
                 .SetupSequence(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
                 .Returns(new ValueTask<EventProcessorPartitionOwnership>(new EventProcessorPartitionOwnership { PartitionId = partitionId }))
                 .Returns(() => default);
@@ -1686,6 +1702,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLoadBalancer
                 .SetupGet(lb => lb.OwnedPartitionIds)
                 .Returns(ownedPartitions);
+
+            mockLoadBalancer
+                .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
+                .Returns<string>(partition => ownedPartitions.Contains(partition));
 
             mockLoadBalancer
                 .SetupSequence(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -2429,6 +2449,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLoadBalancer
                 .SetupGet(lb => lb.OwnedPartitionIds)
                 .Returns(ownedPartitions);
+
+            mockLoadBalancer
+                .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
+                .Returns<string>(partition => ownedPartitions.Contains(partition));
 
             mockLoadBalancer
                 .SetupSequence(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
