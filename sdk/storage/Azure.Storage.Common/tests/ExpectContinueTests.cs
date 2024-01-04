@@ -2,9 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
+using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.Storage.Tests
@@ -92,6 +98,47 @@ namespace Azure.Storage.Tests
             policy.OnSendingRequest(message3);
             Assert.That(message3.Request.Headers.TryGetValue("Expect", out string value), Is.True);
             Assert.That(value, Is.EqualTo("100-continue"));
+        }
+
+        [Test]
+        public void ThrottlePolicyAddsHeader_RST()
+        {
+            // Mocked requsest/response
+            MockResponse responseOk = new(202);
+
+            MockRequest MakeRequest() => new()
+            {
+                Content = RequestContent.Create("foo")
+            };
+            MockRequest MakeRequest_RST() => new()
+            {
+                Content = RequestContent.Create(new FaultyStream(
+                    new RepeatingStream(17, 5000, true),
+                    500,
+                    1,
+                    new SocketException((int)SocketError.ConnectionReset),
+                    onFault: () => { })),
+            };
+            MockResponse MakeResponse(MockRequest request)
+            {
+                request.Content.WriteTo(Stream.Null, default);
+                return responseOk;
+            };
+
+            MockTransport transport = new MockTransport(MakeResponse);
+
+            ExpectContinueOnThrottlePolicy policy = new();
+            ResponseClassifier classifier = new StorageResponseClassifier();
+            HttpPipeline pipeline = new(transport, new HttpPipelinePolicy[] { policy });
+
+            HttpMessage message1 = new(MakeRequest_RST(), classifier);
+            Assert.That(() => pipeline.Send(message1, default), Throws.TypeOf<SocketException>());
+            Assert.That(message1.Request.Headers.Contains("Expect"), Is.False);
+
+            HttpMessage message2 = new(MakeRequest(), classifier);
+            pipeline.Send(message2, default);
+
+            Assert.That(message2.Request.Headers.Contains("Expect"), Is.True);
         }
 
         [TestCase(1024, 2048, true)]

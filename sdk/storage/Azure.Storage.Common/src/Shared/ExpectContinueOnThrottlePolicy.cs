@@ -5,6 +5,8 @@ using System.Threading;
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace Azure.Storage;
 
@@ -21,7 +23,43 @@ internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
 
     public long ContentLengthThreshold { get; set; }
 
-    public override void OnSendingRequest(HttpMessage message)
+    public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        => ProcessAsync(message, pipeline, false).EnsureCompleted();
+
+    public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        => ProcessAsync(message, pipeline, true);
+
+    private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+    {
+        bool CheckException(Exception ex)
+        {
+            if (ex.GetBaseException() is SocketException socketEx &&
+                socketEx.SocketErrorCode == SocketError.ConnectionReset)
+            {
+                Interlocked.Exchange(ref _lastThrottleTicks, DateTimeOffset.UtcNow.Ticks);
+            }
+            return false;
+        }
+
+        ApplyHeader(message);
+        try
+        {
+            if (async)
+            {
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessNext(message, pipeline);
+            }
+        }
+        catch (Exception ex) when (CheckException(ex)) // will never catch
+        {
+        }
+        EvaluateResponse(message);
+    }
+
+    private void ApplyHeader(HttpMessage message)
     {
         if (message.Request.Content == null ||
             (message.Request.Content.TryComputeLength(out long contentLength) && contentLength < ContentLengthThreshold))
@@ -35,9 +73,8 @@ internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
         }
     }
 
-    public override void OnReceivedResponse(HttpMessage message)
+    private void EvaluateResponse(HttpMessage message)
     {
-        base.OnReceivedResponse(message);
         if (message.HasResponse && (
             message.Response.Status == 429 ||
             message.Response.Status == 500 ||
