@@ -27,15 +27,15 @@ public class ClientRequestException : Exception, ISerializable
         protected set => _status = value;
     }
 
-    // Constructor from Response and InnerException
     public ClientRequestException(PipelineResponse response, string? message = default, Exception? innerException = default)
-        : base(GetMessage(message, response), innerException)
+        : base(GetMessage(response, message), innerException)
     {
+        ClientUtilities.AssertNotNull(response, nameof(response));
+
         _response = response;
         _status = response.Status;
     }
 
-    // Constructor for case with no Response
     public ClientRequestException(string message, Exception? innerException = default)
         : base(message, innerException)
     {
@@ -65,18 +65,13 @@ public class ClientRequestException : Exception, ISerializable
 
     public PipelineResponse? GetRawResponse() => _response;
 
-    // Create message from Response if available, and override message, if available.
-    private static string GetMessage(string? message, PipelineResponse? response)
+    // Create message from response if available, and override message, if available.
+    private static string GetMessage(PipelineResponse response, string? message)
     {
         // Setting the message will override extracting it from the response.
         if (message is not null)
         {
             return message;
-        }
-
-        if (response is null)
-        {
-            return DefaultMessage;
         }
 
         if (!response.TryGetBufferedContent(out _))
