@@ -186,7 +186,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
 
 ### Common errors
 
-When you interact with Image Analysis using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests. For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` error is returned, indicating a bad request.
+When you interact with Image Analysis using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests. For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` status is returned, indicating a bad request.
 
 ### Handling exceptions
 
