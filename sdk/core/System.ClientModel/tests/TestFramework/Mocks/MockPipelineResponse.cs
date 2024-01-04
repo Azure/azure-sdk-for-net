@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Text;
 
 namespace ClientModel.Tests.Mocks;
 
@@ -31,6 +32,17 @@ public class MockPipelineResponse : PipelineResponse
     public override string ReasonPhrase => _reasonPhrase;
 
     public void SetReasonPhrase(string value) => _reasonPhrase = value;
+
+    public void SetContent(byte[] content)
+    {
+        ContentStream = new MemoryStream(content, 0, content.Length, false, true);
+    }
+
+    public MockPipelineResponse SetContent(string content)
+    {
+        SetContent(Encoding.UTF8.GetBytes(content));
+        return this;
+    }
 
     public override Stream? ContentStream
     {

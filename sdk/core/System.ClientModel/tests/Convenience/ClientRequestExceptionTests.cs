@@ -19,7 +19,9 @@ public class ClientRequestExceptionTests
 
         Assert.AreEqual(response.Status, exception.Status);
         Assert.AreEqual(response, exception.GetRawResponse());
-        Assert.AreEqual("Service request failed.\r\nStatus: 200 (MockReason)\r\n", exception.Message);
+        Assert.AreEqual(
+            $"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}",
+            exception.Message);
     }
 
     [Test]

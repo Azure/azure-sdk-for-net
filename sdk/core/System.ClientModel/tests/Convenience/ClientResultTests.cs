@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.Results;
 
-public class ClientResultTests
+public class PipelineResponseTests
 {
     #region ClientResult
 
