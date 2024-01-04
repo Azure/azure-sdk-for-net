@@ -14,6 +14,12 @@ namespace Azure.AI.OpenAI.Tests
 
         public string TestAudioInputPathEnglish => GetOptionalVariable("OAI_TEST_AUDIO_INPUT_ENGLISH_PATH");
 
+        public string TestImageInputInternetUrl => GetOptionalVariable("OAI_TEST_IMAGE_INTERNET_URL");
+
+        public string TestImageInputJpegPath => GetOptionalVariable("OAI_TEST_IMAGE_JPEG_PATH");
+
+        public string TestImageInputPngPath => GetOptionalVariable("OAI_TEST_IMAGE_JPEG_PATH");
+
         public Uri GetUrlVariable(string variableName) => new(GetRecordedVariable(variableName));
 
         public bool TryGetUrlVariable(string variableName, out Uri variableValue)

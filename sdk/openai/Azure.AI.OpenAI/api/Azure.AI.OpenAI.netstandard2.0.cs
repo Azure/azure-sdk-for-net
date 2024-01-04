@@ -379,10 +379,14 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatMessageImageContentItem : Azure.AI.OpenAI.ChatMessageContentItem
     {
-        public ChatMessageImageContentItem(Azure.AI.OpenAI.ChatMessageImageUrl imageUrl) { }
+        public ChatMessageImageContentItem(System.BinaryData imageData) { }
+        public ChatMessageImageContentItem(System.BinaryData imageData, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
+        public ChatMessageImageContentItem(System.BinaryData imageData, string imageDataFormat) { }
+        public ChatMessageImageContentItem(System.BinaryData imageData, string imageDataFormat, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
         public ChatMessageImageContentItem(System.Uri imageUri) { }
         public ChatMessageImageContentItem(System.Uri imageUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
-        public Azure.AI.OpenAI.ChatMessageImageUrl ImageUrl { get { throw null; } }
+        public System.BinaryData Data { get { throw null; } }
+        public System.Uri Url { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ChatMessageImageDetailLevel : System.IEquatable<Azure.AI.OpenAI.ChatMessageImageDetailLevel>
@@ -402,12 +406,6 @@ namespace Azure.AI.OpenAI
         public static implicit operator Azure.AI.OpenAI.ChatMessageImageDetailLevel (string value) { throw null; }
         public static bool operator !=(Azure.AI.OpenAI.ChatMessageImageDetailLevel left, Azure.AI.OpenAI.ChatMessageImageDetailLevel right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ChatMessageImageUrl
-    {
-        public ChatMessageImageUrl(System.Uri url) { }
-        public Azure.AI.OpenAI.ChatMessageImageDetailLevel? Detail { get { throw null; } set { } }
-        public System.Uri Url { get { throw null; } }
     }
     public partial class ChatMessageTextContentItem : Azure.AI.OpenAI.ChatMessageContentItem
     {

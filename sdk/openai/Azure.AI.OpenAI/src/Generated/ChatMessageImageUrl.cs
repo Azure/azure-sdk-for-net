@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary> An internet location from which the model may retrieve an image. </summary>
-    public partial class ChatMessageImageUrl
+    internal partial class ChatMessageImageUrl
     {
         /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/>. </summary>
         /// <param name="url"> The URL of the image. </param>
@@ -34,9 +34,6 @@ namespace Azure.AI.OpenAI
             Url = url;
             Detail = detail;
         }
-
-        /// <summary> The URL of the image. </summary>
-        public Uri Url { get; }
         /// <summary>
         /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
         /// accuracy.

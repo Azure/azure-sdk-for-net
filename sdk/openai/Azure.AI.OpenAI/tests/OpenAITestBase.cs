@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
@@ -118,6 +119,37 @@ namespace Azure.AI.OpenAI.Tests
                 "en" => TestEnvironment.TestAudioInputPathEnglish,
                 _ => throw new NotImplementedException(),
             });
+        }
+
+        protected Uri GetTestImageInternetUrl()
+        {
+            const string placeholderUrl = "https://www.bing.com/placeholder.jpg";
+
+            BodyRegexSanitizers.Add(new("\"http[^\"]*\"", $"\"{placeholderUrl}\""));
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new Uri(placeholderUrl);
+            }
+            return new Uri(TestEnvironment.TestImageInputInternetUrl);
+        }
+
+        protected BinaryData GetTestImageData(string imageFormat)
+        {
+            BodyRegexSanitizers.Add(new($"\"data:{imageFormat};base64[^\"]*\"", $"\"data:{imageFormat};base64,\""));
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return BinaryData.FromString("");
+            }
+            string inputFilePath = imageFormat switch
+            {
+                MediaTypeNames.Image.Jpeg => TestEnvironment.TestImageInputJpegPath,
+                "image/png" => TestEnvironment.TestImageInputPngPath,
+                _ => throw new NotImplementedException($"No input routed for format: {imageFormat}")
+            };
+            using Stream inputFileStream = File.OpenRead(inputFilePath);
+            return BinaryData.FromStream(inputFileStream);
         }
 
         [SetUp]

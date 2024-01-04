@@ -4,7 +4,13 @@
 
 ### Features Added
 
+- `ChatMessageImageContentItem` now supports the use of local binary data (base64-encoded) via new constructors that
+  accept `BinaryData` and a format `string`.
+
 ### Breaking Changes
+
+- `ChatMessageImageUrl` is now internal. All properties and functionality are routed through
+  `ChatMessageImageContentItem`, instead.
 
 ### Bugs Fixed
 

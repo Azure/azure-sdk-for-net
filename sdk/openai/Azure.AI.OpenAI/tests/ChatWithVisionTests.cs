@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -15,13 +16,49 @@ public class ChatWithVisionTests : OpenAITestBase
     {
     }
 
+    public enum ImageInputKind
+    {
+        InternetUrl,
+        LocalJpegData,
+        LocalPngData
+    }
+
+    public enum ImageDetailKind
+    {
+        None,
+        Low,
+        High
+    };
+
     [RecordedTest]
-    [TestCase(Service.Azure)]
-    [TestCase(Service.NonAzure)]
-    public async Task ChatWithImages(Service serviceTarget)
+    [TestCase(Service.Azure, ImageInputKind.InternetUrl)]
+    [TestCase(Service.Azure, ImageInputKind.LocalJpegData)]
+    [TestCase(Service.Azure, ImageInputKind.LocalPngData)]
+    [TestCase(Service.Azure, ImageInputKind.LocalPngData, ImageDetailKind.Low)]
+    [TestCase(Service.NonAzure, ImageInputKind.InternetUrl)]
+    [TestCase(Service.NonAzure, ImageInputKind.LocalJpegData)]
+    [TestCase(Service.NonAzure, ImageInputKind.LocalPngData)]
+    [TestCase(Service.NonAzure, ImageInputKind.LocalPngData, ImageDetailKind.Low)]
+    public async Task ChatWithImages(Service serviceTarget, ImageInputKind imageInputKind, ImageDetailKind detailKind = ImageDetailKind.None)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+
+        ChatMessageImageContentItem imageContentItem = imageInputKind switch
+        {
+            ImageInputKind.InternetUrl => new(GetTestImageInternetUrl()),
+            ImageInputKind.LocalJpegData => new(GetTestImageData(MediaTypeNames.Image.Jpeg)),
+            ImageInputKind.LocalPngData => detailKind switch
+            {
+                ImageDetailKind.None => new(GetTestImageData("image/png"), "image/png"),
+                ImageDetailKind.Low => new(GetTestImageData("image/png"), "image/png", ChatMessageImageDetailLevel.Low),
+                ImageDetailKind.High => new(GetTestImageData("image/png"), "image/png", ChatMessageImageDetailLevel.High),
+            _ => throw new NotImplementedException($"Unsupported detail kind: {detailKind}")
+            },
+            _ => throw new NotImplementedException($"Unsupported input kind: {imageInputKind}")
+        };
+        ;
+
         var requestOptions = new ChatCompletionsOptions()
         {
             DeploymentName = deploymentOrModelName,
@@ -30,9 +67,7 @@ public class ChatWithVisionTests : OpenAITestBase
                 new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
                 new ChatRequestUserMessage(
                     new ChatMessageTextContentItem("describe this image"),
-                    new ChatMessageImageContentItem(
-                        new Uri("https://www.bing.com/th?id=OHR.BradgateFallow_EN-US3932725763_1920x1080.jpg"),
-                        ChatMessageImageDetailLevel.Low)),
+                    imageContentItem),
             },
             MaxTokens = 2048,
         };
