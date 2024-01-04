@@ -305,7 +305,10 @@
 #/<NotInRepo>/                                                     @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes
+/sdk/confidentialledger/                                           @christothes @PallabPaul
+
+# ServiceLabel: %Confidential Ledger
+#/<NotInRepo>/                                                     @PallabPaul
 
 # ServiceLabel: %Consumption %Service Attention
 /sdk/consumption/Microsoft.Azure.Management.Consumption/           @ms-premp
@@ -641,6 +644,9 @@
 
 # ServiceLabel: %Network - Private Link %Service Attention
 #/<NotInRepo>/                                                     @privlinksuppgithub
+
+# PRLabel: %Nginx
+/sdk/nginx/                                                        @spencerofwiti @bangbingsyb
 
 # ServiceLabel: %Notification Hub %Service Attention
 /sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/ @tjsomasundaram

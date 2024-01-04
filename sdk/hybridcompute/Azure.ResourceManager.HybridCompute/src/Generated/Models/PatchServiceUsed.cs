@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private const string UnknownValue = "Unknown";
         private const string WUValue = "WU";
         private const string WUWsusValue = "WU_WSUS";
-        private const string YUMValue = "YUM";
-        private const string APTValue = "APT";
+        private const string YumValue = "YUM";
+        private const string AptValue = "APT";
         private const string ZypperValue = "Zypper";
 
         /// <summary> Unknown. </summary>
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> WU_WSUS. </summary>
         public static PatchServiceUsed WUWsus { get; } = new PatchServiceUsed(WUWsusValue);
         /// <summary> YUM. </summary>
-        public static PatchServiceUsed YUM { get; } = new PatchServiceUsed(YUMValue);
+        public static PatchServiceUsed Yum { get; } = new PatchServiceUsed(YumValue);
         /// <summary> APT. </summary>
-        public static PatchServiceUsed APT { get; } = new PatchServiceUsed(APTValue);
+        public static PatchServiceUsed Apt { get; } = new PatchServiceUsed(AptValue);
         /// <summary> Zypper. </summary>
         public static PatchServiceUsed Zypper { get; } = new PatchServiceUsed(ZypperValue);
         /// <summary> Determines if two <see cref="PatchServiceUsed"/> values are the same. </summary>
