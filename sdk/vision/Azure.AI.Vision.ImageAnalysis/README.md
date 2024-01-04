@@ -63,7 +63,7 @@ For more information about these features, see [Image Analysis overview][image_a
 
 ### Analyze from image buffer or URL
 
-The `ImageAnalysisClient` a method `Analyze` that has two overloads:
+The `ImageAnalysisClient` contains an `Analyze` method that has two overloads:
 * `Analyze (BianryData ...`: Analyze an image from an input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object. The client will upload the image to the service as part of the REST request. 
 * `Analyze (Uri ...)`: Analyze an image from a publicly-accessible URL, via the `Uri` object. The client will send the image URL to the service. The service will download the image.
 
