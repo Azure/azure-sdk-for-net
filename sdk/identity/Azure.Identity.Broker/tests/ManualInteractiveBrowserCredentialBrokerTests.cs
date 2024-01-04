@@ -35,7 +35,7 @@ namespace Azure.Identity.Broker.Tests
         }
 
         [Test]
-        [Ignore("This test is an integration test which can only be run with user interaction")]
+        // [Ignore("This test is an integration test which can only be run with user interaction")]
         public async Task GetPopToken()
         {
             using var logger = AzureEventSourceListener.CreateConsoleLogger();

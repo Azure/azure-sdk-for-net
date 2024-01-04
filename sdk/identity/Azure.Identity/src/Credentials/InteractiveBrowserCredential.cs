@@ -17,7 +17,7 @@ namespace Azure.Identity
     /// </summary>
     public class InteractiveBrowserCredential : TokenCredential
 #if PREVIEW_FEATURE_FLAG
-    , IPopTokenCredential
+    , ISupportsProofOfPossession
 #endif
     {
         internal string TenantId { get; }

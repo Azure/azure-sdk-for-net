@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class PopTokenAuthenticationPolicy : HttpPipelinePolicy
     {
-        private readonly IPopTokenCredential _tokenCredential;
+        private readonly ISupportsProofOfPossession _tokenCredential;
         private string? _popNonce;
         private readonly string[] _scopes;
 
@@ -21,7 +21,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="credential"></param>
         /// <param name="scope">The scope to be included in acquired tokens.</param>
-        public PopTokenAuthenticationPolicy(IPopTokenCredential credential, string scope)
+        public PopTokenAuthenticationPolicy(ISupportsProofOfPossession credential, string scope)
         {
             _tokenCredential = credential;
             _scopes = new[] { scope };

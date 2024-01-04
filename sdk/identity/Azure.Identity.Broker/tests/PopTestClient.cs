@@ -17,7 +17,7 @@ public class PopTestClient
     {
         options ??= new PopClientOptions();
         var pipelineOptions = new HttpPipelineOptions(options);
-        pipelineOptions.PerRetryPolicies.Add(new PopTokenAuthenticationPolicy(credential as IPopTokenCredential, "https://graph.microsoft.com/.default"));
+        pipelineOptions.PerRetryPolicies.Add(new PopTokenAuthenticationPolicy(credential as ISupportsProofOfPossession, "https://graph.microsoft.com/.default"));
         _pipeline = HttpPipelineBuilder.Build(
             pipelineOptions,
             new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = (_) => true });
