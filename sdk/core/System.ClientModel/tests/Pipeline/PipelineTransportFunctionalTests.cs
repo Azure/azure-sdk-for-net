@@ -7,10 +7,12 @@ using ClientModel.Tests.Mocks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -96,32 +98,8 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task RequestHeaderHostSetFromUri()
-    {
-        HostString? host = null;
-        string uri = string.Empty;
-        using TestServer testServer = new TestServer(
-            context =>
-            {
-                uri = context.Request.GetDisplayUrl();
-                host = context.Request.GetTypedHeaders().Host;
-            });
-
-        HttpClientPipelineTransport transport = new();
-
-        using PipelineMessage message = transport.CreateMessage();
-        message.Request.Uri = testServer.Address;
-        message.Request.Method = "GET";
-
-        await transport.ProcessSyncOrAsync(message, IsAsync);
-
-        Assert.AreEqual(testServer.Address.ToString(), uri);
-        Assert.AreEqual(testServer.Address.Host + ":" + testServer.Address.Port, host.ToString());
-    }
-
-    [Test]
     [TestCaseSource(nameof(RequestMethods))]
-    public async Task RequestHeaderContentLengthSetWhenNoContent(string method, bool hasContent)
+    public async Task RequestHeaderContentLengthIsSetWhenNoContent(string method, bool hasContent)
     {
         HttpClientPipelineTransport transport = new();
 
@@ -163,7 +141,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
 
     [Test]
     [TestCaseSource(nameof(RequestMethods))]
-    public async Task RequestHeaderContentTypeNullWhenNoContent(string method, bool hasContent)
+    public async Task RequestHeaderContentTypeIsNullWhenNoContent(string method, bool hasContent)
     {
         HttpClientPipelineTransport transport = new();
 
@@ -186,7 +164,7 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task SettingRequestHeaderOverridesDefaultContentLength()
+    public async Task SettingRequestHeaderContentLengthOverridesDefault()
     {
         long contentLength = 0;
         using TestServer testServer = new TestServer(
@@ -230,10 +208,67 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
         message.Request.Content = new InvalidSizeContent();
         message.Request.Headers.Add("Content-Length", long.MaxValue.ToString());
 
-        await transport.ProcessSyncOrAsync(message, IsAsync);
+        try
+        {
+            await transport.ProcessSyncOrAsync(message, IsAsync);
+        }
+        catch (Exception)
+        {
+            // Sending the request fails because of length mismatch
+        }
 
         Assert.AreEqual(long.MaxValue, contentLength);
         Assert.Greater(contentLength, int.MaxValue);
+    }
+
+    [Test]
+    public async Task RequestHeaderHostIsSetFromUri()
+    {
+        HostString? host = null;
+        string uri = string.Empty;
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                uri = context.Request.GetDisplayUrl();
+                host = context.Request.GetTypedHeaders().Host;
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "GET";
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(testServer.Address.ToString(), uri);
+        Assert.AreEqual(testServer.Address.Host + ":" + testServer.Address.Port, host.ToString());
+    }
+
+    [Test]
+    public async Task SettingRequestHeaderHostOverridesDefault()
+    {
+        HostString? host = null;
+        string uri = string.Empty;
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                uri = context.Request.GetDisplayUrl();
+                host = context.Request.GetTypedHeaders().Host;
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "GET";
+
+        message.Request.Headers.Add("Host", "example.org");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual("http://example.org/", uri);
+        Assert.AreEqual("example.org", host.ToString());
     }
 
     [Test]
@@ -257,6 +292,103 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
         }
 
         Assert.True(disposeTrackingContent.IsDisposed);
+    }
+
+    [TestCaseSource(nameof(HeadersWithValues))]
+    public async Task CanAddRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+    {
+        StringValues httpHeaderValues = default;
+
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "POST";
+        message.Request.Headers.Add(headerName, headerValue);
+
+        if (contentHeader)
+        {
+            message.Request.Content = BinaryContent.Create(BinaryData.FromBytes(new byte[16]));
+        }
+
+        Assert.True(message.Request.Headers.TryGetValue(headerName, out var value));
+        Assert.AreEqual(headerValue, value);
+
+        Assert.True(message.Request.Headers.TryGetValue(headerName.ToUpper(), out value));
+        Assert.AreEqual(headerValue, value);
+
+        CollectionAssert.AreEqual(
+            new[] { new KeyValuePair<string, string>(headerName, headerValue) },
+            message.Request.Headers);
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+    }
+
+    [TestCaseSource(nameof(HeadersWithValues))]
+    public async Task CanAddRequestHeadersUppercase(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+        => await CanAddRequestHeaders(headerName.ToUpperInvariant(), headerValue, contentHeader, supportsMultiple);
+
+    [TestCaseSource(nameof(HeadersWithValues))]
+    public void RequestHeaderTryGetReturnsFalseWhenNotFound(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+    {
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+
+        Assert.False(message.Request.Headers.TryGetValue(headerName, out string? value));
+        Assert.IsNull(value);
+
+        Assert.False(message.Request.Headers.TryGetValues(headerName, out IEnumerable<string>? values));
+        Assert.IsNull(values);
+    }
+
+    [TestCaseSource(nameof(HeadersWithValues))]
+    public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+    {
+        if (!supportsMultiple) return;
+
+        var anotherHeaderValue = headerValue + "1";
+        var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
+
+        StringValues httpHeaderValues = default;
+
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "POST";
+        message.Request.Headers.Add(headerName, headerValue);
+        message.Request.Headers.Add(headerName, anotherHeaderValue);
+        message.Request.Content = BinaryContent.Create(BinaryData.FromBytes(Array.Empty<byte>()));
+
+        Assert.True(message.Request.Headers.TryGetValue(headerName, out var value));
+        Assert.AreEqual(joinedHeaderValues, value);
+
+        Assert.True(message.Request.Headers.TryGetValues(headerName, out IEnumerable<string>? values));
+        CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
+
+        CollectionAssert.AreEqual(
+            new[] { new KeyValuePair<string, string>(headerName, joinedHeaderValues), },
+            message.Request.Headers);
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        StringAssert.Contains(headerValue, httpHeaderValues.ToString());
+        StringAssert.Contains(anotherHeaderValue, httpHeaderValues.ToString());
     }
 
     #endregion
@@ -319,6 +451,37 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
             new object[] { "PUT", true },
             new object[] { "HEAD", false },
             new object[] { "CUSTOM", false },
+        };
+
+    public static object[] HeadersWithValues =>
+       new object[]
+       {
+                // Name, value, is content, supports multiple
+                new object[] { "Allow", "adcde", true, true },
+                new object[] { "Accept", "adcde", true, true },
+                new object[] { "Referer", "adcde", true, true },
+                new object[] { "User-Agent", "adcde", true, true },
+                new object[] { "Content-Disposition", "adcde", true, true },
+                new object[] { "Content-Encoding", "adcde", true, true },
+                new object[] { "Content-Language", "en-US", true, true },
+                new object[] { "Content-Location", "adcde", true, true },
+                new object[] { "Content-MD5", "adcde", true, true },
+                new object[] { "Content-Range", "adcde", true, true },
+                new object[] { "Content-Type", "text/xml", true, true },
+                new object[] { "Expires", "11/12/19", true, true },
+                new object[] { "Last-Modified", "11/12/19", true, true },
+                new object[] { "If-Modified-Since", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
+                new object[] { "Custom-Header", "11/12/19", false, true },
+                new object[] { "Expect", "text/json", false, true },
+                new object[] { "Host", "example.com", false, false },
+                new object[] { "Keep-Alive", "true", false, true },
+                new object[] { "Referer", "example.com", false, true },
+                new object[] { "WWW-Authenticate", "Basic realm=\"Access to the staging site\", charset=\"UTF-8\"", false, true },
+                new object[] { "Custom-Header", "11/12/19", false, true },
+                new object[] { "Range", "bytes=0-", false, false },
+                new object[] { "Range", "bytes=0-100", false, false },
+                new object[] { "Content-Length", "16", true, false },
+                new object[] { "Date", "Tue, 12 Nov 2019 08:00:00 GMT", false, false },
         };
 
     public class DisposeTrackingContent : BinaryContent
