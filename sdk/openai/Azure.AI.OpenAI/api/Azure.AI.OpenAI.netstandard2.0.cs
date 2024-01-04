@@ -265,7 +265,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.AzureGroundingEnhancementCoordinatePoint AzureGroundingEnhancementCoordinatePoint(float x = 0f, float y = 0f) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementLine AzureGroundingEnhancementLine(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementLineSpan> spans = null) { throw null; }
         public static Azure.AI.OpenAI.AzureGroundingEnhancementLineSpan AzureGroundingEnhancementLineSpan(string text = null, int offset = 0, int length = 0, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.AzureGroundingEnhancementCoordinatePoint> polygon = null) { throw null; }
-        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatResponseMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason), Azure.AI.OpenAI.ChatFinishDetails finishDetails = null, Azure.AI.OpenAI.ChatResponseMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.AzureChatEnhancements enhancements = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatResponseMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), Azure.AI.OpenAI.ChatFinishDetails finishDetails = null, Azure.AI.OpenAI.ChatResponseMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.AzureChatEnhancements enhancements = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatChoice> choices = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.ChatResponseMessage ChatResponseMessage(Azure.AI.OpenAI.ChatRole role = default(Azure.AI.OpenAI.ChatRole), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatCompletionsToolCall> toolCalls = null, Azure.AI.OpenAI.FunctionCall functionCall = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
         public static Azure.AI.OpenAI.Choice Choice(string text = null, int index = 0, Azure.AI.OpenAI.ContentFilterResultsForChoice contentFilterResults = null, Azure.AI.OpenAI.CompletionsLogProbabilityModel logProbabilityModel = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?)) { throw null; }
@@ -284,7 +284,8 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.OpenAI.ImageGenerationData ImageGenerationData(System.Uri url = null, string base64Data = null, string revisedPrompt = null) { throw null; }
         public static Azure.AI.OpenAI.StopFinishDetails StopFinishDetails(string stop = null) { throw null; }
-        public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, System.DateTimeOffset created, string systemFingerprint, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.ChatCompletionsToolCall toolCall = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, System.DateTimeOffset created, string systemFingerprint, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.StreamingToolCallUpdate toolCallUpdate = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingFunctionToolCallUpdate StreamingFunctionToolCallUpdate(string id, int toolCallIndex, string functionName, string functionArgumentsUpdate) { throw null; }
     }
     public partial class ChatChoice
     {
@@ -308,7 +309,7 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatCompletionsFunctionToolCall : Azure.AI.OpenAI.ChatCompletionsToolCall
     {
-        internal ChatCompletionsFunctionToolCall() : base (default(string)) { }
+        public ChatCompletionsFunctionToolCall(string id, string name, string arguments) : base (default(string)) { }
         public string Arguments { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
@@ -324,7 +325,6 @@ namespace Azure.AI.OpenAI
     public partial class ChatCompletionsOptions
     {
         public ChatCompletionsOptions() { }
-        public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatRequestMessage> messages) { }
         public ChatCompletionsOptions(string deploymentName, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatRequestMessage> messages) { }
         public Azure.AI.OpenAI.AzureChatExtensionsOptions AzureExtensionsOptions { get { throw null; } set { } }
         public int? ChoiceCount { get { throw null; } set { } }
@@ -336,37 +336,34 @@ namespace Azure.AI.OpenAI
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatRequestMessage> Messages { get { throw null; } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
         public float? PresencePenalty { get { throw null; } set { } }
-        public Azure.AI.OpenAI.ChatCompletionsResponseFormat? ResponseFormat { get { throw null; } set { } }
+        public Azure.AI.OpenAI.ChatCompletionsResponseFormat ResponseFormat { get { throw null; } set { } }
         public long? Seed { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> StopSequences { get { throw null; } }
         public float? Temperature { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<int, int> TokenSelectionBiases { get { throw null; } }
-        public System.BinaryData ToolChoice { get { throw null; } set { } }
+        public Azure.AI.OpenAI.ChatCompletionsToolChoice ToolChoice { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatCompletionsToolDefinition> Tools { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ChatCompletionsResponseFormat : System.IEquatable<Azure.AI.OpenAI.ChatCompletionsResponseFormat>
+    public abstract partial class ChatCompletionsResponseFormat
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ChatCompletionsResponseFormat(string value) { throw null; }
-        public static Azure.AI.OpenAI.ChatCompletionsResponseFormat JsonObject { get { throw null; } }
-        public static Azure.AI.OpenAI.ChatCompletionsResponseFormat Text { get { throw null; } }
-        public bool Equals(Azure.AI.OpenAI.ChatCompletionsResponseFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.OpenAI.ChatCompletionsResponseFormat left, Azure.AI.OpenAI.ChatCompletionsResponseFormat right) { throw null; }
-        public static implicit operator Azure.AI.OpenAI.ChatCompletionsResponseFormat (string value) { throw null; }
-        public static bool operator !=(Azure.AI.OpenAI.ChatCompletionsResponseFormat left, Azure.AI.OpenAI.ChatCompletionsResponseFormat right) { throw null; }
-        public override string ToString() { throw null; }
+        public static readonly Azure.AI.OpenAI.ChatCompletionsResponseFormat JsonObject;
+        public static readonly Azure.AI.OpenAI.ChatCompletionsResponseFormat Text;
+        protected ChatCompletionsResponseFormat() { }
     }
     public abstract partial class ChatCompletionsToolCall
     {
         protected ChatCompletionsToolCall(string id) { }
         public string Id { get { throw null; } set { } }
+    }
+    public partial class ChatCompletionsToolChoice
+    {
+        public static readonly Azure.AI.OpenAI.ChatCompletionsToolChoice Auto;
+        public static readonly Azure.AI.OpenAI.ChatCompletionsToolChoice None;
+        public ChatCompletionsToolChoice(Azure.AI.OpenAI.ChatCompletionsFunctionToolDefinition functionToolDefinition) { }
+        public ChatCompletionsToolChoice(Azure.AI.OpenAI.FunctionDefinition functionDefinition) { }
+        public static implicit operator Azure.AI.OpenAI.ChatCompletionsToolChoice (Azure.AI.OpenAI.ChatCompletionsFunctionToolDefinition functionToolDefinition) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.ChatCompletionsToolChoice (Azure.AI.OpenAI.FunctionDefinition functionDefinition) { throw null; }
     }
     public abstract partial class ChatCompletionsToolDefinition
     {
@@ -419,6 +416,7 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatRequestAssistantMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
+        public ChatRequestAssistantMessage(Azure.AI.OpenAI.ChatResponseMessage responseMessage) { }
         public ChatRequestAssistantMessage(string content) { }
         public string Content { get { throw null; } }
         public Azure.AI.OpenAI.FunctionCall FunctionCall { get { throw null; } set { } }
@@ -434,6 +432,7 @@ namespace Azure.AI.OpenAI
     public abstract partial class ChatRequestMessage
     {
         protected ChatRequestMessage() { }
+        public Azure.AI.OpenAI.ChatRole Role { get { throw null; } set { } }
     }
     public partial class ChatRequestSystemMessage : Azure.AI.OpenAI.ChatRequestMessage
     {
@@ -452,6 +451,8 @@ namespace Azure.AI.OpenAI
         public ChatRequestUserMessage(params Azure.AI.OpenAI.ChatMessageContentItem[] content) { }
         public ChatRequestUserMessage(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessageContentItem> content) { }
         public ChatRequestUserMessage(string content) { }
+        public string Content { get { throw null; } protected set { } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessageContentItem> MultimodalContentItems { get { throw null; } }
         public string Name { get { throw null; } set { } }
     }
     public partial class ChatResponseMessage
@@ -693,7 +694,7 @@ namespace Azure.AI.OpenAI
         public EmbeddingsOptions() { }
         public EmbeddingsOptions(string deploymentName, System.Collections.Generic.IEnumerable<string> input) { }
         public string DeploymentName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Input { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Input { get { throw null; } }
         public string User { get { throw null; } set { } }
     }
     public partial class EmbeddingsUsage
@@ -937,7 +938,13 @@ namespace Azure.AI.OpenAI
         public string Id { get { throw null; } }
         public Azure.AI.OpenAI.ChatRole? Role { get { throw null; } }
         public string SystemFingerprint { get { throw null; } }
-        public Azure.AI.OpenAI.ChatCompletionsToolCall ToolCallUpdate { get { throw null; } }
+        public Azure.AI.OpenAI.StreamingToolCallUpdate ToolCallUpdate { get { throw null; } }
+    }
+    public partial class StreamingFunctionToolCallUpdate : Azure.AI.OpenAI.StreamingToolCallUpdate
+    {
+        internal StreamingFunctionToolCallUpdate() { }
+        public string ArgumentsUpdate { get { throw null; } }
+        public string Name { get { throw null; } }
     }
     public partial class StreamingResponse<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IDisposable
     {
@@ -948,6 +955,12 @@ namespace Azure.AI.OpenAI
         public System.Collections.Generic.IAsyncEnumerable<T> EnumerateValues() { throw null; }
         public Azure.Response GetRawResponse() { throw null; }
         System.Collections.Generic.IAsyncEnumerator<T> System.Collections.Generic.IAsyncEnumerable<T>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public abstract partial class StreamingToolCallUpdate
+    {
+        internal StreamingToolCallUpdate() { }
+        public string Id { get { throw null; } }
+        public int ToolCallIndex { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Azure

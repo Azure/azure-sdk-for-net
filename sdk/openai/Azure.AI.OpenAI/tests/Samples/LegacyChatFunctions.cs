@@ -101,17 +101,17 @@ public partial class StreamingChat
         string functionName = null;
         StringBuilder contentBuilder = new();
         StringBuilder functionArgumentsBuilder = new();
-        ChatRole streamedRole = default;
-        CompletionsFinishReason finishReason = default;
+        ChatRole? streamedRole = default;
+        CompletionsFinishReason? finishReason = default;
 
         await foreach (StreamingChatCompletionsUpdate update
             in client.GetChatCompletionsStreaming(chatCompletionsOptions))
         {
-            contentBuilder.Append(update.ContentUpdate);
             functionName ??= update.FunctionName;
+            streamedRole ??= update.Role;
+            finishReason ??= update.FinishReason;
+            contentBuilder.Append(update.ContentUpdate);
             functionArgumentsBuilder.Append(update.FunctionArgumentsUpdate);
-            streamedRole = update.Role ?? default;
-            finishReason = update.FinishReason ?? default;
         }
 
         if (finishReason == CompletionsFinishReason.FunctionCall)
@@ -126,6 +126,12 @@ public partial class StreamingChat
 
             // Handle from here just like the non-streaming case
         }
+        #endregion
+
+        #region Snippet::ChatFunctions::UseFunctionCall
+        chatCompletionsOptions.FunctionCall = FunctionDefinition.Auto; // let the model decide
+        chatCompletionsOptions.FunctionCall = FunctionDefinition.None; // don't call functions
+        chatCompletionsOptions.FunctionCall = getWeatherFuntionDefinition; // use only the specified function
         #endregion
     }
 }

@@ -70,7 +70,7 @@ public partial class StreamingChatCompletionsUpdate
                     int choiceIndex = 0;
                     CompletionsFinishReason? finishReason = null;
                     ContentFilterResultsForChoice responseContentFilterResults = null;
-                    ChangeTrackingList<ChatCompletionsToolCall> toolCalls = new();
+                    ChangeTrackingList<StreamingToolCallUpdate> toolCallUpdates = new();
 
                     foreach (JsonProperty choiceProperty in choiceElement.EnumerateObject())
                     {
@@ -81,6 +81,11 @@ public partial class StreamingChatCompletionsUpdate
                         }
                         if (choiceProperty.NameEquals("finish_reason"u8))
                         {
+                            if (choiceProperty.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                finishReason = null;
+                                continue;
+                            }
                             finishReason = new CompletionsFinishReason(choiceProperty.Value.GetString());
                             continue;
                         }
@@ -122,7 +127,8 @@ public partial class StreamingChatCompletionsUpdate
                                 {
                                     foreach (JsonElement toolCallElement in deltaProperty.Value.EnumerateArray())
                                     {
-                                        toolCalls.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(toolCallElement));
+                                        toolCallUpdates.Add(
+                                            StreamingToolCallUpdate.DeserializeStreamingToolCallUpdate(toolCallElement));
                                     }
                                 }
                                 if (deltaProperty.NameEquals("context"u8))
@@ -151,11 +157,11 @@ public partial class StreamingChatCompletionsUpdate
                     }
                     // In the unlikely event that more than one tool call arrives on a single chunk, we'll generate
                     // separate updates just like for choices. Adding a "null" if empty lets us avoid a separate loop.
-                    if (toolCalls.Count == 0)
+                    if (toolCallUpdates.Count == 0)
                     {
-                        toolCalls.Add(null);
+                        toolCallUpdates.Add(null);
                     }
-                    foreach (ChatCompletionsToolCall toolCall in toolCalls)
+                    foreach (StreamingToolCallUpdate toolCallUpdate in toolCallUpdates)
                     {
                         results.Add(new StreamingChatCompletionsUpdate(
                             id,
@@ -168,7 +174,7 @@ public partial class StreamingChatCompletionsUpdate
                             finishReason,
                             functionName,
                             functionArgumentsUpdate,
-                            toolCall,
+                            toolCallUpdate,
                             azureExtensionsContext));
                     }
                 }

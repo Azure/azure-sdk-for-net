@@ -16,8 +16,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// A client used to perform cryptographic operations with Azure Key Vault keys.
     /// </summary>
+    [CallerShouldAudit(Reason = CallerShouldAuditReason)]
     public class CryptographyClient : IKeyEncryptionKey
     {
+        private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-keys";
         private const string GetOperation = "get";
         private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly string _keyId;

@@ -39,7 +39,12 @@ namespace Azure.Search.Documents.Tests
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
-                    new VectorSearchField("descriptionVector", 1536, "my-vector-profile"),
+                    new SearchField("descriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
+                    {
+                        IsSearchable = true,
+                        VectorSearchDimensions = 1536,
+                        VectorSearchProfile = "my-vector-profile"
+                    },
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                     new SimpleField("parkingIncluded", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
@@ -53,7 +58,7 @@ namespace Azure.Search.Documents.Tests
                         Fields =
                         {
                             new SearchableField("streetAddress"),
-                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true, NormalizerName = LexicalNormalizerName.Lowercase },
                             new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                             new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true },
@@ -82,23 +87,23 @@ namespace Azure.Search.Documents.Tests
                     },
                     Algorithms =
                     {
-                        new HnswAlgorithmConfiguration( "my-hsnw-vector-config")
+                        new HnswVectorSearchAlgorithmConfiguration( "my-hsnw-vector-config")
                     }
                 },
-                SemanticSearch = new()
+                SemanticSettings = new()
                 {
                     Configurations =
                     {
                        new SemanticConfiguration("my-semantic-config", new()
                        {
-                           TitleField = new SemanticField("hotelName"),
+                           TitleField = new(){ FieldName = "hotelName" },
                            ContentFields =
                            {
-                               new SemanticField("description")
+                               new() { FieldName = "description" }
                            },
-                           KeywordsFields =
+                           KeywordFields =
                            {
-                               new SemanticField("category")
+                               new() { FieldName = "category" }
                            }
                        })
                     }
@@ -360,7 +365,7 @@ namespace Azure.Search.Documents.Tests
         public string DescriptionFr { get; set; }
 
         [JsonPropertyName("descriptionVector")]
-        public ReadOnlyMemory<float> DescriptionVector { get; set; } = VectorSearchEmbeddings.DefaultVectorizeDescription; // Default DescriptionVector: "Hotel"
+        public IReadOnlyList<float> DescriptionVector { get; set; } = VectorSearchEmbeddings.DefaultVectorizeDescription; // Default DescriptionVector: "Hotel"
 
         [JsonPropertyName("category")]
         public string Category { get; set; }
@@ -401,7 +406,7 @@ namespace Azure.Search.Documents.Tests
             HotelName == other.HotelName &&
             Description == other.Description &&
             DescriptionFr == other.DescriptionFr &&
-            DescriptionVector.Span.SequenceEqual(other.DescriptionVector.Span) &&
+            DescriptionVector.SequenceEqualsNullSafe(other.DescriptionVector) &&
             Category == other.Category &&
             Tags.SequenceEqualsNullSafe(other.Tags) &&
             ParkingIncluded == other.ParkingIncluded &&

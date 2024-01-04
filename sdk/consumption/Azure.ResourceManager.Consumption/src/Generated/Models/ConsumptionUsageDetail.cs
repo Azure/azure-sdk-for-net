@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Consumption.Models
     /// Please note <see cref="ConsumptionUsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConsumptionLegacyUsageDetail"/> and <see cref="ConsumptionModernUsageDetail"/>.
     /// </summary>
-    public partial class ConsumptionUsageDetail : ResourceData
+    public abstract partial class ConsumptionUsageDetail : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionUsageDetail"/>. </summary>
-        internal ConsumptionUsageDetail()
+        protected ConsumptionUsageDetail()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

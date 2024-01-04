@@ -32,15 +32,18 @@ namespace Azure.Identity.Tests
 
             var options = new InteractiveBrowserCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 TokenCachePersistenceOptions = tokenCacheOptions,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null));
+            return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));
         }
 
         [Test]
@@ -73,7 +76,7 @@ namespace Azure.Identity.Tests
             var mockMsalClient = new MockMsalPublicClient
             {
                 AuthFactory = (_, _) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); },
-                SilentAuthFactory = (_, _) => { throw new MockClientException(expInnerExMessage); }
+                SilentAuthFactory = (_, _, _, _, _) => { throw new MockClientException(expInnerExMessage); }
             };
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
@@ -105,7 +108,7 @@ namespace Azure.Identity.Tests
             var mockMsalClient = new MockMsalPublicClient
             {
                 AuthFactory = (_, _) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); },
-                SilentAuthFactory = (_, _) => { throw new MsalUiRequiredException("errorCode", "message"); }
+                SilentAuthFactory = (_, _, _, _, _) => { throw new MsalUiRequiredException("errorCode", "message"); }
             };
 
             var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
