@@ -254,7 +254,6 @@
 
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.ClientModel" />
 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />
