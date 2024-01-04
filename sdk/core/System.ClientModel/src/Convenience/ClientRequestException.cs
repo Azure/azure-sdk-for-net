@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Globalization;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
@@ -79,7 +80,10 @@ public class ClientRequestException : Exception, ISerializable
             return DefaultMessage;
         }
 
-        ResponseBufferingPolicy.BufferContent(response, ResponseBufferingPolicy.DefaultNetworkTimeout, new CancellationTokenSource());
+        if (!response.TryGetBufferedContent(out _))
+        {
+            BufferResponse(response);
+        }
 
         StringBuilder messageBuilder = new();
 
@@ -102,5 +106,23 @@ public class ClientRequestException : Exception, ISerializable
         // Content or headers can be obtained from raw response so are not added here.
 
         return messageBuilder.ToString();
+    }
+
+    private static void BufferResponse(PipelineResponse response)
+    {
+        if (response.ContentStream is null)
+        {
+            return;
+        }
+
+        var bufferedStream = new MemoryStream();
+        response.ContentStream.CopyTo(bufferedStream);
+
+        // Dispose the unbuffered stream
+        response.ContentStream.Dispose();
+
+        // Reset the position of the buffered stream and set it on the response
+        bufferedStream.Position = 0;
+        response.ContentStream = bufferedStream;
     }
 }
