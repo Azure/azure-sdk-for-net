@@ -51,7 +51,7 @@ public class ClientResultTests
     }
 
     [Test]
-    public void CanCreateOptionalResultFromBool()
+    public void CanCreateOptionalClientResultFromBool()
     {
         // This tests simulates creation of the result returned from a HEAD request.
 
@@ -71,7 +71,7 @@ public class ClientResultTests
     }
 
     [Test]
-    public void OptionalResultDerivedTypeCanShadowValue()
+    public void OptionalClientResultDerivedTypeCanShadowValue()
     {
         // This tests simulates creation of the result returned from a HEAD request.
 
@@ -91,7 +91,7 @@ public class ClientResultTests
     }
 
     [Test]
-    public void CanCreateDerivedOptionalResult()
+    public void CanCreateDerivedOptionalClientResult()
     {
         // This tests simulates creation of the result returned from a HEAD request.
 
@@ -115,7 +115,7 @@ public class ClientResultTests
         Assert.Throws<ArgumentNullException>(() => new MockClientResult<object>(value, null!));
         Assert.Throws<ArgumentNullException>(() =>
         {
-            OptionalClientResult<object> result = ClientResult.FromValue(value, null!);
+            ClientResult<object> result = ClientResult.FromValue(value, null!);
         });
     }
 
@@ -127,12 +127,12 @@ public class ClientResultTests
         Assert.Throws<ArgumentNullException>(() => new MockClientResult<object>(null!, response));
         Assert.Throws<ArgumentNullException>(() =>
         {
-            OptionalClientResult<object> result = ClientResult.FromValue<object>(null!, response);
+            ClientResult<object> result = ClientResult.FromValue<object>(null!, response);
         });
     }
 
     [Test]
-    public void CanCreateDerivedResult()
+    public void CanCreateDerivedClientResultOfT()
     {
         string value = "hello";
 
