@@ -391,6 +391,78 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
         StringAssert.Contains(anotherHeaderValue, httpHeaderValues.ToString());
     }
 
+    [TestCaseSource(nameof(HeadersWithValues))]
+    public async Task CanRemoveRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+    {
+        // Some headers are required
+        bool checkOnServer = headerName != "Content-Length" && headerName != "Host";
+
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                if (checkOnServer)
+                {
+                    Assert.False(context.Request.Headers.TryGetValue(headerName, out _));
+                }
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "POST";
+        message.Request.Content = BinaryContent.Create(BinaryData.FromBytes(Array.Empty<byte>()));
+
+        message.Request.Headers.Add(headerName, headerValue);
+        Assert.True(message.Request.Headers.Remove(headerName));
+        Assert.False(message.Request.Headers.Remove(headerName));
+
+        Assert.False(message.Request.Headers.TryGetValue(headerName, out _));
+        Assert.False(message.Request.Headers.TryGetValue(headerName.ToUpper(), out _));
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+    }
+
+    [TestCaseSource(nameof(HeadersWithValues))]
+    public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+    {
+        StringValues httpHeaderValues = default;
+
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                Assert.True(context.Request.Headers.TryGetValue(headerName, out httpHeaderValues));
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "POST";
+        message.Request.Content = BinaryContent.Create(BinaryData.FromBytes(Array.Empty<byte>()));
+
+        message.Request.Headers.Add(headerName, "Random value");
+        message.Request.Headers.Set(headerName, headerValue);
+
+        if (contentHeader)
+        {
+            message.Request.Content = BinaryContent.Create(BinaryData.FromBytes(new byte[16]));
+        }
+
+        Assert.True(message.Request.Headers.TryGetValue(headerName, out var value));
+        Assert.AreEqual(headerValue, value);
+
+        Assert.True(message.Request.Headers.TryGetValue(headerName.ToUpper(), out value));
+        Assert.AreEqual(headerValue, value);
+
+        CollectionAssert.AreEqual(new[]{new KeyValuePair<string, string>(headerName, headerValue),},
+            message.Request.Headers);
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+    }
+
     #endregion
 
     #region Transport Response tests
@@ -436,6 +508,79 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
         Assert.AreEqual("Custom ReasonPhrase", message.Response!.ReasonPhrase);
+    }
+
+    [TestCaseSource(nameof(HeadersWithValues))]
+    public async Task CanGetResponseHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+    {
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                context.Response.Headers.Add(headerName, headerValue);
+                context.Response.WriteAsync("1234567890123456");
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "POST";
+        message.Request.Content = BinaryContent.Create(BinaryData.FromBytes(Array.Empty<byte>()));
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        using PipelineResponse response = message.Response!;
+
+        Assert.True(
+            response.Headers.TryGetValue(headerName, out _),
+            $"response.Headers contains the following headers: {string.Join(", ", response.Headers.Select(h => $"\"{h.Key}\": \"{h.Value}\""))}");
+
+        Assert.True(response.Headers.TryGetValue(headerName, out var value));
+        Assert.AreEqual(headerValue, value);
+
+        Assert.True(response.Headers.TryGetValues(headerName, out IEnumerable<string>? values));
+        CollectionAssert.AreEqual(new[] { headerValue }, values);
+
+        CollectionAssert.Contains(response.Headers, new KeyValuePair<string, string>(headerName, headerValue));
+    }
+
+    [TestCaseSource(nameof(HeadersWithValues))]
+    public async Task CanSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader, bool supportsMultiple)
+    {
+        if (!supportsMultiple) return;
+
+        var anotherHeaderValue = headerValue + "1";
+        var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
+
+        using TestServer testServer = new TestServer(
+            context =>
+            {
+                context.Response.Headers.Add(headerName,
+                    new StringValues(new[]
+                    {
+                            headerValue,
+                            anotherHeaderValue
+                    }));
+            });
+
+        HttpClientPipelineTransport transport = new();
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.Request.Method = "POST";
+        message.Request.Content = BinaryContent.Create(BinaryData.FromBytes(Array.Empty<byte>()));
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        using PipelineResponse response = message.Response!;
+
+        Assert.True(response.Headers.TryGetValue(headerName, out var value));
+        Assert.AreEqual(joinedHeaderValues, value);
+
+        Assert.True(response.Headers.TryGetValues(headerName, out IEnumerable<string>? values));
+        CollectionAssert.AreEqual(new[] { headerValue, anotherHeaderValue }, values);
+
+        CollectionAssert.Contains(response.Headers, new KeyValuePair<string, string>(headerName, joinedHeaderValues));
     }
 
     #endregion
