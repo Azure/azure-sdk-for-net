@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Relay
 {
     /// <summary>
     /// A Class representing a RelayNamespace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RelayNamespaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRelayNamespaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetRelayNamespace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelayNamespaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRelayNamespaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetRelayNamespace method.
     /// </summary>
     public partial class RelayNamespaceResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Relay
         private readonly NamespacesRestOperations _relayNamespaceNamespacesRestClient;
         private readonly RelayNamespaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces";
+
         /// <summary> Initializes a new instance of the <see cref="RelayNamespaceResource"/> class for mocking. </summary>
         protected RelayNamespaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RelayNamespaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelayNamespaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RelayNamespaceResource(ArmClient client, RelayNamespaceData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary> Gets an object representing a RelayNetworkRuleSetResource along with the instance operations that can be performed on it in the RelayNamespace. </summary>
-        /// <returns> Returns a <see cref="RelayNetworkRuleSetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RelayNetworkRuleSetResource"/> object. </returns>
         public virtual RelayNetworkRuleSetResource GetRelayNetworkRuleSet()
         {
             return new RelayNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));

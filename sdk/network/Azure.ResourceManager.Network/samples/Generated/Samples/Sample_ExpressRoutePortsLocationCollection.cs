@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ExpressRoutePortsLocationList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/ExpressRoutePortsLocationList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/ExpressRoutePortsLocationList.json
             // this example is just showing the usage of "ExpressRoutePortsLocations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ExpressRoutePortsLocationGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/ExpressRoutePortsLocationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/ExpressRoutePortsLocationGet.json
             // this example is just showing the usage of "ExpressRoutePortsLocations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ExpressRoutePortsLocationGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/ExpressRoutePortsLocationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/ExpressRoutePortsLocationGet.json
             // this example is just showing the usage of "ExpressRoutePortsLocations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_ExpressRoutePortsLocationGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/ExpressRoutePortsLocationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/ExpressRoutePortsLocationGet.json
             // this example is just showing the usage of "ExpressRoutePortsLocations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

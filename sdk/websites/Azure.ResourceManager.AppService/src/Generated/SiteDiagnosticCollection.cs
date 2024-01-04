@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteDiagnosticResource" /> and their operations.
-    /// Each <see cref="SiteDiagnosticResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="SiteDiagnosticCollection" /> instance call the GetSiteDiagnostics method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="SiteDiagnosticResource"/> and their operations.
+    /// Each <see cref="SiteDiagnosticResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="SiteDiagnosticCollection"/> instance call the GetSiteDiagnostics method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class SiteDiagnosticCollection : ArmCollection, IEnumerable<SiteDiagnosticResource>, IAsyncEnumerable<SiteDiagnosticResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteDiagnosticResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteDiagnosticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteDiagnosticResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticDiagnosticsRestClient.CreateListSiteDiagnosticCategoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
     public partial class AppServiceCertificateProperties
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateProperties"/>. </summary>
         public AppServiceCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateProperties"/>. </summary>
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>

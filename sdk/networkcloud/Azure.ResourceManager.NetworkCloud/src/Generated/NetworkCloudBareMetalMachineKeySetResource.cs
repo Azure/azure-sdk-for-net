@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A Class representing a NetworkCloudBareMetalMachineKeySet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkCloudBareMetalMachineKeySetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkCloudBareMetalMachineKeySetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudClusterResource" /> using the GetNetworkCloudBareMetalMachineKeySet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkCloudBareMetalMachineKeySetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkCloudBareMetalMachineKeySetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkCloudClusterResource"/> using the GetNetworkCloudBareMetalMachineKeySet method.
     /// </summary>
     public partial class NetworkCloudBareMetalMachineKeySetResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.NetworkCloud
         private readonly BareMetalMachineKeySetsRestOperations _networkCloudBareMetalMachineKeySetBareMetalMachineKeySetsRestClient;
         private readonly NetworkCloudBareMetalMachineKeySetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/clusters/bareMetalMachineKeySets";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkCloudBareMetalMachineKeySetResource"/> class for mocking. </summary>
         protected NetworkCloudBareMetalMachineKeySetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkCloudBareMetalMachineKeySetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudBareMetalMachineKeySetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkCloudBareMetalMachineKeySetResource(ArmClient client, NetworkCloudBareMetalMachineKeySetData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.NetworkCloud
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkCloud/clusters/bareMetalMachineKeySets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

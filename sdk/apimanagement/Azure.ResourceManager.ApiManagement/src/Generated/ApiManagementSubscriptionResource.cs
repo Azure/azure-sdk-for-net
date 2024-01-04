@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementSubscriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementSubscription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementSubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementSubscription method.
     /// </summary>
     public partial class ApiManagementSubscriptionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly SubscriptionRestOperations _apiManagementSubscriptionSubscriptionRestClient;
         private readonly SubscriptionContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/subscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementSubscriptionResource"/> class for mocking. </summary>
         protected ApiManagementSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementSubscriptionResource(ArmClient client, SubscriptionContractData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/subscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

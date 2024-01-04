@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class StorageClassificationData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageClassificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationData"/>. </summary>
         internal StorageClassificationData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageClassificationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

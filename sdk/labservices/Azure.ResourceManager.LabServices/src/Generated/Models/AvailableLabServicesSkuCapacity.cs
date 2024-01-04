@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The scale out/in options of the SKU. </summary>
     public partial class AvailableLabServicesSkuCapacity
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCapacity"/>. </summary>
         internal AvailableLabServicesSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuCapacity"/>. </summary>
         /// <param name="default"> The default capacity for this resource. </param>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>

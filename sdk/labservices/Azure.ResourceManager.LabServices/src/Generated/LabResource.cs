@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
     /// A Class representing a Lab along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LabResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLabResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetLab method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LabResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLabResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetLab method.
     /// </summary>
     public partial class LabResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.LabServices
         private readonly LabsRestOperations _labRestClient;
         private readonly LabData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.LabServices/labs";
+
         /// <summary> Initializes a new instance of the <see cref="LabResource"/> class for mocking. </summary>
         protected LabResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LabResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LabResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LabResource(ArmClient client, LabData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.LabServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.LabServices/labs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

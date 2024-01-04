@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> One or more actions that will execute, modifying the request and/or response. </summary>
     public partial class RulesEngineAction
     {
-        /// <summary> Initializes a new instance of RulesEngineAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineAction"/>. </summary>
         public RulesEngineAction()
         {
             RequestHeaderActions = new ChangeTrackingList<RulesEngineHeaderAction>();
             ResponseHeaderActions = new ChangeTrackingList<RulesEngineHeaderAction>();
         }
 
-        /// <summary> Initializes a new instance of RulesEngineAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulesEngineAction"/>. </summary>
         /// <param name="requestHeaderActions"> A list of header actions to apply from the request from AFD to the origin. </param>
         /// <param name="responseHeaderActions"> A list of header actions to apply from the response from AFD to the client. </param>
         /// <param name="routeConfigurationOverride">

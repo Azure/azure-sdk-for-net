@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
     /// A Class representing an ExperimentExecutionDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExperimentExecutionDetailResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExperimentExecutionDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExperimentResource" /> using the GetExperimentExecutionDetail method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExperimentExecutionDetailResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExperimentExecutionDetailResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExperimentResource"/> using the GetExperimentExecutionDetail method.
     /// </summary>
     public partial class ExperimentExecutionDetailResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Chaos
         private readonly ExperimentsRestOperations _experimentExecutionDetailExperimentsRestClient;
         private readonly ExperimentExecutionDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Chaos/experiments/executionDetails";
+
         /// <summary> Initializes a new instance of the <see cref="ExperimentExecutionDetailResource"/> class for mocking. </summary>
         protected ExperimentExecutionDetailResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExperimentExecutionDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExperimentExecutionDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExperimentExecutionDetailResource(ArmClient client, ExperimentExecutionDetailData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Chaos
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Chaos/experiments/executionDetails";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

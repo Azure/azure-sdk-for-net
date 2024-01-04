@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppReplica along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppReplicaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppReplicaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppRevisionResource" /> using the GetContainerAppReplica method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppReplicaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppReplicaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppRevisionResource"/> using the GetContainerAppReplica method.
     /// </summary>
     public partial class ContainerAppReplicaResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsRevisionReplicasRestOperations _containerAppReplicaContainerAppsRevisionReplicasRestClient;
         private readonly ContainerAppReplicaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/revisions/replicas";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppReplicaResource"/> class for mocking. </summary>
         protected ContainerAppReplicaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppReplicaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppReplicaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppReplicaResource(ArmClient client, ContainerAppReplicaData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/revisions/replicas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

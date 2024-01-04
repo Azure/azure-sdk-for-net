@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The list of bot service operation response. </summary>
     internal partial class BotResponseList
     {
-        /// <summary> Initializes a new instance of BotResponseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotResponseList"/>. </summary>
         internal BotResponseList()
         {
             Value = new ChangeTrackingList<BotData>();
         }
 
-        /// <summary> Initializes a new instance of BotResponseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotResponseList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of bot service resources. </param>
         /// <param name="value"> Gets the list of bot service results and their properties. </param>
         internal BotResponseList(string nextLink, IReadOnlyList<BotData> value)

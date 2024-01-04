@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class FirewallRuleForDataLakeAnalyticsAccountUpdateContent
     {
-        /// <summary> Initializes a new instance of FirewallRuleForDataLakeAnalyticsAccountUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
         /// <param name="name">
         /// The unique name of the firewall rule to update.
         /// Serialized Name: UpdateFirewallRuleWithAccountParameters.name
@@ -28,6 +28,26 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeAnalyticsAccountUpdateContent"/>. </summary>
+        /// <param name="name">
+        /// The unique name of the firewall rule to update.
+        /// Serialized Name: UpdateFirewallRuleWithAccountParameters.name
+        /// </param>
+        /// <param name="startIPAddress">
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleWithAccountParameters.properties.startIpAddress
+        /// </param>
+        /// <param name="endIPAddress">
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleWithAccountParameters.properties.endIpAddress
+        /// </param>
+        internal FirewallRuleForDataLakeAnalyticsAccountUpdateContent(string name, IPAddress startIPAddress, IPAddress endIPAddress)
+        {
+            Name = name;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
         }
 
         /// <summary>

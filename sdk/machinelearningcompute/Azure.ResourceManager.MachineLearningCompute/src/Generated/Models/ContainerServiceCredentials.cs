@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Information about the Azure Container Registry which contains the images deployed to the cluster. </summary>
     public partial class ContainerServiceCredentials
     {
-        /// <summary> Initializes a new instance of ContainerServiceCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceCredentials"/>. </summary>
         internal ContainerServiceCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceCredentials"/>. </summary>
         /// <param name="acsKubeConfig"> The ACS kube config file. </param>
         /// <param name="servicePrincipalConfiguration"> Service principal configuration used by Kubernetes. </param>
         /// <param name="imagePullSecretName"> The ACR image pull secret name which was created in Kubernetes. </param>

@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI
     /// <summary> The definition of a caller-specified function that chat completions may invoke in response to matching user input. </summary>
     public partial class FunctionDefinition
     {
-        /// <summary> Initializes a new instance of FunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FunctionDefinition(string name)
@@ -23,13 +23,13 @@ namespace Azure.AI.OpenAI
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of FunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="description">
         /// A description of what the function does. The model will use this description when selecting the function and
         /// interpreting its parameters.
         /// </param>
-        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <param name="parameters"> The parameters the function accepts, described as a JSON Schema object. </param>
         internal FunctionDefinition(string name, string description, BinaryData parameters)
         {
             Name = name;
@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// The parameters the functions accepts, described as a JSON Schema object.
+        /// The parameters the function accepts, described as a JSON Schema object.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

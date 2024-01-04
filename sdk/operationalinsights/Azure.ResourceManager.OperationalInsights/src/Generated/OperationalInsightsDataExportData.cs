@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsDataExportData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataExportData"/>. </summary>
         public OperationalInsightsDataExportData()
         {
             TableNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataExportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

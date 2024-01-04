@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A SQL DB Table data set mapping. </summary>
     public partial class SqlDBTableDataSetMapping : ShareDataSetMappingData
     {
-        /// <summary> Initializes a new instance of SqlDBTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSetMapping"/>. </summary>
         /// <param name="databaseName"> DatabaseName name of the sink data set. </param>
         /// <param name="dataSetId"> The id of the source data set. </param>
         /// <param name="schemaName"> Schema of the table. Default value is dbo. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetMappingKind.SqlDBTable;
         }
 
-        /// <summary> Initializes a new instance of SqlDBTableDataSetMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBTableDataSetMapping"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

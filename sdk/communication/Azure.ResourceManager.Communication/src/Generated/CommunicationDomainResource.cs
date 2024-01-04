@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Communication
 {
     /// <summary>
     /// A Class representing a CommunicationDomainResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommunicationDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCommunicationDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EmailServiceResource" /> using the GetCommunicationDomainResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunicationDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommunicationDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EmailServiceResource"/> using the GetCommunicationDomainResource method.
     /// </summary>
     public partial class CommunicationDomainResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Communication
         private readonly DomainsRestOperations _communicationDomainResourceDomainsRestClient;
         private readonly CommunicationDomainResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains";
+
         /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResource"/> class for mocking. </summary>
         protected CommunicationDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CommunicationDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommunicationDomainResource(ArmClient client, CommunicationDomainResourceData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Communication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Communication/emailServices/domains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The change history of the resource move. </summary>
     public partial class ResourceMoveChangeHistory
     {
-        /// <summary> Initializes a new instance of ResourceMoveChangeHistory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMoveChangeHistory"/>. </summary>
         public ResourceMoveChangeHistory()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceMoveChangeHistory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMoveChangeHistory"/>. </summary>
         /// <param name="azureSubscriptionId"> Azure subscription ID of the resource. </param>
         /// <param name="resourceGroupName"> Azure Resource Group of the resource. </param>
         /// <param name="changedTimeUtc"> UTC timestamp of when the resource was changed. </param>

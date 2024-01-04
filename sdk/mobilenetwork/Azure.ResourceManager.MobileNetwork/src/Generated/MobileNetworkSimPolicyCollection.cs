@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MobileNetworkSimPolicyResource" /> and their operations.
-    /// Each <see cref="MobileNetworkSimPolicyResource" /> in the collection will belong to the same instance of <see cref="MobileNetworkResource" />.
-    /// To get a <see cref="MobileNetworkSimPolicyCollection" /> instance call the GetMobileNetworkSimPolicies method from an instance of <see cref="MobileNetworkResource" />.
+    /// A class representing a collection of <see cref="MobileNetworkSimPolicyResource"/> and their operations.
+    /// Each <see cref="MobileNetworkSimPolicyResource"/> in the collection will belong to the same instance of <see cref="MobileNetworkResource"/>.
+    /// To get a <see cref="MobileNetworkSimPolicyCollection"/> instance call the GetMobileNetworkSimPolicies method from an instance of <see cref="MobileNetworkResource"/>.
     /// </summary>
     public partial class MobileNetworkSimPolicyCollection : ArmCollection, IEnumerable<MobileNetworkSimPolicyResource>, IAsyncEnumerable<MobileNetworkSimPolicyResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkSimPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkSimPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkSimPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkSimPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkSimPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkSimPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

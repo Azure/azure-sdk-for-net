@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
     /// A Class representing a ContainerServiceFleetMember along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerServiceFleetMemberResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerServiceFleetMemberResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource" /> using the GetContainerServiceFleetMember method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceFleetMemberResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerServiceFleetMemberResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceFleetResource"/> using the GetContainerServiceFleetMember method.
     /// </summary>
     public partial class ContainerServiceFleetMemberResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.ContainerService
         private readonly FleetMembersRestOperations _containerServiceFleetMemberFleetMembersRestClient;
         private readonly ContainerServiceFleetMemberData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/members";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetMemberResource"/> class for mocking. </summary>
         protected ContainerServiceFleetMemberResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerServiceFleetMemberResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetMemberResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerServiceFleetMemberResource(ArmClient client, ContainerServiceFleetMemberData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/fleets/members";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating an agent pool. </summary>
     public partial class ContainerRegistryAgentPoolPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryAgentPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolPatch"/>. </summary>
         public ContainerRegistryAgentPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAgentPoolPatch"/>. </summary>
+        /// <param name="tags"> The ARM resource tags. </param>
+        /// <param name="count"> The count of agent machine. </param>
+        internal ContainerRegistryAgentPoolPatch(IDictionary<string, string> tags, int? count)
+        {
+            Tags = tags;
+            Count = count;
         }
 
         /// <summary> The ARM resource tags. </summary>

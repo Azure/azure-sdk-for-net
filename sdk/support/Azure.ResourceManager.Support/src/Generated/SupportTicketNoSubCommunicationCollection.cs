@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SupportTicketNoSubCommunicationResource" /> and their operations.
-    /// Each <see cref="SupportTicketNoSubCommunicationResource" /> in the collection will belong to the same instance of <see cref="TenantSupportTicketResource" />.
-    /// To get a <see cref="SupportTicketNoSubCommunicationCollection" /> instance call the GetSupportTicketNoSubCommunications method from an instance of <see cref="TenantSupportTicketResource" />.
+    /// A class representing a collection of <see cref="SupportTicketNoSubCommunicationResource"/> and their operations.
+    /// Each <see cref="SupportTicketNoSubCommunicationResource"/> in the collection will belong to the same instance of <see cref="TenantSupportTicketResource"/>.
+    /// To get a <see cref="SupportTicketNoSubCommunicationCollection"/> instance call the GetSupportTicketNoSubCommunications method from an instance of <see cref="TenantSupportTicketResource"/>.
     /// </summary>
     public partial class SupportTicketNoSubCommunicationCollection : ArmCollection, IEnumerable<SupportTicketNoSubCommunicationResource>, IAsyncEnumerable<SupportTicketNoSubCommunicationResource>
     {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportTicketNoSubCommunicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SupportTicketNoSubCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketNoSubCommunicationResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionRestClient.CreateListRequest(Id.Name, top, filter);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupportTicketNoSubCommunicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SupportTicketNoSubCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketNoSubCommunicationResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketNoSubCommunicationSupportTicketCommunicationsNoSubscriptionRestClient.CreateListRequest(Id.Name, top, filter);

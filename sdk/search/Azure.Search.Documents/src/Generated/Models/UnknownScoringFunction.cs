@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownScoringFunction. </summary>
     internal partial class UnknownScoringFunction : ScoringFunction
     {
-        /// <summary> Initializes a new instance of UnknownScoringFunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownScoringFunction"/>. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>

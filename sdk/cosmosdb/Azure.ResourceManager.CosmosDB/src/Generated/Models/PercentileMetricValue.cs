@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Represents percentile metrics values. </summary>
     public partial class PercentileMetricValue : CosmosDBMetricValue
     {
-        /// <summary> Initializes a new instance of PercentileMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="PercentileMetricValue"/>. </summary>
         internal PercentileMetricValue()
         {
         }
 
-        /// <summary> Initializes a new instance of PercentileMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="PercentileMetricValue"/>. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>

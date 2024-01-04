@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
     public partial class DiskPurchasePlan
     {
-        /// <summary> Initializes a new instance of DiskPurchasePlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPurchasePlan"/>. </summary>
         /// <param name="name"> The plan ID. </param>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             Product = product;
         }
 
-        /// <summary> Initializes a new instance of DiskPurchasePlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPurchasePlan"/>. </summary>
         /// <param name="name"> The plan ID. </param>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>

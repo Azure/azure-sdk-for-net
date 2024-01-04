@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Auto scale properties. </summary>
     public partial class MachineLearningAutoScaleProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningAutoScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAutoScaleProperties"/>. </summary>
         public MachineLearningAutoScaleProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAutoScaleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAutoScaleProperties"/>. </summary>
         /// <param name="minNodeCount"></param>
         /// <param name="isEnabled"></param>
         /// <param name="maxNodeCount"></param>

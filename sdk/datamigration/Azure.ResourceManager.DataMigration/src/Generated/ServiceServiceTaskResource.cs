@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a ServiceServiceTask along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceServiceTaskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceServiceTaskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataMigrationServiceResource" /> using the GetServiceServiceTask method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceServiceTaskResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceServiceTaskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataMigrationServiceResource"/> using the GetServiceServiceTask method.
     /// </summary>
     public partial class ServiceServiceTaskResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly ServiceTasksRestOperations _serviceServiceTaskServiceTasksRestClient;
         private readonly ProjectTaskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataMigration/services/serviceTasks";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceServiceTaskResource"/> class for mocking. </summary>
         protected ServiceServiceTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceServiceTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceServiceTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceServiceTaskResource(ArmClient client, ProjectTaskData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataMigration/services/serviceTasks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

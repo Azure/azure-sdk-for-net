@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseWorkspaceSqlAdministratorResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseWorkspaceSqlAdministratorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseWorkspaceSqlAdministratorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseWorkspaceSqlAdministratorResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseWorkspaceSqlAdministratorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseWorkspaceSqlAdministratorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseWorkspaceSqlAdministratorResource method.
     /// </summary>
     public partial class SynapseWorkspaceSqlAdministratorResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly WorkspaceSqlAadAdminsRestOperations _synapseWorkspaceSqlAdministratorResourceWorkspaceSqlAadAdminsRestClient;
         private readonly SynapseWorkspaceAadAdminInfoData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlAdministrators";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseWorkspaceSqlAdministratorResource"/> class for mocking. </summary>
         protected SynapseWorkspaceSqlAdministratorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseWorkspaceSqlAdministratorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseWorkspaceSqlAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseWorkspaceSqlAdministratorResource(ArmClient client, SynapseWorkspaceAadAdminInfoData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlAdministrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

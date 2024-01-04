@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM specific backup protection intent item. </summary>
     public partial class ResourceProtectionIntent : BackupGenericProtectionIntent
     {
-        /// <summary> Initializes a new instance of ResourceProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProtectionIntent"/>. </summary>
         public ResourceProtectionIntent()
         {
             ProtectionIntentItemType = ProtectionIntentItemType.AzureResourceItem;
         }
 
-        /// <summary> Initializes a new instance of ResourceProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProtectionIntent"/>. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>

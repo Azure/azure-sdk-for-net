@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a StaticSite along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StaticSiteResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStaticSiteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetStaticSite method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StaticSiteResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStaticSiteResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStaticSite method.
     /// </summary>
     public partial class StaticSiteResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.AppService
         private readonly StaticSitesRestOperations _staticSiteRestClient;
         private readonly StaticSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites";
+
         /// <summary> Initializes a new instance of the <see cref="StaticSiteResource"/> class for mocking. </summary>
         protected StaticSiteResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StaticSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StaticSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StaticSiteResource(ArmClient client, StaticSiteData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StaticSiteUser" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StaticSiteUser"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteUser> GetUsersAsync(string authprovider, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> is null. </exception>
-        /// <returns> A collection of <see cref="StaticSiteUser" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteUser"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteUser> GetUsers(string authprovider, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The StaticSiteUserInvitationContent to use. </param>
+        /// <param name="content"> The <see cref="StaticSiteUserInvitationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StaticSiteUserInvitationResult>> CreateUserRolesInvitationLinkAsync(StaticSiteUserInvitationContent content, CancellationToken cancellationToken = default)
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The StaticSiteUserInvitationContent to use. </param>
+        /// <param name="content"> The <see cref="StaticSiteUserInvitationContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<StaticSiteUserInvitationResult> CreateUserRolesInvitationLink(StaticSiteUserInvitationContent content, CancellationToken cancellationToken = default)
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StaticSiteFunctionOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteFunctionOverview> GetStaticSiteFunctionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteFunctionOverview" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteFunctionOverview"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteFunctionOverview> GetStaticSiteFunctions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteFunctionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppServicePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The StaticSiteResetContent to use. </param>
+        /// <param name="content"> The <see cref="StaticSiteResetContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> ResetApiKeyAsync(StaticSiteResetContent content, CancellationToken cancellationToken = default)
@@ -1355,7 +1355,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The StaticSiteResetContent to use. </param>
+        /// <param name="content"> The <see cref="StaticSiteResetContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response ResetApiKey(StaticSiteResetContent content, CancellationToken cancellationToken = default)

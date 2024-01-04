@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a ScriptExecution along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScriptExecutionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScriptExecutionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetScriptExecution method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptExecutionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScriptExecutionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetScriptExecution method.
     /// </summary>
     public partial class ScriptExecutionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Avs
         private readonly ScriptExecutionsRestOperations _scriptExecutionRestClient;
         private readonly ScriptExecutionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptExecutions";
+
         /// <summary> Initializes a new instance of the <see cref="ScriptExecutionResource"/> class for mocking. </summary>
         protected ScriptExecutionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScriptExecutionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptExecutionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptExecutionResource(ArmClient client, ScriptExecutionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptExecutions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

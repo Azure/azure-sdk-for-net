@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of SecurityCenterCloudOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudOffering"/>. </summary>
         protected SecurityCenterCloudOffering()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterCloudOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         internal SecurityCenterCloudOffering(OfferingType offeringType, string description)

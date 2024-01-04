@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing an IngestionSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IngestionSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIngestionSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetIngestionSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IngestionSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIngestionSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetIngestionSetting method.
     /// </summary>
     public partial class IngestionSettingResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly IngestionSettingsRestOperations _ingestionSettingRestClient;
         private readonly IngestionSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/ingestionSettings";
+
         /// <summary> Initializes a new instance of the <see cref="IngestionSettingResource"/> class for mocking. </summary>
         protected IngestionSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IngestionSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IngestionSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IngestionSettingResource(ArmClient client, IngestionSettingData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/ingestionSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IngestionConnectionString" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IngestionConnectionString"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IngestionConnectionString> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.Name);
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IngestionConnectionString" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IngestionConnectionString"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IngestionConnectionString> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListConnectionStringsRequest(Id.SubscriptionId, Id.Name);

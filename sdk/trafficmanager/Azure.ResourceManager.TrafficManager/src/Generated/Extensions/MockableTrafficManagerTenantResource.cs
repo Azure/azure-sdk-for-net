@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         }
 
         /// <summary> Gets an object representing a TrafficManagerGeographicHierarchyResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
         public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy()
         {
             return new TrafficManagerGeographicHierarchyResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerGeographicHierarchies", "default"));

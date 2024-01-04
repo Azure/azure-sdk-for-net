@@ -10,33 +10,29 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> LinuxProfile - Profile for Linux VMs in the container service cluster. </summary>
-    public partial class LinuxProfileProperties
+    internal partial class LinuxProfileProperties
     {
-        /// <summary> Initializes a new instance of LinuxProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxProfileProperties"/>. </summary>
         public LinuxProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LinuxProfileProperties. </summary>
-        /// <param name="adminUsername"> AdminUsername - The administrator username to use for Linux VMs. </param>
+        /// <summary> Initializes a new instance of <see cref="LinuxProfileProperties"/>. </summary>
         /// <param name="ssh"> SSH - SSH configuration for Linux-based VMs running on Azure. </param>
-        internal LinuxProfileProperties(string adminUsername, LinuxProfilePropertiesSsh ssh)
+        internal LinuxProfileProperties(LinuxSshConfiguration ssh)
         {
-            AdminUsername = adminUsername;
             Ssh = ssh;
         }
 
-        /// <summary> AdminUsername - The administrator username to use for Linux VMs. </summary>
-        public string AdminUsername { get; set; }
         /// <summary> SSH - SSH configuration for Linux-based VMs running on Azure. </summary>
-        internal LinuxProfilePropertiesSsh Ssh { get; set; }
+        internal LinuxSshConfiguration Ssh { get; set; }
         /// <summary> PublicKeys - The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified. </summary>
-        public IList<LinuxProfilePropertiesSshPublicKeysItem> SshPublicKeys
+        public IList<LinuxSshPublicKey> SshPublicKeys
         {
             get
             {
                 if (Ssh is null)
-                    Ssh = new LinuxProfilePropertiesSsh();
+                    Ssh = new LinuxSshConfiguration();
                 return Ssh.PublicKeys;
             }
         }

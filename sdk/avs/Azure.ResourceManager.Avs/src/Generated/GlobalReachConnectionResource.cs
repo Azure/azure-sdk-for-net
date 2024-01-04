@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a GlobalReachConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GlobalReachConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGlobalReachConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetGlobalReachConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GlobalReachConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGlobalReachConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetGlobalReachConnection method.
     /// </summary>
     public partial class GlobalReachConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Avs
         private readonly GlobalReachConnectionsRestOperations _globalReachConnectionRestClient;
         private readonly GlobalReachConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/globalReachConnections";
+
         /// <summary> Initializes a new instance of the <see cref="GlobalReachConnectionResource"/> class for mocking. </summary>
         protected GlobalReachConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GlobalReachConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GlobalReachConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GlobalReachConnectionResource(ArmClient client, GlobalReachConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/globalReachConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

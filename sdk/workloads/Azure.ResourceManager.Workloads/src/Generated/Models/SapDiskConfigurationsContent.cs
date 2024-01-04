@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP request to get list of disk configurations. </summary>
     public partial class SapDiskConfigurationsContent
     {
-        /// <summary> Initializes a new instance of SapDiskConfigurationsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsContent"/>. </summary>
         /// <param name="appLocation"> The geo-location where the SAP resources will be created. </param>
         /// <param name="environment"> Defines the environment type - Production/Non Production. </param>
         /// <param name="sapProduct"> Defines the SAP Product type. </param>

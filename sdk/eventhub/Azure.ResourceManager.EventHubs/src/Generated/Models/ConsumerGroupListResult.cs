@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The result to the List Consumer Group operation. </summary>
     internal partial class ConsumerGroupListResult
     {
-        /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerGroupListResult"/>. </summary>
         internal ConsumerGroupListResult()
         {
             Value = new ChangeTrackingList<EventHubsConsumerGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerGroupListResult"/>. </summary>
         /// <param name="value"> Result of the List Consumer Group operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Consumer Group. </param>
         internal ConsumerGroupListResult(IReadOnlyList<EventHubsConsumerGroupData> value, string nextLink)

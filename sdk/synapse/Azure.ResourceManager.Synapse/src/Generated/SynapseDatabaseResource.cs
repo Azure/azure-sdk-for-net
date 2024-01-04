@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseDatabase along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseDatabaseResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseDatabaseResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseKustoPoolResource" /> using the GetSynapseDatabase method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseDatabaseResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseDatabaseResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseKustoPoolResource"/> using the GetSynapseDatabase method.
     /// </summary>
     public partial class SynapseDatabaseResource : ArmResource
     {
@@ -45,12 +45,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly KustoPoolDatabasePrincipalAssignmentsRestOperations _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsRestClient;
         private readonly SynapseDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseDatabaseResource"/> class for mocking. </summary>
         protected SynapseDatabaseResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseDatabaseResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseDatabaseResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseDatabaseResource(ArmClient client, SynapseDatabaseData data) : this(client, data.Id)
@@ -77,9 +80,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

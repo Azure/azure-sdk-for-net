@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementUserSubscriptionResource" /> and their operations.
-    /// Each <see cref="ApiManagementUserSubscriptionResource" /> in the collection will belong to the same instance of <see cref="ApiManagementUserResource" />.
-    /// To get an <see cref="ApiManagementUserSubscriptionCollection" /> instance call the GetApiManagementUserSubscriptions method from an instance of <see cref="ApiManagementUserResource" />.
+    /// A class representing a collection of <see cref="ApiManagementUserSubscriptionResource"/> and their operations.
+    /// Each <see cref="ApiManagementUserSubscriptionResource"/> in the collection will belong to the same instance of <see cref="ApiManagementUserResource"/>.
+    /// To get an <see cref="ApiManagementUserSubscriptionCollection"/> instance call the GetApiManagementUserSubscriptions method from an instance of <see cref="ApiManagementUserResource"/>.
     /// </summary>
     public partial class ApiManagementUserSubscriptionCollection : ArmCollection, IEnumerable<ApiManagementUserSubscriptionResource>, IAsyncEnumerable<ApiManagementUserSubscriptionResource>
     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementUserSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementUserSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementUserSubscriptionResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementUserSubscriptionUserSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementUserSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementUserSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementUserSubscriptionResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementUserSubscriptionUserSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);

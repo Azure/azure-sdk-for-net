@@ -6,15 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
     /// <summary> Definition of the configuration profile. </summary>
     public partial class AutomanageConfigurationProfilePatch : AutomanageResourceUpdateDetails
     {
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfilePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfilePatch"/>. </summary>
         public AutomanageConfigurationProfilePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfilePatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="properties"> Properties of the configuration profile. </param>
+        internal AutomanageConfigurationProfilePatch(IDictionary<string, string> tags, ConfigurationProfileProperties properties) : base(tags)
+        {
+            Properties = properties;
         }
 
         /// <summary> Properties of the configuration profile. </summary>

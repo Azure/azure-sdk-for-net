@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BatchAccountDetectorResource" /> and their operations.
-    /// Each <see cref="BatchAccountDetectorResource" /> in the collection will belong to the same instance of <see cref="BatchAccountResource" />.
-    /// To get a <see cref="BatchAccountDetectorCollection" /> instance call the GetBatchAccountDetectors method from an instance of <see cref="BatchAccountResource" />.
+    /// A class representing a collection of <see cref="BatchAccountDetectorResource"/> and their operations.
+    /// Each <see cref="BatchAccountDetectorResource"/> in the collection will belong to the same instance of <see cref="BatchAccountResource"/>.
+    /// To get a <see cref="BatchAccountDetectorCollection"/> instance call the GetBatchAccountDetectors method from an instance of <see cref="BatchAccountResource"/>.
     /// </summary>
     public partial class BatchAccountDetectorCollection : ArmCollection, IEnumerable<BatchAccountDetectorResource>, IAsyncEnumerable<BatchAccountDetectorResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BatchAccountDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BatchAccountDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BatchAccountDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Batch
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BatchAccountDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BatchAccountDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BatchAccountDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountDetectorBatchAccountRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A Class representing a Publisher along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PublisherResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPublisherResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPublisher method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublisherResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPublisherResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPublisher method.
     /// </summary>
     public partial class PublisherResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly PublishersRestOperations _publisherRestClient;
         private readonly PublisherData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers";
+
         /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class for mocking. </summary>
         protected PublisherResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PublisherResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublisherResource(ArmClient client, PublisherData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

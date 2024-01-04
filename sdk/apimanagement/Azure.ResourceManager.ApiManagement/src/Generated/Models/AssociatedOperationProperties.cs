@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Operation Entity contract Properties. </summary>
     public partial class AssociatedOperationProperties
     {
-        /// <summary> Initializes a new instance of AssociatedOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
         internal AssociatedOperationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AssociatedOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
         /// <param name="id"> Identifier of the operation in form /operations/{operationId}. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="apiName"> API Name. </param>

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementGatewayCertificateAuthorityData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementGatewayCertificateAuthorityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayCertificateAuthorityData"/>. </summary>
         public ApiManagementGatewayCertificateAuthorityData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayCertificateAuthorityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayCertificateAuthorityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

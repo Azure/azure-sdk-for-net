@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> object type info. </summary>
     public partial class NameDescriptionObject
     {
-        /// <summary> Initializes a new instance of NameDescriptionObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameDescriptionObject"/>. </summary>
         /// <param name="name"> name value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal NameDescriptionObject(string name)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of NameDescriptionObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameDescriptionObject"/>. </summary>
         /// <param name="name"> name value. </param>
         /// <param name="description"> description value. </param>
         internal NameDescriptionObject(string name, string description)

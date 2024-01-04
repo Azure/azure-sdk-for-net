@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> A summary of the recommendation. </summary>
     public partial class ShortDescription
     {
-        /// <summary> Initializes a new instance of ShortDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortDescription"/>. </summary>
         public ShortDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of ShortDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortDescription"/>. </summary>
         /// <param name="problem"> The issue or opportunity identified by the recommendation. </param>
         /// <param name="solution"> The remediation action suggested by the recommendation. </param>
         internal ShortDescription(string problem, string solution)

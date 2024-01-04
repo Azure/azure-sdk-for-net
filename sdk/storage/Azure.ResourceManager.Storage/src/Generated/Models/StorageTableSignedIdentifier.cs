@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Object to set Table Access Policy. </summary>
     public partial class StorageTableSignedIdentifier
     {
-        /// <summary> Initializes a new instance of StorageTableSignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTableSignedIdentifier"/>. </summary>
         /// <param name="id"> unique-64-character-value of the stored access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public StorageTableSignedIdentifier(string id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of StorageTableSignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTableSignedIdentifier"/>. </summary>
         /// <param name="id"> unique-64-character-value of the stored access policy. </param>
         /// <param name="accessPolicy"> Access policy. </param>
         internal StorageTableSignedIdentifier(string id, StorageTableAccessPolicy accessPolicy)

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementProductTag along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementProductTagResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementProductTagResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource" /> using the GetApiManagementProductTag method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementProductTagResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementProductTagResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource"/> using the GetApiManagementProductTag method.
     /// </summary>
     public partial class ApiManagementProductTagResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly TagRestOperations _apiManagementProductTagTagRestClient;
         private readonly TagContractData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/products/tags";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementProductTagResource"/> class for mocking. </summary>
         protected ApiManagementProductTagResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementProductTagResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementProductTagResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementProductTagResource(ArmClient client, TagContractData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/products/tags";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

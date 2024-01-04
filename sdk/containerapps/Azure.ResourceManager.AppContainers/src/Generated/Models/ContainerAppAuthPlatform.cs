@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </summary>
     public partial class ContainerAppAuthPlatform
     {
-        /// <summary> Initializes a new instance of ContainerAppAuthPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAuthPlatform"/>. </summary>
         public ContainerAppAuthPlatform()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAuthPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAuthPlatform"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.

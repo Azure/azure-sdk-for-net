@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteCrossConnectionData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionData"/>. </summary>
         public ExpressRouteCrossConnectionData()
         {
             Peerings = new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

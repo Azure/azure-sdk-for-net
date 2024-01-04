@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> A class representing the EventGridPrivateEndpointConnection data model. </summary>
     public partial class EventGridPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionData"/>. </summary>
         public EventGridPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

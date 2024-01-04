@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class TargetLags
     {
-        /// <summary> Initializes a new instance of TargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetLags"/>. </summary>
         protected TargetLags()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetLags. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetLags"/>. </summary>
         /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
         internal TargetLags(TargetLagsMode mode)
         {

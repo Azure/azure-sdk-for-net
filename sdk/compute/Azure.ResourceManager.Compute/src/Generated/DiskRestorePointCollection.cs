@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DiskRestorePointResource" /> and their operations.
-    /// Each <see cref="DiskRestorePointResource" /> in the collection will belong to the same instance of <see cref="RestorePointResource" />.
-    /// To get a <see cref="DiskRestorePointCollection" /> instance call the GetDiskRestorePoints method from an instance of <see cref="RestorePointResource" />.
+    /// A class representing a collection of <see cref="DiskRestorePointResource"/> and their operations.
+    /// Each <see cref="DiskRestorePointResource"/> in the collection will belong to the same instance of <see cref="RestorePointResource"/>.
+    /// To get a <see cref="DiskRestorePointCollection"/> instance call the GetDiskRestorePoints method from an instance of <see cref="RestorePointResource"/>.
     /// </summary>
     public partial class DiskRestorePointCollection : ArmCollection, IEnumerable<DiskRestorePointResource>, IAsyncEnumerable<DiskRestorePointResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskRestorePointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskRestorePointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskRestorePointRestClient.CreateListByRestorePointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskRestorePointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskRestorePointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskRestorePointRestClient.CreateListByRestorePointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

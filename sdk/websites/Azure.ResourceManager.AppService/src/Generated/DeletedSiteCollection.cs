@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedSiteResource" /> and their operations.
-    /// Each <see cref="DeletedSiteResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="DeletedSiteCollection" /> instance call the GetDeletedSites method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="DeletedSiteResource"/> and their operations.
+    /// Each <see cref="DeletedSiteResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="DeletedSiteCollection"/> instance call the GetDeletedSites method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class DeletedSiteCollection : ArmCollection, IEnumerable<DeletedSiteResource>, IAsyncEnumerable<DeletedSiteResource>
     {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeletedSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedSiteResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteDeletedWebAppsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeletedSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedSiteResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteDeletedWebAppsRestClient.CreateListRequest(Id.SubscriptionId);

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> The Sku description for a namespace. </summary>
     public partial class NotificationHubSku
     {
-        /// <summary> Initializes a new instance of NotificationHubSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubSku"/>. </summary>
         /// <param name="name"> Name of the notification hub sku. </param>
         public NotificationHubSku(NotificationHubSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of NotificationHubSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubSku"/>. </summary>
         /// <param name="name"> Name of the notification hub sku. </param>
         /// <param name="tier"> The tier of particular sku. </param>
         /// <param name="size"> The Sku size. </param>

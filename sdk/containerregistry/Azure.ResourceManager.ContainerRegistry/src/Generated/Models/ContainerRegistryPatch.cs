@@ -14,10 +14,35 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a container registry. </summary>
     public partial class ContainerRegistryPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPatch"/>. </summary>
         public ContainerRegistryPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPatch"/>. </summary>
+        /// <param name="identity"> The identity of the container registry. </param>
+        /// <param name="tags"> The tags for the container registry. </param>
+        /// <param name="sku"> The SKU of the container registry. </param>
+        /// <param name="isAdminUserEnabled"> The value that indicates whether the admin user is enabled. </param>
+        /// <param name="networkRuleSet"> The network rule set for a container registry. </param>
+        /// <param name="policies"> The policies for a container registry. </param>
+        /// <param name="encryption"> The encryption settings of container registry. </param>
+        /// <param name="isDataEndpointEnabled"> Enable a single data endpoint per region for serving data. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
+        /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
+        internal ContainerRegistryPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerRegistrySku sku, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions)
+        {
+            Identity = identity;
+            Tags = tags;
+            Sku = sku;
+            IsAdminUserEnabled = isAdminUserEnabled;
+            NetworkRuleSet = networkRuleSet;
+            Policies = policies;
+            Encryption = encryption;
+            IsDataEndpointEnabled = isDataEndpointEnabled;
+            PublicNetworkAccess = publicNetworkAccess;
+            NetworkRuleBypassOptions = networkRuleBypassOptions;
         }
 
         /// <summary> The identity of the container registry. </summary>

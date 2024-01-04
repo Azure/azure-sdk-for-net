@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a MonitoringMetricConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitoringMetricConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMonitoringMetricConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeRoleResource" /> using the GetMonitoringMetricConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitoringMetricConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMonitoringMetricConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeRoleResource"/> using the GetMonitoringMetricConfiguration method.
     /// </summary>
     public partial class MonitoringMetricConfigurationResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly MonitoringConfigRestOperations _monitoringMetricConfigurationMonitoringConfigRestClient;
         private readonly MonitoringMetricConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig";
+
         /// <summary> Initializes a new instance of the <see cref="MonitoringMetricConfigurationResource"/> class for mocking. </summary>
         protected MonitoringMetricConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MonitoringMetricConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitoringMetricConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MonitoringMetricConfigurationResource(ArmClient client, MonitoringMetricConfigurationData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/roles/monitoringConfig";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

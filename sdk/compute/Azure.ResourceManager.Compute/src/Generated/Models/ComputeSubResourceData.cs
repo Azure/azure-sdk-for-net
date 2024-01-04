@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The ComputeSubResourceData. </summary>
     public partial class ComputeSubResourceData
     {
-        /// <summary> Initializes a new instance of ComputeSubResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSubResourceData"/>. </summary>
         public ComputeSubResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeSubResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSubResourceData"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         internal ComputeSubResourceData(ResourceIdentifier id)
         {

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Microsoft Fabric LakeHouse linked service. </summary>
     public partial class LakeHouseLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of LakeHouseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseLinkedService"/>. </summary>
         public LakeHouseLinkedService()
         {
             LinkedServiceType = "LakeHouse";
         }
 
-        /// <summary> Initializes a new instance of LakeHouseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

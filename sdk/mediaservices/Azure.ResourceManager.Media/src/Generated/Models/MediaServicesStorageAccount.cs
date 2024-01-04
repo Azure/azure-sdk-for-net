@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The storage account details. </summary>
     public partial class MediaServicesStorageAccount
     {
-        /// <summary> Initializes a new instance of MediaServicesStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesStorageAccount"/>. </summary>
         /// <param name="accountType"> The type of the storage account. </param>
         public MediaServicesStorageAccount(MediaServicesStorageAccountType accountType)
         {
             AccountType = accountType;
         }
 
-        /// <summary> Initializes a new instance of MediaServicesStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesStorageAccount"/>. </summary>
         /// <param name="id"> The ID of the storage account resource. Media Services relies on tables and queues as well as blobs, so the primary storage account must be a Standard Storage account (either Microsoft.ClassicStorage or Microsoft.Storage). Blob only storage accounts can be added as secondary storage accounts. </param>
         /// <param name="accountType"> The type of the storage account. </param>
         /// <param name="identity"> The storage account identity. </param>

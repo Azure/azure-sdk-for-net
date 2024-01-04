@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class CompletionsOptions
     {
-        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompletionsOptions"/>. </summary>
         /// <param name="prompts"> The prompts to generate completions from. </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
         /// <param name="temperature">
@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI
         /// It is not recommended to modify temperature and top_p for the same completions request as the
         /// interaction of these two settings is difficult to predict.
         /// </param>
-        /// <param name="internalStringKeyedTokenSelectionBiases">
+        /// <param name="tokenSelectionBiases">
         /// A map between GPT token IDs and bias scores that influences the probability of specific tokens
         /// appearing in a completions response. Token IDs are computed via external tokenizer tools, while
         /// bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
@@ -89,13 +89,13 @@ namespace Azure.AI.OpenAI
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string deploymentName)
+        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string deploymentName)
         {
             Prompts = prompts;
             MaxTokens = maxTokens;
             Temperature = temperature;
             NucleusSamplingFactor = nucleusSamplingFactor;
-            InternalStringKeyedTokenSelectionBiases = internalStringKeyedTokenSelectionBiases;
+            TokenSelectionBiases = tokenSelectionBiases;
             User = user;
             ChoicesPerPrompt = choicesPerPrompt;
             LogProbabilityCount = logProbabilityCount;
@@ -112,5 +112,10 @@ namespace Azure.AI.OpenAI
         /// or rate-limiting purposes.
         /// </summary>
         public string User { get; set; }
+        /// <summary>
+        /// A value specifying whether completions responses should include input prompts as prefixes to
+        /// their generated output.
+        /// </summary>
+        public bool? Echo { get; set; }
     }
 }

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public abstract partial class ManagedServiceScalingMechanism
     {
-        /// <summary> Initializes a new instance of ManagedServiceScalingMechanism. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingMechanism"/>. </summary>
         protected ManagedServiceScalingMechanism()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceScalingMechanism. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingMechanism"/>. </summary>
         /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
         internal ManagedServiceScalingMechanism(ServiceScalingMechanismKind kind)
         {

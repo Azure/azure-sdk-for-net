@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReportResource.CreateResourceIdentifier" /> to create a <see cref="ReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReportResource.CreateResourceIdentifier" /> to create a <see cref="ReportResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ReportResource"/> object. </returns>
         public virtual ReportResource GetReportResource(ResourceIdentifier id)
         {
             ReportResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SnapshotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
         public virtual SnapshotResource GetSnapshotResource(ResourceIdentifier id)
         {
             SnapshotResource.ValidateResourceId(id);

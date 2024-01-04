@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The UnknownCopySink. </summary>
     internal partial class UnknownCopySink : CopySink
     {
-        /// <summary> Initializes a new instance of UnknownCopySink. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCopySink"/>. </summary>
         /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

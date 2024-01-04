@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Settings for the operating system disk of the virtual machine. </summary>
     internal partial class OSDisk
     {
-        /// <summary> Initializes a new instance of OSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
         public OSDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of OSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
         /// <param name="ephemeralOSDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
         internal OSDisk(DiffDiskSettings ephemeralOSDiskSettings)
         {

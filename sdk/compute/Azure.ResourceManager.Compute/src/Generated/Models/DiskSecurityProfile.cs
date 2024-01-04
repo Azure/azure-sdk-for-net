@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains the security related information for the resource. </summary>
     public partial class DiskSecurityProfile
     {
-        /// <summary> Initializes a new instance of DiskSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskSecurityProfile"/>. </summary>
         public DiskSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskSecurityProfile"/>. </summary>
         /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
         /// <param name="secureVmDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
         internal DiskSecurityProfile(DiskSecurityType? securityType, ResourceIdentifier secureVmDiskEncryptionSetId)

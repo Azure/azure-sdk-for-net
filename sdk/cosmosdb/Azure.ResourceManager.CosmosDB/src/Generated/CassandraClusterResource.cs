@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CassandraCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CassandraClusterResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCassandraClusterResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetCassandraCluster method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CassandraClusterResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCassandraClusterResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCassandraCluster method.
     /// </summary>
     public partial class CassandraClusterResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly CassandraClustersRestOperations _cassandraClusterRestClient;
         private readonly CassandraClusterData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/cassandraClusters";
+
         /// <summary> Initializes a new instance of the <see cref="CassandraClusterResource"/> class for mocking. </summary>
         protected CassandraClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CassandraClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CassandraClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CassandraClusterResource(ArmClient client, CassandraClusterData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/cassandraClusters";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraClusterBackupResourceInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CassandraClusterBackupResourceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraClusterBackupResourceInfo> GetBackupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraClusterBackupResourceInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CassandraClusterBackupResourceInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraClusterBackupResourceInfo> GetBackups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraClusterRestClient.CreateListBackupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

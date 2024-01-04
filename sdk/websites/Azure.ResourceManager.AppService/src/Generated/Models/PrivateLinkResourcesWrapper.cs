@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Wrapper for a collection of private link resources. </summary>
     internal partial class PrivateLinkResourcesWrapper
     {
-        /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResourceData> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
         /// <param name="value"></param>
         internal PrivateLinkResourcesWrapper(IReadOnlyList<AppServicePrivateLinkResourceData> value)
         {

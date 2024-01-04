@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Immutability Settings of vault. </summary>
     internal partial class ImmutabilitySettings
     {
-        /// <summary> Initializes a new instance of ImmutabilitySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImmutabilitySettings"/>. </summary>
         public ImmutabilitySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ImmutabilitySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImmutabilitySettings"/>. </summary>
         /// <param name="state"></param>
         internal ImmutabilitySettings(ImmutabilityState? state)
         {

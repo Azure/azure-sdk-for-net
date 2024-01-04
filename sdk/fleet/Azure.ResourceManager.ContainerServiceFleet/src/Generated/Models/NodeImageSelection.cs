@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The node image upgrade to be applied to the target nodes in update run. </summary>
     internal partial class NodeImageSelection
     {
-        /// <summary> Initializes a new instance of NodeImageSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeImageSelection"/>. </summary>
         /// <param name="selectionType"> The node image upgrade type. </param>
         public NodeImageSelection(NodeImageSelectionType selectionType)
         {

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformApp along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformAppResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformAppResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformApp method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformAppResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformAppResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformApp method.
     /// </summary>
     public partial class AppPlatformAppResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly AppsRestOperations _appPlatformAppAppsRestClient;
         private readonly AppPlatformAppData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResource"/> class for mocking. </summary>
         protected AppPlatformAppResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformAppResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformAppResource(ArmClient client, AppPlatformAppData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

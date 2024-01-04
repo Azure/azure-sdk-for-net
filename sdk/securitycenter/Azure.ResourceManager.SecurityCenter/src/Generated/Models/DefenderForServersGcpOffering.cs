@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The Defender for Servers GCP offering configurations. </summary>
     public partial class DefenderForServersGcpOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of DefenderForServersGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOffering"/>. </summary>
         public DefenderForServersGcpOffering()
         {
             OfferingType = OfferingType.DefenderForServersGcp;
         }
 
-        /// <summary> Initializes a new instance of DefenderForServersGcpOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <param name="defenderForServers"> The Defender for servers connection configuration. </param>

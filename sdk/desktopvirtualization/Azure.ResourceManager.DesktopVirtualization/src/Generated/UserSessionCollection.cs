@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="UserSessionResource" /> and their operations.
-    /// Each <see cref="UserSessionResource" /> in the collection will belong to the same instance of <see cref="SessionHostResource" />.
-    /// To get an <see cref="UserSessionCollection" /> instance call the GetUserSessions method from an instance of <see cref="SessionHostResource" />.
+    /// A class representing a collection of <see cref="UserSessionResource"/> and their operations.
+    /// Each <see cref="UserSessionResource"/> in the collection will belong to the same instance of <see cref="SessionHostResource"/>.
+    /// To get an <see cref="UserSessionCollection"/> instance call the GetUserSessions method from an instance of <see cref="SessionHostResource"/>.
     /// </summary>
     public partial class UserSessionCollection : ArmCollection, IEnumerable<UserSessionResource>, IAsyncEnumerable<UserSessionResource>
     {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserSessionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UserSessionResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userSessionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserSessionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UserSessionResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userSessionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, pageSizeHint, isDescending, initialSkip);

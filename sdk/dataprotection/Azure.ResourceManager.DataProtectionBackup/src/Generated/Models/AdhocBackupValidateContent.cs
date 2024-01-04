@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Validate for backup request. </summary>
     public partial class AdhocBackupValidateContent
     {
-        /// <summary> Initializes a new instance of AdhocBackupValidateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupValidateContent"/>. </summary>
         /// <param name="backupInstance"> Backup Instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstance"/> is null. </exception>
         public AdhocBackupValidateContent(DataProtectionBackupInstanceProperties backupInstance)

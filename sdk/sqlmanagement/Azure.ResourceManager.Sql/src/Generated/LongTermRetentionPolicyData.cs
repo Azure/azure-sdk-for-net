@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class LongTermRetentionPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of LongTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicyData"/>. </summary>
         public LongTermRetentionPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of LongTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LongTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

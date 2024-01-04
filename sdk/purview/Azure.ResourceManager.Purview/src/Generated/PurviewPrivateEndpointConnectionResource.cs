@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Purview
 {
     /// <summary>
     /// A Class representing a PurviewPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PurviewPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPurviewPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PurviewAccountResource" /> using the GetPurviewPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PurviewPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPurviewPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PurviewAccountResource"/> using the GetPurviewPrivateEndpointConnection method.
     /// </summary>
     public partial class PurviewPrivateEndpointConnectionResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Purview
         private readonly PrivateEndpointConnectionsRestOperations _purviewPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly PurviewPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="PurviewPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected PurviewPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PurviewPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PurviewPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PurviewPrivateEndpointConnectionResource(ArmClient client, PurviewPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Purview
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Purview/accounts/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerDatabaseRestorePointResource" /> and their operations.
-    /// Each <see cref="SqlServerDatabaseRestorePointResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get a <see cref="SqlServerDatabaseRestorePointCollection" /> instance call the GetSqlServerDatabaseRestorePoints method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="SqlServerDatabaseRestorePointResource"/> and their operations.
+    /// Each <see cref="SqlServerDatabaseRestorePointResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get a <see cref="SqlServerDatabaseRestorePointCollection"/> instance call the GetSqlServerDatabaseRestorePoints method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class SqlServerDatabaseRestorePointCollection : ArmCollection, IEnumerable<SqlServerDatabaseRestorePointResource>, IAsyncEnumerable<SqlServerDatabaseRestorePointResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerDatabaseRestorePointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerDatabaseRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerDatabaseRestorePointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerDatabaseRestorePointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerDatabaseRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerDatabaseRestorePointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

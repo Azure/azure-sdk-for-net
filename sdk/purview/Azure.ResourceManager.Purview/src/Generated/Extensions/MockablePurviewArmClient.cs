@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PurviewAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PurviewAccountResource.CreateResourceIdentifier" /> to create a <see cref="PurviewAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PurviewAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PurviewAccountResource.CreateResourceIdentifier" /> to create a <see cref="PurviewAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PurviewAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PurviewAccountResource"/> object. </returns>
         public virtual PurviewAccountResource GetPurviewAccountResource(ResourceIdentifier id)
         {
             PurviewAccountResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PurviewPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PurviewPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PurviewPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PurviewPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PurviewPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PurviewPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PurviewPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PurviewPrivateEndpointConnectionResource"/> object. </returns>
         public virtual PurviewPrivateEndpointConnectionResource GetPurviewPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             PurviewPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Purview.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PurviewPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PurviewPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PurviewPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PurviewPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PurviewPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PurviewPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PurviewPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PurviewPrivateLinkResource"/> object. </returns>
         public virtual PurviewPrivateLinkResource GetPurviewPrivateLinkResource(ResourceIdentifier id)
         {
             PurviewPrivateLinkResource.ValidateResourceId(id);

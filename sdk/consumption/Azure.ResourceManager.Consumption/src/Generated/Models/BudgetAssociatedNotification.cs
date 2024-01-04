@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The notification associated with a budget. </summary>
     public partial class BudgetAssociatedNotification
     {
-        /// <summary> Initializes a new instance of BudgetAssociatedNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetAssociatedNotification"/>. </summary>
         /// <param name="isEnabled"> The notification is enabled or not. </param>
         /// <param name="operator"> The comparison operator. </param>
         /// <param name="threshold"> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ContactGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BudgetAssociatedNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="BudgetAssociatedNotification"/>. </summary>
         /// <param name="isEnabled"> The notification is enabled or not. </param>
         /// <param name="operator"> The comparison operator. </param>
         /// <param name="threshold"> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </param>

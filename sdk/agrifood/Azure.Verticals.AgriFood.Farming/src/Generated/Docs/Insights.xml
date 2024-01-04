@@ -5,8 +5,9 @@
       <example>
 This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -17,8 +18,9 @@ Console.WriteLine(result.GetProperty("resourceType").ToString());
 ]]></code>
 This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -41,8 +43,9 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
       <example>
 This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -53,8 +56,9 @@ Console.WriteLine(result.GetProperty("resourceType").ToString());
 ]]></code>
 This sample shows how to call GetCascadeDeleteJobDetails with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -77,8 +81,9 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", content);
@@ -88,8 +93,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -141,8 +147,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", content);
@@ -152,8 +159,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -205,8 +213,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetInsightAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", null);
 
@@ -215,8 +224,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetInsightAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.GetInsightAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", null);
 
@@ -247,8 +257,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call GetInsight and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", null);
 
@@ -257,8 +268,9 @@ Console.WriteLine(result.ToString());
 ]]></code>
 This sample shows how to call GetInsight with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.GetInsight("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", null);
 
@@ -289,8 +301,9 @@ Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString
       <example>
 This sample shows how to call DeleteAsync.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
@@ -298,8 +311,9 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
@@ -310,8 +324,9 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call Delete.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
@@ -319,8 +334,9 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call Delete with all parameters.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>");
 
@@ -331,8 +347,9 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetInsightsByPartyIdModelIdAndResourceAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -342,8 +359,9 @@ await foreach (BinaryData item in client.GetInsightsByPartyIdModelIdAndResourceA
 ]]></code>
 This sample shows how to call GetInsightsByPartyIdModelIdAndResourceAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 await foreach (BinaryData item in client.GetInsightsByPartyIdModelIdAndResourceAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -375,8 +393,9 @@ await foreach (BinaryData item in client.GetInsightsByPartyIdModelIdAndResourceA
       <example>
 This sample shows how to call GetInsightsByPartyIdModelIdAndResource and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -386,8 +405,9 @@ foreach (BinaryData item in client.GetInsightsByPartyIdModelIdAndResource("<part
 ]]></code>
 This sample shows how to call GetInsightsByPartyIdModelIdAndResource with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 foreach (BinaryData item in client.GetInsightsByPartyIdModelIdAndResource("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new string[] { "<measurementFilters>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -419,8 +439,9 @@ foreach (BinaryData item in client.GetInsightsByPartyIdModelIdAndResource("<part
       <example>
 This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", null);
 BinaryData responseData = operation.Value;
@@ -432,8 +453,9 @@ Console.WriteLine(result.GetProperty("resourceType").ToString());
 ]]></code>
 This sample shows how to call CreateCascadeDeleteJobAsync with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", null);
 BinaryData responseData = operation.Value;
@@ -457,8 +479,9 @@ Console.WriteLine(result.GetProperty("endTime").ToString());
       <example>
 This sample shows how to call CreateCascadeDeleteJob and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", null);
 BinaryData responseData = operation.Value;
@@ -470,8 +493,9 @@ Console.WriteLine(result.GetProperty("resourceType").ToString());
 ]]></code>
 This sample shows how to call CreateCascadeDeleteJob with all parameters and parse the result.
 <code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Insights client = new FarmBeatsClient(credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
+Insights client = new FarmBeatsClient(endpoint, credential).GetInsightsClient(apiVersion: "2022-11-01-preview");
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightId>", null);
 BinaryData responseData = operation.Value;

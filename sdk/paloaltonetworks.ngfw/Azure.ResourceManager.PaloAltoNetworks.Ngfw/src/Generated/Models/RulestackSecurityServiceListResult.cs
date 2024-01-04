@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Security services list response. </summary>
     public partial class RulestackSecurityServiceListResult
     {
-        /// <summary> Initializes a new instance of RulestackSecurityServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServiceListResult"/>. </summary>
         /// <param name="value"> response value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RulestackSecurityServiceListResult(RulestackSecurityServiceTypeList value)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of RulestackSecurityServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServiceListResult"/>. </summary>
         /// <param name="value"> response value. </param>
         /// <param name="nextLink"> next link. </param>
         internal RulestackSecurityServiceListResult(RulestackSecurityServiceTypeList value, string nextLink)

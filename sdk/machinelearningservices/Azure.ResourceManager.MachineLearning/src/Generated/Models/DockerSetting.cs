@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The DockerSetting. </summary>
     public partial class DockerSetting
     {
-        /// <summary> Initializes a new instance of DockerSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DockerSetting"/>. </summary>
         public DockerSetting()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DockerSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="DockerSetting"/>. </summary>
         /// <param name="privileged"> Indicate whether container shall run in privileged or non-privileged mode. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal DockerSetting(bool? privileged, IDictionary<string, BinaryData> additionalProperties)

@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Attestation.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AttestationProviderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttestationProviderResource.CreateResourceIdentifier" /> to create an <see cref="AttestationProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AttestationProviderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AttestationProviderResource.CreateResourceIdentifier" /> to create an <see cref="AttestationProviderResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttestationProviderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AttestationProviderResource"/> object. </returns>
         public virtual AttestationProviderResource GetAttestationProviderResource(ResourceIdentifier id)
         {
             AttestationProviderResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Attestation.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AttestationPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttestationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttestationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AttestationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AttestationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttestationPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AttestationPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AttestationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual AttestationPrivateEndpointConnectionResource GetAttestationPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             AttestationPrivateEndpointConnectionResource.ValidateResourceId(id);

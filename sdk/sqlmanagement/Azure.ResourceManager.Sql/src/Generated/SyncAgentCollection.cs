@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SyncAgentResource" /> and their operations.
-    /// Each <see cref="SyncAgentResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SyncAgentCollection" /> instance call the GetSyncAgents method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SyncAgentResource"/> and their operations.
+    /// Each <see cref="SyncAgentResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SyncAgentCollection"/> instance call the GetSyncAgents method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SyncAgentCollection : ArmCollection, IEnumerable<SyncAgentResource>, IAsyncEnumerable<SyncAgentResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SyncAgentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SyncAgentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SyncAgentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncAgentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SyncAgentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SyncAgentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

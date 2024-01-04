@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a WorkloadNetworkGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkGatewayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkGateway method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkGatewayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkGateway method.
     /// </summary>
     public partial class WorkloadNetworkGatewayResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Avs
         private readonly WorkloadNetworksRestOperations _workloadNetworkGatewayWorkloadNetworksRestClient;
         private readonly WorkloadNetworkGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/gateways";
+
         /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkGatewayResource"/> class for mocking. </summary>
         protected WorkloadNetworkGatewayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkloadNetworkGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkloadNetworkGatewayResource(ArmClient client, WorkloadNetworkGatewayData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/gateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

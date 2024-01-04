@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Shared access keys of the Namespace. </summary>
     public partial class NamespaceSharedAccessKeys
     {
-        /// <summary> Initializes a new instance of NamespaceSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceSharedAccessKeys"/>. </summary>
         internal NamespaceSharedAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceSharedAccessKeys"/>. </summary>
         /// <param name="key1"> Shared access key1 for the namespace. </param>
         /// <param name="key2"> Shared access key2 for the namespace. </param>
         internal NamespaceSharedAccessKeys(string key1, string key2)

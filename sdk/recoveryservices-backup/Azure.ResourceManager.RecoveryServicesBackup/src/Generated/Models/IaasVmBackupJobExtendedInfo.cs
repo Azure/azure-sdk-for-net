@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure IaaS VM workload-specific additional information for job. </summary>
     public partial class IaasVmBackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of IaasVmBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobExtendedInfo"/>. </summary>
         public IaasVmBackupJobExtendedInfo()
         {
             TasksList = new ChangeTrackingList<IaasVmBackupJobTaskDetails>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             InternalPropertyBag = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of IaasVmBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobExtendedInfo"/>. </summary>
         /// <param name="tasksList"> List of tasks associated with this job. </param>
         /// <param name="propertyBag"> Job properties. </param>
         /// <param name="internalPropertyBag"> Job internal properties. </param>

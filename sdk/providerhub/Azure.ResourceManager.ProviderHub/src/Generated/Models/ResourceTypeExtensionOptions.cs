@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceTypeExtensionOptions. </summary>
     internal partial class ResourceTypeExtensionOptions
     {
-        /// <summary> Initializes a new instance of ResourceTypeExtensionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeExtensionOptions"/>. </summary>
         public ResourceTypeExtensionOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeExtensionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeExtensionOptions"/>. </summary>
         /// <param name="resourceCreationBegin"></param>
         internal ResourceTypeExtensionOptions(ExtensionOptions resourceCreationBegin)
         {

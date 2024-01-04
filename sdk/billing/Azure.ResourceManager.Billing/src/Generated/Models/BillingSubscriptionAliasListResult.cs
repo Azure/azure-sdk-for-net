@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Billing.Models
     /// <summary> The list of billing subscription aliases. </summary>
     internal partial class BillingSubscriptionAliasListResult
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionAliasListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionAliasListResult"/>. </summary>
         internal BillingSubscriptionAliasListResult()
         {
             Value = new ChangeTrackingList<BillingSubscriptionAliasData>();
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionAliasListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionAliasListResult"/>. </summary>
         /// <param name="value"> The list of billing subscription aliases. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal BillingSubscriptionAliasListResult(IReadOnlyList<BillingSubscriptionAliasData> value, string nextLink)

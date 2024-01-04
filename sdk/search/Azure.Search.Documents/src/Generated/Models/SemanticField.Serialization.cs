@@ -15,8 +15,11 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("fieldName"u8);
-            writer.WriteStringValue(FieldName);
+            if (Optional.IsDefined(FieldName))
+            {
+                writer.WritePropertyName("fieldName"u8);
+                writer.WriteStringValue(FieldName);
+            }
             writer.WriteEndObject();
         }
 
@@ -26,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            string fieldName = default;
+            Optional<string> fieldName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"u8))
@@ -35,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticField(fieldName);
+            return new SemanticField(fieldName.Value);
         }
     }
 }

@@ -37,6 +37,114 @@ namespace Azure.ResourceManager.Resources.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of TemplateSpecResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of TemplateSpecResources and their operations over a TemplateSpecResource. </returns>
+        public virtual TemplateSpecCollection GetTemplateSpecs()
+        {
+            return GetCachedClient(client => new TemplateSpecCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a Template Spec with a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="templateSpecName"> Name of the Template Spec. </param>
+        /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TemplateSpecResource>> GetTemplateSpecAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        {
+            return await GetTemplateSpecs().GetAsync(templateSpecName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Template Spec with a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TemplateSpecs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="templateSpecName"> Name of the Template Spec. </param>
+        /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TemplateSpecResource> GetTemplateSpec(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
+        {
+            return GetTemplateSpecs().Get(templateSpecName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ArmDeploymentScriptResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentScriptResources and their operations over a ArmDeploymentScriptResource. </returns>
+        public virtual ArmDeploymentScriptCollection GetArmDeploymentScripts()
+        {
+            return GetCachedClient(client => new ArmDeploymentScriptCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a deployment script with a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentScripts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptName"> Name of the deployment script. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArmDeploymentScriptResource>> GetArmDeploymentScriptAsync(string scriptName, CancellationToken cancellationToken = default)
+        {
+            return await GetArmDeploymentScripts().GetAsync(scriptName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a deployment script with a given name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentScripts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptName"> Name of the deployment script. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ArmDeploymentScriptResource> GetArmDeploymentScript(string scriptName, CancellationToken cancellationToken = default)
+        {
+            return GetArmDeploymentScripts().Get(scriptName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ArmDeploymentResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public virtual ArmDeploymentCollection GetArmDeployments()
@@ -247,114 +355,6 @@ namespace Azure.ResourceManager.Resources.Mocking
         public virtual Response<JitRequestResource> GetJitRequest(string jitRequestName, CancellationToken cancellationToken = default)
         {
             return GetJitRequests().Get(jitRequestName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ArmDeploymentScriptResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ArmDeploymentScriptResources and their operations over a ArmDeploymentScriptResource. </returns>
-        public virtual ArmDeploymentScriptCollection GetArmDeploymentScripts()
-        {
-            return GetCachedClient(client => new ArmDeploymentScriptCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a deployment script with a given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentScripts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ArmDeploymentScriptResource>> GetArmDeploymentScriptAsync(string scriptName, CancellationToken cancellationToken = default)
-        {
-            return await GetArmDeploymentScripts().GetAsync(scriptName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a deployment script with a given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentScripts_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scriptName"> Name of the deployment script. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ArmDeploymentScriptResource> GetArmDeploymentScript(string scriptName, CancellationToken cancellationToken = default)
-        {
-            return GetArmDeploymentScripts().Get(scriptName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of TemplateSpecResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of TemplateSpecResources and their operations over a TemplateSpecResource. </returns>
-        public virtual TemplateSpecCollection GetTemplateSpecs()
-        {
-            return GetCachedClient(client => new TemplateSpecCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a Template Spec with a given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TemplateSpecs_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="templateSpecName"> Name of the Template Spec. </param>
-        /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TemplateSpecResource>> GetTemplateSpecAsync(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetTemplateSpecs().GetAsync(templateSpecName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a Template Spec with a given name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Resources/templateSpecs/{templateSpecName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TemplateSpecs_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="templateSpecName"> Name of the Template Spec. </param>
-        /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="templateSpecName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="templateSpecName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TemplateSpecResource> GetTemplateSpec(string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetTemplateSpecs().Get(templateSpecName, expand, cancellationToken);
         }
     }
 }

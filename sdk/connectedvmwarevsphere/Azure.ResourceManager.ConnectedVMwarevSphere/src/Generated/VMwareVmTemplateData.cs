@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareVmTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareVmTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareVmTemplateData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Statuses = new ChangeTrackingList<VMwareResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VMwareVmTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

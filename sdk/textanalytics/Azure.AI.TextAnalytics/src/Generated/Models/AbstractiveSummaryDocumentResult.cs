@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing the summarization result of a single document. </summary>
     internal partial class AbstractiveSummaryDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of AbstractiveSummaryDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummaryDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="summaries"> A list of abstractive summaries. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
             Summaries = summaries.ToList();
         }
 
-        /// <summary> Initializes a new instance of AbstractiveSummaryDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummaryDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

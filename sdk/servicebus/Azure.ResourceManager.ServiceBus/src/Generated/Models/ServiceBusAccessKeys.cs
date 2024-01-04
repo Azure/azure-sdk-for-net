@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Namespace/ServiceBus Connection String. </summary>
     public partial class ServiceBusAccessKeys
     {
-        /// <summary> Initializes a new instance of ServiceBusAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusAccessKeys"/>. </summary>
         internal ServiceBusAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusAccessKeys"/>. </summary>
         /// <param name="primaryConnectionString"> Primary connection string of the created namespace authorization rule. </param>
         /// <param name="secondaryConnectionString"> Secondary connection string of the created namespace authorization rule. </param>
         /// <param name="aliasPrimaryConnectionString"> Primary connection string of the alias if GEO DR is enabled. </param>

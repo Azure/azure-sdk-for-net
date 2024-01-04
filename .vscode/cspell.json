@@ -118,11 +118,13 @@
     "Vectorizable",
     "Vectorizer",
     "Vectorizers",
+    "vhdx",
     "vmss",
     "vnet",
     "westcentralus",
     "westus",
-    "xunit"
+    "xunit",
+    "miscs"
   ],
   "overrides": [
     {
@@ -452,6 +454,13 @@
       ]
     },
     {
+      "filename": "**/sdk/documentintelligence/**/*.cs",
+      "words": [
+        "UPCA",
+        "UPCE"
+      ]
+    },
+    {
       "filename": "**/sdk/dynatrace/**/*.cs",
       "words": [
         "Dynatrace",
@@ -536,6 +545,12 @@
       "words": [
         "Vmip",
         "Kubevirt"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridcompute/**/*.cs",
+      "words": [
+        "Scvmm"
       ]
     },
     {
@@ -930,6 +945,12 @@
       "filename": "**/sdk/resourcehealth/**/*.cs",
       "words": [
         "occured"
+      ]
+    },
+    {
+      "filename": "**/sdk/schemaregistry/**/*.cs",
+      "words": [
+        "protobuf"
       ]
     },
     {

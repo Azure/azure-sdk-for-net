@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRecoveryServicesBackupModelFactory
     {
-        /// <summary> Initializes a new instance of BackupResourceConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupResourceConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupResourceConfigData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of PreValidateEnableBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PreValidateEnableBackupResult"/>. </summary>
         /// <param name="status"> Validation Status. </param>
         /// <param name="errorCode"> Response error code. </param>
         /// <param name="errorMessage"> Response error message. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new PreValidateEnableBackupResult(status, errorCode, errorMessage, recommendation, containerName, protectedItemName);
         }
 
-        /// <summary> Initializes a new instance of BackupStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackupStatusResult"/>. </summary>
         /// <param name="protectionStatus"> Specifies whether the container is registered or not. </param>
         /// <param name="vaultId"> Specifies the arm resource id of the vault. </param>
         /// <param name="fabricName"> Specifies the fabric name - Azure or AD. </param>
@@ -61,13 +61,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="errorMessage"> ErrorMessage in case of intent failed. </param>
         /// <param name="policyName"> Specifies the policy name which is used for protection. </param>
         /// <param name="registrationStatus"> Container registration status. </param>
+        /// <param name="protectedItemsCount"> Number of protected items. </param>
+        /// <param name="acquireStorageAccountLock"> Specifies whether the storage account lock has been acquired or not. </param>
         /// <returns> A new <see cref="Models.BackupStatusResult"/> instance for mocking. </returns>
-        public static BackupStatusResult BackupStatusResult(BackupProtectionStatus? protectionStatus = null, ResourceIdentifier vaultId = null, BackupFabricName? fabricName = null, string containerName = null, string protectedItemName = null, string errorCode = null, string errorMessage = null, string policyName = null, string registrationStatus = null)
+        public static BackupStatusResult BackupStatusResult(BackupProtectionStatus? protectionStatus = null, ResourceIdentifier vaultId = null, BackupFabricName? fabricName = null, string containerName = null, string protectedItemName = null, string errorCode = null, string errorMessage = null, string policyName = null, string registrationStatus = null, int? protectedItemsCount = null, AcquireStorageAccountLock? acquireStorageAccountLock = null)
         {
-            return new BackupStatusResult(protectionStatus, vaultId, fabricName, containerName, protectedItemName, errorCode, errorMessage, policyName, registrationStatus);
+            return new BackupStatusResult(protectionStatus, vaultId, fabricName, containerName, protectedItemName, errorCode, errorMessage, policyName, registrationStatus, protectedItemsCount, acquireStorageAccountLock);
         }
 
-        /// <summary> Initializes a new instance of VmResourceFeatureSupportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmResourceFeatureSupportResult"/>. </summary>
         /// <param name="supportStatus"> Support status of feature. </param>
         /// <returns> A new <see cref="Models.VmResourceFeatureSupportResult"/> instance for mocking. </returns>
         public static VmResourceFeatureSupportResult VmResourceFeatureSupportResult(VmResourceFeatureSupportStatus? supportStatus = null)
@@ -75,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new VmResourceFeatureSupportResult(supportStatus);
         }
 
-        /// <summary> Initializes a new instance of BackupProtectionIntentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupProtectionIntentData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupManagementUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackupManagementUsage"/>. </summary>
         /// <param name="unit"> Unit of the usage. </param>
         /// <param name="quotaPeriod"> Quota period of usage. </param>
         /// <param name="nextResetOn"> Next reset time of usage. </param>
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupManagementUsage(unit, quotaPeriod, nextResetOn, currentValue, limit, name);
         }
 
-        /// <summary> Initializes a new instance of BackupNameInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackupNameInfo"/>. </summary>
         /// <param name="value"> Value of usage. </param>
         /// <param name="localizedValue"> Localized value of usage. </param>
         /// <returns> A new <see cref="Models.BackupNameInfo"/> instance for mocking. </returns>
@@ -118,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupNameInfo(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of BackupResourceVaultConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupResourceVaultConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupResourceVaultConfigData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -152,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupResourceEncryptionConfigExtendedData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackupResourceEncryptionConfigExtendedCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -169,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -186,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupProtectedItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectedItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -207,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupProtectedItemData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupGenericProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackupGenericProtectedItem"/>. </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
@@ -226,15 +228,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <returns> A new <see cref="Models.BackupGenericProtectedItem"/> instance for mocking. </returns>
-        public static BackupGenericProtectedItem BackupGenericProtectedItem(string protectedItemType = null, BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null)
+        public static BackupGenericProtectedItem BackupGenericProtectedItem(string protectedItemType = null, BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new UnknownProtectedItem(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays);
+            return new UnknownProtectedItem(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId);
         }
 
-        /// <summary> Initializes a new instance of BackupRecoveryPointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupRecoveryPointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -255,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupRecoveryPointData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of TriggerRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TriggerRestoreContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -276,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new TriggerRestoreContent(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupProtectionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -297,7 +300,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupProtectionPolicyData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -318,7 +321,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupJobData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupEngineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupEngineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -339,7 +342,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupEngineData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of ProtectableContainerResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProtectableContainerResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -360,7 +363,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new ProtectableContainerResource(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of BackupProtectionContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -381,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupProtectionContainerData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of WorkloadItemResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WorkloadItemResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -402,7 +405,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadItemResource(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of TriggerBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TriggerBackupContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -423,7 +426,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new TriggerBackupContent(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of ProvisionIlrConnectionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProvisionIlrConnectionContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -444,7 +447,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new ProvisionIlrConnectionContent(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of WorkloadProtectableItemResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WorkloadProtectableItemResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -454,7 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="properties">
         /// WorkloadProtectableItemResource properties
         /// Please note <see cref="WorkloadProtectableItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="AzureVmWorkloadSapHanaHSRProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
+        /// The available derived classes include <see cref="FileShareProtectableItem"/>, <see cref="VmWorkloadProtectableItem"/>, <see cref="VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="IaasVmProtectableItem"/>, <see cref="IaasClassicComputeVmProtectableItem"/>, <see cref="IaasComputeVmProtectableItem"/>, <see cref="VmWorkloadSapAseSystemProtectableItem"/>, <see cref="VmWorkloadSapHanaDBInstance"/>, <see cref="VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="VmWorkloadSqlDatabaseProtectableItem"/> and <see cref="VmWorkloadSqlInstanceProtectableItem"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>
@@ -465,7 +468,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadProtectableItemResource(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of TokenInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TokenInformation"/>. </summary>
         /// <param name="token"> Token value. </param>
         /// <param name="expiryTimeInUtcTicks"> Expiry time of token. </param>
         /// <param name="securityPin"> Security PIN. </param>
@@ -475,7 +478,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new TokenInformation(token, expiryTimeInUtcTicks, securityPin);
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -492,7 +495,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new ResourceGuardProxyData(id, name, resourceType, systemData, tags, location, properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of UnlockDeleteResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UnlockDeleteResult"/>. </summary>
         /// <param name="unlockDeleteExpireOn"> This is the time when unlock delete privileges will get expired. </param>
         /// <returns> A new <see cref="Models.UnlockDeleteResult"/> instance for mocking. </returns>
         public static UnlockDeleteResult UnlockDeleteResult(DateTimeOffset? unlockDeleteExpireOn = null)
@@ -500,7 +503,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new UnlockDeleteResult(unlockDeleteExpireOn);
         }
 
-        /// <summary> Initializes a new instance of FileshareProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FileshareProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -518,6 +521,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the fileshare represented by this backup item. </param>
         /// <param name="protectionStatus"> Backup status of this backup item. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
@@ -526,15 +530,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="extendedInfo"> Additional information with this backup item. </param>
         /// <returns> A new <see cref="Models.FileshareProtectedItem"/> instance for mocking. </returns>
-        public static FileshareProtectedItem FileshareProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string protectionStatus = null, BackupProtectionState? protectionState = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, FileshareProtectedItemExtendedInfo extendedInfo = null)
+        public static FileshareProtectedItem FileshareProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string protectionStatus = null, BackupProtectionState? protectionState = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, FileshareProtectedItemExtendedInfo extendedInfo = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new FileshareProtectedItem("AzureFileShareProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, kpisHealths, extendedInfo);
+            return new FileshareProtectedItem("AzureFileShareProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, kpisHealths, extendedInfo);
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceHealthDetails"/>. </summary>
         /// <param name="code"> Health Code. </param>
         /// <param name="title"> Health Title. </param>
         /// <param name="message"> Health Message. </param>
@@ -547,7 +551,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new ResourceHealthDetails(code, title, message, recommendations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FileshareProtectedItemExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FileshareProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this item in the service. </param>
         /// <param name="recoveryPointCount"> Number of available backup copies associated with this backup item. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
@@ -559,7 +563,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new FileshareProtectedItemExtendedInfo(oldestRecoverOn, recoveryPointCount, policyState, resourceState, resourceStateSyncOn);
         }
 
-        /// <summary> Initializes a new instance of IaasClassicComputeVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IaasClassicComputeVmProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -577,6 +581,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the VM represented by this backup item. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine represented by this item. </param>
         /// <param name="protectionStatus"> Backup status of this backup item. </param>
@@ -590,16 +595,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="extendedProperties"> Extended Properties for Azure IaasVM Backup. </param>
         /// <returns> A new <see cref="Models.IaasClassicComputeVmProtectedItem"/> instance for mocking. </returns>
-        public static IaasClassicComputeVmProtectedItem IaasClassicComputeVmProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, ResourceIdentifier virtualMachineId = null, string protectionStatus = null, BackupProtectionState? protectionState = null, IaasVmProtectedItemHealthStatus? healthStatus = null, IEnumerable<IaasVmHealthDetails> healthDetails = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, string protectedItemDataId = null, IaasVmProtectedItemExtendedInfo extendedInfo = null, IaasVmBackupExtendedProperties extendedProperties = null)
+        public static IaasClassicComputeVmProtectedItem IaasClassicComputeVmProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, ResourceIdentifier virtualMachineId = null, string protectionStatus = null, BackupProtectionState? protectionState = null, IaasVmProtectedItemHealthStatus? healthStatus = null, IEnumerable<IaasVmHealthDetails> healthDetails = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, string protectedItemDataId = null, IaasVmProtectedItemExtendedInfo extendedInfo = null, IaasVmBackupExtendedProperties extendedProperties = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasClassicComputeVmProtectedItem("Microsoft.ClassicCompute/virtualMachines", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasClassicComputeVmProtectedItem("Microsoft.ClassicCompute/virtualMachines", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
         }
 
-        /// <summary> Initializes a new instance of IaasVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IaasVmProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -617,6 +622,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the VM represented by this backup item. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine represented by this item. </param>
         /// <param name="protectionStatus"> Backup status of this backup item. </param>
@@ -630,16 +636,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="extendedProperties"> Extended Properties for Azure IaasVM Backup. </param>
         /// <returns> A new <see cref="Models.IaasVmProtectedItem"/> instance for mocking. </returns>
-        public static IaasVmProtectedItem IaasVmProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, ResourceIdentifier virtualMachineId = null, string protectionStatus = null, BackupProtectionState? protectionState = null, IaasVmProtectedItemHealthStatus? healthStatus = null, IEnumerable<IaasVmHealthDetails> healthDetails = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, string protectedItemDataId = null, IaasVmProtectedItemExtendedInfo extendedInfo = null, IaasVmBackupExtendedProperties extendedProperties = null)
+        public static IaasVmProtectedItem IaasVmProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, ResourceIdentifier virtualMachineId = null, string protectionStatus = null, BackupProtectionState? protectionState = null, IaasVmProtectedItemHealthStatus? healthStatus = null, IEnumerable<IaasVmHealthDetails> healthDetails = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, string protectedItemDataId = null, IaasVmProtectedItemExtendedInfo extendedInfo = null, IaasVmBackupExtendedProperties extendedProperties = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasVmProtectedItem("AzureIaaSVMProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasVmProtectedItem("AzureIaaSVMProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
         }
 
-        /// <summary> Initializes a new instance of IaasVmHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IaasVmHealthDetails"/>. </summary>
         /// <param name="code"> Health Code. </param>
         /// <param name="title"> Health Title. </param>
         /// <param name="message"> Health Message. </param>
@@ -652,7 +658,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new IaasVmHealthDetails(code, title, message, recommendations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IaasComputeVmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IaasComputeVmProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -670,6 +676,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the VM represented by this backup item. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine represented by this item. </param>
         /// <param name="protectionStatus"> Backup status of this backup item. </param>
@@ -683,16 +690,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="extendedProperties"> Extended Properties for Azure IaasVM Backup. </param>
         /// <returns> A new <see cref="Models.IaasComputeVmProtectedItem"/> instance for mocking. </returns>
-        public static IaasComputeVmProtectedItem IaasComputeVmProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, ResourceIdentifier virtualMachineId = null, string protectionStatus = null, BackupProtectionState? protectionState = null, IaasVmProtectedItemHealthStatus? healthStatus = null, IEnumerable<IaasVmHealthDetails> healthDetails = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, string protectedItemDataId = null, IaasVmProtectedItemExtendedInfo extendedInfo = null, IaasVmBackupExtendedProperties extendedProperties = null)
+        public static IaasComputeVmProtectedItem IaasComputeVmProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, ResourceIdentifier virtualMachineId = null, string protectionStatus = null, BackupProtectionState? protectionState = null, IaasVmProtectedItemHealthStatus? healthStatus = null, IEnumerable<IaasVmHealthDetails> healthDetails = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, string protectedItemDataId = null, IaasVmProtectedItemExtendedInfo extendedInfo = null, IaasVmBackupExtendedProperties extendedProperties = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             healthDetails ??= new List<IaasVmHealthDetails>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
 
-            return new IaasComputeVmProtectedItem("Microsoft.Compute/virtualMachines", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
+            return new IaasComputeVmProtectedItem("Microsoft.Compute/virtualMachines", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, virtualMachineId, protectionStatus, protectionState, healthStatus, healthDetails?.ToList(), kpisHealths, lastBackupStatus, lastBackupOn, protectedItemDataId, extendedInfo, extendedProperties);
         }
 
-        /// <summary> Initializes a new instance of IaasVmErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IaasVmErrorInfo"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorTitle"> Title: Typically, the entity that the error pertains to. </param>
         /// <param name="errorString"> Localized error string. </param>
@@ -705,7 +712,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new IaasVmErrorInfo(errorCode, errorTitle, errorString, recommendations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SqlProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -723,18 +730,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="protectedItemDataId"> Internal ID of a backup item. Used by Azure SQL Backup engine to contact Recovery Services. </param>
         /// <param name="protectionState"> Backup state of the backed up item. </param>
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <returns> A new <see cref="Models.SqlProtectedItem"/> instance for mocking. </returns>
-        public static SqlProtectedItem SqlProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string protectedItemDataId = null, ProtectedItemState? protectionState = null, SqlProtectedItemExtendedInfo extendedInfo = null)
+        public static SqlProtectedItem SqlProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string protectedItemDataId = null, ProtectedItemState? protectionState = null, SqlProtectedItemExtendedInfo extendedInfo = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new SqlProtectedItem("Microsoft.Sql/servers/databases", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, protectedItemDataId, protectionState, extendedInfo);
+            return new SqlProtectedItem("Microsoft.Sql/servers/databases", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, protectedItemDataId, protectionState, extendedInfo);
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -752,6 +760,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the DB represented by this backup item. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="parentName"> Parent name of the DB such as Instance or Availability Group. </param>
@@ -767,16 +776,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
         /// <returns> A new <see cref="Models.VmWorkloadProtectedItem"/> instance for mocking. </returns>
-        public static VmWorkloadProtectedItem VmWorkloadProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
+        public static VmWorkloadProtectedItem VmWorkloadProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadProtectedItem("AzureVmWorkloadProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadProtectedItem("AzureVmWorkloadProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BackupErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BackupErrorDetail"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error Message related to the Code. </param>
         /// <param name="recommendations"> List of recommendation strings. </param>
@@ -788,7 +797,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupErrorDetail(code, message, recommendations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSapAseDatabaseProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -806,6 +815,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the DB represented by this backup item. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="parentName"> Parent name of the DB such as Instance or Availability Group. </param>
@@ -821,16 +831,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
         /// <returns> A new <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/> instance for mocking. </returns>
-        public static VmWorkloadSapAseDatabaseProtectedItem VmWorkloadSapAseDatabaseProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
+        public static VmWorkloadSapAseDatabaseProtectedItem VmWorkloadSapAseDatabaseProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapAseDatabaseProtectedItem("AzureVmWorkloadSAPAseDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapAseDatabaseProtectedItem("AzureVmWorkloadSAPAseDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSapHanaDatabaseProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -848,6 +858,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the DB represented by this backup item. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="parentName"> Parent name of the DB such as Instance or Availability Group. </param>
@@ -863,16 +874,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
         /// <returns> A new <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/> instance for mocking. </returns>
-        public static VmWorkloadSapHanaDatabaseProtectedItem VmWorkloadSapHanaDatabaseProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
+        public static VmWorkloadSapHanaDatabaseProtectedItem VmWorkloadSapHanaDatabaseProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapHanaDatabaseProtectedItem("AzureVmWorkloadSAPHanaDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapHanaDatabaseProtectedItem("AzureVmWorkloadSAPHanaDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSapHanaDBInstanceProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -890,6 +901,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the DB represented by this backup item. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="parentName"> Parent name of the DB such as Instance or Availability Group. </param>
@@ -905,16 +917,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
         /// <returns> A new <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/> instance for mocking. </returns>
-        public static VmWorkloadSapHanaDBInstanceProtectedItem VmWorkloadSapHanaDBInstanceProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
+        public static VmWorkloadSapHanaDBInstanceProtectedItem VmWorkloadSapHanaDBInstanceProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSapHanaDBInstanceProtectedItem("AzureVmWorkloadSAPHanaDBInstance", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSapHanaDBInstanceProtectedItem("AzureVmWorkloadSAPHanaDBInstance", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSqlDatabaseProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -932,6 +944,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the DB represented by this backup item. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="parentName"> Parent name of the DB such as Instance or Availability Group. </param>
@@ -947,16 +960,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
         /// <returns> A new <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/> instance for mocking. </returns>
-        public static VmWorkloadSqlDatabaseProtectedItem VmWorkloadSqlDatabaseProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
+        public static VmWorkloadSqlDatabaseProtectedItem VmWorkloadSqlDatabaseProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string serverName = null, string parentName = null, string parentType = null, string protectionStatus = null, BackupProtectionState? protectionState = null, LastBackupStatus? lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, BackupErrorDetail lastBackupErrorDetail = null, string protectedItemDataSourceId = null, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = null, VmWorkloadProtectedItemExtendedInfo extendedInfo = null, IDictionary<string, KpiResourceHealthDetails> kpisHealths = null, IEnumerable<DistributedNodesInfo> nodesList = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             kpisHealths ??= new Dictionary<string, KpiResourceHealthDetails>();
             nodesList ??= new List<DistributedNodesInfo>();
 
-            return new VmWorkloadSqlDatabaseProtectedItem("AzureVmWorkloadSQLDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
+            return new VmWorkloadSqlDatabaseProtectedItem("AzureVmWorkloadSQLDatabase", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, serverName, parentName, parentType, protectionStatus, protectionState, lastBackupStatus, lastBackupOn, lastBackupErrorDetail, protectedItemDataSourceId, protectedItemHealthStatus, extendedInfo, kpisHealths, nodesList?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DpmProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DpmProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -974,19 +987,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the managed item. </param>
         /// <param name="backupEngineName"> Backup Management server protecting this backup item. </param>
         /// <param name="protectionState"> Protection state of the backup engine. </param>
         /// <param name="extendedInfo"> Extended info of the backup item. </param>
         /// <returns> A new <see cref="Models.DpmProtectedItem"/> instance for mocking. </returns>
-        public static DpmProtectedItem DpmProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string backupEngineName = null, ProtectedItemState? protectionState = null, DpmProtectedItemExtendedInfo extendedInfo = null)
+        public static DpmProtectedItem DpmProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string backupEngineName = null, ProtectedItemState? protectionState = null, DpmProtectedItemExtendedInfo extendedInfo = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new DpmProtectedItem("DPMProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, backupEngineName, protectionState, extendedInfo);
+            return new DpmProtectedItem("DPMProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, backupEngineName, protectionState, extendedInfo);
         }
 
-        /// <summary> Initializes a new instance of GenericProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GenericProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -1004,6 +1018,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
@@ -1011,15 +1026,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="sourceAssociations"> Loosely coupled (type, value) associations (example - parent of a protected item). </param>
         /// <param name="fabricName"> Name of this backup item's fabric. </param>
         /// <returns> A new <see cref="Models.GenericProtectedItem"/> instance for mocking. </returns>
-        public static GenericProtectedItem GenericProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string policyState = null, BackupProtectionState? protectionState = null, long? protectedItemId = null, IDictionary<string, string> sourceAssociations = null, string fabricName = null)
+        public static GenericProtectedItem GenericProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string policyState = null, BackupProtectionState? protectionState = null, long? protectedItemId = null, IDictionary<string, string> sourceAssociations = null, string fabricName = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
             sourceAssociations ??= new Dictionary<string, string>();
 
-            return new GenericProtectedItem("GenericProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, policyState, protectionState, protectedItemId, sourceAssociations, fabricName);
+            return new GenericProtectedItem("GenericProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, policyState, protectionState, protectedItemId, sourceAssociations, fabricName);
         }
 
-        /// <summary> Initializes a new instance of MabErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MabErrorInfo"/>. </summary>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="recommendations"> List of localized recommendations. </param>
         /// <returns> A new <see cref="Models.MabErrorInfo"/> instance for mocking. </returns>
@@ -1030,7 +1045,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new MabErrorInfo(errorString, recommendations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MabFileFolderProtectedItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MabFileFolderProtectedItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="workloadType"> Type of workload this item represents. </param>
         /// <param name="containerName"> Unique name of container. </param>
@@ -1048,6 +1063,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="friendlyName"> Friendly name of this backup item. </param>
         /// <param name="computerName"> Name of the computer associated with this backup item. </param>
         /// <param name="lastBackupStatus"> Status of last backup operation. </param>
@@ -1056,14 +1072,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="deferredDeleteSyncTimeInUTC"> Sync time for deferred deletion in UTC. </param>
         /// <param name="extendedInfo"> Additional information with this backup item. </param>
         /// <returns> A new <see cref="Models.MabFileFolderProtectedItem"/> instance for mocking. </returns>
-        public static MabFileFolderProtectedItem MabFileFolderProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string friendlyName = null, string computerName = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, string protectionState = null, long? deferredDeleteSyncTimeInUTC = null, MabFileFolderProtectedItemExtendedInfo extendedInfo = null)
+        public static MabFileFolderProtectedItem MabFileFolderProtectedItem(BackupManagementType? backupManagementType = null, BackupDataSourceType? workloadType = null, string containerName = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier policyId = null, DateTimeOffset? lastRecoverOn = null, string backupSetName = null, BackupCreateMode? createMode = null, DateTimeOffset? deferredDeletedOn = null, bool? isScheduledForDeferredDelete = null, string deferredDeleteTimeRemaining = null, bool? isDeferredDeleteScheduleUpcoming = null, bool? isRehydrate = null, IEnumerable<string> resourceGuardOperationRequests = null, bool? isArchiveEnabled = null, string policyName = null, int? softDeleteRetentionPeriodInDays = null, string vaultId = null, string friendlyName = null, string computerName = null, string lastBackupStatus = null, DateTimeOffset? lastBackupOn = null, string protectionState = null, long? deferredDeleteSyncTimeInUTC = null, MabFileFolderProtectedItemExtendedInfo extendedInfo = null)
         {
             resourceGuardOperationRequests ??= new List<string>();
 
-            return new MabFileFolderProtectedItem("MabFileFolderProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, friendlyName, computerName, lastBackupStatus, lastBackupOn, protectionState, deferredDeleteSyncTimeInUTC, extendedInfo);
+            return new MabFileFolderProtectedItem("MabFileFolderProtectedItem", backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests?.ToList(), isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, friendlyName, computerName, lastBackupStatus, lastBackupOn, protectionState, deferredDeleteSyncTimeInUTC, extendedInfo);
         }
 
-        /// <summary> Initializes a new instance of InquiryValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InquiryValidation"/>. </summary>
         /// <param name="status"> Status for the Inquiry Validation. </param>
         /// <param name="errorDetail"> Error Detail in case the status is non-success. </param>
         /// <param name="additionalDetail"> Error Additional Detail in case the status is non-success. </param>
@@ -1072,6 +1088,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static InquiryValidation InquiryValidation(string status = null, BackupErrorDetail errorDetail = null, string additionalDetail = null, BinaryData protectableItemCount = null)
         {
             return new InquiryValidation(status, errorDetail, additionalDetail, protectableItemCount);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TieringCostRehydrationInfo"/>. </summary>
+        /// <param name="rehydrationSizeInBytes"> Rehydration size in bytes. </param>
+        /// <param name="retailRehydrationCostPerGBPerMonth"> Source tier to target tier rehydration cost per GB per month. </param>
+        /// <returns> A new <see cref="Models.TieringCostRehydrationInfo"/> instance for mocking. </returns>
+        public static TieringCostRehydrationInfo TieringCostRehydrationInfo(long rehydrationSizeInBytes = default, double retailRehydrationCostPerGBPerMonth = default)
+        {
+            return new TieringCostRehydrationInfo("TieringCostRehydrationInfo", rehydrationSizeInBytes, retailRehydrationCostPerGBPerMonth);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TieringCostSavingInfo"/>. </summary>
+        /// <param name="sourceTierSizeReductionInBytes"> Source tier size reduction in bytes after moving all the recommended backup points to target tier. </param>
+        /// <param name="targetTierSizeIncreaseInBytes"> Target tier size increase in bytes after moving all the recommended backup points to target tier. </param>
+        /// <param name="retailSourceTierCostPerGBPerMonth"> Source tier retail cost per GB per month. </param>
+        /// <param name="retailTargetTierCostPerGBPerMonth"> Target tier retail cost per GB per month. </param>
+        /// <returns> A new <see cref="Models.TieringCostSavingInfo"/> instance for mocking. </returns>
+        public static TieringCostSavingInfo TieringCostSavingInfo(long sourceTierSizeReductionInBytes = default, long targetTierSizeIncreaseInBytes = default, double retailSourceTierCostPerGBPerMonth = default, double retailTargetTierCostPerGBPerMonth = default)
+        {
+            return new TieringCostSavingInfo("TieringCostSavingInfo", sourceTierSizeReductionInBytes, targetTierSizeIncreaseInBytes, retailSourceTierCostPerGBPerMonth, retailTargetTierCostPerGBPerMonth);
         }
     }
 }

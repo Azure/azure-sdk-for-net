@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Query parameters for listing runs. </summary>
     public partial class RunFilterContent
     {
-        /// <summary> Initializes a new instance of RunFilterContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunFilterContent"/>. </summary>
         /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
         /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
         public RunFilterContent(DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore)
@@ -23,6 +23,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             LastUpdatedBefore = lastUpdatedBefore;
             Filters = new ChangeTrackingList<RunQueryFilter>();
             OrderBy = new ChangeTrackingList<RunQueryOrderBy>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunFilterContent"/>. </summary>
+        /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
+        /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="filters"> List of filters. </param>
+        /// <param name="orderBy"> List of OrderBy option. </param>
+        internal RunFilterContent(string continuationToken, DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore, IList<RunQueryFilter> filters, IList<RunQueryOrderBy> orderBy)
+        {
+            ContinuationToken = continuationToken;
+            LastUpdatedAfter = lastUpdatedAfter;
+            LastUpdatedBefore = lastUpdatedBefore;
+            Filters = filters;
+            OrderBy = orderBy;
         }
 
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>

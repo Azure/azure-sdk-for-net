@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity Concur Service source. </summary>
     public partial class ConcurSource : TabularSource
     {
-        /// <summary> Initializes a new instance of ConcurSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConcurSource"/>. </summary>
         public ConcurSource()
         {
             Type = "ConcurSource";
         }
 
-        /// <summary> Initializes a new instance of ConcurSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConcurSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.EdgeOrder
     /// </summary>
     public partial class EdgeOrderData : ResourceData
     {
-        /// <summary> Initializes a new instance of EdgeOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderData"/>. </summary>
         public EdgeOrderData()
         {
             OrderItemIds = new ChangeTrackingList<ResourceIdentifier>();
             OrderStageHistory = new ChangeTrackingList<EdgeOrderStageDetails>();
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedServicesMarketplaceRegistrationResource" /> and their operations.
-    /// Each <see cref="ManagedServicesMarketplaceRegistrationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ManagedServicesMarketplaceRegistrationCollection" /> instance call the GetManagedServicesMarketplaceRegistrations method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ManagedServicesMarketplaceRegistrationResource"/> and their operations.
+    /// Each <see cref="ManagedServicesMarketplaceRegistrationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ManagedServicesMarketplaceRegistrationCollection"/> instance call the GetManagedServicesMarketplaceRegistrations method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ManagedServicesMarketplaceRegistrationCollection : ArmCollection, IEnumerable<ManagedServicesMarketplaceRegistrationResource>, IAsyncEnumerable<ManagedServicesMarketplaceRegistrationResource>
     {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedServicesMarketplaceRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedServicesMarketplaceRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedServicesMarketplaceRegistrationResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedServicesMarketplaceRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedServicesMarketplaceRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedServicesMarketplaceRegistrationResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class representing the WebSiteInstanceStatus data model. </summary>
     public partial class WebSiteInstanceStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteInstanceStatusData"/>. </summary>
         public WebSiteInstanceStatusData()
         {
             Containers = new ChangeTrackingDictionary<string, ContainerInfo>();
         }
 
-        /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteInstanceStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

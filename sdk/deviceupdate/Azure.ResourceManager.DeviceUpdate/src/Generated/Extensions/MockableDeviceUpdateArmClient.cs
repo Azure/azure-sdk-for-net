@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceUpdateAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceUpdateAccountResource.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdateAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceUpdateAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceUpdateAccountResource.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdateAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceUpdateAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DeviceUpdateAccountResource"/> object. </returns>
         public virtual DeviceUpdateAccountResource GetDeviceUpdateAccountResource(ResourceIdentifier id)
         {
             DeviceUpdateAccountResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceUpdateInstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceUpdateInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdateInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceUpdateInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceUpdateInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdateInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceUpdateInstanceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DeviceUpdateInstanceResource"/> object. </returns>
         public virtual DeviceUpdateInstanceResource GetDeviceUpdateInstanceResource(ResourceIdentifier id)
         {
             DeviceUpdateInstanceResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceUpdatePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceUpdatePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdatePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceUpdatePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceUpdatePrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> object. </returns>
         public virtual DeviceUpdatePrivateEndpointConnectionResource GetDeviceUpdatePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             DeviceUpdatePrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -73,27 +73,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceUpdatePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceUpdatePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdatePrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkResource" /> object. </returns>
-        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceUpdatePrivateLinkResource"/> object. </returns>
+        public virtual DeviceUpdatePrivateLinkResource GetDeviceUpdatePrivateLinkResource(ResourceIdentifier id)
         {
-            PrivateLinkResource.ValidateResourceId(id);
-            return new PrivateLinkResource(Client, id);
+            DeviceUpdatePrivateLinkResource.ValidateResourceId(id);
+            return new DeviceUpdatePrivateLinkResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionProxyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionProxyResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionProxyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceUpdatePrivateEndpointConnectionProxyResource.CreateResourceIdentifier" /> to create a <see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionProxyResource" /> object. </returns>
-        public virtual PrivateEndpointConnectionProxyResource GetPrivateEndpointConnectionProxyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/> object. </returns>
+        public virtual DeviceUpdatePrivateEndpointConnectionProxyResource GetDeviceUpdatePrivateEndpointConnectionProxyResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionProxyResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionProxyResource(Client, id);
+            DeviceUpdatePrivateEndpointConnectionProxyResource.ValidateResourceId(id);
+            return new DeviceUpdatePrivateEndpointConnectionProxyResource(Client, id);
         }
     }
 }

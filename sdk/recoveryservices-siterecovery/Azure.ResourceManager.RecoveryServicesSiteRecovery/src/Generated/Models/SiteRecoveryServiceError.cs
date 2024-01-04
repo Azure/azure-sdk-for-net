@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> ASR error model. </summary>
     public partial class SiteRecoveryServiceError
     {
-        /// <summary> Initializes a new instance of SiteRecoveryServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServiceError"/>. </summary>
         internal SiteRecoveryServiceError()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryServiceError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="possibleCauses"> Possible causes of error. </param>

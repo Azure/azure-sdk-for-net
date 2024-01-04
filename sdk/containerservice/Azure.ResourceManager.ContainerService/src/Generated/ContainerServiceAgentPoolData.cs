@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceAgentPoolData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolData"/>. </summary>
         public ContainerServiceAgentPoolData()
         {
             AvailabilityZones = new ChangeTrackingList<string>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService
             NodeTaints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceAgentPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

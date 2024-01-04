@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Build result log resource properties payload. </summary>
     public partial class AppPlatformBuildResultLog
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildResultLog. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultLog"/>. </summary>
         internal AppPlatformBuildResultLog()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResultLog. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultLog"/>. </summary>
         /// <param name="blobUri"> The public download URL of this build result log. </param>
         internal AppPlatformBuildResultLog(Uri blobUri)
         {

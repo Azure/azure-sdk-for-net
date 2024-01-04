@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table column. </summary>
     public partial class CassandraColumn
     {
-        /// <summary> Initializes a new instance of CassandraColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraColumn"/>. </summary>
         public CassandraColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraColumn"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB Cassandra table column. </param>
         /// <param name="cassandraColumnType"> Type of the Cosmos DB Cassandra table column. </param>
         internal CassandraColumn(string name, string cassandraColumnType)

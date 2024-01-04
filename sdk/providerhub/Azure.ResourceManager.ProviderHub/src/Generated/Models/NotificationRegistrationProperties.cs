@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The NotificationRegistrationProperties. </summary>
     public partial class NotificationRegistrationProperties
     {
-        /// <summary> Initializes a new instance of NotificationRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationProperties"/>. </summary>
         public NotificationRegistrationProperties()
         {
             IncludedEvents = new ChangeTrackingList<string>();
             NotificationEndpoints = new ChangeTrackingList<NotificationEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of NotificationRegistrationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRegistrationProperties"/>. </summary>
         /// <param name="notificationMode"></param>
         /// <param name="messageScope"></param>
         /// <param name="includedEvents"></param>

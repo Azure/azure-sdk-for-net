@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Details about target workload during restore operation. </summary>
     public partial class TargetRestoreInfo
     {
-        /// <summary> Initializes a new instance of TargetRestoreInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRestoreInfo"/>. </summary>
         public TargetRestoreInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetRestoreInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRestoreInfo"/>. </summary>
         /// <param name="overwriteOption"> Can Overwrite if Target DataBase already exists. </param>
         /// <param name="containerId"> Resource Id name of the container in which Target DataBase resides. </param>
         /// <param name="databaseName"> Database name InstanceName/DataBaseName for SQL or System/DbName for SAP Hana. </param>

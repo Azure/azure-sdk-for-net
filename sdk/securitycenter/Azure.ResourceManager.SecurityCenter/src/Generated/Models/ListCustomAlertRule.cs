@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public partial class ListCustomAlertRule : CustomAlertRule
     {
-        /// <summary> Initializes a new instance of ListCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCustomAlertRule"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         public ListCustomAlertRule(bool isEnabled) : base(isEnabled)
         {
             RuleType = "ListCustomAlertRule";
         }
 
-        /// <summary> Initializes a new instance of ListCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

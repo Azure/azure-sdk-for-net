@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiTagDescription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiTagDescriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiTagDescriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiResource" /> using the GetApiTagDescription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiTagDescriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiTagDescriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiResource"/> using the GetApiTagDescription method.
     /// </summary>
     public partial class ApiTagDescriptionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly ApiTagDescriptionRestOperations _apiTagDescriptionRestClient;
         private readonly ApiTagDescriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/tagDescriptions";
+
         /// <summary> Initializes a new instance of the <see cref="ApiTagDescriptionResource"/> class for mocking. </summary>
         protected ApiTagDescriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiTagDescriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiTagDescriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiTagDescriptionResource(ArmClient client, ApiTagDescriptionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/apis/tagDescriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

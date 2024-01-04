@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CostManagementExportResource" /> and their operations.
-    /// Each <see cref="CostManagementExportResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="CostManagementExportCollection" /> instance call the GetCostManagementExports method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="CostManagementExportResource"/> and their operations.
+    /// Each <see cref="CostManagementExportResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CostManagementExportCollection"/> instance call the GetCostManagementExports method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class CostManagementExportCollection : ArmCollection, IEnumerable<CostManagementExportResource>, IAsyncEnumerable<CostManagementExportResource>
     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CostManagementExportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CostManagementExportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CostManagementExportResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostManagementExportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CostManagementExportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CostManagementExportResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);

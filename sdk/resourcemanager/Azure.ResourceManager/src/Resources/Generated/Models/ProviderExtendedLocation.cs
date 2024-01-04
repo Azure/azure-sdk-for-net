@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The provider extended location. </summary>
     public partial class ProviderExtendedLocation
     {
-        /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderExtendedLocation"/>. </summary>
         internal ProviderExtendedLocation()
         {
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderExtendedLocation"/>. </summary>
         /// <param name="location"> The azure location. </param>
         /// <param name="providerExtendedLocationType"> The extended location type. </param>
         /// <param name="extendedLocations"> The extended locations for the azure location. </param>

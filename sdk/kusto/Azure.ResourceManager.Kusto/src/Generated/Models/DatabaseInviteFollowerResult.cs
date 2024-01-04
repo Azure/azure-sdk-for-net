@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The result returned from a follower invitation generation request. </summary>
     public partial class DatabaseInviteFollowerResult
     {
-        /// <summary> Initializes a new instance of DatabaseInviteFollowerResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseInviteFollowerResult"/>. </summary>
         internal DatabaseInviteFollowerResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseInviteFollowerResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseInviteFollowerResult"/>. </summary>
         /// <param name="generatedInvitation"> The generated invitation token. </param>
         internal DatabaseInviteFollowerResult(string generatedInvitation)
         {

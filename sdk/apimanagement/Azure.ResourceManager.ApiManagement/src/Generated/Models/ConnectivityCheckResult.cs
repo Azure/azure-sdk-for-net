@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Information on the connectivity status. </summary>
     public partial class ConnectivityCheckResult
     {
-        /// <summary> Initializes a new instance of ConnectivityCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckResult"/>. </summary>
         internal ConnectivityCheckResult()
         {
             Hops = new ChangeTrackingList<ConnectivityHop>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckResult"/>. </summary>
         /// <param name="hops"> List of hops between the source and the destination. </param>
         /// <param name="connectionStatus"> The connection status. </param>
         /// <param name="avgLatencyInMs"> Average latency in milliseconds. </param>

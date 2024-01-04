@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// </summary>
     public partial class TriggerDependencyReference : DependencyReference
     {
-        /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TriggerDependencyReference(TriggerReference referenceTrigger)
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "TriggerDependencyReference";
         }
 
-        /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="type"> The type of dependency reference. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         internal TriggerDependencyReference(string type, TriggerReference referenceTrigger) : base(type)

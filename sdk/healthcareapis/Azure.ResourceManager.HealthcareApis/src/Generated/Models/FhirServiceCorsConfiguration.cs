@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The settings for the CORS configuration of the service instance. </summary>
     public partial class FhirServiceCorsConfiguration
     {
-        /// <summary> Initializes a new instance of FhirServiceCorsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceCorsConfiguration"/>. </summary>
         public FhirServiceCorsConfiguration()
         {
             Origins = new ChangeTrackingList<string>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Methods = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FhirServiceCorsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceCorsConfiguration"/>. </summary>
         /// <param name="origins"> The origins to be allowed via CORS. </param>
         /// <param name="headers"> The headers to be allowed via CORS. </param>
         /// <param name="methods"> The methods to be allowed via CORS. </param>

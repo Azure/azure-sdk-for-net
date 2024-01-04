@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The request payload of get SSIS object metadata. </summary>
     public partial class GetSsisObjectMetadataRequest
     {
-        /// <summary> Initializes a new instance of GetSsisObjectMetadataRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataRequest"/>. </summary>
         public GetSsisObjectMetadataRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of GetSsisObjectMetadataRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSsisObjectMetadataRequest"/>. </summary>
         /// <param name="metadataPath"> Metadata path. </param>
         internal GetSsisObjectMetadataRequest(string metadataPath)
         {

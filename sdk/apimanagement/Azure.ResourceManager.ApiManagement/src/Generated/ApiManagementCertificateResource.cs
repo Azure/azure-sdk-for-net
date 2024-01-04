@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementCertificate method.
     /// </summary>
     public partial class ApiManagementCertificateResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly CertificateRestOperations _apiManagementCertificateCertificateRestClient;
         private readonly ApiManagementCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementCertificateResource"/> class for mocking. </summary>
         protected ApiManagementCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementCertificateResource(ArmClient client, ApiManagementCertificateData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

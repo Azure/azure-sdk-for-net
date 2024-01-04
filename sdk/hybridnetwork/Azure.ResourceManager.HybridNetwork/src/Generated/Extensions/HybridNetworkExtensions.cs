@@ -44,9 +44,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource"/> object. </returns>
         public static ConfigurationGroupSchemaResource GetConfigurationGroupSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetConfigurationGroupSchemaResource(id);
         }
 
@@ -60,9 +63,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationGroupValueResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConfigurationGroupValueResource"/> object. </returns>
         public static ConfigurationGroupValueResource GetConfigurationGroupValueResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetConfigurationGroupValueResource(id);
         }
 
@@ -76,9 +82,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFunctionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkFunctionResource"/> object. </returns>
         public static NetworkFunctionResource GetNetworkFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetNetworkFunctionResource(id);
         }
 
@@ -92,9 +101,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ComponentResource"/> object. </returns>
         public static ComponentResource GetComponentResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetComponentResource(id);
         }
 
@@ -108,9 +120,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFunctionDefinitionGroupResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkFunctionDefinitionGroupResource"/> object. </returns>
         public static NetworkFunctionDefinitionGroupResource GetNetworkFunctionDefinitionGroupResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetNetworkFunctionDefinitionGroupResource(id);
         }
 
@@ -124,9 +139,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFunctionDefinitionVersionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkFunctionDefinitionVersionResource"/> object. </returns>
         public static NetworkFunctionDefinitionVersionResource GetNetworkFunctionDefinitionVersionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetNetworkFunctionDefinitionVersionResource(id);
         }
 
@@ -140,9 +158,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkServiceDesignGroupResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkServiceDesignGroupResource"/> object. </returns>
         public static NetworkServiceDesignGroupResource GetNetworkServiceDesignGroupResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetNetworkServiceDesignGroupResource(id);
         }
 
@@ -156,9 +177,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkServiceDesignVersionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkServiceDesignVersionResource"/> object. </returns>
         public static NetworkServiceDesignVersionResource GetNetworkServiceDesignVersionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetNetworkServiceDesignVersionResource(id);
         }
 
@@ -172,9 +196,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublisherResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
         public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetPublisherResource(id);
         }
 
@@ -188,9 +215,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArtifactStoreResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArtifactStoreResource"/> object. </returns>
         public static ArtifactStoreResource GetArtifactStoreResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetArtifactStoreResource(id);
         }
 
@@ -204,9 +234,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArtifactManifestResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArtifactManifestResource"/> object. </returns>
         public static ArtifactManifestResource GetArtifactManifestResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetArtifactManifestResource(id);
         }
 
@@ -220,9 +253,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
         public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetSiteResource(id);
         }
 
@@ -236,9 +272,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteNetworkServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteNetworkServiceResource"/> object. </returns>
         public static SiteNetworkServiceResource GetSiteNetworkServiceResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableHybridNetworkArmClient(client).GetSiteNetworkServiceResource(id);
         }
 
@@ -250,9 +289,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of ConfigurationGroupValueResources and their operations over a ConfigurationGroupValueResource. </returns>
         public static ConfigurationGroupValueCollection GetConfigurationGroupValues(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetConfigurationGroupValues();
         }
 
@@ -276,11 +318,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="configurationGroupValueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationGroupValueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ConfigurationGroupValueResource>> GetConfigurationGroupValueAsync(this ResourceGroupResource resourceGroupResource, string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetConfigurationGroupValueAsync(configurationGroupValueName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -304,11 +348,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="configurationGroupValueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationGroupValueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ConfigurationGroupValueResource> GetConfigurationGroupValue(this ResourceGroupResource resourceGroupResource, string configurationGroupValueName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetConfigurationGroupValue(configurationGroupValueName, cancellationToken);
         }
 
@@ -320,9 +366,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of NetworkFunctionResources and their operations over a NetworkFunctionResource. </returns>
         public static NetworkFunctionCollection GetNetworkFunctions(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetNetworkFunctions();
         }
 
@@ -346,11 +395,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkFunctionName"> The name of the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkFunctionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFunctionResource>> GetNetworkFunctionAsync(this ResourceGroupResource resourceGroupResource, string networkFunctionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetNetworkFunctionAsync(networkFunctionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -374,11 +425,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="networkFunctionName"> The name of the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkFunctionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<NetworkFunctionResource> GetNetworkFunction(this ResourceGroupResource resourceGroupResource, string networkFunctionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetNetworkFunction(networkFunctionName, cancellationToken);
         }
 
@@ -390,9 +443,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of PublisherResources and their operations over a PublisherResource. </returns>
         public static PublisherCollection GetPublishers(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetPublishers();
         }
 
@@ -416,11 +472,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PublisherResource>> GetPublisherAsync(this ResourceGroupResource resourceGroupResource, string publisherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetPublisherAsync(publisherName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -444,11 +502,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PublisherResource> GetPublisher(this ResourceGroupResource resourceGroupResource, string publisherName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetPublisher(publisherName, cancellationToken);
         }
 
@@ -460,9 +520,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of SiteResources and their operations over a SiteResource. </returns>
         public static SiteCollection GetSites(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSites();
         }
 
@@ -486,11 +549,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="siteName"> The name of the network service site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SiteResource>> GetSiteAsync(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -514,11 +579,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="siteName"> The name of the network service site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SiteResource> GetSite(this ResourceGroupResource resourceGroupResource, string siteName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSite(siteName, cancellationToken);
         }
 
@@ -530,9 +597,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of SiteNetworkServiceResources and their operations over a SiteNetworkServiceResource. </returns>
         public static SiteNetworkServiceCollection GetSiteNetworkServices(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkServices();
         }
 
@@ -556,11 +626,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteNetworkServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SiteNetworkServiceResource>> GetSiteNetworkServiceAsync(this ResourceGroupResource resourceGroupResource, string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkServiceAsync(siteNetworkServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -584,11 +656,13 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteNetworkServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SiteNetworkServiceResource> GetSiteNetworkService(this ResourceGroupResource resourceGroupResource, string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkService(siteNetworkServiceName, cancellationToken);
         }
 
@@ -611,9 +685,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfigurationGroupValueResource> GetConfigurationGroupValuesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetConfigurationGroupValuesAsync(cancellationToken);
         }
 
@@ -636,9 +713,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfigurationGroupValueResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfigurationGroupValueResource> GetConfigurationGroupValues(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetConfigurationGroupValues(cancellationToken);
         }
 
@@ -661,9 +741,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFunctionResource> GetNetworkFunctionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetNetworkFunctionsAsync(cancellationToken);
         }
 
@@ -686,9 +769,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFunctionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFunctionResource> GetNetworkFunctions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetNetworkFunctions(cancellationToken);
         }
 
@@ -711,9 +797,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublisherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PublisherResource> GetPublishersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetPublishersAsync(cancellationToken);
         }
 
@@ -736,9 +825,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublisherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PublisherResource> GetPublishers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetPublishers(cancellationToken);
         }
 
@@ -761,9 +853,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SiteResource> GetSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSitesAsync(cancellationToken);
         }
 
@@ -786,9 +881,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SiteResource> GetSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSites(cancellationToken);
         }
 
@@ -811,9 +909,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteNetworkServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SiteNetworkServiceResource> GetSiteNetworkServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSiteNetworkServicesAsync(cancellationToken);
         }
 
@@ -836,9 +937,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteNetworkServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SiteNetworkServiceResource> GetSiteNetworkServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSiteNetworkServices(cancellationToken);
         }
     }

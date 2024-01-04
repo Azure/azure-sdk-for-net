@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The configuration object for the specified cluster. </summary>
     public partial class HDInsightClusterConfigurations
     {
-        /// <summary> Initializes a new instance of HDInsightClusterConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterConfigurations"/>. </summary>
         internal HDInsightClusterConfigurations()
         {
             Configurations = new ChangeTrackingDictionary<string, IDictionary<string, string>>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterConfigurations"/>. </summary>
         /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
         internal HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations)
         {

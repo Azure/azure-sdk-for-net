@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningCompute along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningComputeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningComputeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningCompute method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningComputeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningComputeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningCompute method.
     /// </summary>
     public partial class MachineLearningComputeResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly ComputeRestOperations _machineLearningComputeComputeRestClient;
         private readonly MachineLearningComputeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/computes";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningComputeResource"/> class for mocking. </summary>
         protected MachineLearningComputeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningComputeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningComputeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningComputeResource(ArmClient client, MachineLearningComputeData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/computes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlComputeNodeInformation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AmlComputeNodeInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AmlComputeNodeInformation> GetNodesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListNodesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlComputeNodeInformation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AmlComputeNodeInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AmlComputeNodeInformation> GetNodes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListNodesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

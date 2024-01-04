@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Relay
 {
     /// <summary>
     /// A Class representing a RelayNamespaceAuthorizationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RelayNamespaceAuthorizationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRelayNamespaceAuthorizationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource" /> using the GetRelayNamespaceAuthorizationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RelayNamespaceAuthorizationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRelayNamespaceAuthorizationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource"/> using the GetRelayNamespaceAuthorizationRule method.
     /// </summary>
     public partial class RelayNamespaceAuthorizationRuleResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Relay
         private readonly NamespacesRestOperations _relayNamespaceAuthorizationRuleNamespacesRestClient;
         private readonly RelayAuthorizationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/authorizationRules";
+
         /// <summary> Initializes a new instance of the <see cref="RelayNamespaceAuthorizationRuleResource"/> class for mocking. </summary>
         protected RelayNamespaceAuthorizationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RelayNamespaceAuthorizationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RelayNamespaceAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RelayNamespaceAuthorizationRuleResource(ArmClient client, RelayAuthorizationRuleData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/authorizationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

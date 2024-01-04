@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotCentral
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotCentralPrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="IotCentralPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="IotCentralAppResource" />.
-    /// To get an <see cref="IotCentralPrivateEndpointConnectionCollection" /> instance call the GetIotCentralPrivateEndpointConnections method from an instance of <see cref="IotCentralAppResource" />.
+    /// A class representing a collection of <see cref="IotCentralPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="IotCentralPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="IotCentralAppResource"/>.
+    /// To get an <see cref="IotCentralPrivateEndpointConnectionCollection"/> instance call the GetIotCentralPrivateEndpointConnections method from an instance of <see cref="IotCentralAppResource"/>.
     /// </summary>
     public partial class IotCentralPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<IotCentralPrivateEndpointConnectionResource>, IAsyncEnumerable<IotCentralPrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotCentralPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotCentralPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotCentralPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotCentralPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

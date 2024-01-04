@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of list profile operation. </summary>
     internal partial class ProfileListResult
     {
-        /// <summary> Initializes a new instance of ProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileListResult"/>. </summary>
         internal ProfileListResult()
         {
             Value = new ChangeTrackingList<ProfileResourceFormatData>();
         }
 
-        /// <summary> Initializes a new instance of ProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal ProfileListResult(IReadOnlyList<ProfileResourceFormatData> value, string nextLink)

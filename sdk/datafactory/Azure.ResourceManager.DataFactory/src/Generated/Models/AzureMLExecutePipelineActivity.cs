@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure ML Execute Pipeline activity. </summary>
     public partial class AzureMLExecutePipelineActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureMLExecutePipelineActivity(string name) : base(name)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "AzureMLExecutePipeline";
         }
 
-        /// <summary> Initializes a new instance of AzureMLExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

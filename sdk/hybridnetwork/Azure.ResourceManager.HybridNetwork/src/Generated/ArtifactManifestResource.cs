@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A Class representing an ArtifactManifest along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArtifactManifestResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArtifactManifestResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArtifactStoreResource" /> using the GetArtifactManifest method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArtifactManifestResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArtifactManifestResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArtifactStoreResource"/> using the GetArtifactManifest method.
     /// </summary>
     public partial class ArtifactManifestResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly ArtifactManifestsRestOperations _artifactManifestRestClient;
         private readonly ArtifactManifestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores/artifactManifests";
+
         /// <summary> Initializes a new instance of the <see cref="ArtifactManifestResource"/> class for mocking. </summary>
         protected ArtifactManifestResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArtifactManifestResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArtifactManifestResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArtifactManifestResource(ArmClient client, ArtifactManifestData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/artifactStores/artifactManifests";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

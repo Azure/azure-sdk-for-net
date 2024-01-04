@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowResource"/> object. </returns>
         public virtual LogicWorkflowResource GetLogicWorkflowResource(ResourceIdentifier id)
         {
             LogicWorkflowResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowVersionResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowVersionResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowVersionResource"/> object. </returns>
         public virtual LogicWorkflowVersionResource GetLogicWorkflowVersionResource(ResourceIdentifier id)
         {
             LogicWorkflowVersionResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowTriggerResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowTriggerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowTriggerResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowTriggerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowTriggerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowTriggerResource"/> object. </returns>
         public virtual LogicWorkflowTriggerResource GetLogicWorkflowTriggerResource(ResourceIdentifier id)
         {
             LogicWorkflowTriggerResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowTriggerHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowTriggerHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowTriggerHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowTriggerHistoryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowTriggerHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowTriggerHistoryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowTriggerHistoryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowTriggerHistoryResource"/> object. </returns>
         public virtual LogicWorkflowTriggerHistoryResource GetLogicWorkflowTriggerHistoryResource(ResourceIdentifier id)
         {
             LogicWorkflowTriggerHistoryResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowRunResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowRunResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowRunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowRunResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowRunResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowRunResource"/> object. </returns>
         public virtual LogicWorkflowRunResource GetLogicWorkflowRunResource(ResourceIdentifier id)
         {
             LogicWorkflowRunResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowRunOperationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowRunOperationResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowRunOperationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowRunOperationResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowRunOperationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowRunOperationResource"/> object. </returns>
         public virtual LogicWorkflowRunOperationResource GetLogicWorkflowRunOperationResource(ResourceIdentifier id)
         {
             LogicWorkflowRunOperationResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowRunActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowRunActionResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowRunActionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowRunActionResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowRunActionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowRunActionResource"/> object. </returns>
         public virtual LogicWorkflowRunActionResource GetLogicWorkflowRunActionResource(ResourceIdentifier id)
         {
             LogicWorkflowRunActionResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowRunActionRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowRunActionRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowRunActionRepetitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowRunActionRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionRepetitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowRunActionRepetitionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowRunActionRepetitionResource"/> object. </returns>
         public virtual LogicWorkflowRunActionRepetitionResource GetLogicWorkflowRunActionRepetitionResource(ResourceIdentifier id)
         {
             LogicWorkflowRunActionRepetitionResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowRunActionScopeRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowRunActionScopeRepetitionResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> object. </returns>
         public virtual LogicWorkflowRunActionScopeRepetitionResource GetLogicWorkflowRunActionScopeRepetitionResource(ResourceIdentifier id)
         {
             LogicWorkflowRunActionScopeRepetitionResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowRunActionRepetitionRequestHistoryResource"/> object. </returns>
         public virtual LogicWorkflowRunActionRepetitionRequestHistoryResource GetLogicWorkflowRunActionRepetitionRequestHistoryResource(ResourceIdentifier id)
         {
             LogicWorkflowRunActionRepetitionRequestHistoryResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogicWorkflowRunActionRequestHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogicWorkflowRunActionRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionRequestHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LogicWorkflowRunActionRequestHistoryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicWorkflowRunActionRequestHistoryResource.CreateResourceIdentifier" /> to create a <see cref="LogicWorkflowRunActionRequestHistoryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogicWorkflowRunActionRequestHistoryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LogicWorkflowRunActionRequestHistoryResource"/> object. </returns>
         public virtual LogicWorkflowRunActionRequestHistoryResource GetLogicWorkflowRunActionRequestHistoryResource(ResourceIdentifier id)
         {
             LogicWorkflowRunActionRequestHistoryResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountResource"/> object. </returns>
         public virtual IntegrationAccountResource GetIntegrationAccountResource(ResourceIdentifier id)
         {
             IntegrationAccountResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountAssemblyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountAssemblyDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountAssemblyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountAssemblyDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountAssemblyDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountAssemblyDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountAssemblyDefinitionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountAssemblyDefinitionResource"/> object. </returns>
         public virtual IntegrationAccountAssemblyDefinitionResource GetIntegrationAccountAssemblyDefinitionResource(ResourceIdentifier id)
         {
             IntegrationAccountAssemblyDefinitionResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountBatchConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountBatchConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountBatchConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountBatchConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountBatchConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountBatchConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountBatchConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountBatchConfigurationResource"/> object. </returns>
         public virtual IntegrationAccountBatchConfigurationResource GetIntegrationAccountBatchConfigurationResource(ResourceIdentifier id)
         {
             IntegrationAccountBatchConfigurationResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountSchemaResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountSchemaResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountSchemaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountSchemaResource"/> object. </returns>
         public virtual IntegrationAccountSchemaResource GetIntegrationAccountSchemaResource(ResourceIdentifier id)
         {
             IntegrationAccountSchemaResource.ValidateResourceId(id);
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountMapResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountMapResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountMapResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountMapResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountMapResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountMapResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountMapResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountMapResource"/> object. </returns>
         public virtual IntegrationAccountMapResource GetIntegrationAccountMapResource(ResourceIdentifier id)
         {
             IntegrationAccountMapResource.ValidateResourceId(id);
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountPartnerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountPartnerResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountPartnerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountPartnerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountPartnerResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountPartnerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountPartnerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountPartnerResource"/> object. </returns>
         public virtual IntegrationAccountPartnerResource GetIntegrationAccountPartnerResource(ResourceIdentifier id)
         {
             IntegrationAccountPartnerResource.ValidateResourceId(id);
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountAgreementResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountAgreementResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountAgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountAgreementResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountAgreementResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountAgreementResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountAgreementResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountAgreementResource"/> object. </returns>
         public virtual IntegrationAccountAgreementResource GetIntegrationAccountAgreementResource(ResourceIdentifier id)
         {
             IntegrationAccountAgreementResource.ValidateResourceId(id);
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountCertificateResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountCertificateResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountCertificateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountCertificateResource"/> object. </returns>
         public virtual IntegrationAccountCertificateResource GetIntegrationAccountCertificateResource(ResourceIdentifier id)
         {
             IntegrationAccountCertificateResource.ValidateResourceId(id);
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationAccountSessionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationAccountSessionResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountSessionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationAccountSessionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationAccountSessionResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationAccountSessionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationAccountSessionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationAccountSessionResource"/> object. </returns>
         public virtual IntegrationAccountSessionResource GetIntegrationAccountSessionResource(ResourceIdentifier id)
         {
             IntegrationAccountSessionResource.ValidateResourceId(id);
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationServiceEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationServiceEnvironmentResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationServiceEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationServiceEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationServiceEnvironmentResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationServiceEnvironmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationServiceEnvironmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationServiceEnvironmentResource"/> object. </returns>
         public virtual IntegrationServiceEnvironmentResource GetIntegrationServiceEnvironmentResource(ResourceIdentifier id)
         {
             IntegrationServiceEnvironmentResource.ValidateResourceId(id);
@@ -289,11 +289,11 @@ namespace Azure.ResourceManager.Logic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IntegrationServiceEnvironmentManagedApiResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IntegrationServiceEnvironmentManagedApiResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationServiceEnvironmentManagedApiResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IntegrationServiceEnvironmentManagedApiResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IntegrationServiceEnvironmentManagedApiResource.CreateResourceIdentifier" /> to create an <see cref="IntegrationServiceEnvironmentManagedApiResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IntegrationServiceEnvironmentManagedApiResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IntegrationServiceEnvironmentManagedApiResource"/> object. </returns>
         public virtual IntegrationServiceEnvironmentManagedApiResource GetIntegrationServiceEnvironmentManagedApiResource(ResourceIdentifier id)
         {
             IntegrationServiceEnvironmentManagedApiResource.ValidateResourceId(id);

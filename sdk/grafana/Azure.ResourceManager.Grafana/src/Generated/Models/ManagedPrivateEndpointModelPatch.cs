@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The parameters for a PATCH request to a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpointModelPatch
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelPatch"/>. </summary>
         public ManagedPrivateEndpointModelPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelPatch"/>. </summary>
+        /// <param name="tags"> The new tags of the managed private endpoint. </param>
+        internal ManagedPrivateEndpointModelPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> The new tags of the managed private endpoint. </summary>

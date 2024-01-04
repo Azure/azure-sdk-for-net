@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> VaultCritical Operation protected by a resource guard. </summary>
     public partial class ResourceGuardOperationDetail
     {
-        /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         public ResourceGuardOperationDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardOperationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardOperationDetail"/>. </summary>
         /// <param name="vaultCriticalOperation"></param>
         /// <param name="defaultResourceRequest"></param>
         internal ResourceGuardOperationDetail(string vaultCriticalOperation, string defaultResourceRequest)

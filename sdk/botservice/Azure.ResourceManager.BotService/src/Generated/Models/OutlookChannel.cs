@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Outlook channel definition. </summary>
     public partial class OutlookChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of OutlookChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutlookChannel"/>. </summary>
         public OutlookChannel()
         {
             ChannelName = "OutlookChannel";
         }
 
-        /// <summary> Initializes a new instance of OutlookChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutlookChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

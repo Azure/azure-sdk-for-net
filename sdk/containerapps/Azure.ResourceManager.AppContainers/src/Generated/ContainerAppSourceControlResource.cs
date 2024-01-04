@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppSourceControl along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppSourceControlResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppSourceControlResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource" /> using the GetContainerAppSourceControl method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppSourceControlResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppSourceControlResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetContainerAppSourceControl method.
     /// </summary>
     public partial class ContainerAppSourceControlResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsSourceControlsRestOperations _containerAppSourceControlContainerAppsSourceControlsRestClient;
         private readonly ContainerAppSourceControlData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/sourcecontrols";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppSourceControlResource"/> class for mocking. </summary>
         protected ContainerAppSourceControlResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppSourceControlResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppSourceControlResource(ArmClient client, ContainerAppSourceControlData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/sourcecontrols";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

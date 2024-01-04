@@ -21,9 +21,9 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageClassificationMappingResource" /> and their operations.
-    /// Each <see cref="StorageClassificationMappingResource" /> in the collection will belong to the same instance of <see cref="StorageClassificationResource" />.
-    /// To get a <see cref="StorageClassificationMappingCollection" /> instance call the GetStorageClassificationMappings method from an instance of <see cref="StorageClassificationResource" />.
+    /// A class representing a collection of <see cref="StorageClassificationMappingResource"/> and their operations.
+    /// Each <see cref="StorageClassificationMappingResource"/> in the collection will belong to the same instance of <see cref="StorageClassificationResource"/>.
+    /// To get a <see cref="StorageClassificationMappingCollection"/> instance call the GetStorageClassificationMappings method from an instance of <see cref="StorageClassificationResource"/>.
     /// </summary>
     public partial class StorageClassificationMappingCollection : ArmCollection, IEnumerable<StorageClassificationMappingResource>, IAsyncEnumerable<StorageClassificationMappingResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageClassificationMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageClassificationMappingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageClassificationMappingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageClassificationMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageClassificationMappingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListByReplicationStorageClassificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

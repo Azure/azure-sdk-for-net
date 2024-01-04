@@ -12,14 +12,14 @@ namespace Azure.Communication.JobRouter
     /// <summary> Assignment details of a job to a worker. </summary>
     public partial class RouterJobAssignment
     {
-        /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
         /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
         internal RouterJobAssignment(DateTimeOffset assignedAt)
         {
             AssignedAt = assignedAt;
         }
 
-        /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
         /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="workerId"> Id of the Worker assigned to the job. </param>
         /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>

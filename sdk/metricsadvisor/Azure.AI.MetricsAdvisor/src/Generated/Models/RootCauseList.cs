@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The RootCauseList. </summary>
     internal partial class RootCauseList
     {
-        /// <summary> Initializes a new instance of RootCauseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RootCauseList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RootCauseList(IEnumerable<IncidentRootCause> value)
@@ -25,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RootCauseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RootCauseList"/>. </summary>
         /// <param name="value"></param>
         internal RootCauseList(IReadOnlyList<IncidentRootCause> value)
         {

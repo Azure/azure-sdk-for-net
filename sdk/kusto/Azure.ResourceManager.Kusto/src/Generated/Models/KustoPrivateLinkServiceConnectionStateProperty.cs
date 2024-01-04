@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Connection State of the Private Endpoint Connection. </summary>
     public partial class KustoPrivateLinkServiceConnectionStateProperty
     {
-        /// <summary> Initializes a new instance of KustoPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkServiceConnectionStateProperty"/>. </summary>
         public KustoPrivateLinkServiceConnectionStateProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>

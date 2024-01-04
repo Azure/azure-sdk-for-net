@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A Class representing a ReplicationProtectionIntent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReplicationProtectionIntentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReplicationProtectionIntentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetReplicationProtectionIntent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicationProtectionIntentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetReplicationProtectionIntentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetReplicationProtectionIntent method.
     /// </summary>
     public partial class ReplicationProtectionIntentResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly ReplicationProtectionIntentsRestOperations _replicationProtectionIntentRestClient;
         private readonly ReplicationProtectionIntentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationProtectionIntents";
+
         /// <summary> Initializes a new instance of the <see cref="ReplicationProtectionIntentResource"/> class for mocking. </summary>
         protected ReplicationProtectionIntentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReplicationProtectionIntentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReplicationProtectionIntentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReplicationProtectionIntentResource(ArmClient client, ReplicationProtectionIntentData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationProtectionIntents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

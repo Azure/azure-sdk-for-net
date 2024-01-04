@@ -13,12 +13,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> A deleted storage account bundle consisting of its previous id, attributes and its tags, as well as information on when it will be purged. </summary>
     public partial class DeletedStorageBundle : StorageBundle
     {
-        /// <summary> Initializes a new instance of DeletedStorageBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedStorageBundle"/>. </summary>
         internal DeletedStorageBundle()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedStorageBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedStorageBundle"/>. </summary>
         /// <param name="id"> The storage account id. </param>
         /// <param name="resourceId"> The storage account resource id. </param>
         /// <param name="activeKeyName"> The current active storage account key name. </param>

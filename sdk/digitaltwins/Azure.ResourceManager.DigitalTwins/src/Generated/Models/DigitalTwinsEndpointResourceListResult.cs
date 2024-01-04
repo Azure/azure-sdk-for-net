@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> A list of DigitalTwinsInstance Endpoints with a next link. </summary>
     internal partial class DigitalTwinsEndpointResourceListResult
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEndpointResourceListResult"/>. </summary>
         internal DigitalTwinsEndpointResourceListResult()
         {
             Value = new ChangeTrackingList<DigitalTwinsEndpointResourceData>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEndpointResourceListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of DigitalTwinsInstance Endpoints. </param>
         /// <param name="value"> A list of DigitalTwinsInstance Endpoints. </param>
         internal DigitalTwinsEndpointResourceListResult(string nextLink, IReadOnlyList<DigitalTwinsEndpointResourceData> value)

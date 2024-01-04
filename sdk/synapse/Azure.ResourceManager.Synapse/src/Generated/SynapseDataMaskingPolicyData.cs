@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Synapse
     /// <summary> A class representing the SynapseDataMaskingPolicy data model. </summary>
     public partial class SynapseDataMaskingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseDataMaskingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataMaskingPolicyData"/>. </summary>
         public SynapseDataMaskingPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataMaskingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataMaskingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

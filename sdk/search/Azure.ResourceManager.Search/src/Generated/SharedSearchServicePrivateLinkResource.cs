@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Search
 {
     /// <summary>
     /// A Class representing a SharedSearchServicePrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SharedSearchServicePrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSharedSearchServicePrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource" /> using the GetSharedSearchServicePrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SharedSearchServicePrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSharedSearchServicePrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource"/> using the GetSharedSearchServicePrivateLinkResource method.
     /// </summary>
     public partial class SharedSearchServicePrivateLinkResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Search
         private readonly SharedPrivateLinkResourcesRestOperations _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesRestClient;
         private readonly SharedSearchServicePrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/sharedPrivateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="SharedSearchServicePrivateLinkResource"/> class for mocking. </summary>
         protected SharedSearchServicePrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SharedSearchServicePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SharedSearchServicePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SharedSearchServicePrivateLinkResource(ArmClient client, SharedSearchServicePrivateLinkResourceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Search
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/sharedPrivateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Quantum
     /// </summary>
     public partial class QuantumWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of QuantumWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public QuantumWorkspaceData(AzureLocation location) : base(location)
         {
             Providers = new ChangeTrackingList<Provider>();
         }
 
-        /// <summary> Initializes a new instance of QuantumWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

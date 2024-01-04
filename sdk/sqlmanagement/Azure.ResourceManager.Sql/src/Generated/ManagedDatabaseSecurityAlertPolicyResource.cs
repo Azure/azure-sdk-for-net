@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedDatabaseSecurityAlertPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedDatabaseSecurityAlertPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseSecurityAlertPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource" /> using the GetManagedDatabaseSecurityAlertPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedDatabaseSecurityAlertPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedDatabaseSecurityAlertPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseResource"/> using the GetManagedDatabaseSecurityAlertPolicy method.
     /// </summary>
     public partial class ManagedDatabaseSecurityAlertPolicyResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedDatabaseSecurityAlertPoliciesRestOperations _managedDatabaseSecurityAlertPolicyRestClient;
         private readonly ManagedDatabaseSecurityAlertPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/securityAlertPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSecurityAlertPolicyResource"/> class for mocking. </summary>
         protected ManagedDatabaseSecurityAlertPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseSecurityAlertPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSecurityAlertPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedDatabaseSecurityAlertPolicyResource(ArmClient client, ManagedDatabaseSecurityAlertPolicyData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/securityAlertPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

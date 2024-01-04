@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperV to AzStackHCI Replication extension model custom properties. </summary>
     public partial class HyperVToAzStackHciReplicationExtensionModelCustomProperties : ReplicationExtensionModelCustomProperties
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="hyperVFabricArmId"> Gets or sets the ARM Id of the source HyperV fabric. </param>
         /// <param name="azStackHciFabricArmId"> Gets or sets the ARM Id of the target AzStackHCI fabric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVFabricArmId"/> or <paramref name="azStackHciFabricArmId"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "HyperVToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <param name="hyperVFabricArmId"> Gets or sets the ARM Id of the source HyperV fabric. </param>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>

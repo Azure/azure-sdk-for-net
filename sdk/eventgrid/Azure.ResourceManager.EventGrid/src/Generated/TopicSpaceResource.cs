@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing a TopicSpace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TopicSpaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTopicSpaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource" /> using the GetTopicSpace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TopicSpaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTopicSpaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventGridNamespaceResource"/> using the GetTopicSpace method.
     /// </summary>
     public partial class TopicSpaceResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly TopicSpacesRestOperations _topicSpaceRestClient;
         private readonly TopicSpaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/topicSpaces";
+
         /// <summary> Initializes a new instance of the <see cref="TopicSpaceResource"/> class for mocking. </summary>
         protected TopicSpaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TopicSpaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TopicSpaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TopicSpaceResource(ArmClient client, TopicSpaceData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/namespaces/topicSpaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

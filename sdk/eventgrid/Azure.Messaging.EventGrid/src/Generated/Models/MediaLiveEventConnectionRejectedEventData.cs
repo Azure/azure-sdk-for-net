@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Encoder connection rejected event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventConnectionRejected event. </summary>
     public partial class MediaLiveEventConnectionRejectedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventConnectionRejectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventConnectionRejectedEventData"/>. </summary>
         internal MediaLiveEventConnectionRejectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventConnectionRejectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventConnectionRejectedEventData"/>. </summary>
         /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
         /// <param name="streamId"> Gets the stream Id. </param>
         /// <param name="encoderIp"> Gets the remote IP. </param>

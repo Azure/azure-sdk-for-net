@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A Class representing a ResourceGuardProxy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGuardProxyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGuardProxyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetResourceGuardProxy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGuardProxyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceGuardProxyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetResourceGuardProxy method.
     /// </summary>
     public partial class ResourceGuardProxyResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly ResourceGuardProxyRestOperations _resourceGuardProxyRestClient;
         private readonly ResourceGuardProxyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupResourceGuardProxies";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGuardProxyResource"/> class for mocking. </summary>
         protected ResourceGuardProxyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGuardProxyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGuardProxyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceGuardProxyResource(ArmClient client, ResourceGuardProxyData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupResourceGuardProxies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

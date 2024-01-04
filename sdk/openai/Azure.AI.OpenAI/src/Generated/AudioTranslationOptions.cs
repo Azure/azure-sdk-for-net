@@ -13,11 +13,12 @@ namespace Azure.AI.OpenAI
     /// <summary> The configuration information for an audio translation request. </summary>
     public partial class AudioTranslationOptions
     {
-        /// <summary> Initializes a new instance of AudioTranslationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTranslationOptions"/>. </summary>
         /// <param name="audioData">
         /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
         ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
         /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
         /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
         /// <param name="prompt">
         /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
@@ -29,14 +30,17 @@ namespace Azure.AI.OpenAI
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </param>
         /// <param name="deploymentName"> The model to use for this translation request. </param>
-        internal AudioTranslationOptions(BinaryData audioData, AudioTranslationFormat? responseFormat, string prompt, float? temperature, string deploymentName)
+        internal AudioTranslationOptions(BinaryData audioData, string filename, AudioTranslationFormat? responseFormat, string prompt, float? temperature, string deploymentName)
         {
             AudioData = audioData;
+            Filename = filename;
             ResponseFormat = responseFormat;
             Prompt = prompt;
             Temperature = temperature;
             DeploymentName = deploymentName;
         }
+        /// <summary> The optional filename or descriptive identifier to associate with with the audio data. </summary>
+        public string Filename { get; set; }
         /// <summary> The requested format of the translation response data, which will influence the content and detail of the result. </summary>
         public AudioTranslationFormat? ResponseFormat { get; set; }
         /// <summary>

@@ -10,6 +10,16 @@
 
 ### Other Changes
 
+## 1.0.1 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
 ## 1.0.0 (2023-08-22)
 
 This is the first stable SDK for NetworkCloud based on 2023-07-01 APIs.

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A Class representing a SignalR along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SignalRResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSignalRResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSignalR method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SignalRResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSignalRResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSignalR method.
     /// </summary>
     public partial class SignalRResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.SignalR
         private readonly SignalRPrivateLinkResourcesRestOperations _signalRPrivateLinkResourcesRestClient;
         private readonly SignalRData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR";
+
         /// <summary> Initializes a new instance of the <see cref="SignalRResource"/> class for mocking. </summary>
         protected SignalRResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SignalRResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SignalRResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SignalRResource(ArmClient client, SignalRData data) : this(client, data.Id)
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.SignalR
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/signalR";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SignalRPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SignalRPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRPrivateLinkResource> GetSignalRPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SignalRPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SignalRPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRPrivateLinkResource> GetSignalRPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

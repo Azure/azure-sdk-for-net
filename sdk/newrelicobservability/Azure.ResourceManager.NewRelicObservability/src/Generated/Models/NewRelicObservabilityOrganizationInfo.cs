@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Organization Info of the NewRelic account. </summary>
     internal partial class NewRelicObservabilityOrganizationInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityOrganizationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityOrganizationInfo"/>. </summary>
         public NewRelicObservabilityOrganizationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityOrganizationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityOrganizationInfo"/>. </summary>
         /// <param name="organizationId"> Organization id. </param>
         internal NewRelicObservabilityOrganizationInfo(string organizationId)
         {

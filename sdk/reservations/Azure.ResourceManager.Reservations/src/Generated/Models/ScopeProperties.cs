@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The scope and whether it is valid. </summary>
     public partial class ScopeProperties
     {
-        /// <summary> Initializes a new instance of ScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeProperties"/>. </summary>
         internal ScopeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeProperties"/>. </summary>
         /// <param name="scope"></param>
         /// <param name="isValid"></param>
         internal ScopeProperties(string scope, bool? isValid)

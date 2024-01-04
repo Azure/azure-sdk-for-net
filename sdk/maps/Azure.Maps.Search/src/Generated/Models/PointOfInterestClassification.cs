@@ -13,13 +13,13 @@ namespace Azure.Maps.Search.Models
     /// <summary> The classification for the POI being returned. </summary>
     public partial class PointOfInterestClassification
     {
-        /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestClassification"/>. </summary>
         internal PointOfInterestClassification()
         {
             Names = new ChangeTrackingList<ClassificationName>();
         }
 
-        /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestClassification"/>. </summary>
         /// <param name="code"> Code property. </param>
         /// <param name="names"> Names array. </param>
         internal PointOfInterestClassification(string code, IReadOnlyList<ClassificationName> names)

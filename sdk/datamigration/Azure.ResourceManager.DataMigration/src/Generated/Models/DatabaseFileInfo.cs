@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database file specific information. </summary>
     public partial class DatabaseFileInfo
     {
-        /// <summary> Initializes a new instance of DatabaseFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFileInfo"/>. </summary>
         internal DatabaseFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFileInfo"/>. </summary>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="id"> Unique identifier for database file. </param>
         /// <param name="logicalName"> Logical name of the file. </param>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ResourceMover
 {
     /// <summary>
     /// A Class representing a MoverResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MoverResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMoverResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MoverResourceSetResource" /> using the GetMoverResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MoverResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMoverResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MoverResourceSetResource"/> using the GetMoverResource method.
     /// </summary>
     public partial class MoverResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ResourceMover
         private readonly MoveResourcesRestOperations _moverResourceMoveResourcesRestClient;
         private readonly MoverResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Migrate/moveCollections/moveResources";
+
         /// <summary> Initializes a new instance of the <see cref="MoverResource"/> class for mocking. </summary>
         protected MoverResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MoverResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MoverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MoverResource(ArmClient client, MoverResourceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ResourceMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Migrate/moveCollections/moveResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The MoverResource to use. </param>
+        /// <param name="data"> The <see cref="MoverResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MoverResource>> UpdateAsync(WaitUntil waitUntil, MoverResourceData data, CancellationToken cancellationToken = default)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The MoverResource to use. </param>
+        /// <param name="data"> The <see cref="MoverResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MoverResource> Update(WaitUntil waitUntil, MoverResourceData data, CancellationToken cancellationToken = default)

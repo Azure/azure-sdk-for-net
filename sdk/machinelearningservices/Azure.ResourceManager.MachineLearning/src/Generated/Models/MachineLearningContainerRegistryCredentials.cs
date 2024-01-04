@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningContainerRegistryCredentials. </summary>
     public partial class MachineLearningContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         internal MachineLearningContainerRegistryCredentials()
         {
             Passwords = new ChangeTrackingList<MachineLearningPasswordDetail>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         /// <param name="location"> The location of the workspace ACR. </param>
         /// <param name="passwords"></param>
         /// <param name="username"> The username of the workspace ACR. </param>

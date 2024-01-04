@@ -10,13 +10,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Identity properties of the workspace resource. </summary>
     public partial class WorkspaceIdentity
     {
-        /// <summary> Initializes a new instance of WorkspaceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceIdentity"/>. </summary>
         public WorkspaceIdentity()
         {
             Type = WorkspaceIdentityType.SystemAssigned;
         }
 
-        /// <summary> Initializes a new instance of WorkspaceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceIdentity"/>. </summary>
         /// <param name="type"> The identity type. Currently the only supported type is 'SystemAssigned'. </param>
         /// <param name="principalId"> The principal id of the identity. </param>
         /// <param name="tenantId"> The client tenant id of the identity. </param>

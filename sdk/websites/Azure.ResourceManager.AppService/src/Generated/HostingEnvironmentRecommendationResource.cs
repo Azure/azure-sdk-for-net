@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a HostingEnvironmentRecommendation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HostingEnvironmentRecommendationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHostingEnvironmentRecommendationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource" /> using the GetHostingEnvironmentRecommendation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HostingEnvironmentRecommendationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHostingEnvironmentRecommendationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServiceEnvironmentResource"/> using the GetHostingEnvironmentRecommendation method.
     /// </summary>
     public partial class HostingEnvironmentRecommendationResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.AppService
         private readonly RecommendationsRestOperations _hostingEnvironmentRecommendationRecommendationsRestClient;
         private readonly RecommendationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/recommendations";
+
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationResource"/> class for mocking. </summary>
         protected HostingEnvironmentRecommendationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HostingEnvironmentRecommendationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HostingEnvironmentRecommendationResource(ArmClient client, RecommendationRuleData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/recommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

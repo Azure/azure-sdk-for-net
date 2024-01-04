@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppConfigurationStoreResource" /> and their operations.
-    /// Each <see cref="AppConfigurationStoreResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AppConfigurationStoreCollection" /> instance call the GetAppConfigurationStores method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AppConfigurationStoreResource"/> and their operations.
+    /// Each <see cref="AppConfigurationStoreResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AppConfigurationStoreCollection"/> instance call the GetAppConfigurationStores method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AppConfigurationStoreCollection : ArmCollection, IEnumerable<AppConfigurationStoreResource>, IAsyncEnumerable<AppConfigurationStoreResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppConfigurationStoreResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppConfigurationStoreResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Properties of data center and transport preference validation response. </summary>
     public partial class PreferencesValidationResult : DataBoxValidationInputResult
     {
-        /// <summary> Initializes a new instance of PreferencesValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreferencesValidationResult"/>. </summary>
         internal PreferencesValidationResult()
         {
             ValidationType = DataBoxValidationInputDiscriminator.ValidatePreferences;
         }
 
-        /// <summary> Initializes a new instance of PreferencesValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreferencesValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of requested data center and transport. </param>

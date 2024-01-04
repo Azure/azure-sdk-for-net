@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU properties of the API Management service. </param>
         /// <param name="publisherEmail"> Publisher email. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ApiManagement
             PublisherName = publisherName;
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Profile of load based Autoscale. </summary>
     public partial class LoadBasedConfig
     {
-        /// <summary> Initializes a new instance of LoadBasedConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBasedConfig"/>. </summary>
         /// <param name="minNodes"> User needs to set the minimum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </param>
         /// <param name="maxNodes"> User needs to set the maximum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </param>
         /// <param name="scalingRules"> The scaling rules. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ScalingRules = scalingRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of LoadBasedConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBasedConfig"/>. </summary>
         /// <param name="minNodes"> User needs to set the minimum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </param>
         /// <param name="maxNodes"> User needs to set the maximum number of nodes for load based scaling, the load based scaling will use this to scale up and scale down between minimum and maximum number of nodes. </param>
         /// <param name="pollIntervalInSeconds"> User can specify the poll interval, this is the time period (in seconds) after which scaling metrics are polled for triggering a scaling operation. </param>

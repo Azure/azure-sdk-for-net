@@ -81,7 +81,7 @@
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
 
     <!-- Azure SDK packages -->
-    <PackageReference Update="Azure.Communication.Identity" Version="1.2.0" />
+    <PackageReference Update="Azure.Communication.Identity" Version="1.3.0" />
     <PackageReference Update="Azure.Communication.Common" Version="1.2.1" />
     <PackageReference Update="Azure.Core" Version="1.36.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.0" />
@@ -91,7 +91,7 @@
     <PackageReference Update="Azure.Data.Tables" Version="12.8.0" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.10.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.21.0" />
-    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.17.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.17.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.0.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
@@ -103,10 +103,10 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
     <PackageReference Update="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.8.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.9.0" />
 
     <!-- Other approved packages -->
-    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.3" />
+    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.4" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.56.0" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.56.0" />
@@ -152,7 +152,7 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.0" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
-    <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
@@ -176,10 +176,10 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20231114.1" PrivateAssets="All" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20231107.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240103.2" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20231116.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
-    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.4" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.20467.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" PrivateAssets="All" />
@@ -196,20 +196,21 @@
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSamplesProject)' == 'true')">
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.Identity" Version="1.9.0" />
+    <PackageReference Update="Azure.Identity" Version="1.10.4" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.16.0" />
-    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0" />
-    <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.1.0" />
-    <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.0.0" />
-    <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.0.0" />
-    <PackageReference Update="Azure.ResourceManager.Network" Version="1.1.0" />
-    <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.0.0" />
-    <PackageReference Update="Azure.ResourceManager.PrivateDns" Version="1.0.0" />
+    <PackageReference Update="Azure.ResourceManager.Compute" Version="1.2.0" />
+    <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.3.0" />
+    <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.Network" Version="1.5.0" />
+    <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.PrivateDns" Version="1.0.1" />
     <PackageReference Update="Azure.ResourceManager.RecoveryServices" Version="1.1.0" />
-    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.4.0" />
-    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.0" />
+    <PackageReference Update="Azure.ResourceManager.Resources" Version="1.6.0" />
+    <PackageReference Update="Azure.ResourceManager.Storage" Version="1.1.1" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.0.0" />
+    <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.1.0" />
     <PackageReference Update="Azure.Search.Documents" Version="11.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.4.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0-beta.4" />
@@ -275,7 +276,7 @@
     <PackageReference Update="Moq" Version="[4.18.2]" /><!-- This version should not be changed without team discussion. -->
     <PackageReference Update="MSTest.TestAdapter" Version="1.3.2" />
     <PackageReference Update="MSTest.TestFramework" Version="1.3.2" />
-    <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />

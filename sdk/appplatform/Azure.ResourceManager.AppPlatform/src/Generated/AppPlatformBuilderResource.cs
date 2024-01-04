@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuilder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuilderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuilderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource" /> using the GetAppPlatformBuilder method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuilderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuilderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource"/> using the GetAppPlatformBuilder method.
     /// </summary>
     public partial class AppPlatformBuilderResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BuildServiceBuilderRestOperations _appPlatformBuilderBuildServiceBuilderRestClient;
         private readonly AppPlatformBuilderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builders";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBuilderResource"/> class for mocking. </summary>
         protected AppPlatformBuilderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuilderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuilderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuilderResource(ArmClient client, AppPlatformBuilderData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceIdentifier"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceIdentifier> GetDeploymentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceIdentifier" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceIdentifier"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceIdentifier> GetDeployments(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListDeploymentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

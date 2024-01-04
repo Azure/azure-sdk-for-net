@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a Subscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetSubscription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSubscription method.
     /// </summary>
     public partial class SubscriptionResource : ArmResource
     {
@@ -44,12 +44,15 @@ namespace Azure.ResourceManager.Resources
         private readonly FeaturesRestOperations _featureRestClient;
         private readonly SubscriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResource"/> class for mocking. </summary>
         protected SubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionResource(ArmClient client, SubscriptionData data) : this(client, data.Id)
@@ -79,9 +82,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PredefinedTag"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PredefinedTag> GetAllPredefinedTagsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionTagsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PredefinedTag" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PredefinedTag"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PredefinedTag> GetAllPredefinedTags(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionTagsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocationExpanded" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LocationExpanded"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocationExpanded> GetLocationsAsync(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionRestClient.CreateListLocationsRequest(Id.SubscriptionId, includeExtendedLocations);
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocationExpanded" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LocationExpanded"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocationExpanded> GetLocations(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionRestClient.CreateListLocationsRequest(Id.SubscriptionId, includeExtendedLocations);
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FeatureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FeatureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FeatureResource> GetFeaturesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListAllRequest(Id.SubscriptionId);
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FeatureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FeatureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FeatureResource> GetFeatures(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListAllRequest(Id.SubscriptionId);

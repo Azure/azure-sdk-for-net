@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Desired outbound IP resources for the cluster load balancer. </summary>
     internal partial class ManagedClusterLoadBalancerProfileOutboundIPs
     {
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPs"/>. </summary>
         public ManagedClusterLoadBalancerProfileOutboundIPs()
         {
             PublicIPs = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPs"/>. </summary>
         /// <param name="publicIPs"> A list of public IP resources. </param>
         internal ManagedClusterLoadBalancerProfileOutboundIPs(IList<WritableSubResource> publicIPs)
         {

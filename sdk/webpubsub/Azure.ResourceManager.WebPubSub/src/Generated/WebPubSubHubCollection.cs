@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebPubSubHubResource" /> and their operations.
-    /// Each <see cref="WebPubSubHubResource" /> in the collection will belong to the same instance of <see cref="WebPubSubResource" />.
-    /// To get a <see cref="WebPubSubHubCollection" /> instance call the GetWebPubSubHubs method from an instance of <see cref="WebPubSubResource" />.
+    /// A class representing a collection of <see cref="WebPubSubHubResource"/> and their operations.
+    /// Each <see cref="WebPubSubHubResource"/> in the collection will belong to the same instance of <see cref="WebPubSubResource"/>.
+    /// To get a <see cref="WebPubSubHubCollection"/> instance call the GetWebPubSubHubs method from an instance of <see cref="WebPubSubResource"/>.
     /// </summary>
     public partial class WebPubSubHubCollection : ArmCollection, IEnumerable<WebPubSubHubResource>, IAsyncEnumerable<WebPubSubHubResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebPubSubHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebPubSubHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebPubSubHubResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebPubSubHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebPubSubHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebPubSubHubResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubHubRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The configuration of dataset in the query. </summary>
     internal partial class QueryDatasetConfiguration
     {
-        /// <summary> Initializes a new instance of QueryDatasetConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryDatasetConfiguration"/>. </summary>
         public QueryDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryDatasetConfiguration"/>. </summary>
+        /// <param name="columns"> Array of column names to be included in the query. Any valid query column name is allowed. If not provided, then query includes all columns. </param>
+        internal QueryDatasetConfiguration(IList<string> columns)
+        {
+            Columns = columns;
         }
 
         /// <summary> Array of column names to be included in the query. Any valid query column name is allowed. If not provided, then query includes all columns. </summary>

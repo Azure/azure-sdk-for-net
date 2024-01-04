@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
     /// A Class representing a ContainerRegistryToken along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerRegistryTokenResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerRegistryTokenResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource" /> using the GetContainerRegistryToken method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerRegistryTokenResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerRegistryTokenResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerRegistryResource"/> using the GetContainerRegistryToken method.
     /// </summary>
     public partial class ContainerRegistryTokenResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly TokensRestOperations _containerRegistryTokenTokensRestClient;
         private readonly ContainerRegistryTokenData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/tokens";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryTokenResource"/> class for mocking. </summary>
         protected ContainerRegistryTokenResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerRegistryTokenResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryTokenResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerRegistryTokenResource(ArmClient client, ContainerRegistryTokenData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/tokens";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The node image upgrade specs for the update run. </summary>
     internal partial class NodeImageSelectionStatus
     {
-        /// <summary> Initializes a new instance of NodeImageSelectionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeImageSelectionStatus"/>. </summary>
         internal NodeImageSelectionStatus()
         {
             SelectedNodeImageVersions = new ChangeTrackingList<NodeImageVersion>();
         }
 
-        /// <summary> Initializes a new instance of NodeImageSelectionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeImageSelectionStatus"/>. </summary>
         /// <param name="selectedNodeImageVersions"> The image versions to upgrade the nodes to. </param>
         internal NodeImageSelectionStatus(IReadOnlyList<NodeImageVersion> selectedNodeImageVersions)
         {

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Indicates what diagnostic log settings are to be enabled. </summary>
     internal partial class DiagnosticLogSettings
     {
-        /// <summary> Initializes a new instance of DiagnosticLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticLogSettings"/>. </summary>
         public DiagnosticLogSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticLogSettings"/>. </summary>
         /// <param name="enableFullTextQuery"> Describe the level of detail with which queries are to be logged. </param>
         internal DiagnosticLogSettings(EnableFullTextQuery? enableFullTextQuery)
         {

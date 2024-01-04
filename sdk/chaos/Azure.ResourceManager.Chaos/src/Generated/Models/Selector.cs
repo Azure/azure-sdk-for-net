@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Chaos.Models
     /// Please note <see cref="Selector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ListSelector"/> and <see cref="QuerySelector"/>.
     /// </summary>
-    public partial class Selector
+    public abstract partial class Selector
     {
-        /// <summary> Initializes a new instance of Selector. </summary>
+        /// <summary> Initializes a new instance of <see cref="Selector"/>. </summary>
         /// <param name="id"> String of the selector ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public Selector(string id)
+        protected Selector(string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of Selector. </summary>
+        /// <summary> Initializes a new instance of <see cref="Selector"/>. </summary>
         /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="filter">

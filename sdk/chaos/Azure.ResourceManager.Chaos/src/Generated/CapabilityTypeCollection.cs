@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CapabilityTypeResource" /> and their operations.
-    /// Each <see cref="CapabilityTypeResource" /> in the collection will belong to the same instance of <see cref="TargetTypeResource" />.
-    /// To get a <see cref="CapabilityTypeCollection" /> instance call the GetCapabilityTypes method from an instance of <see cref="TargetTypeResource" />.
+    /// A class representing a collection of <see cref="CapabilityTypeResource"/> and their operations.
+    /// Each <see cref="CapabilityTypeResource"/> in the collection will belong to the same instance of <see cref="TargetTypeResource"/>.
+    /// To get a <see cref="CapabilityTypeCollection"/> instance call the GetCapabilityTypes method from an instance of <see cref="TargetTypeResource"/>.
     /// </summary>
     public partial class CapabilityTypeCollection : ArmCollection, IEnumerable<CapabilityTypeResource>, IAsyncEnumerable<CapabilityTypeResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapabilityTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CapabilityTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapabilityTypeResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityTypeRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapabilityTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CapabilityTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapabilityTypeResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityTypeRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);

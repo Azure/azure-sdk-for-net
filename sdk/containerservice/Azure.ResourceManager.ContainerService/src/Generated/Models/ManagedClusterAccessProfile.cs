@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Managed cluster Access Profile. </summary>
     public partial class ManagedClusterAccessProfile : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedClusterAccessProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAccessProfile"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedClusterAccessProfile(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAccessProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAccessProfile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

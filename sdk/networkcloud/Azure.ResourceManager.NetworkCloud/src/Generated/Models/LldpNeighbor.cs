@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> Type Deprecated. Will be removed in an upcoming version. LldpNeighbor represents the details about the device connected to the NIC. </summary>
     public partial class LldpNeighbor
     {
-        /// <summary> Initializes a new instance of LldpNeighbor. </summary>
+        /// <summary> Initializes a new instance of <see cref="LldpNeighbor"/>. </summary>
         internal LldpNeighbor()
         {
         }
 
-        /// <summary> Initializes a new instance of LldpNeighbor. </summary>
+        /// <summary> Initializes a new instance of <see cref="LldpNeighbor"/>. </summary>
         /// <param name="portDescription"> The descriptive information about the port on the connected device. </param>
         /// <param name="portName"> The system-assigned name of the port on the connected device. </param>
         /// <param name="systemDescription"> The descriptive information about the connected device. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A type of trigger based on schedule. </summary>
     public partial class ScheduledTrigger : DataShareTriggerData
     {
-        /// <summary> Initializes a new instance of ScheduledTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledTrigger"/>. </summary>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizeOn"> Synchronization time. </param>
         public ScheduledTrigger(DataShareSynchronizationRecurrenceInterval recurrenceInterval, DateTimeOffset synchronizeOn)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = TriggerKind.ScheduleBased;
         }
 
-        /// <summary> Initializes a new instance of ScheduledTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledTrigger"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

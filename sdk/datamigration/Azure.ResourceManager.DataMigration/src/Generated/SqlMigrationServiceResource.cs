@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a SqlMigrationService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlMigrationServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlMigrationServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSqlMigrationService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlMigrationServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlMigrationServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSqlMigrationService method.
     /// </summary>
     public partial class SqlMigrationServiceResource : ArmResource
     {
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly SqlMigrationServicesRestOperations _sqlMigrationServiceRestClient;
         private readonly SqlMigrationServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/sqlMigrationServices";
+
         /// <summary> Initializes a new instance of the <see cref="SqlMigrationServiceResource"/> class for mocking. </summary>
         protected SqlMigrationServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlMigrationServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlMigrationServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlMigrationServiceResource(ArmClient client, SqlMigrationServiceData data) : this(client, data.Id)
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/sqlMigrationServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatabaseMigration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatabaseMigration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseMigration> GetMigrationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListMigrationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseMigration" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatabaseMigration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseMigration> GetMigrations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlMigrationServiceRestClient.CreateListMigrationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

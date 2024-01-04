@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
     /// A Class representing a PacketCoreDataPlane along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PacketCoreDataPlaneResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPacketCoreDataPlaneResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PacketCoreControlPlaneResource" /> using the GetPacketCoreDataPlane method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PacketCoreDataPlaneResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPacketCoreDataPlaneResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PacketCoreControlPlaneResource"/> using the GetPacketCoreDataPlane method.
     /// </summary>
     public partial class PacketCoreDataPlaneResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.MobileNetwork
         private readonly PacketCoreDataPlanesRestOperations _packetCoreDataPlaneRestClient;
         private readonly PacketCoreDataPlaneData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/packetCoreDataPlanes";
+
         /// <summary> Initializes a new instance of the <see cref="PacketCoreDataPlaneResource"/> class for mocking. </summary>
         protected PacketCoreDataPlaneResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PacketCoreDataPlaneResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PacketCoreDataPlaneResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PacketCoreDataPlaneResource(ArmClient client, PacketCoreDataPlaneData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.MobileNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MobileNetwork/packetCoreControlPlanes/packetCoreDataPlanes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

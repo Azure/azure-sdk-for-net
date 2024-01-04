@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningOutboundRuleBasic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningOutboundRuleBasicResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningOutboundRuleBasicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningOutboundRuleBasic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningOutboundRuleBasicResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningOutboundRuleBasicResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningOutboundRuleBasic method.
     /// </summary>
     public partial class MachineLearningOutboundRuleBasicResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly ManagedNetworkSettingsRuleRestOperations _machineLearningOutboundRuleBasicManagedNetworkSettingsRuleRestClient;
         private readonly MachineLearningOutboundRuleBasicData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/outboundRules";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningOutboundRuleBasicResource"/> class for mocking. </summary>
         protected MachineLearningOutboundRuleBasicResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningOutboundRuleBasicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningOutboundRuleBasicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningOutboundRuleBasicResource(ArmClient client, MachineLearningOutboundRuleBasicData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/outboundRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

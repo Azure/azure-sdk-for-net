@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location">
         /// The resource location.
         /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.location
@@ -44,6 +44,86 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             StorageAccounts = new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>();
             ComputePolicies = new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
             FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="location">
+        /// The resource location.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.location
+        /// </param>
+        /// <param name="tags">
+        /// The resource tags.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.tags
+        /// </param>
+        /// <param name="defaultDataLakeStoreAccount">
+        /// The default Data Lake Store account associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.defaultDataLakeStoreAccount
+        /// </param>
+        /// <param name="dataLakeStoreAccounts">
+        /// The list of Data Lake Store accounts associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.dataLakeStoreAccounts
+        /// </param>
+        /// <param name="storageAccounts">
+        /// The list of Azure Blob Storage accounts associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.storageAccounts
+        /// </param>
+        /// <param name="computePolicies">
+        /// The list of compute policies associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.computePolicies
+        /// </param>
+        /// <param name="firewallRules">
+        /// The list of firewall rules associated with this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallRules
+        /// </param>
+        /// <param name="firewallState">
+        /// The current state of the IP address firewall for this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallState
+        /// </param>
+        /// <param name="firewallAllowAzureIPs">
+        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.firewallAllowAzureIps
+        /// </param>
+        /// <param name="newTier">
+        /// The commitment tier for the next month.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.newTier
+        /// </param>
+        /// <param name="maxJobCount">
+        /// The maximum supported jobs running under the account at the same time.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.maxJobCount
+        /// </param>
+        /// <param name="maxDegreeOfParallelism">
+        /// The maximum supported degree of parallelism for this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.maxDegreeOfParallelism
+        /// </param>
+        /// <param name="maxDegreeOfParallelismPerJob">
+        /// The maximum supported degree of parallelism per job for this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.maxDegreeOfParallelismPerJob
+        /// </param>
+        /// <param name="minPriorityPerJob">
+        /// The minimum supported priority per job for this account.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.minPriorityPerJob
+        /// </param>
+        /// <param name="queryStoreRetention">
+        /// The number of days that job metadata is retained.
+        /// Serialized Name: CreateDataLakeAnalyticsAccountParameters.properties.queryStoreRetention
+        /// </param>
+        internal DataLakeAnalyticsAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, string defaultDataLakeStoreAccount, IList<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts, IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> storageAccounts, IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> computePolicies, IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, int? maxJobCount, int? maxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention)
+        {
+            Location = location;
+            Tags = tags;
+            DefaultDataLakeStoreAccount = defaultDataLakeStoreAccount;
+            DataLakeStoreAccounts = dataLakeStoreAccounts;
+            StorageAccounts = storageAccounts;
+            ComputePolicies = computePolicies;
+            FirewallRules = firewallRules;
+            FirewallState = firewallState;
+            FirewallAllowAzureIPs = firewallAllowAzureIPs;
+            NewTier = newTier;
+            MaxJobCount = maxJobCount;
+            MaxDegreeOfParallelism = maxDegreeOfParallelism;
+            MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
+            MinPriorityPerJob = minPriorityPerJob;
+            QueryStoreRetention = queryStoreRetention;
         }
 
         /// <summary>

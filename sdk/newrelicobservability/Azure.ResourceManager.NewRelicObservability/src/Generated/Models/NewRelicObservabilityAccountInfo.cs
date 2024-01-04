@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Account Info of the NewRelic account. </summary>
     public partial class NewRelicObservabilityAccountInfo
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityAccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAccountInfo"/>. </summary>
         public NewRelicObservabilityAccountInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityAccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAccountInfo"/>. </summary>
         /// <param name="accountId"> Account id. </param>
         /// <param name="ingestionKey"> ingestion key of account. </param>
         /// <param name="region"> NewRelic account region. </param>

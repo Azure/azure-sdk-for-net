@@ -21,9 +21,9 @@ using Azure.ResourceManager.DataLakeAnalytics.Models;
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataLakeAnalyticsComputePolicyResource" /> and their operations.
-    /// Each <see cref="DataLakeAnalyticsComputePolicyResource" /> in the collection will belong to the same instance of <see cref="DataLakeAnalyticsAccountResource" />.
-    /// To get a <see cref="DataLakeAnalyticsComputePolicyCollection" /> instance call the GetDataLakeAnalyticsComputePolicies method from an instance of <see cref="DataLakeAnalyticsAccountResource" />.
+    /// A class representing a collection of <see cref="DataLakeAnalyticsComputePolicyResource"/> and their operations.
+    /// Each <see cref="DataLakeAnalyticsComputePolicyResource"/> in the collection will belong to the same instance of <see cref="DataLakeAnalyticsAccountResource"/>.
+    /// To get a <see cref="DataLakeAnalyticsComputePolicyCollection"/> instance call the GetDataLakeAnalyticsComputePolicies method from an instance of <see cref="DataLakeAnalyticsAccountResource"/>.
     /// </summary>
     public partial class DataLakeAnalyticsComputePolicyCollection : ArmCollection, IEnumerable<DataLakeAnalyticsComputePolicyResource>, IAsyncEnumerable<DataLakeAnalyticsComputePolicyResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataLakeAnalyticsComputePolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataLakeAnalyticsComputePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeAnalyticsComputePolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataLakeAnalyticsComputePolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataLakeAnalyticsComputePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeAnalyticsComputePolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

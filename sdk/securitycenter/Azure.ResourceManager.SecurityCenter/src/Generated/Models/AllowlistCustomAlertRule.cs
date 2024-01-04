@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public partial class AllowlistCustomAlertRule : ListCustomAlertRule
     {
-        /// <summary> Initializes a new instance of AllowlistCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowlistCustomAlertRule"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowlistValues"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RuleType = "AllowlistCustomAlertRule";
         }
 
-        /// <summary> Initializes a new instance of AllowlistCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllowlistCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

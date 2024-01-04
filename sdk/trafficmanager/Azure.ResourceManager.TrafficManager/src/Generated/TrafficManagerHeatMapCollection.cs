@@ -19,9 +19,9 @@ using Azure.ResourceManager.TrafficManager.Models;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TrafficManagerHeatMapResource" /> and their operations.
-    /// Each <see cref="TrafficManagerHeatMapResource" /> in the collection will belong to the same instance of <see cref="TrafficManagerProfileResource" />.
-    /// To get a <see cref="TrafficManagerHeatMapCollection" /> instance call the GetTrafficManagerHeatMaps method from an instance of <see cref="TrafficManagerProfileResource" />.
+    /// A class representing a collection of <see cref="TrafficManagerHeatMapResource"/> and their operations.
+    /// Each <see cref="TrafficManagerHeatMapResource"/> in the collection will belong to the same instance of <see cref="TrafficManagerProfileResource"/>.
+    /// To get a <see cref="TrafficManagerHeatMapCollection"/> instance call the GetTrafficManagerHeatMaps method from an instance of <see cref="TrafficManagerProfileResource"/>.
     /// </summary>
     public partial class TrafficManagerHeatMapCollection : ArmCollection
     {

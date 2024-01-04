@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryIntegrationRuntime along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryIntegrationRuntimeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryIntegrationRuntimeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryIntegrationRuntime method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryIntegrationRuntimeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryIntegrationRuntimeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryIntegrationRuntime method.
     /// </summary>
     public partial class DataFactoryIntegrationRuntimeResource : ArmResource
     {
@@ -45,12 +45,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly IntegrationRuntimeNodesRestOperations _integrationRuntimeNodesRestClient;
         private readonly DataFactoryIntegrationRuntimeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/integrationRuntimes";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryIntegrationRuntimeResource"/> class for mocking. </summary>
         protected DataFactoryIntegrationRuntimeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryIntegrationRuntimeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryIntegrationRuntimeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryIntegrationRuntimeResource(ArmClient client, DataFactoryIntegrationRuntimeData data) : this(client, data.Id)
@@ -75,9 +78,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/integrationRuntimes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -1127,7 +1127,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SsisObjectMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SsisObjectMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);

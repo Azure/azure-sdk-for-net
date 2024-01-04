@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing a PartnerNamespacePrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PartnerNamespacePrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPartnerNamespacePrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource" /> using the GetPartnerNamespacePrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerNamespacePrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPartnerNamespacePrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource"/> using the GetPartnerNamespacePrivateLinkResource method.
     /// </summary>
     public partial class PartnerNamespacePrivateLinkResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PrivateLinkResourcesRestOperations _partnerNamespacePrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly EventGridPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="PartnerNamespacePrivateLinkResource"/> class for mocking. </summary>
         protected PartnerNamespacePrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PartnerNamespacePrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PartnerNamespacePrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PartnerNamespacePrivateLinkResource(ArmClient client, EventGridPrivateLinkResourceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

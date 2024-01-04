@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Skype channel definition. </summary>
     public partial class SkypeChannel : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of SkypeChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkypeChannel"/>. </summary>
         public SkypeChannel()
         {
             ChannelName = "SkypeChannel";
         }
 
-        /// <summary> Initializes a new instance of SkypeChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkypeChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

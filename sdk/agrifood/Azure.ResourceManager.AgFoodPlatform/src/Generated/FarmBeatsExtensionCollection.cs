@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AgFoodPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FarmBeatsExtensionResource" /> and their operations.
-    /// Each <see cref="FarmBeatsExtensionResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="FarmBeatsExtensionCollection" /> instance call the GetFarmBeatsExtensions method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="FarmBeatsExtensionResource"/> and their operations.
+    /// Each <see cref="FarmBeatsExtensionResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="FarmBeatsExtensionCollection"/> instance call the GetFarmBeatsExtensions method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class FarmBeatsExtensionCollection : ArmCollection, IEnumerable<FarmBeatsExtensionResource>, IAsyncEnumerable<FarmBeatsExtensionResource>
     {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FarmBeatsExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FarmBeatsExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FarmBeatsExtensionResource> GetAllAsync(IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatsExtensionRestClient.CreateListRequest(farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Minimum = 10, Maximum = 1000, Default value = 50.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FarmBeatsExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FarmBeatsExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FarmBeatsExtensionResource> GetAll(IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _farmBeatsExtensionRestClient.CreateListRequest(farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, pageSizeHint);

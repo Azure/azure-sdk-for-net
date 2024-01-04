@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> M365 Extensions definition. </summary>
     public partial class M365Extensions : BotChannelProperties
     {
-        /// <summary> Initializes a new instance of M365Extensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="M365Extensions"/>. </summary>
         public M365Extensions()
         {
             ChannelName = "M365Extensions";
         }
 
-        /// <summary> Initializes a new instance of M365Extensions. </summary>
+        /// <summary> Initializes a new instance of <see cref="M365Extensions"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>

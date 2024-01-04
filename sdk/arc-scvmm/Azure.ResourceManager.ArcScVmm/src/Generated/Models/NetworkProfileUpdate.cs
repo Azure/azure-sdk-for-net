@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     internal partial class NetworkProfileUpdate
     {
-        /// <summary> Initializes a new instance of NetworkProfileUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileUpdate"/>. </summary>
         public NetworkProfileUpdate()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfacesUpdate>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileUpdate"/>. </summary>
+        /// <param name="networkInterfaces"> Gets or sets the list of network interfaces associated with the virtual machine. </param>
+        internal NetworkProfileUpdate(IList<NetworkInterfacesUpdate> networkInterfaces)
+        {
+            NetworkInterfaces = networkInterfaces;
         }
 
         /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>

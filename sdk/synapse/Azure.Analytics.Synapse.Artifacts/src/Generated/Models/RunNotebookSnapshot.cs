@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Run notebook snapshot. </summary>
     public partial class RunNotebookSnapshot
     {
-        /// <summary> Initializes a new instance of RunNotebookSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshot"/>. </summary>
         /// <param name="id"> Run notebook runId. </param>
         /// <param name="notebook"> Notebook name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="notebook"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Parameters = new ChangeTrackingDictionary<string, RunNotebookParameter>();
         }
 
-        /// <summary> Initializes a new instance of RunNotebookSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSnapshot"/>. </summary>
         /// <param name="exitValue"> Output of exit command. </param>
         /// <param name="id"> Run notebook runId. </param>
         /// <param name="notebook"> Notebook name. </param>

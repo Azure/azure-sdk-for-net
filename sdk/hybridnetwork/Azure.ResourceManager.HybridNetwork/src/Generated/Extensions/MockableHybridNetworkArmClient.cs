@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationGroupSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationGroupSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationGroupSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConfigurationGroupSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfigurationGroupSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationGroupSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource"/> object. </returns>
         public virtual ConfigurationGroupSchemaResource GetConfigurationGroupSchemaResource(ResourceIdentifier id)
         {
             ConfigurationGroupSchemaResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationGroupValueResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationGroupValueResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationGroupValueResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConfigurationGroupValueResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfigurationGroupValueResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationGroupValueResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationGroupValueResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConfigurationGroupValueResource"/> object. </returns>
         public virtual ConfigurationGroupValueResource GetConfigurationGroupValueResource(ResourceIdentifier id)
         {
             ConfigurationGroupValueResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFunctionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFunctionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFunctionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFunctionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFunctionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFunctionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkFunctionResource"/> object. </returns>
         public virtual NetworkFunctionResource GetNetworkFunctionResource(ResourceIdentifier id)
         {
             NetworkFunctionResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ComponentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComponentResource.CreateResourceIdentifier" /> to create a <see cref="ComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ComponentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComponentResource.CreateResourceIdentifier" /> to create a <see cref="ComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ComponentResource"/> object. </returns>
         public virtual ComponentResource GetComponentResource(ResourceIdentifier id)
         {
             ComponentResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFunctionDefinitionGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFunctionDefinitionGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFunctionDefinitionGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFunctionDefinitionGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFunctionDefinitionGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFunctionDefinitionGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFunctionDefinitionGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkFunctionDefinitionGroupResource"/> object. </returns>
         public virtual NetworkFunctionDefinitionGroupResource GetNetworkFunctionDefinitionGroupResource(ResourceIdentifier id)
         {
             NetworkFunctionDefinitionGroupResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkFunctionDefinitionVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkFunctionDefinitionVersionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFunctionDefinitionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFunctionDefinitionVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFunctionDefinitionVersionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFunctionDefinitionVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkFunctionDefinitionVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkFunctionDefinitionVersionResource"/> object. </returns>
         public virtual NetworkFunctionDefinitionVersionResource GetNetworkFunctionDefinitionVersionResource(ResourceIdentifier id)
         {
             NetworkFunctionDefinitionVersionResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkServiceDesignGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkServiceDesignGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkServiceDesignGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkServiceDesignGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkServiceDesignGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkServiceDesignGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkServiceDesignGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkServiceDesignGroupResource"/> object. </returns>
         public virtual NetworkServiceDesignGroupResource GetNetworkServiceDesignGroupResource(ResourceIdentifier id)
         {
             NetworkServiceDesignGroupResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkServiceDesignVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkServiceDesignVersionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkServiceDesignVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkServiceDesignVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkServiceDesignVersionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkServiceDesignVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkServiceDesignVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkServiceDesignVersionResource"/> object. </returns>
         public virtual NetworkServiceDesignVersionResource GetNetworkServiceDesignVersionResource(ResourceIdentifier id)
         {
             NetworkServiceDesignVersionResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PublisherResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PublisherResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublisherResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
         public virtual PublisherResource GetPublisherResource(ResourceIdentifier id)
         {
             PublisherResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArtifactStoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArtifactStoreResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ArtifactStoreResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArtifactStoreResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArtifactStoreResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ArtifactStoreResource"/> object. </returns>
         public virtual ArtifactStoreResource GetArtifactStoreResource(ResourceIdentifier id)
         {
             ArtifactStoreResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArtifactManifestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArtifactManifestResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactManifestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ArtifactManifestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArtifactManifestResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactManifestResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArtifactManifestResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ArtifactManifestResource"/> object. </returns>
         public virtual ArtifactManifestResource GetArtifactManifestResource(ResourceIdentifier id)
         {
             ArtifactManifestResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
         public virtual SiteResource GetSiteResource(ResourceIdentifier id)
         {
             SiteResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteNetworkServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="SiteNetworkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteNetworkServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="SiteNetworkServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteNetworkServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SiteNetworkServiceResource"/> object. </returns>
         public virtual SiteNetworkServiceResource GetSiteNetworkServiceResource(ResourceIdentifier id)
         {
             SiteNetworkServiceResource.ValidateResourceId(id);

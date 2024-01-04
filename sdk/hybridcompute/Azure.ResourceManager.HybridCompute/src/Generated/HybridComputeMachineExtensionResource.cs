@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
     /// A Class representing a HybridComputeMachineExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HybridComputeMachineExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHybridComputeMachineExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HybridComputeMachineResource" /> using the GetHybridComputeMachineExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeMachineExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputeMachineExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HybridComputeMachineResource"/> using the GetHybridComputeMachineExtension method.
     /// </summary>
     public partial class HybridComputeMachineExtensionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly MachineExtensionsRestOperations _hybridComputeMachineExtensionMachineExtensionsRestClient;
         private readonly HybridComputeMachineExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineExtensionResource"/> class for mocking. </summary>
         protected HybridComputeMachineExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HybridComputeMachineExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputeMachineExtensionResource(ArmClient client, HybridComputeMachineExtensionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridCompute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

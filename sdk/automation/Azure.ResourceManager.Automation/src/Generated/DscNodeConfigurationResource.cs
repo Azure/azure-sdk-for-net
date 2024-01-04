@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing a DscNodeConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DscNodeConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDscNodeConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetDscNodeConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DscNodeConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDscNodeConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetDscNodeConfiguration method.
     /// </summary>
     public partial class DscNodeConfigurationResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Automation
         private readonly DscNodeConfigurationRestOperations _dscNodeConfigurationRestClient;
         private readonly DscNodeConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/nodeConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="DscNodeConfigurationResource"/> class for mocking. </summary>
         protected DscNodeConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DscNodeConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DscNodeConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DscNodeConfigurationResource(ArmClient client, DscNodeConfigurationData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/nodeConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

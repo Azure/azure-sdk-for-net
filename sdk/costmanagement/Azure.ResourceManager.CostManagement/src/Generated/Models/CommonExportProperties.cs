@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The common properties of the export. </summary>
     public partial class CommonExportProperties
     {
-        /// <summary> Initializes a new instance of CommonExportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deliveryInfo"/> or <paramref name="definition"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of CommonExportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
         /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
         /// <param name="deliveryInfo"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>

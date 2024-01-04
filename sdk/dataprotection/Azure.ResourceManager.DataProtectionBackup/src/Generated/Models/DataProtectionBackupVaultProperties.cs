@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Backup Vault. </summary>
     public partial class DataProtectionBackupVaultProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="storageSettings"> Storage Settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageSettings"/> is null. </exception>
         public DataProtectionBackupVaultProperties(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
@@ -23,9 +23,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(storageSettings, nameof(storageSettings));
 
             StorageSettings = storageSettings.ToList();
+            ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="monitoringSettings"> Monitoring Settings. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
@@ -35,7 +36,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
         /// <param name="secureScore"> Secure Score of Backup Vault. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore)
+        /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, IList<AzureLocation> replicatedRegions)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IsVaultProtectedByResourceGuard = isVaultProtectedByResourceGuard;
             FeatureSettings = featureSettings;
             SecureScore = secureScore;
+            ReplicatedRegions = replicatedRegions;
         }
 
         /// <summary> Monitoring Settings. </summary>
@@ -76,5 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public BackupVaultFeatureSettings FeatureSettings { get; set; }
         /// <summary> Secure Score of Backup Vault. </summary>
         public BackupVaultSecureScoreLevel? SecureScore { get; }
+        /// <summary> List of replicated regions for Backup Vault. </summary>
+        public IList<AzureLocation> ReplicatedRegions { get; }
     }
 }

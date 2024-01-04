@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties associated with a Stream Analytics cluster. </summary>
     internal partial class ClusterInfo
     {
-        /// <summary> Initializes a new instance of ClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInfo"/>. </summary>
         public ClusterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInfo"/>. </summary>
         /// <param name="id"> The resource id of cluster. </param>
         internal ClusterInfo(ResourceIdentifier id)
         {

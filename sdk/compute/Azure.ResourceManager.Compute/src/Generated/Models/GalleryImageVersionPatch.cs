@@ -14,10 +14,33 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery image version that you want to update. </summary>
     public partial class GalleryImageVersionPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPatch"/>. </summary>
         public GalleryImageVersionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
+        /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
+        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="securityProfile"> The security profile of a gallery image version. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal GalleryImageVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        {
+            PublishingProfile = publishingProfile;
+            ProvisioningState = provisioningState;
+            StorageProfile = storageProfile;
+            SafetyProfile = safetyProfile;
+            ReplicationStatus = replicationStatus;
+            SecurityProfile = securityProfile;
+            Tags = tags;
         }
 
         /// <summary> The publishing profile of a gallery image Version. </summary>
@@ -30,6 +53,20 @@ namespace Azure.ResourceManager.Compute.Models
         public GalleryImageVersionSafetyProfile SafetyProfile { get; set; }
         /// <summary> This is the replication status of the gallery image version. </summary>
         public ReplicationStatus ReplicationStatus { get; }
+        /// <summary> The security profile of a gallery image version. </summary>
+        internal ImageVersionSecurityProfile SecurityProfile { get; set; }
+        /// <summary> Contains UEFI settings for the image version. </summary>
+        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        {
+            get => SecurityProfile is null ? default : SecurityProfile.UefiSettings;
+            set
+            {
+                if (SecurityProfile is null)
+                    SecurityProfile = new ImageVersionSecurityProfile();
+                SecurityProfile.UefiSettings = value;
+            }
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReservationCatalog"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SubscriptionResourceGetCatalogOptions();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReservationCatalog"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReservationCatalog> GetCatalog(SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SubscriptionResourceGetCatalogOptions();

@@ -13,10 +13,19 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ConfigurationQueriesTestInput. </summary>
     public partial class ConfigurationQueriesTestInput
     {
-        /// <summary> Initializes a new instance of ConfigurationQueriesTestInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestInput"/>. </summary>
         public ConfigurationQueriesTestInput()
         {
             CustomMetricQueries = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationQueriesTestInput"/>. </summary>
+        /// <param name="targetCondition"> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </param>
+        /// <param name="customMetricQueries"> The key-value pairs with queries and their identifier. </param>
+        internal ConfigurationQueriesTestInput(string targetCondition, IDictionary<string, string> customMetricQueries)
+        {
+            TargetCondition = targetCondition;
+            CustomMetricQueries = customMetricQueries;
         }
 
         /// <summary> The query used to define targeted devices or modules. The query is based on twin tags and/or reported properties. </summary>

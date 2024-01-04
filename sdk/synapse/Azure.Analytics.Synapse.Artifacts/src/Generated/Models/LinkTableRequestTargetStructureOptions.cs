@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkTableRequestTargetStructureOptions. </summary>
     public partial class LinkTableRequestTargetStructureOptions
     {
-        /// <summary> Initializes a new instance of LinkTableRequestTargetStructureOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTargetStructureOptions"/>. </summary>
         public LinkTableRequestTargetStructureOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableRequestTargetStructureOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequestTargetStructureOptions"/>. </summary>
         /// <param name="type"> Target table structure type. </param>
         internal LinkTableRequestTargetStructureOptions(string type)
         {

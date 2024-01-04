@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Parameters supplied to move hybrid worker operation. </summary>
     public partial class HybridRunbookWorkerMoveContent
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkerMoveContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerMoveContent"/>. </summary>
         public HybridRunbookWorkerMoveContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerMoveContent"/>. </summary>
+        /// <param name="hybridRunbookWorkerGroupName"> Gets or sets the target hybrid runbook worker group. </param>
+        internal HybridRunbookWorkerMoveContent(string hybridRunbookWorkerGroupName)
+        {
+            HybridRunbookWorkerGroupName = hybridRunbookWorkerGroupName;
         }
 
         /// <summary> Gets or sets the target hybrid runbook worker group. </summary>

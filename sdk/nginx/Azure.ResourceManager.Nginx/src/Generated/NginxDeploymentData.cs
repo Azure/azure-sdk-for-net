@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> A class representing the NginxDeployment data model. </summary>
     public partial class NginxDeploymentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NginxDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NginxDeploymentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NginxDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="identity"> Gets or sets the identity. </param>
         /// <param name="properties"></param>
         /// <param name="sku"></param>
-        internal NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties, ResourceSku sku) : base(id, name, resourceType, systemData, tags, location)
+        internal NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties, NginxResourceSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Properties = properties;
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Nginx
         /// <summary> Gets or sets the properties. </summary>
         public NginxDeploymentProperties Properties { get; set; }
         /// <summary> Gets or sets the sku. </summary>
-        internal ResourceSku Sku { get; set; }
+        internal NginxResourceSku Sku { get; set; }
         /// <summary> Name of the SKU. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
-            set => Sku = new ResourceSku(value);
+            set => Sku = new NginxResourceSku(value);
         }
     }
 }

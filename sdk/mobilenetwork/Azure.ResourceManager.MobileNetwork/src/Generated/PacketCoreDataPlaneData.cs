@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class PacketCoreDataPlaneData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreDataPlaneData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userPlaneAccessInterface"/> is null. </exception>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MobileNetwork
             UserPlaneAccessVirtualIPv4Addresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCoreDataPlaneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

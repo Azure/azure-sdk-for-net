@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> The UnknownSourceShareSynchronizationSetting. </summary>
     internal partial class UnknownSourceShareSynchronizationSetting : SourceShareSynchronizationSetting
     {
-        /// <summary> Initializes a new instance of UnknownSourceShareSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSourceShareSynchronizationSetting"/>. </summary>
         /// <param name="kind"> Kind of synchronization setting on share. </param>
         internal UnknownSourceShareSynchronizationSetting(SourceShareSynchronizationSettingKind kind) : base(kind)
         {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -22,7 +23,7 @@ namespace Azure.Communication.JobRouter
             }
             string queueId = default;
             int length = default;
-            Optional<IDictionary<string, double>> estimatedWaitTimeMinutes = default;
+            Optional<IDictionary<int, TimeSpan>> estimatedWaitTimeMinutes = default;
             Optional<double> longestJobWaitTimeMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,16 +39,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("estimatedWaitTimeMinutes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, double> dictionary = new Dictionary<string, double>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetDouble());
-                    }
-                    estimatedWaitTimeMinutes = dictionary;
+                    ReadEstimatedWaitTimes(property, ref estimatedWaitTimeMinutes);
                     continue;
                 }
                 if (property.NameEquals("longestJobWaitTimeMinutes"u8))

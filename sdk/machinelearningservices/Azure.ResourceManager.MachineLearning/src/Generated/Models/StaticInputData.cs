@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Static input data definition. </summary>
     public partial class StaticInputData : MonitoringInputDataBase
     {
-        /// <summary> Initializes a new instance of StaticInputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticInputData"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <param name="windowEnd"> [Required] The end date of the data window. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             InputDataType = MonitoringInputDataType.Static;
         }
 
-        /// <summary> Initializes a new instance of StaticInputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticInputData"/>. </summary>
         /// <param name="columns"> Mapping of column names to special uses. </param>
         /// <param name="dataContext"> The context metadata of the data source. </param>
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>

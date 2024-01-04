@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualHubRouteTableV2Resource" /> and their operations.
-    /// Each <see cref="VirtualHubRouteTableV2Resource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
-    /// To get a <see cref="VirtualHubRouteTableV2Collection" /> instance call the GetVirtualHubRouteTableV2s method from an instance of <see cref="VirtualHubResource" />.
+    /// A class representing a collection of <see cref="VirtualHubRouteTableV2Resource"/> and their operations.
+    /// Each <see cref="VirtualHubRouteTableV2Resource"/> in the collection will belong to the same instance of <see cref="VirtualHubResource"/>.
+    /// To get a <see cref="VirtualHubRouteTableV2Collection"/> instance call the GetVirtualHubRouteTableV2s method from an instance of <see cref="VirtualHubResource"/>.
     /// </summary>
     public partial class VirtualHubRouteTableV2Collection : ArmCollection, IEnumerable<VirtualHubRouteTableV2Resource>, IAsyncEnumerable<VirtualHubRouteTableV2Resource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualHubRouteTableV2Resource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualHubRouteTableV2Resource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualHubRouteTableV2Resource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualHubRouteTableV2RestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualHubRouteTableV2Resource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualHubRouteTableV2Resource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualHubRouteTableV2Resource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualHubRouteTableV2RestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

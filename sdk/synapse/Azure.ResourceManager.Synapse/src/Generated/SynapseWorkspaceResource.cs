@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetSynapseWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSynapseWorkspace method.
     /// </summary>
     public partial class SynapseWorkspaceResource : ArmResource
     {
@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly WorkspaceManagedSqlServerUsagesRestOperations _workspaceManagedSqlServerUsagesRestClient;
         private readonly SynapseWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseWorkspaceResource"/> class for mocking. </summary>
         protected SynapseWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseWorkspaceResource(ArmClient client, SynapseWorkspaceData data) : this(client, data.Id)
@@ -77,9 +80,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -768,21 +768,21 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary> Gets an object representing a SynapseWorkspaceAdministratorResource along with the instance operations that can be performed on it in the SynapseWorkspace. </summary>
-        /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource"/> object. </returns>
         public virtual SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource()
         {
             return new SynapseWorkspaceAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
         }
 
         /// <summary> Gets an object representing a SynapseWorkspaceSqlAdministratorResource along with the instance operations that can be performed on it in the SynapseWorkspace. </summary>
-        /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource"/> object. </returns>
         public virtual SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource()
         {
             return new SynapseWorkspaceSqlAdministratorResource(Client, Id.AppendChildResource("sqlAdministrators", "activeDirectory"));
         }
 
         /// <summary> Gets an object representing a SynapseManagedIdentitySqlControlSettingResource along with the instance operations that can be performed on it in the SynapseWorkspace. </summary>
-        /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource"/> object. </returns>
         public virtual SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSetting()
         {
             return new SynapseManagedIdentitySqlControlSettingResource(Client, Id.AppendChildResource("managedIdentitySqlControlSettings", "default"));
@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseServerUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseServerUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseServerUsage> GetWorkspaceManagedSqlServerUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseServerUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseServerUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseServerUsage> GetWorkspaceManagedSqlServerUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

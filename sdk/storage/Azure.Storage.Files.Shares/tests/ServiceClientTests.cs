@@ -102,7 +102,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetPropertiesAsync(),
-                e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
+                e => Assert.AreEqual(ShareErrorCode.AccountIsDisabled.ToString(), e.ErrorCode));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]
@@ -181,7 +181,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fakeService.SetPropertiesAsync(properties),
-                e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
+                e => Assert.AreEqual(ShareErrorCode.AccountIsDisabled.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]
@@ -328,7 +328,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 service.GetSharesAsync().ToListAsync(),
-                e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
+                e => Assert.AreEqual(ShareErrorCode.AccountIsDisabled.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

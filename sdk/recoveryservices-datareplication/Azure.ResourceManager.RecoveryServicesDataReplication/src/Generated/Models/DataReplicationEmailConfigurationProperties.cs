@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Email configuration model properties. </summary>
     public partial class DataReplicationEmailConfigurationProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationEmailConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationProperties"/>. </summary>
         /// <param name="sendToOwners"> Gets or sets a value indicating whether to send email to subscription administrator. </param>
         public DataReplicationEmailConfigurationProperties(bool sendToOwners)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomEmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationEmailConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationEmailConfigurationProperties"/>. </summary>
         /// <param name="sendToOwners"> Gets or sets a value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> Gets or sets the custom email address for sending emails. </param>
         /// <param name="locale"> Gets or sets the locale for the email notification. </param>

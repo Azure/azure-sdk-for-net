@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevTestLabNotificationChannelResource" /> and their operations.
-    /// Each <see cref="DevTestLabNotificationChannelResource" /> in the collection will belong to the same instance of <see cref="DevTestLabResource" />.
-    /// To get a <see cref="DevTestLabNotificationChannelCollection" /> instance call the GetDevTestLabNotificationChannels method from an instance of <see cref="DevTestLabResource" />.
+    /// A class representing a collection of <see cref="DevTestLabNotificationChannelResource"/> and their operations.
+    /// Each <see cref="DevTestLabNotificationChannelResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabNotificationChannelCollection"/> instance call the GetDevTestLabNotificationChannels method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabNotificationChannelCollection : ArmCollection, IEnumerable<DevTestLabNotificationChannelResource>, IAsyncEnumerable<DevTestLabNotificationChannelResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevTestLabNotificationChannelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevTestLabNotificationChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabNotificationChannelResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabNotificationChannelNotificationChannelsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabNotificationChannelResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevTestLabNotificationChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabNotificationChannelResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabNotificationChannelNotificationChannelsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);

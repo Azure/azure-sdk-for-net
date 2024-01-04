@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A class representing follower database request. </summary>
     public partial class KustoFollowerDatabaseDefinition
     {
-        /// <summary> Initializes a new instance of KustoFollowerDatabaseDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoFollowerDatabaseDefinition"/>. </summary>
         /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterResourceId"/> or <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
         }
 
-        /// <summary> Initializes a new instance of KustoFollowerDatabaseDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoFollowerDatabaseDefinition"/>. </summary>
         /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>

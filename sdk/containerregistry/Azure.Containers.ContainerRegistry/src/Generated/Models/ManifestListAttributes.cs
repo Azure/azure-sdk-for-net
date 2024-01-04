@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The ManifestListAttributes. </summary>
     internal partial class ManifestListAttributes
     {
-        /// <summary> Initializes a new instance of ManifestListAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestListAttributes"/>. </summary>
         internal ManifestListAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of ManifestListAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestListAttributes"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. This will generally be application/vnd.docker.image.manifest.v2+json, but it could also be application/vnd.docker.image.manifest.v1+json. </param>
         /// <param name="size"> The size in bytes of the object. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a ServiceEndpointPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceEndpointPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceEndpointPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetServiceEndpointPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceEndpointPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceEndpointPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetServiceEndpointPolicy method.
     /// </summary>
     public partial class ServiceEndpointPolicyResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Network
         private readonly ServiceEndpointPoliciesRestOperations _serviceEndpointPolicyRestClient;
         private readonly ServiceEndpointPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/serviceEndpointPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyResource"/> class for mocking. </summary>
         protected ServiceEndpointPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceEndpointPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceEndpointPolicyResource(ArmClient client, ServiceEndpointPolicyData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/serviceEndpointPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

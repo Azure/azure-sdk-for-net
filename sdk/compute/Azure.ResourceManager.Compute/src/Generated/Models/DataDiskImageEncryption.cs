@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Contains encryption settings for a data disk image. </summary>
     public partial class DataDiskImageEncryption : DiskImageEncryption
     {
-        /// <summary> Initializes a new instance of DataDiskImageEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDiskImageEncryption"/>. </summary>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         public DataDiskImageEncryption(int lun)
         {
             Lun = lun;
         }
 
-        /// <summary> Initializes a new instance of DataDiskImageEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataDiskImageEncryption"/>. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         internal DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, int lun) : base(diskEncryptionSetId)

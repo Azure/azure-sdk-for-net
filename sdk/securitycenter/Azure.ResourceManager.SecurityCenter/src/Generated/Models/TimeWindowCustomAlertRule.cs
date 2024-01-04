@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public partial class TimeWindowCustomAlertRule : ThresholdCustomAlertRule
     {
-        /// <summary> Initializes a new instance of TimeWindowCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/>. </summary>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RuleType = "TimeWindowCustomAlertRule";
         }
 
-        /// <summary> Initializes a new instance of TimeWindowCustomAlertRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/>. </summary>
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Input to get top query statistics. </summary>
     public partial class MySqlTopQueryStatisticsInput
     {
-        /// <summary> Initializes a new instance of MySqlTopQueryStatisticsInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlTopQueryStatisticsInput"/>. </summary>
         /// <param name="numberOfTopQueries"> Max number of top queries to return. </param>
         /// <param name="aggregationFunction"> Aggregation function name. </param>
         /// <param name="observedMetric"> Observed metric name. </param>

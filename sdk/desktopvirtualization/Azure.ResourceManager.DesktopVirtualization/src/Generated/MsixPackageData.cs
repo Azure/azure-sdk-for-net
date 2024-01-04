@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class MsixPackageData : ResourceData
     {
-        /// <summary> Initializes a new instance of MsixPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageData"/>. </summary>
         public MsixPackageData()
         {
             PackageDependencies = new ChangeTrackingList<MsixPackageDependencies>();
             PackageApplications = new ChangeTrackingList<MsixPackageApplications>();
         }
 
-        /// <summary> Initializes a new instance of MsixPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

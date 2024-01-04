@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.VaultAccessPolicyChanged event. </summary>
     public partial class KeyVaultAccessPolicyChangedEventData
     {
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicyChangedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyChangedEventData"/>. </summary>
         internal KeyVaultAccessPolicyChangedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicyChangedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyChangedEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>

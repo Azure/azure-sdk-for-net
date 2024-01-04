@@ -10,9 +10,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters to update or create an API Version Set Contract. </summary>
     public partial class ApiVersionSetPatch
     {
-        /// <summary> Initializes a new instance of ApiVersionSetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiVersionSetPatch"/>. </summary>
         public ApiVersionSetPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiVersionSetPatch"/>. </summary>
+        /// <param name="description"> Description of API Version Set. </param>
+        /// <param name="versionQueryName"> Name of query parameter that indicates the API Version if versioningScheme is set to `query`. </param>
+        /// <param name="versionHeaderName"> Name of HTTP header parameter that indicates the API Version if versioningScheme is set to `header`. </param>
+        /// <param name="displayName"> Name of API Version Set. </param>
+        /// <param name="versioningScheme"> An value that determines where the API Version identifier will be located in a HTTP request. </param>
+        internal ApiVersionSetPatch(string description, string versionQueryName, string versionHeaderName, string displayName, VersioningScheme? versioningScheme)
+        {
+            Description = description;
+            VersionQueryName = versionQueryName;
+            VersionHeaderName = versionHeaderName;
+            DisplayName = displayName;
+            VersioningScheme = versioningScheme;
         }
 
         /// <summary> Description of API Version Set. </summary>

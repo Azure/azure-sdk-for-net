@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmLogicModelFactory
     {
-        /// <summary> Initializes a new instance of LogicWorkflowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowData(id, name, resourceType, systemData, tags, location, identity, provisioningState, createdOn, changedOn, state, version, accessEndpoint, endpointsConfiguration, accessControl, sku, integrationAccount, integrationServiceEnvironment, definition, parameters);
         }
 
-        /// <summary> Initializes a new instance of LogicSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicSku"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="plan"> The reference to plan. </param>
         /// <returns> A new <see cref="Models.LogicSku"/> instance for mocking. </returns>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicSku(name, plan);
         }
 
-        /// <summary> Initializes a new instance of LogicResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicResourceReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicResourceReference(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowTriggerCallbackUri"/>. </summary>
         /// <param name="value"> Gets the workflow trigger callback URL. </param>
         /// <param name="method"> Gets the workflow trigger callback URL HTTP method. </param>
         /// <param name="basePath"> Gets the workflow trigger callback URL base path. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowTriggerCallbackUri(value, method, basePath, relativePath, relativePathParameters?.ToList(), queries);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackQueryParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowTriggerCallbackQueryParameterInfo"/>. </summary>
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="sp"> The SAS permissions. </param>
         /// <param name="sv"> The SAS version. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowTriggerCallbackQueryParameterInfo(apiVersion, sp, sv, sig, se);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowReference(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowVersionData(id, name, resourceType, systemData, tags, location, provisioningState, createdOn, changedOn, state, version, accessEndpoint, endpointsConfiguration, accessControl, sku, integrationAccount, definition, parameters);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowTriggerData(id, name, resourceType, systemData, provisioningState, createdOn, changedOn, state, status, lastExecutionOn, nextExecutionOn, recurrence, workflow);
         }
 
-        /// <summary> Initializes a new instance of LogicJsonSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicJsonSchema"/>. </summary>
         /// <param name="title"> The JSON title. </param>
         /// <param name="content"> The JSON content. </param>
         /// <returns> A new <see cref="Models.LogicJsonSchema"/> instance for mocking. </returns>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicJsonSchema(title, content);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowTriggerReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowTriggerReference(id, name, resourceType, flowName, triggerName);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerHistoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowTriggerHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowTriggerHistoryData(id, name, resourceType, systemData, startOn, endOn, scheduledOn, status, code, error, trackingId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, inputsLink, outputsLink, isFired, run);
         }
 
-        /// <summary> Initializes a new instance of LogicContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicContentLink"/>. </summary>
         /// <param name="uri"> The content link URI. </param>
         /// <param name="contentVersion"> The content version. </param>
         /// <param name="contentSize"> The content size. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicContentLink(uri, contentVersion, contentSize, contentHash, metadata);
         }
 
-        /// <summary> Initializes a new instance of LogicContentHash. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicContentHash"/>. </summary>
         /// <param name="algorithm"> The algorithm of the content hash. </param>
         /// <param name="value"> The value of the content hash. </param>
         /// <returns> A new <see cref="Models.LogicContentHash"/> instance for mocking. </returns>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicContentHash(algorithm, value);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowRunData(id, name, resourceType, systemData, waitEndOn, startOn, endOn, status, code, error, correlationId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, workflow, trigger, outputs, response);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowRunTrigger"/>. </summary>
         /// <param name="name"> Gets the name. </param>
         /// <param name="inputs"> Gets the inputs. </param>
         /// <param name="inputsLink"> Gets the link to inputs. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowRunTrigger(name, inputs, inputsLink, outputs, outputsLink, scheduledOn, startOn, endOn, trackingId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, code, status, error, trackedProperties);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowOutputParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowOutputParameterInfo"/>. </summary>
         /// <param name="parameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowOutputParameterInfo(parameterType, value, metadata, description, error);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowRunActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowRunActionData(id, name, resourceType, systemData, startOn, endOn, status, code, error, trackingId, correlation, inputsLink, outputsLink, trackedProperties, retryHistory?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LogicExpressionRoot. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicExpressionRoot"/>. </summary>
         /// <param name="text"> The text. </param>
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicExpressionRoot(text, value, subexpressions?.ToList(), error, path);
         }
 
-        /// <summary> Initializes a new instance of LogicExpression. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicExpression"/>. </summary>
         /// <param name="text"> The text. </param>
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicExpression(text, value, subexpressions?.ToList(), error);
         }
 
-        /// <summary> Initializes a new instance of LogicExpressionErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicExpressionErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicExpressionErrorInfo(code, message, details?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LogicErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         /// <returns> A new <see cref="Models.LogicErrorInfo"/> instance for mocking. </returns>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicErrorInfo(code);
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunActionRepetitionDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowRunActionRepetitionDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowRunActionRepetitionDefinitionData(id, name, resourceType, systemData, tags, location, startOn, endOn, correlation, status, code, error, trackingId, inputs, inputsLink, outputs, outputsLink, trackedProperties, retryHistory?.ToList(), iterationCount, repetitionIndexes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRequestHistoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowRequestHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowRequestHistoryData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new IntegrationAccountSku(skuName.Value) : null, integrationServiceEnvironment, state);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAssemblyDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountAssemblyDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountAssemblyDefinitionData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountBatchConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountBatchConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountBatchConfigurationData(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of ListOperationCallbackUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ListOperationCallbackUri"/>. </summary>
         /// <param name="uri"> The URL value. </param>
         /// <returns> A new <see cref="Models.ListOperationCallbackUri"/> instance for mocking. </returns>
         public static ListOperationCallbackUri ListOperationCallbackUri(Uri uri = null)
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new ListOperationCallbackUri(uri);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultNameReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountKeyVaultNameReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountKeyVaultNameReference(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountKeyVaultKey"/>. </summary>
         /// <param name="keyId"> The key id. </param>
         /// <param name="isEnabled"> Whether the key is enabled or not. </param>
         /// <param name="createdOn"> When the key was created. </param>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountKeyVaultKey(keyId, isEnabled, createdOn, updatedOn);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountSchemaData(id, name, resourceType, systemData, tags, location, schemaType, targetNamespace, documentName, fileName, createdOn, changedOn, metadata, content, contentType, contentLink);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountMapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountMapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountMapData(id, name, resourceType, systemData, tags, location, mapType, parametersSchemaRef != null ? new IntegrationAccountMapPropertiesParametersSchema(parametersSchemaRef) : null, createdOn, changedOn, content, contentType, contentLink, metadata);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountPartnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountPartnerData(id, name, resourceType, systemData, tags, location, partnerType, createdOn, changedOn, metadata, b2bBusinessIdentities != null ? new IntegrationAccountPartnerContent(new B2BPartnerContent(b2bBusinessIdentities?.ToList())) : null);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountAgreementData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountAgreementData(id, name, resourceType, systemData, tags, location, createdOn, changedOn, metadata, agreementType, hostPartner, guestPartner, hostIdentity, guestIdentity, content);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountCertificateData(id, name, resourceType, systemData, tags, location, createdOn, changedOn, metadata, key, publicCertificate);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountKeyVaultKeyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountKeyVaultKeyReference"/>. </summary>
         /// <param name="keyName"> The private key name in key vault. </param>
         /// <param name="keyVersion"> The private key version in key vault. </param>
         /// <param name="resourceId"> The resource id. </param>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountKeyVaultKeyReference(keyName, keyVersion, resourceId, resourceName, resourceType);
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountSessionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountSessionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountSessionData(id, name, resourceType, systemData, tags, location, createdOn, changedOn, content);
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationServiceEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentData(id, name, resourceType, systemData, tags, location, properties, sku, identity);
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentSkuDefinition"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The sku. </param>
         /// <param name="capacity"> The sku capacity. </param>
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentSkuDefinition(resourceType, sku, capacity);
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinitionSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentSkuDefinitionSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The sku tier. </param>
         /// <returns> A new <see cref="Models.IntegrationServiceEnvironmentSkuDefinitionSku"/> instance for mocking. </returns>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentSkuDefinitionSku(name, tier);
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="default"> The default capacity. </param>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentSkuCapacity(minimum, maximum, @default, scaleType);
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSubnetNetworkHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentSubnetNetworkHealth"/>. </summary>
         /// <param name="outboundNetworkDependencies"> The outbound network dependencies. </param>
         /// <param name="outboundNetworkHealth"> The integration service environment network health. </param>
         /// <param name="networkDependencyHealthState"> The integration service environment network health state. </param>
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies?.ToList(), outboundNetworkHealth, networkDependencyHealthState);
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentNetworkDependency"/>. </summary>
         /// <param name="category"> The network dependency category type. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="endpoints"> The endpoints. </param>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentNetworkDependency(category, displayName, endpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentNetworkEndpoint"/>. </summary>
         /// <param name="accessibility"> The accessibility state. </param>
         /// <param name="domainName"> The domain name. </param>
         /// <param name="ports"> The ports. </param>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentNetworkEndpoint(accessibility, domainName, ports?.ToList());
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentNetworkDependencyHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentNetworkDependencyHealth"/>. </summary>
         /// <param name="error"> The error if any occurred during the operation. </param>
         /// <param name="state"> The network dependency health state. </param>
         /// <returns> A new <see cref="Models.IntegrationServiceEnvironmentNetworkDependencyHealth"/> instance for mocking. </returns>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentNetworkDependencyHealth(error, state);
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error message details. </param>
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceErrorInfo(code, message, details?.ToList(), innerError);
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentManagedApiData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Logic.IntegrationServiceEnvironmentManagedApiData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationServiceEnvironmentManagedApiData(id, name, resourceType, systemData, tags, location, namePropertiesName, connectionParameters, metadata, runtimeUris?.ToList(), generalInformation, capabilities?.ToList(), serviceUri != null ? new LogicApiResourceBackendService(serviceUri) : null, policies, apiDefinitionUri, apiDefinitions, integrationServiceEnvironment, provisioningState, category, deploymentParametersContentLinkDefinition != null ? new IntegrationServiceEnvironmentManagedApiDeploymentParameters(deploymentParametersContentLinkDefinition) : null);
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicApiResourceMetadata"/>. </summary>
         /// <param name="source"> The source. </param>
         /// <param name="brandColor"> The brand color. </param>
         /// <param name="hideKey"> The hide key. </param>
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicApiResourceMetadata(source, brandColor, hideKey, tags, apiType, wsdlService, wsdlImportMethod, connectionType, provisioningState, deploymentParameters);
         }
 
-        /// <summary> Initializes a new instance of LogicWsdlService. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicWsdlService"/>. </summary>
         /// <param name="qualifiedName"> The qualified name. </param>
         /// <param name="endpointQualifiedNames"> The list of endpoints' qualified names. </param>
         /// <returns> A new <see cref="Models.LogicWsdlService"/> instance for mocking. </returns>
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWsdlService(qualifiedName, endpointQualifiedNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LogicApiDeploymentParameterMetadataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicApiDeploymentParameterMetadataSet"/>. </summary>
         /// <param name="packageContentLink"> The package content link parameter. </param>
         /// <param name="redisCacheConnectionString"> The package content link parameter. </param>
         /// <returns> A new <see cref="Models.LogicApiDeploymentParameterMetadataSet"/> instance for mocking. </returns>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicApiDeploymentParameterMetadataSet(packageContentLink, redisCacheConnectionString);
         }
 
-        /// <summary> Initializes a new instance of LogicApiDeploymentParameterMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicApiDeploymentParameterMetadata"/>. </summary>
         /// <param name="apiDeploymentParameterMetadataType"> The type. </param>
         /// <param name="isRequired"> Indicates whether its required. </param>
         /// <param name="displayName"> The display name. </param>
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicApiDeploymentParameterMetadata(apiDeploymentParameterMetadataType, isRequired, displayName, description, visibility);
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceGeneralInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicApiResourceGeneralInformation"/>. </summary>
         /// <param name="iconUri"> The icon url. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="description"> The description. </param>
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicApiResourceGeneralInformation(iconUri, displayName, description, termsOfUseUri, releaseTag, tier);
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourcePolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicApiResourcePolicies"/>. </summary>
         /// <param name="content"> The API level only policies XML as embedded content. </param>
         /// <param name="contentLink"> The content link to the policies. </param>
         /// <returns> A new <see cref="Models.LogicApiResourcePolicies"/> instance for mocking. </returns>
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicApiResourcePolicies(content, contentLink);
         }
 
-        /// <summary> Initializes a new instance of LogicApiResourceDefinitions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicApiResourceDefinitions"/>. </summary>
         /// <param name="originalSwaggerUri"> The original swagger url. </param>
         /// <param name="modifiedSwaggerUri"> The modified swagger url. </param>
         /// <returns> A new <see cref="Models.LogicApiResourceDefinitions"/> instance for mocking. </returns>
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicApiResourceDefinitions(originalSwaggerUri, modifiedSwaggerUri);
         }
 
-        /// <summary> Initializes a new instance of LogicApiOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicApiOperationInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicApiOperationInfo(id, name, resourceType, systemData, tags, location, properties);
         }
 
-        /// <summary> Initializes a new instance of LogicApiReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogicApiReference"/>. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>

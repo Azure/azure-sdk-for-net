@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryTimerTriggerDescriptor. </summary>
     public partial class ContainerRegistryTimerTriggerDescriptor
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTriggerDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerDescriptor"/>. </summary>
         public ContainerRegistryTimerTriggerDescriptor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTriggerDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerDescriptor"/>. </summary>
         /// <param name="timerTriggerName"> The timer trigger name that caused the run. </param>
         /// <param name="scheduleOccurrence"> The occurrence that triggered the run. </param>
         internal ContainerRegistryTimerTriggerDescriptor(string timerTriggerName, string scheduleOccurrence)

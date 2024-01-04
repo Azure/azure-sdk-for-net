@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppReplicaResource" /> and their operations.
-    /// Each <see cref="ContainerAppReplicaResource" /> in the collection will belong to the same instance of <see cref="ContainerAppRevisionResource" />.
-    /// To get a <see cref="ContainerAppReplicaCollection" /> instance call the GetContainerAppReplicas method from an instance of <see cref="ContainerAppRevisionResource" />.
+    /// A class representing a collection of <see cref="ContainerAppReplicaResource"/> and their operations.
+    /// Each <see cref="ContainerAppReplicaResource"/> in the collection will belong to the same instance of <see cref="ContainerAppRevisionResource"/>.
+    /// To get a <see cref="ContainerAppReplicaCollection"/> instance call the GetContainerAppReplicas method from an instance of <see cref="ContainerAppRevisionResource"/>.
     /// </summary>
     public partial class ContainerAppReplicaCollection : ArmCollection, IEnumerable<ContainerAppReplicaResource>, IAsyncEnumerable<ContainerAppReplicaResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppReplicaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppReplicaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppReplicaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppReplicaContainerAppsRevisionReplicasRestClient.CreateListReplicasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppReplicaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppReplicaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppReplicaResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppReplicaContainerAppsRevisionReplicasRestClient.CreateListReplicasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

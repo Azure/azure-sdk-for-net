@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxStorageAccount. </summary>
     public partial class NginxStorageAccount
     {
-        /// <summary> Initializes a new instance of NginxStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxStorageAccount"/>. </summary>
         public NginxStorageAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of NginxStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxStorageAccount"/>. </summary>
         /// <param name="accountName"></param>
         /// <param name="containerName"></param>
         internal NginxStorageAccount(string accountName, string containerName)

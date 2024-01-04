@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(SharingProfile))
+            {
+                writer.WritePropertyName("sharingProfile"u8);
+                writer.WriteObjectValue(SharingProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

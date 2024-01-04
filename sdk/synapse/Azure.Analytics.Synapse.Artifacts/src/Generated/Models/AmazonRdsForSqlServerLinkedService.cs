@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Amazon RDS for SQL Server linked service. </summary>
     public partial class AmazonRdsForSqlServerLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AmazonRdsForSqlServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerLinkedService"/>. </summary>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public AmazonRdsForSqlServerLinkedService(object connectionString)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AmazonRdsForSqlServer";
         }
 
-        /// <summary> Initializes a new instance of AmazonRdsForSqlServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

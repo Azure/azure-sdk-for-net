@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the MongoDB databases and their properties. </summary>
     internal partial class MongoDBDatabaseListResult
     {
-        /// <summary> Initializes a new instance of MongoDBDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseListResult"/>. </summary>
         internal MongoDBDatabaseListResult()
         {
             Value = new ChangeTrackingList<MongoDBDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBDatabaseListResult"/>. </summary>
         /// <param name="value"> List of MongoDB databases and their properties. </param>
         internal MongoDBDatabaseListResult(IReadOnlyList<MongoDBDatabaseData> value)
         {

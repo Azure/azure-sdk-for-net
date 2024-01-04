@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotCentral.Models
     /// <summary> List of private endpoint connections associated with the specified resource. </summary>
     internal partial class IotCentralPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateEndpointConnectionListResult"/>. </summary>
         internal IotCentralPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
         internal IotCentralPrivateEndpointConnectionListResult(IReadOnlyList<IotCentralPrivateEndpointConnectionData> value)
         {

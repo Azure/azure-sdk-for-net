@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Gallery information for a workbook template. </summary>
     public partial class WorkbookTemplateGallery
     {
-        /// <summary> Initializes a new instance of WorkbookTemplateGallery. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateGallery"/>. </summary>
         public WorkbookTemplateGallery()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkbookTemplateGallery. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookTemplateGallery"/>. </summary>
         /// <param name="name"> Name of the workbook template in the gallery. </param>
         /// <param name="category"> Category for the gallery. </param>
         /// <param name="workbookTemplateGalleryType"> Type of workbook supported by the workbook template. </param>

@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkBatchJob. </summary>
     public partial class SparkBatchJob
     {
-        /// <summary> Initializes a new instance of SparkBatchJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJob"/>. </summary>
         /// <param name="id"> The session Id. </param>
         internal SparkBatchJob(int id)
         {
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             LogLines = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SparkBatchJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkBatchJob"/>. </summary>
         /// <param name="livyInfo"></param>
         /// <param name="name"> The batch name. </param>
         /// <param name="workspaceName"> The workspace name. </param>

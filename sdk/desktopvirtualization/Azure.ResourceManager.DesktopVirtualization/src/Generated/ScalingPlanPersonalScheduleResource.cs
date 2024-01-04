@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing a ScalingPlanPersonalSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScalingPlanPersonalScheduleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScalingPlanPersonalScheduleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ScalingPlanResource" /> using the GetScalingPlanPersonalSchedule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScalingPlanPersonalScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScalingPlanPersonalScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ScalingPlanResource"/> using the GetScalingPlanPersonalSchedule method.
     /// </summary>
     public partial class ScalingPlanPersonalScheduleResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly ScalingPlanPersonalSchedulesRestOperations _scalingPlanPersonalScheduleRestClient;
         private readonly ScalingPlanPersonalScheduleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/scalingPlans/personalSchedules";
+
         /// <summary> Initializes a new instance of the <see cref="ScalingPlanPersonalScheduleResource"/> class for mocking. </summary>
         protected ScalingPlanPersonalScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScalingPlanPersonalScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScalingPlanPersonalScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScalingPlanPersonalScheduleResource(ArmClient client, ScalingPlanPersonalScheduleData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/scalingPlans/personalSchedules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

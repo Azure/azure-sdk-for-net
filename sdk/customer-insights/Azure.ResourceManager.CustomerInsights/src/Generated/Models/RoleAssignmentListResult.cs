@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of list role assignment operation. </summary>
     internal partial class RoleAssignmentListResult
     {
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         internal RoleAssignmentListResult()
         {
             Value = new ChangeTrackingList<RoleAssignmentResourceFormatData>();
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
         internal RoleAssignmentListResult(IReadOnlyList<RoleAssignmentResourceFormatData> value, string nextLink)

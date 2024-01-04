@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBServiceResource" /> and their operations.
-    /// Each <see cref="CosmosDBServiceResource" /> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource" />.
-    /// To get a <see cref="CosmosDBServiceCollection" /> instance call the GetCosmosDBServices method from an instance of <see cref="CosmosDBAccountResource" />.
+    /// A class representing a collection of <see cref="CosmosDBServiceResource"/> and their operations.
+    /// Each <see cref="CosmosDBServiceResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="CosmosDBServiceCollection"/> instance call the GetCosmosDBServices method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
     public partial class CosmosDBServiceCollection : ArmCollection, IEnumerable<CosmosDBServiceResource>, IAsyncEnumerable<CosmosDBServiceResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBServiceServiceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBServiceServiceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

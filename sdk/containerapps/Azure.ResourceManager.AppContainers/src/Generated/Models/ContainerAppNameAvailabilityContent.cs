@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The check availability request body. </summary>
     public partial class ContainerAppNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ContainerAppNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppNameAvailabilityContent"/>. </summary>
         public ContainerAppNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal ContainerAppNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>

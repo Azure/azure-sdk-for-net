@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Storage properties. </summary>
     internal partial class ConnectedEnvironmentStorageProperties
     {
-        /// <summary> Initializes a new instance of ConnectedEnvironmentStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
         public ConnectedEnvironmentStorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectedEnvironmentStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
         internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile)
         {

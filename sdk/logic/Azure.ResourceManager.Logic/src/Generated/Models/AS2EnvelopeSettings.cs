@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The AS2 agreement envelope settings. </summary>
     public partial class AS2EnvelopeSettings
     {
-        /// <summary> Initializes a new instance of AS2EnvelopeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2EnvelopeSettings"/>. </summary>
         /// <param name="messageContentType"> The message content type. </param>
         /// <param name="transmitFileNameInMimeHeader"> The value indicating whether to transmit file name in mime header. </param>
         /// <param name="fileNameTemplate"> The template for file name. </param>

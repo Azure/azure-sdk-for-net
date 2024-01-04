@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The response of a DataProduct list operation. </summary>
     internal partial class DataProductListResult
     {
-        /// <summary> Initializes a new instance of DataProductListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductListResult"/>. </summary>
         /// <param name="value"> The DataProduct items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataProductListResult(IEnumerable<DataProductData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProductListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductListResult"/>. </summary>
         /// <param name="value"> The DataProduct items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal DataProductListResult(IReadOnlyList<DataProductData> value, Uri nextLink)

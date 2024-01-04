@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// </summary>
     public partial class ServiceFabricManagedApplicationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricManagedApplicationData(AzureLocation location) : base(location)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ManagedIdentities = new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

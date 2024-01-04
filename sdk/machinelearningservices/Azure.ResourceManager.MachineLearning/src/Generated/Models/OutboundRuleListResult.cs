@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> List of outbound rules for the managed network of a machine learning workspace. </summary>
     internal partial class OutboundRuleListResult
     {
-        /// <summary> Initializes a new instance of OutboundRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundRuleListResult"/>. </summary>
         internal OutboundRuleListResult()
         {
             Value = new ChangeTrackingList<MachineLearningOutboundRuleBasicData>();
         }
 
-        /// <summary> Initializes a new instance of OutboundRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundRuleListResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </param>
         /// <param name="value"> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </param>
         internal OutboundRuleListResult(string nextLink, IReadOnlyList<MachineLearningOutboundRuleBasicData> value)

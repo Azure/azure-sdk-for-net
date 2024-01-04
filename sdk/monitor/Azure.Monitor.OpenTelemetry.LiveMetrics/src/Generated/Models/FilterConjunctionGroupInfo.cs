@@ -13,13 +13,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> An AND-connected group of FilterInfo objects. </summary>
     internal partial class FilterConjunctionGroupInfo
     {
-        /// <summary> Initializes a new instance of FilterConjunctionGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterConjunctionGroupInfo"/>. </summary>
         internal FilterConjunctionGroupInfo()
         {
             Filters = new ChangeTrackingList<FilterInfo>();
         }
 
-        /// <summary> Initializes a new instance of FilterConjunctionGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterConjunctionGroupInfo"/>. </summary>
         /// <param name="filters"></param>
         internal FilterConjunctionGroupInfo(IReadOnlyList<FilterInfo> filters)
         {

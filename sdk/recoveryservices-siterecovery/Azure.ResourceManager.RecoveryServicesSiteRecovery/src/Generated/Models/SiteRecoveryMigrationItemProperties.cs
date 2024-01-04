@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Migration item properties. </summary>
     public partial class SiteRecoveryMigrationItemProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemProperties"/>. </summary>
         internal SiteRecoveryMigrationItemProperties()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CriticalJobHistory = new ChangeTrackingList<CriticalJobHistoryDetails>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemProperties"/>. </summary>
         /// <param name="machineName"> The on-premise virtual machine name. </param>
         /// <param name="policyId"> The ARM Id of policy governing this item. </param>
         /// <param name="policyFriendlyName"> The name of policy governing this item. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Datadog.Models
     /// <summary> Response of a list operation. </summary>
     internal partial class DatadogAgreementResourceListResponse
     {
-        /// <summary> Initializes a new instance of DatadogAgreementResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResponse"/>. </summary>
         internal DatadogAgreementResourceListResponse()
         {
             Value = new ChangeTrackingList<DatadogAgreementResourceProperties>();
         }
 
-        /// <summary> Initializes a new instance of DatadogAgreementResourceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementResourceListResponse"/>. </summary>
         /// <param name="value"> Results of a list operation. </param>
         /// <param name="nextLink"> Link to the next set of results, if any. </param>
         internal DatadogAgreementResourceListResponse(IReadOnlyList<DatadogAgreementResourceProperties> value, string nextLink)

@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Request body for detaching data disk from a virtual machine. </summary>
     public partial class DevTestLabVmDetachDataDiskContent
     {
-        /// <summary> Initializes a new instance of DevTestLabVmDetachDataDiskContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmDetachDataDiskContent"/>. </summary>
         public DevTestLabVmDetachDataDiskContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmDetachDataDiskContent"/>. </summary>
+        /// <param name="existingLabDiskId"> Specifies the disk resource ID to detach from virtual machine. </param>
+        internal DevTestLabVmDetachDataDiskContent(ResourceIdentifier existingLabDiskId)
+        {
+            ExistingLabDiskId = existingLabDiskId;
         }
 
         /// <summary> Specifies the disk resource ID to detach from virtual machine. </summary>

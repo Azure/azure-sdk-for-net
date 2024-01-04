@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Specify the name and value of custom metadata item. </summary>
     public partial class DataFactoryMetadataItemInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryMetadataItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryMetadataItemInfo"/>. </summary>
         public DataFactoryMetadataItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryMetadataItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryMetadataItemInfo"/>. </summary>
         /// <param name="name"> Metadata item key name. Type: string (or Expression with resultType string). </param>
         /// <param name="value"> Metadata item value. Type: string (or Expression with resultType string). </param>
         internal DataFactoryMetadataItemInfo(DataFactoryElement<string> name, DataFactoryElement<string> value)

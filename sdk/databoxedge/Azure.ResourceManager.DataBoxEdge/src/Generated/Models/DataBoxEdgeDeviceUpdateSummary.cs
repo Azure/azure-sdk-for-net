@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Details about ongoing updates and availability of updates on the device. </summary>
     public partial class DataBoxEdgeDeviceUpdateSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceUpdateSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceUpdateSummary"/>. </summary>
         public DataBoxEdgeDeviceUpdateSummary()
         {
             UpdateTitles = new ChangeTrackingList<string>();
             Updates = new ChangeTrackingList<DataBoxEdgeUpdateDetails>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceUpdateSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceUpdateSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

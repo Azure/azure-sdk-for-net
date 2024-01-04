@@ -4,19 +4,19 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 using System.Linq;
-using Azure.Core.TestFramework;
 
-namespace Azure.Search.Documents.Tests.Samples.VectorSearch
+namespace Azure.Search.Documents.Tests.samples.VectorSearch
 {
     public partial class VectorSemanticHybridSearch : SearchTestBase
     {
         public VectorSemanticHybridSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, SearchClientOptions.ServiceVersion.V2023_10_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -34,33 +34,28 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search
-                ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+                IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
 
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
-                     new SearchOptions
-                     {
-                         VectorSearch = new()
-                         {
-                             Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
-                         },
-                         SemanticSearch = new()
-                         {
-                             SemanticConfigurationName = "my-semantic-config",
-                             QueryCaption = new(QueryCaptionType.Extractive),
-                             QueryAnswer = new(QueryAnswerType.Extractive)
-                         },
-                         QueryType = SearchQueryType.Semantic,
-                     });
+                    new SearchOptions
+                    {
+                        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+                        QueryType = SearchQueryType.Semantic,
+                        QueryLanguage = QueryLanguage.EnUs,
+                        SemanticConfigurationName = "my-semantic-config",
+                        QueryCaption = QueryCaptionType.Extractive,
+                        QueryAnswer = QueryAnswerType.Extractive,
+                    });
 
                 int count = 0;
                 Console.WriteLine($"Semantic Hybrid Search Results:");
 
                 Console.WriteLine($"\nQuery Answer:");
-                foreach (QueryAnswerResult result in response.SemanticSearch.Answers)
+                foreach (AnswerResult result in response.Answers)
                 {
                     Console.WriteLine($"Answer Highlights: {result.Highlights}");
                     Console.WriteLine($"Answer Text: {result.Text}");
@@ -72,9 +67,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     Hotel doc = result.Document;
                     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
-                    if (result.SemanticSearch.Captions != null)
+                    if (result.Captions != null)
                     {
-                        var caption = result.SemanticSearch.Captions.FirstOrDefault();
+                        var caption = result.Captions.FirstOrDefault();
                         if (caption.Highlights != null && caption.Highlights != "")
                         {
                             Console.WriteLine($"Caption Highlights: {caption.Highlights}");
@@ -98,11 +93,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search_Index
-            string vectorSearchProfileName = "my-vector-profile";
+            string vectorSearchProfile = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
             int modelDimensions = 1536;
 
-            string indexName = "Hotel";
+            string indexName = "hotel";
 #if !SNIPPET
             indexName = name;
 #endif
@@ -113,37 +108,47 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("Description") { IsFilterable = true },
-                    new VectorSearchField("DescriptionVector", modelDimensions, vectorSearchProfileName),
+                    new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
+                    {
+                        IsSearchable = true,
+                        VectorSearchDimensions = modelDimensions,
+                        VectorSearchProfile = vectorSearchProfile
+                    },
                     new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new VectorSearchField("CategoryVector", modelDimensions, vectorSearchProfileName),
+                    new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
+                    {
+                        IsSearchable = true,
+                        VectorSearchDimensions = modelDimensions,
+                        VectorSearchProfile = vectorSearchProfile
+                    },
                 },
                 VectorSearch = new()
                 {
                     Profiles =
                     {
-                        new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
+                        new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
                     },
                     Algorithms =
                     {
-                        new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
+                        new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
                     }
                 },
-                SemanticSearch = new()
+                SemanticSettings = new()
                 {
                     Configurations =
-                    {
-                        new SemanticConfiguration("my-semantic-config", new()
-                        {
-                            TitleField = new SemanticField("HotelName"),
-                            ContentFields =
-                            {
-                                new SemanticField("Description")
-                            },
-                            KeywordsFields =
-                            {
-                                new SemanticField("Category")
-                            }
-                        })
+                {
+                       new SemanticConfiguration("my-semantic-config", new()
+                       {
+                           TitleField = new(){ FieldName = "HotelName" },
+                           ContentFields =
+                           {
+                               new() { FieldName = "Description" }
+                           },
+                           KeywordFields =
+                           {
+                               new() { FieldName = "Category" }
+                           }
+                       })
                     }
                 }
             };

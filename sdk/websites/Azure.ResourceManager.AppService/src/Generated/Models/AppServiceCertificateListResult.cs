@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of certificate order certificates. </summary>
     internal partial class AppServiceCertificateListResult
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceCertificateListResult(IEnumerable<AppServiceCertificateData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal AppServiceCertificateListResult(IReadOnlyList<AppServiceCertificateData> value, string nextLink)

@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class BackupRetentionPolicy
     {
-        /// <summary> Initializes a new instance of BackupRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRetentionPolicy"/>. </summary>
         protected BackupRetentionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupRetentionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRetentionPolicy"/>. </summary>
         /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         internal BackupRetentionPolicy(string retentionPolicyType)
         {

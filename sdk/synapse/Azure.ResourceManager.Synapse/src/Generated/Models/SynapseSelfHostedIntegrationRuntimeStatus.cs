@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Self-hosted integration runtime status. </summary>
     public partial class SynapseSelfHostedIntegrationRuntimeStatus : SynapseIntegrationRuntimeStatus
     {
-        /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>. </summary>
         internal SynapseSelfHostedIntegrationRuntimeStatus()
         {
             Nodes = new ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Synapse.Models
             RuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
-        /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>

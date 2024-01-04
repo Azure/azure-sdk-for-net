@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing an UserSession along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="UserSessionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetUserSessionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SessionHostResource" /> using the GetUserSession method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="UserSessionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetUserSessionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SessionHostResource"/> using the GetUserSession method.
     /// </summary>
     public partial class UserSessionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly UserSessionsRestOperations _userSessionRestClient;
         private readonly UserSessionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/sessionHosts/userSessions";
+
         /// <summary> Initializes a new instance of the <see cref="UserSessionResource"/> class for mocking. </summary>
         protected UserSessionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "UserSessionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="UserSessionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal UserSessionResource(ArmClient client, UserSessionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools/sessionHosts/userSessions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

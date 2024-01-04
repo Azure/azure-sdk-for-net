@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Results of network security group evaluation. </summary>
     public partial class EvaluatedNetworkSecurityGroup
     {
-        /// <summary> Initializes a new instance of EvaluatedNetworkSecurityGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluatedNetworkSecurityGroup"/>. </summary>
         internal EvaluatedNetworkSecurityGroup()
         {
             RulesEvaluationResult = new ChangeTrackingList<NetworkSecurityRulesEvaluationResult>();
         }
 
-        /// <summary> Initializes a new instance of EvaluatedNetworkSecurityGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluatedNetworkSecurityGroup"/>. </summary>
         /// <param name="networkSecurityGroupId"> Network security group ID. </param>
         /// <param name="appliedTo"> Resource ID of nic or subnet to which network security group is applied. </param>
         /// <param name="matchedRule"> Matched network security rule. </param>

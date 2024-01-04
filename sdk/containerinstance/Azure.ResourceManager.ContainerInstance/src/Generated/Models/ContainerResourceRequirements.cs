@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The resource requirements. </summary>
     public partial class ContainerResourceRequirements
     {
-        /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequirements"/>. </summary>
         /// <param name="requests"> The resource requests of this container instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public ContainerResourceRequirements(ContainerResourceRequestsContent requests)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Requests = requests;
         }
 
-        /// <summary> Initializes a new instance of ContainerResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerResourceRequirements"/>. </summary>
         /// <param name="requests"> The resource requests of this container instance. </param>
         /// <param name="limits"> The resource limits of this container instance. </param>
         internal ContainerResourceRequirements(ContainerResourceRequestsContent requests, ContainerResourceLimits limits)

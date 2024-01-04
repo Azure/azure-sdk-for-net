@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceFleetMemberData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberData"/>. </summary>
         public ContainerServiceFleetMemberData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

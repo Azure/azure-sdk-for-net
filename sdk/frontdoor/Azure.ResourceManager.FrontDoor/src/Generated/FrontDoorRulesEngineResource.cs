@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
     /// A Class representing a FrontDoorRulesEngine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FrontDoorRulesEngineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFrontDoorRulesEngineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorResource" /> using the GetFrontDoorRulesEngine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorRulesEngineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorRulesEngineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorResource"/> using the GetFrontDoorRulesEngine method.
     /// </summary>
     public partial class FrontDoorRulesEngineResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.FrontDoor
         private readonly RulesEnginesRestOperations _frontDoorRulesEngineRulesEnginesRestClient;
         private readonly FrontDoorRulesEngineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/frontDoors/rulesEngines";
+
         /// <summary> Initializes a new instance of the <see cref="FrontDoorRulesEngineResource"/> class for mocking. </summary>
         protected FrontDoorRulesEngineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FrontDoorRulesEngineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorRulesEngineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorRulesEngineResource(ArmClient client, FrontDoorRulesEngineData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.FrontDoor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/frontDoors/rulesEngines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

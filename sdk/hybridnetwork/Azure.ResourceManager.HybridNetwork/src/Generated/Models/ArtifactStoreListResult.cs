@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of artifact stores. </summary>
     internal partial class ArtifactStoreListResult
     {
-        /// <summary> Initializes a new instance of ArtifactStoreListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreListResult"/>. </summary>
         internal ArtifactStoreListResult()
         {
             Value = new ChangeTrackingList<ArtifactStoreData>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactStoreListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreListResult"/>. </summary>
         /// <param name="value"> A list of artifact stores. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal ArtifactStoreListResult(IReadOnlyList<ArtifactStoreData> value, string nextLink)

@@ -14,7 +14,7 @@ namespace Azure.Communication.CallingServer
     /// <summary> The transfer call to participant request. </summary>
     internal partial class TransferToParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of TransferToParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant)
@@ -22,6 +22,19 @@ namespace Azure.Communication.CallingServer
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
+        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
+        /// <param name="transfereeCallerId"> The caller ID of the transferee when transferring to PSTN. </param>
+        /// <param name="userToUserInformation"> The user to user information. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, PhoneNumberIdentifierModel transfereeCallerId, string userToUserInformation, string operationContext)
+        {
+            TargetParticipant = targetParticipant;
+            TransfereeCallerId = transfereeCallerId;
+            UserToUserInformation = userToUserInformation;
+            OperationContext = operationContext;
         }
 
         /// <summary> The identity of the target where call should be transferred to. </summary>

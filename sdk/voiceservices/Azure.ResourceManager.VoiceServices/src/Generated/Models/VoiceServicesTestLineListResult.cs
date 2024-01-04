@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The response of a TestLine list operation. </summary>
     internal partial class VoiceServicesTestLineListResult
     {
-        /// <summary> Initializes a new instance of VoiceServicesTestLineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesTestLineListResult"/>. </summary>
         /// <param name="value"> The TestLine items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VoiceServicesTestLineListResult(IEnumerable<VoiceServicesTestLineData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VoiceServicesTestLineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesTestLineListResult"/>. </summary>
         /// <param name="value"> The TestLine items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal VoiceServicesTestLineListResult(IReadOnlyList<VoiceServicesTestLineData> value, Uri nextLink)

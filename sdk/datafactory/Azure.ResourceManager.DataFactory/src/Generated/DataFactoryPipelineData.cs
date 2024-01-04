@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryPipelineData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineData"/>. </summary>
         public DataFactoryPipelineData()
         {
             Activities = new ChangeTrackingList<PipelineActivity>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

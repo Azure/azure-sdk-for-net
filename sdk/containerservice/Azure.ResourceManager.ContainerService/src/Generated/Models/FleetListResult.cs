@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The response from the List Fleets operation. </summary>
     internal partial class FleetListResult
     {
-        /// <summary> Initializes a new instance of FleetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetListResult"/>. </summary>
         internal FleetListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceFleetData>();
         }
 
-        /// <summary> Initializes a new instance of FleetListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetListResult"/>. </summary>
         /// <param name="value"> The list of Fleets. </param>
         /// <param name="nextLink"> The URL to get the next page of Fleets. </param>
         internal FleetListResult(IReadOnlyList<ContainerServiceFleetData> value, string nextLink)

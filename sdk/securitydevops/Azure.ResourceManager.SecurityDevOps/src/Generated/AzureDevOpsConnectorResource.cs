@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
     /// A Class representing an AzureDevOpsConnector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AzureDevOpsConnectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAzureDevOpsConnectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAzureDevOpsConnector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AzureDevOpsConnectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAzureDevOpsConnectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAzureDevOpsConnector method.
     /// </summary>
     public partial class AzureDevOpsConnectorResource : ArmResource
     {
@@ -46,12 +46,15 @@ namespace Azure.ResourceManager.SecurityDevOps
         private readonly AzureDevOpsConnectorStatsRestOperations _azureDevOpsConnectorStatsRestClient;
         private readonly AzureDevOpsConnectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/azureDevOpsConnectors";
+
         /// <summary> Initializes a new instance of the <see cref="AzureDevOpsConnectorResource"/> class for mocking. </summary>
         protected AzureDevOpsConnectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AzureDevOpsConnectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureDevOpsConnectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AzureDevOpsConnectorResource(ArmClient client, AzureDevOpsConnectorData data) : this(client, data.Id)
@@ -77,9 +80,6 @@ namespace Azure.ResourceManager.SecurityDevOps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/azureDevOpsConnectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureDevOpsRepoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureDevOpsRepoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsRepoResource> GetAzureDevOpsReposByConnectorAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureDevOpsRepoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureDevOpsRepoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsRepoResource> GetAzureDevOpsReposByConnector(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureDevOpsConnectorStats" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureDevOpsConnectorStats"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureDevOpsConnectorStats> GetAzureDevOpsConnectorStatsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureDevOpsConnectorStats" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureDevOpsConnectorStats"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureDevOpsConnectorStats> GetAzureDevOpsConnectorStats(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

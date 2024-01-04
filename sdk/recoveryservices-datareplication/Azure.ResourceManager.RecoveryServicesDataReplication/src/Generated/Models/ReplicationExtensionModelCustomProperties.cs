@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// </summary>
     public abstract partial class ReplicationExtensionModelCustomProperties
     {
-        /// <summary> Initializes a new instance of ReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationExtensionModelCustomProperties"/>. </summary>
         protected ReplicationExtensionModelCustomProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationExtensionModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal ReplicationExtensionModelCustomProperties(string instanceType)
         {

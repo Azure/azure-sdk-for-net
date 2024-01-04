@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Azure.Core.TestFramework;
 using Azure.Core;
 using Azure.Storage.Test.Shared;
@@ -309,7 +308,10 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 Assert.NotNull(copyObjectInfo[i].DataTransfer);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                await copyObjectInfo[i].DataTransfer.WaitForCompletionAsync(tokenSource.Token);
+                await TestTransferWithTimeout.WaitForCompletionAsync(
+                    copyObjectInfo[i].DataTransfer,
+                    copyObjectInfo[i].testEventsRaised,
+                    tokenSource.Token);
                 Assert.IsTrue(copyObjectInfo[i].DataTransfer.HasCompleted);
                 Assert.AreEqual(DataTransferState.Completed, copyObjectInfo[i].DataTransfer.TransferStatus.State);
 
@@ -340,8 +342,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransferOptions options = new DataTransferOptions()
             {
-                InitialTransferSize = 100,
-                MaximumTransferChunkSize = 200,
+                InitialTransferSize = Constants.KB / 2,
+                MaximumTransferChunkSize = Constants.KB / 2,
             };
 
             // Arrange
@@ -359,7 +361,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(100, 10)]
+        [TestCase(Constants.KB/2, 10)]
         [TestCase(Constants.KB, 10)]
         [TestCase(2 * Constants.KB, 10)]
         public async Task SourceObjectToDestinationObject_SmallSize(long size, int waitTimeInSec)
@@ -400,8 +402,8 @@ namespace Azure.Storage.DataMovement.Tests
         [LiveOnly]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
-        [TestCase(2, 100, 30)]
-        [TestCase(6, 100, 30)]
+        [TestCase(2, Constants.KB/2, 30)]
+        [TestCase(6, Constants.KB/2, 30)]
         [TestCase(2, Constants.KB, 300)]
         [TestCase(6, Constants.KB, 300)]
         public async Task SourceObjectToDestinationObject_SmallMultiple(int count, long size, int waitTimeInSec)
@@ -516,11 +518,14 @@ namespace Azure.Storage.DataMovement.Tests
             string objectName = GetNewObjectName();
             string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, objectName);
             int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            using Stream originalStream = await CreateLimitedMemoryStream(size);
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
-                destination.Container,
-                objectName: objectName,
+                container: destination.Container,
                 objectLength: size,
-                createResource: true);
+                createResource: true,
+                objectName: objectName,
+                contents: originalStream);
 
             // Act
             // Create options bag to overwrite any existing destination.
@@ -548,7 +553,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -558,9 +566,8 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertSingleSkippedCheck();
             Assert.IsTrue(await DestinationExistsAsync(destinationClient));
             // Verify Upload - That we skipped over and didn't reupload something new.
-            using Stream sourceStream = await SourceOpenReadAsync(sourceClient);
             using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.AreEqual(originalStream, destinationStream);
         }
 
         [RecordedTest]
@@ -573,11 +580,14 @@ namespace Azure.Storage.DataMovement.Tests
             string name = GetNewObjectName();
             string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, name);
             int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            using Stream originalStream = await CreateLimitedMemoryStream(size);
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
                 container: destination.Container,
                 objectLength: size,
                 createResource: true,
-                objectName: name);
+                objectName: name,
+                contents: originalStream);
 
             // Act
             // Create options bag to fail and keep track of the failure.
@@ -603,7 +613,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -614,10 +627,9 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(testEventsRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
-            // Verify Upload - That we skipped over and didn't reupload something new.
-            using Stream sourceStream = await SourceOpenReadAsync(sourceClient);
+            // Verify Copy - That we skipped over and didn't reupload something new.
             using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.AreEqual(originalStream, destinationStream);
         }
         #endregion
 
@@ -683,7 +695,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleCompletedCheck();
@@ -715,7 +730,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -750,7 +768,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
@@ -779,7 +800,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleCompletedCheck();
@@ -811,7 +835,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleFailedCheck(1);
@@ -846,7 +873,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
+            TestTransferWithTimeout.WaitForCompletion(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();

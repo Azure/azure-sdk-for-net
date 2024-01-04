@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> The current status of an async operation. </summary>
     public partial class NetworkCloudOperationStatusResult
     {
-        /// <summary> Initializes a new instance of NetworkCloudOperationStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudOperationStatusResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal NetworkCloudOperationStatusResult(string status)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Operations = new ChangeTrackingList<NetworkCloudOperationStatusResult>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudOperationStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudOperationStatusResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="name"> Name of the async operation. </param>

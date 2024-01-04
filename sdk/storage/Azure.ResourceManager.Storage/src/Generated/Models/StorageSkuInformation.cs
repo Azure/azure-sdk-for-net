@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Storage SKU and its properties. </summary>
     public partial class StorageSkuInformation
     {
-        /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSkuInformation"/>. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         internal StorageSkuInformation(StorageSkuName name)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             Restrictions = new ChangeTrackingList<StorageSkuRestriction>();
         }
 
-        /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSkuInformation"/>. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
         /// <param name="resourceType"> The type of the resource, usually it is 'storageAccounts'. </param>

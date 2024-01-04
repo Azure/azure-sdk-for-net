@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put subscription creation result properties. </summary>
     public partial class SubscriptionAliasProperties
     {
-        /// <summary> Initializes a new instance of SubscriptionAliasProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasProperties"/>. </summary>
         internal SubscriptionAliasProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SubscriptionAliasProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionAliasProperties"/>. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>

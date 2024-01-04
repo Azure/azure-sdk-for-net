@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The details of the authorization for the resource. </summary>
     public partial class ResourceAuthorization
     {
-        /// <summary> Initializes a new instance of ResourceAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
         internal ResourceAuthorization()
         {
             Evidence = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceAuthorization"/>. </summary>
         /// <param name="scope"> The scope of the authorization. </param>
         /// <param name="action"> The action being requested. </param>
         /// <param name="evidence"> The evidence for the authorization. </param>

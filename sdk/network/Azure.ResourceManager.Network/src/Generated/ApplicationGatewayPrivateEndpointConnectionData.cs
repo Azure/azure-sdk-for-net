@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
         public ApplicationGatewayPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

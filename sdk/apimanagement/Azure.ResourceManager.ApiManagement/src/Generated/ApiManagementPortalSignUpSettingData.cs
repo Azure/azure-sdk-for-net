@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementPortalSignUpSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementPortalSignUpSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalSignUpSettingData"/>. </summary>
         public ApiManagementPortalSignUpSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalSignUpSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalSignUpSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

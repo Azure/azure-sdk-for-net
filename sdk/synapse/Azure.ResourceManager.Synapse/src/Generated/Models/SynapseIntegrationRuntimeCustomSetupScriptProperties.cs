@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeCustomSetupScriptProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeCustomSetupScriptProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         public SynapseIntegrationRuntimeCustomSetupScriptProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeCustomSetupScriptProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
         /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
         internal SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, SynapseSecureString sasToken)

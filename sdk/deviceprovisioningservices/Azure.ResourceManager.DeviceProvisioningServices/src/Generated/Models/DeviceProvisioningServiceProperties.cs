@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> the service specific properties of a provisioning service, including keys, linked iot hubs, current state, and system generated properties such as hostname and idScope. </summary>
     public partial class DeviceProvisioningServiceProperties
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceProperties"/>. </summary>
         public DeviceProvisioningServiceProperties()
         {
             IPFilterRules = new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             AuthorizationPolicies = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceProperties"/>. </summary>
         /// <param name="state"> Current state of the provisioning service. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="ipFilterRules"> The IP filter rules. </param>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteContinuousWebJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteContinuousWebJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteContinuousWebJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteContinuousWebJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteContinuousWebJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteContinuousWebJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteContinuousWebJob method.
     /// </summary>
     public partial class WebSiteContinuousWebJobResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteContinuousWebJobWebAppsRestClient;
         private readonly ContinuousWebJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/continuouswebjobs";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteContinuousWebJobResource"/> class for mocking. </summary>
         protected WebSiteContinuousWebJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteContinuousWebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteContinuousWebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteContinuousWebJobResource(ArmClient client, ContinuousWebJobData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/continuouswebjobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

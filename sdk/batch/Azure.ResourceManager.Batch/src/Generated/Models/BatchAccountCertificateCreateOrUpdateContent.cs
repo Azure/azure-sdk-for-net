@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Contains information about a certificate. </summary>
     public partial class BatchAccountCertificateCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchAccountCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
         public BatchAccountCertificateCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchAccountCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

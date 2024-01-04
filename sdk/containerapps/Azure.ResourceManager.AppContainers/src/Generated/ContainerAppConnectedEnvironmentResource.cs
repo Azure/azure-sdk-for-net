@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppConnectedEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppConnectedEnvironmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppConnectedEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetContainerAppConnectedEnvironment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppConnectedEnvironmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppConnectedEnvironmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetContainerAppConnectedEnvironment method.
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
         private readonly ContainerAppConnectedEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentResource"/> class for mocking. </summary>
         protected ContainerAppConnectedEnvironmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppConnectedEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppConnectedEnvironmentResource(ArmClient client, ContainerAppConnectedEnvironmentData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/connectedEnvironments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

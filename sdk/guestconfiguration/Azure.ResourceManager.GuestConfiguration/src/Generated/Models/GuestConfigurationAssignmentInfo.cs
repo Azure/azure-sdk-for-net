@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Information about the guest configuration assignment. </summary>
     public partial class GuestConfigurationAssignmentInfo
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentInfo"/>. </summary>
         public GuestConfigurationAssignmentInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentInfo"/>. </summary>
         /// <param name="name"> Name of the guest configuration assignment. </param>
         /// <param name="configuration"> Information about the configuration. </param>
         internal GuestConfigurationAssignmentInfo(string name, GuestConfigurationInfo configuration)

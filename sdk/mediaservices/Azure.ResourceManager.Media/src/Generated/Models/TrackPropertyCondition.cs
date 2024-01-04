@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class to specify one track property condition. </summary>
     public partial class TrackPropertyCondition
     {
-        /// <summary> Initializes a new instance of TrackPropertyCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackPropertyCondition"/>. </summary>
         /// <param name="property"> Track property type. </param>
         /// <param name="operation"> Track property condition operation. </param>
         public TrackPropertyCondition(TrackPropertyType property, TrackPropertyCompareOperation operation)
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             Operation = operation;
         }
 
-        /// <summary> Initializes a new instance of TrackPropertyCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrackPropertyCondition"/>. </summary>
         /// <param name="property"> Track property type. </param>
         /// <param name="operation"> Track property condition operation. </param>
         /// <param name="value"> Track property value. </param>

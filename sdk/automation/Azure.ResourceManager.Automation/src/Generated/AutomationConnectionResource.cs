@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A Class representing an AutomationConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomationConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource" /> using the GetAutomationConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomationConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationConnection method.
     /// </summary>
     public partial class AutomationConnectionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Automation
         private readonly ConnectionRestOperations _automationConnectionConnectionRestClient;
         private readonly AutomationConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/connections";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationConnectionResource"/> class for mocking. </summary>
         protected AutomationConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomationConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomationConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationConnectionResource(ArmClient client, AutomationConnectionData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Automation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/connections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

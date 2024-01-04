@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The table configuration for the Log Analytics integration. </summary>
     public partial class HDInsightAzureMonitorTableConfiguration
     {
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorTableConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorTableConfiguration"/>. </summary>
         public HDInsightAzureMonitorTableConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorTableConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorTableConfiguration"/>. </summary>
         /// <param name="name"> The name. </param>
         internal HDInsightAzureMonitorTableConfiguration(string name)
         {

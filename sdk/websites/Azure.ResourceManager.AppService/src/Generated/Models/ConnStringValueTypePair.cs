@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Database connection string value to type pair. </summary>
     public partial class ConnStringValueTypePair
     {
-        /// <summary> Initializes a new instance of ConnStringValueTypePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
         /// <param name="value"> Value of pair. </param>
         /// <param name="connectionStringType"> Type of database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>

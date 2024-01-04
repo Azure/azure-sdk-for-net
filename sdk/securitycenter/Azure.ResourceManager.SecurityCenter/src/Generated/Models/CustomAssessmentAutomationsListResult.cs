@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A list of Custom Assessment Automations. </summary>
     internal partial class CustomAssessmentAutomationsListResult
     {
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAssessmentAutomationsListResult"/>. </summary>
         internal CustomAssessmentAutomationsListResult()
         {
             Value = new ChangeTrackingList<CustomAssessmentAutomationData>();
         }
 
-        /// <summary> Initializes a new instance of CustomAssessmentAutomationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomAssessmentAutomationsListResult"/>. </summary>
         /// <param name="value"> Collection of Custom Assessment Automations. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         internal CustomAssessmentAutomationsListResult(IReadOnlyList<CustomAssessmentAutomationData> value, string nextLink)

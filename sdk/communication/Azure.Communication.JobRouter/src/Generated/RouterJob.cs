@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -14,7 +15,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> A unit of work to be routed. </summary>
     public partial class RouterJob
     {
-        /// <summary> Initializes a new instance of RouterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
         internal RouterJob()
         {
             RequestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
@@ -25,8 +26,8 @@ namespace Azure.Communication.JobRouter
             Notes = new ChangeTrackingList<RouterJobNote>();
         }
 
-        /// <summary> Initializes a new instance of RouterJob. </summary>
-        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="RouterJob"/>. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
         /// <param name="status"> The status of the job. </param>
@@ -44,9 +45,9 @@ namespace Azure.Communication.JobRouter
         /// <param name="notes"> Notes attached to a job, sorted by timestamp. </param>
         /// <param name="scheduledAt"> If set, job will be scheduled to be enqueued at a given time. </param>
         /// <param name="matchingMode"> If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode. </param>
-        internal RouterJob(string etag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
+        internal RouterJob(ETag eTag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
         {
-            _etag = etag;
+            ETag = eTag;
             Id = id;
             ChannelReference = channelReference;
             Status = status;

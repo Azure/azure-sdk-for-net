@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageMoverResource> GetStorageMoversAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageMoverRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageMoverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageMoverResource> GetStorageMovers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageMoverRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

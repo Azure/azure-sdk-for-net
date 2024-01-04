@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A Class representing a ConfigurationGroupSchema along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConfigurationGroupSchemaResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConfigurationGroupSchemaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PublisherResource" /> using the GetConfigurationGroupSchema method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConfigurationGroupSchemaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConfigurationGroupSchemaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PublisherResource"/> using the GetConfigurationGroupSchema method.
     /// </summary>
     public partial class ConfigurationGroupSchemaResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.HybridNetwork
         private readonly ConfigurationGroupSchemasRestOperations _configurationGroupSchemaRestClient;
         private readonly ConfigurationGroupSchemaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/configurationGroupSchemas";
+
         /// <summary> Initializes a new instance of the <see cref="ConfigurationGroupSchemaResource"/> class for mocking. </summary>
         protected ConfigurationGroupSchemaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConfigurationGroupSchemaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConfigurationGroupSchemaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConfigurationGroupSchemaResource(ArmClient client, ConfigurationGroupSchemaData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.HybridNetwork
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers/configurationGroupSchemas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

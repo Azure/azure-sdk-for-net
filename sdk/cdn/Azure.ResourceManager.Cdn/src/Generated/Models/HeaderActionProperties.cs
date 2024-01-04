@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the request header action. </summary>
     public partial class HeaderActionProperties
     {
-        /// <summary> Initializes a new instance of HeaderActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             HeaderName = headerName;
         }
 
-        /// <summary> Initializes a new instance of HeaderActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="headerAction"> Action to perform. </param>
         /// <param name="headerName"> Name of the header to modify. </param>

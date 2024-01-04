@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The AutomationRunbookDraft. </summary>
     public partial class AutomationRunbookDraft
     {
-        /// <summary> Initializes a new instance of AutomationRunbookDraft. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookDraft"/>. </summary>
         public AutomationRunbookDraft()
         {
             Parameters = new ChangeTrackingDictionary<string, RunbookParameterDefinition>();
             OutputTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRunbookDraft. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookDraft"/>. </summary>
         /// <param name="isInEditMode"> Gets or sets whether runbook is in edit mode. </param>
         /// <param name="draftContentLink"> Gets or sets the draft runbook content link. </param>
         /// <param name="createdOn"> Gets or sets the creation time of the runbook draft. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The name of usage. </summary>
     public partial class BackupNameInfo
     {
-        /// <summary> Initializes a new instance of BackupNameInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupNameInfo"/>. </summary>
         internal BackupNameInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupNameInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupNameInfo"/>. </summary>
         /// <param name="value"> Value of usage. </param>
         /// <param name="localizedValue"> Localized value of usage. </param>
         internal BackupNameInfo(string value, string localizedValue)

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.DicomImageDeleted event. </summary>
     public partial class HealthcareDicomImageDeletedEventData
     {
-        /// <summary> Initializes a new instance of HealthcareDicomImageDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageDeletedEventData"/>. </summary>
         internal HealthcareDicomImageDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareDicomImageDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageDeletedEventData"/>. </summary>
         /// <param name="partitionName"> Data partition name. </param>
         /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
         /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>

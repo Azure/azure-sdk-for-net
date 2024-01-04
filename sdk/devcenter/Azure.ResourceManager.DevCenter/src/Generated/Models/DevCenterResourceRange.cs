@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Properties for a range of values. </summary>
     public partial class DevCenterResourceRange
     {
-        /// <summary> Initializes a new instance of DevCenterResourceRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterResourceRange"/>. </summary>
         internal DevCenterResourceRange()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterResourceRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterResourceRange"/>. </summary>
         /// <param name="min"> Minimum value. </param>
         /// <param name="max"> Maximum value. </param>
         internal DevCenterResourceRange(int? min, int? max)

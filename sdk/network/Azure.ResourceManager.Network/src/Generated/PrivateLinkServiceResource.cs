@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a PrivateLinkService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateLinkServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateLinkServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetPrivateLinkService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPrivateLinkServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPrivateLinkService method.
     /// </summary>
     public partial class PrivateLinkServiceResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.Network
         private readonly PrivateLinkServicesRestOperations _privateLinkServiceRestClient;
         private readonly PrivateLinkServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/privateLinkServices";
+
         /// <summary> Initializes a new instance of the <see cref="PrivateLinkServiceResource"/> class for mocking. </summary>
         protected PrivateLinkServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateLinkServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateLinkServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PrivateLinkServiceResource(ArmClient client, PrivateLinkServiceData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/privateLinkServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

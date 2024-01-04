@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration service environment properties. </summary>
     public partial class IntegrationServiceEnvironmentProperties
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentProperties"/>. </summary>
         public IntegrationServiceEnvironmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="state"> The integration service environment state. </param>
         /// <param name="integrationServiceEnvironmentId"> Gets the tracking id. </param>

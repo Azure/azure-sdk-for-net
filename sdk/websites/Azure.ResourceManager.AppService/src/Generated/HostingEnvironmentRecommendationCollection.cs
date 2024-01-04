@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HostingEnvironmentRecommendationResource" /> and their operations.
-    /// Each <see cref="HostingEnvironmentRecommendationResource" /> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource" />.
-    /// To get a <see cref="HostingEnvironmentRecommendationCollection" /> instance call the GetHostingEnvironmentRecommendations method from an instance of <see cref="AppServiceEnvironmentResource" />.
+    /// A class representing a collection of <see cref="HostingEnvironmentRecommendationResource"/> and their operations.
+    /// Each <see cref="HostingEnvironmentRecommendationResource"/> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource"/>.
+    /// To get a <see cref="HostingEnvironmentRecommendationCollection"/> instance call the GetHostingEnvironmentRecommendations method from an instance of <see cref="AppServiceEnvironmentResource"/>.
     /// </summary>
     public partial class HostingEnvironmentRecommendationCollection : ArmCollection
     {

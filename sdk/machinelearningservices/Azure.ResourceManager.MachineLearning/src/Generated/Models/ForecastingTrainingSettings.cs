@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting Training related configuration. </summary>
     public partial class ForecastingTrainingSettings : MachineLearningTrainingSettings
     {
-        /// <summary> Initializes a new instance of ForecastingTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingTrainingSettings"/>. </summary>
         public ForecastingTrainingSettings()
         {
             AllowedTrainingAlgorithms = new ChangeTrackingList<ForecastingModel>();
             BlockedTrainingAlgorithms = new ChangeTrackingList<ForecastingModel>();
         }
 
-        /// <summary> Initializes a new instance of ForecastingTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingTrainingSettings"/>. </summary>
         /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>

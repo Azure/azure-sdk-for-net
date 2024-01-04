@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A list of Activity Log Alert rules. </summary>
     internal partial class AlertRuleList
     {
-        /// <summary> Initializes a new instance of AlertRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleList"/>. </summary>
         internal AlertRuleList()
         {
             Value = new ChangeTrackingList<ActivityLogAlertData>();
         }
 
-        /// <summary> Initializes a new instance of AlertRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleList"/>. </summary>
         /// <param name="value"> The list of Activity Log Alert rules. </param>
         /// <param name="nextLink"> Provides the link to retrieve the next set of elements. </param>
         internal AlertRuleList(IReadOnlyList<ActivityLogAlertData> value, string nextLink)

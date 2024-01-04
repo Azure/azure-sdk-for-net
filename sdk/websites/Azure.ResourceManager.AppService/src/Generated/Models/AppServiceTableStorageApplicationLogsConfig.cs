@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Application logs to Azure table storage configuration. </summary>
     public partial class AppServiceTableStorageApplicationLogsConfig
     {
-        /// <summary> Initializes a new instance of AppServiceTableStorageApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/>. </summary>
         /// <param name="sasUriString"> SAS URL to an Azure table with add/query/delete permissions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriString"/> is null. </exception>
         public AppServiceTableStorageApplicationLogsConfig(string sasUriString)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             SasUriString = sasUriString;
         }
 
-        /// <summary> Initializes a new instance of AppServiceTableStorageApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/>. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="sasUriString"> SAS URL to an Azure table with add/query/delete permissions. </param>
         internal AppServiceTableStorageApplicationLogsConfig(WebAppLogLevel? level, string sasUriString)

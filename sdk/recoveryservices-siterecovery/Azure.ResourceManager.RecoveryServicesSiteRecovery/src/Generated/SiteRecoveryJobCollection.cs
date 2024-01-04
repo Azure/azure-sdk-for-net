@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteRecoveryJobResource" /> and their operations.
-    /// Each <see cref="SiteRecoveryJobResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SiteRecoveryJobCollection" /> instance call the GetSiteRecoveryJobs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryJobResource"/> and their operations.
+    /// Each <see cref="SiteRecoveryJobResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SiteRecoveryJobCollection"/> instance call the GetSiteRecoveryJobs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SiteRecoveryJobCollection : ArmCollection, IEnumerable<SiteRecoveryJobResource>, IAsyncEnumerable<SiteRecoveryJobResource>
     {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteRecoveryJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryJobResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryJobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteRecoveryJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryJobResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryJobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);

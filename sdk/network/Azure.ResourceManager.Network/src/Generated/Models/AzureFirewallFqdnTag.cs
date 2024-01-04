@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure Firewall FQDN Tag Resource. </summary>
     public partial class AzureFirewallFqdnTag : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of AzureFirewallFqdnTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTag"/>. </summary>
         public AzureFirewallFqdnTag()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallFqdnTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTag"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

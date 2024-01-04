@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of an Azure SQL Database sync group log. </summary>
     public partial class SyncGroupLogProperties
     {
-        /// <summary> Initializes a new instance of SyncGroupLogProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupLogProperties"/>. </summary>
         internal SyncGroupLogProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncGroupLogProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupLogProperties"/>. </summary>
         /// <param name="timestamp"> Timestamp of the sync group log. </param>
         /// <param name="logType"> Type of the sync group log. </param>
         /// <param name="source"> Source of the sync group log. </param>

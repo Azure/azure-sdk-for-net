@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An Ssl predefined policy. </summary>
     public partial class ApplicationGatewaySslPredefinedPolicy : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPredefinedPolicy"/>. </summary>
         public ApplicationGatewaySslPredefinedPolicy()
         {
             CipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPredefinedPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> A queue that can contain jobs to be routed. </summary>
     public partial class RouterQueue
     {
-        /// <summary> Initializes a new instance of RouterQueue. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterQueue"/>. </summary>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a queue. </param>
         /// <param name="name"> Friendly name of this queue. </param>

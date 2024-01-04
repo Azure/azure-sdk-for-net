@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> A list of shared private link resources. </summary>
     internal partial class SharedPrivateLinkResourceList
     {
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceList"/>. </summary>
         internal SharedPrivateLinkResourceList()
         {
             Value = new ChangeTrackingList<WebPubSubSharedPrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPrivateLinkResourceList"/>. </summary>
         /// <param name="value"> The list of the shared private link resources. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
         internal SharedPrivateLinkResourceList(IReadOnlyList<WebPubSubSharedPrivateLinkData> value, string nextLink)

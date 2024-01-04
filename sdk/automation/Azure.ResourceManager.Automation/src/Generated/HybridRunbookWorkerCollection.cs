@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HybridRunbookWorkerResource" /> and their operations.
-    /// Each <see cref="HybridRunbookWorkerResource" /> in the collection will belong to the same instance of <see cref="HybridRunbookWorkerGroupResource" />.
-    /// To get a <see cref="HybridRunbookWorkerCollection" /> instance call the GetHybridRunbookWorkers method from an instance of <see cref="HybridRunbookWorkerGroupResource" />.
+    /// A class representing a collection of <see cref="HybridRunbookWorkerResource"/> and their operations.
+    /// Each <see cref="HybridRunbookWorkerResource"/> in the collection will belong to the same instance of <see cref="HybridRunbookWorkerGroupResource"/>.
+    /// To get a <see cref="HybridRunbookWorkerCollection"/> instance call the GetHybridRunbookWorkers method from an instance of <see cref="HybridRunbookWorkerGroupResource"/>.
     /// </summary>
     public partial class HybridRunbookWorkerCollection : ArmCollection, IEnumerable<HybridRunbookWorkerResource>, IAsyncEnumerable<HybridRunbookWorkerResource>
     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridRunbookWorkerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HybridRunbookWorkerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridRunbookWorkerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridRunbookWorkerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridRunbookWorkerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridRunbookWorkerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridRunbookWorkerRestClient.CreateListByHybridRunbookWorkerGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);

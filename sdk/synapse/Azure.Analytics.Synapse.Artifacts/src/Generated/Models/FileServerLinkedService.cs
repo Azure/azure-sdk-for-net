@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> File system linked service. </summary>
     public partial class FileServerLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of FileServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServerLinkedService"/>. </summary>
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public FileServerLinkedService(object host)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "FileServer";
         }
 
-        /// <summary> Initializes a new instance of FileServerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServerLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

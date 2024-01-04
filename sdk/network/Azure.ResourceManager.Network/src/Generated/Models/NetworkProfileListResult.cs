@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListNetworkProfiles API service call. </summary>
     internal partial class NetworkProfileListResult
     {
-        /// <summary> Initializes a new instance of NetworkProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileListResult"/>. </summary>
         internal NetworkProfileListResult()
         {
             Value = new ChangeTrackingList<NetworkProfileData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileListResult"/>. </summary>
         /// <param name="value"> A list of network profiles that exist in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkProfileListResult(IReadOnlyList<NetworkProfileData> value, string nextLink)

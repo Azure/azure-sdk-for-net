@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Definition of the properties for a TagRules resource. </summary>
     public partial class MonitoringTagRulesProperties
     {
-        /// <summary> Initializes a new instance of MonitoringTagRulesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
         public MonitoringTagRulesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringTagRulesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringTagRulesProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the monitoring tag rules. </param>
         /// <param name="logRules"> Rules for sending logs. </param>
         internal MonitoringTagRulesProperties(ProvisioningState? provisioningState, LogRules logRules)

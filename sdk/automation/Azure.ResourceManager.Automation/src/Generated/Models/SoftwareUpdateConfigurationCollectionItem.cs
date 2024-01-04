@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration collection item properties. </summary>
     public partial class SoftwareUpdateConfigurationCollectionItem
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationCollectionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationCollectionItem"/>. </summary>
         internal SoftwareUpdateConfigurationCollectionItem()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationCollectionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationCollectionItem"/>. </summary>
         /// <param name="name"> Name of the software update configuration. </param>
         /// <param name="id"> Resource Id of the software update configuration. </param>
         /// <param name="updateConfiguration"> Update specific properties of the software update configuration. </param>

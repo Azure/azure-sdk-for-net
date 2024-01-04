@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridNamespaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EventGridNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EventGridNamespaceData(AzureLocation location) : base(location)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid
             InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
-        /// <summary> Initializes a new instance of EventGridNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +40,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="topicsConfiguration"> Topics configuration information for the namespace resource. </param>
         /// <param name="topicSpacesConfiguration"> Topic spaces configuration information for the namespace resource. </param>
         /// <param name="isZoneRedundant">
-        /// Allows the user to specify if the service is zone-redundant. This is a required property and user needs to specify this value explicitly.
+        /// This is an optional property and it allows the user to specify if the namespace resource supports zone-redundancy capability or not. If this
+        /// property is not specified explicitly by the user, its default value depends on the following conditions:
+        ///     a. For Availability Zones enabled regions - The default property value would be true.
+        ///     b. For non-Availability Zones enabled regions - The default property value would be false.
         /// Once specified, this property cannot be updated.
         /// </param>
         /// <param name="publicNetworkAccess">
@@ -82,7 +85,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Topic spaces configuration information for the namespace resource. </summary>
         public TopicSpacesConfiguration TopicSpacesConfiguration { get; set; }
         /// <summary>
-        /// Allows the user to specify if the service is zone-redundant. This is a required property and user needs to specify this value explicitly.
+        /// This is an optional property and it allows the user to specify if the namespace resource supports zone-redundancy capability or not. If this
+        /// property is not specified explicitly by the user, its default value depends on the following conditions:
+        ///     a. For Availability Zones enabled regions - The default property value would be true.
+        ///     b. For non-Availability Zones enabled regions - The default property value would be false.
         /// Once specified, this property cannot be updated.
         /// </summary>
         public bool? IsZoneRedundant { get; set; }

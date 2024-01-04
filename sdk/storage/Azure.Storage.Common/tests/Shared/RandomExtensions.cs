@@ -27,6 +27,13 @@ namespace Azure.Storage.Tests
             return new Span<byte>(buffer);
         }
 
+        public static Memory<byte> NextMemoryInline(this Random random, int length)
+        {
+            var buffer = new byte[length];
+            random.NextBytes(buffer);
+            return new Memory<byte>(buffer);
+        }
+
         public static string NextBase64(this Random random, int length)
         {
             var buffer = new byte[length];

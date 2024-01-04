@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The AppServiceApiKeyVaultReferenceList. </summary>
     internal partial class AppServiceApiKeyVaultReferenceList
     {
-        /// <summary> Initializes a new instance of AppServiceApiKeyVaultReferenceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceApiKeyVaultReferenceList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceApiKeyVaultReferenceList(IEnumerable<ApiKeyVaultReferenceData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppServiceApiKeyVaultReferenceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceApiKeyVaultReferenceList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal AppServiceApiKeyVaultReferenceList(IReadOnlyList<ApiKeyVaultReferenceData> value, string nextLink)

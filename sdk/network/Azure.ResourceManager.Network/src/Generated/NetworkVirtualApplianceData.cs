@@ -20,19 +20,20 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkVirtualApplianceData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceData"/>. </summary>
         public NetworkVirtualApplianceData()
         {
             BootStrapConfigurationBlobs = new ChangeTrackingList<string>();
             CloudInitConfigurationBlobs = new ChangeTrackingList<string>();
             VirtualApplianceNics = new ChangeTrackingList<VirtualApplianceNicProperties>();
             AdditionalNics = new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>();
+            InternetIngressPublicIPs = new ChangeTrackingList<WritableSubResource>();
             VirtualApplianceSites = new ChangeTrackingList<WritableSubResource>();
             VirtualApplianceConnections = new ChangeTrackingList<WritableSubResource>();
             InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
         /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
+        /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
         /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
         /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
-        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags)
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags)
         {
             Identity = identity;
             ETag = etag;
@@ -71,6 +73,7 @@ namespace Azure.ResourceManager.Network
             SshPublicKey = sshPublicKey;
             VirtualApplianceNics = virtualApplianceNics;
             AdditionalNics = additionalNics;
+            InternetIngressPublicIPs = internetIngressPublicIPs;
             VirtualApplianceSites = virtualApplianceSites;
             VirtualApplianceConnections = virtualApplianceConnections;
             InboundSecurityRules = inboundSecurityRules;
@@ -116,6 +119,8 @@ namespace Azure.ResourceManager.Network
         public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
         /// <summary> Details required for Additional Network Interface. </summary>
         public IList<VirtualApplianceAdditionalNicProperties> AdditionalNics { get; }
+        /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
+        public IList<WritableSubResource> InternetIngressPublicIPs { get; }
         /// <summary> List of references to VirtualApplianceSite. </summary>
         public IReadOnlyList<WritableSubResource> VirtualApplianceSites { get; }
         /// <summary> List of references to VirtualApplianceConnections. </summary>

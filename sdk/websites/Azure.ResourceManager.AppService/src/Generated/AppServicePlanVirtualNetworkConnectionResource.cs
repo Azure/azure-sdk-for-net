@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing an AppServicePlanVirtualNetworkConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServicePlanVirtualNetworkConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppServicePlanVirtualNetworkConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource" /> using the GetAppServicePlanVirtualNetworkConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppServicePlanVirtualNetworkConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppServicePlanVirtualNetworkConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppServicePlanResource"/> using the GetAppServicePlanVirtualNetworkConnection method.
     /// </summary>
     public partial class AppServicePlanVirtualNetworkConnectionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.AppService
         private readonly AppServicePlansRestOperations _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient;
         private readonly AppServiceVirtualNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/virtualNetworkConnections";
+
         /// <summary> Initializes a new instance of the <see cref="AppServicePlanVirtualNetworkConnectionResource"/> class for mocking. </summary>
         protected AppServicePlanVirtualNetworkConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppServicePlanVirtualNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServicePlanVirtualNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppServicePlanVirtualNetworkConnectionResource(ArmClient client, AppServiceVirtualNetworkData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/virtualNetworkConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceVirtualNetworkRoute" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppServiceVirtualNetworkRoute"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceVirtualNetworkRoute> GetRoutesForVnetAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.CreateListRoutesForVnetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceVirtualNetworkRoute" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppServiceVirtualNetworkRoute"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceVirtualNetworkRoute> GetRoutesForVnet(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServicePlanVirtualNetworkConnectionAppServicePlansRestClient.CreateListRoutesForVnetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

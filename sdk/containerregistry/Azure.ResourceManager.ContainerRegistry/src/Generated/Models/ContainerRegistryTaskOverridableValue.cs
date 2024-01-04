@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties of a overridable value that can be passed to a task template. </summary>
     public partial class ContainerRegistryTaskOverridableValue
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskOverridableValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskOverridableValue"/>. </summary>
         /// <param name="name"> The name of the overridable value. </param>
         /// <param name="value"> The overridable value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskOverridableValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskOverridableValue"/>. </summary>
         /// <param name="name"> The name of the overridable value. </param>
         /// <param name="value"> The overridable value. </param>
         /// <param name="isSecret"> Flag to indicate whether the value represents a secret or not. </param>

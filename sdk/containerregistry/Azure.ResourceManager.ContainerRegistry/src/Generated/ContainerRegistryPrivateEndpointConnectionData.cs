@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateEndpointConnectionData"/>. </summary>
         public ContainerRegistryPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

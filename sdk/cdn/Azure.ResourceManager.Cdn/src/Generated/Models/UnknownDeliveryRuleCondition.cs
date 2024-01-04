@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The UnknownDeliveryRuleCondition. </summary>
     internal partial class UnknownDeliveryRuleCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of UnknownDeliveryRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDeliveryRuleCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         internal UnknownDeliveryRuleCondition(MatchVariable name) : base(name)
         {

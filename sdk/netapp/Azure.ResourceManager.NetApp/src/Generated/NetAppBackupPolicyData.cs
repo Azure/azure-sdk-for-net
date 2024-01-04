@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppBackupPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppBackupPolicyData(AzureLocation location) : base(location)
         {
             VolumeBackups = new ChangeTrackingList<NetAppVolumeBackupDetail>();
         }
 
-        /// <summary> Initializes a new instance of NetAppBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

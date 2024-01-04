@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlDatabaseSecurityAlertPolicyResource" /> and their operations.
-    /// Each <see cref="SqlDatabaseSecurityAlertPolicyResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get a <see cref="SqlDatabaseSecurityAlertPolicyCollection" /> instance call the GetSqlDatabaseSecurityAlertPolicies method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="SqlDatabaseSecurityAlertPolicyResource"/> and their operations.
+    /// Each <see cref="SqlDatabaseSecurityAlertPolicyResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get a <see cref="SqlDatabaseSecurityAlertPolicyCollection"/> instance call the GetSqlDatabaseSecurityAlertPolicies method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class SqlDatabaseSecurityAlertPolicyCollection : ArmCollection, IEnumerable<SqlDatabaseSecurityAlertPolicyResource>, IAsyncEnumerable<SqlDatabaseSecurityAlertPolicyResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlDatabaseSecurityAlertPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseSecurityAlertPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlDatabaseSecurityAlertPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseSecurityAlertPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSecurityAlertPolicyDatabaseSecurityAlertPoliciesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

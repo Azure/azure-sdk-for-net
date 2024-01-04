@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of the network rules. </summary>
     internal partial class NetworkRuleSet
     {
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         public NetworkRuleSet()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
         internal NetworkRuleSet(MonitorPublicNetworkAccess? publicNetworkAccess)
         {

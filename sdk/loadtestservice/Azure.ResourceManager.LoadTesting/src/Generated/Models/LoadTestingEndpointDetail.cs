@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> Details about the connection between the Batch service and the endpoint. </summary>
     public partial class LoadTestingEndpointDetail
     {
-        /// <summary> Initializes a new instance of LoadTestingEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingEndpointDetail"/>. </summary>
         internal LoadTestingEndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadTestingEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingEndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         internal LoadTestingEndpointDetail(int? port)
         {

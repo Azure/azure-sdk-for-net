@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBindingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBindingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformAppResource" /> using the GetAppPlatformBinding method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBindingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformAppResource"/> using the GetAppPlatformBinding method.
     /// </summary>
     public partial class AppPlatformBindingResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BindingsRestOperations _appPlatformBindingBindingsRestClient;
         private readonly AppPlatformBindingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps/bindings";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBindingResource"/> class for mocking. </summary>
         protected AppPlatformBindingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBindingResource(ArmClient client, AppPlatformBindingData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/apps/bindings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

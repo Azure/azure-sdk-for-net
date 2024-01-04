@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Microsoft Azure SQL Database linked service. </summary>
     public partial class AzureSqlDatabaseLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureSqlDatabaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDatabaseLinkedService"/>. </summary>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public AzureSqlDatabaseLinkedService(object connectionString)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureSqlDatabase";
         }
 
-        /// <summary> Initializes a new instance of AzureSqlDatabaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDatabaseLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

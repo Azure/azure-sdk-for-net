@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteInstanceExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteInstanceExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteInstanceExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceResource" /> using the GetSiteInstanceExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteInstanceExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteInstanceExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteInstanceResource"/> using the GetSiteInstanceExtension method.
     /// </summary>
     public partial class SiteInstanceExtensionResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteInstanceExtensionWebAppsRestClient;
         private readonly MSDeployStatusData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/instances/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="SiteInstanceExtensionResource"/> class for mocking. </summary>
         protected SiteInstanceExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteInstanceExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteInstanceExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteInstanceExtensionResource(ArmClient client, MSDeployStatusData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/instances/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

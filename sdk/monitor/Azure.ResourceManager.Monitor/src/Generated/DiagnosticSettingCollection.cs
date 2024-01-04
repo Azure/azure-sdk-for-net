@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DiagnosticSettingResource" /> and their operations.
-    /// Each <see cref="DiagnosticSettingResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="DiagnosticSettingCollection" /> instance call the GetDiagnosticSettings method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="DiagnosticSettingResource"/> and their operations.
+    /// Each <see cref="DiagnosticSettingResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="DiagnosticSettingCollection"/> instance call the GetDiagnosticSettings method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class DiagnosticSettingCollection : ArmCollection, IEnumerable<DiagnosticSettingResource>, IAsyncEnumerable<DiagnosticSettingResource>
     {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiagnosticSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiagnosticSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiagnosticSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingRestClient.CreateListRequest(Id);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiagnosticSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiagnosticSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiagnosticSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingRestClient.CreateListRequest(Id);

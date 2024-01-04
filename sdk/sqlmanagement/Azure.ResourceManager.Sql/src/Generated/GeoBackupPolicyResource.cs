@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a GeoBackupPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GeoBackupPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGeoBackupPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetGeoBackupPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GeoBackupPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGeoBackupPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetGeoBackupPolicy method.
     /// </summary>
     public partial class GeoBackupPolicyResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Sql
         private readonly GeoBackupPoliciesRestOperations _geoBackupPolicyRestClient;
         private readonly GeoBackupPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/geoBackupPolicies";
+
         /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicyResource"/> class for mocking. </summary>
         protected GeoBackupPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GeoBackupPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GeoBackupPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GeoBackupPolicyResource(ArmClient client, GeoBackupPolicyData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/geoBackupPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

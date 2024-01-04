@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SubscriptionSecurityTask along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSecurityTaskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSecurityTaskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource" /> using the GetSubscriptionSecurityTask method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionSecurityTaskResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionSecurityTaskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityCenterLocationResource"/> using the GetSubscriptionSecurityTask method.
     /// </summary>
     public partial class SubscriptionSecurityTaskResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly TasksRestOperations _subscriptionSecurityTaskTasksRestClient;
         private readonly SecurityTaskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/tasks";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityTaskResource"/> class for mocking. </summary>
         protected SubscriptionSecurityTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SubscriptionSecurityTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSecurityTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SubscriptionSecurityTaskResource(ArmClient client, SecurityTaskData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/locations/tasks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

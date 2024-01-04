@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
     /// A Class representing a ReportResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ReportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetReportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetReportResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReportResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetReportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetReportResource method.
     /// </summary>
     public partial class ReportResource : ArmResource
     {
@@ -38,12 +38,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private readonly ReportRestOperations _reportResourceReportRestClient;
         private readonly ReportResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports";
+
         /// <summary> Initializes a new instance of the <see cref="ReportResource"/> class for mocking. </summary>
         protected ReportResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ReportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ReportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReportResource(ArmClient client, ReportResourceData data) : this(client, data.Id)
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

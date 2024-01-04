@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureTrafficCollectorResource" /> and their operations.
-    /// Each <see cref="AzureTrafficCollectorResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AzureTrafficCollectorCollection" /> instance call the GetAzureTrafficCollectors method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AzureTrafficCollectorResource"/> and their operations.
+    /// Each <see cref="AzureTrafficCollectorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AzureTrafficCollectorCollection"/> instance call the GetAzureTrafficCollectors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AzureTrafficCollectorCollection : ArmCollection, IEnumerable<AzureTrafficCollectorResource>, IAsyncEnumerable<AzureTrafficCollectorResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureTrafficCollectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureTrafficCollectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureTrafficCollectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureTrafficCollectorAzureTrafficCollectorsByResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);

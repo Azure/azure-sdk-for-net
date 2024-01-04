@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> An object returning sentence boundaries in the input and output texts. </summary>
     public partial class SentenceLength
     {
-        /// <summary> Initializes a new instance of SentenceLength. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceLength"/>. </summary>
         /// <param name="srcSentLen">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
@@ -34,7 +34,7 @@ namespace Azure.AI.Translation.Text
             TransSentLen = transSentLen.ToList();
         }
 
-        /// <summary> Initializes a new instance of SentenceLength. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceLength"/>. </summary>
         /// <param name="srcSentLen">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.

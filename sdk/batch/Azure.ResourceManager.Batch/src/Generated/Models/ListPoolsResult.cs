@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Values returned by the List operation. </summary>
     internal partial class ListPoolsResult
     {
-        /// <summary> Initializes a new instance of ListPoolsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListPoolsResult"/>. </summary>
         internal ListPoolsResult()
         {
             Value = new ChangeTrackingList<BatchAccountPoolData>();
         }
 
-        /// <summary> Initializes a new instance of ListPoolsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListPoolsResult"/>. </summary>
         /// <param name="value"> The collection of returned pools. </param>
         /// <param name="nextLink"> The continuation token. </param>
         internal ListPoolsResult(IReadOnlyList<BatchAccountPoolData> value, string nextLink)

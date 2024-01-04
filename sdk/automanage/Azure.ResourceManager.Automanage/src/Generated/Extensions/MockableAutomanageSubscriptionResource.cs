@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomanageConfigurationProfileConfigurationProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomanageConfigurationProfileConfigurationProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServicePrincipalsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageServicePrincipalData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageServicePrincipalData> GetServicePrincipals(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServicePrincipalsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

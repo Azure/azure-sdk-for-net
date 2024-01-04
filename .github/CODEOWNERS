@@ -181,6 +181,7 @@
 /sdk/cognitiveservices/Vision.Face/                                @JinyuID @dipidoo @SteveMSFT @msyache @longli0 @ShaoAnLin @lulululululu
 
 # PRLabel: %Cognitive - Form Recognizer
+/sdk/documentintelligence/                                         @kinelski @pallavit @joseharriaga
 /sdk/formrecognizer/                                               @kinelski @pallavit @joseharriaga
 
 # ServiceLabel: %Cognitive - Form Recognizer %Service Attention
@@ -208,7 +209,7 @@
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga @kinelski @heaths
+/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/                     @assafi
@@ -227,9 +228,6 @@
 
 # ServiceLabel: %Cognitive - Content Moderator %Service Attention
 #/<NotInRepo>/                                                     @swiftarrow11
-
-# ServiceLabel: %Cognitive - Personalizer %Service Attention
-/sdk/cognitiveservices/Personalizer/                               @dwaijam
 
 # ServiceLabel: %Cognitive - Immersive Reader %Service Attention
 #/<NotInRepo>/                                                     @metanMSFT
@@ -307,7 +305,10 @@
 #/<NotInRepo>/                                                     @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes
+/sdk/confidentialledger/                                           @christothes @PallabPaul
+
+# ServiceLabel: %Confidential Ledger
+#/<NotInRepo>/                                                     @PallabPaul
 
 # ServiceLabel: %Consumption %Service Attention
 /sdk/consumption/Microsoft.Azure.Management.Consumption/           @ms-premp
@@ -644,6 +645,9 @@
 # ServiceLabel: %Network - Private Link %Service Attention
 #/<NotInRepo>/                                                     @privlinksuppgithub
 
+# PRLabel: %Nginx
+/sdk/nginx/                                                        @spencerofwiti @bangbingsyb
+
 # ServiceLabel: %Notification Hub %Service Attention
 /sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/ @tjsomasundaram
 
@@ -654,6 +658,9 @@
 
 # PRLabel: %OpenAI
 /sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
+
+# ServiceLabel: %OpenAI %Service Attention
+#/<NotInRepo>/                                                     @jpalvarezl @trrwilson
 
 # ServiceLabel: %Monitor - Operational Insights %Service Attention
 #/<NotInRepo>/                                                     zy@omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
@@ -810,8 +817,8 @@
 # ServiceLabel: %WebPubSub %Service Attention
 /sdk/webpubsub/                                                    @vicancy @JialinXin
 
-# ServiceLabel: %Personalizer %Service Attention
-# PRLabel: %Personalizer
+# ServiceLabel: %Cognitive - Personalizer %Service Attention
+# PRLabel: %Cognitive - Personalizer
 /sdk/personalizer/                                                 @orenmichaely @tyclintw
 
 # ######## Management Plane ########
@@ -837,7 +844,10 @@
 /doc/DataPlaneCodeGeneration                                       @chunyu3 @pshao25 @lirenhe @annelo-msft
 
 # PRLabel: %Cognitive - Content Safety
-/sdk/contentsafety/												   @bowgong @mengaims
+/sdk/contentsafety/												   @bowgong @mengaims @JieZhou000
 
 # ServiceLabel: %Cognitive - Content Safety %Service Attention
-/sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims
+/sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims @JieZhou000
+
+# PRLabel: %Spring App Discovery
+/sdk/springappdiscovery/Azure.ResourceManager.*/                    @sunkun99

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the agent registration keys. </summary>
     public partial class AgentRegistrationKeys
     {
-        /// <summary> Initializes a new instance of AgentRegistrationKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentRegistrationKeys"/>. </summary>
         internal AgentRegistrationKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentRegistrationKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentRegistrationKeys"/>. </summary>
         /// <param name="primary"> Gets or sets the primary key. </param>
         /// <param name="secondary"> Gets or sets the secondary key. </param>
         internal AgentRegistrationKeys(string primary, string secondary)

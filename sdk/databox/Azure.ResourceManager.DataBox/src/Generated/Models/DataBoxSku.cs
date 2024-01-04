@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> The Sku. </summary>
     public partial class DataBoxSku
     {
-        /// <summary> Initializes a new instance of DataBoxSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         public DataBoxSku(DataBoxSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DataBoxSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="displayName"> The display name of the sku. </param>
         /// <param name="family"> The sku family. </param>
