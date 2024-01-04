@@ -36,13 +36,13 @@ public sealed partial class ClientPipeline
     }
 
     public static ClientPipeline Create()
-        => Create(PipelineOptions.Default, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
+        => Create(ClientPipelineOptions.Default, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
 
-    public static ClientPipeline Create(PipelineOptions options, params PipelinePolicy[] perCallPolicies)
+    public static ClientPipeline Create(ClientPipelineOptions options, params PipelinePolicy[] perCallPolicies)
         => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static ClientPipeline Create(
-        PipelineOptions options,
+        ClientPipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,
         ReadOnlySpan<PipelinePolicy> perTryPolicies,
         ReadOnlySpan<PipelinePolicy> beforeTransportPolicies)

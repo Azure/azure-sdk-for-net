@@ -184,7 +184,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     public void TimesOutResponseBuffering()
     {
         var testDoneTcs = new CancellationTokenSource();
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             NetworkTimeout = TimeSpan.FromMilliseconds(500),
             RetryPolicy = new RequestRetryPolicy(maxRetries: 0, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
@@ -211,7 +211,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     public void TimesOutBodyBuffering()
     {
         var testDoneTcs = new CancellationTokenSource();
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             NetworkTimeout = TimeSpan.FromMilliseconds(500),
             RetryPolicy = new RequestRetryPolicy(maxRetries: 0, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
@@ -245,7 +245,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     //{
     //    var testDoneTcs = new CancellationTokenSource();
 
-    //    PipelineOptions options = new()
+    //    ClientPipelineOptions options = new()
     //    {
     //        NetworkTimeout = TimeSpan.FromMilliseconds(500),
     //    };
@@ -320,7 +320,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         var testDoneTcs = new CancellationTokenSource();
         int i = 0;
 
-        PipelineOptions options = new() { NetworkTimeout = TimeSpan.FromMilliseconds(500) };
+        ClientPipelineOptions options = new() { NetworkTimeout = TimeSpan.FromMilliseconds(500) };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
         using TestServer testServer = new TestServer(
@@ -390,7 +390,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     {
         var testDoneTcs = new CancellationTokenSource();
         int i = 0;
-        PipelineOptions options = new() { NetworkTimeout = TimeSpan.FromMilliseconds(500) };
+        ClientPipelineOptions options = new() { NetworkTimeout = TimeSpan.FromMilliseconds(500) };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
         using TestServer testServer = new TestServer(

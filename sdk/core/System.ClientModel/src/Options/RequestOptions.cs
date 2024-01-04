@@ -52,13 +52,13 @@ public class RequestOptions
         switch (position)
         {
             case PipelinePosition.PerCall:
-                _perCallPolicies = PipelineOptions.AddPolicy(policy, _perCallPolicies);
+                _perCallPolicies = ClientPipelineOptions.AddPolicy(policy, _perCallPolicies);
                 break;
             case PipelinePosition.PerTry:
-                _perTryPolicies = PipelineOptions.AddPolicy(policy, _perTryPolicies);
+                _perTryPolicies = ClientPipelineOptions.AddPolicy(policy, _perTryPolicies);
                 break;
             case PipelinePosition.BeforeTransport:
-                _beforeTransportPolicies = PipelineOptions.AddPolicy(policy, _beforeTransportPolicies);
+                _beforeTransportPolicies = ClientPipelineOptions.AddPolicy(policy, _beforeTransportPolicies);
                 break;
             default:
                 throw new ArgumentException($"Unexpected value for position: '{position}'.");

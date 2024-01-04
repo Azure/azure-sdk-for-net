@@ -19,7 +19,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
     [Test]
     public async Task CanEnumeratePipeline()
     {
-        PipelineOptions options = new();
+        ClientPipelineOptions options = new();
         options.Transport = new ObservableTransport("Transport");
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -36,7 +36,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
     [Test]
     public async Task RequestOptionsCanCustomizePipeline()
     {
-        PipelineOptions pipelineOptions = new PipelineOptions();
+        ClientPipelineOptions pipelineOptions = new ClientPipelineOptions();
         pipelineOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
         pipelineOptions.Transport = new ObservableTransport("Transport");
 

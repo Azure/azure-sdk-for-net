@@ -10,10 +10,10 @@ namespace System.ClientModel.Primitives;
 // TODO: we've made this non-abstract in ClientModel, so to make sure service
 // clients always inherit from it rather than using it directly, we will need to
 // add an analyzer to validate it via static analysis.
-public class PipelineOptions
+public class ClientPipelineOptions
 {
-    private static readonly PipelineOptions _defaultOptions = new();
-    internal static PipelineOptions Default => _defaultOptions;
+    private static readonly ClientPipelineOptions _defaultOptions = new();
+    internal static ClientPipelineOptions Default => _defaultOptions;
 
     #region Pipeline creation: User-specified policies
 

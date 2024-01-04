@@ -20,7 +20,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
     [Test]
     public async Task RetriesErrorResponse()
     {
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             Transport = new RetriableTransport("Transport", new int[] { 429, 200 })
         };
@@ -44,7 +44,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
     [Test]
     public async Task DoesNotExceedRetryCount()
     {
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             Transport = new RetriableTransport("Transport", i => 500)
         };
@@ -72,7 +72,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
     {
         int maxRetryCount = 10;
 
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             RetryPolicy = new RequestRetryPolicy(maxRetryCount, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
             Transport = new RetriableTransport("Transport", i => 500)
@@ -102,7 +102,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         int maxRetryCount = 3;
         MockMessageDelay delay = new MockMessageDelay(i => TimeSpan.FromMilliseconds(10));
 
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             RetryPolicy = new RequestRetryPolicy(maxRetryCount, delay),
             Transport = new RetriableTransport("Transport", i => 500)
@@ -122,7 +122,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
         // Retriable codes are hard-coded into the ClientModel retry policy today:
         // 408, 429, 500, 502, 503, and 504.  501 should not be retried.
 
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             RetryPolicy = new RequestRetryPolicy(maxRetries: 10, new MockMessageDelay()),
             Transport = new RetriableTransport("Transport",
@@ -165,7 +165,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
                 _ => throw new InvalidOperationException(),
             };
 
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             RetryPolicy = retryPolicy,
             Transport = transport,
@@ -233,7 +233,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
                 _ => throw new InvalidOperationException(),
             };
 
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             RetryPolicy = retryPolicy,
             Transport = transport,
@@ -291,7 +291,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
     [Test]
     public async Task RetriesWithPolly()
     {
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             RetryPolicy = new PollyRetryPolicy(),
             Transport = new RetriableTransport("Transport", new int[] { 429, 200 })
@@ -335,7 +335,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
                 _ => throw new InvalidOperationException(),
             };
 
-        PipelineOptions options = new()
+        ClientPipelineOptions options = new()
         {
             RetryPolicy = retryPolicy,
             Transport = transport,
