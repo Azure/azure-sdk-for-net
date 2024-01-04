@@ -8,9 +8,9 @@ namespace ClientModel.Tests.Mocks;
 
 public class MockErrorResult<T> : OptionalClientResult<T>
 {
-    private readonly ClientRequestException _exception;
+    private readonly ClientResultException _exception;
 
-    public MockErrorResult(PipelineResponse response, ClientRequestException exception)
+    public MockErrorResult(PipelineResponse response, ClientResultException exception)
         : base(default, response)
     {
         _exception = exception;

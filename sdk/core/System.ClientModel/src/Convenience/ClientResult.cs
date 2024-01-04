@@ -23,20 +23,18 @@ public abstract class ClientResult
     /// <returns>The HTTP response returned by the service.</returns>
     public PipelineResponse GetRawResponse() => _response;
 
-    #region Factory methods for OutputMessage and subtypes
+    #region Factory methods for ClientResult and subtypes
 
     public static ClientResult FromResponse(PipelineResponse response)
         => new ClientModelClientResult(response);
 
     public static ClientResult<T> FromValue<T>(T value, PipelineResponse response)
     {
-        // TODO: Add test to validate that the only way to create this prevents null
-
-        // Null values must use OptionalOutputMessage<T>
+        // Null values must use OptionalClientResult<T>
         if (value is null)
         {
-            string message = "OutputMessage<T> contract guarantees that OutputMessage<T>.Value is non-null. " +
-                "If you need to return an OutputMessage where the Value is null, please use OptionalOutputMessage<T> instead.";
+            string message = "ClientResult<T> contract guarantees that ClientResult<T>.Value is non-null. " +
+                "If you need to return an ClientResult where the Value is null, please use OptionalClientResult<T> instead.";
 
             throw new ArgumentNullException(nameof(value), message);
         }
@@ -49,7 +47,7 @@ public abstract class ClientResult
 
     #endregion
 
-    #region Private implementation subtypes of abstract OutputMessage types
+    #region Private implementation subtypes of abstract ClientResult types
     private class ClientModelClientResult : ClientResult
     {
         public ClientModelClientResult(PipelineResponse response)

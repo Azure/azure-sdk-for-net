@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.Results;
 
-public class ClientResultTests
+public class PipelineResponseTests
 {
     #region ClientResult
 
@@ -51,7 +51,7 @@ public class ClientResultTests
     }
 
     [Test]
-    public void CanCreateOptionalResultFromBool()
+    public void CanCreateOptionalClientResultFromBool()
     {
         // This tests simulates creation of the result returned from a HEAD request.
 
@@ -71,7 +71,7 @@ public class ClientResultTests
     }
 
     [Test]
-    public void OptionalResultDerivedTypeCanShadowValue()
+    public void OptionalClientResultDerivedTypeCanShadowValue()
     {
         // This tests simulates creation of the result returned from a HEAD request.
 
@@ -91,23 +91,69 @@ public class ClientResultTests
     }
 
     [Test]
-    public void CanCreateDerivedOptionalResult()
+    public void CanCreateDerivedOptionalClientResult()
     {
         // This tests simulates creation of the result returned from a HEAD request.
 
         PipelineResponse response = new MockPipelineResponse(500);
-        OptionalClientResult<bool> result = new MockErrorResult<bool>(response, new ClientRequestException(response));
+        OptionalClientResult<bool> result = new MockErrorResult<bool>(response, new ClientResultException(response));
 
-        Assert.Throws<ClientRequestException>(() => { bool b = result.Value; });
+        Assert.Throws<ClientResultException>(() => { bool b = result.Value; });
         Assert.IsFalse(result.HasValue);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }
+
     #endregion
 
     #region ClientResult<T>
 
+    [Test]
+    public void CannotCreateClientResultOfTFromNullResponse()
+    {
+        object value = new();
+
+        Assert.Throws<ArgumentNullException>(() => new MockClientResult<object>(value, null!));
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ClientResult<object> result = ClientResult.FromValue(value, null!);
+        });
+    }
+
+    [Test]
+    public void CannotCreateClientResultOfTFromNullValue()
+    {
+        MockPipelineResponse response = new MockPipelineResponse();
+
+        Assert.Throws<ArgumentNullException>(() => new MockClientResult<object>(null!, response));
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            ClientResult<object> result = ClientResult.FromValue<object>(null!, response);
+        });
+    }
+
+    [Test]
+    public void CanCreateDerivedClientResultOfT()
+    {
+        string value = "hello";
+
+        PipelineResponse response = new MockPipelineResponse(200);
+        DerivedClientResult<string> result = new(value, response);
+
+        Assert.IsTrue(result.HasValue);
+        Assert.AreEqual(value, result.Value);
+        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+    }
+
     #endregion
 
     #region Helpers
+
+    internal class DerivedClientResult<T> : ClientResult<T>
+    {
+        public DerivedClientResult(T value, PipelineResponse response) : base(value, response)
+        {
+        }
+    }
+
     #endregion
 }
