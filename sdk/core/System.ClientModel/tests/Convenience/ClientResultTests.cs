@@ -102,12 +102,58 @@ public class ClientResultTests
         Assert.IsFalse(result.HasValue);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }
+
     #endregion
 
     #region ClientResult<T>
 
+    [Test]
+    public void CannotCreateClientResultOfTFromNullResponse()
+    {
+        object value = new();
+
+        Assert.Throws<ArgumentNullException>(() => new MockClientResult<object>(value, null!));
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            OptionalClientResult<object> result = ClientResult.FromValue(value, null!);
+        });
+    }
+
+    [Test]
+    public void CannotCreateClientResultOfTFromNullValue()
+    {
+        MockPipelineResponse response = new MockPipelineResponse();
+
+        Assert.Throws<ArgumentNullException>(() => new MockClientResult<object>(null!, response));
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            OptionalClientResult<object> result = ClientResult.FromValue<object>(null!, response);
+        });
+    }
+
+    [Test]
+    public void CanCreateDerivedResult()
+    {
+        string value = "hello";
+
+        PipelineResponse response = new MockPipelineResponse(200);
+        DerivedClientResult<string> result = new(value, response);
+
+        Assert.IsTrue(result.HasValue);
+        Assert.AreEqual(value, result.Value);
+        Assert.AreEqual(response.Status, result.GetRawResponse().Status);
+    }
+
     #endregion
 
     #region Helpers
+
+    internal class DerivedClientResult<T> : ClientResult<T>
+    {
+        public DerivedClientResult(T value, PipelineResponse response) : base(value, response)
+        {
+        }
+    }
+
     #endregion
 }
