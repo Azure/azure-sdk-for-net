@@ -20,4 +20,3 @@ steps:
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify REST API spec location for "${{ parameters.PackageName }}"
-    continueOnError: false
