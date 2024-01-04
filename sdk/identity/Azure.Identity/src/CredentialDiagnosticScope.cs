@@ -28,7 +28,7 @@ namespace Azure.Identity
         {
             _name = name;
             _scope = scopeHandler.CreateScope(diagnostics, name);
-            _context = new TokenRequestContext(context.Scopes, context.Claims);
+            _context = new TokenRequestContext(context.Scopes, context.ParentRequestId, context.Claims);
             _scopeHandler = scopeHandler;
         }
 #endif
