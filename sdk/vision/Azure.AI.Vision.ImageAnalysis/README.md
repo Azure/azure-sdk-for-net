@@ -67,7 +67,7 @@ The `ImageAnalysisClient` contains an `Analyze` method that has two overloads:
 * `Analyze (BianryData ...`: Analyze an image from an input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object. The client will upload the image to the service as part of the REST request. 
 * `Analyze (Uri ...)`: Analyze an image from a publicly-accessible URL, via the `Uri` object. The client will send the image URL to the service. The service will download the image.
 
-The examples below show how to do both. The `Analyze` examples populate the input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object by loading an image from a file on disk.
+The examples below demonstrate both. The `Analyze` examples populate the input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object by loading an image from a file from disk.
 
 ### Supported image formats
 
