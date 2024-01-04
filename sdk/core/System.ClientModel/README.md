@@ -33,7 +33,7 @@ The main shared concepts of `System.ClientModel` include:
 
 - Configuring service clients (`RequestOptions`).
 - Accessing HTTP response details (`OutputMessage`, `OutputMessage<T>`).
-- Exceptions for reporting errors from service requests in a consistent fashion (`ClientRequestException`).
+- Exceptions for reporting errors from service requests in a consistent fashion (`ClientResultException`).
 - Providing APIs to read and write models in different formats.
 
 ## Examples
@@ -79,7 +79,7 @@ OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(j
 
 ## Troubleshooting
 
-You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientRequestException` thrown from a pipeline's `Send` method.
+You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientResultException` thrown from a pipeline's `Send` method.
 
 ## Next steps
 

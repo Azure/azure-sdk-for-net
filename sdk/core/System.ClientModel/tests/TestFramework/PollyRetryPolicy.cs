@@ -16,7 +16,7 @@ namespace ClientModel.Tests
         public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             Policy.Handle<IOException>()
-                .Or<ClientRequestException>(ex => ex.Status == 0)
+                .Or<ClientResultException>(ex => ex.Status == 0)
                 .OrResult<PipelineResponse>(r => r.Status >= 400)
                 .WaitAndRetry(
                     new[]
@@ -36,7 +36,7 @@ namespace ClientModel.Tests
         public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         {
             await Policy.Handle<IOException>()
-                .Or<ClientRequestException>(ex => ex.Status == 0)
+                .Or<ClientResultException>(ex => ex.Status == 0)
                 .OrResult<PipelineResponse>(r => r.Status >= 400)
                 .WaitAndRetryAsync(
                     new[]

@@ -32,7 +32,7 @@ public class MapsClientTests
             Assert.AreEqual("US", output.Value.CountryRegion.IsoCode);
             Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), output.Value.IpAddress);
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
@@ -59,7 +59,7 @@ public class MapsClientTests
             Assert.AreEqual("US", output.Value.CountryRegion.IsoCode);
             Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), output.Value.IpAddress);
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
@@ -84,7 +84,7 @@ public class MapsClientTests
             Assert.AreEqual("US", output.Value.CountryRegion.IsoCode);
             Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), output.Value.IpAddress);
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
@@ -109,7 +109,7 @@ public class MapsClientTests
 
             Assert.IsTrue(customPolicy.ProcessedMessage);
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
@@ -135,7 +135,7 @@ public class MapsClientTests
 
             Assert.AreEqual("CustomTransportResponse", reponse.ReasonPhrase);
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
@@ -161,7 +161,7 @@ public class MapsClientTests
 
             // TODO: Add validation test
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
@@ -187,7 +187,7 @@ public class MapsClientTests
 
             // TODO: Add validation test
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
@@ -214,7 +214,7 @@ public class MapsClientTests
 
             Assert.IsTrue(customPolicy.ProcessedMessage);
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }
@@ -238,7 +238,7 @@ public class MapsClientTests
             // Call protocol method in order to pass RequestOptions
             ClientResult output = client.GetCountryCode(ipAddress.ToString(), options);
         }
-        catch (ClientRequestException e)
+        catch (ClientResultException e)
         {
             Assert.Fail($"Error: Response status code: '{e.Status}'");
         }

@@ -59,7 +59,7 @@ public class OpenAIClient
 
         if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
         {
-            throw new ClientRequestException(response);
+            throw new ClientResultException(response);
         }
 
         return ClientResult.FromResponse(response);

@@ -206,7 +206,7 @@ public class RequestRetryPolicy : PipelinePolicy
 
     private static bool IsRetriable(Exception exception)
         => (exception is IOException) ||
-            (exception is ClientRequestException ex && ex.Status == 0);
+            (exception is ClientResultException ex && ex.Status == 0);
 
     #endregion
 }
