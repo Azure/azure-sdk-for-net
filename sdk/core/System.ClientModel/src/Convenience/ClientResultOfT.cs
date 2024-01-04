@@ -12,6 +12,7 @@ public abstract class ClientResult<T> : OptionalClientResult<T>
     protected ClientResult(T value, PipelineResponse response)
         : base(value, response)
     {
+        // Null values must use OptionalClientResult<T>
         ClientUtilities.AssertNotNull(value, nameof(value));
     }
 
