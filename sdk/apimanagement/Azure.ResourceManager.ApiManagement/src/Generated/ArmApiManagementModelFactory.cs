@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="isTls11Enabled"> Specifies if TLS 1.1 is supported. </param>
         /// <param name="isHttp20Enabled"> Specifies if HTTP/2.0 is supported. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementGatewayHostnameConfigurationData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayHostnameConfigurationData ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostname = null, string certificateId = null, bool? isClientCertificateRequired = null, bool? isTls10Enabled = null, bool? isTls11Enabled = null, bool? isHttp20Enabled = null)
+        public static ApiManagementGatewayHostnameConfigurationData ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string hostname = null, string certificateId = null, bool? isClientCertificateRequired = null, bool isTls10Enabled = default, bool isTls11Enabled = default, bool isHttp20Enabled = default)
         {
             return new ApiManagementGatewayHostnameConfigurationData(id, name, resourceType, systemData, hostname, certificateId, isClientCertificateRequired, isTls10Enabled, isTls11Enabled, isHttp20Enabled);
         }

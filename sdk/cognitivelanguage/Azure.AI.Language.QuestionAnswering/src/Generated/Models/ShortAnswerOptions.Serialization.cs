@@ -25,7 +25,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("topAnswersWithSpan"u8);
-                writer.WriteNumberValue(Size.Value);
+                writer.WriteNumberValue(Size);
             }
             writer.WriteEndObject();
         }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="isTls10Enabled"> Specifies if TLS 1.0 is supported. </param>
         /// <param name="isTls11Enabled"> Specifies if TLS 1.1 is supported. </param>
         /// <param name="isHttp20Enabled"> Specifies if HTTP/2.0 is supported. </param>
-        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? isClientCertificateRequired, bool? isTls10Enabled, bool? isTls11Enabled, bool? isHttp20Enabled) : base(id, name, resourceType, systemData)
+        internal ApiManagementGatewayHostnameConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostname, string certificateId, bool? isClientCertificateRequired, bool isTls10Enabled, bool isTls11Enabled, bool isHttp20Enabled) : base(id, name, resourceType, systemData)
         {
             Hostname = hostname;
             CertificateId = certificateId;

@@ -26,7 +26,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="filters"> Filter QnAs based on given metadata list and knowledge base sources. </param>
         /// <param name="shortAnswerOptions"> To configure Answer span prediction feature. </param>
         /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
-        internal AnswersOptions(int? qnaId, string question, int? size, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerOptions shortAnswerOptions, bool? includeUnstructuredSources)
+        internal AnswersOptions(int qnaId, string question, int size, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerOptions shortAnswerOptions, bool? includeUnstructuredSources)
         {
             QnaId = qnaId;
             Question = question;

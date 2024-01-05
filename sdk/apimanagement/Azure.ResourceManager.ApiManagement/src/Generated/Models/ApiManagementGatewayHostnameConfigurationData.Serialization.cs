@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(IsTls1_0Enabled))
             {
                 writer.WritePropertyName("tls10Enabled"u8);
-                writer.WriteBooleanValue(IsTls1_0Enabled.Value);
+                writer.WriteBooleanValue(IsTls1_0Enabled);
             }
             if (Optional.IsDefined(IsTls1_1Enabled))
             {
                 writer.WritePropertyName("tls11Enabled"u8);
-                writer.WriteBooleanValue(IsTls1_1Enabled.Value);
+                writer.WriteBooleanValue(IsTls1_1Enabled);
             }
             if (Optional.IsDefined(IsHttp2_0Enabled))
             {
                 writer.WritePropertyName("http2Enabled"u8);
-                writer.WriteBooleanValue(IsHttp2_0Enabled.Value);
+                writer.WriteBooleanValue(IsHttp2_0Enabled);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement
                     continue;
                 }
             }
-            return new ApiManagementGatewayHostnameConfigurationData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Optional.ToNullable(negotiateClientCertificate), Optional.ToNullable(tls10Enabled), Optional.ToNullable(tls11Enabled), Optional.ToNullable(http2Enabled));
+            return new ApiManagementGatewayHostnameConfigurationData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Optional.ToNullable(negotiateClientCertificate), tls10Enabled, tls11Enabled, http2Enabled);
         }
     }
 }

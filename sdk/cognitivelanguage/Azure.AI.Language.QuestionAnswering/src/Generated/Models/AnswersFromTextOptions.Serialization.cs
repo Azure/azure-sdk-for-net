@@ -32,7 +32,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
-                writer.WriteStringValue(StringIndexType.Value.ToString());
+                writer.WriteStringValue(StringIndexType.ToString());
             }
             writer.WriteEndObject();
         }

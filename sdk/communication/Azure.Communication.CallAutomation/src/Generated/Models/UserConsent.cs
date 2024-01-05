@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="UserConsent"/>. </summary>
         /// <param name="recording"></param>
-        internal UserConsent(int? recording)
+        internal UserConsent(int recording)
         {
             Recording = recording;
         }

@@ -18,7 +18,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(QnaId))
             {
                 writer.WritePropertyName("qnaId"u8);
-                writer.WriteNumberValue(QnaId.Value);
+                writer.WriteNumberValue(QnaId);
             }
             if (Optional.IsDefined(Question))
             {
@@ -28,7 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top"u8);
-                writer.WriteNumberValue(Size.Value);
+                writer.WriteNumberValue(Size);
             }
             if (Optional.IsDefined(UserId))
             {
