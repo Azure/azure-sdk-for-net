@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             ResourceIdentifier resourceIdentifier = new ResourceIdentifier("alertProcessingRule");
 
             // Create Alert processing Rule
-            AlertProcessingRuleData alertProcessingRule = new AlertProcessingRuleData("global")
+            AlertProcessingRuleData alertProcessingRule = new AlertProcessingRuleData("Global")
             {
                 Properties = new AlertProcessingRuleProperties(
                         scopes,
