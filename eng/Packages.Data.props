@@ -57,7 +57,7 @@
   <!--
     Dependency versions for Track 2, Azure.* libraries.
     Only packages that are approved dependencies should go here.
-    Contact azuresdkengsysteam@microsoft.com for approval.
+    To add a new dependency, seek architect approval.
 
     Prior to making any updates to this section, potential version
     conflicts with PowerShell or Functions need to be investigated.
