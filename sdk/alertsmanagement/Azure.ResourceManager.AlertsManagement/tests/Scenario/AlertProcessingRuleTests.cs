@@ -44,21 +44,27 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             ResourceIdentifier resourceIdentifier = new ResourceIdentifier("alertProcessingRule");
 
             // Create Alert processing Rule
-            AlertProcessingRuleData alertProcessingRule = new AlertProcessingRuleData(
-                resourceIdentifier,
-                "AlertProcessingRuleTest",
-                "Microsoft.AlertsManagement/actionRules",
-                new SystemData(),
-                tags: new Dictionary<string, string>(),
-                "Global",
-                new AlertProcessingRuleProperties(
+            AlertProcessingRuleData alertProcessingRule = new AlertProcessingRuleData("global")
+            {
+                Properties = new AlertProcessingRuleProperties(
                         scopes,
-                        new List<AlertProcessingRuleCondition> { new AlertProcessingRuleCondition("Severity","Equals",new List<string> { "Sev2" }) },
-                        null,
-                        new List<AlertProcessingRuleAction> { new AlertProcessingRuleRemoveAllGroupsAction()},
-                        null,
-                        true)
-                );
+                        new List<AlertProcessingRuleAction> { new AlertProcessingRuleRemoveAllGroupsAction() })
+                {
+                    Conditions =
+                    {
+                        new AlertProcessingRuleCondition()
+                        {
+                            Field = "Severity",
+                            Operator = "Equals",
+                            Values =
+                            {
+                                "Sev2"
+                            }
+                        },
+                    },
+                    IsEnabled = true,
+                }
+            };
 
             var createAlertProcessingRuleOperation = await rg.GetAlertProcessingRules().CreateOrUpdateAsync(WaitUntil.Completed, resourceName, alertProcessingRule);
             await createAlertProcessingRuleOperation.WaitForCompletionAsync();
