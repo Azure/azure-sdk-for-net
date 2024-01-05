@@ -34,7 +34,7 @@ namespace Azure.Core
             // Iterate through each challenge value.
             while (TryGetNextChallenge(ref headerSpan, out var challengeKey))
             {
-                // Enumerate each key=value parameter until we find the parameter key on the specified scheme challenge.
+                // Enumerate each key-value parameter until we find the parameter key on the specified scheme challenge.
                 while (TryGetNextParameter(ref headerSpan, out var key, out var value))
                 {
                     if (challengeKey.Equals(scheme, StringComparison.OrdinalIgnoreCase) && key.Equals(parameter, StringComparison.OrdinalIgnoreCase))

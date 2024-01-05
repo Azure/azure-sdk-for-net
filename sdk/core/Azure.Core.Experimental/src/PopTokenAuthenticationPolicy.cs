@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// A policy that supports Proof of Possession (PoP) tokens.
+    /// A policy that supports <see href="https://learn.microsoft.com/entra/msal/dotnet/advanced/proof-of-possession-tokens">Proof of Possession (PoP) tokens</see>.
     /// </summary>
     public class PopTokenAuthenticationPolicy : HttpPipelinePolicy
     {
@@ -104,7 +104,7 @@ namespace Azure.Core.Pipeline
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
-                throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
+                throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS-protected (HTTPS) endpoints.");
             }
 
             if (async)
@@ -152,7 +152,7 @@ namespace Azure.Core.Pipeline
         {
             if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
             {
-                throw new InvalidOperationException("Proof of possession token authentication is not permitted for non TLS protected (https) endpoints.");
+                throw new InvalidOperationException("Proof of possession token authentication is not permitted for non TLS-protected (HTTPS) endpoints.");
             }
 
             if (_popNonce != null)

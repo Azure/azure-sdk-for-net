@@ -17,9 +17,9 @@ namespace Azure.Core
         /// <param name="scopes">The scopes required for the token.</param>
         /// <param name="parentRequestId">The <see cref="Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
         /// <param name="claims">Additional claims to be included in the token.</param>
-        /// <param name="tenantId"> The tenantId to be included in the token request.</param>
+        /// <param name="tenantId">The tenant ID to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
-        /// <param name="proofOfPossessionNonce">The nonce value required for Pop token requests.</param>
+        /// <param name="proofOfPossessionNonce">The nonce value required for PoP token requests.</param>
         /// <param name="request"></param>
         public PopTokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, string? proofOfPossessionNonce = default, Request? request = default)
         {
@@ -74,7 +74,7 @@ namespace Azure.Core
         public string? Claims { get; }
 
         /// <summary>
-        /// The tenantId to be included in the token request.
+        /// The tenant ID to be included in the token request.
         /// </summary>
         public string? TenantId { get; }
 
@@ -83,7 +83,7 @@ namespace Azure.Core
         /// </summary>
         /// <remarks>
         /// If a resource API implements CAE and your application declares it can handle CAE, your app receives CAE tokens for that resource.
-        /// For this reason, if you declare your app CAE ready, your application must handle the CAE claim challenge for all resource APIs that accept Microsoft Identity access tokens.
+        /// For this reason, if you declare your app CAE-ready, your app must handle the CAE claim challenge for all resource APIs that accept Microsoft Identity access tokens.
         /// If you don't handle CAE responses in these API calls, your app could end up in a loop retrying an API call with a token that is still in the returned lifespan of the token but has been revoked due to CAE.
         /// </remarks>
         public bool IsCaeEnabled { get; }
