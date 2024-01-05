@@ -10,33 +10,33 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> An internet location from which the model may retrieve an image. </summary>
+    /// <summary> A representation of the image data in a chat message content item. </summary>
     internal partial class InternalChatMessageImageUrl
     {
         /// <summary> Initializes a new instance of <see cref="InternalChatMessageImageUrl"/>. </summary>
-        /// <param name="urlOrEncodedData"> The URL of the image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="urlOrEncodedData"/> is null. </exception>
-        public InternalChatMessageImageUrl(string urlOrEncodedData)
+        /// <param name="url"> The URL or base64-encoded binary data of the image. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
+        public InternalChatMessageImageUrl(string url)
         {
-            Argument.AssertNotNull(urlOrEncodedData, nameof(urlOrEncodedData));
+            Argument.AssertNotNull(url, nameof(url));
 
-            UrlOrEncodedData = urlOrEncodedData;
+            Url = url;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalChatMessageImageUrl"/>. </summary>
-        /// <param name="urlOrEncodedData"> The URL of the image. </param>
+        /// <param name="url"> The URL or base64-encoded binary data of the image. </param>
         /// <param name="detail">
         /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
         /// accuracy.
         /// </param>
-        internal InternalChatMessageImageUrl(string urlOrEncodedData, ChatMessageImageDetailLevel? detail)
+        internal InternalChatMessageImageUrl(string url, ChatMessageImageDetailLevel? detail)
         {
-            UrlOrEncodedData = urlOrEncodedData;
+            Url = url;
             Detail = detail;
         }
 
-        /// <summary> The URL of the image. </summary>
-        public string UrlOrEncodedData { get; }
+        /// <summary> The URL or base64-encoded binary data of the image. </summary>
+        public string Url { get; }
         /// <summary>
         /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
         /// accuracy.

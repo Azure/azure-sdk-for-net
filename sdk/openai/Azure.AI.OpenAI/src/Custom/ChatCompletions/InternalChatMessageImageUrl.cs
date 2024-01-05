@@ -27,7 +27,7 @@ internal partial class InternalChatMessageImageUrl
         Argument.AssertNotNull(imageDataFormat, nameof(imageDataFormat));
         byte[] imageDataBytes = imageData.ToArray();
         string encodedImageData = Convert.ToBase64String(imageDataBytes);
-        UrlOrEncodedData = $"data:{imageDataFormat};base64,{encodedImageData}";
+        Url = $"data:{imageDataFormat};base64,{encodedImageData}";
         Detail = detailLevel;
     }
 }
