@@ -74,10 +74,7 @@ public class ClientResultException : Exception, ISerializable
             return message;
         }
 
-        if (!response.TryGetBufferedContent(out _))
-        {
-            BufferResponse(response);
-        }
+        response.BufferContent();
 
         StringBuilder messageBuilder = new();
 
@@ -100,23 +97,5 @@ public class ClientResultException : Exception, ISerializable
         // Content or headers can be obtained from raw response so are not added here.
 
         return messageBuilder.ToString();
-    }
-
-    private static void BufferResponse(PipelineResponse response)
-    {
-        if (response.ContentStream is null)
-        {
-            return;
-        }
-
-        var bufferedStream = new MemoryStream();
-        response.ContentStream.CopyTo(bufferedStream);
-
-        // Dispose the unbuffered stream
-        response.ContentStream.Dispose();
-
-        // Reset the position of the buffered stream and set it on the response
-        bufferedStream.Position = 0;
-        response.ContentStream = bufferedStream;
     }
 }
