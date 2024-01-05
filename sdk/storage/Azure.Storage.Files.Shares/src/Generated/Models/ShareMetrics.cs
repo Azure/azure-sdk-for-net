@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="enabled"> Indicates whether metrics are enabled for the File service. </param>
         /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> The retention policy. </param>
-        internal ShareMetrics(string version, bool enabled, bool? includeApis, ShareRetentionPolicy retentionPolicy)
+        internal ShareMetrics(string version, bool enabled, bool includeApis, ShareRetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;

@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
         internal static BlobGeoReplication DeserializeBlobGeoReplication(XElement element)
         {
             BlobGeoReplicationStatus status = default;
-            DateTimeOffset? lastSyncedOn = default;
+            DateTimeOffset lastSyncedOn = default;
             if (element.Element("Status") is XElement statusElement)
             {
                 status = statusElement.Value.ToBlobGeoReplicationStatus();

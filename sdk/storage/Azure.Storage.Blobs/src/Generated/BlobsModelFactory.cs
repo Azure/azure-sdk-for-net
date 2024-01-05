@@ -13,6 +13,15 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class BlobsModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.BlobGeoReplication"/>. </summary>
+        /// <param name="status"> The status of the secondary location. </param>
+        /// <param name="lastSyncedOn"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
+        /// <returns> A new <see cref="Models.BlobGeoReplication"/> instance for mocking. </returns>
+        public static BlobGeoReplication BlobGeoReplication(BlobGeoReplicationStatus status = default, DateTimeOffset lastSyncedOn = default)
+        {
+            return new BlobGeoReplication(status, lastSyncedOn);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>

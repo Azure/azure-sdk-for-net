@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(StorageUriKind))
             {
                 writer.WritePropertyName("storageType"u8);
-                writer.WriteStringValue(StorageUriKind.Value.ToSerialString());
+                writer.WriteStringValue(StorageUriKind.ToSerialString());
             }
             writer.WriteEndObject();
         }

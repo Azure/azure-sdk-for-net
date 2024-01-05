@@ -28,7 +28,7 @@ namespace Azure.Storage.Queues.Models
             if (Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
-                writer.WriteValue(IncludeApis.Value);
+                writer.WriteValue(IncludeApis);
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(RetentionPolicy))
@@ -42,7 +42,7 @@ namespace Azure.Storage.Queues.Models
         {
             string version = default;
             bool enabled = default;
-            bool? includeApis = default;
+            bool includeApis = default;
             QueueRetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
@@ -54,7 +54,7 @@ namespace Azure.Storage.Queues.Models
             }
             if (element.Element("IncludeAPIs") is XElement includeAPIsElement)
             {
-                includeApis = (bool?)includeAPIsElement;
+                includeApis = (bool)includeAPIsElement;
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {

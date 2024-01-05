@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="policyStartsOn"> The date-time the policy is active. </param>
         /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
         /// <param name="permissions"> The permissions for the ACL policy. </param>
-        internal ShareAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions)
+        internal ShareAccessPolicy(DateTimeOffset policyStartsOn, DateTimeOffset policyExpiresOn, string permissions)
         {
             PolicyStartsOn = policyStartsOn;
             PolicyExpiresOn = policyExpiresOn;

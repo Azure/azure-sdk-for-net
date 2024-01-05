@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="enabled"> Indicates whether metrics are enabled for the Blob service. </param>
         /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> the retention policy which determines how long the associated data should persist. </param>
-        internal BlobMetrics(string version, bool enabled, bool? includeApis, BlobRetentionPolicy retentionPolicy)
+        internal BlobMetrics(string version, bool enabled, bool includeApis, BlobRetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;

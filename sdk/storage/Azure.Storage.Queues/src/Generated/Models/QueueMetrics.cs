@@ -15,7 +15,7 @@ namespace Azure.Storage.Queues.Models
         /// <param name="enabled"> Indicates whether metrics are enabled for the Queue service. </param>
         /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
         /// <param name="retentionPolicy"> the retention policy. </param>
-        internal QueueMetrics(string version, bool enabled, bool? includeApis, QueueRetentionPolicy retentionPolicy)
+        internal QueueMetrics(string version, bool enabled, bool includeApis, QueueRetentionPolicy retentionPolicy)
         {
             Version = version;
             Enabled = enabled;

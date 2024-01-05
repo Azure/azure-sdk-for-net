@@ -20,13 +20,13 @@ namespace Azure.Storage.Files.Shares.Models
             if (Optional.IsDefined(PolicyStartsOn))
             {
                 writer.WriteStartElement("Start");
-                writer.WriteValue(PolicyStartsOn.Value, "O");
+                writer.WriteValue(PolicyStartsOn, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(PolicyExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
-                writer.WriteValue(PolicyExpiresOn.Value, "O");
+                writer.WriteValue(PolicyExpiresOn, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(Permissions))
@@ -40,8 +40,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         internal static ShareAccessPolicy DeserializeShareAccessPolicy(XElement element)
         {
-            DateTimeOffset? policyStartsOn = default;
-            DateTimeOffset? policyExpiresOn = default;
+            DateTimeOffset policyStartsOn = default;
+            DateTimeOffset policyExpiresOn = default;
             string permissions = default;
             if (element.Element("Start") is XElement startElement)
             {

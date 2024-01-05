@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Models
             if (Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
-                writer.WriteValue(IncludeApis.Value);
+                writer.WriteValue(IncludeApis);
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(RetentionPolicy))
@@ -43,7 +43,7 @@ namespace Azure.Data.Tables.Models
         {
             string version = default;
             bool enabled = default;
-            bool? includeApis = default;
+            bool includeApis = default;
             TableRetentionPolicy retentionPolicy = default;
             if (element.Element("Version") is XElement versionElement)
             {
@@ -55,7 +55,7 @@ namespace Azure.Data.Tables.Models
             }
             if (element.Element("IncludeAPIs") is XElement includeAPIsElement)
             {
-                includeApis = (bool?)includeAPIsElement;
+                includeApis = (bool)includeAPIsElement;
             }
             if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
             {

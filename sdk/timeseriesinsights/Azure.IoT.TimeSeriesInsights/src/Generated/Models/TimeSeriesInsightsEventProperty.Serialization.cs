@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(PropertyValueType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(PropertyValueType.Value.ToString());
+                writer.WriteStringValue(PropertyValueType.ToString());
             }
             writer.WriteEndObject();
         }
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesInsightsEventProperty(name.Value, Optional.ToNullable(type));
+            return new TimeSeriesInsightsEventProperty(name.Value, type);
         }
     }
 }

@@ -20,13 +20,13 @@ namespace Azure.Storage.Queues.Models
             if (Optional.IsDefined(StartsOn))
             {
                 writer.WriteStartElement("Start");
-                writer.WriteValue(StartsOn.Value, "O");
+                writer.WriteValue(StartsOn, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
-                writer.WriteValue(ExpiresOn.Value, "O");
+                writer.WriteValue(ExpiresOn, "O");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(Permissions))
@@ -40,8 +40,8 @@ namespace Azure.Storage.Queues.Models
 
         internal static QueueAccessPolicy DeserializeQueueAccessPolicy(XElement element)
         {
-            DateTimeOffset? startsOn = default;
-            DateTimeOffset? expiresOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset expiresOn = default;
             string permissions = default;
             if (element.Element("Start") is XElement startElement)
             {

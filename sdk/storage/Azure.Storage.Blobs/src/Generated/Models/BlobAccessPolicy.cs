@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="policyStartsOn"> the date-time the policy is active. </param>
         /// <param name="policyExpiresOn"> the date-time the policy expires. </param>
         /// <param name="permissions"> the permissions for the acl policy. </param>
-        internal BlobAccessPolicy(DateTimeOffset? policyStartsOn, DateTimeOffset? policyExpiresOn, string permissions)
+        internal BlobAccessPolicy(DateTimeOffset policyStartsOn, DateTimeOffset policyExpiresOn, string permissions)
         {
             PolicyStartsOn = policyStartsOn;
             PolicyExpiresOn = policyExpiresOn;

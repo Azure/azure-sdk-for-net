@@ -13,5 +13,13 @@ namespace Azure.Storage.Queues.Models
     /// <summary> Model factory for models. </summary>
     public static partial class QueuesModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.QueueGeoReplication"/>. </summary>
+        /// <param name="status"> The status of the secondary location. </param>
+        /// <param name="lastSyncedOn"> A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for reads. </param>
+        /// <returns> A new <see cref="Models.QueueGeoReplication"/> instance for mocking. </returns>
+        public static QueueGeoReplication QueueGeoReplication(QueueGeoReplicationStatus status = default, DateTimeOffset lastSyncedOn = default)
+        {
+            return new QueueGeoReplication(status, lastSyncedOn);
+        }
     }
 }

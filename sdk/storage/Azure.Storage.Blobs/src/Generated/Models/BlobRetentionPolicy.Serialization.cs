@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Models
             if (Optional.IsDefined(AllowPermanentDelete))
             {
                 writer.WriteStartElement("AllowPermanentDelete");
-                writer.WriteValue(AllowPermanentDelete.Value);
+                writer.WriteValue(AllowPermanentDelete);
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.Models
         {
             bool enabled = default;
             int? days = default;
-            bool? allowPermanentDelete = default;
+            bool allowPermanentDelete = default;
             if (element.Element("Enabled") is XElement enabledElement)
             {
                 enabled = (bool)enabledElement;
@@ -49,7 +49,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("AllowPermanentDelete") is XElement allowPermanentDeleteElement)
             {
-                allowPermanentDelete = (bool?)allowPermanentDeleteElement;
+                allowPermanentDelete = (bool)allowPermanentDeleteElement;
             }
             return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
         }

@@ -21,7 +21,7 @@ namespace Azure.Storage.Queues.Models
         /// <param name="startsOn"> the date-time the policy is active. </param>
         /// <param name="expiresOn"> the date-time the policy expires. </param>
         /// <param name="permissions"> the permissions for the acl policy. </param>
-        internal QueueAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permissions)
+        internal QueueAccessPolicy(DateTimeOffset startsOn, DateTimeOffset expiresOn, string permissions)
         {
             StartsOn = startsOn;
             ExpiresOn = expiresOn;

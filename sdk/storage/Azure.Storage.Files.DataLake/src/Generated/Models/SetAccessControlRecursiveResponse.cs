@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="filesSuccessful"></param>
         /// <param name="failureCount"></param>
         /// <param name="failedEntries"></param>
-        internal SetAccessControlRecursiveResponse(int? directoriesSuccessful, int? filesSuccessful, int? failureCount, IReadOnlyList<AclFailedEntry> failedEntries)
+        internal SetAccessControlRecursiveResponse(int directoriesSuccessful, int filesSuccessful, int failureCount, IReadOnlyList<AclFailedEntry> failedEntries)
         {
             DirectoriesSuccessful = directoriesSuccessful;
             FilesSuccessful = filesSuccessful;

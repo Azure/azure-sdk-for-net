@@ -18,17 +18,17 @@ namespace Azure.AI.TextAnalytics
             if (Optional.IsDefined(Conditionality))
             {
                 writer.WritePropertyName("conditionality"u8);
-                writer.WriteStringValue(Conditionality.Value.ToSerialString());
+                writer.WriteStringValue(Conditionality.ToSerialString());
             }
             if (Optional.IsDefined(Certainty))
             {
                 writer.WritePropertyName("certainty"u8);
-                writer.WriteStringValue(Certainty.Value.ToSerialString());
+                writer.WriteStringValue(Certainty.ToSerialString());
             }
             if (Optional.IsDefined(Association))
             {
                 writer.WritePropertyName("association"u8);
-                writer.WriteStringValue(Association.Value.ToSerialString());
+                writer.WriteStringValue(Association.ToSerialString());
             }
             writer.WriteEndObject();
         }
@@ -72,7 +72,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntityAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            return new HealthcareEntityAssertion(conditionality, certainty, association);
         }
     }
 }

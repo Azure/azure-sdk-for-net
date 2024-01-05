@@ -21,7 +21,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="name"> The name of the property. </param>
         /// <param name="propertyValueType"> The type of the property. </param>
         /// <param name="valuesInternal"> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </param>
-        internal PropertyValues(string name, TimeSeriesPropertyType? propertyValueType, JsonElement valuesInternal) : base(name, propertyValueType)
+        internal PropertyValues(string name, TimeSeriesPropertyType propertyValueType, JsonElement valuesInternal) : base(name, propertyValueType)
         {
             ValuesInternal = valuesInternal;
         }

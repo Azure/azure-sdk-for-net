@@ -67,7 +67,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new SetAccessControlRecursiveResponse(Optional.ToNullable(directoriesSuccessful), Optional.ToNullable(filesSuccessful), Optional.ToNullable(failureCount), Optional.ToList(failedEntries));
+            return new SetAccessControlRecursiveResponse(directoriesSuccessful, filesSuccessful, failureCount, Optional.ToList(failedEntries));
         }
     }
 }

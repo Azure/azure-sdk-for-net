@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of <see cref="TimeSeriesInsightsEventProperty"/>. </summary>
         /// <param name="name"> The name of the property. </param>
         /// <param name="propertyValueType"> The type of the property. </param>
-        internal TimeSeriesInsightsEventProperty(string name, TimeSeriesPropertyType? propertyValueType)
+        internal TimeSeriesInsightsEventProperty(string name, TimeSeriesPropertyType propertyValueType)
         {
             Name = name;
             PropertyValueType = propertyValueType;

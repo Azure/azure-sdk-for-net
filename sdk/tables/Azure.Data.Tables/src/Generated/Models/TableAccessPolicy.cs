@@ -16,7 +16,7 @@ namespace Azure.Data.Tables.Models
         /// <param name="startsOn"> The start datetime from which the policy is active. </param>
         /// <param name="expiresOn"> The datetime that the policy expires. </param>
         /// <param name="permission"> The permissions for the acl policy. </param>
-        public TableAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permission)
+        public TableAccessPolicy(DateTimeOffset startsOn, DateTimeOffset expiresOn, string permission)
         {
             StartsOn = startsOn;
             ExpiresOn = expiresOn;
