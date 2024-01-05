@@ -42,7 +42,7 @@ This example demonstrates how to detect people in the image file [sample.jpg](ht
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Detect people in the image. 
+// Detect people in the image.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.People);
@@ -61,7 +61,7 @@ foreach (DetectedPerson person in result.People.Values)
 This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisPeopleFromUrl
-// Detect people in the image. 
+// Detect people in the image.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.People);

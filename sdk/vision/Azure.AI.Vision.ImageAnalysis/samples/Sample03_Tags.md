@@ -43,7 +43,7 @@ This example demonstrates how to extract tags for the image file [sample.jpg](ht
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get the tags for the image. 
+// Get the tags for the image.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Tags);
@@ -62,7 +62,7 @@ foreach (DetectedTag tag in result.Tags.Values)
 This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisTagsFromUrl
-// Get the tags for the image. 
+// Get the tags for the image.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Tags);

@@ -42,7 +42,7 @@ This example demonstrates how to generate smart-cropped thumbnails for the image
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get the smart-cropped thumbnails for the image. 
+// Get the smart-cropped thumbnails for the image.
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.SmartCrops);
@@ -61,7 +61,7 @@ foreach (CropRegion cropRegion in result.SmartCrops.Values)
 This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisSmartCropsFromUrl
-// Get the smart-cropped thumbnails for the image. 
+// Get the smart-cropped thumbnails for the image.
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.SmartCrops);
