@@ -14,5 +14,14 @@ namespace Azure.Maps.Routing.Models
         internal LatLongPair()
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="LatLongPair"/>. </summary>
+        /// <param name="latitude"> Latitude property. </param>
+        /// <param name="longitude"> Longitude property. </param>
+        internal LatLongPair(double latitude, double longitude)
+        {
+            _Latitude = latitude;
+            _Longitude = longitude;
+        }
     }
 }

@@ -72,7 +72,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSummary(Optional.ToNullable(lengthInMeters), Optional.ToNullable(travelTimeInSeconds), Optional.ToNullable(trafficDelayInSeconds), Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime));
+            return new RouteSummary(Optional.ToNullable(lengthInMeters), travelTimeInSeconds, trafficDelayInSeconds, Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(CrossMetricsOperator))
             {
                 writer.WritePropertyName("crossMetricsOperator"u8);
-                writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
+                writer.WriteStringValue(CrossMetricsOperator.ToString());
             }
             if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
             {
@@ -129,7 +129,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, Optional.ToNullable(crossMetricsOperator), Optional.ToList(splitAlertByDimensions), hookIds, metricAlertingConfigurations);
+            return new AnomalyAlertConfiguration(anomalyAlertingConfigurationId.Value, name, description.Value, crossMetricsOperator, Optional.ToList(splitAlertByDimensions), hookIds, metricAlertingConfigurations);
         }
     }
 }

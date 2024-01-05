@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="smartDetectionCondition"></param>
         /// <param name="hardThresholdCondition"></param>
         /// <param name="changeThresholdCondition"></param>
-        internal MetricWholeSeriesDetectionCondition(DetectionConditionOperator? conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition)
+        internal MetricWholeSeriesDetectionCondition(DetectionConditionOperator conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition)
         {
             ConditionOperator = conditionOperator;
             SmartDetectionCondition = smartDetectionCondition;

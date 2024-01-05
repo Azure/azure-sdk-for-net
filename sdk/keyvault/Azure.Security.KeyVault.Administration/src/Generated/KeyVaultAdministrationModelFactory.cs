@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="content"> The value of the pool setting. </param>
         /// <param name="settingType"> The type specifier of the value. </param>
         /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
-        public static KeyVaultSetting KeyVaultSetting(string name = null, string content = null, KeyVaultSettingType? settingType = null)
+        public static KeyVaultSetting KeyVaultSetting(string name = null, string content = null, KeyVaultSettingType settingType = default)
         {
             return new KeyVaultSetting(name, content, settingType);
         }

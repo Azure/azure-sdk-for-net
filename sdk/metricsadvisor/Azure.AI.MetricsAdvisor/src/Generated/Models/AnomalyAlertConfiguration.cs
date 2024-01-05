@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>
         /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
         /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
-        internal AnomalyAlertConfiguration(string id, string name, string description, MetricAlertConfigurationsOperator? crossMetricsOperator, IList<string> dimensionsToSplitAlert, IList<string> idsOfHooksToAlert, IList<MetricAlertConfiguration> metricAlertConfigurations)
+        internal AnomalyAlertConfiguration(string id, string name, string description, MetricAlertConfigurationsOperator crossMetricsOperator, IList<string> dimensionsToSplitAlert, IList<string> idsOfHooksToAlert, IList<MetricAlertConfiguration> metricAlertConfigurations)
         {
             Id = id;
             Name = name;

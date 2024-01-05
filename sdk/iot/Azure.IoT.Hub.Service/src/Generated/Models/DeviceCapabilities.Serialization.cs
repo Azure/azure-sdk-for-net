@@ -18,7 +18,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(IsIotEdgeDevice))
             {
                 writer.WritePropertyName("iotEdge"u8);
-                writer.WriteBooleanValue(IsIotEdgeDevice.Value);
+                writer.WriteBooleanValue(IsIotEdgeDevice);
             }
             writer.WriteEndObject();
         }
@@ -42,7 +42,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceCapabilities(Optional.ToNullable(iotEdge));
+            return new DeviceCapabilities(iotEdge);
         }
     }
 }

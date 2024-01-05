@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// the timestamp of latest ingestion job with status update.
         /// null indicates not available
         /// </param>
-        internal DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp, DateTimeOffset? latestActiveTimestamp)
+        internal DataFeedIngestionProgress(DateTimeOffset latestSuccessTimestamp, DateTimeOffset latestActiveTimestamp)
         {
             LatestSuccessTimestamp = latestSuccessTimestamp;
             LatestActiveTimestamp = latestActiveTimestamp;

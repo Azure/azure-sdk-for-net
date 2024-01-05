@@ -41,7 +41,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new LatLongPair(Optional.ToNullable(latitude), Optional.ToNullable(longitude));
+            return new LatLongPair(latitude, longitude);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure;
@@ -801,6 +802,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             statements ??= new List<RoutePolicyStatementProperties>();
 
             return new NetworkFabricRoutePolicyData(id, name, resourceType, systemData, tags, location, annotation, defaultAction, statements?.ToList(), networkFabricId, addressFamilyType, configurationState, provisioningState, administrativeState);
+        }
+
+        /// <summary>
+        /// This constructor is added for the backward compatibility.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="configurationType"></param>
+        /// <param name="aclsUri"></param>
+        /// <param name="matchConfigurations"></param>
+        /// <param name="dynamicMatchConfigurations"></param>
+        /// <param name="lastSyncedOn"></param>
+        /// <param name="configurationState"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="administrativeState"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType configurationType, Uri aclsUri, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset lastSyncedOn, NetworkFabricConfigurationState configurationState, NetworkFabricProvisioningState provisioningState, NetworkFabricAdministrativeState administrativeState)
+        {
+            return NetworkFabricAccessControlListData(id, name, resourceType, systemData, tags, location, annotation, configurationType, aclsUri, defaultAction: default, matchConfigurations, dynamicMatchConfigurations, lastSyncedOn, configurationState, provisioningState, administrativeState);
+        }
+
+        /// <summary>
+        /// This constructor is added for the backward compatibility
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="tags"></param>
+        /// <param name="location"></param>
+        /// <param name="annotation"></param>
+        /// <param name="statements"></param>
+        /// <param name="networkFabricId"></param>
+        /// <param name="addressFamilyType"></param>
+        /// <param name="configurationState"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="administrativeState"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType addressFamilyType, NetworkFabricConfigurationState configurationState, NetworkFabricProvisioningState provisioningState, NetworkFabricAdministrativeState administrativeState)
+        {
+            return NetworkFabricRoutePolicyData(id, name, resourceType, systemData, tags, location, annotation, defaultAction: default, statements, networkFabricId, addressFamilyType, configurationState, provisioningState, administrativeState);
         }
     }
 }

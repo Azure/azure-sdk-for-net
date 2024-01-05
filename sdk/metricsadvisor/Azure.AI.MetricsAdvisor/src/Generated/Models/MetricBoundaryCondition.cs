@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         ///
         /// should be specified only when using other metric to filter
         /// </param>
-        internal MetricBoundaryCondition(double? lowerBound, double? upperBound, BoundaryDirection direction, BoundaryMeasureType? measureType, string companionMetricId, bool? shouldAlertIfDataPointMissing)
+        internal MetricBoundaryCondition(double lowerBound, double upperBound, BoundaryDirection direction, BoundaryMeasureType measureType, string companionMetricId, bool shouldAlertIfDataPointMissing)
         {
             LowerBound = lowerBound;
             UpperBound = upperBound;

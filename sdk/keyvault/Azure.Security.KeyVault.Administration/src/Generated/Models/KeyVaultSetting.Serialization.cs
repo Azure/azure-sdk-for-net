@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultSetting(name, value, Optional.ToNullable(type));
+            return new KeyVaultSetting(name, value, type);
         }
     }
 }

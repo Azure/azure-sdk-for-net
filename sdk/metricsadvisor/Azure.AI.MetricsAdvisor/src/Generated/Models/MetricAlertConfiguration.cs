@@ -13,5 +13,25 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricAlertingConfiguration. </summary>
     public partial class MetricAlertConfiguration
     {
+        /// <summary> Initializes a new instance of <see cref="MetricAlertConfiguration"/>. </summary>
+        /// <param name="detectionConfigurationId"> Anomaly detection configuration unique id. </param>
+        /// <param name="anomalyScopeType"> Anomaly scope. </param>
+        /// <param name="useDetectionResultToFilterAnomalies"> Negation operation. </param>
+        /// <param name="dimensionAnomalyScope"></param>
+        /// <param name="topNAnomalyScope"></param>
+        /// <param name="severityFilter"></param>
+        /// <param name="alertSnoozeCondition"></param>
+        /// <param name="valueFilter"></param>
+        internal MetricAlertConfiguration(string detectionConfigurationId, MetricAnomalyAlertScopeType anomalyScopeType, bool useDetectionResultToFilterAnomalies, DimensionKey dimensionAnomalyScope, TopNGroupScope topNAnomalyScope, SeverityCondition severityFilter, MetricAnomalyAlertSnoozeCondition alertSnoozeCondition, MetricBoundaryCondition valueFilter)
+        {
+            DetectionConfigurationId = detectionConfigurationId;
+            AnomalyScopeType = anomalyScopeType;
+            UseDetectionResultToFilterAnomalies = useDetectionResultToFilterAnomalies;
+            DimensionAnomalyScope = dimensionAnomalyScope;
+            TopNAnomalyScope = topNAnomalyScope;
+            SeverityFilter = severityFilter;
+            AlertSnoozeCondition = alertSnoozeCondition;
+            ValueFilter = valueFilter;
+        }
     }
 }

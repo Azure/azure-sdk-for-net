@@ -15,6 +15,28 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> Model factory for models. </summary>
     public static partial class MetricsAdvisorModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.AnomalyAlertConfiguration"/>. </summary>
+        /// <param name="id"> anomaly alerting configuration unique id. </param>
+        /// <param name="name"> anomaly alerting configuration name. </param>
+        /// <param name="description"> anomaly alerting configuration description. </param>
+        /// <param name="crossMetricsOperator">
+        /// cross metrics operator
+        ///
+        /// should be specified when setting up multiple metric alerting configurations
+        /// </param>
+        /// <param name="dimensionsToSplitAlert"> dimensions used to split alert. </param>
+        /// <param name="idsOfHooksToAlert"> hook unique ids. </param>
+        /// <param name="metricAlertConfigurations"> Anomaly alerting configurations. </param>
+        /// <returns> A new <see cref="Models.AnomalyAlertConfiguration"/> instance for mocking. </returns>
+        public static AnomalyAlertConfiguration AnomalyAlertConfiguration(string id = null, string name = null, string description = null, MetricAlertConfigurationsOperator crossMetricsOperator = default, IEnumerable<string> dimensionsToSplitAlert = null, IEnumerable<string> idsOfHooksToAlert = null, IEnumerable<MetricAlertConfiguration> metricAlertConfigurations = null)
+        {
+            dimensionsToSplitAlert ??= new List<string>();
+            idsOfHooksToAlert ??= new List<string>();
+            metricAlertConfigurations ??= new List<MetricAlertConfiguration>();
+
+            return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, dimensionsToSplitAlert?.ToList(), idsOfHooksToAlert?.ToList(), metricAlertConfigurations?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Administration.DataSourceCredentialEntity"/>. </summary>
         /// <param name="credentialKind"> Type of data source credential. </param>
         /// <param name="id"> Unique id of data source credential. </param>
@@ -24,6 +46,21 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = "Unknown", string id = null, string name = null, string description = null)
         {
             return new UnknownDataSourceCredential(credentialKind, id, name, description);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataFeedIngestionProgress"/>. </summary>
+        /// <param name="latestSuccessTimestamp">
+        /// the timestamp of latest success ingestion job.
+        /// null indicates not available
+        /// </param>
+        /// <param name="latestActiveTimestamp">
+        /// the timestamp of latest ingestion job with status update.
+        /// null indicates not available
+        /// </param>
+        /// <returns> A new <see cref="Models.DataFeedIngestionProgress"/> instance for mocking. </returns>
+        public static DataFeedIngestionProgress DataFeedIngestionProgress(DateTimeOffset latestSuccessTimestamp = default, DateTimeOffset latestActiveTimestamp = default)
+        {
+            return new DataFeedIngestionProgress(latestSuccessTimestamp, latestActiveTimestamp);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(UseDetectionResultToFilterAnomalies))
             {
                 writer.WritePropertyName("negationOperation"u8);
-                writer.WriteBooleanValue(UseDetectionResultToFilterAnomalies.Value);
+                writer.WriteBooleanValue(UseDetectionResultToFilterAnomalies);
             }
             if (Optional.IsDefined(DimensionAnomalyScope))
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricAlertConfiguration(anomalyDetectionConfigurationId, anomalyScopeType, Optional.ToNullable(negationOperation), dimensionAnomalyScope.Value, topNAnomalyScope.Value, severityFilter.Value, snoozeFilter.Value, valueFilter.Value);
+            return new MetricAlertConfiguration(anomalyDetectionConfigurationId, anomalyScopeType, negationOperation, dimensionAnomalyScope.Value, topNAnomalyScope.Value, severityFilter.Value, snoozeFilter.Value, valueFilter.Value);
         }
     }
 }

@@ -15,5 +15,56 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SeriesResult. </summary>
     public partial class MetricEnrichedSeriesData
     {
+        /// <summary> Initializes a new instance of <see cref="MetricEnrichedSeriesData"/>. </summary>
+        /// <param name="series"></param>
+        /// <param name="timestamps"> timestamps of the series. </param>
+        /// <param name="metricValues"> values of the series. </param>
+        /// <param name="isAnomaly"> whether points of the series are anomalies. </param>
+        /// <param name="periods"> period calculated on each point of the series. </param>
+        /// <param name="expectedMetricValues"> expected values of the series given by smart detector. </param>
+        /// <param name="lowerBoundaryValues"> lower boundary list of the series given by smart detector. </param>
+        /// <param name="upperBoundaryValues"> upper boundary list of the series given by smart detector. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="series"/>, <paramref name="timestamps"/>, <paramref name="metricValues"/>, <paramref name="isAnomaly"/>, <paramref name="periods"/>, <paramref name="expectedMetricValues"/>, <paramref name="lowerBoundaryValues"/> or <paramref name="upperBoundaryValues"/> is null. </exception>
+        internal MetricEnrichedSeriesData(SeriesIdentity series, IEnumerable<DateTimeOffset> timestamps, IEnumerable<double> metricValues, IEnumerable<bool> isAnomaly, IEnumerable<int> periods, IEnumerable<double> expectedMetricValues, IEnumerable<double> lowerBoundaryValues, IEnumerable<double> upperBoundaryValues)
+        {
+            Argument.AssertNotNull(series, nameof(series));
+            Argument.AssertNotNull(timestamps, nameof(timestamps));
+            Argument.AssertNotNull(metricValues, nameof(metricValues));
+            Argument.AssertNotNull(isAnomaly, nameof(isAnomaly));
+            Argument.AssertNotNull(periods, nameof(periods));
+            Argument.AssertNotNull(expectedMetricValues, nameof(expectedMetricValues));
+            Argument.AssertNotNull(lowerBoundaryValues, nameof(lowerBoundaryValues));
+            Argument.AssertNotNull(upperBoundaryValues, nameof(upperBoundaryValues));
+
+            Series = series;
+            Timestamps = timestamps.ToList();
+            MetricValues = metricValues.ToList();
+            IsAnomaly = isAnomaly.ToList();
+            Periods = periods.ToList();
+            ExpectedMetricValues = expectedMetricValues.ToList();
+            LowerBoundaryValues = lowerBoundaryValues.ToList();
+            UpperBoundaryValues = upperBoundaryValues.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricEnrichedSeriesData"/>. </summary>
+        /// <param name="series"></param>
+        /// <param name="timestamps"> timestamps of the series. </param>
+        /// <param name="metricValues"> values of the series. </param>
+        /// <param name="isAnomaly"> whether points of the series are anomalies. </param>
+        /// <param name="periods"> period calculated on each point of the series. </param>
+        /// <param name="expectedMetricValues"> expected values of the series given by smart detector. </param>
+        /// <param name="lowerBoundaryValues"> lower boundary list of the series given by smart detector. </param>
+        /// <param name="upperBoundaryValues"> upper boundary list of the series given by smart detector. </param>
+        internal MetricEnrichedSeriesData(SeriesIdentity series, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> metricValues, IReadOnlyList<bool> isAnomaly, IReadOnlyList<int> periods, IReadOnlyList<double> expectedMetricValues, IReadOnlyList<double> lowerBoundaryValues, IReadOnlyList<double> upperBoundaryValues)
+        {
+            Series = series;
+            Timestamps = timestamps;
+            MetricValues = metricValues;
+            IsAnomaly = isAnomaly;
+            Periods = periods;
+            ExpectedMetricValues = expectedMetricValues;
+            LowerBoundaryValues = lowerBoundaryValues;
+            UpperBoundaryValues = upperBoundaryValues;
+        }
     }
 }

@@ -18,19 +18,19 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(LowerBound))
             {
                 writer.WritePropertyName("lower"u8);
-                writer.WriteNumberValue(LowerBound.Value);
+                writer.WriteNumberValue(LowerBound);
             }
             if (Optional.IsDefined(UpperBound))
             {
                 writer.WritePropertyName("upper"u8);
-                writer.WriteNumberValue(UpperBound.Value);
+                writer.WriteNumberValue(UpperBound);
             }
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
             if (Optional.IsDefined(MeasureType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(MeasureType.Value.ToString());
+                writer.WriteStringValue(MeasureType.ToString());
             }
             if (Optional.IsDefined(CompanionMetricId))
             {
@@ -40,7 +40,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(ShouldAlertIfDataPointMissing))
             {
                 writer.WritePropertyName("triggerForMissing"u8);
-                writer.WriteBooleanValue(ShouldAlertIfDataPointMissing.Value);
+                writer.WriteBooleanValue(ShouldAlertIfDataPointMissing);
             }
             writer.WriteEndObject();
         }
@@ -106,7 +106,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricBoundaryCondition(Optional.ToNullable(lower), Optional.ToNullable(upper), direction, Optional.ToNullable(type), metricId.Value, Optional.ToNullable(triggerForMissing));
+            return new MetricBoundaryCondition(lower, upper, direction, type, metricId.Value, triggerForMissing);
         }
     }
 }

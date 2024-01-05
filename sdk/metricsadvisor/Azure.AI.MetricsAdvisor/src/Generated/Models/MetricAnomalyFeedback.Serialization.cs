@@ -145,7 +145,7 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
+            return new MetricAnomalyFeedback(feedbackType, feedbackId.Value, createdTime, userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value, anomalyDetectionConfigurationId.Value, anomalyDetectionConfigurationSnapshot.Value);
         }
     }
 }

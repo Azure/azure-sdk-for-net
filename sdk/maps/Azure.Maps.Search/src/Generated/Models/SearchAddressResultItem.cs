@@ -51,7 +51,7 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <param name="detourTimeInternal"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? searchAddressResultType, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntity? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int? detourTimeInternal)
+        internal SearchAddressResultItem(SearchAddressResultType searchAddressResultType, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntity? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int detourTimeInternal)
         {
             SearchAddressResultType = searchAddressResultType;
             Id = id;

@@ -13,6 +13,17 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> The Setting. </summary>
     public partial class KeyVaultSetting
     {
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSetting"/>. </summary>
+        /// <param name="name"> The account setting to be updated. </param>
+        /// <param name="content"> The value of the pool setting. </param>
+        /// <param name="settingType"> The type specifier of the value. </param>
+        internal KeyVaultSetting(string name, string content, KeyVaultSettingType settingType)
+        {
+            Name = name;
+            Content = content;
+            SettingType = settingType;
+        }
+
         /// <summary> The account setting to be updated. </summary>
         public string Name { get; }
     }

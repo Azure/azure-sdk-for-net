@@ -41,7 +41,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new FacilityEntryPoint(Optional.ToNullable(type), position.Value);
+            return new FacilityEntryPoint(type, position.Value);
         }
     }
 }

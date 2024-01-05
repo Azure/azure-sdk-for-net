@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor
         /// <param name="startsOn"> the start timestamp of feedback time range. </param>
         /// <param name="endsOn"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
         /// <param name="valueInternal"></param>
-        internal MetricChangePointFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, ChangePointFeedbackValue valueInternal) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+        internal MetricChangePointFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset startsOn, DateTimeOffset endsOn, ChangePointFeedbackValue valueInternal) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
             StartsOn = startsOn;
             EndsOn = endsOn;

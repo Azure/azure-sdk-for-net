@@ -18,12 +18,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(LowerBound))
             {
                 writer.WritePropertyName("lowerBound"u8);
-                writer.WriteNumberValue(LowerBound.Value);
+                writer.WriteNumberValue(LowerBound);
             }
             if (Optional.IsDefined(UpperBound))
             {
                 writer.WritePropertyName("upperBound"u8);
-                writer.WriteNumberValue(UpperBound.Value);
+                writer.WriteNumberValue(UpperBound);
             }
             writer.WritePropertyName("anomalyDetectorDirection"u8);
             writer.WriteStringValue(AnomalyDetectorDirection.ToString());
@@ -73,7 +73,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new HardThresholdCondition(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition);
+            return new HardThresholdCondition(lowerBound, upperBound, anomalyDetectorDirection, suppressCondition);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimensionFilter"></param>
-        internal UnknownMetricFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+        internal UnknownMetricFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
         {
             FeedbackKind = feedbackKind;
         }

@@ -13,5 +13,19 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SeriesConfiguration. </summary>
     public partial class MetricSingleSeriesDetectionCondition : MetricWholeSeriesDetectionCondition
     {
+        /// <summary> Initializes a new instance of <see cref="MetricSingleSeriesDetectionCondition"/>. </summary>
+        /// <param name="conditionOperator">
+        /// condition operator
+        ///
+        /// should be specified when combining multiple detection conditions
+        /// </param>
+        /// <param name="smartDetectionCondition"></param>
+        /// <param name="hardThresholdCondition"></param>
+        /// <param name="changeThresholdCondition"></param>
+        /// <param name="series"></param>
+        internal MetricSingleSeriesDetectionCondition(DetectionConditionOperator conditionOperator, SmartDetectionCondition smartDetectionCondition, HardThresholdCondition hardThresholdCondition, ChangeThresholdCondition changeThresholdCondition, SeriesIdentity series) : base(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition)
+        {
+            Series = series;
+        }
     }
 }

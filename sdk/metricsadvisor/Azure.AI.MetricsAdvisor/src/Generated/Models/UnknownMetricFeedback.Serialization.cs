@@ -75,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UnknownMetricFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter);
+            return new UnknownMetricFeedback(feedbackType, feedbackId.Value, createdTime, userPrincipal.Value, metricId, dimensionFilter);
         }
     }
 }

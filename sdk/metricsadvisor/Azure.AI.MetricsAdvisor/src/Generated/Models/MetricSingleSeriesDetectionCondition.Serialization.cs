@@ -20,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(ConditionOperator))
             {
                 writer.WritePropertyName("conditionOperator"u8);
-                writer.WriteStringValue(ConditionOperator.Value.ToString());
+                writer.WriteStringValue(ConditionOperator.ToString());
             }
             if (Optional.IsDefined(SmartDetectionCondition))
             {
@@ -95,7 +95,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricSingleSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, series);
+            return new MetricSingleSeriesDetectionCondition(conditionOperator, smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, series);
         }
     }
 }

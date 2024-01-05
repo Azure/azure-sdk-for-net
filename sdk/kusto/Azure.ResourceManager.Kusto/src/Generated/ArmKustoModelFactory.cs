@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -604,6 +605,47 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoCosmosDBDataConnection KustoCosmosDBDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string tableName = null, string mappingRuleName = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, ResourceIdentifier cosmosDBAccountResourceId = null, string cosmosDBDatabase = null, string cosmosDBContainer = null, DateTimeOffset? retrievalStartOn = null, KustoProvisioningState? provisioningState = null)
         {
             return new KustoCosmosDBDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.CosmosDB, tableName, mappingRuleName, managedIdentityResourceId, managedIdentityObjectId, cosmosDBAccountResourceId, cosmosDBDatabase, cosmosDBContainer, retrievalStartOn, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of KustoClusterPatch. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The SKU of the cluster. </param>
+        /// <param name="identity"> The identity of the cluster, if configured. </param>
+        /// <param name="state"> The state of the resource. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="uri"> The cluster URI. </param>
+        /// <param name="dataIngestionUri"> The cluster data ingestion URI. </param>
+        /// <param name="stateReason"> The reason for the cluster's current state. </param>
+        /// <param name="trustedExternalTenants"> The cluster's external tenants. </param>
+        /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
+        /// <param name="isDiskEncryptionEnabled"> A boolean value that indicates if the cluster's disks are encrypted. </param>
+        /// <param name="isStreamingIngestEnabled"> A boolean value that indicates if the streaming ingest is enabled. </param>
+        /// <param name="virtualNetworkConfiguration"> Virtual network definition. </param>
+        /// <param name="keyVaultProperties"> KeyVault properties for the cluster encryption. </param>
+        /// <param name="isPurgeEnabled"> A boolean value that indicates if the purge operations are enabled. </param>
+        /// <param name="languageExtensionsValue"> List of the cluster's language extensions. </param>
+        /// <param name="isDoubleEncryptionEnabled"> A boolean value that indicates if double encryption is enabled. </param>
+        /// <param name="publicNetworkAccess"> Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed. </param>
+        /// <param name="allowedIPRangeList"> The list of ips in the format of CIDR allowed to connect to the cluster. </param>
+        /// <param name="engineType"> The engine type. </param>
+        /// <param name="acceptedAudiences"> The cluster's accepted audiences. </param>
+        /// <param name="isAutoStopEnabled"> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="allowedFqdnList"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </param>
+        /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
+        /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
+        /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
+        /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Kusto.Models.KustoClusterPatch" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, ManagedServiceIdentity identity, KustoClusterState state, KustoProvisioningState provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool isDiskEncryptionEnabled, bool isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool isPurgeEnabled, IEnumerable<KustoLanguageExtension> languageExtensionsValue, bool isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess publicNetworkAccess, IEnumerable<string> allowedIPRangeList, KustoClusterEngineType engineType, IEnumerable<AcceptedAudience> acceptedAudiences, bool isAutoStopEnabled, KustoClusterNetworkAccessFlag restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdnList, KustoClusterPublicIPType publicIPType, string virtualClusterGraduationProperties, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster)
+        {
+            return KustoClusterPatch(id, name, resourceType, systemData, tags, location, sku, zones: default, identity, state, provisioningState, uri, dataIngestionUri, stateReason, trustedExternalTenants, optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, languageExtensionsValue, isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList, engineType, acceptedAudiences, isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList, publicIPType, virtualClusterGraduationProperties, privateEndpointConnections, migrationCluster);
         }
     }
 }
