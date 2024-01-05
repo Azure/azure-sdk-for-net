@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/>. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of identity. </param>
         /// <param name="userAssignedIdentity"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
         internal SearchIndexerDataUserAssignedIdentity(string oDataType, string userAssignedIdentity) : base(oDataType)
         {

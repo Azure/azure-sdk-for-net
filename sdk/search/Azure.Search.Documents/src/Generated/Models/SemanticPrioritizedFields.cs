@@ -11,24 +11,24 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Describes the title, content, and keywords fields to be used for semantic ranking, captions, highlights, and answers. </summary>
-    public partial class PrioritizedFields
+    public partial class SemanticPrioritizedFields
     {
-        /// <summary> Initializes a new instance of <see cref="PrioritizedFields"/>. </summary>
-        public PrioritizedFields()
+        /// <summary> Initializes a new instance of <see cref="SemanticPrioritizedFields"/>. </summary>
+        public SemanticPrioritizedFields()
         {
             ContentFields = new ChangeTrackingList<SemanticField>();
-            KeywordFields = new ChangeTrackingList<SemanticField>();
+            KeywordsFields = new ChangeTrackingList<SemanticField>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrioritizedFields"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticPrioritizedFields"/>. </summary>
         /// <param name="titleField"> Defines the title field to be used for semantic ranking, captions, highlights, and answers. If you don't have a title field in your index, leave this blank. </param>
         /// <param name="contentFields"> Defines the content fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain text in natural language form. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </param>
-        /// <param name="keywordFields"> Defines the keyword fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain a list of keywords. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </param>
-        internal PrioritizedFields(SemanticField titleField, IList<SemanticField> contentFields, IList<SemanticField> keywordFields)
+        /// <param name="keywordsFields"> Defines the keyword fields to be used for semantic ranking, captions, highlights, and answers. For the best result, the selected fields should contain a list of keywords. The order of the fields in the array represents their priority. Fields with lower priority may get truncated if the content is long. </param>
+        internal SemanticPrioritizedFields(SemanticField titleField, IList<SemanticField> contentFields, IList<SemanticField> keywordsFields)
         {
             TitleField = titleField;
             ContentFields = contentFields;
-            KeywordFields = keywordFields;
+            KeywordsFields = keywordsFields;
         }
 
         /// <summary> Defines the title field to be used for semantic ranking, captions, highlights, and answers. If you don't have a title field in your index, leave this blank. </summary>

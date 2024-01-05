@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class HnswVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable
+    public partial class HnswAlgorithmConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static HnswVectorSearchAlgorithmConfiguration DeserializeHnswVectorSearchAlgorithmConfiguration(JsonElement element)
+        internal static HnswAlgorithmConfiguration DeserializeHnswAlgorithmConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new HnswVectorSearchAlgorithmConfiguration(name, kind, hnswParameters.Value);
+            return new HnswAlgorithmConfiguration(name, kind, hnswParameters.Value);
         }
     }
 }
