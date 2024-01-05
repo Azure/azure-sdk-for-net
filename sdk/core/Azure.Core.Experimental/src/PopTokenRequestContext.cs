@@ -89,19 +89,20 @@ namespace Azure.Core
         public bool IsCaeEnabled { get; }
 
         /// <summary>
-        ///
+        /// The nonce value required for PoP token requests. This is typically retrieved from teh WWW-Authenticate header of a 401 challenge response.
+        /// This is used in combination with <see cref="Uri"/> and <see cref="HttpMethod"/> to generate the PoP token.
         /// </summary>
         public string? ProofOfPossessionNonce { get; }
 
         private readonly Request? _request;
 
         /// <summary>
-        ///
+        /// The HTTP method of the request. This is used in combination with <see cref="Uri"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
         /// </summary>
         public HttpMethod? HttpMethod => new(_request!.Method.ToString());
 
         /// <summary>
-        ///
+        /// The URI of the request. This is used in combination with <see cref="HttpMethod"/> and <see cref="ProofOfPossessionNonce"/> to generate the PoP token.
         /// </summary>
         public Uri? Uri => _request?.Uri.ToUri();
     }
