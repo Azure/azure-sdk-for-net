@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
                 return null;
             }
             string fieldName = default;
-            float? accuracy = default;
+            float accuracy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"u8))
@@ -28,11 +28,6 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("accuracy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        accuracy = null;
-                        continue;
-                    }
                     accuracy = property.Value.GetSingle();
                     continue;
                 }

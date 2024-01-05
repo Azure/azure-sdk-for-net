@@ -22,7 +22,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="decommissioned"> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </param>
         /// <param name="dtdlModel"> The model definition. </param>
         /// <returns> A new <see cref="Core.DigitalTwinsModelData"/> instance for mocking. </returns>
-        public static DigitalTwinsModelData DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames = null, IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, DateTimeOffset? uploadedOn = null, bool? decommissioned = null, string dtdlModel = null)
+        public static DigitalTwinsModelData DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames = null, IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, DateTimeOffset uploadedOn = default, bool? decommissioned = null, string dtdlModel = null)
         {
             languageDisplayNames ??= new Dictionary<string, string>();
             languageDescriptions ??= new Dictionary<string, string>();
@@ -62,7 +62,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
         /// <returns> A new <see cref="Core.ImportJob"/> instance for mocking. </returns>
-        public static ImportJob ImportJob(string id = null, Uri inputBlobUri = null, Uri outputBlobUri = null, ImportJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ResponseError error = null)
+        public static ImportJob ImportJob(string id = null, Uri inputBlobUri = null, Uri outputBlobUri = null, ImportJobStatus status = default, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ResponseError error = null)
         {
             return new ImportJob(id, inputBlobUri, outputBlobUri, status, createdDateTime, lastActionDateTime, finishedDateTime, purgeDateTime, error);
         }

@@ -48,10 +48,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/eventroutes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (eventRoutesListOptions?.MaxItemsPerPage != null)
-            {
-                request.Headers.Add("max-items-per-page", eventRoutesListOptions.MaxItemsPerPage.Value);
-            }
+            request.Headers.Add("max-items-per-page", eventRoutesListOptions.MaxItemsPerPage);
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -364,10 +361,7 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (eventRoutesListOptions?.MaxItemsPerPage != null)
-            {
-                request.Headers.Add("max-items-per-page", eventRoutesListOptions.MaxItemsPerPage.Value);
-            }
+            request.Headers.Add("max-items-per-page", eventRoutesListOptions.MaxItemsPerPage);
             request.Headers.Add("Accept", "application/json");
             return message;
         }

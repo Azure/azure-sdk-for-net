@@ -68,7 +68,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentClassifierDetails(classifierId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion, docTypes);
+            return new DocumentClassifierDetails(classifierId, description.Value, createdDateTime, expirationDateTime, apiVersion, docTypes);
         }
     }
 }

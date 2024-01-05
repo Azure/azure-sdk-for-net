@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelSummary(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags));
+            return new DocumentModelSummary(modelId, description.Value, createdDateTime, expirationDateTime, apiVersion.Value, Optional.ToDictionary(tags));
         }
     }
 }

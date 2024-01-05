@@ -37,7 +37,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
-        internal ImportJob(string id, Uri inputBlobUri, Uri outputBlobUri, ImportJobStatus? status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ResponseError error)
+        internal ImportJob(string id, Uri inputBlobUri, Uri outputBlobUri, ImportJobStatus status, DateTimeOffset? createdDateTime, DateTimeOffset? lastActionDateTime, DateTimeOffset? finishedDateTime, DateTimeOffset? purgeDateTime, ResponseError error)
         {
             Id = id;
             InputBlobUri = inputBlobUri;

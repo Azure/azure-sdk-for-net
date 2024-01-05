@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="ttlSeconds"> Router Job Worker Selector Time to Live in Seconds. </param>
         /// <param name="selectorState"> Router Job Worker Selector State. </param>
         /// <param name="expirationTime"> Router Job Worker Selector Expiration Time. </param>
-        internal AcsRouterWorkerSelector(string key, AcsRouterLabelOperator? @operator, object labelValue, float? ttlSeconds, AcsRouterWorkerSelectorState? selectorState, DateTimeOffset? expirationTime)
+        internal AcsRouterWorkerSelector(string key, AcsRouterLabelOperator @operator, object labelValue, float ttlSeconds, AcsRouterWorkerSelectorState selectorState, DateTimeOffset? expirationTime)
         {
             Key = key;
             Operator = @operator;

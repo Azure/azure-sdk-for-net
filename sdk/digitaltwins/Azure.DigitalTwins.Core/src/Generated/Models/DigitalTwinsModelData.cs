@@ -21,7 +21,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="uploadedOn"> The time the model was uploaded to the service. </param>
         /// <param name="decommissioned"> Indicates if the model is decommissioned. Decommissioned models cannot be referenced by newly created digital twins. </param>
         /// <param name="dtdlModel"> The model definition. </param>
-        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames, IReadOnlyDictionary<string, string> languageDescriptions, string id, DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel)
+        internal DigitalTwinsModelData(IReadOnlyDictionary<string, string> languageDisplayNames, IReadOnlyDictionary<string, string> languageDescriptions, string id, DateTimeOffset uploadedOn, bool? decommissioned, string dtdlModel)
         {
             LanguageDisplayNames = languageDisplayNames;
             LanguageDescriptions = languageDescriptions;

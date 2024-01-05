@@ -96,7 +96,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentTableCell(Optional.ToNullable(kind), rowIndex, columnIndex, Optional.ToNullable(rowSpan), Optional.ToNullable(columnSpan), content, Optional.ToList(boundingRegions), spans);
+            return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, Optional.ToList(boundingRegions), spans);
         }
     }
 }

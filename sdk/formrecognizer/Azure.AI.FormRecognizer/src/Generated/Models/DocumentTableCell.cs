@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="content"> Concatenated content of the table cell in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
-        internal DocumentTableCell(DocumentTableCellKind? kindPrivate, int rowIndex, int columnIndex, int? rowSpanPrivate, int? columnSpanPrivate, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
+        internal DocumentTableCell(DocumentTableCellKind kindPrivate, int rowIndex, int columnIndex, int rowSpanPrivate, int columnSpanPrivate, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans)
         {
             KindPrivate = kindPrivate;
             RowIndex = rowIndex;

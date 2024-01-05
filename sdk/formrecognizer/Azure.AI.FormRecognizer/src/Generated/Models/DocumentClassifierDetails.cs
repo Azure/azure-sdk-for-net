@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
         /// <param name="serviceVersion"> API version used to create this document classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset expiresOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             ClassifierId = classifierId;
             Description = description;

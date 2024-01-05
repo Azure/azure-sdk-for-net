@@ -48,10 +48,7 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/query", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (queryTwinsOptions?.MaxItemsPerPage != null)
-            {
-                request.Headers.Add("max-items-per-page", queryTwinsOptions.MaxItemsPerPage.Value);
-            }
+            request.Headers.Add("max-items-per-page", queryTwinsOptions.MaxItemsPerPage);
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();

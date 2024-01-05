@@ -176,10 +176,7 @@ namespace Azure.DigitalTwins.Core
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
-            {
-                request.Headers.Add("max-items-per-page", digitalTwinModelsListOptions.MaxItemsPerPage.Value);
-            }
+            request.Headers.Add("max-items-per-page", digitalTwinModelsListOptions.MaxItemsPerPage);
             request.Headers.Add("Accept", "application/json");
             return message;
         }
@@ -544,10 +541,7 @@ namespace Azure.DigitalTwins.Core
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            if (digitalTwinModelsListOptions?.MaxItemsPerPage != null)
-            {
-                request.Headers.Add("max-items-per-page", digitalTwinModelsListOptions.MaxItemsPerPage.Value);
-            }
+            request.Headers.Add("max-items-per-page", digitalTwinModelsListOptions.MaxItemsPerPage);
             request.Headers.Add("Accept", "application/json");
             return message;
         }

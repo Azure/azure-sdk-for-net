@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
         /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
         /// <param name="maxItemsPerPage"> The maximum number of items to retrieve per request. The server may choose to return less than the requested number. </param>
-        internal GetModelsOptions(string traceParent, string traceState, int? maxItemsPerPage)
+        internal GetModelsOptions(string traceParent, string traceState, int maxItemsPerPage)
         {
             TraceParent = traceParent;
             TraceState = traceState;
