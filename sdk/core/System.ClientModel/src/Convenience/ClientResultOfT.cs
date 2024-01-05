@@ -7,9 +7,9 @@ using System.ComponentModel;
 
 namespace System.ClientModel;
 
-public abstract class ClientResult<T> : OptionalClientResult<T>
+public class ClientResult<T> : OptionalClientResult<T>
 {
-    protected ClientResult(T value, PipelineResponse response)
+    protected internal ClientResult(T value, PipelineResponse response)
         : base(value, response)
     {
         // Null values must use OptionalClientResult<T>
