@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Creates a new instance of <see cref="PopTokenAuthenticationPolicy"/>.
         /// </summary>
-        /// <param name="credential"></param>
+        /// <param name="credential">The <see cref="TokenCredential"/> to be used for authorization.</param>
         /// <param name="scope">The scope to be included in acquired tokens.</param>
         public PopTokenAuthenticationPolicy(ISupportsProofOfPossession credential, string scope)
         {

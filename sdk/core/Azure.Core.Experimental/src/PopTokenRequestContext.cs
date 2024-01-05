@@ -20,7 +20,7 @@ namespace Azure.Core
         /// <param name="tenantId">The tenant ID to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
         /// <param name="proofOfPossessionNonce">The nonce value required for PoP token requests.</param>
-        /// <param name="request"></param>
+        /// <param name="request">The request to be authorized with a PoP token.</param>
         public PopTokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, string? proofOfPossessionNonce = default, Request? request = default)
         {
             Scopes = scopes;
