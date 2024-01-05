@@ -4,12 +4,6 @@ The Azure AI Vision ImageAnalysis Dense Caption feature generates detailed capti
 
 This sample demonstrates how to get Dense Captions for an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
-## Key concepts
-
-### DenseCaption
-
-A `DenseCaption` is part of the result of the dense caption analysis. It contains the generated one-sentence caption for a specific region in the image, its confidence score in the range [0, 1], and the bounding box coordinates of the region. The higher the confidence score, the more accurate the generated caption is likely to be.
-
 ## Examples
 
 The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to generate dense captions for an image:

@@ -4,12 +4,6 @@ The Azure AI Vision ImageAnalysis SmartCrops feature creates intuitive image thu
 
 This sample demonstrates how to get a SmartCrops for an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
-## Key concepts
-
-### SmartCropsResult
-
-A `SmartCropsResult` is the result of the smart-cropping analysis. It contains a list of `CropRegion` objects, each representing a region of the image identified for smart-cropping. Each `CropRegion` has an aspect ratio and a bounding box that defines the region in the image.
-
 ## Examples
 
 The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to generate smart-cropped thumbnails from an image:

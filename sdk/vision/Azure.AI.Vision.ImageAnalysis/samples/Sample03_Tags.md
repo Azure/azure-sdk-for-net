@@ -5,12 +5,6 @@ The Azure AI Vision ImageAnalysis Tags feature extracts content tags for thousan
 
 This sample demonstrates how to get a Tags for an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
-## Key concepts
-
-### TagsResult
-
-A `TagsResult` is the result of the tag analysis. It contains a list of detected tags along with their confidence scores in the range [0, 1]. The higher the confidence score, the more accurate the detected tag is likely to be.
-
 ## Examples
 
 The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to extract tags from an image:

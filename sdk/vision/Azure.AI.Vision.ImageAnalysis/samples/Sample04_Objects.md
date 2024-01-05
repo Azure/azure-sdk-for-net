@@ -4,12 +4,6 @@ The Azure AI Vision ImageAnalysis Objects feature enables the detection of objec
 
 This sample demonstrates how to get Objects in an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
-## Key concepts
-
-### DetectedObject
-
-A `DetectedObject` represents a detected object within an image. It contains information about the object, such as its name, confidence score, and the location of the object in the form of a bounding box.
-
 ## Examples
 
 The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to detect objects in an image:

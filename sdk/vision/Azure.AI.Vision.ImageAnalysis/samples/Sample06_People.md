@@ -4,12 +4,6 @@ The Azure AI Vision ImageAnalysis People Detection feature detects people appear
 
 This sample demonstrates how to get a detect people in an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
-## Key concepts
-
-### People Detection Result
-
-A `PeopleResult` is the result of the people detection analysis. It contains a list of detected people, each with their bounding box coordinates and a confidence score in the range [0, 1]. The higher the confidence score, the more accurate the detected person is likely to be.
-
 ## Examples
 
 The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to detect people in an image:

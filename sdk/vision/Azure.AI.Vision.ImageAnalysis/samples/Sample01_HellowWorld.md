@@ -2,12 +2,6 @@
 
 This sample demonstrates how to get a caption for an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
-## Key concepts
-
-### CaptionResult
-
-A `CaptionResult` is the result of the caption analysis. It contains the generated caption and its confidence score in the range [0, 1]. The higher the confidence score, the more accurate the generated caption is likely to be.
-
 ## Examples
 
 The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to caption an image:
