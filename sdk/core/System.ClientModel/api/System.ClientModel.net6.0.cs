@@ -10,7 +10,7 @@ namespace System.ClientModel
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
-    public abstract partial class ClientResult
+    public partial class ClientResult
     {
         protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
         public static System.ClientModel.OptionalClientResult<T> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
@@ -27,9 +27,9 @@ namespace System.ClientModel
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
-    public abstract partial class ClientResult<T> : System.ClientModel.OptionalClientResult<T>
+    public partial class ClientResult<T> : System.ClientModel.OptionalClientResult<T>
     {
-        protected ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public sealed override bool HasValue { get { throw null; } }
         public sealed override T Value { get { throw null; } }
@@ -40,9 +40,9 @@ namespace System.ClientModel
         public string GetValue() { throw null; }
         public void Update(string key) { }
     }
-    public abstract partial class OptionalClientResult<T> : System.ClientModel.ClientResult
+    public partial class OptionalClientResult<T> : System.ClientModel.ClientResult
     {
-        protected OptionalClientResult(T? value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected internal OptionalClientResult(T? value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
     }

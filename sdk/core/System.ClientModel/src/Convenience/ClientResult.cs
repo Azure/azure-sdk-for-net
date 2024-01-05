@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
 
-public abstract class ClientResult
+public class ClientResult
 {
     private readonly PipelineResponse _response;
 
@@ -26,7 +26,7 @@ public abstract class ClientResult
     #region Factory methods for ClientResult and subtypes
 
     public static ClientResult FromResponse(PipelineResponse response)
-        => new ClientModelClientResult(response);
+        => new ClientResult(response);
 
     public static ClientResult<T> FromValue<T>(T value, PipelineResponse response)
     {
@@ -39,32 +39,11 @@ public abstract class ClientResult
             throw new ArgumentNullException(nameof(value), message);
         }
 
-        return new ClientModelClientResult<T>(value, response);
+        return new ClientResult<T>(value, response);
     }
 
     public static OptionalClientResult<T> FromOptionalValue<T>(T? value, PipelineResponse response)
-        => new ClientModelOptionalClientResult<T>(value, response);
-
-    #endregion
-
-    #region Private implementation subtypes of abstract ClientResult types
-    private class ClientModelClientResult : ClientResult
-    {
-        public ClientModelClientResult(PipelineResponse response)
-            : base(response) { }
-    }
-
-    private class ClientModelOptionalClientResult<T> : OptionalClientResult<T>
-    {
-        public ClientModelOptionalClientResult(T? value, PipelineResponse response)
-            : base(value, response) { }
-    }
-
-    private class ClientModelClientResult<T> : ClientResult<T>
-    {
-        public ClientModelClientResult(T value, PipelineResponse response)
-            : base(value, response) { }
-    }
+        => new OptionalClientResult<T>(value, response);
 
     #endregion
 }
