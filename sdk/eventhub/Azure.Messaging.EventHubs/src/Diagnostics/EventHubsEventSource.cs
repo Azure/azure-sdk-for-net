@@ -3534,7 +3534,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Writes an event with four string arguments and two value type arguments into a stack allocated
+        ///   Writes an event with four string arguments and a value type argument into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
         ///
