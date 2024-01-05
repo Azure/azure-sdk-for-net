@@ -1535,9 +1535,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // With the processing task having completed, perform the necessary cleanup of partition processing tasks
                 // and surrender ownership.
 
-                var stopPartitionProcessingTasks = ActivePartitionProcessors.Keys
-                    .Select(partitionId => TryStopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None))
-                    .ToArray();
+                var stopPartitionProcessingTasks = new Task[ActivePartitionProcessors.Keys.Count];
+                var index = -1;
+
+                foreach (var partitionId in ActivePartitionProcessors.Keys)
+                {
+                    stopPartitionProcessingTasks[++index] = StopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None);
+                };
 
                 if (async)
                 {
@@ -1768,34 +1772,50 @@ namespace Azure.Messaging.EventHubs.Primitives
                 }
             }
 
-            // Some ownership for some previously claimed partitions may have expired or have been stolen; stop the processing for partitions
-            // which are no longer owned.
+            // Some ownership for some previously claimed partitions may have expired or have been stolen; stop the processing
+            // for partitions which are no longer owned.
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await Task.WhenAll(ActivePartitionProcessors.Keys
-                .Except(LoadBalancer.OwnedPartitionIds)
-                .Select(partitionId => TryStopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken)))
-                .ConfigureAwait(false);
+            foreach (var partitionId in ActivePartitionProcessors.Keys)
+            {
+                if (!LoadBalancer.IsPartitionOwned(partitionId))
+                {
+                   // The partition is no longer owned.  Stopping may take longer than a load balancing cycle
+                   // should run if event processing is active and chooses not to honor cancellation immediately, so
+                   // do not wait for the stop to complete.  Its continuation will ensure proper clean-up even when unobserved.
+                   // If the processor is stopped, the task will be awaited then to ensure that all processing is complete.
 
-            // The remaining processing tasks should be running.  To ensure that is the case, validate the status of the task
+                   _ = StopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken);
+                }
+            }
+
+            // The tasks for owned partitions should be running.  To ensure that is the case, validate the status of the task
             // and restart processing if it has failed.  It is also possible that task creation failed when the processing was started,
             // in which case there would be no task; create them.
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            await Task.WhenAll(LoadBalancer.OwnedPartitionIds
-                .Select(async partitionId =>
-                {
-                    if (!ActivePartitionProcessors.TryGetValue(partitionId, out var partitionProcessor) || partitionProcessor.ProcessingTask.IsCompleted)
-                    {
-                        await TryStopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken).ConfigureAwait(false);
-                        TryStartProcessingPartition(partitionId, cancellationToken);
-                    }
-                }))
-                .ConfigureAwait(false);
+            foreach (var partitionId in LoadBalancer.OwnedPartitionIds)
+            {
+                var processorFound = ActivePartitionProcessors.TryGetValue(partitionId, out var partitionProcessor);
 
-            // If load balancing is greedy and there was a partition claimed, then signal that there should be a very minimal delay before
+                if ((!processorFound) || (partitionProcessor.ProcessingTask.IsCompleted))
+                {
+                    // If there is a processing task, it is known to have been completed so awaiting will not be blocked by event
+                    // processing currently in flight.  Any time spent will be in the StopProcessingPartitionAsync handler, which
+                    // is expected to run quickly.
+
+                    if (processorFound)
+                    {
+                        await StopProcessingPartitionAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken).ConfigureAwait(false);
+                    }
+
+                    TryStartProcessingPartition(partitionId, cancellationToken);
+                }
+            }
+
+            // If load balancing is greedy and ownership is not balanced, then signal that there should be a very minimal delay before
             // invoking the next load balancing cycle, to ensure a yield which allows the thread pool to manage its load.
 
             if ((Options.LoadBalancingStrategy == LoadBalancingStrategy.Greedy) && (!LoadBalancer.IsBalanced))
@@ -1918,14 +1938,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   Attempts to stop processing the requested partition.
+        ///   Stops processing the requested partition.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing should be stopped.</param>
         /// <param name="reason">The reason why the processing is being stopped.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns><c>true</c> if the <paramref name="partitionId"/> was owned and was being processed; otherwise, <c>false</c>.</returns>
         ///
         /// <remarks>
         ///   Exceptions encountered when stopping processing for an owned partition will be logged and will result in the error handler
@@ -1933,9 +1951,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   as part of the load balancing cycle, which is failure-tolerant.
         /// </remarks>
         ///
-        private async Task<bool> TryStopProcessingPartitionAsync(string partitionId,
-                                                                 ProcessingStoppedReason reason,
-                                                                 CancellationToken cancellationToken)
+        private Task StopProcessingPartitionAsync(string partitionId,
+                                                  ProcessingStoppedReason reason,
+                                                  CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.EventProcessorPartitionProcessingStop(partitionId, Identifier, EventHubName, ConsumerGroup);
@@ -1944,12 +1962,20 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             try
             {
-                // If the partition processor is not being tracked or could not be retrieved from the tracking items,
-                // then it cannot be stopped.
+                // If the partition processor is not being tracked, then there is no
+                // further work to be done.
 
-                if (!ActivePartitionProcessors.TryRemove(partitionId, out var partitionProcessor))
+                if (!ActivePartitionProcessors.TryGetValue(partitionId, out var partitionProcessor))
                 {
-                    return false;
+                    return Task.CompletedTask;
+                }
+
+                // If a cleanup task has already been registered, the processing task was updated and awaiting
+                // that will ensure stopping is complete.
+
+                if (partitionProcessor.CleanupRegistered)
+                {
+                    return partitionProcessor.ProcessingTask;
                 }
 
                 // Attempt to stop the processor; any exceptions should be treated as a problem with processing, not
@@ -1970,47 +1996,98 @@ namespace Azure.Messaging.EventHubs.Primitives
                     Logger.PartitionProcessorStoppingCancellationWarning(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
                 }
 
-                try
-                {
-                    await partitionProcessor.ProcessingTask.ConfigureAwait(false);
-                }
-                catch (TaskCanceledException)
-                {
-                    // This is expected; no action is needed.
-                }
-                catch
-                {
-                    // The processing task is in a failed state; any logging and dispatching
-                    // to the error handler happened in the processing task before the exception
-                    // was thrown.  All that remains is to override the reason for stopping.
+                // To ensure that callers do not have to wait until the processing task has fully stopped,
+                // schedule an explicit continuation for the task and return immediately.  This allows the
+                // cleanup to happen in the background.
 
-                    reason = ProcessingStoppedReason.OwnershipLost;
-                }
-
-                partitionProcessor.Dispose();
-
-                // Notify the handler of the now-closed partition, awaiting completion to allow for a more deterministic model
-                // for developers where the initialize and stop handlers will fire in a deterministic order and not interleave.
-                //
-                // Because the processor does not assume responsibility for observing or surfacing exceptions that may occur in the handler,
-                // errors are logged but the error handler is not invoked nor does an exception in the handler constitute a failure to stop
-                // processing the partition.  This also aims to prevent an infinite loop scenario where StopProcessing is called from the
-                // error handler, which calls the partition stopped handler, which has an exception that again calls the error handler.
-
-                try
+                var stopContinuation = partitionProcessor.ProcessingTask.ContinueWith(async (task, state) =>
                 {
-                    await OnPartitionProcessingStoppedAsync(partition, reason, cancellationToken).ConfigureAwait(false);
-                }
-                catch (TaskCanceledException)
-                {
-                    // This is expected; no action is needed.
-                }
-                catch (Exception ex)
-                {
-                    Logger.EventProcessorPartitionProcessingStopError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
-                }
+                    var innerPartition = default(TPartition);
+                    var (innerId, innerReason) = ((string, ProcessingStoppedReason))state;
 
-                return true;
+                    try
+                    {
+                        // Await the processing task to ensure that any in-flight event processing
+                        // has completed.
+
+                        try
+                        {
+                            await task.ConfigureAwait(false);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // This is expected; no action is needed.
+                        }
+                        catch
+                        {
+                            // The processing task is in a failed state; any logging and dispatching
+                            // to the error handler happened in the processing task before the exception
+                            // was thrown.  All that remains is to override the reason for stopping.
+
+                            innerReason = ProcessingStoppedReason.OwnershipLost;
+                        }
+
+                        // There is no longer a need for the processing task; dispose it.
+
+                        task.Dispose();
+
+                        innerPartition = ActivePartitionProcessors.TryGetValue(innerId, out var innerProcessor) switch
+                        {
+                            true => innerProcessor.Partition,
+                            _ => new TPartition { PartitionId = innerId }
+                        };
+
+                        // Notify the handler of the now-closed partition, awaiting completion to allow for a more deterministic model
+                        // for developers where the initialize and stop handlers will fire in a deterministic order and not interleave.
+                        //
+                        // Because the processor does not assume responsibility for observing or surfacing exceptions that may occur in the handler,
+                        // errors are logged but the error handler is not invoked nor does an exception in the handler constitute a failure to stop
+                        // processing the partition.  This also aims to prevent an infinite loop scenario where StopProcessing is called from the
+                        // error handler, which calls the partition stopped handler, which has an exception that again calls the error handler.
+
+                        try
+                        {
+                            await OnPartitionProcessingStoppedAsync(innerPartition, innerReason, cancellationToken).ConfigureAwait(false);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // This is expected; no action is needed.
+                        }
+                        catch (Exception ex)
+                        {
+                            // This is an error in handler code and does not get surfaced to the error handler.
+
+                            Logger.EventProcessorPartitionProcessingStopError(innerId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                        }
+                    }
+                    catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())
+                    {
+                        // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
+                        // for observing or surfacing exceptions that may occur in the handler.
+
+                        _ = InvokeOnProcessingErrorAsync(ex, innerPartition, Resources.OperationSurrenderOwnership, CancellationToken.None);
+                        Logger.EventProcessorPartitionProcessingStopError(innerId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                    }
+                    finally
+                    {
+                        Logger.EventProcessorPartitionProcessingStopComplete(innerId, Identifier, EventHubName, ConsumerGroup);
+                    }
+
+                    // If the partition processor is still being tracked, dispose it and remove it from the
+                    // tracking items.  This is done last to ensure that any interested observers can await
+                    // the cleanup if desired.
+
+                    if (ActivePartitionProcessors.TryRemove(innerId, out var disposeProcessor))
+                    {
+                        disposeProcessor.Dispose();
+                    }
+                }, (partitionId, reason), default, TaskContinuationOptions.RunContinuationsAsynchronously, TaskScheduler.Current);
+
+                // Set the processing task to the continuation, which allows it to be awaited when the processor is
+                // stopping or otherwise needs to be ensure completion.
+
+                partitionProcessor.RegisterCleanupTask(stopContinuation);
+                return stopContinuation;
             }
             catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())
             {
@@ -2020,11 +2097,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _ = InvokeOnProcessingErrorAsync(ex, partition, Resources.OperationSurrenderOwnership, CancellationToken.None);
                 Logger.EventProcessorPartitionProcessingStopError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
 
-                return false;
-            }
-            finally
-            {
-                Logger.EventProcessorPartitionProcessingStopComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                return Task.CompletedTask;
             }
         }
 
@@ -2126,6 +2199,90 @@ namespace Azure.Messaging.EventHubs.Primitives
         private static int CalculateMaximumAdvisedOwnedPartitions() => (Environment.ProcessorCount * 2);
 
         /// <summary>
+        ///   The set of information needed to track and manage the active processing
+        ///   of a partition.
+        /// </summary>
+        ///
+        internal class PartitionProcessor : IDisposable
+        {
+            /// <summary>The partition that is being processed.</summary>
+            public readonly TPartition Partition;
+
+            /// <summary>The source token that can be used to cancel the processing for the associated <see cref="ProcessingTask" />.</summary>
+            public readonly CancellationTokenSource CancellationSource;
+
+            /// <summary>A function that can be used to read the information about the last enqueued event of the partition.</summary>
+            public readonly Func<LastEnqueuedEventProperties> ReadLastEnqueuedEventProperties;
+
+            /// <summary>
+            ///   Gets a value indicating whether a cleanup task has been registered.
+            /// </summary>
+            ///
+            /// <value> <c>true</c> if a cleanup task was registered; otherwise, <c>false</c>.</value>
+            ///
+            public bool CleanupRegistered { get; private set; }
+
+            /// <summary>
+            ///   The task that is performing the processing.
+            /// </summary>
+            ///
+            public Task ProcessingTask { get; private set; }
+
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
+            /// </summary>
+            ///
+            /// <param name="processingTask">The task that is performing the processing.</param>
+            /// <param name="partition">The partition that is being processed.</param>
+            /// <param name="readLastEnqueuedEventProperties">A function that can be used to read the information about the last enqueued event of the partition.</param>
+            /// <param name="cancellationSource">he source token that can be used to cancel the processing.</param>
+            ///
+            public PartitionProcessor(Task processingTask,
+                                      TPartition partition,
+                                      Func<LastEnqueuedEventProperties> readLastEnqueuedEventProperties,
+                                      CancellationTokenSource cancellationSource) => (ProcessingTask, Partition, ReadLastEnqueuedEventProperties, CancellationSource) = (processingTask, partition, readLastEnqueuedEventProperties, cancellationSource);
+
+            /// <summary>
+            ///   Updates the processing task instance with a task responsible for cleaning
+            ///   up the processor.  This is useful when adding an explicit continuation that
+            ///   will later be awaited to ensure cleanup, such as when stopping processing.
+            /// </summary>
+            ///
+            /// <param name="task">The new task to use as the <see cref="ProcessingTask"/>.</param>
+            ///
+            public void RegisterCleanupTask(Task task)
+            {
+                ProcessingTask = task;
+                CleanupRegistered = true;
+            }
+
+            /// <summary>
+            ///   Performs tasks needed to clean-up the disposable resources used by the processor.  This method does
+            ///   not assume responsibility for signaling the cancellation source or awaiting the <see cref="ProcessingTask" />.
+            /// </summary>
+            ///
+            public void Dispose()
+            {
+                CancellationSource?.Dispose();
+
+                // If there is a processing task and it is already completed,
+                // dispose it.  Generally, disposal of the partition processor takes
+                // place inside of this task and disposal will cause an error.
+                //
+                // Per the Task documentation, this pattern is safe.  Further discussion
+                // can be found in Stephen Toub's write-up "Do I need to dispose of tasks?"
+                //
+                // https://learn.microsoft.com/dotnet/api/system.threading.tasks.task.dispose
+                // https://devblogs.microsoft.com/pfxteam/do-i-need-to-dispose-of-tasks/
+
+                if (ProcessingTask?.IsCompleted == true)
+                {
+                    ProcessingTask.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
         ///   A virtual <see cref="CheckpointStore" /> instance that delegates calls to the
         ///   <see cref="EventProcessor{TPartition}" /> to which it is associated.
         /// </summary>
@@ -2217,51 +2374,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                              string clientIdentifier,
                                                              CheckpointPosition checkpointStartingPosition,
                                                              CancellationToken cancellationToken) => await Processor.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        ///   The set of information needed to track and manage the active processing
-        ///   of a partition.
-        /// </summary>
-        ///
-        internal class PartitionProcessor : IDisposable
-        {
-            /// <summary>The task that is performing the processing.</summary>
-            public readonly Task ProcessingTask;
-
-            /// <summary>The partition that is being processed.</summary>
-            public readonly TPartition Partition;
-
-            /// <summary>The source token that can be used to cancel the processing for the associated <see cref="ProcessingTask" />.</summary>
-            public readonly CancellationTokenSource CancellationSource;
-
-            /// <summary>A function that can be used to read the information about the last enqueued event of the partition.</summary>
-            public readonly Func<LastEnqueuedEventProperties> ReadLastEnqueuedEventProperties;
-
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="PartitionProcessor"/> class.
-            /// </summary>
-            ///
-            /// <param name="processingTask">The task that is performing the processing.</param>
-            /// <param name="partition">The partition that is being processed.</param>
-            /// <param name="readLastEnqueuedEventProperties">A function that can be used to read the information about the last enqueued event of the partition.</param>
-            /// <param name="cancellationSource">he source token that can be used to cancel the processing.</param>
-            ///
-            public PartitionProcessor(Task processingTask,
-                                      TPartition partition,
-                                      Func<LastEnqueuedEventProperties> readLastEnqueuedEventProperties,
-                                      CancellationTokenSource cancellationSource) => (ProcessingTask, Partition, ReadLastEnqueuedEventProperties, CancellationSource) = (processingTask, partition, readLastEnqueuedEventProperties, cancellationSource);
-
-            /// <summary>
-            ///   Performs tasks needed to clean-up the disposable resources used by the processor.  This method does
-            ///   not assume responsibility for signaling the cancellation source or awaiting the <see cref="ProcessingTask" />.
-            /// </summary>
-            ///
-            public void Dispose()
-            {
-                CancellationSource?.Dispose();
-                ProcessingTask?.Dispose();
-            }
         }
     }
 }

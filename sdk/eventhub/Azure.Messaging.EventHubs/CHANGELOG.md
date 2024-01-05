@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Load balancing is no longer blocked when event processing for a lost partition does not honor the cancellation token.  Previously, long-running processing could cause delays in load balancing that resulted in ownership not being renewed for all partitions.
+
 - Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
 
 - Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping an event processor.
@@ -19,6 +21,8 @@
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
 
 - Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
+
+- Improved efficiency of partition management during load balancing, reducing the number of operations performed and deferring waiting for lost partitions until the processor is stopped or the partition is reclaimed.  Allocations were also non-trivially reduced.
 
 ## 5.10.0 (2023-11-07)
 
