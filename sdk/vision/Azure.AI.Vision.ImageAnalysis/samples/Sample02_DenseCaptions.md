@@ -4,6 +4,16 @@ The Azure AI Vision ImageAnalysis Dense Caption feature generates detailed capti
 
 This sample demonstrates how to get Dense Captions for an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
+## Key concepts
+
+### DenseCaption
+
+A `DenseCaption` is part of the result of the dense caption analysis. It contains the generated one-sentence caption for a specific region in the image, its confidence score in the range [0, 1], and the bounding box coordinates of the region. The higher the confidence score, the more accurate the generated caption is likely to be.
+
+## Examples
+
+The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to generate dense captions for an image:
+
 ### Authenticate the client
 
 In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class]
@@ -18,21 +28,7 @@ string key = Environment.GetEnvironmentVariable("VISION_KEY");
 ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 ```
 
-Here we are using environment variables to hold the endpoint and key for the Computer Vision Resource.
-
-## Key concepts
-
-### ImageAnalysisClient
-
-An `ImageAnalysisClient` provides both synchronous and asynchronous operations in the SDK, allowing for the selection of a client based on an application's use case. Once you've initialized an `ImageAnalysisClient`, you can interact with the Dense Caption feature in Azure AI Vision ImageAnalysis.
-
-### DenseCaption
-
-A `DenseCaption` is part of the result of the dense caption analysis. It contains the generated one-sentence caption for a specific region in the image, its confidence score in the range [0, 1], and the bounding box coordinates of the region. The higher the confidence score, the more accurate the generated caption is likely to be.
-
-## Examples
-
-The following sections provide code snippets using the `client` created above, covering using ImageAnalysis to generate dense captions for an image:
+Here we are using enviornment variables to hold the endpoint and key for the Computer Vision Resource.
 
 ### Generate dense captions for an image file
 
@@ -81,61 +77,4 @@ foreach (DenseCaption denseCaption in result.DenseCaptions.Values)
     Console.WriteLine($"   Region: '{denseCaption.Text}', Confidence {denseCaption.Confidence:F4}, Bounding box {denseCaption.BoundingBox}");
 }
 ```
-
-## Troubleshooting
-### Common errors
-When you interact with Image Analysis using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests. For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` error is returned, indicating a bad request.
-
-### Logging
-You can learn more about how to enable SDK logging [here](https://learn.microsoft.com/dotnet/azure/sdk/logging).
-
-### General
-
-When you interact with the Azure Computer Vision service using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][keyvault_rest] requests.
-
-For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` error is returned, indicating a bad request.
-
-### Handling exceptions
-
-In the following snippet, the error is handled gracefully by catching the exception and displaying additional information about the error.
-
-```C# Snippet:ImageAnalysisDenseCaptionException
-var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
-
-try
-{
-    var result = client.Analyze(imageUrl, VisualFeatures.DenseCaptions);
-}
-catch (RequestFailedException e)
-{
-    if (e.Status == 400)
-    {
-        Console.WriteLine("Error analyzing image.");
-        Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
-    }
-    else
-    {
-        throw;
-    }
-}
-```
-
-You will notice that additional information is logged, like the Client Request ID of the operation.
-
-## Next steps
-
-Several Azure AI Vision ImageAnalysis client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Azure AI Vision ImageAnalysis:
-
-* [Image Analysis README][image_analysis_readme] - A comprehensive guide covering various features of the Azure AI Vision ImageAnalysis service and their usage with the .NET SDK.
-
-<!-- LINKS -->
-[image_analysis_overview]: https://learn.microsoft.com/azure/ai-services/computer-vision/overview-image-analysis?tabs=4-0
-[image_analysis_concepts]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40
-[azure_sub]: https://azure.microsoft.com/free/dotnet/
-[azure_cli]: https://learn.microsoft.com/cli/azure
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
-[image_analysis_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md
 [imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
-[nuget]: https://www.nuget.org/
-[keyvault_rest]: https://learn.microsoft.com/rest/api/keyvault/
