@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ManualReclassifyExceptionAction(id.Value, kind, queueId.Value, Optional.ToNullable(priority), Optional.ToList(workerSelectors));
+            return new ManualReclassifyExceptionAction(id.Value, kind, queueId.Value, priority, Optional.ToList(workerSelectors));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

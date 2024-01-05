@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="endOn"> Job execution end time. </param>
         /// <param name="template"> Job's execution container. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppJobExecutionData"/> instance for mocking. </returns>
-        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobExecutionRunningState? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ContainerAppJobExecutionTemplate template = null)
+        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobExecutionRunningState status = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, ContainerAppJobExecutionTemplate template = null)
         {
             return new ContainerAppJobExecutionData(id, name, resourceType, systemData, status, startOn, endOn, template);
         }

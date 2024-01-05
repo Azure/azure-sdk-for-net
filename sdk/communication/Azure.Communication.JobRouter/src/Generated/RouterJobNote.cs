@@ -16,7 +16,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of <see cref="RouterJobNote"/>. </summary>
         /// <param name="message"> The message contained in the note. </param>
         /// <param name="addedAt"> The time at which the note was added in UTC. If not provided, will default to the current time. </param>
-        internal RouterJobNote(string message, DateTimeOffset? addedAt)
+        internal RouterJobNote(string message, DateTimeOffset addedAt)
         {
             Message = message;
             AddedAt = addedAt;

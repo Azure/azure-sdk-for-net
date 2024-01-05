@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
         /// <param name="mode"> Mode governing the specific distribution method. </param>
         /// <returns> A new <see cref="JobRouter.DistributionPolicy"/> instance for mocking. </returns>
-        public static DistributionPolicy DistributionPolicy(ETag eTag = default, string id = null, string name = null, TimeSpan? offerExpiresAfter = null, DistributionMode mode = null)
+        public static DistributionPolicy DistributionPolicy(ETag eTag = default, string id = null, string name = null, TimeSpan offerExpiresAfter = default, DistributionMode mode = null)
         {
             return new DistributionPolicy(eTag, id, name, offerExpiresAfter, mode);
         }
@@ -81,7 +81,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="message"> The message contained in the note. </param>
         /// <param name="addedAt"> The time at which the note was added in UTC. If not provided, will default to the current time. </param>
         /// <returns> A new <see cref="JobRouter.RouterJobNote"/> instance for mocking. </returns>
-        public static RouterJobNote RouterJobNote(string message = null, DateTimeOffset? addedAt = null)
+        public static RouterJobNote RouterJobNote(string message = null, DateTimeOffset addedAt = default)
         {
             return new RouterJobNote(message, addedAt);
         }
@@ -165,7 +165,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. </param>
         /// <returns> A new <see cref="JobRouter.RouterChannel"/> instance for mocking. </returns>
-        public static RouterChannel RouterChannel(string channelId = null, int capacityCostPerJob = default, int? maxNumberOfJobs = null)
+        public static RouterChannel RouterChannel(string channelId = null, int capacityCostPerJob = default, int maxNumberOfJobs = default)
         {
             return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs);
         }
@@ -258,7 +258,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="priority"> Updated Priority. </param>
         /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
         /// <returns> A new <see cref="JobRouter.ManualReclassifyExceptionAction"/> instance for mocking. </returns>
-        public static ManualReclassifyExceptionAction ManualReclassifyExceptionAction(string id = null, string queueId = null, int? priority = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
+        public static ManualReclassifyExceptionAction ManualReclassifyExceptionAction(string id = null, string queueId = null, int priority = default, IEnumerable<RouterWorkerSelector> workerSelectors = null)
         {
             workerSelectors ??= new List<RouterWorkerSelector>();
 
@@ -279,7 +279,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <param name="expiresAfter"> Describes how long the attached label selector is valid in seconds. </param>
         /// <returns> A new <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/> instance for mocking. </returns>
-        public static PassThroughWorkerSelectorAttachment PassThroughWorkerSelectorAttachment(string key = null, LabelOperator labelOperator = default, TimeSpan? expiresAfter = null)
+        public static PassThroughWorkerSelectorAttachment PassThroughWorkerSelectorAttachment(string key = null, LabelOperator labelOperator = default, TimeSpan expiresAfter = default)
         {
             return new PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind.PassThrough, key, labelOperator, expiresAfter);
         }

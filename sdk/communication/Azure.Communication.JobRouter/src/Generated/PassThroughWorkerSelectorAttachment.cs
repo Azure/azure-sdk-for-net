@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <param name="expiresAfter"> Describes how long the attached label selector is valid in seconds. </param>
-        internal PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, string key, LabelOperator labelOperator, TimeSpan? expiresAfter) : base(kind)
+        internal PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, string key, LabelOperator labelOperator, TimeSpan expiresAfter) : base(kind)
         {
             Key = key;
             LabelOperator = labelOperator;

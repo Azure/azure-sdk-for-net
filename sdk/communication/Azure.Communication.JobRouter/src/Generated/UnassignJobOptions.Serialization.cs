@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(SuspendMatching))
             {
                 writer.WritePropertyName("suspendMatching"u8);
-                writer.WriteBooleanValue(SuspendMatching.Value);
+                writer.WriteBooleanValue(SuspendMatching);
             }
             writer.WriteEndObject();
         }

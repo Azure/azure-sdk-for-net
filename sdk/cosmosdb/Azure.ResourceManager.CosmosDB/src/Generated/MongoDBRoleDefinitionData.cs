@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="databaseName"> The database name for which access is being granted for this Role Definition. </param>
         /// <param name="privileges"> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </param>
         /// <param name="roles"> The set of roles inherited by this Role Definition. </param>
-        internal MongoDBRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, MongoDBRoleDefinitionType? roleDefinitionType, string databaseName, IList<MongoDBPrivilege> privileges, IList<MongoDBRole> roles) : base(id, name, resourceType, systemData)
+        internal MongoDBRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, MongoDBRoleDefinitionType roleDefinitionType, string databaseName, IList<MongoDBPrivilege> privileges, IList<MongoDBRole> roles) : base(id, name, resourceType, systemData)
         {
             RoleName = roleName;
             RoleDefinitionType = roleDefinitionType;

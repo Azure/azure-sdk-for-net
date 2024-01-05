@@ -68,7 +68,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ScoringRuleOptions(Optional.ToNullable(batchSize), Optional.ToList(scoringParameters), Optional.ToNullable(isBatchScoringEnabled), Optional.ToNullable(descendingOrder));
+            return new ScoringRuleOptions(batchSize, Optional.ToList(scoringParameters), isBatchScoringEnabled, descendingOrder);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

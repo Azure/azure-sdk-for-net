@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of DistributionMode. </param>
         /// <param name="scoringRule"> Define a scoring rule to use, when calculating a score to determine the best worker. If not set, will use a default scoring formula that uses the number of job labels that the worker labels match, as well as the number of label selectors the worker labels match and/or exceed using a logistic function (https://en.wikipedia.org/wiki/Logistic_function). </param>
         /// <param name="scoringRuleOptions"> Options to configure 'scoringRule'. If not set, default values are used. </param>
-        internal BestWorkerMode(int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, DistributionModeKind kind, RouterRule scoringRule, ScoringRuleOptions scoringRuleOptions) : base(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind)
+        internal BestWorkerMode(int minConcurrentOffers, int maxConcurrentOffers, bool bypassSelectors, DistributionModeKind kind, RouterRule scoringRule, ScoringRuleOptions scoringRuleOptions) : base(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind)
         {
             ScoringRule = scoringRule;
             ScoringRuleOptions = scoringRuleOptions;

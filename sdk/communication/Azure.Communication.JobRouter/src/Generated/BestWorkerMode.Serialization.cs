@@ -78,7 +78,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new BestWorkerMode(minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), kind, scoringRule.Value, scoringRuleOptions.Value);
+            return new BestWorkerMode(minConcurrentOffers, maxConcurrentOffers, bypassSelectors, kind, scoringRule.Value, scoringRuleOptions.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

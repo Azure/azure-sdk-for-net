@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
         /// <param name="mode"> Mode governing the specific distribution method. </param>
-        internal DistributionPolicy(ETag eTag, string id, string name, TimeSpan? offerExpiresAfter, DistributionMode mode)
+        internal DistributionPolicy(ETag eTag, string id, string name, TimeSpan offerExpiresAfter, DistributionMode mode)
         {
             ETag = eTag;
             Id = id;

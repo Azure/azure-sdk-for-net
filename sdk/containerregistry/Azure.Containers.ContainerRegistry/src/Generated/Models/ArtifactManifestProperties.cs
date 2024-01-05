@@ -45,7 +45,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ArtifactManifestProperties(string registryLoginServer, string repositoryName, string digest, long? sizeInBytes, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        internal ArtifactManifestProperties(string registryLoginServer, string repositoryName, string digest, long sizeInBytes, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IReadOnlyList<ArtifactManifestPlatform> relatedArtifacts, IReadOnlyList<string> tags, bool canDelete, bool canWrite, bool canList, bool canRead)
         {
             RegistryLoginServer = registryLoginServer;
             RepositoryName = repositoryName;

@@ -61,7 +61,7 @@ namespace Azure.Communication.Sms
                     continue;
                 }
             }
-            return new SmsSendResult(to, messageId.Value, httpStatusCode, Optional.ToNullable(repeatabilityResult), successful, errorMessage.Value);
+            return new SmsSendResult(to, messageId.Value, httpStatusCode, repeatabilityResult, successful, errorMessage.Value);
         }
     }
 }

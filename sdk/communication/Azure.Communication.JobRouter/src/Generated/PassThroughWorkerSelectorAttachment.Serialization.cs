@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, Optional.ToNullable(expiresAfterSeconds));
+            return new PassThroughWorkerSelectorAttachment(kind, key, labelOperator, expiresAfterSeconds);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

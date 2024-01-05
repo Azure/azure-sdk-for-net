@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), template.Value);
+            return new ContainerAppJobExecutionData(id, name, type, systemData.Value, status, startTime, endTime, template.Value);
         }
     }
 }

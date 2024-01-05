@@ -110,7 +110,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRepositoryProperties(registry, imageName, createdTime, lastUpdateTime, manifestCount, tagCount, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ContainerRepositoryProperties(registry, imageName, createdTime, lastUpdateTime, manifestCount, tagCount, deleteEnabled, writeEnabled, listEnabled, readEnabled);
         }
     }
 }

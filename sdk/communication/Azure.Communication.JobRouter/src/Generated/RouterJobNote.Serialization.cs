@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new RouterJobNote(message, Optional.ToNullable(addedAt));
+            return new RouterJobNote(message, addedAt);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

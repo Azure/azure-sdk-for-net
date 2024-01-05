@@ -57,7 +57,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new DistributionPolicy(etag, id, name.Value, Optional.ToNullable(offerExpiresAfterSeconds), mode.Value);
+            return new DistributionPolicy(etag, id, name.Value, offerExpiresAfterSeconds, mode.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

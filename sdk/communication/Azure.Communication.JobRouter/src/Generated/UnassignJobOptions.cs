@@ -12,7 +12,7 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of <see cref="UnassignJobOptions"/>. </summary>
         /// <param name="suspendMatching"> If SuspendMatching is true, then a job is not queued for re-matching with a worker. </param>
-        internal UnassignJobOptions(bool? suspendMatching)
+        internal UnassignJobOptions(bool suspendMatching)
         {
             SuspendMatching = suspendMatching;
         }

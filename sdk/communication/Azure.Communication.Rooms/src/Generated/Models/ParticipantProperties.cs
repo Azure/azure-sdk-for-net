@@ -12,7 +12,7 @@ namespace Azure.Communication.Rooms
     {
         /// <summary> Initializes a new instance of <see cref="ParticipantProperties"/>. </summary>
         /// <param name="role"> The role of a room participant. The default value is Attendee. </param>
-        public ParticipantProperties(ParticipantRole? role)
+        public ParticipantProperties(ParticipantRole role)
         {
             Role = role;
         }

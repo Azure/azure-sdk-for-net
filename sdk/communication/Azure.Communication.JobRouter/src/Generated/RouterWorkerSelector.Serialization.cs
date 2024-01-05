@@ -81,7 +81,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new RouterWorkerSelector(key, labelOperator, value.Value, Optional.ToNullable(expiresAfterSeconds), Optional.ToNullable(expedite), Optional.ToNullable(status), Optional.ToNullable(expiresAt));
+            return new RouterWorkerSelector(key, labelOperator, value.Value, expiresAfterSeconds, expedite, Optional.ToNullable(status), Optional.ToNullable(expiresAt));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

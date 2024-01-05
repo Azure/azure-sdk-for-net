@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(RetryOfferAt))
             {
                 writer.WritePropertyName("retryOfferAt"u8);
-                writer.WriteStringValue(RetryOfferAt.Value, "O");
+                writer.WriteStringValue(RetryOfferAt, "O");
             }
             writer.WriteEndObject();
         }

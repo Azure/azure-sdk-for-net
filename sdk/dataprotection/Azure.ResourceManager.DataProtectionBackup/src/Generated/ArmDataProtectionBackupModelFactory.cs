@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="secureScore"> Secure Score of Backup Vault. </param>
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupVaultProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool? isVaultProtectedByResourceGuard = null, BackupVaultFeatureSettings featureSettings = null, BackupVaultSecureScoreLevel? secureScore = null, IEnumerable<AzureLocation> replicatedRegions = null)
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures = null, DataProtectionBackupProvisioningState? provisioningState = null, BackupVaultResourceMoveState? resourceMoveState = null, BackupVaultResourceMoveDetails resourceMoveDetails = null, BackupVaultSecuritySettings securitySettings = null, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = null, bool isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = null, BackupVaultSecureScoreLevel? secureScore = null, IEnumerable<AzureLocation> replicatedRegions = null)
         {
             storageSettings ??= new List<DataProtectionBackupStorageSetting>();
             replicatedRegions ??= new List<AzureLocation>();
@@ -483,6 +484,139 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             exposureControlledFeatures ??= new List<string>();
 
             return new BackupSupportedFeature(featureName, supportStatus, exposureControlledFeatures?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties" />. </summary>
+        /// <param name="alertSettingsForAllJobFailures"> Monitoring Settings. </param>
+        /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
+        /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
+        /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
+        /// <param name="securitySettings"> Security Settings. </param>
+        /// <param name="storageSettings"> Storage Settings. </param>
+        /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
+        /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupVaultProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState alertSettingsForAllJobFailures, DataProtectionBackupProvisioningState provisioningState, BackupVaultResourceMoveState resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IEnumerable<DataProtectionBackupStorageSetting> storageSettings, bool isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel secureScore)
+        {
+            return DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures, provisioningState, resourceMoveState, resourceMoveDetails, securitySettings, storageSettings, isVaultProtectedByResourceGuard, featureSettings, secureScore, replicatedRegions: default);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of DataProtectionBackupInstanceProperties.
+        /// </summary>
+        /// <param name="friendlyName"></param>
+        /// <param name="dataSourceInfo"></param>
+        /// <param name="dataSourceSetInfo"></param>
+        /// <param name="policyInfo"></param>
+        /// <param name="protectionStatus"></param>
+        /// <param name="currentProtectionState"></param>
+        /// <param name="protectionErrorDetails"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="dataSourceAuthCredentials"></param>
+        /// <param name="validationType"></param>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType validationType, string objectType)
+        {
+            return DataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails: default, objectType);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of DataProtectionBackupJobProperties.
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <param name="backupInstanceFriendlyName"></param>
+        /// <param name="backupInstanceId"></param>
+        /// <param name="dataSourceId"></param>
+        /// <param name="dataSourceLocation"></param>
+        /// <param name="dataSourceName"></param>
+        /// <param name="dataSourceSetName"></param>
+        /// <param name="dataSourceType"></param>
+        /// <param name="duration"></param>
+        /// <param name="endOn"></param>
+        /// <param name="errorDetails"></param>
+        /// <param name="extendedInfo"></param>
+        /// <param name="isUserTriggered"></param>
+        /// <param name="operation"></param>
+        /// <param name="operationCategory"></param>
+        /// <param name="policyId"></param>
+        /// <param name="policyName"></param>
+        /// <param name="isProgressEnabled"></param>
+        /// <param name="progressUri"></param>
+        /// <param name="restoreType"></param>
+        /// <param name="sourceResourceGroup"></param>
+        /// <param name="sourceSubscriptionId"></param>
+        /// <param name="startOn"></param>
+        /// <param name="status"></param>
+        /// <param name="subscriptionId"></param>
+        /// <param name="supportedActions"></param>
+        /// <param name="vaultName"></param>
+        /// <param name="eTag"></param>
+        /// <param name="sourceDataStoreName"></param>
+        /// <param name="destinationDataStoreName"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan duration, DateTimeOffset endOn, IEnumerable<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IEnumerable<string> supportedActions, string vaultName, ETag eTag, string sourceDataStoreName, string destinationDataStoreName)
+        {
+            return DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName, dataSourceType, duration, endOn, errorDetails, extendedInfo, isUserTriggered, operation, operationCategory, policyId, policyName, isProgressEnabled, progressUri, rehydrationPriority: default, restoreType, sourceResourceGroup, sourceSubscriptionId, startOn, status, subscriptionId, supportedActions, vaultName, eTag, sourceDataStoreName, destinationDataStoreName);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of DataProtectionBackupDataSourceProperties.
+        /// </summary>
+        /// <param name="friendlyName"></param>
+        /// <param name="dataSourceInfo"></param>
+        /// <param name="dataSourceSetInfo"></param>
+        /// <param name="policyInfo"></param>
+        /// <param name="protectionStatus"></param>
+        /// <param name="currentProtectionState"></param>
+        /// <param name="protectionErrorDetails"></param>
+        /// <param name="provisioningState"></param>
+        /// <param name="dataSourceAuthCredentials"></param>
+        /// <param name="validationType"></param>
+        /// <param name="objectType"></param>
+        /// <param name="deletionInfo"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType validationType, string objectType, BackupInstanceDeletionInfo deletionInfo)
+        {
+            return DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails: default, objectType, deletionInfo);
+        }
+
+        /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
+        /// <param name="additionalDetails"> Job's Additional Details. </param>
+        /// <param name="backupInstanceState"> State of the Backup Instance. </param>
+        /// <param name="dataTransferredInBytes"> Number of bytes transferred. </param>
+        /// <param name="recoveryDestination"> Destination where restore is done. </param>
+        /// <param name="sourceRecoverPoint"> Details of the Source Recovery Point. </param>
+        /// <param name="subTasks"> List of Sub Tasks of the job. </param>
+        /// <param name="targetRecoverPoint"> Details of the Target Recovery Point. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.BackupJobExtendedInfo" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupJobExtendedInfo BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails, string backupInstanceState, double dataTransferredInBytes, string recoveryDestination, RestoreJobRecoveryPointDetails sourceRecoverPoint, IEnumerable<BackupJobSubTask> subTasks, RestoreJobRecoveryPointDetails targetRecoverPoint)
+        {
+            return BackupJobExtendedInfo(additionalDetails, backupInstanceState, dataTransferredInBytes, recoveryDestination, sourceRecoverPoint, subTasks, targetRecoverPoint, warningDetails: default);
+        }
+
+        /// <summary> Initializes a new instance of DataProtectionBackupDiscreteRecoveryPointProperties. </summary>
+        /// <param name="friendlyName"></param>
+        /// <param name="recoveryPointDataStoresDetails"></param>
+        /// <param name="recoverOn"></param>
+        /// <param name="policyName"></param>
+        /// <param name="policyVersion"></param>
+        /// <param name="recoveryPointId"></param>
+        /// <param name="recoveryPointType"></param>
+        /// <param name="retentionTagName"></param>
+        /// <param name="retentionTagVersion"></param>
+        /// <param name="expireOn"></param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.DataProtectionBackupDiscreteRecoveryPointProperties" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset expireOn)
+        {
+            return DataProtectionBackupDiscreteRecoveryPointProperties(friendlyName, recoveryPointDataStoresDetails, recoverOn, policyName, policyVersion, recoveryPointId, recoveryPointType, retentionTagName, retentionTagVersion, expireOn, recoveryPointState: default);
         }
     }
 }

@@ -1657,7 +1657,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="privileges"> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </param>
         /// <param name="roles"> The set of roles inherited by this Role Definition. </param>
         /// <returns> A new <see cref="CosmosDB.MongoDBRoleDefinitionData"/> instance for mocking. </returns>
-        public static MongoDBRoleDefinitionData MongoDBRoleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string roleName = null, MongoDBRoleDefinitionType? roleDefinitionType = null, string databaseName = null, IEnumerable<MongoDBPrivilege> privileges = null, IEnumerable<MongoDBRole> roles = null)
+        public static MongoDBRoleDefinitionData MongoDBRoleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string roleName = null, MongoDBRoleDefinitionType roleDefinitionType = default, string databaseName = null, IEnumerable<MongoDBPrivilege> privileges = null, IEnumerable<MongoDBRole> roles = null)
         {
             privileges ??= new List<MongoDBPrivilege>();
             roles ??= new List<MongoDBRole>();

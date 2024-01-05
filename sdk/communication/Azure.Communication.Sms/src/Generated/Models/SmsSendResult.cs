@@ -34,7 +34,7 @@ namespace Azure.Communication.Sms
         /// <param name="repeatabilityResult"> The result of a repeatable request with one of the case-insensitive values accepted or rejected. </param>
         /// <param name="successful"> Indicates if the message is processed successfully or not. </param>
         /// <param name="errorMessage"> Optional error message in case of 4xx/5xx/repeatable errors. </param>
-        internal SmsSendResult(string to, string messageId, int httpStatusCode, SmsSendResponseItemRepeatabilityResult? repeatabilityResult, bool successful, string errorMessage)
+        internal SmsSendResult(string to, string messageId, int httpStatusCode, SmsSendResponseItemRepeatabilityResult repeatabilityResult, bool successful, string errorMessage)
         {
             To = to;
             MessageId = messageId;

@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="title"> Human-readable title of the image. </param>
         /// <param name="description"> Human-readable description of the software packaged in the image. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal OciAnnotations(DateTimeOffset? createdOn, string authors, Uri url, Uri documentation, Uri source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, object> additionalProperties)
+        internal OciAnnotations(DateTimeOffset createdOn, string authors, Uri url, Uri documentation, Uri source, string version, string revision, string vendor, string licenses, string name, string title, string description, IDictionary<string, object> additionalProperties)
         {
             CreatedOn = createdOn;
             Authors = authors;

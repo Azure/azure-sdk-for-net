@@ -180,7 +180,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new RouterWorker(etag, id, Optional.ToNullable(state), Optional.ToList(queues), Optional.ToNullable(capacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToList(channels), Optional.ToList(offers), Optional.ToList(assignedJobs), Optional.ToNullable(loadRatio), Optional.ToNullable(availableForOffers));
+            return new RouterWorker(etag, id, Optional.ToNullable(state), Optional.ToList(queues), capacity, Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToList(channels), Optional.ToList(offers), Optional.ToList(assignedJobs), Optional.ToNullable(loadRatio), availableForOffers);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

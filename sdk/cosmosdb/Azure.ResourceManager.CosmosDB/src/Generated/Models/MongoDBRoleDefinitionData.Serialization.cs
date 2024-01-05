@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(RoleDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(RoleDefinitionType.Value.ToSerialString());
+                writer.WriteStringValue(RoleDefinitionType.ToSerialString());
             }
             if (Optional.IsDefined(DatabaseName))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new MongoDBRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Optional.ToNullable(type0), databaseName.Value, Optional.ToList(privileges), Optional.ToList(roles));
+            return new MongoDBRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, type0, databaseName.Value, Optional.ToList(privileges), Optional.ToList(roles));
         }
     }
 }

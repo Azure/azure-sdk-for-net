@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
         /// <param name="jobStageDetails"> Job Stage Details. </param>
         /// <returns> A new <see cref="Models.DataBoxJobStage"/> instance for mocking. </returns>
-        public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName = null, string displayName = null, DataBoxStageStatus? stageStatus = null, DateTimeOffset? stageTime = null, BinaryData jobStageDetails = null)
+        public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName = null, string displayName = null, DataBoxStageStatus? stageStatus = null, DateTimeOffset stageTime = default, BinaryData jobStageDetails = null)
         {
             return new DataBoxJobStage(stageName, displayName, stageStatus, stageTime, jobStageDetails);
         }

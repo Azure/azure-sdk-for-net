@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="channelId"> Id of a channel. </param>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. </param>
-        internal RouterChannel(string channelId, int capacityCostPerJob, int? maxNumberOfJobs)
+        internal RouterChannel(string channelId, int capacityCostPerJob, int maxNumberOfJobs)
         {
             ChannelId = channelId;
             CapacityCostPerJob = capacityCostPerJob;

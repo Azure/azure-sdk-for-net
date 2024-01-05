@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new RouterChannel(channelId, capacityCostPerJob, Optional.ToNullable(maxNumberOfJobs));
+            return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
