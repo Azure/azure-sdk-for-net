@@ -272,7 +272,7 @@
 /sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
 
 # PRLabel: %Communication - SMS
-/sdk/communication/Azure.Communication.Sms/                        @DimaKolomiiets @ozgurcivi-msft @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft
+/sdk/communication/Azure.Communication.Sms/                        @DimaKolomiiets @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
