@@ -57,7 +57,7 @@ namespace Azure
         }
 
         private RequestFailedException(Response response, ErrorDetails details, Exception? innerException)
-            : base(response, details.Message, innerException)
+            : base(details.Message, response, innerException)
         {
             ErrorCode = details.ErrorCode;
 
@@ -114,7 +114,7 @@ namespace Azure
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
-            : base(message, innerException)
+            : base(message, default, innerException)
         {
             Status = status;
             ErrorCode = errorCode;

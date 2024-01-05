@@ -30,7 +30,7 @@ public class ClientResultExceptionTests
         PipelineResponse response = new MockPipelineResponse(200, "MockReason");
         string message = "Override Message";
 
-        ClientResultException exception = new ClientResultException(response, message);
+        ClientResultException exception = new ClientResultException(message, response);
 
         Assert.AreEqual(response.Status, exception.Status);
         Assert.AreEqual(response, exception.GetRawResponse());

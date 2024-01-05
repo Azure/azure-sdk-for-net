@@ -150,7 +150,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         }
         catch (HttpRequestException e)
         {
-            throw new ClientResultException(e.Message, e);
+            throw new ClientResultException(e.Message, response: default, e);
         }
 
         message.Response = new HttpPipelineResponse(responseMessage);
