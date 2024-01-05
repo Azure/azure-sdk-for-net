@@ -4,7 +4,6 @@
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Globalization;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -27,8 +26,8 @@ public class ClientResultException : Exception, ISerializable
         protected set => _status = value;
     }
 
-    public ClientResultException(PipelineResponse response, string? message = default, Exception? innerException = default)
-        : base(GetMessage(response, message), innerException)
+    public ClientResultException(PipelineResponse response, Exception? innerException = default)
+        : base(GetMessage(response), innerException)
     {
         ClientUtilities.AssertNotNull(response, nameof(response));
 
@@ -36,10 +35,11 @@ public class ClientResultException : Exception, ISerializable
         _status = response.Status;
     }
 
-    public ClientResultException(string message, Exception? innerException = default)
-        : base(message, innerException)
+    public ClientResultException(string message, PipelineResponse? response = default, Exception? innerException = default)
+        : base(message ?? DefaultMessage, innerException)
     {
-        _status = 0;
+        _response = response;
+        _status = response?.Status ?? 0;
     }
 
     /// <summary>
@@ -65,15 +65,8 @@ public class ClientResultException : Exception, ISerializable
 
     public PipelineResponse? GetRawResponse() => _response;
 
-    // Create message from response if available, and override message, if available.
-    private static string GetMessage(PipelineResponse response, string? message)
+    private static string GetMessage(PipelineResponse response)
     {
-        // Setting the message will override extracting it from the response.
-        if (message is not null)
-        {
-            return message;
-        }
-
         response.BufferContent();
 
         StringBuilder messageBuilder = new();
