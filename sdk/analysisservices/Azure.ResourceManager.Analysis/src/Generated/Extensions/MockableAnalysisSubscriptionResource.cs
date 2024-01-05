@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         public virtual AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetEligibleSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AnalysisResourceSku.DeserializeAnalysisResourceSku(e), AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Analysis.Mocking
         public virtual Pageable<AnalysisResourceSku> GetEligibleSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetEligibleSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AnalysisResourceSku.DeserializeAnalysisResourceSku(e), AnalysisServerServersClientDiagnostics, Pipeline, "MockableAnalysisSubscriptionResource.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
