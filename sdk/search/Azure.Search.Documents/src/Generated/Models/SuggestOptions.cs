@@ -25,7 +25,7 @@ namespace Azure.Search.Documents
         /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, only the key field will be included in the results. </param>
         /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that's part of the index definition. </param>
         /// <param name="size"> The number of suggestions to retrieve. This must be a value between 1 and 100. The default is 5. </param>
-        internal SuggestOptions(string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, string searchText, string searchFieldsRaw, string selectRaw, string suggesterName, int? size)
+        internal SuggestOptions(string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, string searchText, string searchFieldsRaw, string selectRaw, string suggesterName, int size)
         {
             Filter = filter;
             UseFuzzyMatching = useFuzzyMatching;

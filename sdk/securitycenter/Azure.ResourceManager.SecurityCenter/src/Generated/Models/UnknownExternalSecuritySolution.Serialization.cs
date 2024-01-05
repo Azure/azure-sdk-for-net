@@ -16,15 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Kind != null)
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
-            else
-            {
-                writer.WriteNull("kind");
-            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
@@ -34,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            ExternalSecuritySolutionKind? kind = "Unknown";
+            ExternalSecuritySolutionKind kind = "Unknown";
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -44,11 +37,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        kind = null;
-                        continue;
-                    }
                     kind = new ExternalSecuritySolutionKind(property.Value.GetString());
                     continue;
                 }

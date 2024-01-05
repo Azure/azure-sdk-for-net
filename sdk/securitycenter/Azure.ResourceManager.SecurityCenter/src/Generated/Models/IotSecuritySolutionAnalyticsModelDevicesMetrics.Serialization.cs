@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value);
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(date, devicesMetrics.Value);
         }
     }
 }

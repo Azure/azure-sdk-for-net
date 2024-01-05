@@ -18,15 +18,8 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                if (DefaultLanguageCode != null)
-                {
-                    writer.WritePropertyName("defaultLanguageCode"u8);
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("defaultLanguageCode");
-                }
+                writer.WritePropertyName("defaultLanguageCode"u8);
+                writer.WriteStringValue(DefaultLanguageCode.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
@@ -68,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<SentimentSkillLanguage?> defaultLanguageCode = default;
+            Optional<SentimentSkillLanguage> defaultLanguageCode = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -81,7 +74,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultLanguageCode = null;
                         continue;
                     }
                     defaultLanguageCode = new SentimentSkillLanguage(property.Value.GetString());
@@ -128,7 +120,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SentimentSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode));
+            return new SentimentSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode);
         }
     }
 }

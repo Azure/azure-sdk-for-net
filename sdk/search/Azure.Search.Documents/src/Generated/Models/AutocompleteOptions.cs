@@ -25,7 +25,7 @@ namespace Azure.Search.Documents
         /// <param name="searchFieldsRaw"> The comma-separated list of field names to consider when querying for auto-completed terms. Target fields must be included in the specified suggester. </param>
         /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that's part of the index definition. </param>
         /// <param name="size"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
-        internal AutocompleteOptions(string searchText, AutocompleteMode? mode, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string searchFieldsRaw, string suggesterName, int? size)
+        internal AutocompleteOptions(string searchText, AutocompleteMode mode, string filter, bool? useFuzzyMatching, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string searchFieldsRaw, string suggesterName, int size)
         {
             SearchText = searchText;
             Mode = mode;

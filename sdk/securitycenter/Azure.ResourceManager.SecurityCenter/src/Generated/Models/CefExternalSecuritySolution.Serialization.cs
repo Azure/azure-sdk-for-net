@@ -21,15 +21,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Kind != null)
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
-            else
-            {
-                writer.WriteNull("kind");
-            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
 
@@ -40,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<CefSolutionProperties> properties = default;
-            ExternalSecuritySolutionKind? kind = default;
+            ExternalSecuritySolutionKind kind = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -59,11 +52,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        kind = null;
-                        continue;
-                    }
                     kind = new ExternalSecuritySolutionKind(property.Value.GetString());
                     continue;
                 }

@@ -18,27 +18,13 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ParsingMode))
             {
-                if (ParsingMode != null)
-                {
-                    writer.WritePropertyName("parsingMode"u8);
-                    writer.WriteStringValue(ParsingMode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("parsingMode");
-                }
+                writer.WritePropertyName("parsingMode"u8);
+                writer.WriteStringValue(ParsingMode.ToString());
             }
             if (Optional.IsDefined(DataToExtract))
             {
-                if (DataToExtract != null)
-                {
-                    writer.WritePropertyName("dataToExtract"u8);
-                    writer.WriteStringValue(DataToExtract.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("dataToExtract");
-                }
+                writer.WritePropertyName("dataToExtract"u8);
+                writer.WriteStringValue(DataToExtract.ToString());
             }
             if (Optional.IsCollectionDefined(Configuration))
             {
@@ -103,8 +89,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<BlobIndexerParsingMode?> parsingMode = default;
-            Optional<BlobIndexerDataToExtract?> dataToExtract = default;
+            Optional<BlobIndexerParsingMode> parsingMode = default;
+            Optional<BlobIndexerDataToExtract> dataToExtract = default;
             Optional<IDictionary<string, object>> configuration = default;
             string odataType = default;
             Optional<string> name = default;
@@ -118,7 +104,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        parsingMode = null;
                         continue;
                     }
                     parsingMode = new BlobIndexerParsingMode(property.Value.GetString());
@@ -128,7 +113,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataToExtract = null;
                         continue;
                     }
                     dataToExtract = new BlobIndexerDataToExtract(property.Value.GetString());
@@ -197,7 +181,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(parsingMode), Optional.ToNullable(dataToExtract), Optional.ToDictionary(configuration));
+            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, parsingMode, dataToExtract, Optional.ToDictionary(configuration));
         }
     }
 }

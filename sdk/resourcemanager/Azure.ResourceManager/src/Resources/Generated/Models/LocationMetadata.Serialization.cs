@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geography.Value, geographyGroup.Value, Optional.ToNullable(longitude), Optional.ToNullable(latitude), physicalLocation.Value, Optional.ToList(pairedRegion), homeLocation.Value);
+            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geography.Value, geographyGroup.Value, longitude, latitude, physicalLocation.Value, Optional.ToList(pairedRegion), homeLocation.Value);
         }
     }
 }

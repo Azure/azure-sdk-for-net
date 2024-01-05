@@ -39,7 +39,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="teraflops"> The computational power of the rendering session GPU measured in teraflops. </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="createdOn"> The time when the rendering session was created. Date and time in ISO 8601 format. </param>
-        internal RenderingSession(string sessionId, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string host, int? maxLeaseTimeMinutes, RenderingServerSize size, RenderingSessionStatus status, float? teraflops, RemoteRenderingServiceError error, DateTimeOffset? createdOn)
+        internal RenderingSession(string sessionId, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string host, int maxLeaseTimeMinutes, RenderingServerSize size, RenderingSessionStatus status, float? teraflops, RemoteRenderingServiceError error, DateTimeOffset createdOn)
         {
             SessionId = sessionId;
             ArrInspectorPort = arrInspectorPort;

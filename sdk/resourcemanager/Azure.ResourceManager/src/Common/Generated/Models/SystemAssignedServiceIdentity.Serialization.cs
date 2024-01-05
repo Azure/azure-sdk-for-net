@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new SystemAssignedServiceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type);
+            return new SystemAssignedServiceIdentity(principalId, tenantId, type);
         }
 
         internal partial class SystemAssignedServiceIdentityConverter : JsonConverter<SystemAssignedServiceIdentity>

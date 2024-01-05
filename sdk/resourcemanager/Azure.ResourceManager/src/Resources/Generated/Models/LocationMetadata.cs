@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="physicalLocation"> The physical location of the Azure location. </param>
         /// <param name="pairedRegions"> The regions paired to this region. </param>
         /// <param name="homeLocation"> The home location of an edge zone. </param>
-        internal LocationMetadata(RegionType? regionType, RegionCategory? regionCategory, string geography, string geographyGroup, double? longitude, double? latitude, string physicalLocation, IReadOnlyList<PairedRegion> pairedRegions, string homeLocation)
+        internal LocationMetadata(RegionType? regionType, RegionCategory? regionCategory, string geography, string geographyGroup, double longitude, double latitude, string physicalLocation, IReadOnlyList<PairedRegion> pairedRegions, string homeLocation)
         {
             RegionType = regionType;
             RegionCategory = regionCategory;

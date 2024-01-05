@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="normalizerName"> The name of the normalizer to use to normalize the given text. </param>
         /// <param name="tokenFilters"> An optional list of token filters to use when breaking the given text. </param>
         /// <param name="charFilters"> An optional list of character filters to use when breaking the given text. </param>
-        internal AnalyzeTextOptions(string text, LexicalAnalyzerName? analyzerName, LexicalTokenizerName? tokenizerName, LexicalNormalizerName? normalizerName, IList<TokenFilterName> tokenFilters, IList<string> charFilters)
+        internal AnalyzeTextOptions(string text, LexicalAnalyzerName analyzerName, LexicalTokenizerName tokenizerName, LexicalNormalizerName normalizerName, IList<TokenFilterName> tokenFilters, IList<string> charFilters)
         {
             Text = text;
             AnalyzerName = analyzerName;

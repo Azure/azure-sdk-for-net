@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(MaskingMode))
             {
                 writer.WritePropertyName("maskingMode"u8);
-                writer.WriteStringValue(MaskingMode.Value.ToString());
+                writer.WriteStringValue(MaskingMode.ToString());
             }
             if (Optional.IsDefined(MaskingCharacter))
             {
@@ -260,7 +260,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), Optional.ToNullable(maskingMode), maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
+            return new PiiDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(minimumPrecision), maskingMode, maskingCharacter.Value, modelVersion.Value, Optional.ToList(piiCategories), domain.Value);
         }
     }
 }

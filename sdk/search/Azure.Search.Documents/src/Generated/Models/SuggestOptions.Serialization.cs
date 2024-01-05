@@ -62,7 +62,7 @@ namespace Azure.Search.Documents
             if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top"u8);
-                writer.WriteNumberValue(Size.Value);
+                writer.WriteNumberValue(Size);
             }
             writer.WriteEndObject();
         }

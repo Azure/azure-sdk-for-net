@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelDevicesMetrics"/>. </summary>
         /// <param name="date"> Aggregation of IoT Security solution device alert metrics by date. </param>
         /// <param name="devicesMetrics"> Device alert count by severity. </param>
-        internal IotSecuritySolutionAnalyticsModelDevicesMetrics(DateTimeOffset? date, IotSeverityMetrics devicesMetrics)
+        internal IotSecuritySolutionAnalyticsModelDevicesMetrics(DateTimeOffset date, IotSeverityMetrics devicesMetrics)
         {
             Date = date;
             DevicesMetrics = devicesMetrics;

@@ -40,15 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(IncludeTypelessEntities))
             {
-                if (IncludeTypelessEntities != null)
-                {
-                    writer.WritePropertyName("includeTypelessEntities"u8);
-                    writer.WriteBooleanValue(IncludeTypelessEntities.Value);
-                }
-                else
-                {
-                    writer.WriteNull("includeTypelessEntities");
-                }
+                writer.WritePropertyName("includeTypelessEntities"u8);
+                writer.WriteBooleanValue(IncludeTypelessEntities);
             }
             if (Optional.IsDefined(MinimumPrecision))
             {
@@ -104,7 +97,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             Optional<IList<EntityCategory>> categories = default;
             Optional<EntityRecognitionSkillLanguage?> defaultLanguageCode = default;
-            Optional<bool?> includeTypelessEntities = default;
+            Optional<bool> includeTypelessEntities = default;
             Optional<double?> minimumPrecision = default;
             string odataType = default;
             Optional<string> name = default;
@@ -142,7 +135,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        includeTypelessEntities = null;
                         continue;
                     }
                     includeTypelessEntities = property.Value.GetBoolean();
@@ -199,7 +191,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new EntityRecognitionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToList(categories), Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(includeTypelessEntities), Optional.ToNullable(minimumPrecision));
+            return new EntityRecognitionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToList(categories), Optional.ToNullable(defaultLanguageCode), includeTypelessEntities, Optional.ToNullable(minimumPrecision));
         }
     }
 }

@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="pairedRegions"> The regions paired to this region. </param>
         /// <param name="homeLocation"> The home location of an edge zone. </param>
         /// <returns> A new <see cref="Resources.Models.LocationMetadata"/> instance for mocking. </returns>
-        public static LocationMetadata LocationMetadata(RegionType? regionType = null, RegionCategory? regionCategory = null, string geography = null, string geographyGroup = null, double? longitude = null, double? latitude = null, string physicalLocation = null, IEnumerable<PairedRegion> pairedRegions = null, string homeLocation = null)
+        public static LocationMetadata LocationMetadata(RegionType? regionType = null, RegionCategory? regionCategory = null, string geography = null, string geographyGroup = null, double longitude = default, double latitude = default, string physicalLocation = null, IEnumerable<PairedRegion> pairedRegions = null, string homeLocation = null)
         {
             pairedRegions ??= new List<PairedRegion>();
 

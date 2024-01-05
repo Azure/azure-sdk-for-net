@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
         /// <param name="piiCategories"> A list of PII entity categories that should be extracted and masked. </param>
         /// <param name="domain"> If specified, will set the PII domain to include only a subset of the entity categories. Possible values include: 'phi', 'none'. Default is 'none'. </param>
-        internal PiiDetectionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string defaultLanguageCode, double? minimumPrecision, PiiDetectionSkillMaskingMode? maskingMode, string maskingCharacter, string modelVersion, IList<string> piiCategories, string domain) : base(oDataType, name, description, context, inputs, outputs)
+        internal PiiDetectionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string defaultLanguageCode, double? minimumPrecision, PiiDetectionSkillMaskingMode maskingMode, string maskingCharacter, string modelVersion, IList<string> piiCategories, string domain) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
             MinimumPrecision = minimumPrecision;

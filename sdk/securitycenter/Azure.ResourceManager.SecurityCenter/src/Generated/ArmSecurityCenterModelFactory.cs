@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="date"> Aggregation of IoT Security solution device alert metrics by date. </param>
         /// <param name="devicesMetrics"> Device alert count by severity. </param>
         /// <returns> A new <see cref="Models.IotSecuritySolutionAnalyticsModelDevicesMetrics"/> instance for mocking. </returns>
-        public static IotSecuritySolutionAnalyticsModelDevicesMetrics IotSecuritySolutionAnalyticsModelDevicesMetrics(DateTimeOffset? date = null, IotSeverityMetrics devicesMetrics = null)
+        public static IotSecuritySolutionAnalyticsModelDevicesMetrics IotSecuritySolutionAnalyticsModelDevicesMetrics(DateTimeOffset date = default, IotSeverityMetrics devicesMetrics = null)
         {
             return new IotSecuritySolutionAnalyticsModelDevicesMetrics(date, devicesMetrics);
         }

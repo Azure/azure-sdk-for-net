@@ -18,12 +18,12 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(MinLength))
             {
                 writer.WritePropertyName("min"u8);
-                writer.WriteNumberValue(MinLength.Value);
+                writer.WriteNumberValue(MinLength);
             }
             if (Optional.IsDefined(MaxLength))
             {
                 writer.WritePropertyName("max"u8);
-                writer.WriteNumberValue(MaxLength.Value);
+                writer.WriteNumberValue(MaxLength);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LengthTokenFilter(odataType, name, Optional.ToNullable(min), Optional.ToNullable(max));
+            return new LengthTokenFilter(odataType, name, min, max);
         }
     }
 }

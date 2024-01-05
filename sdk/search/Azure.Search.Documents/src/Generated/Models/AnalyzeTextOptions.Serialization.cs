@@ -20,17 +20,17 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(AnalyzerName))
             {
                 writer.WritePropertyName("analyzer"u8);
-                writer.WriteStringValue(AnalyzerName.Value.ToString());
+                writer.WriteStringValue(AnalyzerName.ToString());
             }
             if (Optional.IsDefined(TokenizerName))
             {
                 writer.WritePropertyName("tokenizer"u8);
-                writer.WriteStringValue(TokenizerName.Value.ToString());
+                writer.WriteStringValue(TokenizerName.ToString());
             }
             if (Optional.IsDefined(NormalizerName))
             {
                 writer.WritePropertyName("normalizer"u8);
-                writer.WriteStringValue(NormalizerName.Value.ToString());
+                writer.WriteStringValue(NormalizerName.ToString());
             }
             if (Optional.IsCollectionDefined(TokenFilters))
             {

@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
         /// <param name="shouldDetectOrientation"> A value indicating to turn orientation detection on or not. Default is false. </param>
         /// <param name="lineEnding"> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is "space". </param>
-        internal OcrSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, OcrSkillLanguage? defaultLanguageCode, bool? shouldDetectOrientation, LineEnding? lineEnding) : base(oDataType, name, description, context, inputs, outputs)
+        internal OcrSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, OcrSkillLanguage defaultLanguageCode, bool shouldDetectOrientation, LineEnding lineEnding) : base(oDataType, name, description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
             ShouldDetectOrientation = shouldDetectOrientation;

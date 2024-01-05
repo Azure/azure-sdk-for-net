@@ -18,32 +18,18 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                if (DefaultLanguageCode != null)
-                {
-                    writer.WritePropertyName("defaultLanguageCode"u8);
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("defaultLanguageCode");
-                }
+                writer.WritePropertyName("defaultLanguageCode"u8);
+                writer.WriteStringValue(DefaultLanguageCode.ToString());
             }
             if (Optional.IsDefined(ShouldDetectOrientation))
             {
-                if (ShouldDetectOrientation != null)
-                {
-                    writer.WritePropertyName("detectOrientation"u8);
-                    writer.WriteBooleanValue(ShouldDetectOrientation.Value);
-                }
-                else
-                {
-                    writer.WriteNull("detectOrientation");
-                }
+                writer.WritePropertyName("detectOrientation"u8);
+                writer.WriteBooleanValue(ShouldDetectOrientation);
             }
             if (Optional.IsDefined(LineEnding))
             {
                 writer.WritePropertyName("lineEnding"u8);
-                writer.WriteStringValue(LineEnding.Value.ToString());
+                writer.WriteStringValue(LineEnding.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
@@ -85,8 +71,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<OcrSkillLanguage?> defaultLanguageCode = default;
-            Optional<bool?> detectOrientation = default;
+            Optional<OcrSkillLanguage> defaultLanguageCode = default;
+            Optional<bool> detectOrientation = default;
             Optional<LineEnding> lineEnding = default;
             string odataType = default;
             Optional<string> name = default;
@@ -100,7 +86,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultLanguageCode = null;
                         continue;
                     }
                     defaultLanguageCode = new OcrSkillLanguage(property.Value.GetString());
@@ -110,7 +95,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        detectOrientation = null;
                         continue;
                     }
                     detectOrientation = property.Value.GetBoolean();
@@ -166,7 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(detectOrientation), Optional.ToNullable(lineEnding));
+            return new OcrSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode, detectOrientation, lineEnding);
         }
     }
 }

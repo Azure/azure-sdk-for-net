@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="properties"> The external security solution properties for AAD solutions. </param>
-        internal AadExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, AadSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location)
+        internal AadExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind kind, AzureLocation? location, AadSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location)
         {
             Properties = properties;
             Kind = kind;

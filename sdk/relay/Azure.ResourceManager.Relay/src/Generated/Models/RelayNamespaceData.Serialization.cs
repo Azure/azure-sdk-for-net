@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Relay
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicNetworkAccess.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Relay
                     continue;
                 }
             }
-            return new RelayNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
+            return new RelayNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToList(privateEndpointConnections), publicNetworkAccess);
         }
     }
 }
