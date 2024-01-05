@@ -662,6 +662,12 @@
 # ServiceLabel: %OpenAI %Service Attention
 #/<NotInRepo>/                                                     @jpalvarezl @trrwilson
 
+# PRLabel: %ImageAnalysis                                          @rhurey @dargilco
+/sdk/vision/Azure.AI.Vision.ImageAnalysis/
+
+# ServiceLabel: %ImageAnalysis %Service Attention
+#/<NotInRepo>/                                                     @rhurey @dargilco
+
 # ServiceLabel: %Monitor - Operational Insights %Service Attention
 #/<NotInRepo>/                                                     zy@omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
 
