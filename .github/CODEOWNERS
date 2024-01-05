@@ -838,6 +838,9 @@
 /sdk/eventhub/tests.data.yml                                       @serkantkaraca @sjkwak
 /sdk/servicebus/tests.data.yml                                     @shankarsama @DorothySun216
 
+# Add owners for package dependency changes
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @pallavit @m-nash @ArthurMa1978 
+
 # ######## DPG ########
 
 # Onboarding Documentation and Quickstarts
