@@ -1,30 +1,10 @@
 
-# Azure AI Vision ImageAnalysis Tags client library for .NET
+# Tags
 
 The Azure AI Vision ImageAnalysis Tags feature extracts content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in images. It can provide additional context about the image content and can be used for searching, filtering, and organizing images based on their content. This library offers an easy way to extract tags from images using the Azure Computer Vision service.
 
-Use the ImageAnalysis client library to:
+This sample demonstrates how to get a Tags for an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
-- Authenticate against the ImageAnalysis service
-- Upload an image for analysis
-- Get the extracted tags
-
-[Product documentation][image_analysis_overview] | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.ai.vision.imageanalysis) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Vision.ImageAnalysis/) | [SDK source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.ImageAnalysis)
-
-## Getting started
-
-### Prerequisites
-
-* An [Azure subscription][azure_sub].
-* An existing Azure Computer Vision resource. If you need to create an Azure Computer Vision resource, you can use the Azure Portal, [Azure CLI][azure_cli], or another Azure Resource Management client library.
-
-### Install the package
-
-Install the Azure AI Vision ImageAnalysis client library for .NET with [NuGet][nuget]:
-
-```dotnetcli
-dotnet add package Azure.AI.Vision.ImageAnalysis
-```
 ### Authenticate the client
 
 In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class]
@@ -63,7 +43,7 @@ This example demonstrates how to extract tags for the image file [sample.jpg](ht
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get the tags for the image. This will be a synchronously (blocking) call.
+// Get the tags for the image. 
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Tags);
@@ -82,7 +62,7 @@ foreach (DetectedTag tag in result.Tags.Values)
 This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisTagsFromUrl
-// Get the tags for the image. This will be a synchronously (blocking) call.
+// Get the tags for the image. 
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Tags);

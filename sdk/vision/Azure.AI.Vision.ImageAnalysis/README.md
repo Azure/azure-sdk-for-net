@@ -23,12 +23,12 @@ Use the Image Analysis client library to:
 * A [Computer Vision resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesComputerVision) in your Azure subscription.
   * You will need the key and endpoint from this resource to authenticate against the service.
   * You can use the free pricing tier (`F0`) to try the service, and upgrade later to a paid tier for production.
-  * Note that in order to run Image Analysis with the `Caption` or `Dense Captions` features, the Azure resource needs to be from one of the following GPU-supported regions: `East US`, `France Central`, `Korea Central`, `North Europe`, `Southeast Asia`, `West Europe`, or `West US`.
+  * Note that in order to run Image Analysis with the `Caption` or `Dense Captions` features, the Azure resource needs to be from a GPU-supported region. See the note [here](https://learn.microsoft.com/azure/ai-services/computer-vision/concept-describe-images-40) for a list of supported regions.
 
 ### Install the package
 
 ```dotnetcli
-dotnet add package Azure.AI.Vision.ImageAnalysis
+dotnet add package Azure.AI.Vision.ImageAnalysis --prerelease
 ```
 
 ### Authenticate the client
@@ -101,11 +101,11 @@ Notes:
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get a caption for the image.
+// Get a caption for the image. 
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { genderNeutralCaption = true });
+    new ImageAnalysisOptions { GenderNeutralCaption = true }); 
 
 // Print caption results to the console
 Console.WriteLine($"Image analysis results:");
@@ -118,11 +118,11 @@ Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confi
 This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisGenerateCaptionFromUrl
-// Get a caption for the image.
+// Get a caption for the image. 
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { genderNeutralCaption = true }); // Optional (default is false)
+    new ImageAnalysisOptions { GenderNeutralCaption = true }); 
 
 // Print caption results to the console
 Console.WriteLine($"Image analysis results:");
@@ -138,7 +138,7 @@ This example demonstrates how to extract printed or hand-written text for the im
 // Load image to analyze into a stream
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Extract text (OCR) from an image stream.
+// Extract text (OCR) from an image stream. 
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Read);
@@ -153,7 +153,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
         Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
         foreach (DetectedTextWord word in line.Words)
         {
-            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.Confidence:F4}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
+            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
         }
     }
 ```
@@ -163,7 +163,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
 This example demonstrates how to extract printed or hand-written text for a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg).
 
 ```C# Snippet:ImageAnalysisExtractTextFromUrl
-// Extract text (OCR) from an image stream.
+// Extract text (OCR) from an image stream. 
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Read);
@@ -178,7 +178,7 @@ foreach (DetectedTextBlock block in result.Read.Blocks)
         Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
         foreach (DetectedTextWord word in line.Words)
         {
-            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence:F4}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
+            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
         }
     }
 ```
@@ -204,7 +204,7 @@ catch (RequestFailedException e)
     if (e.Status == 400)
     {
         Console.WriteLine("Error analyzing image.");
-        Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
+        Console.WriteLine($"HTTP status code {e.Status}: {e.Message}");
     }
     else
     {

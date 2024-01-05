@@ -21,11 +21,11 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             // Use a file stream to pass the image data to the analyze call
             using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-            // Get a caption for the image. This will be a synchronously (blocking) call.
+            // Get a caption for the image. 
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
                 VisualFeatures.Caption,
-                new ImageAnalysisOptions { GenderNeutralCaption = true }); // Optional (default is false)
+                new ImageAnalysisOptions { GenderNeutralCaption = true }); 
 
             // Print caption results to the console
             Console.WriteLine($"Image analysis results:");
@@ -40,11 +40,11 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             var client = ImageAnalysisAuth();
 
             #region Snippet:ImageAnalysisGenerateCaptionFromUrl
-            // Get a caption for the image. This will be a synchronously (blocking) call.
+            // Get a caption for the image. 
             ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.Caption,
-                new ImageAnalysisOptions { GenderNeutralCaption = true }); // Optional (default is false)
+                new ImageAnalysisOptions { GenderNeutralCaption = true }); 
 
             // Print caption results to the console
             Console.WriteLine($"Image analysis results:");
@@ -62,7 +62,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             // Load image to analyze into a stream
             using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-            // Extract text (OCR) from an image stream. This will be a synchronously (blocking) call.
+            // Extract text (OCR) from an image stream. 
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
                 VisualFeatures.Read);
@@ -89,7 +89,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             var client = ImageAnalysisAuth();
 
             #region Snippet:ImageAnalysisExtractTextFromUrl
-            // Extract text (OCR) from an image stream. This will be a synchronously (blocking) call.
+            // Extract text (OCR) from an image stream. 
             ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.Read);

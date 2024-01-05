@@ -20,11 +20,11 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             // Use a file stream to pass the image data to the analyze call
             using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-            // Get dense captions for the image. This will be a synchronously (blocking) call.
+            // Get dense captions for the image. 
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
                 VisualFeatures.DenseCaptions,
-                new ImageAnalysisOptions { GenderNeutralCaption = true }); // Optional (default is false)
+                new ImageAnalysisOptions { GenderNeutralCaption = true }); 
 
             // Print dense caption results to the console
             Console.WriteLine($"Image analysis results:");
@@ -42,11 +42,11 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             var client = ImageAnalysisAuth();
 
             #region Snippet:ImageAnalysisDenseCaptionFromUrl
-            // Get dense captions for the image. This will be a synchronously (blocking) call.
+            // Get dense captions for the image. 
             ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.DenseCaptions,
-                new ImageAnalysisOptions { GenderNeutralCaption = true }); // Optional (default is false)
+                new ImageAnalysisOptions { GenderNeutralCaption = true }); 
 
             // Print dense caption results to the console
             Console.WriteLine($"Image analysis results:");

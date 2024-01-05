@@ -1,29 +1,8 @@
-# Azure AI Vision ImageAnalysis SmartCrops client library for .NET
+# SmartCrops
 
 The Azure AI Vision ImageAnalysis SmartCrops feature creates intuitive image thumbnails that include the most important regions of an image, with priority given to any detected faces. The generated thumbnails maintain the aspect ratio and focus on the essential content of the image. This library offers an easy way to generate smart-cropped thumbnails from images using the Azure Computer Vision service.
 
-Use the ImageAnalysis client library to:
-
-- Authenticate against the ImageAnalysis service
-- Upload an image for analysis
-- Extract smart-cropped thumbnails
-
-[Product documentation][image_analysis_overview] | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.ai.vision.imageanalysis) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Vision.ImageAnalysis/) | [SDK source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.ImageAnalysis)
-
-## Getting started
-
-### Prerequisites
-
-* An [Azure subscription][azure_sub].
-* An existing Azure Computer Vision resource. If you need to create an Azure Computer Vision resource, you can use the Azure Portal, [Azure CLI][azure_cli], or another Azure Resource Management client library.
-
-### Install the package
-
-Install the Azure AI Vision ImageAnalysis client library for .NET with [NuGet][nuget]:
-
-```dotnetcli
-dotnet add package Azure.AI.Vision.ImageAnalysis
-```
+This sample demonstrates how to get a SmartCrops for an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
 ### Authenticate the client
 
@@ -63,7 +42,7 @@ This example demonstrates how to generate smart-cropped thumbnails for the image
 // Use a file stream to pass the image data to the analyze call
 using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-// Get the smart-cropped thumbnails for the image. This will be a synchronously (blocking) call.
+// Get the smart-cropped thumbnails for the image. 
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.SmartCrops);
@@ -82,7 +61,7 @@ foreach (CropRegion cropRegion in result.SmartCrops.Values)
 This example is similar to the above, except it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azai/vision/image-analysis-sample.jpg) instead of a file name.
 
 ```C# Snippet:ImageAnalysisSmartCropsFromUrl
-// Get the smart-cropped thumbnails for the image. This will be a synchronously (blocking) call.
+// Get the smart-cropped thumbnails for the image. 
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.SmartCrops);

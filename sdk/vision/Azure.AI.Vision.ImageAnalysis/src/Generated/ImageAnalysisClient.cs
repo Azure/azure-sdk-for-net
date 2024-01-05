@@ -76,7 +76,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="language">
-        /// The desired Language for result generation (a two-letter Language code).
+        /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
         /// At the moment, only tags can be generated in none-English languages.
@@ -120,7 +120,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="language">
-        /// The desired Language for result generation (a two-letter Language code).
+        /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
         /// At the moment, only tags can be generated in none-English languages.
@@ -178,7 +178,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="language">
-        /// The desired Language for result generation (a two-letter Language code).
+        /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
         /// At the moment, only tags can be generated in none-English languages.
@@ -246,7 +246,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="language">
-        /// The desired Language for result generation (a two-letter Language code).
+        /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
         /// At the moment, only tags can be generated in none-English languages.
@@ -300,7 +300,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="language">
-        /// The desired Language for result generation (a two-letter Language code).
+        /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
         /// At the moment, only tags can be generated in none-English languages.
@@ -344,7 +344,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="language">
-        /// The desired Language for result generation (a two-letter Language code).
+        /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
         /// At the moment, only tags can be generated in none-English languages.
@@ -402,7 +402,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="language">
-        /// The desired Language for result generation (a two-letter Language code).
+        /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
         /// At the moment, only tags can be generated in none-English languages.
@@ -470,7 +470,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="language">
-        /// The desired Language for result generation (a two-letter Language code).
+        /// The desired language for result generation (a two-letter language code).
         /// If this option is not specified, the default value 'en' is used (English).
         /// See https://aka.ms/cv-languages for a list of supported languages.
         /// At the moment, only tags can be generated in none-English languages.
@@ -532,7 +532,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
-                uri.AppendQuery("Language", language, true);
+                uri.AppendQuery("language", language, true);
             }
             if (genderNeutralCaption != null)
             {
@@ -569,7 +569,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
-                uri.AppendQuery("Language", language, true);
+                uri.AppendQuery("language", language, true);
             }
             if (genderNeutralCaption != null)
             {

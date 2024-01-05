@@ -1,29 +1,7 @@
-# Azure AI Vision ImageAnalysis Caption client library for .NET
+# Get An Image Caption
 
-The Azure AI Vision ImageAnalysis Caption feature generates a human-readable sentence that describes the content of an image. It can be used to provide a quick understanding of the image content without the need to view the image itself. This library offers an easy way to extract captions from images using the Azure Computer Vision service.
+This sample demonstrates how to get a caption for an image. To get started you'll need a URL for a Computer Vision endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md) for links and instructions.
 
-Use the ImageAnalysis client library to:
-
-- Authenticate against the ImageAnalysis service
-- Upload an image for analysis
-- Get the generated caption
-
-[Product documentation][image_analysis_overview] | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.ai.vision.imageanalysis) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Vision.ImageAnalysis/) | [SDK source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.ImageAnalysis)
-
-## Getting started
-
-### Prerequisites
-
-* An [Azure subscription][azure_sub].
-* An existing Azure Computer Vision resource. If you need to create an Azure Computer Vision resource, you can use the Azure Portal, [Azure CLI][azure_cli], or another Azure Resource Management client library.
-
-### Install the package
-
-Install the Azure AI Vision ImageAnalysis client library for .NET with [NuGet][nuget]:
-
-```dotnetcli
-dotnet add package Azure.AI.Vision.ImageAnalysis
-```
 ### Authenticate the client
 
 In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class]
@@ -69,7 +47,7 @@ using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.O
 ImageAnalysisResult result = client.Analyze(
     BinaryData.FromStream(stream),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { genderNeutralCaption = true });
+    new ImageAnalysisOptions { GenderNeutralCaption = true });
 
 Console.WriteLine($"Image analysis results:");
 Console.WriteLine($" Caption:");
@@ -84,7 +62,7 @@ This example is similar to the above, except it calls the `Analyze` method and p
 ImageAnalysisResult result = client.Analyze(
     new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
     VisualFeatures.Caption,
-    new ImageAnalysisOptions { genderNeutralCaption = true });
+    new ImageAnalysisOptions { GenderNeutralCaption = true });
 
 Console.WriteLine($"Image analysis results:");
 Console.WriteLine($" Caption:");
@@ -153,8 +131,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [image_analysis_concepts]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_cli]: https://learn.microsoft.com/cli/azure
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [image_analysis_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.md
 [imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
 [nuget]: https://www.nuget.org/

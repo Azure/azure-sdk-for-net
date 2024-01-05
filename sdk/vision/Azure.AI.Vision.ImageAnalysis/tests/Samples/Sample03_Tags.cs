@@ -18,7 +18,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             // Use a file stream to pass the image data to the analyze call
             using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-            // Get the tags for the image. This will be a synchronously (blocking) call.
+            // Get the tags for the image. 
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
                 VisualFeatures.Tags);
@@ -39,7 +39,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             var client = ImageAnalysisAuth();
 
             #region Snippet:ImageAnalysisTagsFromUrl
-            // Get the tags for the image. This will be a synchronously (blocking) call.
+            // Get the tags for the image. 
             ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.Tags);

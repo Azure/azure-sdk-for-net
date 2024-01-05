@@ -20,7 +20,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             // Use a file stream to pass the image data to the analyze call
             using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
 
-            // Detect objects in the image. This will be a synchronously (blocking) call.
+            // Detect objects in the image. 
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
                 VisualFeatures.Objects);
@@ -41,7 +41,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             var client = ImageAnalysisAuth();
 
             #region Snippet:ImageAnalysisObjectsFromUrl
-            // Detect objects in the image. This will be a synchronously (blocking) call.
+            // Detect objects in the image. 
             ImageAnalysisResult result = client.Analyze(
                 new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
                 VisualFeatures.Objects);
