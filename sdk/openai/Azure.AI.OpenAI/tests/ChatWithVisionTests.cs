@@ -20,44 +20,51 @@ public class ChatWithVisionTests : OpenAITestBase
     {
         InternetUrl,
         LocalJpegData,
-        LocalPngData
+        LocalPngData,
+        LocalJpegFile,
+        LocalPngFile,
     }
 
     public enum ImageDetailKind
     {
-        None,
-        Low,
-        High
+        NoDetail,
+        LowDetail,
+        HighDetail
     };
 
     [RecordedTest]
     [TestCase(Service.Azure, ImageInputKind.InternetUrl)]
     [TestCase(Service.Azure, ImageInputKind.LocalJpegData)]
     [TestCase(Service.Azure, ImageInputKind.LocalPngData)]
-    [TestCase(Service.Azure, ImageInputKind.LocalPngData, ImageDetailKind.Low)]
+    [TestCase(Service.Azure, ImageInputKind.LocalPngData, ImageDetailKind.LowDetail)]
     [TestCase(Service.NonAzure, ImageInputKind.InternetUrl)]
     [TestCase(Service.NonAzure, ImageInputKind.LocalJpegData)]
+    [TestCase(Service.NonAzure, ImageInputKind.LocalJpegFile)]
     [TestCase(Service.NonAzure, ImageInputKind.LocalPngData)]
-    [TestCase(Service.NonAzure, ImageInputKind.LocalPngData, ImageDetailKind.Low)]
-    public async Task ChatWithImages(Service serviceTarget, ImageInputKind imageInputKind, ImageDetailKind detailKind = ImageDetailKind.None)
+    [TestCase(Service.NonAzure, ImageInputKind.LocalPngData, ImageDetailKind.LowDetail)]
+    [TestCase(Service.NonAzure, ImageInputKind.LocalPngFile)]
+    public async Task ChatWithImages(Service serviceTarget, ImageInputKind imageInputKind, ImageDetailKind detailKind = ImageDetailKind.NoDetail)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
+        ChatMessageImageDetailLevel? detailLevel = detailKind switch
+        {
+            ImageDetailKind.LowDetail => ChatMessageImageDetailLevel.Low,
+            ImageDetailKind.HighDetail => ChatMessageImageDetailLevel.High,
+            ImageDetailKind.NoDetail => (ChatMessageImageDetailLevel?)null,
+            _ => throw new NotImplementedException($"Unsupported detail kind: {detailKind}")
+        };
+
         ChatMessageImageContentItem imageContentItem = imageInputKind switch
         {
-            ImageInputKind.InternetUrl => new(GetTestImageInternetUrl()),
-            ImageInputKind.LocalJpegData => new(GetTestImageData(MediaTypeNames.Image.Jpeg)),
-            ImageInputKind.LocalPngData => detailKind switch
-            {
-                ImageDetailKind.None => new(GetTestImageData("image/png"), "image/png"),
-                ImageDetailKind.Low => new(GetTestImageData("image/png"), "image/png", ChatMessageImageDetailLevel.Low),
-                ImageDetailKind.High => new(GetTestImageData("image/png"), "image/png", ChatMessageImageDetailLevel.High),
-            _ => throw new NotImplementedException($"Unsupported detail kind: {detailKind}")
-            },
-            _ => throw new NotImplementedException($"Unsupported input kind: {imageInputKind}")
+            ImageInputKind.InternetUrl => new(GetTestImageInternetUrl(), detailLevel),
+            ImageInputKind.LocalJpegData => new(GetTestImageData("image/jpeg"), "image/jpeg", detailLevel),
+            ImageInputKind.LocalPngData => new(GetTestImageData("image/png"), "image/png", detailLevel),
+            ImageInputKind.LocalJpegFile => new(GetTestImagePath(MediaTypeNames.Image.Jpeg), MediaTypeNames.Image.Jpeg, detailLevel),
+            ImageInputKind.LocalPngFile => new(GetTestImagePath("image/png"), detailLevel),
+            _ => throw new NotImplementedException($"Unsupported input kind: {imageInputKind}"),
         };
-        ;
 
         var requestOptions = new ChatCompletionsOptions()
         {

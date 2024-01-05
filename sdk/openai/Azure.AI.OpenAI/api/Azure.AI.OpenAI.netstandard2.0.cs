@@ -379,12 +379,10 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatMessageImageContentItem : Azure.AI.OpenAI.ChatMessageContentItem
     {
-        public ChatMessageImageContentItem(System.BinaryData jpegImageData) { }
-        public ChatMessageImageContentItem(System.BinaryData jpegImageData, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
-        public ChatMessageImageContentItem(System.BinaryData imageData, string imageDataFormat) { }
-        public ChatMessageImageContentItem(System.BinaryData imageData, string imageDataFormat, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
-        public ChatMessageImageContentItem(System.Uri imageUri) { }
-        public ChatMessageImageContentItem(System.Uri imageUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
+        public ChatMessageImageContentItem(System.BinaryData imageData, string imageDataFormat, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detailLevel = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { }
+        public ChatMessageImageContentItem(string localImageFilePath, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detailLevel = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { }
+        public ChatMessageImageContentItem(string localImageFilePath, string imageDataFormat, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detailLevel = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { }
+        public ChatMessageImageContentItem(System.Uri imageUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detailLevel = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { }
         public Azure.AI.OpenAI.ChatMessageImageDetailLevel? DetailLevel { get { throw null; } }
         public System.BinaryData ImageData { get { throw null; } }
         public string ImageDataFormat { get { throw null; } }

@@ -134,6 +134,27 @@ namespace Azure.AI.OpenAI.Tests
             return new Uri(TestEnvironment.TestImageInputInternetUrl);
         }
 
+        protected string GetTestImagePath(string imageFormat)
+        {
+            BodyRegexSanitizers.Add(new($"\"data:{imageFormat};base64[^\"]*\"", $"\"data:{imageFormat};base64,\""));
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                FileInfo placeholderFile = new($"placeholder.{imageFormat.Substring(imageFormat.IndexOf('/') + 1)}");
+                if (!placeholderFile.Exists)
+                {
+                    using Stream placeholderFileStream = placeholderFile.Create();
+                }
+                return placeholderFile.FullName;
+            }
+            return imageFormat switch
+            {
+                MediaTypeNames.Image.Jpeg => TestEnvironment.TestImageInputJpegPath,
+                "image/png" => TestEnvironment.TestImageInputPngPath,
+                _ => throw new NotImplementedException($"No input routed for format: {imageFormat}")
+            };
+        }
+
         protected BinaryData GetTestImageData(string imageFormat)
         {
             BodyRegexSanitizers.Add(new($"\"data:{imageFormat};base64[^\"]*\"", $"\"data:{imageFormat};base64,\""));
@@ -142,13 +163,8 @@ namespace Azure.AI.OpenAI.Tests
             {
                 return BinaryData.FromString("");
             }
-            string inputFilePath = imageFormat switch
-            {
-                MediaTypeNames.Image.Jpeg => TestEnvironment.TestImageInputJpegPath,
-                "image/png" => TestEnvironment.TestImageInputPngPath,
-                _ => throw new NotImplementedException($"No input routed for format: {imageFormat}")
-            };
-            using Stream inputFileStream = File.OpenRead(inputFilePath);
+            string inputPath = GetTestImagePath(imageFormat);
+            using Stream inputFileStream = File.OpenRead(inputPath);
             return BinaryData.FromStream(inputFileStream);
         }
 

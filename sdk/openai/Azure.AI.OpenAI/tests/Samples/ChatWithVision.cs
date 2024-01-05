@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
@@ -16,6 +17,7 @@ public partial class ChatWithVision
     {
         string endpoint = "https://myaccount.openai.azure.com/";
         var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+        Stream imageDataStream = null;
 
         #region Snippet:AddImageToChat
         const string rawImageUri = "<URI to your image>";
@@ -26,8 +28,10 @@ public partial class ChatWithVision
             {
                 new ChatRequestSystemMessage("You are a helpful assistant that describes images."),
                 new ChatRequestUserMessage(
-                    new ChatMessageTextContentItem("Hi! Please describe this image"),
-                    new ChatMessageImageContentItem(new Uri(rawImageUri))),
+                    new ChatMessageTextContentItem("Hi! Please describe these images."),
+                    new ChatMessageImageContentItem(new Uri(rawImageUri)),
+                    new ChatMessageImageContentItem(BinaryData.FromStream(imageDataStream), "image/png"),
+                    new ChatMessageImageContentItem(@"C:\image_file.gif", ChatMessageImageDetailLevel.Low)),
             },
         };
         #endregion

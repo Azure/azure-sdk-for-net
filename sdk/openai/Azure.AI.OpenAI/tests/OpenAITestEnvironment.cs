@@ -18,7 +18,7 @@ namespace Azure.AI.OpenAI.Tests
 
         public string TestImageInputJpegPath => GetOptionalVariable("OAI_TEST_IMAGE_JPEG_PATH");
 
-        public string TestImageInputPngPath => GetOptionalVariable("OAI_TEST_IMAGE_JPEG_PATH");
+        public string TestImageInputPngPath => GetOptionalVariable("OAI_TEST_IMAGE_PNG_PATH");
 
         public Uri GetUrlVariable(string variableName) => new(GetRecordedVariable(variableName));
 
