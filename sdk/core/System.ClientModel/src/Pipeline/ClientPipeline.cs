@@ -105,7 +105,7 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        TimeSpan networkTimeout = options.NetworkTimeout ?? ResponseBufferingPolicy.DefaultNetworkTimeout;
+        TimeSpan networkTimeout = options.NetworkTimeout ?? PipelineResponse.DefaultNetworkTimeout;
         ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
         policies[index++] = bufferingPolicy;
 
