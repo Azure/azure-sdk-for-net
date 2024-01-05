@@ -89,7 +89,7 @@ namespace Azure.AI.OpenAI
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string deploymentName)
+        internal CompletionsOptions(IList<string> prompts, int maxTokens, float temperature, float nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int choicesPerPrompt, int logProbabilityCount, bool? echo, IList<string> stopSequences, float presencePenalty, float frequencyPenalty, int generationSampleCount, bool internalShouldStreamResponse, string deploymentName)
         {
             Prompts = prompts;
             MaxTokens = maxTokens;

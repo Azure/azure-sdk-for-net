@@ -25,7 +25,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountIdInternal"> Identifier for the Account owning the asset conversion job. </param>
         /// <param name="conversionConfiguration"> Configuration settings for the asset conversion job. </param>
         /// <param name="scaledAssetDimensionsWrapper"> The scaled dimensions of the asset. </param>
-        internal AssetConversionProperties(string clientErrorDetails, string serverErrorDetails, ConversionErrorCode errorCode, Guid? jobIdInternal, string outputModelUriString, AssetConversionStatus? conversionStatus, string assetFileTypeString, string inputAssetUriString, Guid? accountIdInternal, AssetConversionConfiguration conversionConfiguration, Vector3 scaledAssetDimensionsWrapper)
+        internal AssetConversionProperties(string clientErrorDetails, string serverErrorDetails, ConversionErrorCode errorCode, Guid jobIdInternal, string outputModelUriString, AssetConversionStatus conversionStatus, string assetFileTypeString, string inputAssetUriString, Guid accountIdInternal, AssetConversionConfiguration conversionConfiguration, Vector3 scaledAssetDimensionsWrapper)
         {
             ClientErrorDetails = clientErrorDetails;
             ServerErrorDetails = serverErrorDetails;

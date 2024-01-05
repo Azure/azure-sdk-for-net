@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="storageSizeInMB"> Storage size in MB. </param>
         /// <param name="defaultIopsTier"> Default tier for IOPS. </param>
         /// <param name="supportedIopsTiers"> List of available options to upgrade the storage performance. </param>
-        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, long? supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason)
+        internal PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, long supportedIops, long? storageSizeInMB, string defaultIopsTier, IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers) : base(capabilityStatus, reason)
         {
             SupportedIops = supportedIops;
             StorageSizeInMB = storageSizeInMB;

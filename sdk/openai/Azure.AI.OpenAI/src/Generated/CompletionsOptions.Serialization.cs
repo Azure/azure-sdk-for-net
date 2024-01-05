@@ -25,17 +25,17 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(MaxTokens))
             {
                 writer.WritePropertyName("max_tokens"u8);
-                writer.WriteNumberValue(MaxTokens.Value);
+                writer.WriteNumberValue(MaxTokens);
             }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
-                writer.WriteNumberValue(Temperature.Value);
+                writer.WriteNumberValue(Temperature);
             }
             if (Optional.IsDefined(NucleusSamplingFactor))
             {
                 writer.WritePropertyName("top_p"u8);
-                writer.WriteNumberValue(NucleusSamplingFactor.Value);
+                writer.WriteNumberValue(NucleusSamplingFactor);
             }
             if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
@@ -50,12 +50,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ChoicesPerPrompt))
             {
                 writer.WritePropertyName("n"u8);
-                writer.WriteNumberValue(ChoicesPerPrompt.Value);
+                writer.WriteNumberValue(ChoicesPerPrompt);
             }
             if (Optional.IsDefined(LogProbabilityCount))
             {
                 writer.WritePropertyName("logprobs"u8);
-                writer.WriteNumberValue(LogProbabilityCount.Value);
+                writer.WriteNumberValue(LogProbabilityCount);
             }
             if (Optional.IsDefined(Echo))
             {
@@ -75,22 +75,22 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(PresencePenalty))
             {
                 writer.WritePropertyName("presence_penalty"u8);
-                writer.WriteNumberValue(PresencePenalty.Value);
+                writer.WriteNumberValue(PresencePenalty);
             }
             if (Optional.IsDefined(FrequencyPenalty))
             {
                 writer.WritePropertyName("frequency_penalty"u8);
-                writer.WriteNumberValue(FrequencyPenalty.Value);
+                writer.WriteNumberValue(FrequencyPenalty);
             }
             if (Optional.IsDefined(GenerationSampleCount))
             {
                 writer.WritePropertyName("best_of"u8);
-                writer.WriteNumberValue(GenerationSampleCount.Value);
+                writer.WriteNumberValue(GenerationSampleCount);
             }
             if (Optional.IsDefined(InternalShouldStreamResponse))
             {
                 writer.WritePropertyName("stream"u8);
-                writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
+                writer.WriteBooleanValue(InternalShouldStreamResponse);
             }
             if (Optional.IsDefined(DeploymentName))
             {

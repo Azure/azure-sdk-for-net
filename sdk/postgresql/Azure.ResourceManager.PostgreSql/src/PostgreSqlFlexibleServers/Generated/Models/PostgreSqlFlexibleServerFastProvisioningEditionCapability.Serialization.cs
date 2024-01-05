@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(Optional.ToNullable(status), reason.Value, supportedTier.Value, supportedSku.Value, Optional.ToNullable(supportedStorageGb), supportedServerVersions.Value, Optional.ToNullable(serverCount));
+            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(Optional.ToNullable(status), reason.Value, supportedTier.Value, supportedSku.Value, supportedStorageGb, supportedServerVersions.Value, Optional.ToNullable(serverCount));
         }
     }
 }

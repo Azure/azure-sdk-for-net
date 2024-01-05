@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
-                writer.WriteStringValue(ResponseFormat.Value.ToString());
+                writer.WriteStringValue(ResponseFormat.ToString());
             }
             if (Optional.IsDefined(Quality))
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ImageGenerationOptions(model.Value, prompt, Optional.ToNullable(n), Optional.ToNullable(size), Optional.ToNullable(responseFormat), Optional.ToNullable(quality), Optional.ToNullable(style), user.Value);
+            return new ImageGenerationOptions(model.Value, prompt, Optional.ToNullable(n), Optional.ToNullable(size), responseFormat, Optional.ToNullable(quality), Optional.ToNullable(style), user.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

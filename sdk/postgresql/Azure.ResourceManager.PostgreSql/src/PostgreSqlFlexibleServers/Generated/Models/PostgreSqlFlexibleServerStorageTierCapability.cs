@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Name to represent Storage tier capability. </param>
         /// <param name="iops"> Supported IOPS for this storage tier. </param>
-        internal PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, long? iops) : base(capabilityStatus, reason)
+        internal PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, long iops) : base(capabilityStatus, reason)
         {
             Name = name;
             Iops = iops;

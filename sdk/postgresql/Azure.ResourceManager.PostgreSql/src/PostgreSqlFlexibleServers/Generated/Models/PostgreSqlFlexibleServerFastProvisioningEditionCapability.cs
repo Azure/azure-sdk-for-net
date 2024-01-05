@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedStorageGb"> Fast provisioning supported storage in Gb. </param>
         /// <param name="supportedServerVersions"> Fast provisioning supported version. </param>
         /// <param name="serverCount"> Count of servers in cache matching the spec. </param>
-        internal PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string supportedTier, string supportedSku, long? supportedStorageGb, string supportedServerVersions, int? serverCount) : base(capabilityStatus, reason)
+        internal PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string supportedTier, string supportedSku, long supportedStorageGb, string supportedServerVersions, int? serverCount) : base(capabilityStatus, reason)
         {
             SupportedTier = supportedTier;
             SupportedSku = supportedSku;

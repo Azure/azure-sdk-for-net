@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricAvailability(Optional.ToNullable(timeGrain), Optional.ToNullable(retention));
+            return new MetricAvailability(timeGrain, Optional.ToNullable(retention));
         }
     }
 }

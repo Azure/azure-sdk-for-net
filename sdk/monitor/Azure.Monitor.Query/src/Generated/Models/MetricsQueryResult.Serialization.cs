@@ -72,7 +72,7 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricsQueryResult(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new MetricsQueryResult(Optional.ToNullable(cost), timespan, interval, @namespace.Value, resourceregion.Value, value);
         }
     }
 }

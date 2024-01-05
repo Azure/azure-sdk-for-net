@@ -38,7 +38,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> the value of the collection. </param>
-        internal MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
+        internal MetricsQueryResult(int? cost, string timespan, TimeSpan granularity, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
         {
             Cost = cost;
             _timespan = timespan;

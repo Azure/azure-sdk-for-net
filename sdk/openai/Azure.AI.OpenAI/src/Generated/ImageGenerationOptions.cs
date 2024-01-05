@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI
         /// Only configurable with dall-e-3 models.
         /// </param>
         /// <param name="user"> A unique identifier representing your end-user, which can help to monitor and detect abuse. </param>
-        internal ImageGenerationOptions(string deploymentName, string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat? responseFormat, ImageGenerationQuality? quality, ImageGenerationStyle? style, string user)
+        internal ImageGenerationOptions(string deploymentName, string prompt, int? imageCount, ImageSize? size, ImageGenerationResponseFormat responseFormat, ImageGenerationQuality? quality, ImageGenerationStyle? style, string user)
         {
             DeploymentName = deploymentName;
             Prompt = prompt;

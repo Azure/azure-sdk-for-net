@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new AudioTranslation(text, Optional.ToNullable(task), language.Value, Optional.ToNullable(duration), Optional.ToList(segments));
+            return new AudioTranslation(text, task, language.Value, Optional.ToNullable(duration), Optional.ToList(segments));
         }
     }
 }

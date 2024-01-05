@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerStorageTierCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToNullable(iops));
+            return new PostgreSqlFlexibleServerStorageTierCapability(Optional.ToNullable(status), reason.Value, name.Value, iops);
         }
     }
 }

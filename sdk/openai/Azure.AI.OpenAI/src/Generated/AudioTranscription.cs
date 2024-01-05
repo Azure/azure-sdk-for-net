@@ -34,7 +34,7 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="duration"> The total duration of the audio processed to produce accompanying transcription information. </param>
         /// <param name="segments"> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </param>
-        internal AudioTranscription(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranscriptionSegment> segments)
+        internal AudioTranscription(string text, AudioTaskLabel internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranscriptionSegment> segments)
         {
             Text = text;
             InternalAudioTaskLabel = internalAudioTaskLabel;

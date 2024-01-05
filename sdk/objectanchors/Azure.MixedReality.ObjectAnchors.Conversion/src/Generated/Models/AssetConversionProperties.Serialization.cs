@@ -20,7 +20,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             if (Optional.IsDefined(ConversionStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
-                writer.WriteStringValue(ConversionStatus.Value.ToSerialString());
+                writer.WriteStringValue(ConversionStatus.ToSerialString());
             }
             if (Optional.IsDefined(AssetFileTypeString))
             {
@@ -140,7 +140,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
+            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, jobId, outputModelUri.Value, jobStatus, assetFileType.Value, inputAssetUri.Value, accountId, ingestionConfiguration.Value, scaledAssetDimensions.Value);
         }
     }
 }

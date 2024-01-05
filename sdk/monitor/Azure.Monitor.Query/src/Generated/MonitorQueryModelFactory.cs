@@ -60,7 +60,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="granularity"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
-        public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
+        public static MetricAvailability MetricAvailability(TimeSpan granularity = default, TimeSpan? retention = null)
         {
             return new MetricAvailability(granularity, retention);
         }
