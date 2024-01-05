@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
     [TestFixture]
     public class AlertProcessingRuleTests : AlertsManagementManagementTestBase
     {
-        public AlertProcessingRuleTests() : base(true)
+        public AlertProcessingRuleTests() : base(true)//, RecordedTestMode.Record)
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
 
             List<string> scopes = new List<string>
             {
-                "/subscriptions/042ebc40-492c-4e4e-a02a-c04b5ba7ee23"
+                "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c"
             };
 
             ResourceIdentifier resourceIdentifier = new ResourceIdentifier("alertProcessingRule");
