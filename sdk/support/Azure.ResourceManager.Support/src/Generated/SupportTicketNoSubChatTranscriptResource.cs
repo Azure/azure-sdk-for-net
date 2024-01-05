@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportTicketNoSubChatTranscript along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportTicketNoSubChatTranscriptResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportTicketNoSubChatTranscriptResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantSupportTicketResource" /> using the GetSupportTicketNoSubChatTranscript method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportTicketNoSubChatTranscriptResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportTicketNoSubChatTranscriptResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantSupportTicketResource"/> using the GetSupportTicketNoSubChatTranscript method.
     /// </summary>
     public partial class SupportTicketNoSubChatTranscriptResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SupportTicketNoSubChatTranscriptResource"/> instance. </summary>
+        /// <param name="supportTicketName"> The supportTicketName. </param>
+        /// <param name="chatTranscriptName"> The chatTranscriptName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string supportTicketName, string chatTranscriptName)
         {
             var resourceId = $"/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Support
         private readonly ChatTranscriptsNoSubscriptionRestOperations _supportTicketNoSubChatTranscriptChatTranscriptsNoSubscriptionRestClient;
         private readonly ChatTranscriptDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/chatTranscripts";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubChatTranscriptResource"/> class for mocking. </summary>
         protected SupportTicketNoSubChatTranscriptResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportTicketNoSubChatTranscriptResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubChatTranscriptResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportTicketNoSubChatTranscriptResource(ArmClient client, ChatTranscriptDetailData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/chatTranscripts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

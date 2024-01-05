@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
     /// A Class representing a ServiceFabricManagedService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceFabricManagedServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceFabricManagedServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedApplicationResource" /> using the GetServiceFabricManagedService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricManagedServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricManagedServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedApplicationResource"/> using the GetServiceFabricManagedService method.
     /// </summary>
     public partial class ServiceFabricManagedServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceFabricManagedServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="applicationName"> The applicationName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}/services/{serviceName}";
@@ -37,12 +42,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private readonly ServicesRestOperations _serviceFabricManagedServiceServicesRestClient;
         private readonly ServiceFabricManagedServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedclusters/applications/services";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedServiceResource"/> class for mocking. </summary>
         protected ServiceFabricManagedServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceFabricManagedServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricManagedServiceResource(ArmClient client, ServiceFabricManagedServiceData data) : this(client, data.Id)
@@ -63,9 +71,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedclusters/applications/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

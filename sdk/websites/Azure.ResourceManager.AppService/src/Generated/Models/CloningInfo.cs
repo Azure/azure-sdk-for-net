@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Information needed for cloning operation. </summary>
     public partial class CloningInfo
     {
-        /// <summary> Initializes a new instance of CloningInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloningInfo"/>. </summary>
         /// <param name="sourceWebAppId">
         /// ARM resource ID of the source app. App resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             AppSettingsOverrides = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CloningInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloningInfo"/>. </summary>
         /// <param name="correlationId">
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.

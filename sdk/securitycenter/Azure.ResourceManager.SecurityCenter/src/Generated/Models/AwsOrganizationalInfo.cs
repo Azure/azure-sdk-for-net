@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class AwsOrganizationalInfo
     {
-        /// <summary> Initializes a new instance of AwsOrganizationalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsOrganizationalInfo"/>. </summary>
         protected AwsOrganizationalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AwsOrganizationalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsOrganizationalInfo"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         internal AwsOrganizationalInfo(OrganizationMembershipType organizationMembershipType)
         {

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageConfigurationProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageConfigurationProfileResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageConfigurationProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAutomanageConfigurationProfile method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageConfigurationProfileResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageConfigurationProfileResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutomanageConfigurationProfile method.
     /// </summary>
     public partial class AutomanageConfigurationProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageConfigurationProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="configurationProfileName"> The configurationProfileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configurationProfileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automanage/configurationProfiles/{configurationProfileName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly ConfigurationProfilesRestOperations _automanageConfigurationProfileConfigurationProfilesRestClient;
         private readonly AutomanageConfigurationProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfiles";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileResource"/> class for mocking. </summary>
         protected AutomanageConfigurationProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageConfigurationProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageConfigurationProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageConfigurationProfileResource(ArmClient client, AutomanageConfigurationProfileData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageConfigurationProfileVersionResources and their operations over a AutomanageConfigurationProfileVersionResource. </returns>
         public virtual AutomanageConfigurationProfileVersionCollection GetAutomanageConfigurationProfileVersions()
         {
-            return GetCachedClient(Client => new AutomanageConfigurationProfileVersionCollection(Client, Id));
+            return GetCachedClient(client => new AutomanageConfigurationProfileVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="versionName"> The configuration profile version name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomanageConfigurationProfileVersionResource>> GetAutomanageConfigurationProfileVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="versionName"> The configuration profile version name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomanageConfigurationProfileVersionResource> GetAutomanageConfigurationProfileVersion(string versionName, CancellationToken cancellationToken = default)
         {

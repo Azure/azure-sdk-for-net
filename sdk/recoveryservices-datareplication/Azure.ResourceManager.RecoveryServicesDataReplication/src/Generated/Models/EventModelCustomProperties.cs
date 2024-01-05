@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// </summary>
     public abstract partial class EventModelCustomProperties
     {
-        /// <summary> Initializes a new instance of EventModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventModelCustomProperties"/>. </summary>
         protected EventModelCustomProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EventModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         internal EventModelCustomProperties(string instanceType)
         {

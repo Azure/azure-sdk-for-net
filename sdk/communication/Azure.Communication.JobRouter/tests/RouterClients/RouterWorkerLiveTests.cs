@@ -34,10 +34,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var channels = new List<RouterChannel> { channel1 };
 
-            var workerLabels = new Dictionary<string, LabelValue?>()
+            var workerLabels = new Dictionary<string, RouterValue?>()
             {
-                ["test_label_1"] = new LabelValue("testLabel"),
-                ["test_label_2"] = new LabelValue(12),
+                ["test_label_1"] = new RouterValue("testLabel"),
+                ["test_label_2"] = new RouterValue(12),
             };
 
             var queues = new List<string> { createQueueResponse.Value.Id };
@@ -48,8 +48,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Queues = { createQueueResponse.Value.Id },
                     Labels =
                     {
-                        ["test_label_1"] = new LabelValue("testLabel"),
-                        ["test_label_2"] = new LabelValue(12),
+                        ["test_label_1"] = new RouterValue("testLabel"),
+                        ["test_label_2"] = new RouterValue(12),
                     },
                     Channels = { channel1 }
                 });
@@ -268,12 +268,12 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new("ACS_Chat_Channel", 20) { MaxNumberOfJobs = 5 },
                 new("ACS_Voice_Channel", 10) { MaxNumberOfJobs = 3 }
             };
-            var workerLabels = new Dictionary<string, LabelValue?>()
+            var workerLabels = new Dictionary<string, RouterValue?>()
             {
                 ["test_label_1"] = new("testLabel"),
                 ["test_label_2"] = new(12),
             };
-            var workerTags = new Dictionary<string, LabelValue?>()
+            var workerTags = new Dictionary<string, RouterValue?>()
             {
                 ["test_tag_1"] = new("tag"),
                 ["test_tag_2"] = new(12),

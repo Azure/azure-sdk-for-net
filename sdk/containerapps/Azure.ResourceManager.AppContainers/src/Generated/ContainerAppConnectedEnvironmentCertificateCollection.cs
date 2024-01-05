@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> and their operations.
-    /// Each <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> in the collection will belong to the same instance of <see cref="ContainerAppConnectedEnvironmentResource" />.
-    /// To get a <see cref="ContainerAppConnectedEnvironmentCertificateCollection" /> instance call the GetContainerAppConnectedEnvironmentCertificates method from an instance of <see cref="ContainerAppConnectedEnvironmentResource" />.
+    /// A class representing a collection of <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> and their operations.
+    /// Each <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> in the collection will belong to the same instance of <see cref="ContainerAppConnectedEnvironmentResource"/>.
+    /// To get a <see cref="ContainerAppConnectedEnvironmentCertificateCollection"/> instance call the GetContainerAppConnectedEnvironmentCertificates method from an instance of <see cref="ContainerAppConnectedEnvironmentResource"/>.
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentCertificateCollection : ArmCollection, IEnumerable<ContainerAppConnectedEnvironmentCertificateResource>, IAsyncEnumerable<ContainerAppConnectedEnvironmentCertificateResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppConnectedEnvironmentCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppConnectedEnvironmentCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

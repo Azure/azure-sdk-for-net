@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A Class representing a DevTestLabPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevTestLabPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevTestLabPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource" /> using the GetDevTestLabPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevTestLabPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevTestLabPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevTestLabResource"/> using the GetDevTestLabPolicy method.
     /// </summary>
     public partial class DevTestLabPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="policySetName"> The policySetName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string policySetName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies/{name}";
@@ -37,12 +42,15 @@ namespace Azure.ResourceManager.DevTestLabs
         private readonly PoliciesRestOperations _devTestLabPolicyPoliciesRestClient;
         private readonly DevTestLabPolicyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/policysets/policies";
+
         /// <summary> Initializes a new instance of the <see cref="DevTestLabPolicyResource"/> class for mocking. </summary>
         protected DevTestLabPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevTestLabPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevTestLabPolicyResource(ArmClient client, DevTestLabPolicyData data) : this(client, data.Id)
@@ -63,9 +71,6 @@ namespace Azure.ResourceManager.DevTestLabs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevTestLab/labs/policysets/policies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

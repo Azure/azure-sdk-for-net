@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MarketplaceAgreementTermResource" /> and their operations.
-    /// Each <see cref="MarketplaceAgreementTermResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="MarketplaceAgreementTermCollection" /> instance call the GetMarketplaceAgreementTerms method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="MarketplaceAgreementTermResource"/> and their operations.
+    /// Each <see cref="MarketplaceAgreementTermResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="MarketplaceAgreementTermCollection"/> instance call the GetMarketplaceAgreementTerms method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class MarketplaceAgreementTermCollection : ArmCollection
     {

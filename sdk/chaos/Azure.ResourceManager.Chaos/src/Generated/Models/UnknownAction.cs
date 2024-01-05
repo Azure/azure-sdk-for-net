@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> The UnknownAction. </summary>
     internal partial class UnknownAction : Action
     {
-        /// <summary> Initializes a new instance of UnknownAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAction"/>. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
         internal UnknownAction(string actionType, string name) : base(actionType, name)

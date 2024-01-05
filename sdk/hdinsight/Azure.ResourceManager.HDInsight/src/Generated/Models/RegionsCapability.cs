@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The regions capability. </summary>
     public partial class RegionsCapability
     {
-        /// <summary> Initializes a new instance of RegionsCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionsCapability"/>. </summary>
         internal RegionsCapability()
         {
             Available = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RegionsCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionsCapability"/>. </summary>
         /// <param name="available"> The list of region capabilities. </param>
         internal RegionsCapability(IReadOnlyList<string> available)
         {

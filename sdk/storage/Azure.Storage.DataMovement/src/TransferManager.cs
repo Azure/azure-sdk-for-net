@@ -11,7 +11,6 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
@@ -556,10 +555,10 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             streamToUriJob.AppendJobPart(
-                                await streamToUriJob.ToJobPartAsync(
+                                streamToUriJob.ToJobPartAsync(
                                     stream,
                                     sourceResource,
-                                    destinationResource).ConfigureAwait(false));
+                                    destinationResource));
                         }
                     }
                     return streamToUriJob;
@@ -596,10 +595,10 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             serviceToServiceJob.AppendJobPart(
-                                await serviceToServiceJob.ToJobPartAsync(
+                                serviceToServiceJob.ToJobPartAsync(
                                     stream,
                                     sourceResource,
-                                    destinationResource).ConfigureAwait(false));
+                                    destinationResource));
                         }
                     }
                     return serviceToServiceJob;
@@ -629,10 +628,10 @@ namespace Azure.Storage.DataMovement
                             cancellationToken: _cancellationToken).ConfigureAwait(false))
                         {
                             uriToStreamJob.AppendJobPart(
-                                await uriToStreamJob.ToJobPartAsync(
+                                uriToStreamJob.ToJobPartAsync(
                                     stream,
                                     sourceResource,
-                                    destinationResource).ConfigureAwait(false));
+                                    destinationResource));
                         }
                     }
                     return uriToStreamJob;
@@ -681,10 +680,10 @@ namespace Azure.Storage.DataMovement
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 streamToUriJob.AppendJobPart(
-                                    await streamToUriJob.ToJobPartAsync(
+                                    streamToUriJob.ToJobPartAsync(
                                         stream,
                                         sourceResource,
-                                        destinationResource).ConfigureAwait(false));
+                                        destinationResource));
                             }
                         }
                     }
@@ -728,10 +727,10 @@ namespace Azure.Storage.DataMovement
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 serviceToServiceJob.AppendJobPart(
-                                    await serviceToServiceJob.ToJobPartAsync(
-                                    stream,
-                                    sourceResource,
-                                    destinationResource).ConfigureAwait(false));
+                                    serviceToServiceJob.ToJobPartAsync(
+                                        stream,
+                                        sourceResource,
+                                        destinationResource));
                             }
                         }
                     }
@@ -768,10 +767,10 @@ namespace Azure.Storage.DataMovement
                                 cancellationToken: _cancellationToken).ConfigureAwait(false))
                             {
                                 uriToStreamJob.AppendJobPart(
-                                    await uriToStreamJob.ToJobPartAsync(
-                                    stream,
-                                    sourceResource,
-                                    destinationResource).ConfigureAwait(false));
+                                    uriToStreamJob.ToJobPartAsync(
+                                        stream,
+                                        sourceResource,
+                                        destinationResource));
                             }
                         }
                     }

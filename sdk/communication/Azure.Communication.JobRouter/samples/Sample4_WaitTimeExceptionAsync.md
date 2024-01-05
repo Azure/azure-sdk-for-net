@@ -51,7 +51,7 @@ ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction
 {
     QueueId = fallbackQueueId,
     Priority = 100,
-    WorkerSelectors = { new RouterWorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true)) }
+    WorkerSelectors = { new RouterWorkerSelector("HandleEscalation", LabelOperator.Equal, new RouterValue(true)) }
 };
 
 string exceptionPolicyId = "execption-policy-id";

@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
     /// A Class representing a ServiceFabricManagedApplicationTypeVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceFabricManagedApplicationTypeVersionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceFabricManagedApplicationTypeVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedApplicationTypeResource" /> using the GetServiceFabricManagedApplicationTypeVersion method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricManagedApplicationTypeVersionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricManagedApplicationTypeVersionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedApplicationTypeResource"/> using the GetServiceFabricManagedApplicationTypeVersion method.
     /// </summary>
     public partial class ServiceFabricManagedApplicationTypeVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceFabricManagedApplicationTypeVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="applicationTypeName"> The applicationTypeName. </param>
+        /// <param name="version"> The version. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string applicationTypeName, string version)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applicationTypes/{applicationTypeName}/versions/{version}";
@@ -37,12 +42,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private readonly ApplicationTypeVersionsRestOperations _serviceFabricManagedApplicationTypeVersionApplicationTypeVersionsRestClient;
         private readonly ServiceFabricManagedApplicationTypeVersionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedclusters/applicationTypes/versions";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedApplicationTypeVersionResource"/> class for mocking. </summary>
         protected ServiceFabricManagedApplicationTypeVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceFabricManagedApplicationTypeVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedApplicationTypeVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricManagedApplicationTypeVersionResource(ArmClient client, ServiceFabricManagedApplicationTypeVersionData data) : this(client, data.Id)
@@ -63,9 +71,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedclusters/applicationTypes/versions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Sharing status of current gallery. </summary>
     public partial class SharingStatus
     {
-        /// <summary> Initializes a new instance of SharingStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingStatus"/>. </summary>
         internal SharingStatus()
         {
             Summary = new ChangeTrackingList<RegionalSharingStatus>();
         }
 
-        /// <summary> Initializes a new instance of SharingStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharingStatus"/>. </summary>
         /// <param name="aggregatedState"> Aggregated sharing state of current gallery. </param>
         /// <param name="summary"> Summary of all regional sharing status. </param>
         internal SharingStatus(SharingState? aggregatedState, IReadOnlyList<RegionalSharingStatus> summary)

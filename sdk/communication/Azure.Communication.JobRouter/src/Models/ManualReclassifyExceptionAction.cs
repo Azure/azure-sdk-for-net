@@ -9,13 +9,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ManualReclassifyExceptionAction")]
     public partial class ManualReclassifyExceptionAction : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
         public ManualReclassifyExceptionAction()
         {
-            Kind = "manual-reclassify";
+            Kind = ExceptionActionKind.ManualReclassify;
         }
 
         /// <summary> Updated QueueId. </summary>
@@ -56,7 +55,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

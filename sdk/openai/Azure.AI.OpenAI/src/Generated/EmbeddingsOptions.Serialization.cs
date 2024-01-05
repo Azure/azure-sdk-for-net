@@ -20,10 +20,10 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(InternalNonAzureModelName))
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(InternalNonAzureModelName);
+                writer.WriteStringValue(DeploymentName);
             }
             writer.WritePropertyName("input"u8);
             writer.WriteStartArray();

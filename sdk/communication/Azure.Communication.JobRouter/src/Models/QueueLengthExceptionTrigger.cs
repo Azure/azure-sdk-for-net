@@ -7,13 +7,12 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding queue length. </summary>
-    [CodeGenModel("QueueLengthExceptionTrigger")]
     public partial class QueueLengthExceptionTrigger : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>
         /// <param name="threshold"> Threshold of number of jobs queued to for this trigger. Must be greater than 0</param>
         public QueueLengthExceptionTrigger(int threshold)
-            : this("queue-length", threshold)
+            : this(ExceptionTriggerKind.QueueLength, threshold)
         {
         }
 
@@ -23,7 +22,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

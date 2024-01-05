@@ -20,13 +20,14 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a TenantSupportTicket along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TenantSupportTicketResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTenantSupportTicketResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantSupportTicket method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantSupportTicketResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTenantSupportTicketResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantSupportTicket method.
     /// </summary>
     public partial class TenantSupportTicketResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantSupportTicketResource"/> instance. </summary>
+        /// <param name="supportTicketName"> The supportTicketName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string supportTicketName)
         {
             var resourceId = $"/providers/Microsoft.Support/supportTickets/{supportTicketName}";
@@ -39,12 +40,15 @@ namespace Azure.ResourceManager.Support
         private readonly CommunicationsNoSubscriptionRestOperations _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient;
         private readonly SupportTicketData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets";
+
         /// <summary> Initializes a new instance of the <see cref="TenantSupportTicketResource"/> class for mocking. </summary>
         protected TenantSupportTicketResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TenantSupportTicketResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TenantSupportTicketResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantSupportTicketResource(ArmClient client, SupportTicketData data) : this(client, data.Id)
@@ -68,9 +72,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketNoSubCommunicationResources and their operations over a SupportTicketNoSubCommunicationResource. </returns>
         public virtual SupportTicketNoSubCommunicationCollection GetSupportTicketNoSubCommunications()
         {
-            return GetCachedClient(Client => new SupportTicketNoSubCommunicationCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketNoSubCommunicationCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +116,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketNoSubCommunicationResource>> GetSupportTicketNoSubCommunicationAsync(string communicationName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +139,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketNoSubCommunicationResource> GetSupportTicketNoSubCommunication(string communicationName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketNoSubChatTranscriptResources and their operations over a SupportTicketNoSubChatTranscriptResource. </returns>
         public virtual SupportTicketNoSubChatTranscriptCollection GetSupportTicketNoSubChatTranscripts()
         {
-            return GetCachedClient(Client => new SupportTicketNoSubChatTranscriptCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketNoSubChatTranscriptCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +169,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketNoSubChatTranscriptResource>> GetSupportTicketNoSubChatTranscriptAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +192,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketNoSubChatTranscriptResource> GetSupportTicketNoSubChatTranscript(string chatTranscriptName, CancellationToken cancellationToken = default)
         {

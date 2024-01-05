@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BackupResourceVaultConfigResource" /> and their operations.
-    /// Each <see cref="BackupResourceVaultConfigResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="BackupResourceVaultConfigCollection" /> instance call the GetBackupResourceVaultConfigs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="BackupResourceVaultConfigResource"/> and their operations.
+    /// Each <see cref="BackupResourceVaultConfigResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BackupResourceVaultConfigCollection"/> instance call the GetBackupResourceVaultConfigs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class BackupResourceVaultConfigCollection : ArmCollection
     {

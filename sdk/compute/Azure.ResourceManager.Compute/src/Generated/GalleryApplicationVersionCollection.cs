@@ -21,9 +21,9 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GalleryApplicationVersionResource" /> and their operations.
-    /// Each <see cref="GalleryApplicationVersionResource" /> in the collection will belong to the same instance of <see cref="GalleryApplicationResource" />.
-    /// To get a <see cref="GalleryApplicationVersionCollection" /> instance call the GetGalleryApplicationVersions method from an instance of <see cref="GalleryApplicationResource" />.
+    /// A class representing a collection of <see cref="GalleryApplicationVersionResource"/> and their operations.
+    /// Each <see cref="GalleryApplicationVersionResource"/> in the collection will belong to the same instance of <see cref="GalleryApplicationResource"/>.
+    /// To get a <see cref="GalleryApplicationVersionCollection"/> instance call the GetGalleryApplicationVersions method from an instance of <see cref="GalleryApplicationResource"/>.
     /// </summary>
     public partial class GalleryApplicationVersionCollection : ArmCollection, IEnumerable<GalleryApplicationVersionResource>, IAsyncEnumerable<GalleryApplicationVersionResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryApplicationVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GalleryApplicationVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryApplicationVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GalleryApplicationVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GalleryApplicationVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryApplicationVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

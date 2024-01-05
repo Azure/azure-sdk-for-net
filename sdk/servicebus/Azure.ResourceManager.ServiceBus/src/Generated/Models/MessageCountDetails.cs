@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Message Count Details. </summary>
     public partial class MessageCountDetails
     {
-        /// <summary> Initializes a new instance of MessageCountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageCountDetails"/>. </summary>
         internal MessageCountDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of MessageCountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageCountDetails"/>. </summary>
         /// <param name="activeMessageCount"> Number of active messages in the queue, topic, or subscription. </param>
         /// <param name="deadLetterMessageCount"> Number of messages that are dead lettered. </param>
         /// <param name="scheduledMessageCount"> Number of scheduled messages. </param>

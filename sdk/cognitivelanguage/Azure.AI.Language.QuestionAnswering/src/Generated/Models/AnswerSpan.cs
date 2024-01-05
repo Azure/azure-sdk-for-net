@@ -10,12 +10,12 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Answer span object of QnA. </summary>
     public partial class AnswerSpan
     {
-        /// <summary> Initializes a new instance of AnswerSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswerSpan"/>. </summary>
         internal AnswerSpan()
         {
         }
 
-        /// <summary> Initializes a new instance of AnswerSpan. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswerSpan"/>. </summary>
         /// <param name="text"> Predicted text of answer span. </param>
         /// <param name="confidence"> Predicted score of answer span, value ranges from 0 to 1. </param>
         /// <param name="offset"> The answer span offset from the start of answer. </param>

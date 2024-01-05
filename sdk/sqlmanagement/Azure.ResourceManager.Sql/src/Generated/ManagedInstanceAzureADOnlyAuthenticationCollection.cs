@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> and their operations.
-    /// Each <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
-    /// To get a <see cref="ManagedInstanceAzureADOnlyAuthenticationCollection" /> instance call the GetManagedInstanceAzureADOnlyAuthentications method from an instance of <see cref="ManagedInstanceResource" />.
+    /// A class representing a collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource"/> and their operations.
+    /// Each <see cref="ManagedInstanceAzureADOnlyAuthenticationResource"/> in the collection will belong to the same instance of <see cref="ManagedInstanceResource"/>.
+    /// To get a <see cref="ManagedInstanceAzureADOnlyAuthenticationCollection"/> instance call the GetManagedInstanceAzureADOnlyAuthentications method from an instance of <see cref="ManagedInstanceResource"/>.
     /// </summary>
     public partial class ManagedInstanceAzureADOnlyAuthenticationCollection : ArmCollection, IEnumerable<ManagedInstanceAzureADOnlyAuthenticationResource>, IAsyncEnumerable<ManagedInstanceAzureADOnlyAuthenticationResource>
     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceAzureADOnlyAuthenticationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceAzureADOnlyAuthenticationRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedInstanceAzureADOnlyAuthenticationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceAzureADOnlyAuthenticationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceAzureADOnlyAuthenticationRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

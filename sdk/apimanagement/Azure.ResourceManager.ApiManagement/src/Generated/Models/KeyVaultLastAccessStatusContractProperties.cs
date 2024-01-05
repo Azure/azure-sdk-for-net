@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Issue contract Update Properties. </summary>
     public partial class KeyVaultLastAccessStatusContractProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultLastAccessStatusContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultLastAccessStatusContractProperties"/>. </summary>
         public KeyVaultLastAccessStatusContractProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultLastAccessStatusContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultLastAccessStatusContractProperties"/>. </summary>
         /// <param name="code"> Last status code for sync and refresh of secret from key vault. </param>
         /// <param name="message"> Details of the error else empty. </param>
         /// <param name="timeStampUtc">

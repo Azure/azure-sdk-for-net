@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataReplicationDraResource" /> and their operations.
-    /// Each <see cref="DataReplicationDraResource" /> in the collection will belong to the same instance of <see cref="DataReplicationFabricResource" />.
-    /// To get a <see cref="DataReplicationDraCollection" /> instance call the GetDataReplicationDras method from an instance of <see cref="DataReplicationFabricResource" />.
+    /// A class representing a collection of <see cref="DataReplicationDraResource"/> and their operations.
+    /// Each <see cref="DataReplicationDraResource"/> in the collection will belong to the same instance of <see cref="DataReplicationFabricResource"/>.
+    /// To get a <see cref="DataReplicationDraCollection"/> instance call the GetDataReplicationDras method from an instance of <see cref="DataReplicationFabricResource"/>.
     /// </summary>
     public partial class DataReplicationDraCollection : ArmCollection, IEnumerable<DataReplicationDraResource>, IAsyncEnumerable<DataReplicationDraResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationDraResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataReplicationDraResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationDraResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationDraDraRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationDraResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationDraResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationDraResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationDraDraRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

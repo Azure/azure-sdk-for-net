@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListSecurityRule API service call. Retrieves all security rules that belongs to a network security group. </summary>
     internal partial class SecurityRuleListResult
     {
-        /// <summary> Initializes a new instance of SecurityRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityRuleListResult"/>. </summary>
         internal SecurityRuleListResult()
         {
             Value = new ChangeTrackingList<SecurityRuleData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityRuleListResult"/>. </summary>
         /// <param name="value"> The security rules in a network security group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal SecurityRuleListResult(IReadOnlyList<SecurityRuleData> value, string nextLink)

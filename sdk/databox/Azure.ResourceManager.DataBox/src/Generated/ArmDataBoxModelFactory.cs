@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDataBoxModelFactory
     {
-        /// <summary> Initializes a new instance of DataBoxJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBox.DataBoxJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxJobData(id, name, resourceType, systemData, tags, location, transferType, isCancellable, isDeletable, isShippingAddressEditable, reverseShippingDetailsUpdate, reverseTransportPreferenceUpdate, isPrepareToShipEnabled, status, startOn, error, details, cancellationReason, deliveryType, deliveryInfoScheduledOn != null ? new JobDeliveryInfo(deliveryInfoScheduledOn) : null, isCancellableWithoutFee, sku, identity);
         }
 
-        /// <summary> Initializes a new instance of DataBoxBasicJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxBasicJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), default, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode);
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobStage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobStage"/>. </summary>
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxJobStage(stageName, displayName, stageStatus, stageTime, jobStageDetails);
         }
 
-        /// <summary> Initializes a new instance of PackageShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PackageShippingDetails"/>. </summary>
         /// <param name="trackingUri"> Url where shipment can be tracked. </param>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="trackingId"> Tracking Id of shipment. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PackageShippingDetails(trackingUri, carrierName, trackingId);
         }
 
-        /// <summary> Initializes a new instance of TransportPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TransportPreferences"/>. </summary>
         /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
         /// <param name="isUpdated"> Read only property which indicates whether transport preferences has been updated or not after device is prepared. </param>
         /// <returns> A new <see cref="Models.TransportPreferences"/> instance for mocking. </returns>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new TransportPreferences(preferredShipmentType, isUpdated);
         }
 
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReverseShippingDetails"/>. </summary>
         /// <param name="contactDetails"> Contact Info. </param>
         /// <param name="shippingAddress"> Shipping address where customer wishes to receive the device. </param>
         /// <param name="isUpdated">
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ReverseShippingDetails(contactDetails, shippingAddress, isUpdated);
         }
 
-        /// <summary> Initializes a new instance of DeviceErasureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeviceErasureDetails"/>. </summary>
         /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
         /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
         /// <returns> A new <see cref="Models.DeviceErasureDetails"/> instance for mocking. </returns>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey);
         }
 
-        /// <summary> Initializes a new instance of LastMitigationActionOnJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LastMitigationActionOnJob"/>. </summary>
         /// <param name="actionPerformedOn"> Action performed date time. </param>
         /// <param name="isPerformedByCustomer">
         /// Action performed by customer,
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new LastMitigationActionOnJob(actionPerformedOn, isPerformedByCustomer, customerResolution);
         }
 
-        /// <summary> Initializes a new instance of DataCenterAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressResult"/>. </summary>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <returns> A new <see cref="Models.DataCenterAddressResult"/> instance for mocking. </returns>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownDataCenterAddressResponse(default, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation);
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuInformation"/>. </summary>
         /// <param name="sku"> The Sku. </param>
         /// <param name="isEnabled"> The sku is enabled or not. </param>
         /// <param name="dataLocationToServiceLocationMap"> The map of data location to service location. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSkuInformation(sku, isEnabled, dataLocationToServiceLocationMap?.ToList(), capacity, costs?.ToList(), apiVersions?.ToList(), disabledReason, disabledReasonMessage, requiredFeature, countriesWithinCommerceBoundary?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataLocationToServiceLocationMap. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataLocationToServiceLocationMap"/>. </summary>
         /// <param name="dataLocation"> Location of the data. </param>
         /// <param name="serviceLocation"> Location of the service. </param>
         /// <returns> A new <see cref="Models.DataLocationToServiceLocationMap"/> instance for mocking. </returns>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataLocationToServiceLocationMap(dataLocation, serviceLocation);
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCapacity"/>. </summary>
         /// <param name="usable"> Usable capacity in TB. </param>
         /// <param name="maximum"> Maximum capacity in TB. </param>
         /// <returns> A new <see cref="Models.DataBoxSkuCapacity"/> instance for mocking. </returns>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSkuCapacity(usable, maximum);
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCost"/>. </summary>
         /// <param name="meterId"> Meter id of the Sku. </param>
         /// <param name="meterType"> The type of the meter. </param>
         /// <param name="multiplier"> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </param>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSkuCost(meterId, meterType, multiplier);
         }
 
-        /// <summary> Initializes a new instance of AddressValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AddressValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new AddressValidationResult(DataBoxValidationInputDiscriminator.ValidateAddress, error, validationStatus, alternateAddresses?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataBoxValidationInputResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidationInputResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <returns> A new <see cref="Models.DataBoxValidationInputResult"/> instance for mocking. </returns>
         public static DataBoxValidationInputResult DataBoxValidationInputResult(ResponseError error = null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownValidationInputResponse(default, error);
         }
 
-        /// <summary> Initializes a new instance of DataBoxValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxValidationResult"/>. </summary>
         /// <param name="status"> Overall validation status. </param>
         /// <param name="individualResponseDetails">
         /// List of response details contain validationType and its response as key and value respectively.
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxValidationResult(status, individualResponseDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataBoxShipmentPickUpResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxShipmentPickUpResult"/>. </summary>
         /// <param name="confirmationNumber"> Confirmation number for the pick up request. </param>
         /// <param name="readyBy"> Time by which shipment should be ready for pick up, this is in local time of pick up area. </param>
         /// <returns> A new <see cref="Models.DataBoxShipmentPickUpResult"/> instance for mocking. </returns>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxShipmentPickUpResult(confirmationNumber, readyBy);
         }
 
-        /// <summary> Initializes a new instance of UnencryptedCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UnencryptedCredentials"/>. </summary>
         /// <param name="jobName"> Name of the job. </param>
         /// <param name="jobSecrets">
         /// Secrets related to this job.
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnencryptedCredentials(jobName, jobSecrets);
         }
 
-        /// <summary> Initializes a new instance of JobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.JobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <returns> A new <see cref="Models.JobSecrets"/> instance for mocking. </returns>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownJobSecrets(default, dataCenterAccessSecurityCode, error);
         }
 
-        /// <summary> Initializes a new instance of DataCenterAccessSecurityCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAccessSecurityCode"/>. </summary>
         /// <param name="reverseDataCenterAccessCode"> Reverse Dc access security code. </param>
         /// <param name="forwardDataCenterAccessCode"> Forward Dc access security code. </param>
         /// <returns> A new <see cref="Models.DataCenterAccessSecurityCode"/> instance for mocking. </returns>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataCenterAccessSecurityCode(reverseDataCenterAccessCode, forwardDataCenterAccessCode);
         }
 
-        /// <summary> Initializes a new instance of RegionConfigurationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RegionConfigurationResult"/>. </summary>
         /// <param name="scheduleAvailabilityResponseAvailableDates"> Schedule availability for given sku in a region. </param>
         /// <param name="transportAvailabilityDetails"> Transport options available for given sku in a region. </param>
         /// <param name="dataCenterAddressResponse">
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates != null ? new ScheduleAvailabilityResponse(scheduleAvailabilityResponseAvailableDates?.ToList()) : null, transportAvailabilityDetails != null ? new TransportAvailabilityResponse(transportAvailabilityDetails?.ToList()) : null, dataCenterAddressResponse);
         }
 
-        /// <summary> Initializes a new instance of TransportAvailabilityDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TransportAvailabilityDetails"/>. </summary>
         /// <param name="shipmentType"> Transport Shipment Type supported for given region. </param>
         /// <returns> A new <see cref="Models.TransportAvailabilityDetails"/> instance for mocking. </returns>
         public static TransportAvailabilityDetails TransportAvailabilityDetails(TransportShipmentType? shipmentType = null)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new TransportAvailabilityDetails(shipmentType);
         }
 
-        /// <summary> Initializes a new instance of DataBoxAccountCredentialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxAccountCredentialDetails"/>. </summary>
         /// <param name="accountName"> Name of the account. </param>
         /// <param name="dataAccountType"> Type of the account. </param>
         /// <param name="accountConnectionString"> Connection string of the account endpoint to use the account as a storage endpoint on the device. </param>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxAccountCredentialDetails(accountName, dataAccountType, accountConnectionString, shareCredentialDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ShareCredentialDetails"/>. </summary>
         /// <param name="shareName"> Name of the share. </param>
         /// <param name="shareType"> Type of the share. </param>
         /// <param name="userName"> User name for the share. </param>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ShareCredentialDetails(shareName, shareType, userName, password, supportedAccessProtocols?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ApplianceNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceNetworkConfiguration"/>. </summary>
         /// <param name="name"> Name of the network. </param>
         /// <param name="macAddress"> Mac Address. </param>
         /// <returns> A new <see cref="Models.ApplianceNetworkConfiguration"/> instance for mocking. </returns>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ApplianceNetworkConfiguration(name, macAddress);
         }
 
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskCopyProgress"/>. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxCustomerDiskCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), serialNumber, copyStatus);
         }
 
-        /// <summary> Initializes a new instance of DataBoxCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxCopyProgress"/>. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GranularCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GranularCopyProgress"/>. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new GranularCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CreateOrderLimitForSubscriptionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Create order limit validation status. </param>
         /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/> instance for mocking. </returns>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new CreateOrderLimitForSubscriptionValidationResult(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit, error, status);
         }
 
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxCustomerDiskJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxCustomerDisk, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, importDiskDetails, exportDiskDetails, copyProgress?.ToList(), deliverToDataCenterPackageDetails, returnToCustomerPackageDetails, enableManifestBackup);
         }
 
-        /// <summary> Initializes a new instance of ImportDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImportDiskDetails"/>. </summary>
         /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
         /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
         /// <param name="bitLockerKey"> BitLocker key used to encrypt the disk. </param>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ImportDiskDetails(manifestFile, manifestHash, bitLockerKey, backupManifestCloudPath);
         }
 
-        /// <summary> Initializes a new instance of ExportDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportDiskDetails"/>. </summary>
         /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
         /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
         /// <param name="backupManifestCloudPath"> Path to backed up manifest, only returned if enableManifestBackup is true. </param>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ExportDiskDetails(manifestFile, manifestHash, backupManifestCloudPath);
         }
 
-        /// <summary> Initializes a new instance of CustomerDiskJobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CustomerDiskJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new CustomerDiskJobSecrets(DataBoxOrderType.DataBoxCustomerDisk, dataCenterAccessSecurityCode, error, diskSecrets?.ToList(), carrierAccountNumber);
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskSecret"/>. </summary>
         /// <param name="diskSerialNumber"> Serial number of the assigned disk. </param>
         /// <param name="bitLockerKey"> Bit Locker key of the disk which can be used to unlock the disk to copy data. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskSecret"/> instance for mocking. </returns>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskSecret(diskSerialNumber, bitLockerKey);
         }
 
-        /// <summary> Initializes a new instance of DataCenterAddressInstructionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressInstructionResult"/>. </summary>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="communicationInstruction"> Data center communication instruction. </param>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataCenterAddressInstructionResult(DataCenterAddressType.DataCenterAddressInstruction, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, communicationInstruction);
         }
 
-        /// <summary> Initializes a new instance of DataCenterAddressLocationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataCenterAddressLocationResult"/>. </summary>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="contactPersonName"> Contact person name. </param>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataCenterAddressLocationResult(DataCenterAddressType.DataCenterAddressLocation, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, contactPersonName, company, street1, street2, street3, city, state, zip, country, phone, phoneExtension, addressType, additionalShippingInformation);
         }
 
-        /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxAccountCopyLogDetails"/>. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </param>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxAccountCopyLogDetails(DataBoxOrderType.DataBox, accountName, copyLogLink, copyVerboseLogLink);
         }
 
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>. </summary>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxCustomerDiskCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, serialNumber, errorLogLink, verboseLogLink);
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskCopyLogDetails"/>. </summary>
         /// <param name="diskSerialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskCopyLogDetails(DataBoxOrderType.DataBoxDisk, diskSerialNumber, errorLogLink, verboseLogLink);
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskGranularCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskGranularCopyLogDetails"/>. </summary>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="accountId"> Account id. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskGranularCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, serialNumber, accountId, errorLogLink, verboseLogLink);
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskCopyProgress"/>. </summary>
         /// <param name="serialNumber"> The serial number of the disk. </param>
         /// <param name="bytesCopied"> Bytes copied during the copy of disk. </param>
         /// <param name="percentComplete"> Indicates the percentage completed for the copy of the disk. </param>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskCopyProgress(serialNumber, bytesCopied, percentComplete, status, error, actions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskGranularCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskGranularCopyProgress"/>. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskGranularCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), serialNumber, copyStatus);
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxDisk, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, preferredDisks, copyProgress?.ToList(), granularCopyProgress?.ToList(), granularCopyLogDetails?.ToList(), disksAndSizeDetails, passkey);
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskJobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskJobSecrets(DataBoxOrderType.DataBoxDisk, dataCenterAccessSecurityCode, error, diskSecrets?.ToList(), passkey, isPasskeyUserDefined);
         }
 
-        /// <summary> Initializes a new instance of DataBoxHeavyAccountCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when the LogCollectionLevel is set to verbose. </param>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxHeavyAccountCopyLogDetails(DataBoxOrderType.DataBoxHeavy, accountName, copyLogLink?.ToList(), copyVerboseLogLink?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataBoxHeavyJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxHeavyJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxHeavy, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, copyProgress?.ToList(), devicePassword);
         }
 
-        /// <summary> Initializes a new instance of DataBoxHeavyJobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="cabinetPodSecrets"> Contains the list of secret objects for a databox heavy job. </param>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxHeavyJobSecrets(DataBoxOrderType.DataBoxHeavy, dataCenterAccessSecurityCode, error, cabinetPodSecrets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataBoxHeavySecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavySecret"/>. </summary>
         /// <param name="deviceSerialNumber"> Serial number of the assigned device. </param>
         /// <param name="devicePassword"> Password for out of the box experience on device. </param>
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxHeavySecret(deviceSerialNumber, devicePassword, networkConfigurations?.ToList(), encodedValidationCertPubKey, accountCredentialDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobDetails"/>. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBox, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, copyProgress?.ToList(), devicePassword);
         }
 
-        /// <summary> Initializes a new instance of DataboxJobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataboxJobSecrets"/>. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="podSecrets"> Contains the list of secret objects for a job. </param>
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataboxJobSecrets(DataBoxOrderType.DataBox, dataCenterAccessSecurityCode, error, podSecrets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataBoxSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSecret"/>. </summary>
         /// <param name="deviceSerialNumber"> Serial number of the assigned device. </param>
         /// <param name="devicePassword"> Password for out of the box experience on device. </param>
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSecret(deviceSerialNumber, devicePassword, networkConfigurations?.ToList(), encodedValidationCertPubKey, accountCredentialDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataTransferDetailsValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataTransferDetailsValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Data transfer details validation status. </param>
         /// <returns> A new <see cref="Models.DataTransferDetailsValidationResult"/> instance for mocking. </returns>
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataTransferDetailsValidationResult(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, error, status);
         }
 
-        /// <summary> Initializes a new instance of PreferencesValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PreferencesValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of requested data center and transport. </param>
         /// <returns> A new <see cref="Models.PreferencesValidationResult"/> instance for mocking. </returns>
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PreferencesValidationResult(DataBoxValidationInputDiscriminator.ValidatePreferences, error, status);
         }
 
-        /// <summary> Initializes a new instance of SkuAvailabilityValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SkuAvailabilityValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Sku availability validation status. </param>
         /// <returns> A new <see cref="Models.SkuAvailabilityValidationResult"/> instance for mocking. </returns>
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new SkuAvailabilityValidationResult(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, error, status);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionIsAllowedToCreateJobValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/>. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of subscription permission to create job. </param>
         /// <returns> A new <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/> instance for mocking. </returns>

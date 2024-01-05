@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionFileWorkspaceResource" /> and their operations.
-    /// Each <see cref="SubscriptionFileWorkspaceResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SubscriptionFileWorkspaceCollection" /> instance call the GetSubscriptionFileWorkspaces method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SubscriptionFileWorkspaceResource"/> and their operations.
+    /// Each <see cref="SubscriptionFileWorkspaceResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionFileWorkspaceCollection"/> instance call the GetSubscriptionFileWorkspaces method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionFileWorkspaceCollection : ArmCollection
     {

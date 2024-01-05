@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure reachability report details for a given provider location. </summary>
     public partial class AzureReachabilityReportItem
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReportItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportItem"/>. </summary>
         internal AzureReachabilityReportItem()
         {
             Latencies = new ChangeTrackingList<AzureReachabilityReportLatencyInfo>();
         }
 
-        /// <summary> Initializes a new instance of AzureReachabilityReportItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportItem"/>. </summary>
         /// <param name="provider"> The Internet service provider. </param>
         /// <param name="azureLocation"> The Azure region. </param>
         /// <param name="latencies"> List of latency details for each of the time series. </param>

@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningResourceConfiguration. </summary>
     public partial class MachineLearningResourceConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningResourceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourceConfiguration"/>. </summary>
         public MachineLearningResourceConfiguration()
         {
             Locations = new ChangeTrackingList<string>();
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningResourceConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningResourceConfiguration"/>. </summary>
         /// <param name="instanceCount"> Optional number of instances or nodes used by the compute target. </param>
         /// <param name="instanceType"> Optional type of VM used as supported by the compute target. </param>
         /// <param name="locations"> Locations where the job can run. </param>

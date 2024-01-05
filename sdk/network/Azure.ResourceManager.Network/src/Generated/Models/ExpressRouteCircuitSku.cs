@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains SKU in an ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitSku
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitSku"/>. </summary>
         public ExpressRouteCircuitSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of the SKU. </param>
         /// <param name="family"> The family of the SKU. </param>

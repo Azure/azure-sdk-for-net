@@ -36,6 +36,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Name = "test",
                 });
+            AddForCleanup(new Task(async () => await administrationClient.DeleteQueueAsync(queueResponse.Value.Id)));
 
             var jobId = $"JobId-{IdPrefix}-{nameof(CancellationScenario)}";
             var createJob = await client.CreateJobAsync(
@@ -53,7 +54,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 TimeSpan.FromSeconds(10));
             Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
 
-            await client.CancelJobAsync(job.Value.Id, new CancelJobOptions
+            await client.CancelJobAsync(new CancelJobOptions(job.Value.Id)
             {
                 DispositionCode = dispositionCode,
             });

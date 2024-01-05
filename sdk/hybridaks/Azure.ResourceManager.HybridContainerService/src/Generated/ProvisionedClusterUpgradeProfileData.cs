@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class ProvisionedClusterUpgradeProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
         /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
         /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
@@ -33,23 +33,23 @@ namespace Azure.ResourceManager.HybridContainerService
             AgentPoolProfiles = agentPoolProfiles.ToList();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
         /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
-        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles) : base(id, name, resourceType, systemData)
+        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridContainerServiceResourceProvisioningState? provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ControlPlaneProfile = controlPlaneProfile;
             AgentPoolProfiles = agentPoolProfiles;
         }
 
-        /// <summary> Gets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
         /// <summary> The list of available upgrade versions for the control plane. </summary>
         public ProvisionedClusterPoolUpgradeProfile ControlPlaneProfile { get; set; }
         /// <summary> The list of available upgrade versions for agent pools. </summary>

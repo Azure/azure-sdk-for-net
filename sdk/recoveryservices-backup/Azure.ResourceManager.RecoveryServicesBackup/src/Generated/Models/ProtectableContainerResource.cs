@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Protectable Container Class. </summary>
     public partial class ProtectableContainerResource : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProtectableContainerResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainerResource"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProtectableContainerResource(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectableContainerResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectableContainerResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

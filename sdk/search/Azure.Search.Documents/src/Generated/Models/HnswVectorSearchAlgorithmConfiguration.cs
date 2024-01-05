@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains configuration options specific to the hnsw approximate nearest neighbors algorithm used during indexing and querying. The hnsw algorithm offers a tunable trade-off between search speed and accuracy. </summary>
     public partial class HnswVectorSearchAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
-        /// <summary> Initializes a new instance of HnswVectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HnswVectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HnswVectorSearchAlgorithmConfiguration(string name) : base(name)
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Kind = VectorSearchAlgorithmKind.Hnsw;
         }
 
-        /// <summary> Initializes a new instance of HnswVectorSearchAlgorithmConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HnswVectorSearchAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. </param>
         /// <param name="parameters"> Contains the parameters specific to hnsw algorithm. </param>

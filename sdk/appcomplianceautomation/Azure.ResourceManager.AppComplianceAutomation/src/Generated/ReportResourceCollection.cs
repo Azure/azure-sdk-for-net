@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ReportResource" /> and their operations.
-    /// Each <see cref="ReportResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="ReportResourceCollection" /> instance call the GetReportResources method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="ReportResource"/> and their operations.
+    /// Each <see cref="ReportResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="ReportResourceCollection"/> instance call the GetReportResources method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class ReportResourceCollection : ArmCollection, IEnumerable<ReportResource>, IAsyncEnumerable<ReportResource>
     {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportResource> GetAllAsync(string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportResource> GetAll(string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);

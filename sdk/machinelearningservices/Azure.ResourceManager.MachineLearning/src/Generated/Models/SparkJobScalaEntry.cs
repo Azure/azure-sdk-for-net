@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The SparkJobScalaEntry. </summary>
     public partial class SparkJobScalaEntry : SparkJobEntry
     {
-        /// <summary> Initializes a new instance of SparkJobScalaEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobScalaEntry"/>. </summary>
         /// <param name="className"> [Required] Scala class name used as entry point. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="className"/> is null. </exception>
         public SparkJobScalaEntry(string className)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SparkJobEntryType = SparkJobEntryType.SparkJobScalaEntry;
         }
 
-        /// <summary> Initializes a new instance of SparkJobScalaEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobScalaEntry"/>. </summary>
         /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
         /// <param name="className"> [Required] Scala class name used as entry point. </param>
         internal SparkJobScalaEntry(SparkJobEntryType sparkJobEntryType, string className) : base(sparkJobEntryType)

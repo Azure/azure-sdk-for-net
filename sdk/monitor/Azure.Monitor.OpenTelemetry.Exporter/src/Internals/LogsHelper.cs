@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -22,8 +20,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal static class LogsHelper
     {
         private const int Version = 2;
-        private static readonly ConcurrentDictionary<int, string> s_depthCache = new ConcurrentDictionary<int, string>();
-        private static readonly Func<int, string> s_convertDepthToStringRef = ConvertDepthToString;
+        private static readonly Action<LogRecordScope, IDictionary<string, string>> s_processScope = (scope, properties) =>
+        {
+            foreach (KeyValuePair<string, object?> scopeItem in scope)
+            {
+                if (string.IsNullOrEmpty(scopeItem.Key) || scopeItem.Key == "{OriginalFormat}")
+                {
+                    continue;
+                }
+
+                // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
+                if (scopeItem.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && scopeItem.Value != null)
+                {
+                    try
+                    {
+                        if (!properties.ContainsKey(scopeItem.Key))
+                        {
+                            properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.FailedToAddScopeItem(scopeItem.Key, ex);
+                    }
+                }
+            }
+        };
 
         internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
         {
@@ -69,28 +91,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
-                if (item.Key.Length <= SchemaConstants.KVP_MaxKeyLength && item.Value != null)
+                // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
+                if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
                 {
-                    // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
-                    if (item.Key == "{OriginalFormat}")
+                    try
                     {
-                        if (logRecord.Exception?.Message != null)
+                        if (item.Key == "{OriginalFormat}")
                         {
-                            properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                            if (logRecord.Exception?.Message != null)
+                            {
+                                properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            }
+                            else if (message == null)
+                            {
+                                message = item.Value.ToString();
+                            }
                         }
-                        else if (message == null)
+                        else
                         {
-                            message = item.Value.ToString();
+                            if (!properties.ContainsKey(item.Key))
+                            {
+                                properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            }
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                        AzureMonitorExporterEventSource.Log.FailedToAddLogAttribute(item.Key, ex);
                     }
                 }
             }
 
-            WriteScopeInformation(logRecord, properties);
+            logRecord.ForEachScope(s_processScope, properties);
 
             if (logRecord.EventId.Id != 0)
             {
@@ -103,49 +135,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return message;
-        }
-
-        internal static void WriteScopeInformation(LogRecord logRecord, IDictionary<string, string> properties)
-        {
-            StringBuilder? builder = null;
-            int originalScopeDepth = 1;
-            logRecord.ForEachScope(ProcessScope, properties);
-
-            void ProcessScope(LogRecordScope scope, IDictionary<string, string> properties)
-            {
-                int valueDepth = 1;
-                foreach (KeyValuePair<string, object?> scopeItem in scope)
-                {
-                    if (string.IsNullOrEmpty(scopeItem.Key))
-                    {
-                        builder ??= new StringBuilder();
-                        builder.Append(" => ").Append(scope.Scope);
-                    }
-                    else if (scopeItem.Key == "{OriginalFormat}")
-                    {
-                        properties.Add($"OriginalFormatScope_{s_depthCache.GetOrAdd(originalScopeDepth, s_convertDepthToStringRef)}",
-                                        Convert.ToString(scope.Scope, CultureInfo.InvariantCulture) ?? "null");
-                    }
-                    else if (!properties.TryGetValue(scopeItem.Key, out _))
-                    {
-                        properties.Add(scopeItem.Key,
-                                        Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture) ?? "null");
-                    }
-                    else
-                    {
-                        properties.Add($"{scopeItem.Key}_{s_depthCache.GetOrAdd(originalScopeDepth, s_convertDepthToStringRef)}_{s_depthCache.GetOrAdd(valueDepth, s_convertDepthToStringRef)}",
-                                        Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture) ?? "null");
-                        valueDepth++;
-                    }
-                }
-
-                originalScopeDepth++;
-            }
-
-            if (builder?.Length > 0)
-            {
-                properties.Add("Scope", builder.ToString().Truncate(SchemaConstants.KVP_MaxValueLength));
-            }
         }
 
         internal static string GetProblemId(Exception exception)
@@ -210,7 +199,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return SeverityLevel.Verbose;
             }
         }
-
-        private static string ConvertDepthToString(int depth) => $"{depth}";
     }
 }

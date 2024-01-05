@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties associated with a Stream Analytics cluster. </summary>
     public partial class StreamAnalyticsClusterProperties
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterProperties"/>. </summary>
         public StreamAnalyticsClusterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterProperties"/>. </summary>
         /// <param name="createdOn"> The date this cluster was created. </param>
         /// <param name="clusterId"> Unique identifier for the cluster. </param>
         /// <param name="provisioningState"> The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and Canceled. </param>

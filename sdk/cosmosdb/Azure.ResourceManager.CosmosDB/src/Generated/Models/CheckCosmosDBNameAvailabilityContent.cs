@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The check availability request body. </summary>
     public partial class CheckCosmosDBNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CheckCosmosDBNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckCosmosDBNameAvailabilityContent"/>. </summary>
         public CheckCosmosDBNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckCosmosDBNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        internal CheckCosmosDBNameAvailabilityContent(string name, string resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>

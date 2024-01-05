@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     public partial class RelayNetworkRuleSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelayNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNetworkRuleSetData"/>. </summary>
         public RelayNetworkRuleSetData()
         {
             IPRules = new ChangeTrackingList<RelayNetworkRuleSetIPRule>();
         }
 
-        /// <summary> Initializes a new instance of RelayNetworkRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNetworkRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

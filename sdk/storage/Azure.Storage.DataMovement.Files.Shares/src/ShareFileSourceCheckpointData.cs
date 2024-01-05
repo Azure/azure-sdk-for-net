@@ -5,11 +5,9 @@ using System.IO;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class ShareFileSourceCheckpointData : StorageResourceCheckpointData
+    internal class ShareFileSourceCheckpointData : StorageResourceCheckpointDataInternal
     {
         public override int Length => 0;
-
-        internal void SerializeInternal(Stream stream) => Serialize(stream);
 
         protected override void Serialize(Stream stream)
         {

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list fields operation. </summary>
     internal partial class AutomationModuleFieldListResult
     {
-        /// <summary> Initializes a new instance of AutomationModuleFieldListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleFieldListResult"/>. </summary>
         internal AutomationModuleFieldListResult()
         {
             Value = new ChangeTrackingList<AutomationModuleField>();
         }
 
-        /// <summary> Initializes a new instance of AutomationModuleFieldListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleFieldListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of fields. </param>
         internal AutomationModuleFieldListResult(IReadOnlyList<AutomationModuleField> value)
         {

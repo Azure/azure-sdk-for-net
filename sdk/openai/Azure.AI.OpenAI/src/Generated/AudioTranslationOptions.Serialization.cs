@@ -17,6 +17,11 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
             writer.WriteBase64StringValue(AudioData.ToArray(), "D");
+            if (Optional.IsDefined(Filename))
+            {
+                writer.WritePropertyName("filename"u8);
+                writer.WriteStringValue(Filename);
+            }
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
@@ -32,10 +37,10 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(InternalNonAzureModelName))
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(InternalNonAzureModelName);
+                writer.WriteStringValue(DeploymentName);
             }
             writer.WriteEndObject();
         }

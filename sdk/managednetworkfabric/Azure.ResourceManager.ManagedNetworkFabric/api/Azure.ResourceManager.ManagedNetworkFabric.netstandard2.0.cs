@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkDeviceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkDeviceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkDeviceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricAccessControlListData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricAccessControlListData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricAccessControlListData(Azure.Core.AzureLocation location) { }
         public System.Uri AclsUri { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricControllerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricControllerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricControllerData(Azure.Core.AzureLocation location) { }
         public string Annotation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation> InfrastructureExpressRouteConnections { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices InfrastructureServices { get { throw null; } }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricData(Azure.Core.AzureLocation location, string networkFabricSku, Azure.Core.ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricAsn, Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration terminalServerConfiguration, Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties managementNetworkConfiguration) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricData(Azure.Core.AzureLocation location, string networkFabricSku, Azure.Core.ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricAsn, Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration terminalServerConfiguration, Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties managementNetworkConfiguration) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricInternetGatewayData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricInternetGatewayData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType typePropertiesType, Azure.Core.ResourceIdentifier networkFabricControllerId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricInternetGatewayData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType typePropertiesType, Azure.Core.ResourceIdentifier networkFabricControllerId) { }
         public string Annotation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InternetGatewayRuleId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricInternetGatewayRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricInternetGatewayRuleData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules ruleProperties) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricInternetGatewayRuleData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules ruleProperties) { }
         public string Annotation { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> InternetGatewayIds { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricIPCommunityData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricIPCommunityData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricIPCommunityData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricIPExtendedCommunityData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricIPExtendedCommunityData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule> ipExtendedCommunityRules) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricIPExtendedCommunityData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule> ipExtendedCommunityRules) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricIPPrefixData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricIPPrefixData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricIPPrefixData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricL2IsolationDomainData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricL2IsolationDomainData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId, int vlanId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricL2IsolationDomainData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId, int vlanId) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricL3IsolationDomainData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricL3IsolationDomainData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricL3IsolationDomainData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration AggregateRouteConfiguration { get { throw null; } set { } }
         public string Annotation { get { throw null; } set { } }
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricNeighborGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricNeighborGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricNeighborGroupData(Azure.Core.AzureLocation location) { }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination Destination { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NetworkTapIds { get { throw null; } }
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkFabricRoutePolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFabricRoutePolicyData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFabricRoutePolicyData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType? AddressFamilyType { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
@@ -1064,7 +1064,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkPacketBrokerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkPacketBrokerData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkPacketBrokerData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NeighborGroupIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NetworkDeviceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkFabricId { get { throw null; } set { } }
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkRackData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkRackData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkRackData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) { }
         public string Annotation { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NetworkDevices { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkFabricId { get { throw null; } set { } }
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkTapData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkTapData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkPacketBrokerId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem> destinations) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkTapData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkPacketBrokerId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem> destinations) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     }
     public partial class NetworkTapRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkTapRuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkTapRuleData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
@@ -1300,6 +1300,135 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult> UpdateNpbStaticRouteBfdAdministrativeState(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult>> UpdateNpbStaticRouteBfdAdministrativeStateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
+{
+    public partial class MockableManagedNetworkFabricArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkFabricArmClient() { }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceResource GetNetworkDeviceInterfaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource GetNetworkDeviceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuResource GetNetworkDeviceSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListResource GetNetworkFabricAccessControlListResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource GetNetworkFabricControllerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkResource GetNetworkFabricExternalNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkResource GetNetworkFabricInternalNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayResource GetNetworkFabricInternetGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleResource GetNetworkFabricInternetGatewayRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityResource GetNetworkFabricIPCommunityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityResource GetNetworkFabricIPExtendedCommunityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixResource GetNetworkFabricIPPrefixResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainResource GetNetworkFabricL2IsolationDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainResource GetNetworkFabricL3IsolationDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupResource GetNetworkFabricNeighborGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricResource GetNetworkFabricResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyResource GetNetworkFabricRoutePolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuResource GetNetworkFabricSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerResource GetNetworkPacketBrokerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkRackResource GetNetworkRackResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkTapResource GetNetworkTapResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource GetNetworkTapRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectResource GetNetworkToNetworkInterconnectResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableManagedNetworkFabricResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkFabricResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource> GetNetworkDevice(string networkDeviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource>> GetNetworkDeviceAsync(string networkDeviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceCollection GetNetworkDevices() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricResource> GetNetworkFabric(string networkFabricName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlList(string accessControlListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListResource>> GetNetworkFabricAccessControlListAsync(string accessControlListName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListCollection GetNetworkFabricAccessControlLists() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricResource>> GetNetworkFabricAsync(string networkFabricName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource> GetNetworkFabricController(string networkFabricControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource>> GetNetworkFabricControllerAsync(string networkFabricControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerCollection GetNetworkFabricControllers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateway(string internetGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayResource>> GetNetworkFabricInternetGatewayAsync(string internetGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRule(string internetGatewayRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleResource>> GetNetworkFabricInternetGatewayRuleAsync(string internetGatewayRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleCollection GetNetworkFabricInternetGatewayRules() { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayCollection GetNetworkFabricInternetGateways() { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityCollection GetNetworkFabricIPCommunities() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunity(string ipCommunityName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityResource>> GetNetworkFabricIPCommunityAsync(string ipCommunityName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityCollection GetNetworkFabricIPExtendedCommunities() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunity(string ipExtendedCommunityName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityResource>> GetNetworkFabricIPExtendedCommunityAsync(string ipExtendedCommunityName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefix(string ipPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixResource>> GetNetworkFabricIPPrefixAsync(string ipPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixCollection GetNetworkFabricIPPrefixes() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomain(string l2IsolationDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainResource>> GetNetworkFabricL2IsolationDomainAsync(string l2IsolationDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainCollection GetNetworkFabricL2IsolationDomains() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomain(string l3IsolationDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainResource>> GetNetworkFabricL3IsolationDomainAsync(string l3IsolationDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainCollection GetNetworkFabricL3IsolationDomains() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroup(string neighborGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupResource>> GetNetworkFabricNeighborGroupAsync(string neighborGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupCollection GetNetworkFabricNeighborGroups() { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyCollection GetNetworkFabricRoutePolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicy(string routePolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyResource>> GetNetworkFabricRoutePolicyAsync(string routePolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricCollection GetNetworkFabrics() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerResource> GetNetworkPacketBroker(string networkPacketBrokerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerResource>> GetNetworkPacketBrokerAsync(string networkPacketBrokerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerCollection GetNetworkPacketBrokers() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackResource> GetNetworkRack(string networkRackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackResource>> GetNetworkRackAsync(string networkRackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkRackCollection GetNetworkRacks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapResource> GetNetworkTap(string networkTapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapResource>> GetNetworkTapAsync(string networkTapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource> GetNetworkTapRule(string networkTapRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource>> GetNetworkTapRuleAsync(string networkTapRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleCollection GetNetworkTapRules() { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkTapCollection GetNetworkTaps() { throw null; }
+    }
+    public partial class MockableManagedNetworkFabricSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkFabricSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource> GetNetworkDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource> GetNetworkDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuResource> GetNetworkDeviceSku(string networkDeviceSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuResource>> GetNetworkDeviceSkuAsync(string networkDeviceSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuCollection GetNetworkDeviceSkus() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlLists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlListsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource> GetNetworkFabricControllers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource> GetNetworkFabricControllersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomains(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomainsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomains(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomainsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePoliciesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricResource> GetNetworkFabrics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricResource> GetNetworkFabricsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuResource> GetNetworkFabricSku(string networkFabricSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuResource>> GetNetworkFabricSkuAsync(string networkFabricSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuCollection GetNetworkFabricSkus() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerResource> GetNetworkPacketBrokers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerResource> GetNetworkPacketBrokersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackResource> GetNetworkRacks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackResource> GetNetworkRacksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource> GetNetworkTapRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource> GetNetworkTapRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapResource> GetNetworkTaps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapResource> GetNetworkTapsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models

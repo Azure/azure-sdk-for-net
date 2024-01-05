@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformStorage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformStorageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformStorageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource" /> using the GetAppPlatformStorage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformStorageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformStorageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformServiceResource"/> using the GetAppPlatformStorage method.
     /// </summary>
     public partial class AppPlatformStorageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformStorageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="storageName"> The storageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string storageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/storages/{storageName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly StoragesRestOperations _appPlatformStorageStoragesRestClient;
         private readonly AppPlatformStorageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/storages";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformStorageResource"/> class for mocking. </summary>
         protected AppPlatformStorageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformStorageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformStorageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformStorageResource(ArmClient client, AppPlatformStorageData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/storages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

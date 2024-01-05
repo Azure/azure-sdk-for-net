@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
@@ -17,45 +18,44 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class InventoryItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of InventoryItemData. </summary>
-        /// <param name="inventoryType"> They inventory type. </param>
-        public InventoryItemData(InventoryType inventoryType)
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
+        /// <param name="properties">
+        /// Resource properties.
+        /// Please note <see cref="InventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualNetworkInventoryItem"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public InventoryItemData(InventoryItemProperties properties)
         {
-            InventoryType = inventoryType;
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of InventoryItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties">
+        /// Resource properties.
+        /// Please note <see cref="InventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualNetworkInventoryItem"/>.
+        /// </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="inventoryType"> They inventory type. </param>
-        /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
-        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
-        /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState) : base(id, name, resourceType, systemData)
+        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InventoryItemProperties properties, string kind) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            InventoryType = inventoryType;
-            ManagedResourceId = managedResourceId;
-            Uuid = uuid;
-            InventoryItemName = inventoryItemName;
-            ProvisioningState = provisioningState;
         }
 
+        /// <summary>
+        /// Resource properties.
+        /// Please note <see cref="InventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualNetworkInventoryItem"/>.
+        /// </summary>
+        public InventoryItemProperties Properties { get; set; }
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
         public string Kind { get; set; }
-        /// <summary> They inventory type. </summary>
-        internal InventoryType InventoryType { get; set; }
-        /// <summary> Gets the tracked resource id corresponding to the inventory resource. </summary>
-        public string ManagedResourceId { get; }
-        /// <summary> Gets the UUID (which is assigned by VMM) for the inventory item. </summary>
-        public string Uuid { get; }
-        /// <summary> Gets the Managed Object name in VMM for the inventory item. </summary>
-        public string InventoryItemName { get; }
-        /// <summary> Gets the provisioning state. </summary>
-        public string ProvisioningState { get; }
     }
 }

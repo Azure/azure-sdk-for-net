@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The resource names object for virtual machine and related resources. </summary>
     public partial class VirtualMachineResourceNames
     {
-        /// <summary> Initializes a new instance of VirtualMachineResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineResourceNames"/>. </summary>
         public VirtualMachineResourceNames()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterfaceResourceNames>();
             DataDiskNames = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineResourceNames"/>. </summary>
         /// <param name="vmName"> The full name for virtual machine. The length of this field can be upto 64 characters. If name is not provided, service uses a default name based on the deployment type. For SingleServer, default name is {SID}vm. In case of HA-AvZone systems, default name will be {SID}{app/ascs/db}z{a/b}vm with an incrementor at the end in case of more than 1 vm per layer. For distributed and HA-AvSet systems, default name will be {SID}{app/ascs/db}vm with an incrementor at the end in case of more than 1 vm per layer. </param>
         /// <param name="hostName"> The full name for virtual-machine's host (computer name). Currently, ACSS only supports host names which are less than or equal to 13 characters long. If this value is not provided, vmName will be used as host name. </param>
         /// <param name="networkInterfaces"> The list of network interface name objects for the selected virtual machine. Currently, only one network interface is supported per virtual machine. </param>

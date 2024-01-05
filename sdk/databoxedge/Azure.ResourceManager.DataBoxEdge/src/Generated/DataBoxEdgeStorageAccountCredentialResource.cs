@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
     /// A Class representing a DataBoxEdgeStorageAccountCredential along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataBoxEdgeStorageAccountCredentialResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataBoxEdgeStorageAccountCredentialResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource" /> using the GetDataBoxEdgeStorageAccountCredential method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataBoxEdgeStorageAccountCredentialResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataBoxEdgeStorageAccountCredentialResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetDataBoxEdgeStorageAccountCredential method.
     /// </summary>
     public partial class DataBoxEdgeStorageAccountCredentialResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataBoxEdgeStorageAccountCredentialResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DataBoxEdge
         private readonly StorageAccountCredentialsRestOperations _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient;
         private readonly DataBoxEdgeStorageAccountCredentialData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccountCredentials";
+
         /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountCredentialResource"/> class for mocking. </summary>
         protected DataBoxEdgeStorageAccountCredentialResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataBoxEdgeStorageAccountCredentialResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountCredentialResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataBoxEdgeStorageAccountCredentialResource(ArmClient client, DataBoxEdgeStorageAccountCredentialData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/storageAccountCredentials";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

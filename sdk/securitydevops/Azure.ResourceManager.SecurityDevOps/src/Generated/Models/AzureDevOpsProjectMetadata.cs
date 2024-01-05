@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> Project onboarding info. </summary>
     public partial class AzureDevOpsProjectMetadata
     {
-        /// <summary> Initializes a new instance of AzureDevOpsProjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectMetadata"/>. </summary>
         public AzureDevOpsProjectMetadata()
         {
             Repos = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsProjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsProjectMetadata"/>. </summary>
         /// <param name="name"> Gets or sets name of the AzureDevOps Project. </param>
         /// <param name="autoDiscovery"></param>
         /// <param name="repos"> Gets or sets repositories. </param>

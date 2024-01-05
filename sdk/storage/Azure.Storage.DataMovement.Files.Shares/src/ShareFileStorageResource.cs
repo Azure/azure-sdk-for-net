@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        protected override long MaxChunkSize => DataMovementShareConstants.MaxRange;
+        protected override long MaxSupportedChunkSize => DataMovementShareConstants.MaxRange;
 
         protected override long? Length => _length;
 
@@ -116,7 +116,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 sourceUri: sourceResource.Uri,
                 range: range,
                 sourceRange: range,
-                options: _options.ToShareFileUploadRangeFromUriOptions(),
+                options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -165,7 +165,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     sourceUri: sourceResource.Uri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
-                    options: _options.ToShareFileUploadRangeFromUriOptions(),
+                    options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData(null, null);
+            return new ShareFileDestinationCheckpointData(null, null, null, null);
         }
     }
 

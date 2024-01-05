@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a PredictionResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PredictionResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPredictionResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetPredictionResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PredictionResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPredictionResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetPredictionResourceFormat method.
     /// </summary>
     public partial class PredictionResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PredictionResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="predictionName"> The predictionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string predictionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/predictions/{predictionName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly PredictionsRestOperations _predictionResourceFormatPredictionsRestClient;
         private readonly PredictionResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/predictions";
+
         /// <summary> Initializes a new instance of the <see cref="PredictionResourceFormatResource"/> class for mocking. </summary>
         protected PredictionResourceFormatResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PredictionResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PredictionResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PredictionResourceFormatResource(ArmClient client, PredictionResourceFormatData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/predictions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Enums for worker status. </summary>
+    /// <summary> Enums for worker states. </summary>
     public readonly partial struct RouterWorkerState : IEquatable<RouterWorkerState>
     {
         private readonly string _value;

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class ProtectionContainerMappingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProtectionContainerMappingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingData"/>. </summary>
         internal ProtectionContainerMappingData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProtectionContainerMappingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

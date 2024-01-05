@@ -10,9 +10,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the Create Group operation. </summary>
     public partial class ApiManagementGroupCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementGroupCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupCreateOrUpdateContent"/>. </summary>
         public ApiManagementGroupCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupCreateOrUpdateContent"/>. </summary>
+        /// <param name="displayName"> Group name. </param>
+        /// <param name="description"> Group description. </param>
+        /// <param name="apiManagementGroupType"> Group type. </param>
+        /// <param name="externalId"> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
+        internal ApiManagementGroupCreateOrUpdateContent(string displayName, string description, ApiManagementGroupType? apiManagementGroupType, string externalId)
+        {
+            DisplayName = displayName;
+            Description = description;
+            ApiManagementGroupType = apiManagementGroupType;
+            ExternalId = externalId;
         }
 
         /// <summary> Group name. </summary>

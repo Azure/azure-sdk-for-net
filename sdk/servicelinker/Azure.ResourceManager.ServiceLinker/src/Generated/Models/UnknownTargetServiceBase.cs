@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The UnknownTargetServiceBase. </summary>
     internal partial class UnknownTargetServiceBase : TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of UnknownTargetServiceBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTargetServiceBase"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
         internal UnknownTargetServiceBase(TargetServiceType targetServiceType) : base(targetServiceType)
         {

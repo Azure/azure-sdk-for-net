@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "GoogleCloudStorageReadSettings": return GoogleCloudStorageReadSettings.DeserializeGoogleCloudStorageReadSettings(element);
                     case "HdfsReadSettings": return HdfsReadSettings.DeserializeHdfsReadSettings(element);
                     case "HttpReadSettings": return HttpReadSettings.DeserializeHttpReadSettings(element);
+                    case "LakeHouseReadSettings": return LakeHouseReadSettings.DeserializeLakeHouseReadSettings(element);
                     case "OracleCloudStorageReadSettings": return OracleCloudStorageReadSettings.DeserializeOracleCloudStorageReadSettings(element);
                     case "SftpReadSettings": return SftpReadSettings.DeserializeSftpReadSettings(element);
                 }

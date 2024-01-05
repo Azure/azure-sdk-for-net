@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningBatchEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningBatchEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningBatchEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningBatchEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningBatchEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningBatchEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningBatchEndpoint method.
     /// </summary>
     public partial class MachineLearningBatchEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningBatchEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string endpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly BatchEndpointsRestOperations _machineLearningBatchEndpointBatchEndpointsRestClient;
         private readonly MachineLearningBatchEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/batchEndpoints";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningBatchEndpointResource"/> class for mocking. </summary>
         protected MachineLearningBatchEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningBatchEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningBatchEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningBatchEndpointResource(ArmClient client, MachineLearningBatchEndpointData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/batchEndpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningBatchDeploymentResources and their operations over a MachineLearningBatchDeploymentResource. </returns>
         public virtual MachineLearningBatchDeploymentCollection GetMachineLearningBatchDeployments()
         {
-            return GetCachedClient(Client => new MachineLearningBatchDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new MachineLearningBatchDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MachineLearningBatchDeploymentResource>> GetMachineLearningBatchDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningBatchDeploymentResource> GetMachineLearningBatchDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {

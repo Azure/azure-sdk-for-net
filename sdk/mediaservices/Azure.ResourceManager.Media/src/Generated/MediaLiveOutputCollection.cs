@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaLiveOutputResource" /> and their operations.
-    /// Each <see cref="MediaLiveOutputResource" /> in the collection will belong to the same instance of <see cref="MediaLiveEventResource" />.
-    /// To get a <see cref="MediaLiveOutputCollection" /> instance call the GetMediaLiveOutputs method from an instance of <see cref="MediaLiveEventResource" />.
+    /// A class representing a collection of <see cref="MediaLiveOutputResource"/> and their operations.
+    /// Each <see cref="MediaLiveOutputResource"/> in the collection will belong to the same instance of <see cref="MediaLiveEventResource"/>.
+    /// To get a <see cref="MediaLiveOutputCollection"/> instance call the GetMediaLiveOutputs method from an instance of <see cref="MediaLiveEventResource"/>.
     /// </summary>
     public partial class MediaLiveOutputCollection : ArmCollection, IEnumerable<MediaLiveOutputResource>, IAsyncEnumerable<MediaLiveOutputResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaLiveOutputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaLiveOutputResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaLiveOutputResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveOutputLiveOutputsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaLiveOutputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaLiveOutputResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaLiveOutputResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveOutputLiveOutputsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

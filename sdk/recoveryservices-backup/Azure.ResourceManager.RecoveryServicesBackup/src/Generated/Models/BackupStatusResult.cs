@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BackupStatus response. </summary>
     public partial class BackupStatusResult
     {
-        /// <summary> Initializes a new instance of BackupStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStatusResult"/>. </summary>
         internal BackupStatusResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStatusResult"/>. </summary>
         /// <param name="protectionStatus"> Specifies whether the container is registered or not. </param>
         /// <param name="vaultId"> Specifies the arm resource id of the vault. </param>
         /// <param name="fabricName"> Specifies the fabric name - Azure or AD. </param>
@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="errorMessage"> ErrorMessage in case of intent failed. </param>
         /// <param name="policyName"> Specifies the policy name which is used for protection. </param>
         /// <param name="registrationStatus"> Container registration status. </param>
-        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus)
+        /// <param name="protectedItemsCount"> Number of protected items. </param>
+        /// <param name="acquireStorageAccountLock"> Specifies whether the storage account lock has been acquired or not. </param>
+        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus, int? protectedItemsCount, AcquireStorageAccountLock? acquireStorageAccountLock)
         {
             ProtectionStatus = protectionStatus;
             VaultId = vaultId;
@@ -38,6 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ErrorMessage = errorMessage;
             PolicyName = policyName;
             RegistrationStatus = registrationStatus;
+            ProtectedItemsCount = protectedItemsCount;
+            AcquireStorageAccountLock = acquireStorageAccountLock;
         }
 
         /// <summary> Specifies whether the container is registered or not. </summary>
@@ -58,5 +62,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string PolicyName { get; }
         /// <summary> Container registration status. </summary>
         public string RegistrationStatus { get; }
+        /// <summary> Number of protected items. </summary>
+        public int? ProtectedItemsCount { get; }
+        /// <summary> Specifies whether the storage account lock has been acquired or not. </summary>
+        public AcquireStorageAccountLock? AcquireStorageAccountLock { get; }
     }
 }

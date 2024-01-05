@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> A dictionary of name and value pairs. </summary>
     public partial class Tag
     {
-        /// <summary> Initializes a new instance of Tag. </summary>
+        /// <summary> Initializes a new instance of <see cref="Tag"/>. </summary>
         public Tag()
         {
             TagValues = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of Tag. </summary>
+        /// <summary> Initializes a new instance of <see cref="Tag"/>. </summary>
         /// <param name="tagValues"> Dictionary of &lt;string&gt;. </param>
         internal Tag(IDictionary<string, string> tagValues)
         {

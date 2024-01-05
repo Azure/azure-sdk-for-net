@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Document
     /// <summary> Model factory for models. </summary>
     public static partial class DocumentTranslationModelFactory
     {
-        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="Document.DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Benefit scope response property. </summary>
     public partial class SavingsPlanValidateResult
     {
-        /// <summary> Initializes a new instance of SavingsPlanValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanValidateResult"/>. </summary>
         internal SavingsPlanValidateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanValidateResult"/>. </summary>
         /// <param name="isValid"> Indicates if the provided input was valid. </param>
         /// <param name="reasonCode"> Failure reason code if the provided input was invalid. </param>
         /// <param name="reason"> Failure reason if the provided input was invalid. </param>

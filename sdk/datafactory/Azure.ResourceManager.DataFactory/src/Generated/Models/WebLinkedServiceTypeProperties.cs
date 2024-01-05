@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class WebLinkedServiceTypeProperties
     {
-        /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         protected WebLinkedServiceTypeProperties(DataFactoryElement<string> uri)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         internal WebLinkedServiceTypeProperties(DataFactoryElement<string> uri, WebAuthenticationType authenticationType)

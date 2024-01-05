@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApplicationInsightsComponentResource" /> and their operations.
-    /// Each <see cref="ApplicationInsightsComponentResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="ApplicationInsightsComponentCollection" /> instance call the GetApplicationInsightsComponents method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ApplicationInsightsComponentResource"/> and their operations.
+    /// Each <see cref="ApplicationInsightsComponentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ApplicationInsightsComponentCollection"/> instance call the GetApplicationInsightsComponents method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ApplicationInsightsComponentCollection : ArmCollection, IEnumerable<ApplicationInsightsComponentResource>, IAsyncEnumerable<ApplicationInsightsComponentResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

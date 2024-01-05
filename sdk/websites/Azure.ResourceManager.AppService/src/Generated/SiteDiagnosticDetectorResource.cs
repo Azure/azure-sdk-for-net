@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteDiagnosticDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteDiagnosticDetectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteDiagnosticDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteDiagnosticResource" /> using the GetSiteDiagnosticDetector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteDiagnosticDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteDiagnosticDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteDiagnosticResource"/> using the GetSiteDiagnosticDetector method.
     /// </summary>
     public partial class SiteDiagnosticDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteDiagnosticDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteName"> The siteName. </param>
+        /// <param name="diagnosticCategory"> The diagnosticCategory. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.AppService
         private readonly DiagnosticsRestOperations _siteDiagnosticDetectorDiagnosticsRestClient;
         private readonly DetectorDefinitionResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/diagnostics/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticDetectorResource"/> class for mocking. </summary>
         protected SiteDiagnosticDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteDiagnosticDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDiagnosticDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteDiagnosticDetectorResource(ArmClient client, DetectorDefinitionResourceData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/diagnostics/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

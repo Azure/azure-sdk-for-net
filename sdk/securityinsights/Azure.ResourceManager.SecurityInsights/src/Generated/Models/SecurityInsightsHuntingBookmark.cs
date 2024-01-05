@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a Hunting bookmark entity. </summary>
     public partial class SecurityInsightsHuntingBookmark : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsHuntingBookmark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntingBookmark"/>. </summary>
         public SecurityInsightsHuntingBookmark()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.Bookmark;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsHuntingBookmark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntingBookmark"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

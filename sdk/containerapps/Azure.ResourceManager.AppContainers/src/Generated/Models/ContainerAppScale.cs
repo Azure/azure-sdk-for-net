@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App scaling configurations. </summary>
     public partial class ContainerAppScale
     {
-        /// <summary> Initializes a new instance of ContainerAppScale. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScale"/>. </summary>
         public ContainerAppScale()
         {
             Rules = new ChangeTrackingList<ContainerAppScaleRule>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppScale. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppScale"/>. </summary>
         /// <param name="minReplicas"> Optional. Minimum number of container replicas. </param>
         /// <param name="maxReplicas"> Optional. Maximum number of container replicas. Defaults to 10 if not set. </param>
         /// <param name="rules"> Scaling rules. </param>

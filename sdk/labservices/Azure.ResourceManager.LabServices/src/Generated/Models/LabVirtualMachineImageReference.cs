@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Image reference information. Used in the virtual machine profile. </summary>
     public partial class LabVirtualMachineImageReference
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageReference"/>. </summary>
         public LabVirtualMachineImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineImageReference"/>. </summary>
         /// <param name="id"> Image resource ID. </param>
         /// <param name="offer"> The image offer if applicable. </param>
         /// <param name="publisher"> The image publisher. </param>

@@ -14,7 +14,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Srt stream to be used as an output. </summary>
     public partial class SrtOutput : MediaOutput
     {
-        /// <summary> Initializes a new instance of SrtOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SrtOutput"/>. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resolution"/> or <paramref name="streamUrl"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaOutputType.Srt;
         }
 
-        /// <summary> Initializes a new instance of SrtOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SrtOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>

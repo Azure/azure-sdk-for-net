@@ -4289,7 +4289,8 @@ namespace Azure.Messaging.EventGrid.Tests
         #endregion
         #region Resource Notifications
 
-        [Test] public void ConsumeCloudEventHealthResourcesAvailiabilityStatusChangedEvent()
+        [Test]
+        public void ConsumeCloudEventHealthResourcesAvailiabilityStatusChangedEvent()
         {
             string requestContent = @"{
               ""id"": ""1fb6fa94-d965-4306-abeq-4810f0774e97"",
@@ -4297,7 +4298,7 @@ namespace Azure.Messaging.EventGrid.Tests
               ""subject"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}"",
               ""data"": {
                 ""resourceInfo"": {
-                  ""id"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}/providers/Microsoft.ResourceHealth/availabilityStatuses/{event-id}"",
+                  ""id"": ""/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}/providers/Microsoft.ResourceHealth/availabilityStatuses/{event-id}"",
                   ""name"": ""{event-id}"",
                   ""type"": ""Microsoft.ResourceHealth/availabilityStatuses"",
                   ""properties"": {
@@ -4324,6 +4325,132 @@ namespace Azure.Messaging.EventGrid.Tests
             var availabilityStatusChangedEventData = eventData as ResourceNotificationsHealthResourcesAvailabilityStatusChangedEventData;
             Assert.IsNotNull(availabilityStatusChangedEventData);
             Assert.AreEqual("{event-id}", availabilityStatusChangedEventData.ResourceDetails.Name);
+            Assert.AreEqual(
+                "/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}/providers/Microsoft.ResourceHealth/availabilityStatuses/{event-id}",
+                availabilityStatusChangedEventData.ResourceDetails.Id);
+            Assert.AreEqual(
+                "/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/{rg-name}/providers/Microsoft.Compute/virtualMachines/{vm-name}/providers/Microsoft.ResourceHealth/availabilityStatuses/{event-id}",
+                availabilityStatusChangedEventData.ResourceDetails.Resource.ToString());
+        }
+
+        [Test]
+        public void ConsumeCloudEventResourceDeletedEvent()
+        {
+            string requestContent = @"{
+              ""id"": ""d4611260-d179-4f86-b196-3a9d4128be2d"",
+              ""source"": ""/subscriptions/{subscription-id}"",
+              ""subject"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Storage/storageAccounts/{storageAccount-name}"",
+              ""data"": {
+                ""resourceInfo"": {
+                  ""id"": ""/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/{rg-name}/providers/Microsoft.Storage/storageAccounts/{storageAccount-name}"",
+                  ""name"": ""storageAccount-name"",
+                  ""type"": ""Microsoft.Storage/storageAccounts""
+                },
+                ""operationalInfo"": {
+                  ""resourceEventTime"": ""2023-07-28T20:11:36.6347858Z""
+                }
+              },
+              ""type"": ""Microsoft.ResourceNotifications.Resources.Deleted"",
+              ""specversion"": ""1.0"",
+              ""time"": ""2023-07-28T20:11:36.6347858Z""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var resourceDeletedEventData = eventData as ResourceNotificationsResourceManagementDeletedEventData;
+            Assert.IsNotNull(resourceDeletedEventData);
+            Assert.AreEqual("{storageAccount-name}", resourceDeletedEventData.ResourceDetails.Resource.Name);
+            Assert.AreEqual(
+                "/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/{rg-name}/providers/Microsoft.Storage/storageAccounts/{storageAccount-name}",
+                resourceDeletedEventData.ResourceDetails.Resource.ToString());
+        }
+
+        [Test]
+        public void ConsumeCloudEventResourceCreatedOrUpdatedEvent()
+        {
+            string requestContent = @"{
+              ""id"": ""4eef929a-a65c-47dd-93e2-46b8c17c6c17"",
+              ""source"": ""/subscriptions/{subscription-id}"",
+              ""subject"": ""/subscriptions/{subscription-id}/resourceGroups/{rg-name}/providers/Microsoft.Storage/storageAccounts/{storageAccount-name}"",
+              ""data"": {
+                ""resourceInfo"": {
+                  ""tags"": {},
+                  ""id"": ""/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/{rg-name}/providers/Microsoft.Storage/storageAccounts/{storageAccount-name}"",
+                  ""name"": ""StorageAccount-name"",
+                  ""type"": ""Microsoft.Storage/storageAccounts"",
+                  ""location"": ""eastus"",
+                  ""properties"": {
+                    ""privateEndpointConnections"": [],
+                    ""minimumTlsVersion"": ""TLS1_2"",
+                    ""allowBlobPublicAccess"": 1,
+                    ""allowSharedKeyAccess"": 1,
+                    ""networkAcls"": {
+                      ""bypass"": ""AzureServices"",
+                      ""virtualNetworkRules"": [],
+                      ""ipRules"": [],
+                      ""defaultAction"": ""Allow""
+                    },
+                    ""supportsHttpsTrafficOnly"": 1,
+                    ""encryption"": {
+                      ""requireInfrastructureEncryption"": 0,
+                      ""services"": {
+                        ""file"": {
+                          ""keyType"": ""Account"",
+                          ""enabled"": 1,
+                          ""lastEnabledTime"": ""2023-07-28T20:12:50.6380308Z""
+                        },
+                        ""blob"": {
+                          ""keyType"": ""Account"",
+                          ""enabled"": 1,
+                          ""lastEnabledTime"": ""2023-07-28T20:12:50.6380308Z""
+                        }
+                      },
+                      ""keySource"": ""Microsoft.Storage""
+                    },
+                    ""accessTier"": ""Hot"",
+                    ""provisioningState"": ""Succeeded"",
+                    ""creationTime"": ""2023-07-28T20:12:50.4661564Z"",
+                    ""primaryEndpoints"": {
+                      ""dfs"": ""https://{storageAccount-name}.dfs.core.windows.net/"",
+                      ""web"": ""https://{storageAccount-name}.z13.web.core.windows.net/"",
+                      ""blob"": ""https://{storageAccount-name}.blob.core.windows.net/"",
+                      ""queue"": ""https://{storageAccount-name}.queue.core.windows.net/"",
+                      ""table"": ""https://{storageAccount-name}.table.core.windows.net/"",
+                      ""file"": ""https://{storageAccount-name}.file.core.windows.net/""
+                    },
+                    ""primaryLocation"": ""eastus"",
+                    ""statusOfPrimary"": ""available"",
+                    ""secondaryLocation"": ""westus"",
+                    ""statusOfSecondary"": ""available"",
+                    ""secondaryEndpoints"": {
+                      ""dfs"": ""https://{storageAccount-name} -secondary.dfs.core.windows.net/"",
+                      ""web"": ""https://{storageAccount-name}-secondary.z13.web.core.windows.net/"",
+                      ""blob"": ""https://{storageAccount-name}-secondary.blob.core.windows.net/"",
+                      ""queue"": ""https://{storageAccount-name}-secondary.queue.core.windows.net/"",
+                      ""table"": ""https://{storageAccount-name}-secondary.table.core.windows.net/""
+                    }
+                  }
+                },
+                ""operationalInfo"": {
+                  ""resourceEventTime"": ""2023-07-28T20:13:10.8418063Z""
+                },
+                ""apiVersion"": ""2019-06-01""
+              },
+              ""type"": ""Microsoft.ResourceNotifications.Resources.CreatedOrUpdated"",
+              ""specversion"": ""1.0"",
+              ""time"": ""2023-07-28T20:13:10.8418063Z""
+            }";
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            Assert.True(events[0].TryGetSystemEventData(out object eventData));
+            var resourceDeletedEventData = eventData as ResourceNotificationsResourceManagementCreatedOrUpdatedEventData;
+            Assert.IsNotNull(resourceDeletedEventData);
+            Assert.AreEqual("{storageAccount-name}", resourceDeletedEventData.ResourceDetails.Resource.Name);
+            Assert.AreEqual(
+                "/subscriptions/319a9601-1ec0-0000-aebc-8fe82724c81e/resourceGroups/{rg-name}/providers/Microsoft.Storage/storageAccounts/{storageAccount-name}",
+                resourceDeletedEventData.ResourceDetails.Resource.ToString());
         }
         #endregion
         #endregion

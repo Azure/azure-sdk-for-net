@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Input type for getting image upload url. </summary>
     public partial class GetImageUploadUrlInput
     {
-        /// <summary> Initializes a new instance of GetImageUploadUrlInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetImageUploadUrlInput"/>. </summary>
         public GetImageUploadUrlInput()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetImageUploadUrlInput"/>. </summary>
+        /// <param name="entityType"> Type of entity. Can be Profile or Interaction. </param>
+        /// <param name="entityTypeName"> Name of the entity type. </param>
+        /// <param name="relativePath"> Relative path of the image. </param>
+        internal GetImageUploadUrlInput(string entityType, string entityTypeName, string relativePath)
+        {
+            EntityType = entityType;
+            EntityTypeName = entityTypeName;
+            RelativePath = relativePath;
         }
 
         /// <summary> Type of entity. Can be Profile or Interaction. </summary>

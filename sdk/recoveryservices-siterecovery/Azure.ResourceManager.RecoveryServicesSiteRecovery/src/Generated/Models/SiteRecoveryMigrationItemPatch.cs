@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update migration item input. </summary>
     public partial class SiteRecoveryMigrationItemPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrationItemPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemPatch"/>. </summary>
         public SiteRecoveryMigrationItemPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrationItemPatch"/>. </summary>
+        /// <param name="properties"> Update migration item input properties. </param>
+        internal SiteRecoveryMigrationItemPatch(UpdateMigrationItemProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Update migration item input properties. </summary>

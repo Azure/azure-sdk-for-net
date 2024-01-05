@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The list results of the Service Fabric runtime versions. </summary>
     internal partial class ClusterCodeVersionsListResult
     {
-        /// <summary> Initializes a new instance of ClusterCodeVersionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCodeVersionsListResult"/>. </summary>
         internal ClusterCodeVersionsListResult()
         {
             Value = new ChangeTrackingList<ClusterCodeVersionsResult>();
         }
 
-        /// <summary> Initializes a new instance of ClusterCodeVersionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCodeVersionsListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ClusterCodeVersionsListResult(IReadOnlyList<ClusterCodeVersionsResult> value, string nextLink)

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
     /// A Class representing a RoleAssignmentResourceFormat along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RoleAssignmentResourceFormatResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRoleAssignmentResourceFormatResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HubResource" /> using the GetRoleAssignmentResourceFormat method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleAssignmentResourceFormatResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRoleAssignmentResourceFormatResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HubResource"/> using the GetRoleAssignmentResourceFormat method.
     /// </summary>
     public partial class RoleAssignmentResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RoleAssignmentResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="assignmentName"> The assignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string assignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/roleAssignments/{assignmentName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.CustomerInsights
         private readonly RoleAssignmentsRestOperations _roleAssignmentResourceFormatRoleAssignmentsRestClient;
         private readonly RoleAssignmentResourceFormatData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/roleAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="RoleAssignmentResourceFormatResource"/> class for mocking. </summary>
         protected RoleAssignmentResourceFormatResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RoleAssignmentResourceFormatResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleAssignmentResourceFormatResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleAssignmentResourceFormatResource(ArmClient client, RoleAssignmentResourceFormatData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.CustomerInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CustomerInsights/hubs/roleAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

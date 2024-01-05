@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Annotation associated with an application insights resource. </summary>
     public partial class Annotation
     {
-        /// <summary> Initializes a new instance of Annotation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Annotation"/>. </summary>
         public Annotation()
         {
         }
 
-        /// <summary> Initializes a new instance of Annotation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Annotation"/>. </summary>
         /// <param name="annotationName"> Name of annotation. </param>
         /// <param name="category"> Category of annotation, free form. </param>
         /// <param name="eventOn"> Time when event occurred. </param>

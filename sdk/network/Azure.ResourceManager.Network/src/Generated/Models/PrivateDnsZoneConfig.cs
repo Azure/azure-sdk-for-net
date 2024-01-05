@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> PrivateDnsZoneConfig resource. </summary>
     public partial class PrivateDnsZoneConfig
     {
-        /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneConfig"/>. </summary>
         public PrivateDnsZoneConfig()
         {
             RecordSets = new ChangeTrackingList<RecordSet>();
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsZoneConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsZoneConfig"/>. </summary>
         /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="privateDnsZoneId"> The resource id of the private dns zone. </param>
         /// <param name="recordSets"> A collection of information regarding a recordSet, holding information to identify private resources. </param>

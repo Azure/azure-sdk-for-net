@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LabResource" /> and their operations.
-    /// Each <see cref="LabResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="LabCollection" /> instance call the GetLabs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="LabResource"/> and their operations.
+    /// Each <see cref="LabResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="LabCollection"/> instance call the GetLabs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class LabCollection : ArmCollection, IEnumerable<LabResource>, IAsyncEnumerable<LabResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LabResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LabResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

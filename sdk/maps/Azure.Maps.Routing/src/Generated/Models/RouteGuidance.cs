@@ -13,14 +13,14 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Contains guidance related elements. This field is present only when guidance was requested and is available. </summary>
     public partial class RouteGuidance
     {
-        /// <summary> Initializes a new instance of RouteGuidance. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteGuidance"/>. </summary>
         internal RouteGuidance()
         {
             Instructions = new ChangeTrackingList<RouteInstruction>();
             InstructionGroups = new ChangeTrackingList<RouteInstructionGroup>();
         }
 
-        /// <summary> Initializes a new instance of RouteGuidance. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteGuidance"/>. </summary>
         /// <param name="instructions"> A list of instructions describing maneuvers. </param>
         /// <param name="instructionGroups"> Groups a sequence of instruction elements which are related to each other. </param>
         internal RouteGuidance(IReadOnlyList<RouteInstruction> instructions, IReadOnlyList<RouteInstructionGroup> instructionGroups)

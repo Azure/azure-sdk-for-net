@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExpressRoutePortsLocationResource" /> and their operations.
-    /// Each <see cref="ExpressRoutePortsLocationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="ExpressRoutePortsLocationCollection" /> instance call the GetExpressRoutePortsLocations method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ExpressRoutePortsLocationResource"/> and their operations.
+    /// Each <see cref="ExpressRoutePortsLocationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="ExpressRoutePortsLocationCollection"/> instance call the GetExpressRoutePortsLocations method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ExpressRoutePortsLocationCollection : ArmCollection, IEnumerable<ExpressRoutePortsLocationResource>, IAsyncEnumerable<ExpressRoutePortsLocationResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRoutePortsLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRoutePortsLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRoutePortsLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortsLocationRestClient.CreateListRequest(Id.SubscriptionId);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRoutePortsLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRoutePortsLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRoutePortsLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRoutePortsLocationRestClient.CreateListRequest(Id.SubscriptionId);

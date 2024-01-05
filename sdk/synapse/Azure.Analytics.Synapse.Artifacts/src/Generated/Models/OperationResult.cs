@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Operation status for the operation. </summary>
     public partial class OperationResult
     {
-        /// <summary> Initializes a new instance of OperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
         internal OperationResult()
         {
             Details = new ChangeTrackingList<CloudError>();
         }
 
-        /// <summary> Initializes a new instance of OperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>

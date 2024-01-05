@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Connector mapping property format. </summary>
     public partial class ConnectorMappingFormat
     {
-        /// <summary> Initializes a new instance of ConnectorMappingFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingFormat"/>. </summary>
         public ConnectorMappingFormat()
         {
             FormatType = FormatType.TextFormat;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingFormat"/>. </summary>
         /// <param name="formatType"> The type mapping format. </param>
         /// <param name="columnDelimiter"> The character that signifies a break between columns. </param>
         /// <param name="acceptLanguage"> The oData language. </param>

@@ -7,7 +7,7 @@ extends:
     SDKType: client
     MaxParallel: 5
     TimeoutInMinutes: 240
-    SupportedClouds: 'Public,UsGov,China,Canary'
+    SupportedClouds: 'Public,UsGov,Canary'
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
@@ -28,10 +28,6 @@ extends:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
         MatrixFilters:
          - ArmTemplateParameters=^(?!.*enableHsm.*true)
-      China:
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
-        MatrixFilters:
-          - ArmTemplateParameters=^(?!.*enableHsm.*true)
     MatrixConfigs:
       - Name: keyvault_test_matrix
         Path: sdk/keyvault/platform-matrix.json

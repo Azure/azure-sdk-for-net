@@ -4,29 +4,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-#nullable disable
-
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are directed to the worker who has been idle longest. </summary>
-    [CodeGenSuppress("LongestIdleMode", typeof(int), typeof(int))]
     public partial class LongestIdleMode : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of LongestIdleModePolicy. </summary>
-        public LongestIdleMode() : this(null)
+        /// <summary> Initializes a new instance of LongestIdleMode. </summary>
+        public LongestIdleMode()
         {
-        }
-
-        internal LongestIdleMode(string kind)
-        {
-            Kind = kind ?? "longest-idle";
+            Kind = DistributionModeKind.LongestIdle;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(MinConcurrentOffers))
             {
                 writer.WritePropertyName("minConcurrentOffers"u8);

@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppPlatformService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppPlatformService method.
     /// </summary>
     public partial class AppPlatformServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}";
@@ -43,12 +46,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly DeploymentsRestOperations _appPlatformDeploymentDeploymentsRestClient;
         private readonly AppPlatformServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceResource"/> class for mocking. </summary>
         protected AppPlatformServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformServiceResource(ArmClient client, AppPlatformServiceData data) : this(client, data.Id)
@@ -76,9 +82,6 @@ namespace Azure.ResourceManager.AppPlatform
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -101,7 +104,7 @@ namespace Azure.ResourceManager.AppPlatform
         }
 
         /// <summary> Gets an object representing a AppPlatformConfigServerResource along with the instance operations that can be performed on it in the AppPlatformService. </summary>
-        /// <returns> Returns a <see cref="AppPlatformConfigServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AppPlatformConfigServerResource"/> object. </returns>
         public virtual AppPlatformConfigServerResource GetAppPlatformConfigServer()
         {
             return new AppPlatformConfigServerResource(Client, Id.AppendChildResource("configServers", "default"));
@@ -111,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformConfigurationServiceResources and their operations over a AppPlatformConfigurationServiceResource. </returns>
         public virtual AppPlatformConfigurationServiceCollection GetAppPlatformConfigurationServices()
         {
-            return GetCachedClient(Client => new AppPlatformConfigurationServiceCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformConfigurationServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -129,8 +132,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="configurationServiceName"> The name of Application Configuration Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformConfigurationServiceResource>> GetAppPlatformConfigurationServiceAsync(string configurationServiceName, CancellationToken cancellationToken = default)
         {
@@ -152,8 +155,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="configurationServiceName"> The name of Application Configuration Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformConfigurationServiceResource> GetAppPlatformConfigurationService(string configurationServiceName, CancellationToken cancellationToken = default)
         {
@@ -164,7 +167,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformServiceRegistryResources and their operations over a AppPlatformServiceRegistryResource. </returns>
         public virtual AppPlatformServiceRegistryCollection GetAppPlatformServiceRegistries()
         {
-            return GetCachedClient(Client => new AppPlatformServiceRegistryCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformServiceRegistryCollection(client, Id));
         }
 
         /// <summary>
@@ -182,8 +185,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformServiceRegistryResource>> GetAppPlatformServiceRegistryAsync(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
@@ -205,8 +208,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="serviceRegistryName"> The name of Service Registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformServiceRegistryResource> GetAppPlatformServiceRegistry(string serviceRegistryName, CancellationToken cancellationToken = default)
         {
@@ -217,7 +220,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBuildServiceResources and their operations over a AppPlatformBuildServiceResource. </returns>
         public virtual AppPlatformBuildServiceCollection GetAppPlatformBuildServices()
         {
-            return GetCachedClient(Client => new AppPlatformBuildServiceCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBuildServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -235,8 +238,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildServiceName"> The name of the build service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBuildServiceResource>> GetAppPlatformBuildServiceAsync(string buildServiceName, CancellationToken cancellationToken = default)
         {
@@ -258,8 +261,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="buildServiceName"> The name of the build service resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBuildServiceResource> GetAppPlatformBuildService(string buildServiceName, CancellationToken cancellationToken = default)
         {
@@ -267,7 +270,7 @@ namespace Azure.ResourceManager.AppPlatform
         }
 
         /// <summary> Gets an object representing a AppPlatformMonitoringSettingResource along with the instance operations that can be performed on it in the AppPlatformService. </summary>
-        /// <returns> Returns a <see cref="AppPlatformMonitoringSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AppPlatformMonitoringSettingResource"/> object. </returns>
         public virtual AppPlatformMonitoringSettingResource GetAppPlatformMonitoringSetting()
         {
             return new AppPlatformMonitoringSettingResource(Client, Id.AppendChildResource("monitoringSettings", "default"));
@@ -277,7 +280,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformAppResources and their operations over a AppPlatformAppResource. </returns>
         public virtual AppPlatformAppCollection GetAppPlatformApps()
         {
-            return GetCachedClient(Client => new AppPlatformAppCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformAppCollection(client, Id));
         }
 
         /// <summary>
@@ -296,8 +299,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformAppResource>> GetAppPlatformAppAsync(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
@@ -320,8 +323,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="appName"> The name of the App resource. </param>
         /// <param name="syncStatus"> Indicates whether sync status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformAppResource> GetAppPlatformApp(string appName, string syncStatus = null, CancellationToken cancellationToken = default)
         {
@@ -332,7 +335,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformStorageResources and their operations over a AppPlatformStorageResource. </returns>
         public virtual AppPlatformStorageCollection GetAppPlatformStorages()
         {
-            return GetCachedClient(Client => new AppPlatformStorageCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformStorageCollection(client, Id));
         }
 
         /// <summary>
@@ -350,8 +353,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="storageName"> The name of the storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformStorageResource>> GetAppPlatformStorageAsync(string storageName, CancellationToken cancellationToken = default)
         {
@@ -373,8 +376,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="storageName"> The name of the storage resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformStorageResource> GetAppPlatformStorage(string storageName, CancellationToken cancellationToken = default)
         {
@@ -385,7 +388,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformCertificateResources and their operations over a AppPlatformCertificateResource. </returns>
         public virtual AppPlatformCertificateCollection GetAppPlatformCertificates()
         {
-            return GetCachedClient(Client => new AppPlatformCertificateCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -403,8 +406,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="certificateName"> The name of the certificate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformCertificateResource>> GetAppPlatformCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -426,8 +429,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="certificateName"> The name of the certificate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformCertificateResource> GetAppPlatformCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -438,7 +441,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformGatewayResources and their operations over a AppPlatformGatewayResource. </returns>
         public virtual AppPlatformGatewayCollection GetAppPlatformGateways()
         {
-            return GetCachedClient(Client => new AppPlatformGatewayCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -456,8 +459,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="gatewayName"> The name of Spring Cloud Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformGatewayResource>> GetAppPlatformGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
@@ -479,8 +482,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="gatewayName"> The name of Spring Cloud Gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformGatewayResource> GetAppPlatformGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
@@ -491,7 +494,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformApiPortalResources and their operations over a AppPlatformApiPortalResource. </returns>
         public virtual AppPlatformApiPortalCollection GetAppPlatformApiPortals()
         {
-            return GetCachedClient(Client => new AppPlatformApiPortalCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformApiPortalCollection(client, Id));
         }
 
         /// <summary>
@@ -509,8 +512,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="apiPortalName"> The name of API portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformApiPortalResource>> GetAppPlatformApiPortalAsync(string apiPortalName, CancellationToken cancellationToken = default)
         {
@@ -532,8 +535,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="apiPortalName"> The name of API portal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformApiPortalResource> GetAppPlatformApiPortal(string apiPortalName, CancellationToken cancellationToken = default)
         {
@@ -1223,7 +1226,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformDeploymentResource> GetDeploymentsAsync(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
@@ -1246,7 +1249,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="version"> Version of the deployments to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformDeploymentResource> GetDeployments(IEnumerable<string> version = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);

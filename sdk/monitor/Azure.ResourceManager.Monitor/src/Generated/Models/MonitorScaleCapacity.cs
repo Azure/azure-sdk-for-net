@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The number of instances that can be used during this profile. </summary>
     public partial class MonitorScaleCapacity
     {
-        /// <summary> Initializes a new instance of MonitorScaleCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorScaleCapacity"/>. </summary>
         /// <param name="minimum"> the minimum number of instances for the resource. </param>
         /// <param name="maximum"> the maximum number of instances for the resource. The actual maximum number of instances is limited by the cores that are available in the subscription. </param>
         /// <param name="default"> the number of instances that will be set if metrics are not available for evaluation. The default is only used if the current instance count is lower than the default. </param>

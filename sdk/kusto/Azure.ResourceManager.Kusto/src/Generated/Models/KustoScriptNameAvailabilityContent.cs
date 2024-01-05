@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A script name availability request. </summary>
     public partial class KustoScriptNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoScriptNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoScriptNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Script name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoScriptNameAvailabilityContent(string name)
@@ -22,6 +22,15 @@ namespace Azure.ResourceManager.Kusto.Models
 
             Name = name;
             ResourceType = KustoScriptType.MicrosoftKustoClustersDatabasesScripts;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoScriptNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Script name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Kusto/clusters/databases/scripts. </param>
+        internal KustoScriptNameAvailabilityContent(string name, KustoScriptType resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Script name. </summary>

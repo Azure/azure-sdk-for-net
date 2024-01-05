@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The available service alias. </summary>
     public partial class AvailableServiceAlias : ResourceData
     {
-        /// <summary> Initializes a new instance of AvailableServiceAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceAlias"/>. </summary>
         internal AvailableServiceAlias()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceAlias"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

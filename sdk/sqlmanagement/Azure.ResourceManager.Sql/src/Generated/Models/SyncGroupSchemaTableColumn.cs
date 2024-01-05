@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of column in sync group table. </summary>
     public partial class SyncGroupSchemaTableColumn
     {
-        /// <summary> Initializes a new instance of SyncGroupSchemaTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupSchemaTableColumn"/>. </summary>
         public SyncGroupSchemaTableColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncGroupSchemaTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupSchemaTableColumn"/>. </summary>
         /// <param name="quotedName"> Quoted name of sync group table column. </param>
         /// <param name="dataSize"> Data size of the column. </param>
         /// <param name="dataType"> Data type of the column. </param>

@@ -30,7 +30,7 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(rule, nameof(rule));
 
-            Kind = "rule-engine";
+            Kind = QueueSelectorAttachmentKind.RuleEngine;
             Rule = rule;
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("rule"u8);
             writer.WriteObjectValue(Rule);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlServerJobCredential along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlServerJobCredentialResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlServerJobCredentialResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerJobAgentResource" /> using the GetSqlServerJobCredential method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerJobCredentialResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerJobCredentialResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerJobAgentResource"/> using the GetSqlServerJobCredential method.
     /// </summary>
     public partial class SqlServerJobCredentialResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerJobCredentialResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="jobAgentName"> The jobAgentName. </param>
+        /// <param name="credentialName"> The credentialName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly JobCredentialsRestOperations _sqlServerJobCredentialJobCredentialsRestClient;
         private readonly SqlServerJobCredentialData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/credentials";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobCredentialResource"/> class for mocking. </summary>
         protected SqlServerJobCredentialResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlServerJobCredentialResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlServerJobCredentialResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerJobCredentialResource(ArmClient client, SqlServerJobCredentialData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/credentials";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

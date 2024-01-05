@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> An Azure Machine Learning compute. </summary>
     public partial class AmlCompute : MachineLearningComputeProperties
     {
-        /// <summary> Initializes a new instance of AmlCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlCompute"/>. </summary>
         public AmlCompute()
         {
             ComputeType = ComputeType.AmlCompute;
         }
 
-        /// <summary> Initializes a new instance of AmlCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlCompute"/>. </summary>
         /// <param name="computeType"> The type of compute. </param>
         /// <param name="computeLocation"> Location for the underlying compute. </param>
         /// <param name="provisioningState"> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </param>

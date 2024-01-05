@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The UnknownPlacementPolicyProperties. </summary>
     internal partial class UnknownPlacementPolicyProperties : PlacementPolicyProperties
     {
-        /// <summary> Initializes a new instance of UnknownPlacementPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPlacementPolicyProperties"/>. </summary>
         /// <param name="policyType"> placement policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>

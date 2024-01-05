@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Validation result for configuration service settings. </summary>
     public partial class AppPlatformConfigurationServiceSettingsValidateResult
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceSettingsValidateResult"/>. </summary>
         internal AppPlatformConfigurationServiceSettingsValidateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceSettingsValidateResult"/>. </summary>
         /// <param name="gitPropertyValidationResult"> Validation result for configuration service settings. </param>
         internal AppPlatformConfigurationServiceSettingsValidateResult(AppPlatformConfigurationServiceGitValidateResult gitPropertyValidationResult)
         {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specification of destinations that can be used in data flows. </summary>
     public partial class DestinationsSpec
     {
-        /// <summary> Initializes a new instance of DestinationsSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DestinationsSpec"/>. </summary>
         public DestinationsSpec()
         {
             LogAnalytics = new ChangeTrackingList<LogAnalyticsDestination>();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
             StorageAccounts = new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>();
         }
 
-        /// <summary> Initializes a new instance of DestinationsSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DestinationsSpec"/>. </summary>
         /// <param name="logAnalytics"> List of Log Analytics destinations. </param>
         /// <param name="monitoringAccounts"> List of monitoring account destinations. </param>
         /// <param name="azureMonitorMetrics"> Azure Monitor Metrics destination. </param>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Properties of an async benefit utilization summaries request. </summary>
     public partial class BenefitUtilizationSummariesContent
     {
-        /// <summary> Initializes a new instance of BenefitUtilizationSummariesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummariesContent"/>. </summary>
         /// <param name="grain"> The grain the summaries data is served at in the report. Accepted values are 'Daily' or 'Monthly'. </param>
         /// <param name="startOn"> The start date of the summaries data that will be served in the report. </param>
         /// <param name="endOn"> The end date of the summaries data that will be served in the report. </param>
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             EndOn = endOn;
         }
 
-        /// <summary> Initializes a new instance of BenefitUtilizationSummariesContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummariesContent"/>. </summary>
         /// <param name="billingAccountId"> Billing account the benefit utilization summaries report is for. Required for billing account and billing profile scopes. Not supported for any benefit scopes. </param>
         /// <param name="billingProfileId"> Billing profile id the benefit utilization summaries report is for. Required for billing profile scope. Not supported for billing account or any benefit scopes. </param>
         /// <param name="benefitOrderId"> Benefit order id the benefit utilization summaries report is for. Required for benefit order and benefit id scopes. Not supported for any billing scopes. </param>

@@ -13,35 +13,23 @@ namespace Azure.Communication.JobRouter
     /// <summary> A queue that can contain jobs to be routed. </summary>
     public partial class RouterQueue
     {
-        /// <summary> Initializes a new instance of RouterQueue. </summary>
-        /// <param name="etag"> Concurrency Token. </param>
-        /// <param name="id"> The Id of this queue. </param>
-        /// <param name="name"> The name of this queue. </param>
-        /// <param name="distributionPolicyId">
-        /// The ID of the distribution policy that will determine how a job is distributed
-        /// to workers.
-        /// </param>
-        /// <param name="labels">
-        /// A set of key/value pairs that are identifying attributes used by the rules
-        /// engines to make decisions.
-        /// </param>
-        /// <param name="exceptionPolicyId">
-        /// (Optional) The ID of the exception policy that determines various job
-        /// escalation rules.
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="RouterQueue"/>. </summary>
+        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a queue. </param>
+        /// <param name="name"> Friendly name of this queue. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy that will determine how a job is distributed to workers. </param>
+        /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
+        /// <param name="exceptionPolicyId"> Id of an exception policy that determines various job escalation rules. </param>
         internal RouterQueue(string etag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             Name = name;
             DistributionPolicyId = distributionPolicyId;
             _labels = labels;
             ExceptionPolicyId = exceptionPolicyId;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
-        /// <summary> The Id of this queue. </summary>
+        /// <summary> Id of a queue. </summary>
         public string Id { get; }
     }
 }

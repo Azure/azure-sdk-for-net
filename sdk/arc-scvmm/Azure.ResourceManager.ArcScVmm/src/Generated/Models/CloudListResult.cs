@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> List of Clouds. </summary>
     internal partial class CloudListResult
     {
-        /// <summary> Initializes a new instance of CloudListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudListResult"/>. </summary>
         internal CloudListResult()
         {
             Value = new ChangeTrackingList<ScVmmCloudData>();
         }
 
-        /// <summary> Initializes a new instance of CloudListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudListResult"/>. </summary>
         /// <param name="value"> List of Clouds. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal CloudListResult(IReadOnlyList<ScVmmCloudData> value, string nextLink)

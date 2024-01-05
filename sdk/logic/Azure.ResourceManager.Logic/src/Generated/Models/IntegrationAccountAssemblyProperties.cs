@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The assembly properties definition. </summary>
     public partial class IntegrationAccountAssemblyProperties : ArtifactContentProperties
     {
-        /// <summary> Initializes a new instance of IntegrationAccountAssemblyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAssemblyProperties"/>. </summary>
         /// <param name="assemblyName"> The assembly name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyName"/> is null. </exception>
         public IntegrationAccountAssemblyProperties(string assemblyName)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Logic.Models
             AssemblyName = assemblyName;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAssemblyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAssemblyProperties"/>. </summary>
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>

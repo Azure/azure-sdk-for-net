@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabric along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabric method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabric method.
     /// </summary>
     public partial class NetworkFabricResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFabricName"> The networkFabricName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly NetworkFabricsRestOperations _networkFabricRestClient;
         private readonly NetworkFabricData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkFabrics";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricResource"/> class for mocking. </summary>
         protected NetworkFabricResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricResource(ArmClient client, NetworkFabricData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkFabrics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkToNetworkInterconnectResources and their operations over a NetworkToNetworkInterconnectResource. </returns>
         public virtual NetworkToNetworkInterconnectCollection GetNetworkToNetworkInterconnects()
         {
-            return GetCachedClient(Client => new NetworkToNetworkInterconnectCollection(Client, Id));
+            return GetCachedClient(client => new NetworkToNetworkInterconnectCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkToNetworkInterconnectResource>> GetNetworkToNetworkInterconnectAsync(string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="networkToNetworkInterconnectName"> Name of the Network to Network Interconnect. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkToNetworkInterconnectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkToNetworkInterconnectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkToNetworkInterconnectResource> GetNetworkToNetworkInterconnect(string networkToNetworkInterconnectName, CancellationToken cancellationToken = default)
         {

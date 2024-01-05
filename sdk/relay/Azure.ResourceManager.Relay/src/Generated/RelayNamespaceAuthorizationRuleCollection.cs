@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RelayNamespaceAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="RelayNamespaceAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="RelayNamespaceResource" />.
-    /// To get a <see cref="RelayNamespaceAuthorizationRuleCollection" /> instance call the GetRelayNamespaceAuthorizationRules method from an instance of <see cref="RelayNamespaceResource" />.
+    /// A class representing a collection of <see cref="RelayNamespaceAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="RelayNamespaceAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="RelayNamespaceResource"/>.
+    /// To get a <see cref="RelayNamespaceAuthorizationRuleCollection"/> instance call the GetRelayNamespaceAuthorizationRules method from an instance of <see cref="RelayNamespaceResource"/>.
     /// </summary>
     public partial class RelayNamespaceAuthorizationRuleCollection : ArmCollection, IEnumerable<RelayNamespaceAuthorizationRuleResource>, IAsyncEnumerable<RelayNamespaceAuthorizationRuleResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RelayNamespaceAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RelayNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RelayNamespaceAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RelayNamespaceAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RelayNamespaceAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RelayNamespaceAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayNamespaceAuthorizationRuleNamespacesRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Microsoft Defender settings for the security profile threat detection. </summary>
     internal partial class ManagedClusterSecurityProfileDefenderSecurityMonitoring
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefenderSecurityMonitoring. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityMonitoring"/>. </summary>
         public ManagedClusterSecurityProfileDefenderSecurityMonitoring()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefenderSecurityMonitoring. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityMonitoring"/>. </summary>
         /// <param name="isSecurityMonitoringEnabled"> Whether to enable Defender threat detection. </param>
         internal ManagedClusterSecurityProfileDefenderSecurityMonitoring(bool? isSecurityMonitoringEnabled)
         {

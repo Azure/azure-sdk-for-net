@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> FQDN Outbound Rule for the managed network of a machine learning workspace. </summary>
     public partial class FqdnOutboundRule : MachineLearningOutboundRule
     {
-        /// <summary> Initializes a new instance of FqdnOutboundRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="FqdnOutboundRule"/>. </summary>
         public FqdnOutboundRule()
         {
             OutboundRuleType = OutboundRuleType.Fqdn;
         }
 
-        /// <summary> Initializes a new instance of FqdnOutboundRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="FqdnOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>

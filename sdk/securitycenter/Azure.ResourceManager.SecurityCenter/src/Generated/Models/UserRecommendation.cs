@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents a user that is recommended to be allowed for a certain rule. </summary>
     public partial class UserRecommendation
     {
-        /// <summary> Initializes a new instance of UserRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserRecommendation"/>. </summary>
         public UserRecommendation()
         {
         }
 
-        /// <summary> Initializes a new instance of UserRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserRecommendation"/>. </summary>
         /// <param name="username"> Represents a user that is recommended to be allowed for a certain rule. </param>
         /// <param name="recommendationAction"> The recommendation action of the machine or rule. </param>
         internal UserRecommendation(string username, RecommendationAction? recommendationAction)

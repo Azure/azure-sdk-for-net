@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of a monitoring event. </summary>
     public partial class SiteRecoveryEventProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEventProperties"/>. </summary>
         internal SiteRecoveryEventProperties()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEventProperties"/>. </summary>
         /// <param name="eventCode"> The Id of the monitoring event. </param>
         /// <param name="description"> The event name. </param>
         /// <param name="eventType"> The type of the event. for example: VM Health, Server Health, Job Failure etc. </param>

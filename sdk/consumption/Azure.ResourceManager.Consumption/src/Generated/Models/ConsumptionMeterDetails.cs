@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> The properties of the meter detail. </summary>
     public partial class ConsumptionMeterDetails
     {
-        /// <summary> Initializes a new instance of ConsumptionMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMeterDetails"/>. </summary>
         internal ConsumptionMeterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMeterDetails"/>. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>

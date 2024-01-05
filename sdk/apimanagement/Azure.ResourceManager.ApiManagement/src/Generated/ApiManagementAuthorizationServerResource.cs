@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementAuthorizationServer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementAuthorizationServerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementAuthorizationServerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementAuthorizationServer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementAuthorizationServerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementAuthorizationServerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementAuthorizationServer method.
     /// </summary>
     public partial class ApiManagementAuthorizationServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementAuthorizationServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="authsid"> The authsid. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string authsid)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly AuthorizationServerRestOperations _apiManagementAuthorizationServerAuthorizationServerRestClient;
         private readonly ApiManagementAuthorizationServerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/authorizationServers";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementAuthorizationServerResource"/> class for mocking. </summary>
         protected ApiManagementAuthorizationServerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementAuthorizationServerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementAuthorizationServerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementAuthorizationServerResource(ArmClient client, ApiManagementAuthorizationServerData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/authorizationServers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

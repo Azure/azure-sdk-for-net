@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> HTTP header and it's value. </summary>
     public partial class HttpHeaderConfiguration
     {
-        /// <summary> Initializes a new instance of HttpHeaderConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpHeaderConfiguration"/>. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>

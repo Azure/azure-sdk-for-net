@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing a ScalingPlan along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScalingPlanResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScalingPlanResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetScalingPlan method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScalingPlanResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScalingPlanResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScalingPlan method.
     /// </summary>
     public partial class ScalingPlanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScalingPlanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scalingPlanName"> The scalingPlanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scalingPlanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly ScalingPlansRestOperations _scalingPlanRestClient;
         private readonly ScalingPlanData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/scalingPlans";
+
         /// <summary> Initializes a new instance of the <see cref="ScalingPlanResource"/> class for mocking. </summary>
         protected ScalingPlanResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScalingPlanResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScalingPlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScalingPlanResource(ArmClient client, ScalingPlanData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/scalingPlans";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of ScalingPlanPooledScheduleResources and their operations over a ScalingPlanPooledScheduleResource. </returns>
         public virtual ScalingPlanPooledScheduleCollection GetScalingPlanPooledSchedules()
         {
-            return GetCachedClient(Client => new ScalingPlanPooledScheduleCollection(Client, Id));
+            return GetCachedClient(client => new ScalingPlanPooledScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScalingPlanPooledScheduleResource>> GetScalingPlanPooledScheduleAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScalingPlanPooledScheduleResource> GetScalingPlanPooledSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of ScalingPlanPersonalScheduleResources and their operations over a ScalingPlanPersonalScheduleResource. </returns>
         public virtual ScalingPlanPersonalScheduleCollection GetScalingPlanPersonalSchedules()
         {
-            return GetCachedClient(Client => new ScalingPlanPersonalScheduleCollection(Client, Id));
+            return GetCachedClient(client => new ScalingPlanPersonalScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScalingPlanPersonalScheduleResource>> GetScalingPlanPersonalScheduleAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScalingPlanPersonalScheduleResource> GetScalingPlanPersonalSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {

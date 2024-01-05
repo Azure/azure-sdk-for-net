@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Properties of availability state. </summary>
     public partial class ResourceHealthAvailabilityStatusProperties
     {
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusProperties"/>. </summary>
         internal ResourceHealthAvailabilityStatusProperties()
         {
             RecommendedActions = new ChangeTrackingList<ResourceHealthRecommendedAction>();
             ServiceImpactingEvents = new ChangeTrackingList<ServiceImpactingEvent>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusProperties"/>. </summary>
         /// <param name="availabilityState"> Availability status of the resource. When it is null, this availabilityStatus object represents an availability impacting event. </param>
         /// <param name="title"> Title description of the availability status. </param>
         /// <param name="summary"> Summary description of the availability status. </param>

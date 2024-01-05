@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> The UnknownScriptExecutionParameter. </summary>
     internal partial class UnknownScriptExecutionParameter : ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of UnknownScriptExecutionParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownScriptExecutionParameter"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
         internal UnknownScriptExecutionParameter(string name, ScriptExecutionParameterType parameterType) : base(name, parameterType)

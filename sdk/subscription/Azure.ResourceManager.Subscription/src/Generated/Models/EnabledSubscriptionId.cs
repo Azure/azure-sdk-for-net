@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> The ID of the subscriptions that is being enabled. </summary>
     public partial class EnabledSubscriptionId
     {
-        /// <summary> Initializes a new instance of EnabledSubscriptionId. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledSubscriptionId"/>. </summary>
         internal EnabledSubscriptionId()
         {
         }
 
-        /// <summary> Initializes a new instance of EnabledSubscriptionId. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnabledSubscriptionId"/>. </summary>
         /// <param name="subscriptionId"> The ID of the subscriptions that is being enabled. </param>
         internal EnabledSubscriptionId(string subscriptionId)
         {

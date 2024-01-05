@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Information of community gallery if current gallery is shared to community. </summary>
     public partial class CommunityGalleryInfo
     {
-        /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryInfo"/>. </summary>
         public CommunityGalleryInfo()
         {
             PublicNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryInfo. </summary>
-        /// <param name="publisherUriString"> The link to the publisher website. Visible to all users. </param>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryInfo"/>. </summary>
+        /// <param name="publisherUri"> The link to the publisher website. Visible to all users. </param>
         /// <param name="publisherContact"> Community gallery publisher support email. The email address of the publisher. Visible to all users. </param>
         /// <param name="eula"> End-user license agreement for community gallery image. </param>
         /// <param name="publicNamePrefix"> The prefix of the gallery name that will be displayed publicly. Visible to all users. </param>
         /// <param name="communityGalleryEnabled"> Contains info about whether community gallery sharing is enabled. </param>
         /// <param name="publicNames"> Community gallery public name list. </param>
-        internal CommunityGalleryInfo(string publisherUriString, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IReadOnlyList<string> publicNames)
+        internal CommunityGalleryInfo(Uri publisherUri, string publisherContact, string eula, string publicNamePrefix, bool? communityGalleryEnabled, IReadOnlyList<string> publicNames)
         {
-            PublisherUriString = publisherUriString;
+            PublisherUri = publisherUri;
             PublisherContact = publisherContact;
             Eula = eula;
             PublicNamePrefix = publicNamePrefix;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The link to the publisher website. Visible to all users. </summary>
-        public string PublisherUriString { get; set; }
+        public Uri PublisherUri { get; set; }
         /// <summary> Community gallery publisher support email. The email address of the publisher. Visible to all users. </summary>
         public string PublisherContact { get; set; }
         /// <summary> End-user license agreement for community gallery image. </summary>

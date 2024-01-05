@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> ARM resource for a static site when patching. </summary>
     public partial class StaticSitePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of StaticSitePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSitePatch"/>. </summary>
         public StaticSitePatch()
         {
             CustomDomains = new ChangeTrackingList<string>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
         }
 
-        /// <summary> Initializes a new instance of StaticSitePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSitePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

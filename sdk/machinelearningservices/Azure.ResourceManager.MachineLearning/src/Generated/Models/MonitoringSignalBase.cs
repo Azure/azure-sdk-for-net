@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of MonitoringSignalBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
         protected MonitoringSignalBase()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MonitoringSignalBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>

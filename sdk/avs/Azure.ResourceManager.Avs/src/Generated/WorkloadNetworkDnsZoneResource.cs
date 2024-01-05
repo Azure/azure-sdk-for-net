@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a WorkloadNetworkDnsZone along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkDnsZoneResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkDnsZoneResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkDnsZone method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkDnsZoneResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkDnsZoneResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkDnsZone method.
     /// </summary>
     public partial class WorkloadNetworkDnsZoneResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkloadNetworkDnsZoneResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="dnsZoneId"> The dnsZoneId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string dnsZoneId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dnsZones/{dnsZoneId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Avs
         private readonly WorkloadNetworksRestOperations _workloadNetworkDnsZoneWorkloadNetworksRestClient;
         private readonly WorkloadNetworkDnsZoneData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/dnsZones";
+
         /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkDnsZoneResource"/> class for mocking. </summary>
         protected WorkloadNetworkDnsZoneResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkloadNetworkDnsZoneResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkDnsZoneResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkloadNetworkDnsZoneResource(ArmClient client, WorkloadNetworkDnsZoneData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/dnsZones";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

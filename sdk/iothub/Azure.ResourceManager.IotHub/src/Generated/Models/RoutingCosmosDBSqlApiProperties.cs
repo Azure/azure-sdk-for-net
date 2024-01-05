@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties related to a cosmos DB sql container endpoint. </summary>
     public partial class RoutingCosmosDBSqlApiProperties
     {
-        /// <summary> Initializes a new instance of RoutingCosmosDBSqlApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingCosmosDBSqlApiProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <param name="endpointUri"> The url of the cosmos DB account. It must include the protocol https://. </param>
         /// <param name="databaseName"> The name of the cosmos DB database in the cosmos DB account. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
             ContainerName = containerName;
         }
 
-        /// <summary> Initializes a new instance of RoutingCosmosDBSqlApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingCosmosDBSqlApiProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <param name="id"> Id of the cosmos DB sql container endpoint. </param>
         /// <param name="subscriptionId"> The subscription identifier of the cosmos DB account. </param>

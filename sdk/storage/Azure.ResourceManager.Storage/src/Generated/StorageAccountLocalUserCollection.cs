@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StorageAccountLocalUserResource" /> and their operations.
-    /// Each <see cref="StorageAccountLocalUserResource" /> in the collection will belong to the same instance of <see cref="StorageAccountResource" />.
-    /// To get a <see cref="StorageAccountLocalUserCollection" /> instance call the GetStorageAccountLocalUsers method from an instance of <see cref="StorageAccountResource" />.
+    /// A class representing a collection of <see cref="StorageAccountLocalUserResource"/> and their operations.
+    /// Each <see cref="StorageAccountLocalUserResource"/> in the collection will belong to the same instance of <see cref="StorageAccountResource"/>.
+    /// To get a <see cref="StorageAccountLocalUserCollection"/> instance call the GetStorageAccountLocalUsers method from an instance of <see cref="StorageAccountResource"/>.
     /// </summary>
     public partial class StorageAccountLocalUserCollection : ArmCollection, IEnumerable<StorageAccountLocalUserResource>, IAsyncEnumerable<StorageAccountLocalUserResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Storage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageAccountLocalUserResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageAccountLocalUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageAccountLocalUserResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountLocalUserLocalUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Storage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageAccountLocalUserResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageAccountLocalUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageAccountLocalUserResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountLocalUserLocalUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

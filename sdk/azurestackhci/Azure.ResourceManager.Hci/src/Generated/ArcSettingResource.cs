@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing an ArcSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArcSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArcSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource" /> using the GetArcSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArcSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArcSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetArcSetting method.
     /// </summary>
     public partial class ArcSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArcSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="arcSettingName"> The arcSettingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Hci
         private readonly ArcSettingsRestOperations _arcSettingRestClient;
         private readonly ArcSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/arcSettings";
+
         /// <summary> Initializes a new instance of the <see cref="ArcSettingResource"/> class for mocking. </summary>
         protected ArcSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArcSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArcSettingResource(ArmClient client, ArcSettingData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/arcSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of ArcExtensionResources and their operations over a ArcExtensionResource. </returns>
         public virtual ArcExtensionCollection GetArcExtensions()
         {
-            return GetCachedClient(Client => new ArcExtensionCollection(Client, Id));
+            return GetCachedClient(client => new ArcExtensionCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +113,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArcExtensionResource>> GetArcExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +136,8 @@ namespace Azure.ResourceManager.Hci
         /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArcExtensionResource> GetArcExtension(string extensionName, CancellationToken cancellationToken = default)
         {

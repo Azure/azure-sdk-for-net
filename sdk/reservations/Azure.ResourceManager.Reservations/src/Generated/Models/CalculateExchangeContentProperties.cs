@@ -13,12 +13,23 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Calculate exchange request properties. </summary>
     public partial class CalculateExchangeContentProperties
     {
-        /// <summary> Initializes a new instance of CalculateExchangeContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeContentProperties"/>. </summary>
         public CalculateExchangeContentProperties()
         {
             ReservationsToPurchase = new ChangeTrackingList<ReservationPurchaseContent>();
             SavingsPlansToPurchase = new ChangeTrackingList<SavingsPlanPurchase>();
             ReservationsToExchange = new ChangeTrackingList<ReservationToReturn>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeContentProperties"/>. </summary>
+        /// <param name="reservationsToPurchase"> List of reservations that are being purchased in this exchange. </param>
+        /// <param name="savingsPlansToPurchase"> List of savings plans that are being purchased in this exchange. </param>
+        /// <param name="reservationsToExchange"> List of reservations that are being returned in this exchange. </param>
+        internal CalculateExchangeContentProperties(IList<ReservationPurchaseContent> reservationsToPurchase, IList<SavingsPlanPurchase> savingsPlansToPurchase, IList<ReservationToReturn> reservationsToExchange)
+        {
+            ReservationsToPurchase = reservationsToPurchase;
+            SavingsPlansToPurchase = savingsPlansToPurchase;
+            ReservationsToExchange = reservationsToExchange;
         }
 
         /// <summary> List of reservations that are being purchased in this exchange. </summary>

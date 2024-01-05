@@ -23,7 +23,7 @@ namespace Azure.Communication.JobRouter
             string key = default;
             LabelOperator labelOperator = default;
             Optional<BinaryData> value = default;
-            Optional<double> expiresAfterSeconds = default;
+            Optional<TimeSpan> expiresAfterSeconds = default;
             Optional<bool> expedite = default;
             Optional<RouterWorkerSelectorStatus> status = default;
             Optional<DateTimeOffset> expiresAt = default;
@@ -50,11 +50,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("expiresAfterSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    expiresAfterSeconds = property.Value.GetDouble();
+                    ReadExpiresAfter(property, ref expiresAfterSeconds);
                     continue;
                 }
                 if (property.NameEquals("expedite"u8))

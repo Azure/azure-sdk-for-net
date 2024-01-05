@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents a RegistrationInfo definition. </summary>
     public partial class HostPoolRegistrationInfoPatch
     {
-        /// <summary> Initializes a new instance of HostPoolRegistrationInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolRegistrationInfoPatch"/>. </summary>
         public HostPoolRegistrationInfoPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of HostPoolRegistrationInfoPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolRegistrationInfoPatch"/>. </summary>
         /// <param name="expireOn"> Expiration time of registration token. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         internal HostPoolRegistrationInfoPatch(DateTimeOffset? expireOn, HostPoolRegistrationTokenOperation? registrationTokenOperation)

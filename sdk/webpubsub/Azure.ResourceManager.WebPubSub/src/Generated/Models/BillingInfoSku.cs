@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> The billing information of the resource. </summary>
     public partial class BillingInfoSku
     {
-        /// <summary> Initializes a new instance of BillingInfoSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInfoSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of BillingInfoSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInfoSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///

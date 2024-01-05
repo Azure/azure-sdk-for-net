@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document classifier info. </summary>
     public partial class DocumentClassifierDetails
     {
-        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="serviceVersion"> API version used to create this document classifier. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DocumentTypes = documentTypes;
         }
 
-        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>

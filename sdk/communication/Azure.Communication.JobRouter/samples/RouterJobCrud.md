@@ -47,9 +47,9 @@ Response<ClassificationPolicy> classificationPolicy = routerAdministrationClient
         QueueSelectorAttachments =
         {
             new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal,
-                new LabelValue(jobQueue.Value.Id))),
+                new RouterValue(jobQueue.Value.Id))),
         },
-        PrioritizationRule = new StaticRouterRule(new LabelValue(10))
+        PrioritizationRule = new StaticRouterRule(new RouterValue(10))
     });
 
 string jobWithCpId = "job-with-cp-id";
@@ -143,7 +143,7 @@ Console.WriteLine($"Job has been successfully assigned with a worker with assign
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
 // A worker can also choose to decline an offer
 
-Response declineOffer = routerClient.DeclineJobOffer(worker.Value.Id, issuedOffer.OfferId);
+Response declineOffer = routerClient.DeclineJobOffer(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
 ```
 
 ## Complete a job
@@ -151,7 +151,7 @@ Response declineOffer = routerClient.DeclineJobOffer(worker.Value.Id, issuedOffe
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CompleteRouterJob
 // Once a worker completes the job, it needs to mark the job as completed
 
-Response completedJobResult = routerClient.CompleteJob(jobId, new CompleteJobOptions(acceptedJobOffer.Value.AssignmentId));
+Response completedJobResult = routerClient.CompleteJob(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
 queriedJob = routerClient.GetJob(jobId);
 Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.Status}"); // "Completed"
@@ -160,7 +160,7 @@ Console.WriteLine($"Job has been successfully completed. Current status: {querie
 ## Close a job
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CloseRouterJob
-Response closeJobResult = routerClient.CloseJob(jobId, new CloseJobOptions(acceptedJobOffer.Value.AssignmentId));
+Response closeJobResult = routerClient.CloseJob(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
 queriedJob = routerClient.GetJob(jobId);
 Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.Status}"); // "Closed"
@@ -169,7 +169,7 @@ Console.WriteLine($"Job has been successfully closed. Current status: {queriedJo
 ## List jobs
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobs
-Pageable<RouterJob> routerJobs = routerClient.GetJobs();
+Pageable<RouterJob> routerJobs = routerClient.GetJobs(null, null);
 foreach (Page<RouterJob> asPage in routerJobs.AsPages(pageSizeHint: 10))
 {
     foreach (RouterJob? _job in asPage.Values)

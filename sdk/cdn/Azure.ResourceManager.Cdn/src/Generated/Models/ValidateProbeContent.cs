@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Input of the validate probe API. </summary>
     public partial class ValidateProbeContent
     {
-        /// <summary> Initializes a new instance of ValidateProbeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateProbeContent"/>. </summary>
         /// <param name="probeUri"> The probe URL to validate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="probeUri"/> is null. </exception>
         public ValidateProbeContent(Uri probeUri)

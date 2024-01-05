@@ -23,6 +23,14 @@ jobs:
     name: azsdk-pool-mms-ubuntu-2204-general
     vmImage: ubuntu-22.04
   steps:
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      parameters:
+        Paths:
+          - 'sdk/**/*.yml'
+          - '!sdk/**/test-recordings/*'
+          - '!sdk/**/recordings/*'
+          - '!sdk/**/SessionRecords/*'
+          - '!sdk/**/session-records/*'
     - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
     # This covers our public repos.

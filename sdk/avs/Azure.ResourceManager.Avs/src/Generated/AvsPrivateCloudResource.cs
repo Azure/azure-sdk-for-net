@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing an AvsPrivateCloud along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AvsPrivateCloudResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAvsPrivateCloudResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAvsPrivateCloud method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AvsPrivateCloudResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAvsPrivateCloudResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAvsPrivateCloud method.
     /// </summary>
     public partial class AvsPrivateCloudResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvsPrivateCloudResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.Avs
         private readonly PrivateCloudsRestOperations _avsPrivateCloudPrivateCloudsRestClient;
         private readonly AvsPrivateCloudData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds";
+
         /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudResource"/> class for mocking. </summary>
         protected AvsPrivateCloudResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AvsPrivateCloudResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AvsPrivateCloudResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AvsPrivateCloudResource(ArmClient client, AvsPrivateCloudData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudClusterResources and their operations over a AvsPrivateCloudClusterResource. </returns>
         public virtual AvsPrivateCloudClusterCollection GetAvsPrivateCloudClusters()
         {
-            return GetCachedClient(Client => new AvsPrivateCloudClusterCollection(Client, Id));
+            return GetCachedClient(client => new AvsPrivateCloudClusterCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvsPrivateCloudClusterResource>> GetAvsPrivateCloudClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="clusterName"> Name of the cluster in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvsPrivateCloudClusterResource> GetAvsPrivateCloudCluster(string clusterName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of HcxEnterpriseSiteResources and their operations over a HcxEnterpriseSiteResource. </returns>
         public virtual HcxEnterpriseSiteCollection GetHcxEnterpriseSites()
         {
-            return GetCachedClient(Client => new HcxEnterpriseSiteCollection(Client, Id));
+            return GetCachedClient(client => new HcxEnterpriseSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HcxEnterpriseSiteResource>> GetHcxEnterpriseSiteAsync(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="hcxEnterpriseSiteName"> Name of the HCX Enterprise Site in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hcxEnterpriseSiteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hcxEnterpriseSiteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HcxEnterpriseSiteResource> GetHcxEnterpriseSite(string hcxEnterpriseSiteName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +202,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of ExpressRouteAuthorizationResources and their operations over a ExpressRouteAuthorizationResource. </returns>
         public virtual ExpressRouteAuthorizationCollection GetExpressRouteAuthorizations()
         {
-            return GetCachedClient(Client => new ExpressRouteAuthorizationCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteAuthorizationCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +220,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteAuthorizationResource>> GetExpressRouteAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +243,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="authorizationName"> Name of the ExpressRoute Circuit Authorization in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteAuthorizationResource> GetExpressRouteAuthorization(string authorizationName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +255,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of GlobalReachConnectionResources and their operations over a GlobalReachConnectionResource. </returns>
         public virtual GlobalReachConnectionCollection GetGlobalReachConnections()
         {
-            return GetCachedClient(Client => new GlobalReachConnectionCollection(Client, Id));
+            return GetCachedClient(client => new GlobalReachConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +273,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GlobalReachConnectionResource>> GetGlobalReachConnectionAsync(string globalReachConnectionName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +296,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="globalReachConnectionName"> Name of the global reach connection in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalReachConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalReachConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GlobalReachConnectionResource> GetGlobalReachConnection(string globalReachConnectionName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +308,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkResources and their operations over a WorkloadNetworkResource. </returns>
         public virtual WorkloadNetworkCollection GetWorkloadNetworks()
         {
-            return GetCachedClient(Client => new WorkloadNetworkCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -354,7 +357,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkSegmentResources and their operations over a WorkloadNetworkSegmentResource. </returns>
         public virtual WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments()
         {
-            return GetCachedClient(Client => new WorkloadNetworkSegmentCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkSegmentCollection(client, Id));
         }
 
         /// <summary>
@@ -372,8 +375,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="segmentId"> NSX Segment identifier. Generally the same as the Segment's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkSegmentResource>> GetWorkloadNetworkSegmentAsync(string segmentId, CancellationToken cancellationToken = default)
         {
@@ -395,8 +398,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="segmentId"> NSX Segment identifier. Generally the same as the Segment's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkSegmentResource> GetWorkloadNetworkSegment(string segmentId, CancellationToken cancellationToken = default)
         {
@@ -407,7 +410,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkDhcpResources and their operations over a WorkloadNetworkDhcpResource. </returns>
         public virtual WorkloadNetworkDhcpCollection GetWorkloadNetworkDhcps()
         {
-            return GetCachedClient(Client => new WorkloadNetworkDhcpCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkDhcpCollection(client, Id));
         }
 
         /// <summary>
@@ -425,8 +428,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="dhcpId"> NSX DHCP identifier. Generally the same as the DHCP display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkDhcpResource>> GetWorkloadNetworkDhcpAsync(string dhcpId, CancellationToken cancellationToken = default)
         {
@@ -448,8 +451,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="dhcpId"> NSX DHCP identifier. Generally the same as the DHCP display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkDhcpResource> GetWorkloadNetworkDhcp(string dhcpId, CancellationToken cancellationToken = default)
         {
@@ -460,7 +463,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkGatewayResources and their operations over a WorkloadNetworkGatewayResource. </returns>
         public virtual WorkloadNetworkGatewayCollection GetWorkloadNetworkGateways()
         {
-            return GetCachedClient(Client => new WorkloadNetworkGatewayCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -478,8 +481,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkGatewayResource>> GetWorkloadNetworkGatewayAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
@@ -501,8 +504,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="gatewayId"> NSX Gateway identifier. Generally the same as the Gateway's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkGatewayResource> GetWorkloadNetworkGateway(string gatewayId, CancellationToken cancellationToken = default)
         {
@@ -513,7 +516,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkPortMirroringProfileResources and their operations over a WorkloadNetworkPortMirroringProfileResource. </returns>
         public virtual WorkloadNetworkPortMirroringProfileCollection GetWorkloadNetworkPortMirroringProfiles()
         {
-            return GetCachedClient(Client => new WorkloadNetworkPortMirroringProfileCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkPortMirroringProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -531,8 +534,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="portMirroringId"> NSX Port Mirroring identifier. Generally the same as the Port Mirroring display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkPortMirroringProfileResource>> GetWorkloadNetworkPortMirroringProfileAsync(string portMirroringId, CancellationToken cancellationToken = default)
         {
@@ -554,8 +557,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="portMirroringId"> NSX Port Mirroring identifier. Generally the same as the Port Mirroring display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkPortMirroringProfileResource> GetWorkloadNetworkPortMirroringProfile(string portMirroringId, CancellationToken cancellationToken = default)
         {
@@ -566,7 +569,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkVmGroupResources and their operations over a WorkloadNetworkVmGroupResource. </returns>
         public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
         {
-            return GetCachedClient(Client => new WorkloadNetworkVmGroupCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkVmGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -584,8 +587,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetWorkloadNetworkVmGroupAsync(string vmGroupId, CancellationToken cancellationToken = default)
         {
@@ -607,8 +610,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="vmGroupId"> NSX VM Group identifier. Generally the same as the VM Group's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkVmGroupResource> GetWorkloadNetworkVmGroup(string vmGroupId, CancellationToken cancellationToken = default)
         {
@@ -619,7 +622,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkVirtualMachineResources and their operations over a WorkloadNetworkVirtualMachineResource. </returns>
         public virtual WorkloadNetworkVirtualMachineCollection GetWorkloadNetworkVirtualMachines()
         {
-            return GetCachedClient(Client => new WorkloadNetworkVirtualMachineCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkVirtualMachineCollection(client, Id));
         }
 
         /// <summary>
@@ -637,8 +640,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkVirtualMachineResource>> GetWorkloadNetworkVirtualMachineAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
@@ -660,8 +663,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkVirtualMachineResource> GetWorkloadNetworkVirtualMachine(string virtualMachineId, CancellationToken cancellationToken = default)
         {
@@ -672,7 +675,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkDnsServiceResources and their operations over a WorkloadNetworkDnsServiceResource. </returns>
         public virtual WorkloadNetworkDnsServiceCollection GetWorkloadNetworkDnsServices()
         {
-            return GetCachedClient(Client => new WorkloadNetworkDnsServiceCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkDnsServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -690,8 +693,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkDnsServiceResource>> GetWorkloadNetworkDnsServiceAsync(string dnsServiceId, CancellationToken cancellationToken = default)
         {
@@ -713,8 +716,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="dnsServiceId"> NSX DNS Service identifier. Generally the same as the DNS Service's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsServiceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsServiceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkDnsServiceResource> GetWorkloadNetworkDnsService(string dnsServiceId, CancellationToken cancellationToken = default)
         {
@@ -725,7 +728,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkDnsZoneResources and their operations over a WorkloadNetworkDnsZoneResource. </returns>
         public virtual WorkloadNetworkDnsZoneCollection GetWorkloadNetworkDnsZones()
         {
-            return GetCachedClient(Client => new WorkloadNetworkDnsZoneCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkDnsZoneCollection(client, Id));
         }
 
         /// <summary>
@@ -743,8 +746,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="dnsZoneId"> NSX DNS Zone identifier. Generally the same as the DNS Zone's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkDnsZoneResource>> GetWorkloadNetworkDnsZoneAsync(string dnsZoneId, CancellationToken cancellationToken = default)
         {
@@ -766,8 +769,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="dnsZoneId"> NSX DNS Zone identifier. Generally the same as the DNS Zone's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsZoneId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsZoneId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkDnsZoneResource> GetWorkloadNetworkDnsZone(string dnsZoneId, CancellationToken cancellationToken = default)
         {
@@ -778,7 +781,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of WorkloadNetworkPublicIPResources and their operations over a WorkloadNetworkPublicIPResource. </returns>
         public virtual WorkloadNetworkPublicIPCollection GetWorkloadNetworkPublicIPs()
         {
-            return GetCachedClient(Client => new WorkloadNetworkPublicIPCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadNetworkPublicIPCollection(client, Id));
         }
 
         /// <summary>
@@ -796,8 +799,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="publicIPId"> NSX Public IP Block identifier. Generally the same as the Public IP Block's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadNetworkPublicIPResource>> GetWorkloadNetworkPublicIPAsync(string publicIPId, CancellationToken cancellationToken = default)
         {
@@ -819,8 +822,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="publicIPId"> NSX Public IP Block identifier. Generally the same as the Public IP Block's display name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publicIPId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadNetworkPublicIPResource> GetWorkloadNetworkPublicIP(string publicIPId, CancellationToken cancellationToken = default)
         {
@@ -831,7 +834,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsCloudLinkResources and their operations over a AvsCloudLinkResource. </returns>
         public virtual AvsCloudLinkCollection GetAvsCloudLinks()
         {
-            return GetCachedClient(Client => new AvsCloudLinkCollection(Client, Id));
+            return GetCachedClient(client => new AvsCloudLinkCollection(client, Id));
         }
 
         /// <summary>
@@ -849,8 +852,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvsCloudLinkResource>> GetAvsCloudLinkAsync(string cloudLinkName, CancellationToken cancellationToken = default)
         {
@@ -872,8 +875,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="cloudLinkName"> Name of the cloud link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvsCloudLinkResource> GetAvsCloudLink(string cloudLinkName, CancellationToken cancellationToken = default)
         {
@@ -884,7 +887,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudAddonResources and their operations over a AvsPrivateCloudAddonResource. </returns>
         public virtual AvsPrivateCloudAddonCollection GetAvsPrivateCloudAddons()
         {
-            return GetCachedClient(Client => new AvsPrivateCloudAddonCollection(Client, Id));
+            return GetCachedClient(client => new AvsPrivateCloudAddonCollection(client, Id));
         }
 
         /// <summary>
@@ -902,8 +905,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvsPrivateCloudAddonResource>> GetAvsPrivateCloudAddonAsync(string addonName, CancellationToken cancellationToken = default)
         {
@@ -925,8 +928,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="addonName"> Name of the addon for the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvsPrivateCloudAddonResource> GetAvsPrivateCloudAddon(string addonName, CancellationToken cancellationToken = default)
         {
@@ -937,7 +940,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of ScriptPackageResources and their operations over a ScriptPackageResource. </returns>
         public virtual ScriptPackageCollection GetScriptPackages()
         {
-            return GetCachedClient(Client => new ScriptPackageCollection(Client, Id));
+            return GetCachedClient(client => new ScriptPackageCollection(client, Id));
         }
 
         /// <summary>
@@ -955,8 +958,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScriptPackageResource>> GetScriptPackageAsync(string scriptPackageName, CancellationToken cancellationToken = default)
         {
@@ -978,8 +981,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptPackageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScriptPackageResource> GetScriptPackage(string scriptPackageName, CancellationToken cancellationToken = default)
         {
@@ -990,7 +993,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of ScriptExecutionResources and their operations over a ScriptExecutionResource. </returns>
         public virtual ScriptExecutionCollection GetScriptExecutions()
         {
-            return GetCachedClient(Client => new ScriptExecutionCollection(Client, Id));
+            return GetCachedClient(client => new ScriptExecutionCollection(client, Id));
         }
 
         /// <summary>
@@ -1008,8 +1011,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="scriptExecutionName"> Name of the user-invoked script execution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScriptExecutionResource>> GetScriptExecutionAsync(string scriptExecutionName, CancellationToken cancellationToken = default)
         {
@@ -1031,8 +1034,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="scriptExecutionName"> Name of the user-invoked script execution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptExecutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScriptExecutionResource> GetScriptExecution(string scriptExecutionName, CancellationToken cancellationToken = default)
         {

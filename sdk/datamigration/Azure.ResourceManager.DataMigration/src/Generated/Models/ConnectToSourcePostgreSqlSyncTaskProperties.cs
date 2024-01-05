@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates connection to PostgreSQL server and source server requirements for online migration. </summary>
     public partial class ConnectToSourcePostgreSqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToSourcePostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskProperties"/>. </summary>
         public ConnectToSourcePostgreSqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToSourcePostgreSqlSyncTaskOutput>();
             TaskType = TaskType.ConnectToSourcePostgreSqlSync;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourcePostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

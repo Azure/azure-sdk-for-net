@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Non Azure query for the update configuration. </summary>
     public partial class NonAzureQueryProperties
     {
-        /// <summary> Initializes a new instance of NonAzureQueryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NonAzureQueryProperties"/>. </summary>
         public NonAzureQueryProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NonAzureQueryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NonAzureQueryProperties"/>. </summary>
         /// <param name="functionAlias"> Log Analytics Saved Search name. </param>
         /// <param name="workspaceId"> Workspace Id for Log Analytics in which the saved Search is resided. </param>
         internal NonAzureQueryProperties(string functionAlias, string workspaceId)

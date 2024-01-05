@@ -26,14 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RejectValue);
-#else
-                using (JsonDocument document = JsonDocument.Parse(RejectValue))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, RejectValue);
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
@@ -67,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<BinaryData> rejectValue = default;
+            Optional<DataFactoryElement<int>> rejectValue = default;
             Optional<DataFactoryElement<int>> rejectSampleValue = default;
             Optional<DataFactoryElement<bool>> useTypeDefault = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -89,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rejectValue = BinaryData.FromString(property.Value.GetRawText());
+                    rejectValue = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rejectSampleValue"u8))

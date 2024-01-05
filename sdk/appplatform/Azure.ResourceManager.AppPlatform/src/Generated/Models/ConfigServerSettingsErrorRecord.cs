@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Error record of the config server settings. </summary>
     public partial class ConfigServerSettingsErrorRecord
     {
-        /// <summary> Initializes a new instance of ConfigServerSettingsErrorRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerSettingsErrorRecord"/>. </summary>
         internal ConfigServerSettingsErrorRecord()
         {
             Messages = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConfigServerSettingsErrorRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerSettingsErrorRecord"/>. </summary>
         /// <param name="name"> The name of the config server settings error record. </param>
         /// <param name="uri"> The uri of the config server settings error record. </param>
         /// <param name="messages"> The detail error messages of the record. </param>

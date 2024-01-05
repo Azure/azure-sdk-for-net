@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PeerAsnResource" /> and their operations.
-    /// Each <see cref="PeerAsnResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="PeerAsnCollection" /> instance call the GetPeerAsns method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="PeerAsnResource"/> and their operations.
+    /// Each <see cref="PeerAsnResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="PeerAsnCollection"/> instance call the GetPeerAsns method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class PeerAsnCollection : ArmCollection, IEnumerable<PeerAsnResource>, IAsyncEnumerable<PeerAsnResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PeerAsnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PeerAsnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeerAsnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peerAsnRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PeerAsnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PeerAsnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeerAsnResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _peerAsnRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

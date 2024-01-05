@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A list of vulnerability assessment scan records. </summary>
     internal partial class Scans
     {
-        /// <summary> Initializes a new instance of Scans. </summary>
+        /// <summary> Initializes a new instance of <see cref="Scans"/>. </summary>
         internal Scans()
         {
             Value = new ChangeTrackingList<SqlVulnerabilityAssessmentScanData>();
         }
 
-        /// <summary> Initializes a new instance of Scans. </summary>
+        /// <summary> Initializes a new instance of <see cref="Scans"/>. </summary>
         /// <param name="value"> List of vulnerability assessment scan records. </param>
         internal Scans(IReadOnlyList<SqlVulnerabilityAssessmentScanData> value)
         {

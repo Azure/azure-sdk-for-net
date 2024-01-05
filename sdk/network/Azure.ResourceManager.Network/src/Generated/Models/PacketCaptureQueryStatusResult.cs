@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Status of packet capture session. </summary>
     public partial class PacketCaptureQueryStatusResult
     {
-        /// <summary> Initializes a new instance of PacketCaptureQueryStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureQueryStatusResult"/>. </summary>
         internal PacketCaptureQueryStatusResult()
         {
             PacketCaptureError = new ChangeTrackingList<PcError>();
         }
 
-        /// <summary> Initializes a new instance of PacketCaptureQueryStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PacketCaptureQueryStatusResult"/>. </summary>
         /// <param name="name"> The name of the packet capture resource. </param>
         /// <param name="id"> The ID of the packet capture resource. </param>
         /// <param name="captureStartOn"> The start time of the packet capture session. </param>

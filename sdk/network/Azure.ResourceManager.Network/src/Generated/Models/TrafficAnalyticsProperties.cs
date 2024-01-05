@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the configuration of traffic analytics. </summary>
     internal partial class TrafficAnalyticsProperties
     {
-        /// <summary> Initializes a new instance of TrafficAnalyticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficAnalyticsProperties"/>. </summary>
         public TrafficAnalyticsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficAnalyticsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficAnalyticsProperties"/>. </summary>
         /// <param name="trafficAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         internal TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration)
         {

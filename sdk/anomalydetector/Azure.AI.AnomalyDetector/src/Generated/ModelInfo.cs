@@ -17,7 +17,7 @@ namespace Azure.AI.AnomalyDetector
     /// </summary>
     public partial class ModelInfo
     {
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
@@ -42,7 +42,7 @@ namespace Azure.AI.AnomalyDetector
             Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
-        /// <summary> Initializes a new instance of ModelInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
         /// <param name="dataSource">
         /// Source link to the input data to indicate an accessible Azure Storage URI.
         /// It either points to an Azure Blob Storage folder or points to a CSV file in

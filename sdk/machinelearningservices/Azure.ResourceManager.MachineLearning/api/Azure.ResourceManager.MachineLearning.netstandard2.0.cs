@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningBatchDeploymentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningBatchDeploymentData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchDeploymentProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningBatchDeploymentData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchDeploymentProperties properties) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchDeploymentProperties Properties { get { throw null; } set { } }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningBatchEndpointData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningBatchEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchEndpointProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningBatchEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchEndpointProperties properties) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchEndpointProperties Properties { get { throw null; } set { } }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningComputeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningComputeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningComputeData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningComputeProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningSku Sku { get { throw null; } set { } }
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningOnlineDeploymentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningOnlineDeploymentData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineDeploymentProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningOnlineDeploymentData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineDeploymentProperties properties) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineDeploymentProperties Properties { get { throw null; } set { } }
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningOnlineEndpointData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningOnlineEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineEndpointProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningOnlineEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineEndpointProperties properties) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineEndpointProperties Properties { get { throw null; } set { } }
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningPrivateEndpointConnectionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningPrivateEndpointConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningPrivateEndpointConnectionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningRegistryData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningRegistryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningRegistryData(Azure.Core.AzureLocation location) { }
         public System.Uri DiscoveryUri { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string IntellectualPropertyPublisher { get { throw null; } set { } }
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningWorkspaceData(Azure.Core.AzureLocation location) { }
         public bool? AllowPublicAccessWhenBehindVnet { get { throw null; } set { } }
         public string ApplicationInsights { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AssociatedWorkspaces { get { throw null; } }
@@ -1752,6 +1752,82 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.MachineLearningComponentVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MachineLearning.MachineLearningComponentVersionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.MachineLearning.Mocking
+{
+    public partial class MockableMachineLearningArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningArmClient() { }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningBatchDeploymentResource GetMachineLearningBatchDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningBatchEndpointResource GetMachineLearningBatchEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningCodeVersionResource GetMachineLearningCodeVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningComponentContainerResource GetMachineLearningComponentContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningComponentVersionResource GetMachineLearningComponentVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningComputeResource GetMachineLearningComputeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningDataContainerResource GetMachineLearningDataContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningDatastoreResource GetMachineLearningDatastoreResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningDataVersionResource GetMachineLearningDataVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningEnvironmentContainerResource GetMachineLearningEnvironmentContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningEnvironmentVersionResource GetMachineLearningEnvironmentVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningFeatureResource GetMachineLearningFeatureResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningFeatureSetContainerResource GetMachineLearningFeatureSetContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningFeatureSetVersionResource GetMachineLearningFeatureSetVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningFeatureStoreEntityContainerResource GetMachineLearningFeatureStoreEntityContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningFeaturestoreEntityVersionResource GetMachineLearningFeaturestoreEntityVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningJobResource GetMachineLearningJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningLabelingJobResource GetMachineLearningLabelingJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningModelContainerResource GetMachineLearningModelContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningModelVersionResource GetMachineLearningModelVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningOnlineDeploymentResource GetMachineLearningOnlineDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningOnlineEndpointResource GetMachineLearningOnlineEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningPrivateEndpointConnectionResource GetMachineLearningPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryCodeContainerResource GetMachineLearningRegistryCodeContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryCodeVersionResource GetMachineLearningRegistryCodeVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryDataContainerResource GetMachineLearningRegistryDataContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryDataVersionResource GetMachineLearningRegistryDataVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryEnvironmentContainerResource GetMachineLearningRegistryEnvironmentContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryEnvironmentVersionResource GetMachineLearningRegistryEnvironmentVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryModelContainerResource GetMachineLearningRegistryModelContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryModelVersionResource GetMachineLearningRegistryModelVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource GetMachineLearningRegistryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningScheduleResource GetMachineLearningScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceConnectionResource GetMachineLearningWorkspaceConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource GetMachineLearningWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableMachineLearningResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningResourceGroupResource() { }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryCollection GetMachineLearningRegistries() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource> GetMachineLearningRegistry(string registryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource>> GetMachineLearningRegistryAsync(string registryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> GetMachineLearningWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource>> GetMachineLearningWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceCollection GetMachineLearningWorkspaces() { throw null; }
+    }
+    public partial class MockableMachineLearningSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceQuota> GetMachineLearningQuotas(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceQuota> GetMachineLearningQuotasAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource> GetMachineLearningRegistries(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource> GetMachineLearningRegistriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningUsage> GetMachineLearningUsages(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningUsage> GetMachineLearningUsagesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningVmSize> GetMachineLearningVmSizes(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningVmSize> GetMachineLearningVmSizesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string skip = null, string kind = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string skip = null, string kind = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string skip = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningQuotaUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningQuotaUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -5658,7 +5734,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     }
     public partial class MachineLearningPrivateLinkResource : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningPrivateLinkResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningPrivateLinkResource(Azure.Core.AzureLocation location) { }
         public string GroupId { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }

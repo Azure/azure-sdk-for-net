@@ -15,7 +15,7 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Detection results for the resultId value. </summary>
     public partial class MultivariateDetectionResult
     {
-        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/>. </summary>
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
             Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of MultivariateDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultivariateDetectionResult"/>. </summary>
         /// <param name="resultId"> Result identifier that's used to fetch the results of an inference call. </param>
         /// <param name="summary"> Multivariate anomaly detection status. </param>
         /// <param name="results"> Detection result for each time stamp. </param>

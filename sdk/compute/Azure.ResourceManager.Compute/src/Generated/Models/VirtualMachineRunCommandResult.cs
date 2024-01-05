@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The VirtualMachineRunCommandResult. </summary>
     public partial class VirtualMachineRunCommandResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandResult"/>. </summary>
         internal VirtualMachineRunCommandResult()
         {
             Value = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandResult"/>. </summary>
         /// <param name="value"> Run command operation response. </param>
         internal VirtualMachineRunCommandResult(IReadOnlyList<InstanceViewStatus> value)
         {

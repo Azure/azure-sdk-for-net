@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a CdnOriginGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CdnOriginGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCdnOriginGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource" /> using the GetCdnOriginGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CdnOriginGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCdnOriginGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CdnEndpointResource"/> using the GetCdnOriginGroup method.
     /// </summary>
     public partial class CdnOriginGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CdnOriginGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
+        /// <param name="originGroupName"> The originGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName, string originGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/originGroups/{originGroupName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.Cdn
         private readonly CdnOriginGroupsRestOperations _cdnOriginGroupRestClient;
         private readonly CdnOriginGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/originGroups";
+
         /// <summary> Initializes a new instance of the <see cref="CdnOriginGroupResource"/> class for mocking. </summary>
         protected CdnOriginGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CdnOriginGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnOriginGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CdnOriginGroupResource(ArmClient client, CdnOriginGroupData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints/originGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

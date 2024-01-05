@@ -199,6 +199,38 @@ namespace Azure.ResourceManager.DataLakeStore
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource>> UpdateAsync(Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreVirtualNetworkRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DataLakeStore.Mocking
+{
+    public partial class MockableDataLakeStoreArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataLakeStoreArmClient() { }
+        public virtual Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountResource GetDataLakeStoreAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeStore.DataLakeStoreFirewallRuleResource GetDataLakeStoreFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeStore.DataLakeStoreTrustedIdProviderResource GetDataLakeStoreTrustedIdProviderResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeStore.DataLakeStoreVirtualNetworkRuleResource GetDataLakeStoreVirtualNetworkRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDataLakeStoreResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataLakeStoreResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountResource> GetDataLakeStoreAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountResource>> GetDataLakeStoreAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataLakeStore.DataLakeStoreAccountCollection GetDataLakeStoreAccounts() { throw null; }
+    }
+    public partial class MockableDataLakeStoreSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataLakeStoreSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityResult> CheckDataLakeStoreAccountNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityResult>> CheckDataLakeStoreAccountNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData> GetAccounts(Azure.ResourceManager.DataLakeStore.Models.SubscriptionResourceGetAccountsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData> GetAccounts(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderBy = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData> GetAccountsAsync(Azure.ResourceManager.DataLakeStore.Models.SubscriptionResourceGetAccountsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreAccountBasicData> GetAccountsAsync(string filter = null, int? top = default(int?), int? skip = default(int?), string select = null, string orderBy = null, bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreCapabilityInformation> GetCapabilityByLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreCapabilityInformation>> GetCapabilityByLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsage> GetUsagesByLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataLakeStore.Models.DataLakeStoreUsage> GetUsagesByLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public static partial class ArmDataLakeStoreModelFactory

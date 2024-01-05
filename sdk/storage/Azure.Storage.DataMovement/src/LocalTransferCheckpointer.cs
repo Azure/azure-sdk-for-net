@@ -61,6 +61,10 @@ namespace Azure.Storage.DataMovement
             StorageResource destination,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(destination, nameof(destination));
+
             if (_transferStates.ContainsKey(transferId))
             {
                 throw Errors.CollisionTransferIdCheckpointer(transferId);
@@ -97,13 +101,11 @@ namespace Azure.Storage.DataMovement
         public override async Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
-            int chunksTotal,
             Stream headerStream,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             Argument.AssertNotNull(partNumber, nameof(partNumber));
-            Argument.AssertNotNull(chunksTotal, nameof(chunksTotal));
             Argument.AssertNotNull(headerStream, nameof(headerStream));
             headerStream.Position = 0;
 
@@ -328,8 +330,8 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.OneByte * 3;
-            int offset = DataMovementConstants.JobPartPlanFile.AtomicPartStatusStateIndex;
+            long length = DataMovementConstants.IntSizeInBytes;
+            int offset = DataMovementConstants.JobPartPlanFile.JobPartStatusIndex;
 
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
@@ -340,27 +342,13 @@ namespace Azure.Storage.DataMovement
                     // Lock MMF
                     await file.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
 
-                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
-                                path: file.FilePath,
-                                mode: FileMode.Open,
-                                mapName: null,
-                                capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(file.FilePath, FileMode.Open))
+                    using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
                     {
-                        using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
-                        {
-                            accessor.Write(
-                                position: 0,
-                                value: (byte)status.State);
-                            accessor.Write(
-                                position: 1,
-                                value: status.HasFailedItems);
-                            accessor.Write(
-                                position: 2,
-                                value: status.HasSkippedItems);
-                            // to flush to the underlying file that supports the mmf
-                            accessor.Flush();
-                        }
+                        accessor.Write(0, (int)status.ToJobPlanStatus());
+                        accessor.Flush();
                     }
+
                     // Release MMF
                     file.WriteLock.Release();
                 }
@@ -381,11 +369,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         private void InitializeExistingCheckpointer()
         {
+            // Enumerate the filesystem
+            IEnumerable<string> checkpointFiles = Directory.EnumerateFiles(_pathToCheckpointer);
+
             // First, retrieve all valid job plan files
-            foreach (string path in Directory.EnumerateFiles(
-                _pathToCheckpointer,
-                $"*.{DataMovementConstants.JobPlanFile.FileExtension}",
-                SearchOption.TopDirectoryOnly))
+            foreach (string path in checkpointFiles
+                .Where(p => Path.GetExtension(p) == DataMovementConstants.JobPlanFile.FileExtension))
             {
                 // TODO: Should we check for valid schema version inside file now?
                 JobPlanFile jobPlanFile = JobPlanFile.LoadExistingJobPlanFile(path);
@@ -400,10 +389,8 @@ namespace Azure.Storage.DataMovement
             }
 
             // Retrieve all valid job part plan files stored in the checkpointer path.
-            foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer, "*", SearchOption.TopDirectoryOnly)
-                .Where(f => Path.HasExtension(string.Concat(
-                    DataMovementConstants.JobPartPlanFile.FileExtension,
-                    DataMovementConstants.JobPartPlanFile.SchemaVersion))))
+            foreach (string path in checkpointFiles
+                .Where(p => Path.GetExtension(p) == DataMovementConstants.JobPartPlanFile.FileExtension))
             {
                 // Ensure each file has the correct format
                 if (JobPartPlanFileName.TryParseJobPartPlanFileName(path, out JobPartPlanFileName partPlanFileName))

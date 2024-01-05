@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Check the cluster name is available or not. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The HDInsightNameAvailabilityContent to use. </param>
+        /// <param name="content"> The <see cref="HDInsightNameAvailabilityContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Check the cluster name is available or not. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The HDInsightNameAvailabilityContent to use. </param>
+        /// <param name="content"> The <see cref="HDInsightNameAvailabilityContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Validate the cluster create request spec is valid or not. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The HDInsightClusterCreationValidateContent to use. </param>
+        /// <param name="content"> The <see cref="HDInsightClusterCreationValidateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Validate the cluster create request spec is valid or not. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The HDInsightClusterCreationValidateContent to use. </param>
+        /// <param name="content"> The <see cref="HDInsightClusterCreationValidateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

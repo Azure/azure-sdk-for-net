@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes a column to sort. </summary>
     public partial class IdpsQueryOrderBy
     {
-        /// <summary> Initializes a new instance of IdpsQueryOrderBy. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryOrderBy"/>. </summary>
         public IdpsQueryOrderBy()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryOrderBy"/>. </summary>
+        /// <param name="field"> Describes the actual column name to sort by. </param>
+        /// <param name="order"> Describes if results should be in ascending/descending order. </param>
+        internal IdpsQueryOrderBy(string field, FirewallPolicyIdpsQuerySortOrder? order)
+        {
+            Field = field;
+            Order = order;
         }
 
         /// <summary> Describes the actual column name to sort by. </summary>

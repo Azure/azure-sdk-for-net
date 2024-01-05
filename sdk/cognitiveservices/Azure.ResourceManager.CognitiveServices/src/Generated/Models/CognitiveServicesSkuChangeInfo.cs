@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Sku change info of account. </summary>
     public partial class CognitiveServicesSkuChangeInfo
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuChangeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuChangeInfo"/>. </summary>
         internal CognitiveServicesSkuChangeInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuChangeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuChangeInfo"/>. </summary>
         /// <param name="countOfDowngrades"> Gets the count of downgrades. </param>
         /// <param name="countOfUpgradesAfterDowngrades"> Gets the count of upgrades after downgrades. </param>
         /// <param name="lastChangedOn"> Gets the last change date. </param>

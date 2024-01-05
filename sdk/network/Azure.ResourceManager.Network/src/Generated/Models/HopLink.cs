@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Hop link. </summary>
     public partial class HopLink
     {
-        /// <summary> Initializes a new instance of HopLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="HopLink"/>. </summary>
         internal HopLink()
         {
             Issues = new ChangeTrackingList<ConnectivityIssueInfo>();
             Context = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of HopLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="HopLink"/>. </summary>
         /// <param name="nextHopId"> The ID of the next hop. </param>
         /// <param name="linkType"> Link type. </param>
         /// <param name="issues"> List of issues. </param>

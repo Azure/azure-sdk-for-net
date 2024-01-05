@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Trusted access role definition. </summary>
     public partial class ContainerServiceTrustedAccessRole
     {
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRole"/>. </summary>
         internal ContainerServiceTrustedAccessRole()
         {
             Rules = new ChangeTrackingList<ContainerServiceTrustedAccessRoleRule>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRole. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRole"/>. </summary>
         /// <param name="sourceResourceType"> Resource type of Azure resource. </param>
         /// <param name="name"> Name of role, name is unique under a source resource type. </param>
         /// <param name="rules"> List of rules for the role. This maps to 'rules' property of [Kubernetes Cluster Role](https://kubernetes.io/docs/reference/kubernetes-api/authorization-resources/cluster-role-v1/#ClusterRole). </param>

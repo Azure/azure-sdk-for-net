@@ -12,9 +12,27 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Channel update. </summary>
     public partial class PartnerNamespaceChannelPatch
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelPatch"/>. </summary>
         public PartnerNamespaceChannelPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelPatch"/>. </summary>
+        /// <param name="expireOnIfNotActivated">
+        /// Expiration time of the channel. If this timer expires while the corresponding partner topic or partner destination is never activated,
+        /// the channel and corresponding partner topic or partner destination are deleted.
+        /// </param>
+        /// <param name="partnerDestinationInfo">
+        /// Partner destination properties which can be updated if the channel is of type PartnerDestination.
+        /// Please note <see cref="PartnerUpdateDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="WebhookUpdatePartnerDestinationInfo"/>.
+        /// </param>
+        /// <param name="partnerTopicInfo"> Partner topic properties which can be updated if the channel is of type PartnerTopic. </param>
+        internal PartnerNamespaceChannelPatch(DateTimeOffset? expireOnIfNotActivated, PartnerUpdateDestinationInfo partnerDestinationInfo, PartnerUpdateTopicInfo partnerTopicInfo)
+        {
+            ExpireOnIfNotActivated = expireOnIfNotActivated;
+            PartnerDestinationInfo = partnerDestinationInfo;
+            PartnerTopicInfo = partnerTopicInfo;
         }
 
         /// <summary>

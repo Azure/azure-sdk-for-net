@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The AzureDevOpsOrgListResponse. </summary>
     internal partial class AzureDevOpsOrgListResponse
     {
-        /// <summary> Initializes a new instance of AzureDevOpsOrgListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgListResponse"/>. </summary>
         internal AzureDevOpsOrgListResponse()
         {
             Value = new ChangeTrackingList<AzureDevOpsOrgData>();
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgListResponse"/>. </summary>
         /// <param name="value"> Gets or sets list of resources. </param>
         /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
         internal AzureDevOpsOrgListResponse(IReadOnlyList<AzureDevOpsOrgData> value, string nextLink)

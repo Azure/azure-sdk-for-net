@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Contains the parameters specific to generating vector embeddings via a custom endpoint. </summary>
     public partial class CustomVectorizer : VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of CustomVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomVectorizer(string name) : base(name)
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Kind = VectorSearchVectorizerKind.CustomWebApi;
         }
 
-        /// <summary> Initializes a new instance of CustomVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         /// <param name="customVectorizerParameters"> Contains the parameters specific to generating vector embeddings via a custom endpoint. </param>

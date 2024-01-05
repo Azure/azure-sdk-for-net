@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The sku of this Bastion Host. </summary>
     internal partial class NetworkSku
     {
-        /// <summary> Initializes a new instance of NetworkSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSku"/>. </summary>
         public NetworkSku()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSku"/>. </summary>
         /// <param name="name"> The name of this Bastion Host. </param>
         internal NetworkSku(BastionHostSkuName? name)
         {

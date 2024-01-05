@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Collection compose of a custom domain resources list and a possible link for next page. </summary>
     internal partial class CustomDomainResourceList
     {
-        /// <summary> Initializes a new instance of CustomDomainResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainResourceList"/>. </summary>
         internal CustomDomainResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformCustomDomainData>();
         }
 
-        /// <summary> Initializes a new instance of CustomDomainResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainResourceList"/>. </summary>
         /// <param name="value"> The custom domain resources list. </param>
         /// <param name="nextLink"> The link to next page of custom domain list. </param>
         internal CustomDomainResourceList(IReadOnlyList<AppPlatformCustomDomainData> value, string nextLink)

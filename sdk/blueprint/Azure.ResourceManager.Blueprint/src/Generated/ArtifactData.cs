@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Blueprint
     /// Please note <see cref="ArtifactData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="PolicyAssignmentArtifact"/>, <see cref="RoleAssignmentArtifact"/> and <see cref="TemplateArtifact"/>.
     /// </summary>
-    public partial class ArtifactData : ResourceData
+    public abstract partial class ArtifactData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArtifactData. </summary>
-        public ArtifactData()
+        /// <summary> Initializes a new instance of <see cref="ArtifactData"/>. </summary>
+        protected ArtifactData()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

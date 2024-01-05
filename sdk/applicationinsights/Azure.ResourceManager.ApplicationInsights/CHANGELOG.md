@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,19 @@
 
 ### Bugs Fixed
 
+- Fix issue [#38783](https://github.com/Azure/azure-sdk-for-net/issues/38783), change `WorkbookTemplates_ListByResourceGroup` response deserialize type to array.
+
 ### Other Changes
+
+## 1.0.0-beta.4 (2023-11-27)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.0.0-beta.3 (2023-05-26)
 

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Quota.Models
     /// <summary> The resource quota limit value. </summary>
     public partial class QuotaLimitObject : QuotaLimitJsonObject
     {
-        /// <summary> Initializes a new instance of QuotaLimitObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/>. </summary>
         /// <param name="value"> The quota/limit value. </param>
         public QuotaLimitObject(int value)
         {
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Quota.Models
             LimitObjectType = Models.LimitType.LimitValue;
         }
 
-        /// <summary> Initializes a new instance of QuotaLimitObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/>. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
         /// <param name="value"> The quota/limit value. </param>
         /// <param name="limitType"> The quota or usages limit types. </param>

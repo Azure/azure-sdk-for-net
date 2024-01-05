@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotCentral
     }
     public partial class IotCentralAppData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IotCentralAppData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotCentral.Models.IotCentralAppSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
+        public IotCentralAppData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotCentral.Models.IotCentralAppSkuInfo sku) { }
         public System.Guid? ApplicationId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -145,6 +145,35 @@ namespace Azure.ResourceManager.IotCentral
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+    }
+}
+namespace Azure.ResourceManager.IotCentral.Mocking
+{
+    public partial class MockableIotCentralArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotCentralArmClient() { }
+        public virtual Azure.ResourceManager.IotCentral.IotCentralAppResource GetIotCentralAppResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.IotCentral.IotCentralPrivateEndpointConnectionResource GetIotCentralPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.IotCentral.IotCentralPrivateLinkResource GetIotCentralPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableIotCentralResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotCentralResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.IotCentral.IotCentralAppResource> GetIotCentralApp(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotCentral.IotCentralAppResource>> GetIotCentralAppAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.IotCentral.IotCentralAppCollection GetIotCentralApps() { throw null; }
+    }
+    public partial class MockableIotCentralSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableIotCentralSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse> CheckIotCentralAppNameAvailability(Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppNameAvailabilityAsync(Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse> CheckIotCentralAppSubdomainAvailability(Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppSubdomainAvailabilityAsync(Azure.ResourceManager.IotCentral.Models.IotCentralAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotCentral.IotCentralAppResource> GetIotCentralApps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotCentral.IotCentralAppResource> GetIotCentralAppsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotCentral.Models.IotCentralAppTemplate> GetTemplatesApps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotCentral.Models.IotCentralAppTemplate> GetTemplatesAppsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.IotCentral.Models

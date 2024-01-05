@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The CSPM monitoring for AzureDevOps offering. </summary>
     public partial class CspmMonitorAzureDevOpsOffering : SecurityCenterCloudOffering
     {
-        /// <summary> Initializes a new instance of CspmMonitorAzureDevOpsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorAzureDevOpsOffering"/>. </summary>
         public CspmMonitorAzureDevOpsOffering()
         {
             OfferingType = OfferingType.CspmMonitorAzureDevOps;
         }
 
-        /// <summary> Initializes a new instance of CspmMonitorAzureDevOpsOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="CspmMonitorAzureDevOpsOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         internal CspmMonitorAzureDevOpsOffering(OfferingType offeringType, string description) : base(offeringType, description)

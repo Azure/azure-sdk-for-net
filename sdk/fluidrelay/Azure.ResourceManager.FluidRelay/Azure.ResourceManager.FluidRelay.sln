@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{85FA8590-3324-4532-BE25-88460DFFDFB8}") = "Azure.ResourceManager.FluidRelay", "src\Azure.ResourceManager.FluidRelay.csproj", "{CE7EE737-729B-4A01-9F87-A193D8846026}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.FluidRelay", "src\Azure.ResourceManager.FluidRelay.csproj", "{CE7EE737-729B-4A01-9F87-A193D8846026}"
 EndProject
-Project("{85FA8590-3324-4532-BE25-88460DFFDFB8}") = "Azure.ResourceManager.FluidRelay.Tests", "tests\Azure.ResourceManager.FluidRelay.Tests.csproj", "{6306EC66-056A-4E4D-AE8A-1AE66C6B456B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.FluidRelay.Tests", "tests\Azure.ResourceManager.FluidRelay.Tests.csproj", "{6306EC66-056A-4E4D-AE8A-1AE66C6B456B}"
 EndProject
-Project("{85FA8590-3324-4532-BE25-88460DFFDFB8}") = "Azure.ResourceManager.FluidRelay.Samples", "samples\Azure.ResourceManager.FluidRelay.Samples.csproj", "{835B8B91-897B-4045-8561-48A732584A30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.FluidRelay.Samples", "samples\Azure.ResourceManager.FluidRelay.Samples.csproj", "{835B8B91-897B-4045-8561-48A732584A30}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DEA6BBF8-D97D-4480-94A0-ED1D3DCDED2C}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{6306EC66-056A-4E4D-AE8A-1AE66C6B456B}.Release|x64.Build.0 = Release|Any CPU
 		{6306EC66-056A-4E4D-AE8A-1AE66C6B456B}.Release|x86.ActiveCfg = Release|Any CPU
 		{6306EC66-056A-4E4D-AE8A-1AE66C6B456B}.Release|x86.Build.0 = Release|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Debug|x64.Build.0 = Debug|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Debug|x86.Build.0 = Debug|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Release|x64.ActiveCfg = Release|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Release|x64.Build.0 = Release|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Release|x86.ActiveCfg = Release|Any CPU
+		{835B8B91-897B-4045-8561-48A732584A30}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEA6BBF8-D97D-4480-94A0-ED1D3DCDED2C}
 	EndGlobalSection
 EndGlobal

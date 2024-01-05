@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Results of the Attached Networks list operation. </summary>
     internal partial class AttachedNetworkListResult
     {
-        /// <summary> Initializes a new instance of AttachedNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkListResult"/>. </summary>
         internal AttachedNetworkListResult()
         {
             Value = new ChangeTrackingList<AttachedNetworkConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AttachedNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedNetworkListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal AttachedNetworkListResult(IReadOnlyList<AttachedNetworkConnectionData> value, string nextLink)

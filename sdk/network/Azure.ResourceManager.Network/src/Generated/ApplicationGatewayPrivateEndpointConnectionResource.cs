@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ApplicationGatewayPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApplicationGatewayPrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApplicationGatewayPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApplicationGatewayResource" /> using the GetApplicationGatewayPrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApplicationGatewayPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApplicationGatewayResource"/> using the GetApplicationGatewayPrivateEndpointConnection method.
     /// </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="applicationGatewayName"> The applicationGatewayName. </param>
+        /// <param name="connectionName"> The connectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGatewayName, string connectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{applicationGatewayName}/privateEndpointConnections/{connectionName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly ApplicationGatewayPrivateEndpointConnectionsRestOperations _applicationGatewayPrivateEndpointConnectionRestClient;
         private readonly ApplicationGatewayPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/applicationGateways/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected ApplicationGatewayPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApplicationGatewayPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApplicationGatewayPrivateEndpointConnectionResource(ArmClient client, ApplicationGatewayPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/applicationGateways/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

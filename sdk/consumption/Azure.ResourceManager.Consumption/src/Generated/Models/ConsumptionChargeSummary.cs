@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Consumption.Models
     /// Please note <see cref="ConsumptionChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
     /// </summary>
-    public partial class ConsumptionChargeSummary : ResourceData
+    public abstract partial class ConsumptionChargeSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionChargeSummary. </summary>
-        public ConsumptionChargeSummary()
+        /// <summary> Initializes a new instance of <see cref="ConsumptionChargeSummary"/>. </summary>
+        protected ConsumptionChargeSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomanageBestPracticeResource" /> and their operations.
-    /// Each <see cref="AutomanageBestPracticeResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get an <see cref="AutomanageBestPracticeCollection" /> instance call the GetAutomanageBestPractices method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="AutomanageBestPracticeResource"/> and their operations.
+    /// Each <see cref="AutomanageBestPracticeResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get an <see cref="AutomanageBestPracticeCollection"/> instance call the GetAutomanageBestPractices method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class AutomanageBestPracticeCollection : ArmCollection, IEnumerable<AutomanageBestPracticeResource>, IAsyncEnumerable<AutomanageBestPracticeResource>
     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageBestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageBestPracticeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageBestPracticeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageBestPracticeBestPracticesRestClient.CreateListByTenantRequest();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageBestPracticeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageBestPracticeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageBestPracticeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageBestPracticeBestPracticesRestClient.CreateListByTenantRequest();

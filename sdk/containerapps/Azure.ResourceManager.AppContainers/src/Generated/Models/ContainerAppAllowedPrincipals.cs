@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
     public partial class ContainerAppAllowedPrincipals
     {
-        /// <summary> Initializes a new instance of ContainerAppAllowedPrincipals. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAllowedPrincipals"/>. </summary>
         public ContainerAppAllowedPrincipals()
         {
             Groups = new ChangeTrackingList<string>();
             Identities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAllowedPrincipals. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAllowedPrincipals"/>. </summary>
         /// <param name="groups"> The list of the allowed groups. </param>
         /// <param name="identities"> The list of the allowed identities. </param>
         internal ContainerAppAllowedPrincipals(IList<string> groups, IList<string> identities)

@@ -24,16 +24,16 @@ Response<ClassificationPolicy> classificationPolicy = await routerAdministration
     options: new CreateClassificationPolicyOptions(classificationPolicyId)
     {
         Name = "Sample classification policy",
-        PrioritizationRule = new StaticRouterRule(new LabelValue(10)),
+        PrioritizationRule = new StaticRouterRule(new RouterValue(10)),
         QueueSelectorAttachments =
         {
-            new StaticQueueSelectorAttachment(new RouterQueueSelector("Region", LabelOperator.Equal, new LabelValue("NA"))),
+            new StaticQueueSelectorAttachment(new RouterQueueSelector("Region", LabelOperator.Equal, new RouterValue("NA"))),
             new ConditionalQueueSelectorAttachment(
                 condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                 queueSelectors: new List<RouterQueueSelector>()
                 {
-                    new RouterQueueSelector("Product", LabelOperator.Equal, new LabelValue("O365")),
-                    new RouterQueueSelector("QGroup", LabelOperator.Equal, new LabelValue("NA_O365"))
+                    new RouterQueueSelector("Product", LabelOperator.Equal, new RouterValue("O365")),
+                    new RouterQueueSelector("QGroup", LabelOperator.Equal, new RouterValue("NA_O365"))
                 }),
         },
         WorkerSelectorAttachments =
@@ -42,14 +42,14 @@ Response<ClassificationPolicy> classificationPolicy = await routerAdministration
                 condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                 workerSelectors: new List<RouterWorkerSelector>()
                 {
-                    new RouterWorkerSelector("Skill_O365", LabelOperator.Equal, new LabelValue(true)),
-                    new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(1))
+                    new RouterWorkerSelector("Skill_O365", LabelOperator.Equal, new RouterValue(true)),
+                    new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanOrEqual, new RouterValue(1))
                 }),
             new ConditionalWorkerSelectorAttachment(
                 condition: new ExpressionRouterRule("If(job.HighPriority = \"true\", true, false)"),
                 workerSelectors: new List<RouterWorkerSelector>()
                 {
-                    new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(10))
+                    new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanOrEqual, new RouterValue(10))
                 })
         }
     });
@@ -85,7 +85,7 @@ Console.WriteLine($"Classification policy successfully update with new prioritiz
 ## List classification policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicies_Async
-AsyncPageable<ClassificationPolicy> classificationPolicies = routerAdministrationClient.GetClassificationPoliciesAsync();
+AsyncPageable<ClassificationPolicy> classificationPolicies = routerAdministrationClient.GetClassificationPoliciesAsync(cancellationToken: default);
 await foreach (Page<ClassificationPolicy> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
 {
     foreach (ClassificationPolicy? policy in asPage.Values)

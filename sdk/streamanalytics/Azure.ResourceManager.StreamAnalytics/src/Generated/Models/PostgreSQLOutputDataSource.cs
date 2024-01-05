@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes a PostgreSQL output data source. </summary>
     public partial class PostgreSQLOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of PostgreSQLOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSQLOutputDataSource"/>. </summary>
         public PostgreSQLOutputDataSource()
         {
             OutputDataSourceType = "Microsoft.DBForPostgreSQL/servers/databases";
         }
 
-        /// <summary> Initializes a new instance of PostgreSQLOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSQLOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="server"> The name of the SQL server containing the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="database"> The name of the Azure SQL database. Required on PUT (CreateOrReplace) requests. </param>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public partial class VideoTrackDescriptor : TrackDescriptor
     {
-        /// <summary> Initializes a new instance of VideoTrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoTrackDescriptor"/>. </summary>
         public VideoTrackDescriptor()
         {
             OdataType = "#Microsoft.Media.VideoTrackDescriptor";
         }
 
-        /// <summary> Initializes a new instance of VideoTrackDescriptor. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoTrackDescriptor"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         internal VideoTrackDescriptor(string odataType) : base(odataType)
         {

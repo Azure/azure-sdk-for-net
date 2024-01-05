@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class CdnWebApplicationFirewallPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn
             EndpointLinks = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The live event endpoint. </summary>
     public partial class LiveEventEndpoint
     {
-        /// <summary> Initializes a new instance of LiveEventEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventEndpoint"/>. </summary>
         public LiveEventEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveEventEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventEndpoint"/>. </summary>
         /// <param name="protocol"> The endpoint protocol. </param>
         /// <param name="uri"> The endpoint URL. </param>
         internal LiveEventEndpoint(string protocol, Uri uri)

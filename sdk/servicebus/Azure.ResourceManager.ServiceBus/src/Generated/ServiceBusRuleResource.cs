@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusSubscriptionResource" /> using the GetServiceBusRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusSubscriptionResource"/> using the GetServiceBusRule method.
     /// </summary>
     public partial class ServiceBusRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="topicName"> The topicName. </param>
+        /// <param name="subscriptionName"> The subscriptionName. </param>
+        /// <param name="ruleName"> The ruleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}";
@@ -35,12 +41,15 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly RulesRestOperations _serviceBusRuleRulesRestClient;
         private readonly ServiceBusRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusRuleResource"/> class for mocking. </summary>
         protected ServiceBusRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusRuleResource(ArmClient client, ServiceBusRuleData data) : this(client, data.Id)
@@ -61,9 +70,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/topics/subscriptions/rules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

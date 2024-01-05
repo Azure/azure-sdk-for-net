@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The ActionableRemediation. </summary>
     public partial class ActionableRemediation
     {
-        /// <summary> Initializes a new instance of ActionableRemediation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionableRemediation"/>. </summary>
         public ActionableRemediation()
         {
             SeverityLevels = new ChangeTrackingList<string>();
             Categories = new ChangeTrackingList<ActionableRemediationRuleCategory>();
         }
 
-        /// <summary> Initializes a new instance of ActionableRemediation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionableRemediation"/>. </summary>
         /// <param name="state"></param>
         /// <param name="severityLevels"></param>
         /// <param name="categories"></param>

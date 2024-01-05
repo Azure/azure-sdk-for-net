@@ -10,9 +10,16 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The Json query request. </summary>
     public partial class QuerySpecification
     {
-        /// <summary> Initializes a new instance of QuerySpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuerySpecification"/>. </summary>
         public QuerySpecification()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuerySpecification"/>. </summary>
+        /// <param name="query"> The query string. </param>
+        internal QuerySpecification(string query)
+        {
+            Query = query;
         }
 
         /// <summary> The query string. </summary>

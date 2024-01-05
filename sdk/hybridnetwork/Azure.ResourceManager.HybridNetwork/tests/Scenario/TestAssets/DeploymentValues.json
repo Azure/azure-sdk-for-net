@@ -1,0 +1,16 @@
+{
+    "vnetName": "DotnetSDKUTVnet",
+    "vnetAddressPrefixes": [
+        "10.0.0.0/16"
+    ],
+    "subnets": [
+        {
+            "name": "subnet1",
+            "addressPrefix": "10.0.1.0/24"
+        },
+        {
+            "name": "subnet2",
+            "addressPrefix": "10.0.2.0/24"
+        }
+    ]
+}

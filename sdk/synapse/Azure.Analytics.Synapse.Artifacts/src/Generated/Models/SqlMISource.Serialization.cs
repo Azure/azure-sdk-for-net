@@ -29,16 +29,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("sqlReaderStoredProcedureName"u8);
                 writer.WriteObjectValue(SqlReaderStoredProcedureName);
             }
-            if (Optional.IsCollectionDefined(StoredProcedureParameters))
+            if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
-                writer.WriteStartObject();
-                foreach (var item in StoredProcedureParameters)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(StoredProcedureParameters);
             }
             if (Optional.IsDefined(IsolationLevel))
             {
@@ -103,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<object> sqlReaderQuery = default;
             Optional<object> sqlReaderStoredProcedureName = default;
-            Optional<IDictionary<string, StoredProcedureParameter>> storedProcedureParameters = default;
+            Optional<object> storedProcedureParameters = default;
             Optional<object> isolationLevel = default;
             Optional<object> produceAdditionalTypes = default;
             Optional<object> partitionOption = default;
@@ -142,12 +136,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    Dictionary<string, StoredProcedureParameter> dictionary = new Dictionary<string, StoredProcedureParameter>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, StoredProcedureParameter.DeserializeStoredProcedureParameter(property0.Value));
-                    }
-                    storedProcedureParameters = dictionary;
+                    storedProcedureParameters = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("isolationLevel"u8))
@@ -239,7 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlMISource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, Optional.ToDictionary(storedProcedureParameters), isolationLevel.Value, produceAdditionalTypes.Value, partitionOption.Value, partitionSettings.Value);
+            return new SqlMISource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, storedProcedureParameters.Value, isolationLevel.Value, produceAdditionalTypes.Value, partitionOption.Value, partitionSettings.Value);
         }
 
         internal partial class SqlMISourceConverter : JsonConverter<SqlMISource>

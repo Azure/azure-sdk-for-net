@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A consumer side dataSet data transfer object. </summary>
     public partial class ConsumerSourceDataSet : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumerSourceDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSet"/>. </summary>
         public ConsumerSourceDataSet()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumerSourceDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumerSourceDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

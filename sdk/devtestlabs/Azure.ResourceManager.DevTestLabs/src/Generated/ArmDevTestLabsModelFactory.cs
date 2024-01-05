@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDevTestLabsModelFactory
     {
-        /// <summary> Initializes a new instance of DevTestLabData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabData(id, name, resourceType, systemData, tags, location, defaultStorageAccount, defaultPremiumStorageAccount, artifactsStorageAccount, premiumDataDiskStorageAccount, vaultName, labStorageType, mandatoryArtifactsResourceIdsLinux?.ToList(), mandatoryArtifactsResourceIdsWindows?.ToList(), createdOn, premiumDataDisks, environmentPermission, announcement, support, vmCreationResourceGroup, publicIPId, loadBalancerId, networkSecurityGroupId, extendedProperties, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabAnnouncement. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabAnnouncement"/>. </summary>
         /// <param name="title"> The plain text title for the lab announcement. </param>
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
         /// <param name="enabled"> Is the lab announcement active/enabled at this time?. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabAnnouncement(title, markdown, enabled, expireOn, isExpired, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabScheduleData(id, name, resourceType, systemData, tags, location, status, taskType, weeklyRecurrence, dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime) : null, hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute) : null, timeZoneId, notificationSettings, createdOn, targetResourceId, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactSourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArtifactSourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArtifactSourceData(id, name, resourceType, systemData, tags, location, displayName, uri, sourceType, folderPath, armTemplateFolderPath, branchRef, securityToken, status, createdOn, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArmTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArmTemplateData(id, name, resourceType, systemData, tags, location, displayName, description, publisher, icon, contents, createdOn, parametersValueFilesInfo?.ToList(), isEnabled);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabParametersValueFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabParametersValueFileInfo"/>. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="parametersValueInfo"> Contents of the file. </param>
         /// <returns> A new <see cref="Models.DevTestLabParametersValueFileInfo"/> instance for mocking. </returns>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabParametersValueFileInfo(fileName, parametersValueInfo);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabArtifactData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArtifactData(id, name, resourceType, systemData, tags, location, title, description, publisher, filePath, icon, targetOSType, parameters, createdOn);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabArmTemplateInfo"/>. </summary>
         /// <param name="template"> The template's contents. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         /// <returns> A new <see cref="Models.DevTestLabArmTemplateInfo"/> instance for mocking. </returns>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArmTemplateInfo(template, parameters);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabCostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCostData(id, name, resourceType, systemData, tags, location, targetCost, estimatedLabCost != null ? new LabCostSummaryProperties(estimatedLabCost) : null, labCostDetails?.ToList(), resourceCosts?.ToList(), currencyCode, startOn, endOn, createdOn, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCostDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabCostDetails"/>. </summary>
         /// <param name="on"> The date of the cost item. </param>
         /// <param name="cost"> The cost component of the cost item. </param>
         /// <param name="costType"> The type of the cost. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCostDetails(@on, cost, costType);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabResourceCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabResourceCost"/>. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceUniqueId"> The unique identifier of the resource. </param>
         /// <param name="resourceCost"> The cost component of the resource cost item. </param>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabResourceCost(resourceName, resourceUniqueId, resourceCost, resourceType, resourceOwner, resourcePricingTier, resourceStatus, resourceId, externalResourceId);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabCustomImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCustomImageData(id, name, resourceType, systemData, tags, location, vm, vhd, description, author, createdOn, managedImageId, managedSnapshotId, dataDiskStorageInfo?.ToList(), customImagePlan, isPlanAuthorized, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabFormulaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabFormulaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabFormulaData(id, name, resourceType, systemData, tags, location, description, author, osType, createdOn, formulaContent, labVmId != null ? new FormulaPropertiesFromVm(labVmId) : null, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabScheduleCreationParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabScheduleCreationParameter"/>. </summary>
         /// <param name="name"> The name of the virtual machine or environment. </param>
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabScheduleCreationParameter(name, location, tags, status, taskType, weeklyRecurrence, dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime) : null, hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute) : null, timeZoneId, notificationSettings, targetResourceId);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabGalleryImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGalleryImage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabGalleryImage(id, name, resourceType, systemData, tags, location, author, createdOn, description, imageReference, icon, isEnabled, planId, isPlanAuthorized);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabNotificationChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabNotificationChannelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabNotificationChannelData(id, name, resourceType, systemData, tags, location, webHookUri, emailRecipient, notificationLocale, description, events?.ToList(), createdOn, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabEvaluatePoliciesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabEvaluatePoliciesResult"/>. </summary>
         /// <param name="results"> Results of evaluating a policy set. </param>
         /// <returns> A new <see cref="Models.DevTestLabEvaluatePoliciesResult"/> instance for mocking. </returns>
         public static DevTestLabEvaluatePoliciesResult DevTestLabEvaluatePoliciesResult(IEnumerable<DevTestLabPolicySetResult> results = null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabEvaluatePoliciesResult(results?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DevTestLabPolicySetResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabPolicySetResult"/>. </summary>
         /// <param name="hasError"> A value indicating whether this policy set evaluation has discovered violations. </param>
         /// <param name="policyViolations"> The list of policy violations. </param>
         /// <returns> A new <see cref="Models.DevTestLabPolicySetResult"/> instance for mocking. </returns>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabPolicySetResult(hasError, policyViolations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DevTestLabPolicyViolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabPolicyViolation"/>. </summary>
         /// <param name="code"> The code of the policy violation. </param>
         /// <param name="message"> The message of the policy violation. </param>
         /// <returns> A new <see cref="Models.DevTestLabPolicyViolation"/> instance for mocking. </returns>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabPolicyViolation(code, message);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabPolicyData(id, name, resourceType, systemData, tags, location, description, status, factName, factData, threshold, evaluatorType, createdOn, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabServiceRunnerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabServiceRunnerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabServiceRunnerData(id, name, resourceType, systemData, tags, location, identity);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabUserData(id, name, resourceType, systemData, tags, location, identity, secretStore, createdOn, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabDiskData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabDiskData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabDiskData(id, name, resourceType, systemData, tags, location, diskType, diskSizeGiB, leasedByLabVmId, diskBlobName, diskUri, storageAccountId, createdOn, hostCaching, managedDiskId, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabEnvironmentData(id, name, resourceType, systemData, tags, location, deploymentProperties, armTemplateDisplayName, resourceGroupId, createdByUser, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabSecretData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabSecretData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabSecretData(id, name, resourceType, systemData, tags, location, value, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabServiceFabricData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabServiceFabricData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabServiceFabricData(id, name, resourceType, systemData, tags, location, externalServiceFabricId, environmentId, applicableSchedule, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabApplicableSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabApplicableSchedule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabApplicableSchedule(id, name, resourceType, systemData, tags, location, labVmsShutdown, labVmsStartup);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabVmData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabVmData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabVmData(id, name, resourceType, systemData, tags, location, notes, ownerObjectId, ownerUserPrincipalName, createdByUserId, createdByUser, createdOn, computeId, customImageId, osType, size, userName, password, sshKey, isAuthenticationWithSshKey, fqdn, labSubnetName, labVirtualNetworkId, disallowPublicIPAddress, artifacts?.ToList(), artifactDeploymentStatus, galleryImageReference, planId, computeVm, networkInterface, applicableSchedule, expireOn, allowClaim, storageType, vmCreationSource, environmentId, dataDiskParameters?.ToList(), scheduleParameters?.ToList(), lastKnownPowerState, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactDeploymentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabArtifactDeploymentStatus"/>. </summary>
         /// <param name="deploymentStatus"> The deployment status of the artifact. </param>
         /// <param name="artifactsApplied"> The total count of the artifacts that were successfully applied. </param>
         /// <param name="totalArtifacts"> The total count of the artifacts that were tentatively applied. </param>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArtifactDeploymentStatus(deploymentStatus, artifactsApplied, totalArtifacts);
         }
 
-        /// <summary> Initializes a new instance of ComputeVmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeVmProperties"/>. </summary>
         /// <param name="statuses"> Gets the statuses of the virtual machine. </param>
         /// <param name="osType"> Gets the OS type of the virtual machine. </param>
         /// <param name="vmSize"> Gets the size of the virtual machine. </param>
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new ComputeVmProperties(statuses?.ToList(), osType, vmSize, networkInterfaceId, osDiskId, dataDiskIds?.ToList(), dataDisks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ComputeVmInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeVmInstanceViewStatus"/>. </summary>
         /// <param name="code"> Gets the status Code. </param>
         /// <param name="displayStatus"> Gets the short localizable label for the status. </param>
         /// <param name="message"> Gets the message associated with the status. </param>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new ComputeVmInstanceViewStatus(code, displayStatus, message);
         }
 
-        /// <summary> Initializes a new instance of ComputeDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeDataDisk"/>. </summary>
         /// <param name="name"> Gets data disk name. </param>
         /// <param name="diskUri"> When backed by a blob, the URI of underlying blob. </param>
         /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new ComputeDataDisk(name, diskUri, managedDiskId, diskSizeGiB);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabRdpConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabRdpConnection"/>. </summary>
         /// <param name="contents"> The contents of the .rdp file. </param>
         /// <returns> A new <see cref="Models.DevTestLabRdpConnection"/> instance for mocking. </returns>
         public static DevTestLabRdpConnection DevTestLabRdpConnection(string contents = null)
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabRdpConnection(contents);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabVirtualNetworkData(id, name, resourceType, systemData, tags, location, allowedSubnets?.ToList(), description, externalProviderResourceId, externalSubnets?.ToList(), subnetOverrides?.ToList(), createdOn, provisioningState, uniqueIdentifier);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabExternalSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabExternalSubnet"/>. </summary>
         /// <param name="id"> Gets or sets the identifier. </param>
         /// <param name="name"> Gets or sets the name. </param>
         /// <returns> A new <see cref="Models.DevTestLabExternalSubnet"/> instance for mocking. </returns>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabExternalSubnet(id, name);
         }
 
-        /// <summary> Initializes a new instance of DevTestLabGenerateUploadUriResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabGenerateUploadUriResult"/>. </summary>
         /// <param name="uploadUri"> The upload URI for the VHD. </param>
         /// <returns> A new <see cref="Models.DevTestLabGenerateUploadUriResult"/> instance for mocking. </returns>
         public static DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(Uri uploadUri = null)

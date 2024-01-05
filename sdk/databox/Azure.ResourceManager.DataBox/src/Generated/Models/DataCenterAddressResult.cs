@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class DataCenterAddressResult
     {
-        /// <summary> Initializes a new instance of DataCenterAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressResult"/>. </summary>
         protected DataCenterAddressResult()
         {
             SupportedCarriersForReturnShipment = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataCenterAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCenterAddressResult"/>. </summary>
         /// <param name="dataCenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>

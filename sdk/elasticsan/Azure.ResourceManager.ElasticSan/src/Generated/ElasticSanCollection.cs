@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ElasticSanResource" /> and their operations.
-    /// Each <see cref="ElasticSanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="ElasticSanCollection" /> instance call the GetElasticSans method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ElasticSanResource"/> and their operations.
+    /// Each <see cref="ElasticSanResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ElasticSanCollection"/> instance call the GetElasticSans method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ElasticSanCollection : ArmCollection, IEnumerable<ElasticSanResource>, IAsyncEnumerable<ElasticSanResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticSanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticSanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);

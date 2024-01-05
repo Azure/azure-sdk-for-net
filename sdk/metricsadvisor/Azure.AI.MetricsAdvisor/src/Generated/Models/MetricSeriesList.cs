@@ -13,13 +13,13 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricSeriesList. </summary>
     internal partial class MetricSeriesList
     {
-        /// <summary> Initializes a new instance of MetricSeriesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesList"/>. </summary>
         internal MetricSeriesList()
         {
             Value = new ChangeTrackingList<MetricSeriesDefinition>();
         }
 
-        /// <summary> Initializes a new instance of MetricSeriesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal MetricSeriesList(string nextLink, IReadOnlyList<MetricSeriesDefinition> value)

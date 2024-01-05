@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Url configuration of the Actions set in Application Gateway. </summary>
     public partial class ApplicationGatewayUrlConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayUrlConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayUrlConfiguration"/>. </summary>
         public ApplicationGatewayUrlConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayUrlConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayUrlConfiguration"/>. </summary>
         /// <param name="modifiedPath"> Url path which user has provided for url rewrite. Null means no path will be updated. Default value is null. </param>
         /// <param name="modifiedQueryString"> Query string which user has provided for url rewrite. Null means no query string will be updated. Default value is null. </param>
         /// <param name="reroute"> If set as true, it will re-evaluate the url path map provided in path based request routing rules using modified path. Default value is false. </param>

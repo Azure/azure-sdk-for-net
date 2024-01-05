@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.BlobInventoryPolicyCompleted event. </summary>
     public partial class StorageBlobInventoryPolicyCompletedEventData
     {
-        /// <summary> Initializes a new instance of StorageBlobInventoryPolicyCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBlobInventoryPolicyCompletedEventData"/>. </summary>
         internal StorageBlobInventoryPolicyCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageBlobInventoryPolicyCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBlobInventoryPolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleDateTime"> The time at which inventory policy was scheduled. </param>
         /// <param name="accountName"> The account name for which inventory policy is registered. </param>
         /// <param name="ruleName"> The rule name for inventory policy. </param>

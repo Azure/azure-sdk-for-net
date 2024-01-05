@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class GlobalReachConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of GlobalReachConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalReachConnectionData"/>. </summary>
         public GlobalReachConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of GlobalReachConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalReachConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

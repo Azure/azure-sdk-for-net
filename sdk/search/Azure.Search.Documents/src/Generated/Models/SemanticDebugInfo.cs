@@ -13,14 +13,14 @@ namespace Azure.Search.Documents.Models
     /// <summary> The SemanticDebugInfo. </summary>
     public partial class SemanticDebugInfo
     {
-        /// <summary> Initializes a new instance of SemanticDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticDebugInfo"/>. </summary>
         internal SemanticDebugInfo()
         {
             ContentFields = new ChangeTrackingList<QueryResultDocumentSemanticField>();
             KeywordFields = new ChangeTrackingList<QueryResultDocumentSemanticField>();
         }
 
-        /// <summary> Initializes a new instance of SemanticDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticDebugInfo"/>. </summary>
         /// <param name="titleField"> The title field that was sent to the semantic enrichment process, as well as how it was used. </param>
         /// <param name="contentFields"> The content fields that were sent to the semantic enrichment process, as well as how they were used. </param>
         /// <param name="keywordFields"> The keyword fields that were sent to the semantic enrichment process, as well as how they were used. </param>

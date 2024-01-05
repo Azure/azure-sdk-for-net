@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The network rule set for a container registry. </summary>
     public partial class ContainerRegistryNetworkRuleSet
     {
-        /// <summary> Initializes a new instance of ContainerRegistryNetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> The default action of allow or deny when no other rules match. </param>
         public ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction)
         {
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IPRules = new ChangeTrackingList<ContainerRegistryIPRule>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryNetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> The default action of allow or deny when no other rules match. </param>
         /// <param name="ipRules"> The IP ACL rules. </param>
         internal ContainerRegistryNetworkRuleSet(ContainerRegistryNetworkRuleDefaultAction defaultAction, IList<ContainerRegistryIPRule> ipRules)

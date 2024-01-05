@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> The List Appliances operation response. </summary>
     internal partial class ApplianceListResult
     {
-        /// <summary> Initializes a new instance of ApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceListResult"/>. </summary>
         internal ApplianceListResult()
         {
             Value = new ChangeTrackingList<ResourceConnectorApplianceData>();
         }
 
-        /// <summary> Initializes a new instance of ApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceListResult"/>. </summary>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="value"> The list of Appliances. </param>
         internal ApplianceListResult(string nextLink, IReadOnlyList<ResourceConnectorApplianceData> value)

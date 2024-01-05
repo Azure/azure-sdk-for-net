@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationJobResource" /> and their operations.
-    /// Each <see cref="AutomationJobResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationJobCollection" /> instance call the GetAutomationJobs method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationJobResource"/> and their operations.
+    /// Each <see cref="AutomationJobResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationJobCollection"/> instance call the GetAutomationJobs method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationJobCollection : ArmCollection, IEnumerable<AutomationJobCollectionItemData>, IAsyncEnumerable<AutomationJobCollectionItemData>
     {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationJobCollectionItemData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobCollectionItemData> GetAllAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationJobCollectionItemData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationJobCollectionItemData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobCollectionItemData> GetAll(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationJobJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, clientRequestId);

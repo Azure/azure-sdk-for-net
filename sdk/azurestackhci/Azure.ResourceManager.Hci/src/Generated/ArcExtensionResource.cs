@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing an ArcExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ArcExtensionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetArcExtensionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArcSettingResource" /> using the GetArcExtension method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ArcExtensionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetArcExtensionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArcSettingResource"/> using the GetArcExtension method.
     /// </summary>
     public partial class ArcExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArcExtensionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="arcSettingName"> The arcSettingName. </param>
+        /// <param name="extensionName"> The extensionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/arcSettings/{arcSettingName}/extensions/{extensionName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.Hci
         private readonly ExtensionsRestOperations _arcExtensionExtensionsRestClient;
         private readonly ArcExtensionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/arcSettings/extensions";
+
         /// <summary> Initializes a new instance of the <see cref="ArcExtensionResource"/> class for mocking. </summary>
         protected ArcExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ArcExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ArcExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ArcExtensionResource(ArmClient client, ArcExtensionData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/arcSettings/extensions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

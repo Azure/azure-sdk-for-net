@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Job's execution template, containing container configuration for a job's execution. </summary>
     public partial class ContainerAppJobExecutionTemplate
     {
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionTemplate"/>. </summary>
         public ContainerAppJobExecutionTemplate()
         {
             Containers = new ChangeTrackingList<JobExecutionContainer>();
             InitContainers = new ChangeTrackingList<JobExecutionContainer>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionTemplate"/>. </summary>
         /// <param name="containers"> List of container definitions for the Container Apps Job. </param>
         /// <param name="initContainers"> List of specialized containers that run before job containers. </param>
         internal ContainerAppJobExecutionTemplate(IList<JobExecutionContainer> containers, IList<JobExecutionContainer> initContainers)

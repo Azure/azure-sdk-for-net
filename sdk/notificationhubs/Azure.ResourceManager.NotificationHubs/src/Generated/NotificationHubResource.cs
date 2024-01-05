@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     /// <summary>
     /// A Class representing a NotificationHub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NotificationHubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNotificationHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NotificationHubNamespaceResource" /> using the GetNotificationHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NotificationHubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNotificationHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NotificationHubNamespaceResource"/> using the GetNotificationHub method.
     /// </summary>
     public partial class NotificationHubResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NotificationHubResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="notificationHubName"> The notificationHubName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string notificationHubName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.NotificationHubs
         private readonly NotificationHubsRestOperations _notificationHubRestClient;
         private readonly NotificationHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NotificationHubs/namespaces/notificationHubs";
+
         /// <summary> Initializes a new instance of the <see cref="NotificationHubResource"/> class for mocking. </summary>
         protected NotificationHubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NotificationHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NotificationHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NotificationHubResource(ArmClient client, NotificationHubData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.NotificationHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NotificationHubs/namespaces/notificationHubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An object representing collection of NotificationHubAuthorizationRuleResources and their operations over a NotificationHubAuthorizationRuleResource. </returns>
         public virtual NotificationHubAuthorizationRuleCollection GetNotificationHubAuthorizationRules()
         {
-            return GetCachedClient(Client => new NotificationHubAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new NotificationHubAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="authorizationRuleName"> authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NotificationHubAuthorizationRuleResource>> GetNotificationHubAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="authorizationRuleName"> authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NotificationHubAuthorizationRuleResource> GetNotificationHubAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {

@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSitePremierAddonResource" /> and their operations.
-    /// Each <see cref="WebSitePremierAddonResource" /> in the collection will belong to the same instance of <see cref="WebSiteResource" />.
-    /// To get a <see cref="WebSitePremierAddonCollection" /> instance call the GetWebSitePremierAddons method from an instance of <see cref="WebSiteResource" />.
+    /// A class representing a collection of <see cref="WebSitePremierAddonResource"/> and their operations.
+    /// Each <see cref="WebSitePremierAddonResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="WebSitePremierAddonCollection"/> instance call the GetWebSitePremierAddons method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class WebSitePremierAddonCollection : ArmCollection
     {

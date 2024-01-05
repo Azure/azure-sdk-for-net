@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public abstract partial class VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of VectorSearchVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected VectorSearchVectorizer(string name)
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of VectorSearchVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         internal VectorSearchVectorizer(string name, VectorSearchVectorizerKind kind)

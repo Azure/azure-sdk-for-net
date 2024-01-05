@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The encryption key details for the integration service environment. </summary>
     public partial class IntegrationServiceEnvironmenEncryptionKeyReference
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionKeyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmenEncryptionKeyReference"/>. </summary>
         public IntegrationServiceEnvironmenEncryptionKeyReference()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionKeyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmenEncryptionKeyReference"/>. </summary>
         /// <param name="keyVault"> The key vault reference. </param>
         /// <param name="keyName"> Gets the key name in the Key Vault. </param>
         /// <param name="keyVersion"> Gets the version of the key specified in the keyName property. </param>

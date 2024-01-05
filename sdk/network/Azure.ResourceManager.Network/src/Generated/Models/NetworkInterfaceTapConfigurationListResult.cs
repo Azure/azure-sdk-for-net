@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for list tap configurations API service call. </summary>
     internal partial class NetworkInterfaceTapConfigurationListResult
     {
-        /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceTapConfigurationListResult"/>. </summary>
         internal NetworkInterfaceTapConfigurationListResult()
         {
             Value = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceTapConfigurationListResult"/>. </summary>
         /// <param name="value"> A list of tap configurations. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal NetworkInterfaceTapConfigurationListResult(IReadOnlyList<NetworkInterfaceTapConfigurationData> value, string nextLink)

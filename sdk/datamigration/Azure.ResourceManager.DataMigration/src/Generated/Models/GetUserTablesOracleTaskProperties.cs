@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that collects user tables for the given list of Oracle schemas. </summary>
     public partial class GetUserTablesOracleTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskProperties"/>. </summary>
         public GetUserTablesOracleTaskProperties()
         {
             Output = new ChangeTrackingList<GetUserTablesOracleTaskOutput>();
             TaskType = TaskType.GetUserTablesOracle;
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesOracleTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>

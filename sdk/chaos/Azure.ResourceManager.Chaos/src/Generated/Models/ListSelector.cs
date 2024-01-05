@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a list selector. </summary>
     public partial class ListSelector : Selector
     {
-        /// <summary> Initializes a new instance of ListSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSelector"/>. </summary>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="targets"> List of Target references. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="targets"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Chaos.Models
             SelectorType = SelectorType.List;
         }
 
-        /// <summary> Initializes a new instance of ListSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSelector"/>. </summary>
         /// <param name="selectorType"> Enum of the selector type. </param>
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="filter">

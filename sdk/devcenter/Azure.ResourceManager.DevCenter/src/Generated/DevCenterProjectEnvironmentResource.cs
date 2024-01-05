@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a DevCenterProjectEnvironment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterProjectEnvironmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterProjectEnvironmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource" /> using the GetDevCenterProjectEnvironment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterProjectEnvironmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterProjectEnvironmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetDevCenterProjectEnvironment method.
     /// </summary>
     public partial class DevCenterProjectEnvironmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevCenterProjectEnvironmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="environmentTypeName"> The environmentTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/environmentTypes/{environmentTypeName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.DevCenter
         private readonly ProjectEnvironmentTypesRestOperations _devCenterProjectEnvironmentProjectEnvironmentTypesRestClient;
         private readonly DevCenterProjectEnvironmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/environmentTypes";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterProjectEnvironmentResource"/> class for mocking. </summary>
         protected DevCenterProjectEnvironmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevCenterProjectEnvironmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterProjectEnvironmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterProjectEnvironmentResource(ArmClient client, DevCenterProjectEnvironmentData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/environmentTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

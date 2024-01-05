@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualRouterPeeringResource" /> and their operations.
-    /// Each <see cref="VirtualRouterPeeringResource" /> in the collection will belong to the same instance of <see cref="VirtualRouterResource" />.
-    /// To get a <see cref="VirtualRouterPeeringCollection" /> instance call the GetVirtualRouterPeerings method from an instance of <see cref="VirtualRouterResource" />.
+    /// A class representing a collection of <see cref="VirtualRouterPeeringResource"/> and their operations.
+    /// Each <see cref="VirtualRouterPeeringResource"/> in the collection will belong to the same instance of <see cref="VirtualRouterResource"/>.
+    /// To get a <see cref="VirtualRouterPeeringCollection"/> instance call the GetVirtualRouterPeerings method from an instance of <see cref="VirtualRouterResource"/>.
     /// </summary>
     public partial class VirtualRouterPeeringCollection : ArmCollection, IEnumerable<VirtualRouterPeeringResource>, IAsyncEnumerable<VirtualRouterPeeringResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualRouterPeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualRouterPeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualRouterPeeringResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualRouterPeeringRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualRouterPeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualRouterPeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualRouterPeeringResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualRouterPeeringRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

@@ -13,12 +13,33 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The autoscale setting object for patch operations. </summary>
     public partial class AutoscaleSettingPatch
     {
-        /// <summary> Initializes a new instance of AutoscaleSettingPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingPatch"/>. </summary>
         public AutoscaleSettingPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Profiles = new ChangeTrackingList<AutoscaleProfile>();
             Notifications = new ChangeTrackingList<AutoscaleNotification>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
+        /// <param name="notifications"> the collection of notifications. </param>
+        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is 'false'. </param>
+        /// <param name="predictiveAutoscalePolicy"> the predictive autoscale policy mode. </param>
+        /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
+        /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
+        /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
+        internal AutoscaleSettingPatch(IDictionary<string, string> tags, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? isEnabled, PredictiveAutoscalePolicy predictiveAutoscalePolicy, string autoscaleSettingName, ResourceIdentifier targetResourceId, AzureLocation? targetResourceLocation)
+        {
+            Tags = tags;
+            Profiles = profiles;
+            Notifications = notifications;
+            IsEnabled = isEnabled;
+            PredictiveAutoscalePolicy = predictiveAutoscalePolicy;
+            AutoscaleSettingName = autoscaleSettingName;
+            TargetResourceId = targetResourceId;
+            TargetResourceLocation = targetResourceLocation;
         }
 
         /// <summary> Resource tags. </summary>

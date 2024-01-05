@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Intelligence Pack containing a string name and boolean indicating if it's enabled. </summary>
     public partial class OperationalInsightsIntelligencePack
     {
-        /// <summary> Initializes a new instance of OperationalInsightsIntelligencePack. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsIntelligencePack"/>. </summary>
         internal OperationalInsightsIntelligencePack()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsIntelligencePack. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsIntelligencePack"/>. </summary>
         /// <param name="name"> The name of the intelligence pack. </param>
         /// <param name="isEnabled"> The enabled boolean for the intelligence pack. </param>
         /// <param name="displayName"> The display name of the intelligence pack. </param>

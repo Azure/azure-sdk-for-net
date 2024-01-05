@@ -21,9 +21,9 @@ using Azure.ResourceManager.StorageSync.Models;
 namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudEndpointResource" /> and their operations.
-    /// Each <see cref="CloudEndpointResource" /> in the collection will belong to the same instance of <see cref="StorageSyncGroupResource" />.
-    /// To get a <see cref="CloudEndpointCollection" /> instance call the GetCloudEndpoints method from an instance of <see cref="StorageSyncGroupResource" />.
+    /// A class representing a collection of <see cref="CloudEndpointResource"/> and their operations.
+    /// Each <see cref="CloudEndpointResource"/> in the collection will belong to the same instance of <see cref="StorageSyncGroupResource"/>.
+    /// To get a <see cref="CloudEndpointCollection"/> instance call the GetCloudEndpoints method from an instance of <see cref="StorageSyncGroupResource"/>.
     /// </summary>
     public partial class CloudEndpointCollection : ArmCollection, IEnumerable<CloudEndpointResource>, IAsyncEnumerable<CloudEndpointResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudEndpointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudEndpointRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.StorageSync
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudEndpointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudEndpointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudEndpointRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

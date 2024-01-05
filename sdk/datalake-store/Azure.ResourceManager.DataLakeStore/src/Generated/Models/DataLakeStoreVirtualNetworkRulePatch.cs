@@ -12,9 +12,16 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to update a virtual network rule. </summary>
     public partial class DataLakeStoreVirtualNetworkRulePatch
     {
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRulePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRulePatch"/>. </summary>
         public DataLakeStoreVirtualNetworkRulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRulePatch"/>. </summary>
+        /// <param name="subnetId"> The resource identifier for the subnet. </param>
+        internal DataLakeStoreVirtualNetworkRulePatch(ResourceIdentifier subnetId)
+        {
+            SubnetId = subnetId;
         }
 
         /// <summary> The resource identifier for the subnet. </summary>

@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Deployment Configuration. </summary>
     public partial class DeploymentConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentConfiguration"/>. </summary>
         public DeploymentConfiguration()
         {
             ConfigurationType = SapConfigurationType.Deployment;
         }
 
-        /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
         /// <param name="infrastructureConfiguration">

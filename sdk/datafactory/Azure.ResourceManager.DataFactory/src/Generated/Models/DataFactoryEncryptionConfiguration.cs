@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Definition of CMK for the factory. </summary>
     public partial class DataFactoryEncryptionConfiguration
     {
-        /// <summary> Initializes a new instance of DataFactoryEncryptionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryEncryptionConfiguration"/>. </summary>
         /// <param name="keyName"> The name of the key in Azure Key Vault to use as Customer Managed Key. </param>
         /// <param name="vaultBaseUri"> The url of the Azure Key Vault used for CMK. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> or <paramref name="vaultBaseUri"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             VaultBaseUri = vaultBaseUri;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryEncryptionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryEncryptionConfiguration"/>. </summary>
         /// <param name="keyName"> The name of the key in Azure Key Vault to use as Customer Managed Key. </param>
         /// <param name="vaultBaseUri"> The url of the Azure Key Vault used for CMK. </param>
         /// <param name="keyVersion"> The version of the key used for CMK. If not provided, latest version will be used. </param>

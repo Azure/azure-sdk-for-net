@@ -10,12 +10,12 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Route sections contain additional information about parts of a route. Each section contains at least the elements `startPointIndex`, `endPointIndex`, and `sectionType`. </summary>
     public partial class RouteSection
     {
-        /// <summary> Initializes a new instance of RouteSection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteSection"/>. </summary>
         internal RouteSection()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteSection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteSection"/>. </summary>
         /// <param name="startPointIndex"> Index of the first point (offset 0) in the route this section applies to. </param>
         /// <param name="endPointIndex"> Index of the last point (offset 0) in the route this section applies to. </param>
         /// <param name="sectionType"> Section types of the reported route response. </param>

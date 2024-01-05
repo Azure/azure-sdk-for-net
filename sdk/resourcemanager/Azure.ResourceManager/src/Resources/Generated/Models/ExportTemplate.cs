@@ -13,10 +13,19 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Export resource group template request parameters. </summary>
     public partial class ExportTemplate
     {
-        /// <summary> Initializes a new instance of ExportTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportTemplate"/>. </summary>
         public ExportTemplate()
         {
             Resources = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportTemplate"/>. </summary>
+        /// <param name="resources"> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry '*'. </param>
+        /// <param name="options"> The export template options. A CSV-formatted list containing zero or more of the following: 'IncludeParameterDefaultValue', 'IncludeComments', 'SkipResourceNameParameterization', 'SkipAllParameterization'. </param>
+        internal ExportTemplate(IList<string> resources, string options)
+        {
+            Resources = resources;
+            Options = options;
         }
 
         /// <summary> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry '*'. </summary>

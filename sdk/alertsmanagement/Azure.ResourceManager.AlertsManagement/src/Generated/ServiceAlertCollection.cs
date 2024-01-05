@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceAlertResource" /> and their operations.
-    /// Each <see cref="ServiceAlertResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="ServiceAlertCollection" /> instance call the GetServiceAlerts method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ServiceAlertResource"/> and their operations.
+    /// Each <see cref="ServiceAlertResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ServiceAlertCollection"/> instance call the GetServiceAlerts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ServiceAlertCollection : ArmCollection, IEnumerable<ServiceAlertResource>, IAsyncEnumerable<ServiceAlertResource>
     {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(ServiceAlertCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new ServiceAlertCollectionGetAllOptions();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceAlertResource> GetAll(ServiceAlertCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new ServiceAlertCollectionGetAllOptions();

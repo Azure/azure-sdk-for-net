@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The JSON object that contains the properties to validate a domain. </summary>
     public partial class DomainValidationProperties
     {
-        /// <summary> Initializes a new instance of DomainValidationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainValidationProperties"/>. </summary>
         internal DomainValidationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DomainValidationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainValidationProperties"/>. </summary>
         /// <param name="validationToken"> Challenge used for DNS TXT record or file based validation. </param>
         /// <param name="expiresOn"> The date time that the token expires. </param>
         internal DomainValidationProperties(string validationToken, DateTimeOffset? expiresOn)

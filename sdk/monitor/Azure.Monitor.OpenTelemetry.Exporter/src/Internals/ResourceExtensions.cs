@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 
@@ -66,7 +67,7 @@ internal static class ResourceExtensions
                     {
                         SdkVersionUtils.IsDistro = true;
                     }
-                    continue;
+                    break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
                     {

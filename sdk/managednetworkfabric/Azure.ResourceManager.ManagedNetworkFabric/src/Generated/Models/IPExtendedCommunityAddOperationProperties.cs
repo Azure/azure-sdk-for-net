@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Extended Community add operation properties. </summary>
     public partial class IPExtendedCommunityAddOperationProperties
     {
-        /// <summary> Initializes a new instance of IPExtendedCommunityAddOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityAddOperationProperties"/>. </summary>
         public IPExtendedCommunityAddOperationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IPExtendedCommunityAddOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityAddOperationProperties"/>. </summary>
         /// <param name="add"> List of IP Extended Community IDs. </param>
         internal IPExtendedCommunityAddOperationProperties(IPExtendedCommunityIdList @add)
         {

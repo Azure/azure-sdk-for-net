@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
     /// A Class representing a GlobalRulestackCertificateObject along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GlobalRulestackCertificateObjectResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGlobalRulestackCertificateObjectResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource" /> using the GetGlobalRulestackCertificateObject method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GlobalRulestackCertificateObjectResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGlobalRulestackCertificateObjectResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GlobalRulestackResource"/> using the GetGlobalRulestackCertificateObject method.
     /// </summary>
     public partial class GlobalRulestackCertificateObjectResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GlobalRulestackCertificateObjectResource"/> instance. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName, string name)
         {
             var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/certificates/{name}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly CertificateObjectGlobalRulestackRestOperations _globalRulestackCertificateObjectCertificateObjectGlobalRulestackRestClient;
         private readonly GlobalRulestackCertificateObjectData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="GlobalRulestackCertificateObjectResource"/> class for mocking. </summary>
         protected GlobalRulestackCertificateObjectResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GlobalRulestackCertificateObjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GlobalRulestackCertificateObjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GlobalRulestackCertificateObjectResource(ArmClient client, GlobalRulestackCertificateObjectData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/globalRulestacks/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

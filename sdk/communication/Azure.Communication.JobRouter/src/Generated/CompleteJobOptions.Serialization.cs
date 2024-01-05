@@ -15,8 +15,6 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("assignmentId"u8);
-            writer.WriteStringValue(AssignmentId);
             if (Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);

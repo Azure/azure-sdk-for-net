@@ -59,7 +59,7 @@ ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction
     Priority = 10,
     WorkerSelectors =
     {
-        new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
+        new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new RouterValue(true))
     }
 };
 

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A Class representing an ElasticSanVolumeGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ElasticSanVolumeGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetElasticSanVolumeGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource" /> using the GetElasticSanVolumeGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ElasticSanVolumeGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetElasticSanVolumeGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ElasticSanResource"/> using the GetElasticSanVolumeGroup method.
     /// </summary>
     public partial class ElasticSanVolumeGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ElasticSanVolumeGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="elasticSanName"> The elasticSanName. </param>
+        /// <param name="volumeGroupName"> The volumeGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly VolumeGroupsRestOperations _elasticSanVolumeGroupVolumeGroupsRestClient;
         private readonly ElasticSanVolumeGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeGroupResource"/> class for mocking. </summary>
         protected ElasticSanVolumeGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ElasticSanVolumeGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ElasticSanVolumeGroupResource(ArmClient client, ElasticSanVolumeGroupData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An object representing collection of ElasticSanVolumeResources and their operations over a ElasticSanVolumeResource. </returns>
         public virtual ElasticSanVolumeCollection GetElasticSanVolumes()
         {
-            return GetCachedClient(Client => new ElasticSanVolumeCollection(Client, Id));
+            return GetCachedClient(client => new ElasticSanVolumeCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +113,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="volumeName"> The name of the Volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ElasticSanVolumeResource>> GetElasticSanVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +136,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="volumeName"> The name of the Volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ElasticSanVolumeResource> GetElasticSanVolume(string volumeName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +148,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <returns> An object representing collection of ElasticSanSnapshotResources and their operations over a ElasticSanSnapshotResource. </returns>
         public virtual ElasticSanSnapshotCollection GetElasticSanSnapshots()
         {
-            return GetCachedClient(Client => new ElasticSanSnapshotCollection(Client, Id));
+            return GetCachedClient(client => new ElasticSanSnapshotCollection(client, Id));
         }
 
         /// <summary>
@@ -162,8 +166,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ElasticSanSnapshotResource>> GetElasticSanSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
@@ -185,8 +189,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ElasticSanSnapshotResource> GetElasticSanSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {

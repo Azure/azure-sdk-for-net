@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
     /// A Class representing a FirmwareWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirmwareWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFirmwareWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFirmwareWorkspace method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FirmwareWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFirmwareWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFirmwareWorkspace method.
     /// </summary>
     public partial class FirmwareWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FirmwareWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}";
@@ -37,12 +40,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         private readonly WorkspacesRestOperations _firmwareWorkspaceWorkspacesRestClient;
         private readonly FirmwareWorkspaceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces";
+
         /// <summary> Initializes a new instance of the <see cref="FirmwareWorkspaceResource"/> class for mocking. </summary>
         protected FirmwareWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FirmwareWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirmwareWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FirmwareWorkspaceResource(ArmClient client, FirmwareWorkspaceData data) : this(client, data.Id)
@@ -63,9 +69,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> An object representing collection of FirmwareResources and their operations over a FirmwareResource. </returns>
         public virtual FirmwareCollection GetFirmwares()
         {
-            return GetCachedClient(Client => new FirmwareCollection(Client, Id));
+            return GetCachedClient(client => new FirmwareCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FirmwareResource>> GetFirmwareAsync(string firmwareName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +136,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FirmwareResource> GetFirmware(string firmwareName, CancellationToken cancellationToken = default)
         {

@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters for Create or Update Request for ServiceResource. </summary>
     public partial class CosmosDBServiceCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CosmosDBServiceCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceCreateOrUpdateContent"/>. </summary>
         public CosmosDBServiceCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceCreateOrUpdateContent"/>. </summary>
+        /// <param name="instanceSize"> Instance type for the service. </param>
+        /// <param name="instanceCount"> Instance count for the service. </param>
+        /// <param name="serviceType"> ServiceType for the service. </param>
+        internal CosmosDBServiceCreateOrUpdateContent(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType? serviceType)
+        {
+            InstanceSize = instanceSize;
+            InstanceCount = instanceCount;
+            ServiceType = serviceType;
         }
 
         /// <summary> Instance type for the service. </summary>

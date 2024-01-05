@@ -7,23 +7,22 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("CancelExceptionAction")]
     public partial class CancelExceptionAction: IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
         public CancelExceptionAction()
         {
-            Kind = "cancel";
+            Kind = ExceptionActionKind.Cancel;
         }
 
         /// <summary>
-        /// (Optional) A note that will be appended to the jobs' Notes collection with the
+        /// A note that will be appended to the jobs' Notes collection with the
         /// current timestamp.
         /// </summary>
         public string Note { get; set; }
 
         /// <summary>
-        /// (Optional) Indicates the outcome of the job, populate this field with your own
+        /// Indicates the outcome of the job, populate this field with your own
         /// custom values.
         /// </summary>
         public string DispositionCode { get; set; }
@@ -47,7 +46,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStringValue(DispositionCode);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Reservations
     /// </summary>
     public partial class QuotaRequestDetailData : ResourceData
     {
-        /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailData"/>. </summary>
         internal QuotaRequestDetailData()
         {
             QuotaRequestValue = new ChangeTrackingList<SubContent>();
         }
 
-        /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaRequestDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

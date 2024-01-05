@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a ManagedInstanceAdministrator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedInstanceAdministratorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedInstanceAdministratorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource" /> using the GetManagedInstanceAdministrator method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedInstanceAdministratorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedInstanceAdministratorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedInstanceResource"/> using the GetManagedInstanceAdministrator method.
     /// </summary>
     public partial class ManagedInstanceAdministratorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedInstanceAdministratorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="administratorName"> The administratorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, SqlAdministratorName administratorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/administrators/{administratorName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstanceAdministratorsRestOperations _managedInstanceAdministratorRestClient;
         private readonly ManagedInstanceAdministratorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/administrators";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceAdministratorResource"/> class for mocking. </summary>
         protected ManagedInstanceAdministratorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedInstanceAdministratorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedInstanceAdministratorResource(ArmClient client, ManagedInstanceAdministratorData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/administrators";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

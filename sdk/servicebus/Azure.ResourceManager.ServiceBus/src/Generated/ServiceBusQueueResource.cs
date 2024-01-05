@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
     /// A Class representing a ServiceBusQueue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceBusQueueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceBusQueueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource" /> using the GetServiceBusQueue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceBusQueueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceBusQueueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceBusNamespaceResource"/> using the GetServiceBusQueue method.
     /// </summary>
     public partial class ServiceBusQueueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusQueueResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="queueName"> The queueName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string queueName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.ServiceBus
         private readonly QueuesRestOperations _serviceBusQueueQueuesRestClient;
         private readonly ServiceBusQueueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/queues";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueResource"/> class for mocking. </summary>
         protected ServiceBusQueueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceBusQueueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceBusQueueResource(ArmClient client, ServiceBusQueueData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.ServiceBus
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/queues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusQueueAuthorizationRuleResources and their operations over a ServiceBusQueueAuthorizationRuleResource. </returns>
         public virtual ServiceBusQueueAuthorizationRuleCollection GetServiceBusQueueAuthorizationRules()
         {
-            return GetCachedClient(Client => new ServiceBusQueueAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusQueueAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusQueueAuthorizationRuleResource>> GetServiceBusQueueAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusQueueAuthorizationRuleResource> GetServiceBusQueueAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {

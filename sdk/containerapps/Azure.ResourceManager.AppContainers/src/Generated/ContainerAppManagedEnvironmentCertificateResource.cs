@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppManagedEnvironmentCertificate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppManagedEnvironmentCertificateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppManagedEnvironmentCertificateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource" /> using the GetContainerAppManagedEnvironmentCertificate method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppManagedEnvironmentCertificateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppManagedEnvironmentCertificateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource"/> using the GetContainerAppManagedEnvironmentCertificate method.
     /// </summary>
     public partial class ContainerAppManagedEnvironmentCertificateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppManagedEnvironmentCertificateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        /// <param name="certificateName"> The certificateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName, string certificateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/certificates/{certificateName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly CertificatesRestOperations _containerAppManagedEnvironmentCertificateCertificatesRestClient;
         private readonly ContainerAppCertificateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/certificates";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentCertificateResource"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentCertificateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppManagedEnvironmentCertificateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentCertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentCertificateResource(ArmClient client, ContainerAppCertificateData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/certificates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

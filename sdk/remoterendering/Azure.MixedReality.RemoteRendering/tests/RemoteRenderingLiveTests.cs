@@ -14,6 +14,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests
         public RemoteRenderingLiveTests(bool isAsync) :
             base(isAsync/*, RecordedTestMode.Record*/)
         {
+            // TODO (39914): enable after Azure.MixedReality.Authentication is released
+            TestDiagnostics = false;
         }
 
         [RecordedTest]

@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricExternalNetwork along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricExternalNetworkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricExternalNetworkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkFabricL3IsolationDomainResource" /> using the GetNetworkFabricExternalNetwork method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricExternalNetworkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricExternalNetworkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkFabricL3IsolationDomainResource"/> using the GetNetworkFabricExternalNetwork method.
     /// </summary>
     public partial class NetworkFabricExternalNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricExternalNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="l3IsolationDomainName"> The l3IsolationDomainName. </param>
+        /// <param name="externalNetworkName"> The externalNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly ExternalNetworksRestOperations _networkFabricExternalNetworkExternalNetworksRestClient;
         private readonly NetworkFabricExternalNetworkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains/externalNetworks";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricExternalNetworkResource"/> class for mocking. </summary>
         protected NetworkFabricExternalNetworkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricExternalNetworkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricExternalNetworkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricExternalNetworkResource(ArmClient client, NetworkFabricExternalNetworkData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/l3IsolationDomains/externalNetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

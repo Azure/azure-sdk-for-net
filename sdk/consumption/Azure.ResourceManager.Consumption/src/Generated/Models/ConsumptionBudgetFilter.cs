@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> May be used to filter budgets by resource group, resource, or meter. </summary>
     public partial class ConsumptionBudgetFilter
     {
-        /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBudgetFilter"/>. </summary>
         public ConsumptionBudgetFilter()
         {
             And = new ChangeTrackingList<BudgetFilterProperties>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBudgetFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBudgetFilter"/>. </summary>
         /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
         /// <param name="dimensions"> Has comparison expression for a dimension. </param>
         /// <param name="tags"> Has comparison expression for a tag. </param>

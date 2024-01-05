@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Cluster node details. </summary>
     public partial class HciClusterNode
     {
-        /// <summary> Initializes a new instance of HciClusterNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterNode"/>. </summary>
         internal HciClusterNode()
         {
         }
 
-        /// <summary> Initializes a new instance of HciClusterNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciClusterNode"/>. </summary>
         /// <param name="name"> Name of the cluster node. </param>
         /// <param name="id"> Id of the node in the cluster. </param>
         /// <param name="windowsServerSubscription"> State of Windows Server Subscription. </param>

@@ -18,35 +18,5 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
-        internal ContainerAppJobExecutionData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> Current running State of the job. </param>
-        /// <param name="startOn"> Job execution start time. </param>
-        /// <param name="endOn"> Job execution end time. </param>
-        /// <param name="template"> Job's execution container. </param>
-        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template) : base(id, name, resourceType, systemData)
-        {
-            Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
-            Template = template;
-        }
-
-        /// <summary> Current running State of the job. </summary>
-        public JobExecutionRunningState? Status { get; }
-        /// <summary> Job execution start time. </summary>
-        public DateTimeOffset? StartOn { get; }
-        /// <summary> Job execution end time. </summary>
-        public DateTimeOffset? EndOn { get; }
-        /// <summary> Job's execution container. </summary>
-        public ContainerAppJobExecutionTemplate Template { get; }
     }
 }

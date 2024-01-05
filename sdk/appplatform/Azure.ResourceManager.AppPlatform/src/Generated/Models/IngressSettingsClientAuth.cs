@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Client-Certification Authentication. </summary>
     internal partial class IngressSettingsClientAuth
     {
-        /// <summary> Initializes a new instance of IngressSettingsClientAuth. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressSettingsClientAuth"/>. </summary>
         public IngressSettingsClientAuth()
         {
             Certificates = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of IngressSettingsClientAuth. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressSettingsClientAuth"/>. </summary>
         /// <param name="certificates"> Collection of certificate resource id. </param>
         internal IngressSettingsClientAuth(IList<string> certificates)
         {

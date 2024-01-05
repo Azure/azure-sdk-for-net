@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The image definition. </summary>
     public partial class ImageDefinition
     {
-        /// <summary> Initializes a new instance of ImageDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDefinition"/>. </summary>
         internal ImageDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDefinition"/>. </summary>
         /// <param name="imageExists"> Whether image exists already. </param>
         /// <param name="contentUri"> Content URL for the image blob. </param>
         /// <param name="relativePath"> Relative path of the image. </param>

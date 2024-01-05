@@ -118,11 +118,13 @@
     "Vectorizable",
     "Vectorizer",
     "Vectorizers",
+    "vhdx",
     "vmss",
     "vnet",
     "westcentralus",
     "westus",
-    "xunit"
+    "xunit",
+    "miscs"
   ],
   "overrides": [
     {
@@ -452,6 +454,13 @@
       ]
     },
     {
+      "filename": "**/sdk/documentintelligence/**/*.cs",
+      "words": [
+        "UPCA",
+        "UPCE"
+      ]
+    },
+    {
       "filename": "**/sdk/dynatrace/**/*.cs",
       "words": [
         "Dynatrace",
@@ -536,6 +545,12 @@
       "words": [
         "Vmip",
         "Kubevirt"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridcompute/**/*.cs",
+      "words": [
+        "Scvmm"
       ]
     },
     {
@@ -638,7 +653,9 @@
         "Ocsp",
         "Afri",
         "Apac",
-        "Latam"
+        "Latam",
+        "Fips",
+        "Diffie"
       ]
     },
     {
@@ -928,6 +945,12 @@
       "filename": "**/sdk/resourcehealth/**/*.cs",
       "words": [
         "occured"
+      ]
+    },
+    {
+      "filename": "**/sdk/schemaregistry/**/*.cs",
+      "words": [
+        "protobuf"
       ]
     },
     {
@@ -1233,6 +1256,15 @@
       "filename": "**/sdk/monitor/**/*.cs",
       "words": [
         "resourceid"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridnetwork/**/*.cs",
+      "words": [
+        "Nfvi",
+        "nfvi",
+        "NFVIs",
+        "nfvis"
       ]
     }
   ],

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list credential operation. </summary>
     internal partial class AutomationCredentialListResult
     {
-        /// <summary> Initializes a new instance of AutomationCredentialListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialListResult"/>. </summary>
         internal AutomationCredentialListResult()
         {
             Value = new ChangeTrackingList<AutomationCredentialData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationCredentialListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of credentials. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         internal AutomationCredentialListResult(IReadOnlyList<AutomationCredentialData> value, string nextLink)

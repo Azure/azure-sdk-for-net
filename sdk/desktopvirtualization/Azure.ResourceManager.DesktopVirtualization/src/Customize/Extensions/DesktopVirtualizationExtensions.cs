@@ -29,7 +29,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<HostPoolResource> GetHostPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => GetHostPoolsAsync(subscriptionResource, null, null, null, cancellationToken );
+        public static AsyncPageable<HostPoolResource> GetHostPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+        {
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetHostPoolsAsync(cancellationToken);
+        }
 
         /// <summary>
         /// List hostPools in subscription.
@@ -48,7 +51,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<HostPoolResource> GetHostPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)  => GetHostPools(subscriptionResource, null, null, null, cancellationToken);
+        public static Pageable<HostPoolResource> GetHostPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+        {
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetHostPools(cancellationToken);
+        }
 
         /// <summary>
         /// List scaling plans in subscription.
@@ -67,7 +73,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken ) => GetScalingPlansAsync(subscriptionResource, null, null, null, cancellationToken);
+        public static AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+        {
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetScalingPlansAsync(cancellationToken);
+        }
 
         /// <summary>
         /// List scaling plans in subscription.
@@ -86,6 +95,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<ScalingPlanResource> GetScalingPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken) => GetScalingPlans(subscriptionResource, null, null, null, cancellationToken);
+        public static Pageable<ScalingPlanResource> GetScalingPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+        {
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetScalingPlans(cancellationToken);
+        }
     }
 }

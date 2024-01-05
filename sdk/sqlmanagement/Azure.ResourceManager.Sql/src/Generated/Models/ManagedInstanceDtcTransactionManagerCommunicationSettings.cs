@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The Transaction Manager Communication Settings of managed instance DTC. </summary>
     public partial class ManagedInstanceDtcTransactionManagerCommunicationSettings
     {
-        /// <summary> Initializes a new instance of ManagedInstanceDtcTransactionManagerCommunicationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcTransactionManagerCommunicationSettings"/>. </summary>
         public ManagedInstanceDtcTransactionManagerCommunicationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDtcTransactionManagerCommunicationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcTransactionManagerCommunicationSettings"/>. </summary>
         /// <param name="allowInboundEnabled"> Allow Inbound traffic to managed instance DTC. </param>
         /// <param name="allowOutboundEnabled"> Allow Outbound traffic of managed instance DTC. </param>
         /// <param name="authentication"> Authentication type of managed instance DTC. </param>

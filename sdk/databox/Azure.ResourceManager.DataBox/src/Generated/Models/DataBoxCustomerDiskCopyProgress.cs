@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> DataBox CustomerDisk Copy Progress. </summary>
     public partial class DataBoxCustomerDiskCopyProgress : DataBoxCopyProgress
     {
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxCustomerDiskCopyProgress"/>. </summary>
         internal DataBoxCustomerDiskCopyProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxCustomerDiskCopyProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxCustomerDiskCopyProgress"/>. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Refund policy result property. </summary>
     public partial class ReservationRefundPolicyResultProperty
     {
-        /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundPolicyResultProperty"/>. </summary>
         internal ReservationRefundPolicyResultProperty()
         {
             PolicyErrors = new ChangeTrackingList<ReservationRefundPolicyError>();
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundPolicyResultProperty"/>. </summary>
         /// <param name="consumedRefundsTotal"> Pricing information containing the amount and the currency code. </param>
         /// <param name="maxRefundLimit"> Pricing information containing the amount and the currency code. </param>
         /// <param name="policyErrors"> Refund Policy errors. </param>

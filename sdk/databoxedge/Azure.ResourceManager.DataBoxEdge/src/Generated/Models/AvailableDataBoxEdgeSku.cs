@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Sku information. </summary>
     public partial class AvailableDataBoxEdgeSku
     {
-        /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDataBoxEdgeSku"/>. </summary>
         internal AvailableDataBoxEdgeSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Capabilities = new ChangeTrackingList<DataBoxEdgeSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDataBoxEdgeSku"/>. </summary>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="name"> The Sku name. </param>
         /// <param name="kind"> The Sku kind. </param>

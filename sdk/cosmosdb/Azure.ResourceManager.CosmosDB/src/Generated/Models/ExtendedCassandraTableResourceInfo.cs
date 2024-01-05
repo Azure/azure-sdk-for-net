@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedCassandraTableResourceInfo. </summary>
     public partial class ExtendedCassandraTableResourceInfo : CassandraTableResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedCassandraTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCassandraTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public ExtendedCassandraTableResourceInfo(string tableName) : base(tableName)
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(tableName, nameof(tableName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedCassandraTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCassandraTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
         /// <param name="defaultTtl"> Time to live of the Cosmos DB Cassandra table. </param>
         /// <param name="schema"> Schema of the Cosmos DB Cassandra table. </param>

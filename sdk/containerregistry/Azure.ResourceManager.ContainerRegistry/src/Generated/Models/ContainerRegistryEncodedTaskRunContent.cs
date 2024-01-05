@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for a quick task run request. </summary>
     public partial class ContainerRegistryEncodedTaskRunContent : ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskRunContent"/>. </summary>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encodedTaskContent"/> or <paramref name="platform"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RunRequestType = "EncodedTaskRunRequest";
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEncodedTaskRunContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>

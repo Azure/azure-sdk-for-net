@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The tracking event. </summary>
     public partial class IntegrationAccountTrackingEvent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountTrackingEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEvent"/>. </summary>
         /// <param name="eventLevel"> The event level. </param>
         /// <param name="eventOn"> The event time. </param>
         /// <param name="recordType"> The record type. </param>
@@ -21,6 +21,21 @@ namespace Azure.ResourceManager.Logic.Models
             EventLevel = eventLevel;
             EventOn = eventOn;
             RecordType = recordType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEvent"/>. </summary>
+        /// <param name="eventLevel"> The event level. </param>
+        /// <param name="eventOn"> The event time. </param>
+        /// <param name="recordType"> The record type. </param>
+        /// <param name="record"> The record. </param>
+        /// <param name="error"> The error. </param>
+        internal IntegrationAccountTrackingEvent(IntegrationAccountEventLevel eventLevel, DateTimeOffset eventOn, IntegrationAccountTrackingRecordType recordType, BinaryData record, IntegrationAccountTrackingEventErrorInfo error)
+        {
+            EventLevel = eventLevel;
+            EventOn = eventOn;
+            RecordType = recordType;
+            Record = record;
+            Error = error;
         }
 
         /// <summary> The event level. </summary>

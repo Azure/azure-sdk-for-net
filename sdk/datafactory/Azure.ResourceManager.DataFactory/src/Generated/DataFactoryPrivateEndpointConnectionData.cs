@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionData"/>. </summary>
         public DataFactoryPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

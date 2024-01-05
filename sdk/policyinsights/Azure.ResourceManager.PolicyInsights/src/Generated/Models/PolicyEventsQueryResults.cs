@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Query results. </summary>
     internal partial class PolicyEventsQueryResults
     {
-        /// <summary> Initializes a new instance of PolicyEventsQueryResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyEventsQueryResults"/>. </summary>
         internal PolicyEventsQueryResults()
         {
             Value = new ChangeTrackingList<PolicyEvent>();
         }
 
-        /// <summary> Initializes a new instance of PolicyEventsQueryResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyEventsQueryResults"/>. </summary>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="odataCount"> OData entity count; represents the number of policy event records returned. </param>
         /// <param name="odataNextLink"> Odata next link; URL to get the next set of results. </param>

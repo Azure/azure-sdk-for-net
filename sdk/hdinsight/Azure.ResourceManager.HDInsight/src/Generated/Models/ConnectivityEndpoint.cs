@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The connectivity properties. </summary>
     public partial class ConnectivityEndpoint
     {
-        /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityEndpoint"/>. </summary>
         public ConnectivityEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityEndpoint"/>. </summary>
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="endpointLocation"> The location of the endpoint. </param>

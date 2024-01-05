@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(ManagedServiceIdentityConverter))]
     public partial class ManagedServiceIdentity
     {
-        internal static void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options = default)
+        internal void Write(Utf8JsonWriter writer, JsonSerializerOptions options = default)
         {
             writer.WriteStartObject();
-            JsonSerializer.Serialize(writer, model.ManagedServiceIdentityType, options);
-            if (Optional.IsCollectionDefined(model.UserAssignedIdentities))
+            JsonSerializer.Serialize(writer, ManagedServiceIdentityType, options);
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
-                foreach (var item in model.UserAssignedIdentities)
+                foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>("{"+property.ToString()+"}", options);
+                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", options);
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, ManagedServiceIdentity model, JsonSerializerOptions options)
             {
-                ManagedServiceIdentity.Write(writer, model, options);
+                model.Write(writer, options);
             }
             public override ManagedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

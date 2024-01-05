@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Object that represents a collection of File resources. </summary>
     internal partial class FilesListResult
     {
-        /// <summary> Initializes a new instance of FilesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesListResult"/>. </summary>
         internal FilesListResult()
         {
             Value = new ChangeTrackingList<SupportFileDetailData>();
         }
 
-        /// <summary> Initializes a new instance of FilesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesListResult"/>. </summary>
         /// <param name="value"> List of File resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of File resources. </param>
         internal FilesListResult(IReadOnlyList<SupportFileDetailData> value, string nextLink)

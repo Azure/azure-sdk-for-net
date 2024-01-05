@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Job collection item properties. </summary>
     public partial class AutomationJobCollectionItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationJobCollectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobCollectionItemData"/>. </summary>
         public AutomationJobCollectionItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationJobCollectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobCollectionItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MaintenanceApplyUpdateResource" /> and their operations.
-    /// Each <see cref="MaintenanceApplyUpdateResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="MaintenanceApplyUpdateCollection" /> instance call the GetMaintenanceApplyUpdates method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="MaintenanceApplyUpdateResource"/> and their operations.
+    /// Each <see cref="MaintenanceApplyUpdateResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="MaintenanceApplyUpdateCollection"/> instance call the GetMaintenanceApplyUpdates method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class MaintenanceApplyUpdateCollection : ArmCollection
     {

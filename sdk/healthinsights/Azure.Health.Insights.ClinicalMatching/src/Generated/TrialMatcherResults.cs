@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> The inference results for the Trial Matcher request. </summary>
     public partial class TrialMatcherResults
     {
-        /// <summary> Initializes a new instance of TrialMatcherResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherResults"/>. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patients"/> or <paramref name="modelVersion"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherResults"/>. </summary>
         /// <param name="patients"> Results for the patients given in the request. </param>
         /// <param name="modelVersion"> The version of the model used for inference, expressed as the model date. </param>
         /// <param name="knowledgeGraphLastUpdateDate"> The date when the clinical trials knowledge graph was last updated. </param>

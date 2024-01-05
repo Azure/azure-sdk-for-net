@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformGatewayCustomDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformGatewayCustomDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformGatewayCustomDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformGatewayResource" /> using the GetAppPlatformGatewayCustomDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformGatewayCustomDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformGatewayCustomDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformGatewayResource"/> using the GetAppPlatformGatewayCustomDomain method.
     /// </summary>
     public partial class AppPlatformGatewayCustomDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformGatewayCustomDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
+        /// <param name="domainName"> The domainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string gatewayName, string domainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}/domains/{domainName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly GatewayCustomDomainsRestOperations _appPlatformGatewayCustomDomainGatewayCustomDomainsRestClient;
         private readonly AppPlatformGatewayCustomDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/gateways/domains";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformGatewayCustomDomainResource"/> class for mocking. </summary>
         protected AppPlatformGatewayCustomDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformGatewayCustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformGatewayCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformGatewayCustomDomainResource(ArmClient client, AppPlatformGatewayCustomDomainData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/gateways/domains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a MonitorWorkspaceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MonitorWorkspaceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMonitorWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMonitorWorkspaceResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitorWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMonitorWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMonitorWorkspaceResource method.
     /// </summary>
     public partial class MonitorWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MonitorWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureMonitorWorkspaceName"> The azureMonitorWorkspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly AzureMonitorWorkspacesRestOperations _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
         private readonly MonitorWorkspaceResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Monitor/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="MonitorWorkspaceResource"/> class for mocking. </summary>
         protected MonitorWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MonitorWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MonitorWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MonitorWorkspaceResource(ArmClient client, MonitorWorkspaceResourceData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Monitor/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

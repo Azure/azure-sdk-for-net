@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Trailing input data definition. </summary>
     public partial class TrailingInputData : MonitoringInputDataBase
     {
-        /// <summary> Initializes a new instance of TrailingInputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrailingInputData"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <param name="windowOffset"> [Required] The time offset between the end of the data window and the monitor's current run time. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             InputDataType = MonitoringInputDataType.Trailing;
         }
 
-        /// <summary> Initializes a new instance of TrailingInputData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrailingInputData"/>. </summary>
         /// <param name="columns"> Mapping of column names to special uses. </param>
         /// <param name="dataContext"> The context metadata of the data source. </param>
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>

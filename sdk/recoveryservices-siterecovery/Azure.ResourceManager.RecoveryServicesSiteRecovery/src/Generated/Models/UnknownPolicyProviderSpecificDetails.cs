@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownPolicyProviderSpecificDetails. </summary>
     internal partial class UnknownPolicyProviderSpecificDetails : PolicyProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of UnknownPolicyProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownPolicyProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         internal UnknownPolicyProviderSpecificDetails(string instanceType) : base(instanceType)
         {

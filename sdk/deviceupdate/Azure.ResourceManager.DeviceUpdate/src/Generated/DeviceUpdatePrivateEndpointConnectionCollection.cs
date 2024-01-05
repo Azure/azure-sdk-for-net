@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DeviceUpdate
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeviceUpdatePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="DeviceUpdatePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource" />.
-    /// To get a <see cref="DeviceUpdatePrivateEndpointConnectionCollection" /> instance call the GetDeviceUpdatePrivateEndpointConnections method from an instance of <see cref="DeviceUpdateAccountResource" />.
+    /// A class representing a collection of <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DeviceUpdateAccountResource"/>.
+    /// To get a <see cref="DeviceUpdatePrivateEndpointConnectionCollection"/> instance call the GetDeviceUpdatePrivateEndpointConnections method from an instance of <see cref="DeviceUpdateAccountResource"/>.
     /// </summary>
     public partial class DeviceUpdatePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<DeviceUpdatePrivateEndpointConnectionResource>, IAsyncEnumerable<DeviceUpdatePrivateEndpointConnectionResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceUpdatePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceUpdatePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceUpdatePrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceUpdatePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdatePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

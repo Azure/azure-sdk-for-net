@@ -11,8 +11,8 @@ namespace Azure.Communication.JobRouter
 {
     public partial class RouterWorker : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
-        /// <param name="workerId"> Id of the policy. </param>
+        /// <summary> Initializes a new instance of a worker. </summary>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         public RouterWorker(string workerId)
         {
@@ -25,26 +25,26 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary>
-        /// A set of non-identifying attributes attached to this worker.
+        /// A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
+        /// <summary> Collection of channel(s) this worker can handle and their impact on the workers capacity. </summary>
         public IList<RouterChannel> Channels { get; } = new List<RouterChannel>();
 
-        /// <summary> The queue(s) that this worker can receive work from. </summary>
+        /// <summary> Collection of queue(s) that this worker can receive work from. </summary>
         public IList<string> Queues { get; } = new List<string>();
 
         /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
         public int? Capacity { get; set; }
 
-        /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
-        public bool? AvailableForOffers { get; internal set; }
+        /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
+        public bool? AvailableForOffers { get; set; }
 
         [CodeGenMember("Labels")]
         internal IDictionary<string, BinaryData> _labels
@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
+                        Labels[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
@@ -82,11 +82,15 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value.ToObjectFromJson());
+                        Tags[tag.Key] = new RouterValue(tag.Value.ToObjectFromJson());
                     }
                 }
             }
         }
+
+        /// <summary> The entity tag for this resource. </summary>
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -152,6 +156,11 @@ namespace Azure.Communication.JobRouter
             {
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
             }
             writer.WriteEndObject();
         }

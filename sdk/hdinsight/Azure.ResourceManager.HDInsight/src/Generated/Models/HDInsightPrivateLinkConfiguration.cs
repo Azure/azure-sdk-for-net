@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The private link configuration. </summary>
     public partial class HDInsightPrivateLinkConfiguration
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkConfiguration"/>. </summary>
         /// <param name="name"> The name of private link configuration. </param>
         /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, 'headnode', 'gateway', 'edgenode'. </param>
         /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             IPConfigurations = ipConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkConfiguration"/>. </summary>
         /// <param name="id"> The private link configuration id. </param>
         /// <param name="name"> The name of private link configuration. </param>
         /// <param name="resourceType"> The type of the private link configuration. </param>

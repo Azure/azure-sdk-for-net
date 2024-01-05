@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityApplicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityApplicationData"/>. </summary>
         public SecurityApplicationData()
         {
             ConditionSets = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

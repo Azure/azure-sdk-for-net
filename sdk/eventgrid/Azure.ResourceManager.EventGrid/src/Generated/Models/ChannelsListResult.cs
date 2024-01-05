@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List Channels operation. </summary>
     internal partial class ChannelsListResult
     {
-        /// <summary> Initializes a new instance of ChannelsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChannelsListResult"/>. </summary>
         internal ChannelsListResult()
         {
             Value = new ChangeTrackingList<PartnerNamespaceChannelData>();
         }
 
-        /// <summary> Initializes a new instance of ChannelsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChannelsListResult"/>. </summary>
         /// <param name="value"> A collection of Channels. </param>
         /// <param name="nextLink"> A link for the next page of channels. </param>
         internal ChannelsListResult(IReadOnlyList<PartnerNamespaceChannelData> value, string nextLink)

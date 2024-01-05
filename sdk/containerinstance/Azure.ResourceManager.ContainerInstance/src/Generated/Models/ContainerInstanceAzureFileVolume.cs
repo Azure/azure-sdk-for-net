@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The properties of the Azure File volume. Azure File shares are mounted as volumes. </summary>
     public partial class ContainerInstanceAzureFileVolume
     {
-        /// <summary> Initializes a new instance of ContainerInstanceAzureFileVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceAzureFileVolume"/>. </summary>
         /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="storageAccountName"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             StorageAccountName = storageAccountName;
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceAzureFileVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceAzureFileVolume"/>. </summary>
         /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
         /// <param name="isReadOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CommunicationDomainResource" /> and their operations.
-    /// Each <see cref="CommunicationDomainResource" /> in the collection will belong to the same instance of <see cref="EmailServiceResource" />.
-    /// To get a <see cref="CommunicationDomainResourceCollection" /> instance call the GetCommunicationDomainResources method from an instance of <see cref="EmailServiceResource" />.
+    /// A class representing a collection of <see cref="CommunicationDomainResource"/> and their operations.
+    /// Each <see cref="CommunicationDomainResource"/> in the collection will belong to the same instance of <see cref="EmailServiceResource"/>.
+    /// To get a <see cref="CommunicationDomainResourceCollection"/> instance call the GetCommunicationDomainResources method from an instance of <see cref="EmailServiceResource"/>.
     /// </summary>
     public partial class CommunicationDomainResourceCollection : ArmCollection, IEnumerable<CommunicationDomainResource>, IAsyncEnumerable<CommunicationDomainResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CommunicationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommunicationDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommunicationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CommunicationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommunicationDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communicationDomainResourceDomainsRestClient.CreateListByEmailServiceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

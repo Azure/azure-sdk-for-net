@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies additional capabilities supported by the image. </summary>
     public partial class VirtualMachineImageFeature
     {
-        /// <summary> Initializes a new instance of VirtualMachineImageFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImageFeature"/>. </summary>
         public VirtualMachineImageFeature()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineImageFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImageFeature"/>. </summary>
         /// <param name="name"> The name of the feature. </param>
         /// <param name="value"> The corresponding value for the feature. </param>
         internal VirtualMachineImageFeature(string name, string value)

@@ -106,6 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "InformixSource": return InformixSource.DeserializeInformixSource(element);
                     case "JiraSource": return JiraSource.DeserializeJiraSource(element);
                     case "JsonSource": return JsonSource.DeserializeJsonSource(element);
+                    case "LakeHouseTableSource": return LakeHouseTableSource.DeserializeLakeHouseTableSource(element);
                     case "MagentoSource": return MagentoSource.DeserializeMagentoSource(element);
                     case "MariaDBSource": return MariaDBSource.DeserializeMariaDBSource(element);
                     case "MarketoSource": return MarketoSource.DeserializeMarketoSource(element);

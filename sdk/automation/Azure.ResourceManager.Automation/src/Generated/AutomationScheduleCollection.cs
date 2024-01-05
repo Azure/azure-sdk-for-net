@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationScheduleResource" /> and their operations.
-    /// Each <see cref="AutomationScheduleResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get an <see cref="AutomationScheduleCollection" /> instance call the GetAutomationSchedules method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="AutomationScheduleResource"/> and their operations.
+    /// Each <see cref="AutomationScheduleResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get an <see cref="AutomationScheduleCollection"/> instance call the GetAutomationSchedules method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class AutomationScheduleCollection : ArmCollection, IEnumerable<AutomationScheduleResource>, IAsyncEnumerable<AutomationScheduleResource>
     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationScheduleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationScheduleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationScheduleScheduleRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

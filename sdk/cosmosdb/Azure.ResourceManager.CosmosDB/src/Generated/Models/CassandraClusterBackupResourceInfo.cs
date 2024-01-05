@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A restorable backup of a Cassandra cluster. </summary>
     public partial class CassandraClusterBackupResourceInfo
     {
-        /// <summary> Initializes a new instance of CassandraClusterBackupResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterBackupResourceInfo"/>. </summary>
         internal CassandraClusterBackupResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterBackupResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterBackupResourceInfo"/>. </summary>
         /// <param name="backupId"> The unique identifier of backup. </param>
         /// <param name="backupState"> The current state of the backup. </param>
         /// <param name="backupStartTimestamp"> The time at which the backup process begins. </param>

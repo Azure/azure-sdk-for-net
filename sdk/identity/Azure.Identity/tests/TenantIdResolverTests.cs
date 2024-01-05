@@ -65,7 +65,7 @@ namespace Azure.Identity.Tests
                         disableMultiTenantAuth.Value.ToString());
                 }
 
-                result = TenantIdResolver.Resolve(tenantId, context, TenantIdResolver.AllTenants);
+                result = TenantIdResolverBase.Default.Resolve(tenantId, context, TenantIdResolverBase.AllTenants);
                 Assert.AreEqual(expectedresult, result);
                 Assert.AreEqual(expectedEvents, messages);
             }
@@ -83,7 +83,7 @@ namespace Azure.Identity.Tests
         [TestCaseSource(nameof(GetAllowedTenantsTestCases))]
         public void VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
         {
-            var additionallyAllowedTenants = TenantIdResolver.ResolveAddionallyAllowedTenantIds(parameters.AdditionallyAllowedTenants);
+            var additionallyAllowedTenants = TenantIdResolverBase.Default.ResolveAddionallyAllowedTenantIds(parameters.AdditionallyAllowedTenants);
 
             AssertAllowedTenantIdsEnforcedAsync(parameters.TenantId, parameters.TokenRequestContext, additionallyAllowedTenants);
         }
@@ -98,13 +98,13 @@ namespace Azure.Identity.Tests
 
             if (expAllowed)
             {
-                var resolvedTenantId = TenantIdResolver.Resolve(tenantId, tokenRequestContext, additionallyAllowedTenants);
+                var resolvedTenantId = TenantIdResolverBase.Default.Resolve(tenantId, tokenRequestContext, additionallyAllowedTenants);
 
                 Assert.AreEqual(tokenRequestContext.TenantId ?? tenantId, resolvedTenantId);
             }
             else
             {
-                var ex = Assert.Throws<AuthenticationFailedException>(() => TenantIdResolver.Resolve(tenantId, tokenRequestContext, additionallyAllowedTenants));
+                var ex = Assert.Throws<AuthenticationFailedException>(() => TenantIdResolverBase.Default.Resolve(tenantId, tokenRequestContext, additionallyAllowedTenants));
 
                 StringAssert.Contains($"The current credential is not configured to acquire tokens for tenant {tokenRequestContext.TenantId}", ex.Message);
             }

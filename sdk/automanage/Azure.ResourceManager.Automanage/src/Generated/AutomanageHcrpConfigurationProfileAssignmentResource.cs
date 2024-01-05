@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageHcrpConfigurationProfileAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageHcrpConfigurationProfileAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetAutomanageHcrpConfigurationProfileAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageHcrpConfigurationProfileAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAutomanageHcrpConfigurationProfileAssignment method.
     /// </summary>
     public partial class AutomanageHcrpConfigurationProfileAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="machineName"> The machineName. </param>
+        /// <param name="configurationProfileAssignmentName"> The configurationProfileAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName, string configurationProfileAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly ConfigurationProfileHcrpAssignmentsRestOperations _automanageHcrpConfigurationProfileAssignmentConfigurationProfileHCRPAssignmentsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> class for mocking. </summary>
         protected AutomanageHcrpConfigurationProfileAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageHcrpConfigurationProfileAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageHcrpConfigurationProfileAssignmentResource(ArmClient client, AutomanageConfigurationProfileAssignmentData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageHcrpConfigurationProfileAssignmentReportResources and their operations over a AutomanageHcrpConfigurationProfileAssignmentReportResource. </returns>
         public virtual AutomanageHcrpConfigurationProfileAssignmentReportCollection GetAutomanageHcrpConfigurationProfileAssignmentReports()
         {
-            return GetCachedClient(Client => new AutomanageHcrpConfigurationProfileAssignmentReportCollection(Client, Id));
+            return GetCachedClient(client => new AutomanageHcrpConfigurationProfileAssignmentReportCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomanageHcrpConfigurationProfileAssignmentReportResource>> GetAutomanageHcrpConfigurationProfileAssignmentReportAsync(string reportName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomanageHcrpConfigurationProfileAssignmentReportResource> GetAutomanageHcrpConfigurationProfileAssignmentReport(string reportName, CancellationToken cancellationToken = default)
         {

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// </summary>
     public partial class GitHubRepoData : ResourceData
     {
-        /// <summary> Initializes a new instance of GitHubRepoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubRepoData"/>. </summary>
         public GitHubRepoData()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubRepoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubRepoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

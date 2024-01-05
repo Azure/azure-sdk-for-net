@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the properties for manual resolution. </summary>
     internal partial class ManualResolutionProperties
     {
-        /// <summary> Initializes a new instance of ManualResolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManualResolutionProperties"/>. </summary>
         internal ManualResolutionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ManualResolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManualResolutionProperties"/>. </summary>
         /// <param name="targetId"> Gets or sets the target resource ARM ID of the dependent resource if the resource type is Manual. </param>
         internal ManualResolutionProperties(ResourceIdentifier targetId)
         {

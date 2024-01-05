@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningDatastoreResource" /> and their operations.
-    /// Each <see cref="MachineLearningDatastoreResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningDatastoreCollection" /> instance call the GetMachineLearningDatastores method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningDatastoreResource"/> and their operations.
+    /// Each <see cref="MachineLearningDatastoreResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningDatastoreCollection"/> instance call the GetMachineLearningDatastores method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningDatastoreCollection : ArmCollection, IEnumerable<MachineLearningDatastoreResource>, IAsyncEnumerable<MachineLearningDatastoreResource>
     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningDatastoreResource> GetAllAsync(MachineLearningDatastoreCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningDatastoreCollectionGetAllOptions();
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningDatastoreResource> GetAll(MachineLearningDatastoreCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new MachineLearningDatastoreCollectionGetAllOptions();

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Relay
 {
     /// <summary>
     /// A Class representing a WcfRelay along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WcfRelayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWcfRelayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource" /> using the GetWcfRelay method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WcfRelayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWcfRelayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RelayNamespaceResource"/> using the GetWcfRelay method.
     /// </summary>
     public partial class WcfRelayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WcfRelayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="relayName"> The relayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string relayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/wcfRelays/{relayName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Relay
         private readonly WCFRelaysRestOperations _wcfRelayWCFRelaysRestClient;
         private readonly WcfRelayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/wcfRelays";
+
         /// <summary> Initializes a new instance of the <see cref="WcfRelayResource"/> class for mocking. </summary>
         protected WcfRelayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WcfRelayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WcfRelayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WcfRelayResource(ArmClient client, WcfRelayData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/wcfRelays";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An object representing collection of WcfRelayAuthorizationRuleResources and their operations over a WcfRelayAuthorizationRuleResource. </returns>
         public virtual WcfRelayAuthorizationRuleCollection GetWcfRelayAuthorizationRules()
         {
-            return GetCachedClient(Client => new WcfRelayAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new WcfRelayAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WcfRelayAuthorizationRuleResource>> GetWcfRelayAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WcfRelayAuthorizationRuleResource> GetWcfRelayAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {

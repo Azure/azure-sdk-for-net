@@ -993,9 +993,13 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert - Confirm we've paused
             Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
             await testEventsRaised.AssertPausedCheck();
+            int completedBeforePause = testEventsRaised.SingleCompletedEvents.Count;
 
             // Act - Resume Job
-            DataTransferOptions resumeOptions = new DataTransferOptions();
+            DataTransferOptions resumeOptions = new()
+            {
+                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+            };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
                 transferId: transfer.Id,
@@ -1005,7 +1009,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertContainerCompletedCheck(partCount);
+            await testEventRaised2.AssertContainerCompletedCheck(partCount - completedBeforePause);
             Assert.AreEqual(DataTransferState.Completed, resumeTransfer.TransferStatus.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -1072,9 +1076,13 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert - Confirm we've paused
             Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
             await testEventsRaised.AssertPausedCheck();
+            int completedBeforePause = testEventsRaised.SingleCompletedEvents.Count;
 
             // Act - Resume Job
-            DataTransferOptions resumeOptions = new();
+            DataTransferOptions resumeOptions = new()
+            {
+                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+            };
             TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
                 transfer.Id,
@@ -1084,7 +1092,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventsRaised2.AssertContainerCompletedCheck(partCount);
+            await testEventsRaised2.AssertContainerCompletedCheck(partCount - completedBeforePause);
             Assert.AreEqual(DataTransferState.Completed, resumeTransfer.TransferStatus.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 

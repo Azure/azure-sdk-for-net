@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRoutePortAuthorizationData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRoutePortAuthorizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortAuthorizationData"/>. </summary>
         public ExpressRoutePortAuthorizationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortAuthorizationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortAuthorizationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

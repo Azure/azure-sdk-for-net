@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class FileServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of FileServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceData"/>. </summary>
         public FileServiceData()
         {
         }
 
-        /// <summary> Initializes a new instance of FileServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

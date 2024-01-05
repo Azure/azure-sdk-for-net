@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningComponentVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningComponentVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningComponentContainerResource" />.
-    /// To get a <see cref="MachineLearningComponentVersionCollection" /> instance call the GetMachineLearningComponentVersions method from an instance of <see cref="MachineLearningComponentContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningComponentVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningComponentVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningComponentContainerResource"/>.
+    /// To get a <see cref="MachineLearningComponentVersionCollection"/> instance call the GetMachineLearningComponentVersions method from an instance of <see cref="MachineLearningComponentContainerResource"/>.
     /// </summary>
     public partial class MachineLearningComponentVersionCollection : ArmCollection, IEnumerable<MachineLearningComponentVersionResource>, IAsyncEnumerable<MachineLearningComponentVersionResource>
     {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="stage"> Component stage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningComponentVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningComponentVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningComponentVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, stage);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="stage"> Component stage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningComponentVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningComponentVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningComponentVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, stage);

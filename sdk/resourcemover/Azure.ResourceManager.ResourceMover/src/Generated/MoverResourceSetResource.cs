@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.ResourceMover
 {
     /// <summary>
     /// A Class representing a MoverResourceSet along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MoverResourceSetResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMoverResourceSetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMoverResourceSet method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MoverResourceSetResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMoverResourceSetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMoverResourceSet method.
     /// </summary>
     public partial class MoverResourceSetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MoverResourceSetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="moverResourceSetName"> The moverResourceSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string moverResourceSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moverResourceSetName}";
@@ -41,12 +44,15 @@ namespace Azure.ResourceManager.ResourceMover
         private readonly UnresolvedDependenciesRestOperations _unresolvedDependenciesRestClient;
         private readonly MoverResourceSetData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Migrate/moveCollections";
+
         /// <summary> Initializes a new instance of the <see cref="MoverResourceSetResource"/> class for mocking. </summary>
         protected MoverResourceSetResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MoverResourceSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MoverResourceSetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MoverResourceSetResource(ArmClient client, MoverResourceSetData data) : this(client, data.Id)
@@ -69,9 +75,6 @@ namespace Azure.ResourceManager.ResourceMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Migrate/moveCollections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An object representing collection of MoverResources and their operations over a MoverResource. </returns>
         public virtual MoverResourceCollection GetMoverResources()
         {
-            return GetCachedClient(Client => new MoverResourceCollection(Client, Id));
+            return GetCachedClient(client => new MoverResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +119,8 @@ namespace Azure.ResourceManager.ResourceMover
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MoverResource>> GetMoverResourceAsync(string moverResourceName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +142,8 @@ namespace Azure.ResourceManager.ResourceMover
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MoverResource> GetMoverResource(string moverResourceName, CancellationToken cancellationToken = default)
         {
@@ -224,7 +227,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The MoverResourceSetPatch to use. </param>
+        /// <param name="patch"> The <see cref="MoverResourceSetPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MoverResourceSetResource>> UpdateAsync(MoverResourceSetPatch patch, CancellationToken cancellationToken = default)
@@ -258,7 +261,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The MoverResourceSetPatch to use. </param>
+        /// <param name="patch"> The <see cref="MoverResourceSetPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MoverResourceSetResource> Update(MoverResourceSetPatch patch, CancellationToken cancellationToken = default)
@@ -293,7 +296,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverPrepareContent to use. </param>
+        /// <param name="content"> The <see cref="MoverPrepareContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<MoverOperationStatus>> PrepareAsync(WaitUntil waitUntil, MoverPrepareContent content = null, CancellationToken cancellationToken = default)
         {
@@ -328,7 +331,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverPrepareContent to use. </param>
+        /// <param name="content"> The <see cref="MoverPrepareContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<MoverOperationStatus> Prepare(WaitUntil waitUntil, MoverPrepareContent content = null, CancellationToken cancellationToken = default)
         {
@@ -363,7 +366,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverResourceMoveContent to use. </param>
+        /// <param name="content"> The <see cref="MoverResourceMoveContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<MoverOperationStatus>> InitiateMoveAsync(WaitUntil waitUntil, MoverResourceMoveContent content = null, CancellationToken cancellationToken = default)
         {
@@ -398,7 +401,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverResourceMoveContent to use. </param>
+        /// <param name="content"> The <see cref="MoverResourceMoveContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<MoverOperationStatus> InitiateMove(WaitUntil waitUntil, MoverResourceMoveContent content = null, CancellationToken cancellationToken = default)
         {
@@ -433,7 +436,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverCommitContent to use. </param>
+        /// <param name="content"> The <see cref="MoverCommitContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<MoverOperationStatus>> CommitAsync(WaitUntil waitUntil, MoverCommitContent content = null, CancellationToken cancellationToken = default)
         {
@@ -468,7 +471,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverCommitContent to use. </param>
+        /// <param name="content"> The <see cref="MoverCommitContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<MoverOperationStatus> Commit(WaitUntil waitUntil, MoverCommitContent content = null, CancellationToken cancellationToken = default)
         {
@@ -503,7 +506,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverDiscardContent to use. </param>
+        /// <param name="content"> The <see cref="MoverDiscardContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<MoverOperationStatus>> DiscardAsync(WaitUntil waitUntil, MoverDiscardContent content = null, CancellationToken cancellationToken = default)
         {
@@ -538,7 +541,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverDiscardContent to use. </param>
+        /// <param name="content"> The <see cref="MoverDiscardContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<MoverOperationStatus> Discard(WaitUntil waitUntil, MoverDiscardContent content = null, CancellationToken cancellationToken = default)
         {
@@ -641,7 +644,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverBulkRemoveContent to use. </param>
+        /// <param name="content"> The <see cref="MoverBulkRemoveContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<MoverOperationStatus>> BulkRemoveAsync(WaitUntil waitUntil, MoverBulkRemoveContent content = null, CancellationToken cancellationToken = default)
         {
@@ -676,7 +679,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The MoverBulkRemoveContent to use. </param>
+        /// <param name="content"> The <see cref="MoverBulkRemoveContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<MoverOperationStatus> BulkRemove(WaitUntil waitUntil, MoverBulkRemoveContent content = null, CancellationToken cancellationToken = default)
         {
@@ -782,7 +785,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MoverUnresolvedDependency"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
@@ -807,7 +810,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
         /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MoverUnresolvedDependency"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);

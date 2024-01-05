@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container object under Container App Revision Replica. </summary>
     public partial class ContainerAppReplicaContainer
     {
-        /// <summary> Initializes a new instance of ContainerAppReplicaContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaContainer"/>. </summary>
         public ContainerAppReplicaContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppReplicaContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaContainer"/>. </summary>
         /// <param name="name"> The Name of the Container. </param>
         /// <param name="containerId"> The Id of the Container. </param>
         /// <param name="isReady"> The container ready status. </param>

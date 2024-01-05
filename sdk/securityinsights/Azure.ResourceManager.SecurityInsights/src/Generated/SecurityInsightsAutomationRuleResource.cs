@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsAutomationRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsAutomationRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsAutomationRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsAutomationRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsAutomationRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsAutomationRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsAutomationRule method.
     /// </summary>
     public partial class SecurityInsightsAutomationRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsAutomationRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="automationRuleId"> The automationRuleId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string automationRuleId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly AutomationRulesRestOperations _securityInsightsAutomationRuleAutomationRulesRestClient;
         private readonly SecurityInsightsAutomationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/automationRules";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAutomationRuleResource"/> class for mocking. </summary>
         protected SecurityInsightsAutomationRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsAutomationRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAutomationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsAutomationRuleResource(ArmClient client, SecurityInsightsAutomationRuleData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/automationRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

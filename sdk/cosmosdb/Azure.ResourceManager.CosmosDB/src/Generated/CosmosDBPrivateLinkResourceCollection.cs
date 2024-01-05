@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBPrivateLinkResource" /> and their operations.
-    /// Each <see cref="CosmosDBPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource" />.
-    /// To get a <see cref="CosmosDBPrivateLinkResourceCollection" /> instance call the GetCosmosDBPrivateLinkResources method from an instance of <see cref="CosmosDBAccountResource" />.
+    /// A class representing a collection of <see cref="CosmosDBPrivateLinkResource"/> and their operations.
+    /// Each <see cref="CosmosDBPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="CosmosDBPrivateLinkResourceCollection"/> instance call the GetCosmosDBPrivateLinkResources method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
     public partial class CosmosDBPrivateLinkResourceCollection : ArmCollection, IEnumerable<CosmosDBPrivateLinkResource>, IAsyncEnumerable<CosmosDBPrivateLinkResource>
     {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByDatabaseAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

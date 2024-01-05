@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Array of StorageSyncServices. </summary>
     internal partial class StorageSyncServiceArray
     {
-        /// <summary> Initializes a new instance of StorageSyncServiceArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceArray"/>. </summary>
         internal StorageSyncServiceArray()
         {
             Value = new ChangeTrackingList<StorageSyncServiceData>();
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServiceArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServiceArray"/>. </summary>
         /// <param name="value"> Collection of StorageSyncServices. </param>
         internal StorageSyncServiceArray(IReadOnlyList<StorageSyncServiceData> value)
         {

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an event hub data connection. </summary>
     public partial class SynapseEventHubDataConnection : SynapseDataConnectionData
     {
-        /// <summary> Initializes a new instance of SynapseEventHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEventHubDataConnection"/>. </summary>
         public SynapseEventHubDataConnection()
         {
             EventSystemProperties = new ChangeTrackingList<string>();
             Kind = SynapseDataConnectionKind.EventHub;
         }
 
-        /// <summary> Initializes a new instance of SynapseEventHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseEventHubDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

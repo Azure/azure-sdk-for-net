@@ -15,11 +15,52 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery image definition that you want to update. </summary>
     public partial class GalleryImagePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of GalleryImagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImagePatch"/>. </summary>
         public GalleryImagePatch()
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImagePatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> The description of this gallery image definition resource. This property is updatable. </param>
+        /// <param name="eula"> The Eula agreement for the gallery image definition. </param>
+        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
+        /// <param name="releaseNoteUri"> The release note uri. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </param>
+        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="identifier"> This is the gallery image definition identifier. </param>
+        /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
+        /// <param name="disallowed"> Describes the disallowed disk types. </param>
+        /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="features"> A list of gallery image features. </param>
+        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal GalleryImagePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, ArchitectureType? architecture, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        {
+            Description = description;
+            Eula = eula;
+            PrivacyStatementUri = privacyStatementUri;
+            ReleaseNoteUri = releaseNoteUri;
+            OSType = osType;
+            OSState = osState;
+            HyperVGeneration = hyperVGeneration;
+            EndOfLifeOn = endOfLifeOn;
+            Identifier = identifier;
+            Recommended = recommended;
+            Disallowed = disallowed;
+            PurchasePlan = purchasePlan;
+            ProvisioningState = provisioningState;
+            Features = features;
+            Architecture = architecture;
+            Tags = tags;
         }
 
         /// <summary> The description of this gallery image definition resource. This property is updatable. </summary>
@@ -30,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Uri PrivacyStatementUri { get; set; }
         /// <summary> The release note uri. </summary>
         public Uri ReleaseNoteUri { get; set; }
-        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
+        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </summary>
         public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
         public OperatingSystemStateType? OSState { get; set; }

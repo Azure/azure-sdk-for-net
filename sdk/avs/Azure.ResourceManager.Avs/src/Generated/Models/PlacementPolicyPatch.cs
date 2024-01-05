@@ -13,11 +13,26 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An update of a DRS placement policy resource. </summary>
     public partial class PlacementPolicyPatch
     {
-        /// <summary> Initializes a new instance of PlacementPolicyPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
         public PlacementPolicyPatch()
         {
             VmMembers = new ChangeTrackingList<ResourceIdentifier>();
             HostMembers = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
+        /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
+        /// <param name="vmMembers"> Virtual machine members list. </param>
+        /// <param name="hostMembers"> Host members list. </param>
+        /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
+        /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
+        internal PlacementPolicyPatch(PlacementPolicyState? state, IList<ResourceIdentifier> vmMembers, IList<string> hostMembers, VmHostPlacementPolicyAffinityStrength? affinityStrength, AzureHybridBenefitType? azureHybridBenefitType)
+        {
+            State = state;
+            VmMembers = vmMembers;
+            HostMembers = hostMembers;
+            AffinityStrength = affinityStrength;
+            AzureHybridBenefitType = azureHybridBenefitType;
         }
 
         /// <summary> Whether the placement policy is enabled or disabled. </summary>

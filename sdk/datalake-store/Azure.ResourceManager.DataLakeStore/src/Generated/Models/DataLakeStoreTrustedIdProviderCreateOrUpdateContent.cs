@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The parameters used to create a new trusted identity provider. </summary>
     public partial class DataLakeStoreTrustedIdProviderCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreTrustedIdProviderCreateOrUpdateContent"/>. </summary>
         /// <param name="idProvider"> The URL of this trusted identity provider. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="idProvider"/> is null. </exception>
         public DataLakeStoreTrustedIdProviderCreateOrUpdateContent(Uri idProvider)

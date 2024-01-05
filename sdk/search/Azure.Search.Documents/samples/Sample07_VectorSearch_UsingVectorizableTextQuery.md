@@ -14,7 +14,7 @@ string vectorSearchHnswConfig = "my-hsnw-vector-config";
 string modelName = "text-embedding-ada-002";
 int modelDimensions = 1536;
 
-string indexName = "Hotel";
+string indexName = "hotel";
 SearchIndex searchIndex = new(indexName)
 {
     Fields =
@@ -103,10 +103,10 @@ AzureKeyCredential credential = new AzureKeyCredential(key);
 
 OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
 string description = "Very popular hotel in town.";
-EmbeddingsOptions embeddingsOptions = new(description);
+EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { description });
 
-Embeddings embeddings = await openAIClient.GetEmbeddingsAsync("EmbeddingsModelName", embeddingsOptions);
-IReadOnlyList<float> descriptionVector = embeddings.Data[0].Embedding;
+Embeddings embeddings = await openAIClient.GetEmbeddingsAsync(embeddingsOptions);
+ReadOnlyMemory<float> descriptionVector = embeddings.Data[0].Embedding;
 ```
 
 In the sample code below, we are using hardcoded embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:

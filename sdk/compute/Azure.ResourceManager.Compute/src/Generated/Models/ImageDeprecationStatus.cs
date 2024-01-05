@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes image deprecation status properties on the image. </summary>
     public partial class ImageDeprecationStatus
     {
-        /// <summary> Initializes a new instance of ImageDeprecationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDeprecationStatus"/>. </summary>
         public ImageDeprecationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageDeprecationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDeprecationStatus"/>. </summary>
         /// <param name="imageState"> Describes the state of the image. </param>
         /// <param name="scheduledDeprecationOn"> The time, in future, at which this image will be marked as deprecated. This scheduled time is chosen by the Publisher. </param>
         /// <param name="alternativeOption"> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </param>

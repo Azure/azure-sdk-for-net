@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The upgrade properties. </summary>
     public partial class ProvisionedClusterPoolUpgradeProfileProperties
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPoolUpgradeProfileProperties"/>. </summary>
         public ProvisionedClusterPoolUpgradeProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPoolUpgradeProfileProperties"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
         internal ProvisionedClusterPoolUpgradeProfileProperties(string kubernetesVersion, bool? isPreview)

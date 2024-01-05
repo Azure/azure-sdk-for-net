@@ -16,12 +16,10 @@
 
 #nullable enable
 
-using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Threading;
 
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1403 // File may only contain a single namespace
@@ -57,6 +55,7 @@ namespace System.Diagnostics.CodeAnalysis
 }
 #endif
 
+#pragma warning disable IDE0161 // Convert to file-scoped namespace
 namespace OpenTelemetry.Internal
 {
     /// <summary>

@@ -11,7 +11,7 @@ This package contains a C# SDK for Azure Communication Services for JobRouter.
 Install the Azure Communication JobRouter client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.JobRouter --prerelease
+dotnet add package Azure.Communication.JobRouter
 ```
 
 ### Prerequisites
@@ -117,7 +117,7 @@ Response<RouterJob> job = await routerClient.CreateJobAsync(
         Priority = 1,
         RequestedWorkerSelectors =
         {
-            new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
+            new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new RouterValue(10))
         }
     });
 ```
@@ -129,7 +129,7 @@ Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
     new CreateWorkerOptions(workerId: "worker-1", capacity: 1)
     {
         Queues = { queue.Value.Id },
-        Labels = { ["Some-Skill"] = new LabelValue(11) },
+        Labels = { ["Some-Skill"] = new RouterValue(11) },
         Channels = { new RouterChannel("my-channel", 1) },
         AvailableForOffers = true,
     }
@@ -202,8 +202,7 @@ Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.Status
 ### Completing a job
 Once the worker is done with the job, the worker has to mark the job as `completed`.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob_Async
-Response completeJob = await routerClient.CompleteJobAsync(
-    jobId: job.Value.Id, new CompleteJobOptions(acceptJobOfferResult.Value.AssignmentId)
+Response completeJob = await routerClient.CompleteJobAsync(new CompleteJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
         Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
@@ -214,8 +213,7 @@ Console.WriteLine($"Job has been successfully completed: {completeJob.Status == 
 ### Closing a job
 After a job has been completed, the worker can perform wrap up actions to the job before closing the job and finally releasing its capacity to accept more incoming jobs
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob_Async
-Response closeJob = await routerClient.CloseJobAsync(
-    jobId: job.Value.Id, new CloseJobOptions(acceptJobOfferResult.Value.AssignmentId)
+Response closeJob = await routerClient.CloseJobAsync(new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
         Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
@@ -227,8 +225,7 @@ Console.WriteLine($"Updated job status: {updatedJob.Value.Status == RouterJobSta
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture_Async
 // Optionally, a job can also be set up to be marked as closed in the future.
-var closeJobInFuture = await routerClient.CloseJobAsync(
-    jobId: job.Value.Id, new CloseJobOptions(acceptJobOfferResult.Value.AssignmentId)
+var closeJobInFuture = await routerClient.CloseJobAsync(new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
         CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
         Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"

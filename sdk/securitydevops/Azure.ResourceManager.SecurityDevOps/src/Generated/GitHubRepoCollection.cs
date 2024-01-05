@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GitHubRepoResource" /> and their operations.
-    /// Each <see cref="GitHubRepoResource" /> in the collection will belong to the same instance of <see cref="GitHubOwnerResource" />.
-    /// To get a <see cref="GitHubRepoCollection" /> instance call the GetGitHubRepos method from an instance of <see cref="GitHubOwnerResource" />.
+    /// A class representing a collection of <see cref="GitHubRepoResource"/> and their operations.
+    /// Each <see cref="GitHubRepoResource"/> in the collection will belong to the same instance of <see cref="GitHubOwnerResource"/>.
+    /// To get a <see cref="GitHubRepoCollection"/> instance call the GetGitHubRepos method from an instance of <see cref="GitHubOwnerResource"/>.
     /// </summary>
     public partial class GitHubRepoCollection : ArmCollection, IEnumerable<GitHubRepoResource>, IAsyncEnumerable<GitHubRepoResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GitHubRepoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GitHubRepoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubRepoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubRepoRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GitHubRepoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GitHubRepoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubRepoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubRepoRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);

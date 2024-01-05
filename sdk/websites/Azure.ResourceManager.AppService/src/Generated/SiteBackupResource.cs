@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteBackup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteBackupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteBackupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteBackup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteBackupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteBackupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteBackup method.
     /// </summary>
     public partial class SiteBackupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteBackupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="backupId"> The backupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string backupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _siteBackupWebAppsRestClient;
         private readonly WebAppBackupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/backups";
+
         /// <summary> Initializes a new instance of the <see cref="SiteBackupResource"/> class for mocking. </summary>
         protected SiteBackupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteBackupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteBackupResource(ArmClient client, WebAppBackupData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/backups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

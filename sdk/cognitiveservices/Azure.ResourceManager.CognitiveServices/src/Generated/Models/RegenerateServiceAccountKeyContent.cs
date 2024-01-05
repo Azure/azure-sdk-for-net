@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Regenerate key parameters. </summary>
     public partial class RegenerateServiceAccountKeyContent
     {
-        /// <summary> Initializes a new instance of RegenerateServiceAccountKeyContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegenerateServiceAccountKeyContent"/>. </summary>
         /// <param name="keyName"> key name to generate (Key1|Key2). </param>
         public RegenerateServiceAccountKeyContent(ServiceAccountKeyName keyName)
         {

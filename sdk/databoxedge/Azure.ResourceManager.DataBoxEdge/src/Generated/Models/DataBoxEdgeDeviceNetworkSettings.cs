@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The network settings of a device. </summary>
     public partial class DataBoxEdgeDeviceNetworkSettings : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceNetworkSettings"/>. </summary>
         public DataBoxEdgeDeviceNetworkSettings()
         {
             NetworkAdapters = new ChangeTrackingList<DataBoxEdgeNetworkAdapter>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceNetworkSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

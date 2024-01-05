@@ -14,13 +14,13 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role definition list operation result. </summary>
     internal partial class RoleDefinitionListResult
     {
-        /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionListResult"/>. </summary>
         internal RoleDefinitionListResult()
         {
             Value = new ChangeTrackingList<KeyVaultRoleDefinition>();
         }
 
-        /// <summary> Initializes a new instance of RoleDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionListResult"/>. </summary>
         /// <param name="value"> Role definition list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal RoleDefinitionListResult(IReadOnlyList<KeyVaultRoleDefinition> value, string nextLink)

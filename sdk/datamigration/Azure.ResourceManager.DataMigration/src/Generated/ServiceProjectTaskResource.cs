@@ -19,13 +19,18 @@ namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
     /// A Class representing a ServiceProjectTask along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceProjectTaskResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceProjectTaskResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProjectResource" /> using the GetServiceProjectTask method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceProjectTaskResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceProjectTaskResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProjectResource"/> using the GetServiceProjectTask method.
     /// </summary>
     public partial class ServiceProjectTaskResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceProjectTaskResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groupName"> The groupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="taskName"> The taskName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName, string projectName, string taskName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}";
@@ -36,12 +41,15 @@ namespace Azure.ResourceManager.DataMigration
         private readonly TasksRestOperations _serviceProjectTaskTasksRestClient;
         private readonly ProjectTaskData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services/projects/tasks";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceProjectTaskResource"/> class for mocking. </summary>
         protected ServiceProjectTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceProjectTaskResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceProjectTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceProjectTaskResource(ArmClient client, ProjectTaskData data) : this(client, data.Id)
@@ -62,9 +70,6 @@ namespace Azure.ResourceManager.DataMigration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.DataMigration/services/projects/tasks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

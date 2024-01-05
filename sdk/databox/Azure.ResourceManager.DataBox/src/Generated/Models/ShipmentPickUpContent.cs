@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Shipment pick up request details. </summary>
     public partial class ShipmentPickUpContent
     {
-        /// <summary> Initializes a new instance of ShipmentPickUpContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShipmentPickUpContent"/>. </summary>
         /// <param name="startOn"> Minimum date after which the pick up should commence, this must be in local time of pick up area. </param>
         /// <param name="endOn"> Maximum date before which the pick up should commence, this must be in local time of pick up area. </param>
         /// <param name="shipmentLocation"> Shipment Location in the pickup place. Eg.front desk. </param>

@@ -1,13 +1,34 @@
 # Release History
 
-## 4.6.0-beta.1 (Unreleased)
+## 4.6.0-beta.3 (Unreleased)
 
 ### Features Added
 
-- Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.6.0-beta.2 (2023-11-13)
+
+### Other Changes
+
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 4.6.0-beta.1 (2023-11-09)
+
+### Features Added
+
+- Added `CryptographyClient.CreateRSA` and `CreateRSAAsync` to create an `RSA` implementation backed by Key Vault or Managed HSM.
+  Use this anywhere an `RSA` or `AsymmetricAlgorithm` is required. ([#3545](https://github.com/Azure/azure-sdk-for-net/issues/3545))
 - Added `KeyProperties.HsmPlatform` to get the underlying HSM platform.
 
 ### Breaking Changes
+
+- Renamed tags reported on `KeyClient`, `KeyResolver`, `CryptographyClient`, and `RemoteCryptographyClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `key` to `az.keyvault.key.id` or `az.keyvault.key.name` depending on the value being reported
+  - `version` to `az.keyvault.key.version`
 
 ### Bugs Fixed
 

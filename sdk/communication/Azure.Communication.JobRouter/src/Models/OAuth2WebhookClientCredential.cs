@@ -21,10 +21,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> ClientId for Contoso Authorization server. </summary>
-        public string ClientId { get; internal set; }
+        internal string ClientId { get; }
 
         /// <summary> Client secret for Contoso Authorization server. </summary>
-        private string ClientSecret { get; }
+        internal string ClientSecret { get; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

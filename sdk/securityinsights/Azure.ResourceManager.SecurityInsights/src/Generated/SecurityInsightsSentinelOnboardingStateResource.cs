@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A Class representing a SecurityInsightsSentinelOnboardingState along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsSentinelOnboardingStateResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsSentinelOnboardingStateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" /> using the GetSecurityInsightsSentinelOnboardingState method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsSentinelOnboardingStateResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsSentinelOnboardingStateResource method.
+    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsSentinelOnboardingState method.
     /// </summary>
     public partial class SecurityInsightsSentinelOnboardingStateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsSentinelOnboardingStateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sentinelOnboardingStateName"> The sentinelOnboardingStateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.SecurityInsights
         private readonly SentinelOnboardingStatesRestOperations _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient;
         private readonly SecurityInsightsSentinelOnboardingStateData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/onboardingStates";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSentinelOnboardingStateResource"/> class for mocking. </summary>
         protected SecurityInsightsSentinelOnboardingStateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsSentinelOnboardingStateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSentinelOnboardingStateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsSentinelOnboardingStateResource(ArmClient client, SecurityInsightsSentinelOnboardingStateData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/onboardingStates";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

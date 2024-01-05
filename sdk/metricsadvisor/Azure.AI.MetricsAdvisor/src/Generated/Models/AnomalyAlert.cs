@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AlertResult. </summary>
     public partial class AnomalyAlert
     {
-        /// <summary> Initializes a new instance of AnomalyAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlert"/>. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdOn"> created time. </param>

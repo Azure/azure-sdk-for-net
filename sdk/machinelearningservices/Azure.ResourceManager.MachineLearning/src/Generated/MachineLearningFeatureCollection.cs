@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningFeatureResource" /> and their operations.
-    /// Each <see cref="MachineLearningFeatureResource" /> in the collection will belong to the same instance of <see cref="MachineLearningFeatureSetVersionResource" />.
-    /// To get a <see cref="MachineLearningFeatureCollection" /> instance call the GetMachineLearningFeatures method from an instance of <see cref="MachineLearningFeatureSetVersionResource" />.
+    /// A class representing a collection of <see cref="MachineLearningFeatureResource"/> and their operations.
+    /// Each <see cref="MachineLearningFeatureResource"/> in the collection will belong to the same instance of <see cref="MachineLearningFeatureSetVersionResource"/>.
+    /// To get a <see cref="MachineLearningFeatureCollection"/> instance call the GetMachineLearningFeatures method from an instance of <see cref="MachineLearningFeatureSetVersionResource"/>.
     /// </summary>
     public partial class MachineLearningFeatureCollection : ArmCollection, IEnumerable<MachineLearningFeatureResource>, IAsyncEnumerable<MachineLearningFeatureResource>
     {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="featureName"> feature name. </param>
         /// <param name="description"> Description of the featureset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningFeatureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningFeatureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningFeatureResource> GetAllAsync(string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, tags, featureName, description);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="featureName"> feature name. </param>
         /// <param name="description"> Description of the featureset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningFeatureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningFeatureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningFeatureResource> GetAll(string skip = null, string tags = null, string featureName = null, string description = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skip, tags, featureName, description);

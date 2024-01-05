@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> OpenAPI properties of Spring Cloud Gateway route config. </summary>
     internal partial class GatewayRouteConfigOpenApiProperties
     {
-        /// <summary> Initializes a new instance of GatewayRouteConfigOpenApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayRouteConfigOpenApiProperties"/>. </summary>
         public GatewayRouteConfigOpenApiProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayRouteConfigOpenApiProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayRouteConfigOpenApiProperties"/>. </summary>
         /// <param name="uri"> The URI of OpenAPI specification. </param>
         internal GatewayRouteConfigOpenApiProperties(Uri uri)
         {

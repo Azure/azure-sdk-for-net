@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino Coordinator. </summary>
     public partial class TrinoCoordinator
     {
-        /// <summary> Initializes a new instance of TrinoCoordinator. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoCoordinator"/>. </summary>
         public TrinoCoordinator()
         {
         }
 
-        /// <summary> Initializes a new instance of TrinoCoordinator. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoCoordinator"/>. </summary>
         /// <param name="highAvailabilityEnabled"> The flag that if enable coordinator HA, uses multiple coordinator replicas with auto failover, one per each head node. Default: true. </param>
         /// <param name="isEnabled"> The flag that if enable debug or not. </param>
         /// <param name="port"> The debug port. </param>

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorNetworkExperimentProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorNetworkExperimentProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorNetworkExperimentProfileData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorNetworkExperimentProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorNetworkExperimentProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

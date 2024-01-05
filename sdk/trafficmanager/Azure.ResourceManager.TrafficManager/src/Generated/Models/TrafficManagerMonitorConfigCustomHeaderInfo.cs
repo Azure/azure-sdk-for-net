@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> Custom header name and value. </summary>
     public partial class TrafficManagerMonitorConfigCustomHeaderInfo
     {
-        /// <summary> Initializes a new instance of TrafficManagerMonitorConfigCustomHeaderInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerMonitorConfigCustomHeaderInfo"/>. </summary>
         public TrafficManagerMonitorConfigCustomHeaderInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerMonitorConfigCustomHeaderInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerMonitorConfigCustomHeaderInfo"/>. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
         internal TrafficManagerMonitorConfigCustomHeaderInfo(string name, string value)

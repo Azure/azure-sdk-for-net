@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A Class representing a MachineLearningComponentContainer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningComponentContainerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningComponentContainerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningComponentContainer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningComponentContainerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningComponentContainerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningComponentContainer method.
     /// </summary>
     public partial class MachineLearningComponentContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningComponentContainerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/components/{name}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly ComponentContainersRestOperations _machineLearningComponentContainerComponentContainersRestClient;
         private readonly MachineLearningComponentContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/components";
+
         /// <summary> Initializes a new instance of the <see cref="MachineLearningComponentContainerResource"/> class for mocking. </summary>
         protected MachineLearningComponentContainerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MachineLearningComponentContainerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MachineLearningComponentContainerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningComponentContainerResource(ArmClient client, MachineLearningComponentContainerData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.MachineLearning
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/components";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningComponentVersionResources and their operations over a MachineLearningComponentVersionResource. </returns>
         public virtual MachineLearningComponentVersionCollection GetMachineLearningComponentVersions()
         {
-            return GetCachedClient(Client => new MachineLearningComponentVersionCollection(Client, Id));
+            return GetCachedClient(client => new MachineLearningComponentVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MachineLearningComponentVersionResource>> GetMachineLearningComponentVersionAsync(string version, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="version"> Version identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningComponentVersionResource> GetMachineLearningComponentVersion(string version, CancellationToken cancellationToken = default)
         {

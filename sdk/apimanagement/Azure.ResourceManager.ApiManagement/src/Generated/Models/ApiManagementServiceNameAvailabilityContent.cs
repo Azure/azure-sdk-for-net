@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the CheckNameAvailability operation. </summary>
     public partial class ApiManagementServiceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ApiManagementServiceNameAvailabilityContent(string name)

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The rule criteria that defines the conditions of the scheduled query rule. </summary>
     internal partial class ScheduledQueryRuleCriteria
     {
-        /// <summary> Initializes a new instance of ScheduledQueryRuleCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleCriteria"/>. </summary>
         public ScheduledQueryRuleCriteria()
         {
             AllOf = new ChangeTrackingList<ScheduledQueryRuleCondition>();
         }
 
-        /// <summary> Initializes a new instance of ScheduledQueryRuleCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleCriteria"/>. </summary>
         /// <param name="allOf"> A list of conditions to evaluate against the specified scopes. </param>
         internal ScheduledQueryRuleCriteria(IList<ScheduledQueryRuleCondition> allOf)
         {

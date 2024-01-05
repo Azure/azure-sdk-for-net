@@ -13,11 +13,22 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Base class of the specific document types. </summary>
     internal partial class DocumentIngress
     {
-        /// <summary> Initializes a new instance of DocumentIngress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentIngress"/>. </summary>
         public DocumentIngress()
         {
             DocumentStreamIds = new ChangeTrackingList<string>();
-            Properties = new ChangeTrackingList<object>();
+            Properties = new ChangeTrackingList<KeyValuePairString>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIngress"/>. </summary>
+        /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
+        /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
+        /// <param name="properties"> Collection of custom properties. </param>
+        internal DocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties)
+        {
+            DocumentType = documentType;
+            DocumentStreamIds = documentStreamIds;
+            Properties = properties;
         }
 
         /// <summary> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </summary>
@@ -25,6 +36,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <summary> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </summary>
         public IList<string> DocumentStreamIds { get; }
         /// <summary> Collection of custom properties. </summary>
-        public IList<object> Properties { get; }
+        public IList<KeyValuePairString> Properties { get; }
     }
 }

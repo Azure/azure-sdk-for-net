@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Get monitoring data response. </summary>
     public partial class SynapseIntegrationRuntimeMonitoringResult
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeMonitoringResult"/>. </summary>
         internal SynapseIntegrationRuntimeMonitoringResult()
         {
             Nodes = new ChangeTrackingList<SynapseIntegrationRuntimeNodeMonitoringResult>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeMonitoringResult"/>. </summary>
         /// <param name="name"> Integration runtime name. </param>
         /// <param name="nodes"> Integration runtime node monitoring data. </param>
         internal SynapseIntegrationRuntimeMonitoringResult(string name, IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult> nodes)

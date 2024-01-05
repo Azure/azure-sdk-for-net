@@ -13,14 +13,14 @@ namespace Azure.Communication.CallAutomation
     public class CallMediaRecognizeChoiceOptions : CallMediaRecognizeOptions
     {
         /// <summary> Initializes a new instance of CallMediaRecognizeChoiceOptions. </summary>
-        public CallMediaRecognizeChoiceOptions(CommunicationIdentifier targetParticipant, IEnumerable<RecognizeChoice> recognizeChoices) : base(RecognizeInputType.Choices, targetParticipant)
+        public CallMediaRecognizeChoiceOptions(CommunicationIdentifier targetParticipant, IEnumerable<RecognitionChoice> choices) : base(RecognizeInputType.Choices, targetParticipant)
         {
-            RecognizeChoices = recognizeChoices.ToList<RecognizeChoice>();
+            Choices = choices.ToList<RecognitionChoice>();
         }
 
         /// <summary>
         /// The IvR choices for recognize
         /// </summary>
-        public IReadOnlyList<RecognizeChoice> RecognizeChoices { get; }
+        public IList<RecognitionChoice> Choices { get; }
     }
 }

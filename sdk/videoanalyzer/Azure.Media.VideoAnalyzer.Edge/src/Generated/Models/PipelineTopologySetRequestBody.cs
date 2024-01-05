@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     internal partial class PipelineTopologySetRequestBody : MethodRequest
     {
-        /// <summary> Initializes a new instance of PipelineTopologySetRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologySetRequestBody"/>. </summary>
         /// <param name="name"> Pipeline topology unique identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PipelineTopologySetRequestBody(string name)
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = "PipelineTopologySetRequestBody";
         }
 
-        /// <summary> Initializes a new instance of PipelineTopologySetRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineTopologySetRequestBody"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="name"> Pipeline topology unique identifier. </param>

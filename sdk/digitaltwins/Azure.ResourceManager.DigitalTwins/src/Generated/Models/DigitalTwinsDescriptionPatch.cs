@@ -14,10 +14,21 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> The description of the DigitalTwins service. </summary>
     public partial class DigitalTwinsDescriptionPatch
     {
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionPatch"/>. </summary>
         public DigitalTwinsDescriptionPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionPatch"/>. </summary>
+        /// <param name="tags"> Instance patch properties. </param>
+        /// <param name="identity"> The managed identity for the DigitalTwinsInstance. </param>
+        /// <param name="properties"> Properties for the DigitalTwinsInstance. </param>
+        internal DigitalTwinsDescriptionPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DigitalTwinsPatchProperties properties)
+        {
+            Tags = tags;
+            Identity = identity;
+            Properties = properties;
         }
 
         /// <summary> Instance patch properties. </summary>

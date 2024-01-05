@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-artifacts-composite-v7
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/1e56b6fbe36e2dcbaccd342f108b7c6efb175181/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/5ae522bc106bf8609c6cb379e584aa3e0e2639f3/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 generation1-convenience-client: true
 public-clients: true
@@ -19,6 +19,9 @@ modelerfour:
   seal-single-value-enum-by-default: true
 model-factory-for-hlc:
 - ManagedIntegrationRuntime
+
+suppress-abstract-base-class:
+- Dataset
 ```
 
 ### Make Endpoint type as Uri

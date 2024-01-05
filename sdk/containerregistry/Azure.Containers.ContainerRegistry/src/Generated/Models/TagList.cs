@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> List of tag details. </summary>
     internal partial class TagList
     {
-        /// <summary> Initializes a new instance of TagList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagList"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>
@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry
             TagAttributeBases = tagAttributeBases.ToList();
         }
 
-        /// <summary> Initializes a new instance of TagList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagList"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>

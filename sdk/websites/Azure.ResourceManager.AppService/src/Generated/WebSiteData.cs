@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class WebSiteData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WebSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WebSiteData(AzureLocation location) : base(location)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
             TrafficManagerHostNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WebSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

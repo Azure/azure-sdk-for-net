@@ -20,13 +20,18 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing a DomainTopicEventSubscription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DomainTopicEventSubscriptionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDomainTopicEventSubscriptionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DomainTopicResource" /> using the GetDomainTopicEventSubscription method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DomainTopicEventSubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDomainTopicEventSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DomainTopicResource"/> using the GetDomainTopicEventSubscription method.
     /// </summary>
     public partial class DomainTopicEventSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DomainTopicEventSubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="domainName"> The domainName. </param>
+        /// <param name="topicName"> The topicName. </param>
+        /// <param name="eventSubscriptionName"> The eventSubscriptionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}";
@@ -37,12 +42,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly DomainTopicEventSubscriptionsRestOperations _domainTopicEventSubscriptionRestClient;
         private readonly EventGridSubscriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/topics/eventSubscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="DomainTopicEventSubscriptionResource"/> class for mocking. </summary>
         protected DomainTopicEventSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DomainTopicEventSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DomainTopicEventSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DomainTopicEventSubscriptionResource(ArmClient client, EventGridSubscriptionData data) : this(client, data.Id)
@@ -63,9 +71,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/topics/eventSubscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -310,7 +315,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeliveryAttributeMapping"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _domainTopicEventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -331,7 +336,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeliveryAttributeMapping"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _domainTopicEventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

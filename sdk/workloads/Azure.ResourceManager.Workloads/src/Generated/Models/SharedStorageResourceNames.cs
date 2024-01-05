@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The resource names object for shared storage. </summary>
     public partial class SharedStorageResourceNames
     {
-        /// <summary> Initializes a new instance of SharedStorageResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedStorageResourceNames"/>. </summary>
         public SharedStorageResourceNames()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedStorageResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedStorageResourceNames"/>. </summary>
         /// <param name="sharedStorageAccountName"> The full name of the shared storage account. If it is not provided, it will be defaulted to {SID}nfs{guid of 15 chars}. </param>
         /// <param name="sharedStorageAccountPrivateEndPointName"> The full name of private end point for the shared storage account. If it is not provided, it will be defaulted to {storageAccountName}_pe. </param>
         internal SharedStorageResourceNames(string sharedStorageAccountName, string sharedStorageAccountPrivateEndPointName)

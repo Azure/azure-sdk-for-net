@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database Migration Resource. </summary>
     public partial class DatabaseMigration : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseMigration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigration"/>. </summary>
         public DatabaseMigration()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseMigration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigration"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

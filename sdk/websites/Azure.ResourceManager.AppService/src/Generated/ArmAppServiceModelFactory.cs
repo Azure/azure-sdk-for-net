@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAppServiceModelFactory
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceCertificateOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceCertificateOrderData(id, name, resourceType, systemData, tags, location, certificates, distinguishedName, domainVerificationToken, validityInYears, keySize, productType, isAutoRenew, provisioningState, status, signedCertificate, csr, intermediate, root, serialNumber, lastCertificateIssuedOn, expireOn, isPrivateKeyExternal, appServiceCertificateNotRenewableReasons?.ToList(), nextAutoRenewTimeStamp, contact, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateProperties"/>. </summary>
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateDetails"/>. </summary>
         /// <param name="version"> Certificate Version. </param>
         /// <param name="serialNumber"> Certificate Serial Number. </param>
         /// <param name="thumbprintString"> Certificate Thumbprint. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceCertificateDetails(version, serialNumber, thumbprintString, subject, notBefore, notAfter, signatureAlgorithm, issuer, rawData);
         }
 
-        /// <summary> Initializes a new instance of CertificateOrderContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CertificateOrderContact"/>. </summary>
         /// <param name="email"></param>
         /// <param name="nameFirst"></param>
         /// <param name="nameLast"></param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CertificateOrderContact(email, nameFirst, nameLast, phone);
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateOrderPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateOrderPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceCertificateOrderPatch(id, name, resourceType, systemData, certificates, distinguishedName, domainVerificationToken, validityInYears, keySize, productType, isAutoRenew, provisioningState, status, signedCertificate, csr, intermediate, root, serialNumber, lastCertificateIssuanceOn, expireOn, isPrivateKeyExternal, appServiceCertificateNotRenewableReasons?.ToList(), nextAutoRenewalTimeStamp, contact, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceCertificateData(id, name, resourceType, systemData, tags, location, keyVaultId, keyVaultSecretName, provisioningState, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificatePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceCertificatePatch(id, name, resourceType, systemData, keyVaultId, keyVaultSecretName, provisioningState, kind);
         }
 
-        /// <summary> Initializes a new instance of ReissueCertificateOrderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ReissueCertificateOrderContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ReissueCertificateOrderContent(id, name, resourceType, systemData, keySize, delayExistingRevokeInHours, csr, isPrivateKeyExternal, kind);
         }
 
-        /// <summary> Initializes a new instance of RenewCertificateOrderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RenewCertificateOrderContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RenewCertificateOrderContent(id, name, resourceType, systemData, keySize, csr, isPrivateKeyExternal, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteSeal. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteSeal"/>. </summary>
         /// <param name="html"> HTML snippet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="html"/> is null. </exception>
         /// <returns> A new <see cref="Models.SiteSeal"/> instance for mocking. </returns>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteSeal(html);
         }
 
-        /// <summary> Initializes a new instance of CertificateOrderAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CertificateOrderAction"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CertificateOrderAction(id, name, resourceType, systemData, actionType, createdOn, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateEmail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateEmail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceCertificateEmail(id, name, resourceType, systemData, emailId, timeStamp, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDetectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceDetectorData(id, name, resourceType, systemData, metadata, dataset?.ToList(), status, dataProvidersMetadata?.ToList(), suggestedUtterances, kind);
         }
 
-        /// <summary> Initializes a new instance of DetectorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DetectorInfo"/>. </summary>
         /// <param name="id"> Id of detector. </param>
         /// <param name="name"> Name of detector. </param>
         /// <param name="description"> Short description of the detector and its purpose. </param>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DetectorInfo(id, name, description, author, category, supportTopicList?.ToList(), analysisType?.ToList(), detectorType, score);
         }
 
-        /// <summary> Initializes a new instance of DetectorSupportTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DetectorSupportTopic"/>. </summary>
         /// <param name="id"> Support Topic Id. </param>
         /// <param name="pesId"> Unique resource Id. </param>
         /// <returns> A new <see cref="Models.DetectorSupportTopic"/> instance for mocking. </returns>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DetectorSupportTopic(id, pesId);
         }
 
-        /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataProviderMetadata"/>. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
         /// <returns> A new <see cref="Models.DataProviderMetadata"/> instance for mocking. </returns>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DataProviderMetadata(providerName, propertyBag?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DataProviderKeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataProviderKeyValuePair"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"> Any object. </param>
         /// <returns> A new <see cref="Models.DataProviderKeyValuePair"/> instance for mocking. </returns>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DataProviderKeyValuePair(key, value);
         }
 
-        /// <summary> Initializes a new instance of CsmOperationDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CsmOperationDescription"/>. </summary>
         /// <param name="name"></param>
         /// <param name="isDataAction"></param>
         /// <param name="display"> Meta data about operation used for display in portal. </param>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CsmOperationDescription(name, isDataAction, display, origin, csmOperationDescriptionServiceSpecification != null ? new CsmOperationDescriptionProperties(csmOperationDescriptionServiceSpecification) : null);
         }
 
-        /// <summary> Initializes a new instance of CsmOperationDisplay. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CsmOperationDisplay"/>. </summary>
         /// <param name="provider"></param>
         /// <param name="resource"></param>
         /// <param name="operation"></param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CsmOperationDisplay(provider, resource, operation, description);
         }
 
-        /// <summary> Initializes a new instance of ServiceSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceSpecification"/>. </summary>
         /// <param name="metricSpecifications"></param>
         /// <param name="logSpecifications"></param>
         /// <returns> A new <see cref="Models.ServiceSpecification"/> instance for mocking. </returns>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ServiceSpecification(metricSpecifications?.ToList(), logSpecifications?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MetricSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricSpecification"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="displayDescription"></param>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new MetricSpecification(name, displayName, displayDescription, unit, aggregationType, isInstanceLevelAggregationSupported, isRegionalMdmAccountEnabled, sourceMdmAccount, sourceMdmNamespace, metricFilterPattern, fillGapWithZero, isInternal, dimensions?.ToList(), category, availabilities?.ToList(), supportedTimeGrainTypes?.ToList(), supportedAggregationTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricDimension"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="internalName"></param>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new MetricDimension(name, displayName, internalName, isToBeExportedForShoebox);
         }
 
-        /// <summary> Initializes a new instance of MetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
         /// <param name="timeGrain"></param>
         /// <param name="blobDuration"></param>
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new MetricAvailability(timeGrain, blobDuration);
         }
 
-        /// <summary> Initializes a new instance of LogSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LogSpecification"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="blobDuration"></param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new LogSpecification(name, displayName, blobDuration, logFilterPattern);
         }
 
-        /// <summary> Initializes a new instance of DomainAvailabilityCheckResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DomainAvailabilityCheckResult"/>. </summary>
         /// <param name="name"> Name of the domain. </param>
         /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="domainType"> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DomainAvailabilityCheckResult(name, isAvailable, domainType);
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceDomainData(id, name, resourceType, systemData, tags, location, contactAdmin, contactBilling, contactRegistrant, contactTech, registrationStatus, provisioningState, nameServers?.ToList(), isDomainPrivacyEnabled, createdOn, expireOn, lastRenewedOn, isAutoRenew, isDnsRecordManagementReady, managedHostNames?.ToList(), consent, domainNotRenewableReasons?.ToList(), dnsType, dnsZoneId, targetDnsType, authCode, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceHostName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceHostName"/>. </summary>
         /// <param name="name"> Name of the hostname. </param>
         /// <param name="siteNames"> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </param>
         /// <param name="azureResourceName"> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </param>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceHostName(name, siteNames?.ToList(), azureResourceName, azureResourceType, customHostNameDnsRecordType, hostNameType);
         }
 
-        /// <summary> Initializes a new instance of DomainControlCenterSsoRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DomainControlCenterSsoRequestInfo"/>. </summary>
         /// <param name="uri"> URL where the single sign-on request is to be made. </param>
         /// <param name="postParameterKey"> Post parameter key. </param>
         /// <param name="postParameterValue"> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </param>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DomainControlCenterSsoRequestInfo(uri, postParameterKey, postParameterValue);
         }
 
-        /// <summary> Initializes a new instance of AppServiceDomainPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceDomainPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceDomainPatch(id, name, resourceType, systemData, contactAdmin, contactBilling, contactRegistrant, contactTech, registrationStatus, provisioningState, nameServers?.ToList(), isDomainPrivacyEnabled, createdOn, expireOn, lastRenewedOn, isAutoRenew, isReadyForDnsRecordManagement, managedHostNames?.ToList(), consent, domainNotRenewableReasons?.ToList(), dnsType, dnsZoneId, targetDnsType, authCode, kind);
         }
 
-        /// <summary> Initializes a new instance of DomainOwnershipIdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.DomainOwnershipIdentifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DomainOwnershipIdentifierData(id, name, resourceType, systemData, ownershipId, kind);
         }
 
-        /// <summary> Initializes a new instance of TopLevelDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.TopLevelDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new TopLevelDomainData(id, name, resourceType, systemData, isDomainPrivacySupported, kind);
         }
 
-        /// <summary> Initializes a new instance of TldLegalAgreement. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TldLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new TldLegalAgreement(agreementKey, title, content, uri);
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEnvironmentData(id, name, resourceType, systemData, tags, location, provisioningState, status, virtualNetwork, internalLoadBalancingMode, multiSize, multiRoleCount, ipSslAddressCount, dnsSuffix, maximumNumberOfMachines, frontEndScaleFactor, isSuspended, clusterSettings?.ToList(), userWhitelistedIPRanges?.ToList(), hasLinuxWorkers, dedicatedHostCount, isZoneRedundant, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceEnvironmentProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEnvironmentProperties(provisioningState, status, virtualNetwork, internalLoadBalancingMode, multiSize, multiRoleCount, ipSslAddressCount, dnsSuffix, maximumNumberOfMachines, frontEndScaleFactor, isSuspended, clusterSettings?.ToList(), userWhitelistedIPRanges?.ToList(), hasLinuxWorkers, dedicatedHostCount, isZoneRedundant);
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkProfile"/>. </summary>
         /// <param name="id"> Resource id of the Virtual Network. </param>
         /// <param name="name"> Name of the Virtual Network (read-only). </param>
         /// <param name="resourceType"> Resource type of the Virtual Network (read-only). </param>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceVirtualNetworkProfile(id, name, resourceType, subnet);
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceEnvironmentPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEnvironmentPatch(id, name, resourceType, systemData, provisioningState, status, virtualNetwork, internalLoadBalancingMode, multiSize, multiRoleCount, ipSslAddressCount, dnsSuffix, maximumNumberOfMachines, frontEndScaleFactor, isSuspended, clusterSettings?.ToList(), userWhitelistedIPRanges?.ToList(), hasLinuxWorkers, dedicatedHostCount, isZoneRedundant, kind);
         }
 
-        /// <summary> Initializes a new instance of StampCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StampCapacity"/>. </summary>
         /// <param name="name"> Name of the stamp. </param>
         /// <param name="availableCapacity"> Available capacity (# of machines, bytes of storage etc...). </param>
         /// <param name="totalCapacity"> Total capacity (# of machines, bytes of storage etc...). </param>
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StampCapacity(name, availableCapacity, totalCapacity, unit, computeMode, workerSize, workerSizeId, excludeFromCapacityAllocation, isApplicableForAllComputeModes, siteMode, isLinux);
         }
 
-        /// <summary> Initializes a new instance of AppServiceEnvironmentAddressResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceEnvironmentAddressResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEnvironmentAddressResult(id, name, resourceType, systemData, serviceIPAddress, internalIPAddress, outboundIPAddresses?.ToList(), virtualIPMappings?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of AseV3NetworkingConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AseV3NetworkingConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AseV3NetworkingConfigurationData(id, name, resourceType, systemData, windowsOutboundIPAddresses?.ToList(), linuxOutboundIPAddresses?.ToList(), externalInboundIPAddresses?.ToList(), internalInboundIPAddresses?.ToList(), allowNewPrivateEndpointConnections, kind);
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentDiagnostics. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HostingEnvironmentDiagnostics"/>. </summary>
         /// <param name="name"> Name/identifier of the diagnostics. </param>
         /// <param name="diagnosticsOutput"> Diagnostics output. </param>
         /// <returns> A new <see cref="Models.HostingEnvironmentDiagnostics"/> instance for mocking. </returns>
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HostingEnvironmentDiagnostics(name, diagnosticsOutput);
         }
 
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InboundEnvironmentEndpoint"/>. </summary>
         /// <param name="description"> Short text describing the purpose of the network traffic. </param>
         /// <param name="endpoints"> The IP addresses that network traffic will originate from in cidr notation. </param>
         /// <param name="ports"> The ports that network traffic will arrive to the App Service Environment at. </param>
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new InboundEnvironmentEndpoint(description, endpoints?.ToList(), ports?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppServiceWorkerPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceWorkerPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceWorkerPoolData(id, name, resourceType, systemData, sku, workerSizeId, computeMode, workerSize, workerCount, instanceNames?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of ResourceMetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceMetricDefinition"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ResourceMetricDefinition(id, name, resourceType, systemData, unit, primaryAggregationType, metricAvailabilities?.ToList(), resourceUri, properties, kind);
         }
 
-        /// <summary> Initializes a new instance of ResourceMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceMetricAvailability"/>. </summary>
         /// <param name="timeGrain"> Time grain . </param>
         /// <param name="retention"> Retention period for the current time grain. </param>
         /// <returns> A new <see cref="Models.ResourceMetricAvailability"/> instance for mocking. </returns>
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ResourceMetricAvailability(timeGrain, retention);
         }
 
-        /// <summary> Initializes a new instance of AppServicePoolSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServicePoolSkuInfo"/>. </summary>
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="sku"> Name and tier of the SKU. </param>
         /// <param name="capacity"> Min, max, and default scale values of the SKU. </param>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServicePoolSkuInfo(resourceType, sku, capacity);
         }
 
-        /// <summary> Initializes a new instance of AppServiceUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceUsage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceUsage(id, name, resourceType, systemData, displayName, resourceName, unit, currentValue, limit, nextResetOn, computeMode, siteMode, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceOperation"/>. </summary>
         /// <param name="id"> Operation ID. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="status"> The current status of the operation. </param>
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceOperation(id, name, status, errors?.ToList(), createdOn, modifiedOn, expireOn, geoMasterOperationId);
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the App Service Environment reaches the service at. </param>
         /// <returns> A new <see cref="Models.OutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new OutboundEnvironmentEndpoint(category, endpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppServiceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
         /// <returns> A new <see cref="Models.AppServiceEndpointDependency"/> instance for mocking. </returns>
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEndpointDependency(domainName, endpointDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppServiceEndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceEndpointDetail"/>. </summary>
         /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="latency"> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </param>
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible);
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionARMResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RemotePrivateEndpointConnectionARMResourceData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, ipAddresses?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkConnectionApprovalRequestInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PrivateLinkConnectionApprovalRequestInfo(id, name, resourceType, systemData, privateLinkServiceConnectionState, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServicePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServicePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServicePrivateLinkResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppServicePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServicePrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> GroupId of a private link resource. </param>
         /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
         /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServicePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServicePlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -984,7 +984,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServicePlanData(id, name, resourceType, systemData, tags, location, sku, extendedLocation, workerTierName, status, subscription, hostingEnvironmentProfile, maximumNumberOfWorkers, geoRegion, isPerSiteScaling, isElasticScaleEnabled, maximumElasticWorkerCount, numberOfSites, isSpot, spotExpireOn, freeOfferExpireOn, resourceGroup, isReserved, isXenon, isHyperV, targetWorkerCount, targetWorkerSizeId, provisioningState, kubeEnvironmentProfile, isZoneRedundant, kind);
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HostingEnvironmentProfile"/>. </summary>
         /// <param name="id"> Resource ID of the App Service Environment. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="resourceType"> Resource type of the App Service Environment. </param>
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HostingEnvironmentProfile(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubeEnvironmentProfile"/>. </summary>
         /// <param name="id"> Resource ID of the Kubernetes Environment. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="resourceType"> Resource type of the Kubernetes Environment. </param>
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new KubeEnvironmentProfile(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of WebSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebSiteData(id, name, resourceType, systemData, tags, location, identity, extendedLocation, state, hostNames?.ToList(), repositorySiteName, usageState, isEnabled, enabledHostNames?.ToList(), availabilityState, hostNameSslStates?.ToList(), appServicePlanId, isReserved, isXenon, isHyperV, lastModifiedTimeUtc, siteConfig, trafficManagerHostNames?.ToList(), isScmSiteAlsoStopped, targetSwapSlot, hostingEnvironmentProfile, isClientAffinityEnabled, isClientCertEnabled, clientCertMode, clientCertExclusionPaths, isHostNameDisabled, customDomainVerificationId, outboundIPAddresses, possibleOutboundIPAddresses, containerSize, dailyMemoryTimeQuota, suspendOn, maxNumberOfWorkers, cloningInfo, resourceGroup, isDefaultContainer, defaultHostName, slotSwapStatus, isHttpsOnly, redundancyMode, inProgressOperationId, isStorageAccountRequired, keyVaultReferenceIdentity, virtualNetworkSubnetId, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteConfigProperties"/>. </summary>
         /// <param name="numberOfWorkers"> Number of workers. </param>
         /// <param name="defaultDocuments"> Default documents. </param>
         /// <param name="netFrameworkVersion"> .NET Framework version. </param>
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteConfigProperties(numberOfWorkers, defaultDocuments?.ToList(), netFrameworkVersion, phpVersion, pythonVersion, nodeVersion, powerShellVersion, linuxFxVersion, windowsFxVersion, isRequestTracingEnabled, requestTracingExpirationOn, isRemoteDebuggingEnabled, remoteDebuggingVersion, isHttpLoggingEnabled, useManagedIdentityCreds, acrUserManagedIdentityId, logsDirectorySizeLimit, isDetailedErrorLoggingEnabled, publishingUsername, appSettings?.ToList(), connectionStrings?.ToList(), machineKey, handlerMappings?.ToList(), documentRoot, scmType, use32BitWorkerProcess, isWebSocketsEnabled, isAlwaysOn, javaVersion, javaContainer, javaContainerVersion, appCommandLine, managedPipelineMode, virtualApplications?.ToList(), loadBalancing, experimentsRampUpRules != null ? new RoutingRuleExperiments(experimentsRampUpRules?.ToList()) : null, limits, isAutoHealEnabled, autoHealRules, tracingOptions, vnetName, isVnetRouteAllEnabled, vnetPrivatePortsCount, cors, push, apiDefinitionUri != null ? new AppServiceApiDefinitionInfo(apiDefinitionUri) : null, apiManagementConfigId != null ? new ApiManagementConfig(apiManagementConfigId) : null, autoSwapSlotName, isLocalMySqlEnabled, managedServiceIdentityId, xManagedServiceIdentityId, keyVaultReferenceIdentity, ipSecurityRestrictions?.ToList(), scmIPSecurityRestrictions?.ToList(), allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled, minTlsVersion, scmMinTlsVersion, ftpsState, preWarmedInstanceCount, functionAppScaleLimit, healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone, minimumElasticInstanceCount, azureStorageAccounts, publicNetworkAccess);
         }
 
-        /// <summary> Initializes a new instance of SiteMachineKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteMachineKey"/>. </summary>
         /// <param name="validation"> MachineKey validation. </param>
         /// <param name="validationKey"> Validation key. </param>
         /// <param name="decryption"> Algorithm used for decryption. </param>
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteMachineKey(validation, validationKey, decryption, decryptionKey);
         }
 
-        /// <summary> Initializes a new instance of WebAppPushSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppPushSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppPushSettings(id, name, resourceType, systemData, isPushEnabled, tagWhitelistJson, tagsRequiringAuth, dynamicTagsJson, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceStorageAccessInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceStorageAccessInfo"/>. </summary>
         /// <param name="storageType"> Type of storage. </param>
         /// <param name="accountName"> Name of the storage account. </param>
         /// <param name="shareName"> Name of the file share (container name, for Blob storage). </param>
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceStorageAccessInfo(storageType, accountName, shareName, accessKey, mountPath, state);
         }
 
-        /// <summary> Initializes a new instance of SlotSwapStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SlotSwapStatus"/>. </summary>
         /// <param name="timestampUtc"> The time the last successful slot swap completed. </param>
         /// <param name="sourceSlotName"> The source slot of the last swap operation. </param>
         /// <param name="destinationSlotName"> The destination slot of the last swap operation. </param>
@@ -1239,7 +1239,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SlotSwapStatus(timestampUtc, sourceSlotName, destinationSlotName);
         }
 
-        /// <summary> Initializes a new instance of CsmUsageQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CsmUsageQuota"/>. </summary>
         /// <param name="unit"> Units of measurement for the quota resource. </param>
         /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
         /// <param name="currentValue"> The current value of the resource counter. </param>
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CsmUsageQuota(unit, nextResetOn, currentValue, limit, name);
         }
 
-        /// <summary> Initializes a new instance of LocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LocalizableString"/>. </summary>
         /// <param name="value"> Non-localized name. </param>
         /// <param name="localizedValue"> Localized name. </param>
         /// <returns> A new <see cref="Models.LocalizableString"/> instance for mocking. </returns>
@@ -1260,7 +1260,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new LocalizableString(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of AppServicePlanPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServicePlanPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServicePlanPatch(id, name, resourceType, systemData, workerTierName, status, subscription, hostingEnvironmentProfile, maximumNumberOfWorkers, geoRegion, isPerSiteScaling, isElasticScaleEnabled, maximumElasticWorkerCount, numberOfSites, isSpot, spotExpirationOn, freeOfferExpirationOn, resourceGroup, isReserved, isXenon, isHyperV, targetWorkerCount, targetWorkerSizeId, provisioningState, kubeEnvironmentProfile, isZoneRedundant, kind);
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.HybridConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HybridConnectionData(id, name, resourceType, systemData, serviceBusNamespace, relayName, relayArmId, hostname, port, sendKeyName, sendKeyValue, serviceBusSuffix, kind);
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridConnectionKey"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HybridConnectionKey(id, name, resourceType, systemData, sendKeyName, sendKeyValue, kind);
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionLimitData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.HybridConnectionLimitData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1351,7 +1351,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HybridConnectionLimitData(id, name, resourceType, systemData, current, maximum, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceVirtualNetworkData(id, name, resourceType, systemData, vnetResourceId, certThumbprintString, certBlob, routes?.ToList(), isResyncRequired, dnsServers, isSwift, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkProperties"/>. </summary>
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob">
@@ -1394,7 +1394,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceVirtualNetworkProperties(vnetResourceId, certThumbprintString, certBlob, routes?.ToList(), isResyncRequired, dnsServers, isSwift);
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkRoute"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceVirtualNetworkRoute(id, name, resourceType, systemData, startAddress, endAddress, routeType, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceVirtualNetworkGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1430,7 +1430,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceVirtualNetworkGatewayData(id, name, resourceType, systemData, vnetName, vpnPackageUri, kind);
         }
 
-        /// <summary> Initializes a new instance of AppCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1468,7 +1468,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppCertificateData(id, name, resourceType, systemData, tags, location, password, friendlyName, subjectName, hostNames?.ToList(), pfxBlob, siteName, selfLink, issuer, issueOn, expireOn, thumbprintString, isValid, cerBlob, publicKeyHash, hostingEnvironmentProfile, keyVaultId, keyVaultSecretName, keyVaultSecretStatus, serverFarmId, canonicalName, domainValidationMethod, kind);
         }
 
-        /// <summary> Initializes a new instance of AppCertificatePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppCertificatePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1503,7 +1503,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppCertificatePatch(id, name, resourceType, systemData, password, friendlyName, subjectName, hostNames?.ToList(), pfxBlob, siteName, selfLink, issuer, issueOn, expireOn, thumbprintString, isValid, cerBlob, publicKeyHash, hostingEnvironmentProfile, keyVaultId, keyVaultSecretName, keyVaultSecretStatus, serverFarmId, canonicalName, domainValidationMethod, kind);
         }
 
-        /// <summary> Initializes a new instance of DeletedSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.DeletedSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1523,7 +1523,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DeletedSiteData(id, name, resourceType, systemData, deletedSiteId, deletedTimestamp, subscription, resourceGroup, deletedSiteName, slot, kindPropertiesKind, geoRegionName, kind);
         }
 
-        /// <summary> Initializes a new instance of DiagnosticCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.DiagnosticCategoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1536,7 +1536,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DiagnosticCategoryData(id, name, resourceType, systemData, description, kind);
         }
 
-        /// <summary> Initializes a new instance of WebSiteAnalysisDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteAnalysisDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1549,7 +1549,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebSiteAnalysisDefinitionData(id, name, resourceType, systemData, description, kind);
         }
 
-        /// <summary> Initializes a new instance of DiagnosticAnalysis. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DiagnosticAnalysis"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DiagnosticAnalysis(id, name, resourceType, systemData, startOn, endOn, abnormalTimePeriods?.ToList(), payload?.ToList(), nonCorrelatedDetectors?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of DetectorDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DetectorDefinition"/>. </summary>
         /// <param name="displayName"> Display name of the detector. </param>
         /// <param name="description"> Description of the detector. </param>
         /// <param name="rank"> Detector Rank. </param>
@@ -1581,7 +1581,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DetectorDefinition(displayName, description, rank, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of DetectorDefinitionResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.DetectorDefinitionResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1597,7 +1597,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DetectorDefinitionResourceData(id, name, resourceType, systemData, displayName, description, rank, isEnabled, kind);
         }
 
-        /// <summary> Initializes a new instance of DiagnosticDetectorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DiagnosticDetectorResponse"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1621,7 +1621,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DiagnosticDetectorResponse(id, name, resourceType, systemData, startOn, endOn, issueDetected, detectorDefinition, metrics?.ToList(), abnormalTimePeriods?.ToList(), data?.ToList(), dataSource != null ? new DetectorMetadata(dataSource) : null, kind);
         }
 
-        /// <summary> Initializes a new instance of AppSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppSnapshot"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1634,7 +1634,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppSnapshot(id, name, resourceType, systemData, time, kind);
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.KubeEnvironmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1667,7 +1667,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new KubeEnvironmentData(id, name, resourceType, systemData, tags, location, extendedLocation, provisioningState, deploymentErrors, isInternalLoadBalancerEnabled, defaultDomain, staticIP, arcConfiguration, appLogsConfiguration, aksResourceId, kind);
         }
 
-        /// <summary> Initializes a new instance of KubeEnvironmentPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KubeEnvironmentPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1695,7 +1695,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new KubeEnvironmentPatch(id, name, resourceType, systemData, provisioningState, deploymentErrors, isInternalLoadBalancerEnabled, defaultDomain, staticIP, arcConfiguration, appLogsConfiguration, aksResourceId, kind);
         }
 
-        /// <summary> Initializes a new instance of ApplicationStackResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplicationStackResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1717,7 +1717,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ApplicationStackResource(id, name, resourceType, systemData, stackName, display, dependency, majorVersions?.ToList(), frameworks?.ToList(), isDeprecated?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of FunctionAppStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FunctionAppStack"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1736,7 +1736,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppStack(id, name, resourceType, systemData, location, displayText, value, majorVersions?.ToList(), preferredOS, kind);
         }
 
-        /// <summary> Initializes a new instance of FunctionAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FunctionAppMajorVersion"/>. </summary>
         /// <param name="displayText"> Function App stack major version (display only). </param>
         /// <param name="value"> Function App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
@@ -1748,7 +1748,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppMajorVersion(displayText, value, minorVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FunctionAppMinorVersion"/>. </summary>
         /// <param name="displayText"> Function App stack (display only). </param>
         /// <param name="value"> Function App stack name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>
@@ -1758,7 +1758,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppMinorVersion(displayText, value, stackSettings);
         }
 
-        /// <summary> Initializes a new instance of FunctionAppRuntimes. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FunctionAppRuntimes"/>. </summary>
         /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
         /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
         /// <returns> A new <see cref="Models.FunctionAppRuntimes"/> instance for mocking. </returns>
@@ -1767,7 +1767,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings);
         }
 
-        /// <summary> Initializes a new instance of FunctionAppRuntimeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FunctionAppRuntimeSettings"/>. </summary>
         /// <param name="runtimeVersion"> Function App stack minor version (runtime only). </param>
         /// <param name="isRemoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>
@@ -1791,7 +1791,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppRuntimeSettings(runtimeVersion, isRemoteDebuggingSupported, appInsightsSettings, gitHubActionSettings, appSettingsDictionary, siteConfigPropertiesDictionary, supportedFunctionsExtensionVersions?.ToList(), isPreview, isDeprecated, isHidden, endOfLifeOn, isAutoUpdate, isEarlyAccess, isDefault);
         }
 
-        /// <summary> Initializes a new instance of AppInsightsWebAppStackSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppInsightsWebAppStackSettings"/>. </summary>
         /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDefaultOff"> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <returns> A new <see cref="Models.AppInsightsWebAppStackSettings"/> instance for mocking. </returns>
@@ -1800,7 +1800,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppInsightsWebAppStackSettings(isSupported, isDefaultOff);
         }
 
-        /// <summary> Initializes a new instance of GitHubActionWebAppStackSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GitHubActionWebAppStackSettings"/>. </summary>
         /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="supportedVersion"> The minor version that is supported for GitHub Actions. </param>
         /// <returns> A new <see cref="Models.GitHubActionWebAppStackSettings"/> instance for mocking. </returns>
@@ -1809,7 +1809,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new GitHubActionWebAppStackSettings(isSupported, supportedVersion);
         }
 
-        /// <summary> Initializes a new instance of SiteConfigPropertiesDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteConfigPropertiesDictionary"/>. </summary>
         /// <param name="use32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; if use32BitWorkerProcess should be set to true for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="linuxFxVersion"> LinuxFxVersion configuration setting. </param>
         /// <param name="javaVersion"> JavaVersion configuration setting. </param>
@@ -1820,7 +1820,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteConfigPropertiesDictionary(use32BitWorkerProcess, linuxFxVersion, javaVersion, powerShellVersion);
         }
 
-        /// <summary> Initializes a new instance of WebAppStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppStack"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1839,7 +1839,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppStack(id, name, resourceType, systemData, location, displayText, value, majorVersions?.ToList(), preferredOS, kind);
         }
 
-        /// <summary> Initializes a new instance of WebAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppMajorVersion"/>. </summary>
         /// <param name="displayText"> Web App stack major version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
@@ -1851,7 +1851,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppMajorVersion(displayText, value, minorVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of WebAppMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppMinorVersion"/>. </summary>
         /// <param name="displayText"> Web App stack minor version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>
@@ -1861,7 +1861,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppMinorVersion(displayText, value, stackSettings);
         }
 
-        /// <summary> Initializes a new instance of WebAppRuntimes. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppRuntimes"/>. </summary>
         /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
         /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
         /// <param name="linuxContainerSettings"> Linux-specific settings associated with the Java container minor version. </param>
@@ -1872,7 +1872,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, linuxContainerSettings, windowsContainerSettings);
         }
 
-        /// <summary> Initializes a new instance of WebAppRuntimeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppRuntimeSettings"/>. </summary>
         /// <param name="runtimeVersion"> Web App stack minor version (runtime only). </param>
         /// <param name="isRemoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>
@@ -1889,7 +1889,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRuntimeSettings(runtimeVersion, isRemoteDebuggingSupported, appInsightsSettings, gitHubActionSettings, isPreview, isDeprecated, isHidden, endOfLifeOn, isAutoUpdate, isEarlyAccess);
         }
 
-        /// <summary> Initializes a new instance of LinuxJavaContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LinuxJavaContainerSettings"/>. </summary>
         /// <param name="java11Runtime"> Java 11 version (runtime only). </param>
         /// <param name="java8Runtime"> Java 8 version (runtime only). </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -1904,7 +1904,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new LinuxJavaContainerSettings(java11Runtime, java8Runtime, isPreview, isDeprecated, isHidden, endOfLifeOn, isAutoUpdate, isEarlyAccess);
         }
 
-        /// <summary> Initializes a new instance of WindowsJavaContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WindowsJavaContainerSettings"/>. </summary>
         /// <param name="javaContainer"> Java container (runtime only). </param>
         /// <param name="javaContainerVersion"> Java container version (runtime only). </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -1919,7 +1919,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WindowsJavaContainerSettings(javaContainer, javaContainerVersion, isPreview, isDeprecated, isHidden, endOfLifeOn, isAutoUpdate, isEarlyAccess);
         }
 
-        /// <summary> Initializes a new instance of AppServiceRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1957,7 +1957,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceRecommendation(id, name, resourceType, systemData, createdOn, recommendationId, resourceId, resourceScope, ruleName, displayName, message, level, channels, categoryTags?.ToList(), actionName, enabled, states?.ToList(), startOn, endOn, nextNotificationOn, notificationExpirationOn, notifiedOn, score, isDynamic, extensionName, bladeName, forwardLink, kind);
         }
 
-        /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.RecommendationRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1987,7 +1987,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RecommendationRuleData(id, name, resourceType, systemData, recommendationName, displayName, message, recommendationId, description, actionName, level, channels, categoryTags?.ToList(), isDynamic, extensionName, bladeName, forwardLink, kind);
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.ResourceHealthMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2001,7 +2001,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ResourceHealthMetadataData(id, name, resourceType, systemData, category, isSignalAvailable, kind);
         }
 
-        /// <summary> Initializes a new instance of PublishingUserData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.PublishingUserData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2018,7 +2018,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PublishingUserData(id, name, resourceType, systemData, publishingUserName, publishingPassword, publishingPasswordHash, publishingPasswordHashSalt, scmUri, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceSourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceSourceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2034,7 +2034,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceSourceControlData(id, name, resourceType, systemData, token, tokenSecret, refreshToken, expireOn, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceBillingMeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceBillingMeter"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2052,7 +2052,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceBillingMeter(id, name, resourceType, systemData, meterId, billingLocation, shortName, friendlyName, osType, multiplier, kind);
         }
 
-        /// <summary> Initializes a new instance of ResourceNameAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceNameAvailability"/>. </summary>
         /// <param name="isNameAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </param>
@@ -2062,7 +2062,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ResourceNameAvailability(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of AppServiceDeploymentLocations. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceDeploymentLocations"/>. </summary>
         /// <param name="locations"> Available regions. </param>
         /// <param name="hostingEnvironments"> Available App Service Environments with full descriptions of the environments. </param>
         /// <param name="hostingEnvironmentDeploymentInfos"> Available App Service Environments with basic information. </param>
@@ -2076,7 +2076,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceDeploymentLocations(locations?.ToList(), hostingEnvironments?.ToList(), hostingEnvironmentDeploymentInfos?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppServiceGeoRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceGeoRegion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2091,7 +2091,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceGeoRegion(id, name, resourceType, systemData, description, displayName, orgDomain, kind);
         }
 
-        /// <summary> Initializes a new instance of HostingEnvironmentDeploymentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HostingEnvironmentDeploymentInfo"/>. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="location"> Location of the App Service Environment. </param>
         /// <returns> A new <see cref="Models.HostingEnvironmentDeploymentInfo"/> instance for mocking. </returns>
@@ -2100,7 +2100,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HostingEnvironmentDeploymentInfo(name, location);
         }
 
-        /// <summary> Initializes a new instance of AppServiceIdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceIdentifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2113,7 +2113,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceIdentifierData(id, name, resourceType, systemData, value, kind);
         }
 
-        /// <summary> Initializes a new instance of PremierAddOnOffer. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PremierAddOnOffer"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2135,7 +2135,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PremierAddOnOffer(id, name, resourceType, systemData, sku, product, vendor, isPromoCodeRequired, quota, webHostingPlanRestrictions, privacyPolicyUri, legalTermsUri, marketplacePublisher, marketplaceOffer, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceSkuResult"/>. </summary>
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="skus"> List of SKUs the subscription is able to use. </param>
         /// <returns> A new <see cref="Models.AppServiceSkuResult"/> instance for mocking. </returns>
@@ -2146,7 +2146,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceSkuResult(resourceType, skus?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GlobalCsmSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GlobalCsmSkuDescription"/>. </summary>
         /// <param name="name"> Name of the resource SKU. </param>
         /// <param name="tier"> Service Tier of the resource SKU. </param>
         /// <param name="size"> Size specifier of the resource SKU. </param>
@@ -2163,7 +2163,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new GlobalCsmSkuDescription(name, tier, size, family, capacity, locations?.ToList(), capabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkValidationContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2179,7 +2179,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceVirtualNetworkValidationContent(id, name, resourceType, systemData, vnetResourceGroup, vnetName, vnetSubnetName, subnetResourceId, kind);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkValidationFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkValidationFailureDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2198,7 +2198,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new VirtualNetworkValidationFailureDetails(id, name, resourceType, systemData, message, isFailed, failedTests?.ToList(), warnings?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkValidationTestFailure. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkValidationTestFailure"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2212,7 +2212,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new VirtualNetworkValidationTestFailure(id, name, resourceType, systemData, testName, details, kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceValidateResult"/>. </summary>
         /// <param name="status"> Result of validation. </param>
         /// <param name="error"> Error details for the case when validation fails. </param>
         /// <returns> A new <see cref="Models.AppServiceValidateResult"/> instance for mocking. </returns>
@@ -2221,7 +2221,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceValidateResult(status, error);
         }
 
-        /// <summary> Initializes a new instance of ValidateResponseError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ValidateResponseError"/>. </summary>
         /// <param name="code"> Validation error code. </param>
         /// <param name="message"> Validation error message. </param>
         /// <returns> A new <see cref="Models.ValidateResponseError"/> instance for mocking. </returns>
@@ -2230,7 +2230,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ValidateResponseError(code, message);
         }
 
-        /// <summary> Initializes a new instance of StaticSitesWorkflowPreviewContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSitesWorkflowPreviewContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2245,7 +2245,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSitesWorkflowPreviewContent(id, name, resourceType, systemData, repositoryUri, branch, buildProperties, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSitesWorkflowPreview. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSitesWorkflowPreview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2259,7 +2259,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSitesWorkflowPreview(id, name, resourceType, systemData, path, contents, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2294,7 +2294,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteData(id, name, resourceType, systemData, tags, location, sku, identity, defaultHostname, repositoryUri, branch, customDomains?.ToList(), repositoryToken, buildProperties, privateEndpointConnections?.ToList(), stagingEnvironmentPolicy, allowConfigFileUpdates, templateProperties, contentDistributionEndpoint, keyVaultReferenceIdentity, userProvidedFunctionApps?.ToList(), provider, kind);
         }
 
-        /// <summary> Initializes a new instance of ResponseMessageEnvelopeRemotePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2317,7 +2317,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, resourceType, systemData, location, tags, plan, properties, sku, status, error, identity, zones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppServiceArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceArmPlan"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="publisher"> The publisher. </param>
         /// <param name="product"> The product. </param>
@@ -2329,7 +2329,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceArmPlan(name, publisher, product, promotionCode, version);
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RemotePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2347,7 +2347,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RemotePrivateEndpointConnection(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, ipAddresses?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserProvidedFunctionAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2362,7 +2362,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteUserProvidedFunctionAppData(id, name, resourceType, systemData, functionAppResourceId, functionAppRegion, createdOn, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSitePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSitePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2392,7 +2392,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSitePatch(id, name, resourceType, systemData, defaultHostname, repositoryUri, branch, customDomains?.ToList(), repositoryToken, buildProperties, privateEndpointConnections?.ToList(), stagingEnvironmentPolicy, allowConfigFileUpdates, templateProperties, contentDistributionEndpoint, keyVaultReferenceIdentity, userProvidedFunctionApps?.ToList(), provider, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUser. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteUser"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2408,7 +2408,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteUser(id, name, resourceType, systemData, provider, userId, displayName, roles, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteBuildData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBuildData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2430,7 +2430,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteBuildData(id, name, resourceType, systemData, buildId, sourceBranch, pullRequestTitle, hostname, createdOn, lastUpdatedOn, status, userProvidedFunctionApps?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of AppServiceConfigurationDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceConfigurationDictionary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2445,7 +2445,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceConfigurationDictionary(id, name, resourceType, systemData, properties, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteFunctionOverview. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteFunctionOverview"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2459,7 +2459,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteFunctionOverview(id, name, resourceType, systemData, functionName, triggerType, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteZipDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteZipDeployment"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2476,7 +2476,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteZipDeployment(id, name, resourceType, systemData, appZipUri, apiZipUri, deploymentTitle, provider, functionLanguage, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserInvitationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteUserInvitationContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2493,7 +2493,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteUserInvitationContent(id, name, resourceType, systemData, domain, provider, userDetails, roles, numHoursToExpiration, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteUserInvitationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteUserInvitationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2507,7 +2507,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteUserInvitationResult(id, name, resourceType, systemData, expiresOn, invitationUri, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainOverviewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteCustomDomainOverviewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2524,7 +2524,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteCustomDomainOverviewData(id, name, resourceType, systemData, domainName, createdOn, status, validationToken, errorMessage, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteCustomDomainContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteCustomDomainContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2537,7 +2537,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteCustomDomainContent(id, name, resourceType, systemData, validationMethod, kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteStringList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteStringList"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2552,7 +2552,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteStringList(id, name, resourceType, systemData, properties?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of StaticSiteResetContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteResetContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2566,7 +2566,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteResetContent(id, name, resourceType, systemData, repositoryToken, shouldUpdateRepository, kind);
         }
 
-        /// <summary> Initializes a new instance of SitePatchInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SitePatchInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2645,7 +2645,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SitePatchInfo(id, name, resourceType, systemData, identity, state, hostNames?.ToList(), repositorySiteName, usageState, isEnabled, enabledHostNames?.ToList(), availabilityState, hostNameSslStates?.ToList(), serverFarmId, isReserved, isXenon, isHyperV, lastModifiedOn, siteConfig, trafficManagerHostNames?.ToList(), isScmSiteAlsoStopped, targetSwapSlot, hostingEnvironmentProfile, isClientAffinityEnabled, isClientCertEnabled, clientCertMode, clientCertExclusionPaths, isHostNameDisabled, customDomainVerificationId, outboundIPAddresses, possibleOutboundIPAddresses, containerSize, dailyMemoryTimeQuota, suspendOn, maxNumberOfWorkers, cloningInfo, resourceGroup, isDefaultContainer, defaultHostName, slotSwapStatus, isHttpsOnly, redundancyMode, inProgressOperationId, isStorageAccountRequired, keyVaultReferenceIdentity, virtualNetworkSubnetId, kind);
         }
 
-        /// <summary> Initializes a new instance of CustomHostnameAnalysisResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CustomHostnameAnalysisResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2674,7 +2674,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CustomHostnameAnalysisResult(id, name, resourceType, systemData, isHostnameAlreadyVerified, customDomainVerificationTest, customDomainVerificationFailureInfo, hasConflictOnScaleUnit, hasConflictAcrossSubscription, conflictingAppResourceId, cNameRecords?.ToList(), txtRecords?.ToList(), aRecords?.ToList(), alternateCNameRecords?.ToList(), alternateTxtRecords?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of WebAppBackupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppBackupInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2693,7 +2693,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppBackupInfo(id, name, resourceType, systemData, backupName, isEnabled, storageAccountUri, backupSchedule, databases?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of WebAppBackupSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppBackupSchedule"/>. </summary>
         /// <param name="frequencyInterval"> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </param>
         /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
         /// <param name="shouldKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
@@ -2706,7 +2706,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, shouldKeepAtLeastOneBackup, retentionPeriodInDays, startOn, lastExecutedOn);
         }
 
-        /// <summary> Initializes a new instance of WebAppBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.WebAppBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2734,7 +2734,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppBackupData(id, name, resourceType, systemData, backupId, storageAccountUri, blobName, backupName, status, sizeInBytes, createdOn, log, databases?.ToList(), isScheduled, lastRestoreOn, finishedOn, correlationId, websiteSizeInBytes, kind);
         }
 
-        /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RestoreRequestInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2762,7 +2762,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RestoreRequestInfo(id, name, resourceType, systemData, storageAccountUri, blobName, canOverwrite, siteName, databases?.ToList(), ignoreConflictingHostNames, ignoreDatabases, appServicePlan, operationType, adjustConnectionStrings, hostingEnvironment, kind);
         }
 
-        /// <summary> Initializes a new instance of CsmPublishingCredentialsPoliciesEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.CsmPublishingCredentialsPoliciesEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2775,7 +2775,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CsmPublishingCredentialsPoliciesEntityData(id, name, resourceType, systemData, allow, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.SiteConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2877,7 +2877,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteConfigData(id, name, resourceType, systemData, numberOfWorkers, defaultDocuments?.ToList(), netFrameworkVersion, phpVersion, pythonVersion, nodeVersion, powerShellVersion, linuxFxVersion, windowsFxVersion, isRequestTracingEnabled, requestTracingExpirationOn, isRemoteDebuggingEnabled, remoteDebuggingVersion, isHttpLoggingEnabled, useManagedIdentityCreds, acrUserManagedIdentityId, logsDirectorySizeLimit, isDetailedErrorLoggingEnabled, publishingUsername, appSettings?.ToList(), connectionStrings?.ToList(), machineKey, handlerMappings?.ToList(), documentRoot, scmType, use32BitWorkerProcess, isWebSocketsEnabled, isAlwaysOn, javaVersion, javaContainer, javaContainerVersion, appCommandLine, managedPipelineMode, virtualApplications?.ToList(), loadBalancing, experimentsRampUpRules != null ? new RoutingRuleExperiments(experimentsRampUpRules?.ToList()) : null, limits, isAutoHealEnabled, autoHealRules, tracingOptions, vnetName, isVnetRouteAllEnabled, vnetPrivatePortsCount, cors, push, apiDefinitionUri != null ? new AppServiceApiDefinitionInfo(apiDefinitionUri) : null, apiManagementConfigId != null ? new ApiManagementConfig(apiManagementConfigId) : null, autoSwapSlotName, isLocalMySqlEnabled, managedServiceIdentityId, xManagedServiceIdentityId, keyVaultReferenceIdentity, ipSecurityRestrictions?.ToList(), scmIPSecurityRestrictions?.ToList(), allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled, minTlsVersion, scmMinTlsVersion, ftpsState, preWarmedInstanceCount, functionAppScaleLimit, healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone, minimumElasticInstanceCount, azureStorageAccounts, publicNetworkAccess, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteAuthSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3051,7 +3051,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteAuthSettings(id, name, resourceType, systemData, isEnabled, runtimeVersion, unauthenticatedClientAction, isTokenStoreEnabled, allowedExternalRedirectUrls?.ToList(), defaultProvider, tokenRefreshExtensionHours, clientId, clientSecret, clientSecretSettingName, clientSecretCertificateThumbprintString, issuer, validateIssuer, allowedAudiences?.ToList(), additionalLoginParams?.ToList(), aadClaimsAuthorization, googleClientId, googleClientSecret, googleClientSecretSettingName, googleOAuthScopes?.ToList(), facebookAppId, facebookAppSecret, facebookAppSecretSettingName, facebookOAuthScopes?.ToList(), gitHubClientId, gitHubClientSecret, gitHubClientSecretSettingName, gitHubOAuthScopes?.ToList(), twitterConsumerKey, twitterConsumerSecret, twitterConsumerSecretSettingName, microsoftAccountClientId, microsoftAccountClientSecret, microsoftAccountClientSecretSettingName, microsoftAccountOAuthScopes?.ToList(), isAuthFromFile, authFilePath, configVersion, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteAuthSettingsV2"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3068,7 +3068,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteAuthSettingsV2(id, name, resourceType, systemData, platform, globalValidation, identityProviders, login, httpSettings, kind);
         }
 
-        /// <summary> Initializes a new instance of AzureStoragePropertyDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStoragePropertyDictionary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3083,7 +3083,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AzureStoragePropertyDictionary(id, name, resourceType, systemData, properties, kind);
         }
 
-        /// <summary> Initializes a new instance of ApiKeyVaultReferenceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.ApiKeyVaultReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3104,7 +3104,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ApiKeyVaultReferenceData(id, name, resourceType, systemData, reference, status, vaultName, secretName, secretVersion, identity, details, source, activeVersion, kind);
         }
 
-        /// <summary> Initializes a new instance of ConnectionStringDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConnectionStringDictionary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3119,7 +3119,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ConnectionStringDictionary(id, name, resourceType, systemData, properties, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.SiteLogsConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3135,7 +3135,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteLogsConfigData(id, name, resourceType, systemData, applicationLogs, httpLogs, isFailedRequestsTracingEnabled != null ? new WebAppEnabledConfig(isFailedRequestsTracingEnabled) : null, isDetailedErrorMessagesEnabled != null ? new WebAppEnabledConfig(isDetailedErrorMessagesEnabled) : null, kind);
         }
 
-        /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.SlotConfigNamesResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3154,7 +3154,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SlotConfigNamesResourceData(id, name, resourceType, systemData, connectionStringNames?.ToList(), appSettingNames?.ToList(), azureStorageConfigNames?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of SiteConfigurationSnapshotInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteConfigurationSnapshotInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3168,7 +3168,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteConfigurationSnapshotInfo(id, name, resourceType, systemData, snapshotTakenOn, snapshotId, kind);
         }
 
-        /// <summary> Initializes a new instance of ContinuousWebJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.ContinuousWebJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3192,7 +3192,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContinuousWebJobData(id, name, resourceType, systemData, status, detailedStatus, logUri, runCommand, uri, extraInfoUri, webJobType, error, isUsingSdk, settings, kind);
         }
 
-        /// <summary> Initializes a new instance of WebAppDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.WebAppDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3213,7 +3213,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppDeploymentData(id, name, resourceType, systemData, status, message, author, deployer, authorEmail, startOn, endOn, isActive, details, kind);
         }
 
-        /// <summary> Initializes a new instance of MSDeployStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.MSDeployStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3230,7 +3230,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new MSDeployStatusData(id, name, resourceType, systemData, deployer, provisioningState, startOn, endOn, isComplete, kind);
         }
 
-        /// <summary> Initializes a new instance of WebAppMSDeploy. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeploy"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3259,7 +3259,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppMSDeploy(id, name, resourceType, systemData, packageUri, connectionString, dbType, setParametersXmlFileUri, setParameters, skipAppData, isAppOffline, kind);
         }
 
-        /// <summary> Initializes a new instance of WebAppMSDeployLog. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeployLog"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3274,7 +3274,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppMSDeployLog(id, name, resourceType, systemData, entries?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of WebAppMSDeployLogEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeployLogEntry"/>. </summary>
         /// <param name="time"> Timestamp of log entry. </param>
         /// <param name="entryType"> Log entry type. </param>
         /// <param name="message"> Log entry message. </param>
@@ -3284,7 +3284,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppMSDeployLogEntry(time, entryType, message);
         }
 
-        /// <summary> Initializes a new instance of FunctionEnvelopeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.FunctionEnvelopeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3311,7 +3311,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionEnvelopeData(id, name, resourceType, systemData, functionAppId, scriptRootPathHref, scriptHref, configHref, testDataHref, secretsFileHref, href, config, files, testData, invokeUrlTemplate, language, isDisabled, kind);
         }
 
-        /// <summary> Initializes a new instance of FunctionSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FunctionSecrets"/>. </summary>
         /// <param name="key"> Secret key. </param>
         /// <param name="triggerUri"> Trigger URL. </param>
         /// <returns> A new <see cref="Models.FunctionSecrets"/> instance for mocking. </returns>
@@ -3320,7 +3320,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionSecrets(key, triggerUri);
         }
 
-        /// <summary> Initializes a new instance of FunctionAppHostKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FunctionAppHostKeys"/>. </summary>
         /// <param name="masterKey"> Secret key. </param>
         /// <param name="functionKeys"> Host level function keys. </param>
         /// <param name="systemKeys"> System keys. </param>
@@ -3333,7 +3333,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppHostKeys(masterKey, functionKeys, systemKeys);
         }
 
-        /// <summary> Initializes a new instance of HostNameBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.HostNameBindingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3354,7 +3354,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HostNameBindingData(id, name, resourceType, systemData, siteName, domainId, azureResourceName, azureResourceType, customHostNameDnsRecordType, hostNameType, sslState, thumbprintString, virtualIP, kind);
         }
 
-        /// <summary> Initializes a new instance of RelayServiceConnectionEntityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.RelayServiceConnectionEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3372,7 +3372,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RelayServiceConnectionEntityData(id, name, resourceType, systemData, entityName, entityConnectionString, resourceConnectionString, hostname, port, biztalkUri, kind);
         }
 
-        /// <summary> Initializes a new instance of WebSiteInstanceStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteInstanceStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3392,7 +3392,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebSiteInstanceStatusData(id, name, resourceType, systemData, state, statusUri, detectorUri, consoleUri, healthCheckUrlString, containers, kind);
         }
 
-        /// <summary> Initializes a new instance of ProcessInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.ProcessInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3446,7 +3446,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ProcessInfoData(id, name, resourceType, systemData, identifier, deploymentName, href, minidump, isProfileRunning, isIisProfileRunning, iisProfileTimeoutInSeconds, parent, children?.ToList(), threads?.ToList(), openFileHandles?.ToList(), modules?.ToList(), fileName, commandLine, userName, handleCount, moduleCount, threadCount, startOn, totalCpuTime, userCpuTime, privilegedCpuTime, workingSet, peakWorkingSet, privateMemory, virtualMemory, peakVirtualMemory, pagedSystemMemory, nonPagedSystemMemory, pagedMemory, peakPagedMemory, timeStamp, environmentVariables, isScmSite, isWebjob, description, kind);
         }
 
-        /// <summary> Initializes a new instance of ProcessThreadInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProcessThreadInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3470,7 +3470,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ProcessThreadInfo(id, name, resourceType, systemData, identifier, href, process, startAddress, currentPriority, priorityLevel, basePriority, startOn, totalProcessorTime, userProcessorTime, state, waitReason, kind);
         }
 
-        /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.ProcessModuleInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3493,7 +3493,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ProcessModuleInfoData(id, name, resourceType, systemData, baseAddress, fileName, href, filePath, moduleMemorySize, fileVersion, fileDescription, product, productVersion, isDebug, language, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteCloneability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteCloneability"/>. </summary>
         /// <param name="result"> Name of app. </param>
         /// <param name="blockingFeatures"> List of features enabled on app that prevent cloning. </param>
         /// <param name="unsupportedFeatures">
@@ -3511,7 +3511,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteCloneability(result, blockingFeatures?.ToList(), unsupportedFeatures?.ToList(), blockingCharacteristics?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SiteCloneabilityCriterion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SiteCloneabilityCriterion"/>. </summary>
         /// <param name="name"> Name of criterion. </param>
         /// <param name="description"> Description of criterion. </param>
         /// <returns> A new <see cref="Models.SiteCloneabilityCriterion"/> instance for mocking. </returns>
@@ -3520,7 +3520,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteCloneabilityCriterion(name, description);
         }
 
-        /// <summary> Initializes a new instance of StorageMigrationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageMigrationContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3536,7 +3536,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StorageMigrationContent(id, name, resourceType, systemData, azurefilesConnectionString, azurefilesShare, switchSiteAfterMigration, blockWriteAccessToSite, kind);
         }
 
-        /// <summary> Initializes a new instance of StorageMigrationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageMigrationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3549,7 +3549,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StorageMigrationResult(id, name, resourceType, systemData, operationId, kind);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3563,7 +3563,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new MigrateMySqlContent(id, name, resourceType, systemData, connectionString, migrationType, kind);
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.MigrateMySqlStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3578,7 +3578,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new MigrateMySqlStatusData(id, name, resourceType, systemData, migrationOperationStatus, operationId, isLocalMySqlEnabled, kind);
         }
 
-        /// <summary> Initializes a new instance of SwiftVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.SwiftVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3592,7 +3592,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SwiftVirtualNetworkData(id, name, resourceType, systemData, subnetResourceId, isSwiftSupported, kind);
         }
 
-        /// <summary> Initializes a new instance of NetworkFeatureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.NetworkFeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3611,7 +3611,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new NetworkFeatureData(id, name, resourceType, systemData, virtualNetworkName, virtualNetworkConnection, hybridConnections?.ToList(), hybridConnectionsV2?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of WebAppNetworkTrace. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WebAppNetworkTrace"/>. </summary>
         /// <param name="path"> Local file path for the captured network trace file. </param>
         /// <param name="status"> Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed). </param>
         /// <param name="message"> Detailed message of a network trace operation, e.g. error message in case of failure. </param>
@@ -3621,7 +3621,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppNetworkTrace(path, status, message);
         }
 
-        /// <summary> Initializes a new instance of PerfMonResponseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PerfMonResponseInfo"/>. </summary>
         /// <param name="code"> The response code. </param>
         /// <param name="message"> The message. </param>
         /// <param name="data"> The performance monitor counters. </param>
@@ -3631,7 +3631,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PerfMonResponseInfo(code, message, data);
         }
 
-        /// <summary> Initializes a new instance of PerfMonSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PerfMonSet"/>. </summary>
         /// <param name="name"> Unique key name of the counter. </param>
         /// <param name="startOn"> Start time of the period. </param>
         /// <param name="endOn"> End time of the period. </param>
@@ -3645,7 +3645,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PerfMonSet(name, startOn, endOn, timeGrain, values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PerfMonSample. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PerfMonSample"/>. </summary>
         /// <param name="time"> Point in time for which counter was measured. </param>
         /// <param name="instanceName"> Name of the server on which the measurement is made. </param>
         /// <param name="value"> Value of counter at a certain time. </param>
@@ -3655,7 +3655,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PerfMonSample(time, instanceName, value);
         }
 
-        /// <summary> Initializes a new instance of SitePhpErrorLogFlag. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SitePhpErrorLogFlag"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3671,7 +3671,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SitePhpErrorLogFlag(id, name, resourceType, systemData, localLogErrors, masterLogErrors, localLogErrorsMaxLength, masterLogErrorsMaxLength, kind);
         }
 
-        /// <summary> Initializes a new instance of PremierAddOnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.PremierAddOnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3692,7 +3692,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PremierAddOnData(id, name, resourceType, systemData, tags, location, sku, product, vendor, marketplacePublisher, marketplaceOffer, kind);
         }
 
-        /// <summary> Initializes a new instance of PremierAddOnPatchResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PremierAddOnPatchResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3709,7 +3709,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PremierAddOnPatchResource(id, name, resourceType, systemData, sku, product, vendor, marketplacePublisher, marketplaceOffer, kind);
         }
 
-        /// <summary> Initializes a new instance of PrivateAccessData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.PrivateAccessData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3725,7 +3725,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PrivateAccessData(id, name, resourceType, systemData, isEnabled, virtualNetworks?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of PublicCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.PublicCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3740,7 +3740,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PublicCertificateData(id, name, resourceType, systemData, blob, publicCertificateLocation, thumbprintString, kind);
         }
 
-        /// <summary> Initializes a new instance of DeletedAppRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeletedAppRestoreContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3762,7 +3762,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DeletedAppRestoreContent(id, name, resourceType, systemData, deletedSiteId, recoverConfiguration, snapshotTime, useDRSecondary, kind);
         }
 
-        /// <summary> Initializes a new instance of SnapshotRestoreRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SnapshotRestoreRequest"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3786,7 +3786,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SnapshotRestoreRequest(id, name, resourceType, systemData, snapshotTime, recoverySource, canOverwrite, recoverConfiguration, ignoreConflictingHostNames, useDRSecondary, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteExtensionInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.SiteExtensionInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3820,7 +3820,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteExtensionInfoData(id, name, resourceType, systemData, extensionId, title, extensionType, summary, description, version, extensionUri, projectUri, iconUri, licenseUri, feedUri, authors?.ToList(), installerCommandLineParams, publishedOn, downloadCount, localIsLatestVersion, localPath, installedOn, provisioningState, comment, kind);
         }
 
-        /// <summary> Initializes a new instance of SlotDifference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SlotDifference"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3839,7 +3839,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SlotDifference(id, name, resourceType, systemData, level, settingType, diffRule, settingName, valueInCurrentSlot, valueInTargetSlot, description, kind);
         }
 
-        /// <summary> Initializes a new instance of SiteSourceControlData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.SiteSourceControlData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3858,7 +3858,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteSourceControlData(id, name, resourceType, systemData, repoUri, branch, isManualIntegration, isGitHubAction, isDeploymentRollbackEnabled, isMercurial, gitHubActionConfiguration, kind);
         }
 
-        /// <summary> Initializes a new instance of TriggeredWebJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.TriggeredWebJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3882,7 +3882,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new TriggeredWebJobData(id, name, resourceType, systemData, latestRun, historyUri, schedulerLogsUri, runCommand, uri, extraInfoUri, webJobType, error, isUsingSdk, settings, kind);
         }
 
-        /// <summary> Initializes a new instance of TriggeredJobHistoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.TriggeredJobHistoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3897,7 +3897,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new TriggeredJobHistoryData(id, name, resourceType, systemData, runs?.ToList(), kind);
         }
 
-        /// <summary> Initializes a new instance of WebJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.WebJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

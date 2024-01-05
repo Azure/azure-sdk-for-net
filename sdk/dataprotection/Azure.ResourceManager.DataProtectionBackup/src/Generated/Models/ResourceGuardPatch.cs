@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Patch Request content for Microsoft.DataProtection Resource Guard resources. </summary>
     public partial class ResourceGuardPatch
     {
-        /// <summary> Initializes a new instance of ResourceGuardPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardPatch"/>. </summary>
         public ResourceGuardPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardPatch"/>. </summary>
+        /// <param name="tags"> Resource Guard tags. </param>
+        internal ResourceGuardPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource Guard tags. </summary>

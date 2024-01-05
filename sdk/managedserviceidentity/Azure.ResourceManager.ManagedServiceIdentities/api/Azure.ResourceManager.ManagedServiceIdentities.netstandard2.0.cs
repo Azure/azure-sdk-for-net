@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     }
     public partial class SystemAssignedIdentityData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SystemAssignedIdentityData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SystemAssignedIdentityData(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Uri ClientSecretUri { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     }
     public partial class UserAssignedIdentityData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public UserAssignedIdentityData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public UserAssignedIdentityData(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
@@ -143,6 +143,35 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> UpdateAsync(Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
+{
+    public partial class MockableManagedServiceIdentitiesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServiceIdentitiesArmClient() { }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource GetUserAssignedIdentityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableManagedServiceIdentitiesArmResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServiceIdentitiesArmResource() { }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity() { throw null; }
+    }
+    public partial class MockableManagedServiceIdentitiesResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServiceIdentitiesResourceGroupResource() { }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityCollection GetUserAssignedIdentities() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentity(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableManagedServiceIdentitiesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServiceIdentitiesSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     public static partial class ArmManagedServiceIdentitiesModelFactory
@@ -161,7 +190,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     }
     public partial class UserAssignedIdentityPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public UserAssignedIdentityPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public UserAssignedIdentityPatch(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Additional information about every inline event. </summary>
     public partial class InlineEventProperties
     {
-        /// <summary> Initializes a new instance of InlineEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="InlineEventProperties"/>. </summary>
         public InlineEventProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of InlineEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="InlineEventProperties"/>. </summary>
         /// <param name="description"> The description for the inline event. </param>
         /// <param name="displayName"> The displayName for the inline event. </param>
         /// <param name="documentationUri"> The documentationUrl for the inline event. </param>

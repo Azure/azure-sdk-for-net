@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Information about the retry policy for an event subscription. </summary>
     public partial class EventSubscriptionRetryPolicy
     {
-        /// <summary> Initializes a new instance of EventSubscriptionRetryPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionRetryPolicy"/>. </summary>
         public EventSubscriptionRetryPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionRetryPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionRetryPolicy"/>. </summary>
         /// <param name="maxDeliveryAttempts"> Maximum number of delivery retry attempts for events. </param>
         /// <param name="eventTimeToLiveInMinutes"> Time To Live (in minutes) for events. </param>
         internal EventSubscriptionRetryPolicy(int? maxDeliveryAttempts, int? eventTimeToLiveInMinutes)

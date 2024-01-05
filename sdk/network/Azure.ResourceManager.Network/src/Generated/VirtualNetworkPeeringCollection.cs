@@ -21,9 +21,9 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualNetworkPeeringResource" /> and their operations.
-    /// Each <see cref="VirtualNetworkPeeringResource" /> in the collection will belong to the same instance of <see cref="VirtualNetworkResource" />.
-    /// To get a <see cref="VirtualNetworkPeeringCollection" /> instance call the GetVirtualNetworkPeerings method from an instance of <see cref="VirtualNetworkResource" />.
+    /// A class representing a collection of <see cref="VirtualNetworkPeeringResource"/> and their operations.
+    /// Each <see cref="VirtualNetworkPeeringResource"/> in the collection will belong to the same instance of <see cref="VirtualNetworkResource"/>.
+    /// To get a <see cref="VirtualNetworkPeeringCollection"/> instance call the GetVirtualNetworkPeerings method from an instance of <see cref="VirtualNetworkResource"/>.
     /// </summary>
     public partial class VirtualNetworkPeeringCollection : ArmCollection, IEnumerable<VirtualNetworkPeeringResource>, IAsyncEnumerable<VirtualNetworkPeeringResource>
     {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkPeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualNetworkPeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkPeeringResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkPeeringRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkPeeringResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualNetworkPeeringResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkPeeringResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkPeeringRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);

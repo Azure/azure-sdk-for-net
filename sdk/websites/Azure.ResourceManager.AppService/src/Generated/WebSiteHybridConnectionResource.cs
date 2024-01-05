@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteHybridConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteHybridConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteHybridConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteHybridConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteHybridConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteHybridConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteHybridConnection method.
     /// </summary>
     public partial class WebSiteHybridConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteHybridConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="entityName"> The entityName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string entityName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteHybridConnectionWebAppsRestClient;
         private readonly RelayServiceConnectionEntityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/hybridconnection";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteHybridConnectionResource"/> class for mocking. </summary>
         protected WebSiteHybridConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteHybridConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteHybridConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteHybridConnectionResource(ArmClient client, RelayServiceConnectionEntityData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/hybridconnection";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

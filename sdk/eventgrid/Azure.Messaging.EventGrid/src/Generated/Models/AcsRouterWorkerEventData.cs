@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of common properties of all Router Worker events. </summary>
     public partial class AcsRouterWorkerEventData : AcsRouterEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterWorkerEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerEventData"/>. </summary>
         internal AcsRouterWorkerEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterWorkerEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerJobVersionResource" /> and their operations.
-    /// Each <see cref="SqlServerJobVersionResource" /> in the collection will belong to the same instance of <see cref="SqlServerJobResource" />.
-    /// To get a <see cref="SqlServerJobVersionCollection" /> instance call the GetSqlServerJobVersions method from an instance of <see cref="SqlServerJobResource" />.
+    /// A class representing a collection of <see cref="SqlServerJobVersionResource"/> and their operations.
+    /// Each <see cref="SqlServerJobVersionResource"/> in the collection will belong to the same instance of <see cref="SqlServerJobResource"/>.
+    /// To get a <see cref="SqlServerJobVersionCollection"/> instance call the GetSqlServerJobVersions method from an instance of <see cref="SqlServerJobResource"/>.
     /// </summary>
     public partial class SqlServerJobVersionCollection : ArmCollection, IEnumerable<SqlServerJobVersionResource>, IAsyncEnumerable<SqlServerJobVersionResource>
     {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerJobVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);

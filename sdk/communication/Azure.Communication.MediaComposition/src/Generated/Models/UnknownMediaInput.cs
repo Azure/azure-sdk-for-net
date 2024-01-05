@@ -12,7 +12,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> The UnknownMediaInput. </summary>
     internal partial class UnknownMediaInput : MediaInput
     {
-        /// <summary> Initializes a new instance of UnknownMediaInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMediaInput"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
         internal UnknownMediaInput(MediaInputType kind, string placeholderImageUri) : base(kind, placeholderImageUri)

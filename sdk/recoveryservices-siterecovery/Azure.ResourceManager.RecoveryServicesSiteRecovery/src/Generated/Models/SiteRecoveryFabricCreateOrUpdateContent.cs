@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Site details provided during the time of site creation. </summary>
     public partial class SiteRecoveryFabricCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryFabricCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Fabric creation input. </param>
+        internal SiteRecoveryFabricCreateOrUpdateContent(FabricCreationProperties properties)
+        {
+            Properties = properties;
         }
 
         /// <summary> Fabric creation input. </summary>

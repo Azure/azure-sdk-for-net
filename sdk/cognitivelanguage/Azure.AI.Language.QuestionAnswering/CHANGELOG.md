@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `projectName` and `deploymentName` tags reported on `QuestionAnsweringClient` activities to `az.cognitivelanguage.project.name` and `az.cognitivelanguage.deployment.name` following OpenTelemetry attribute naming conventions.
+
 ### Bugs Fixed
 
 ### Other Changes

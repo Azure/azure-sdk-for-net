@@ -228,6 +228,10 @@ rename-mapping:
   VolumeRelocationProperties: NetAppVolumeRelocationProperties
   FileAccessLogs: NetAppFileAccessLog
   GetGroupIdListForLdapUserResponse: GetGroupIdListForLdapUserResult
+
+models-to-treat-empty-string-as-null:
+- VolumeSnapshotProperties
+
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 

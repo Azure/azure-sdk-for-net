@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specific Databases to restore. </summary>
     public partial class RestorableSqlResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableSqlResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlResourceData"/>. </summary>
         internal RestorableSqlResourceData()
         {
             CollectionNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

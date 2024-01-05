@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Describes an available Compute SKU Restriction Information. </summary>
     public partial class StoragePoolSkuRestrictionInfo
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictionInfo"/>. </summary>
         internal StoragePoolSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         internal StoragePoolSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)

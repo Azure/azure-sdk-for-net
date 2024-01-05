@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementNamedValue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementNamedValueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementNamedValueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementNamedValue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementNamedValueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementNamedValueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementNamedValue method.
     /// </summary>
     public partial class ApiManagementNamedValueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementNamedValueResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="namedValueId"> The namedValueId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string namedValueId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly NamedValueRestOperations _apiManagementNamedValueNamedValueRestClient;
         private readonly ApiManagementNamedValueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/namedValues";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementNamedValueResource"/> class for mocking. </summary>
         protected ApiManagementNamedValueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementNamedValueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementNamedValueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementNamedValueResource(ArmClient client, ApiManagementNamedValueData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/namedValues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

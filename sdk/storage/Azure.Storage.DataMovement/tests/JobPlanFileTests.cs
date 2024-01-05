@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
                    id: transferId,
                    headerStream: stream);
             }
-            string filePath = Path.Combine(test.DirectoryPath, $"{transferId}.{DataMovementConstants.JobPlanFile.FileExtension}");
+            string filePath = Path.Combine(test.DirectoryPath, $"{transferId}{DataMovementConstants.JobPlanFile.FileExtension}");
 
             Assert.NotNull(file);
             Assert.AreEqual(transferId, file.Id);
@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Setup existing job plan file
-            string filePath = Path.Combine(test.DirectoryPath, $"{transferId}.{DataMovementConstants.JobPlanFile.FileExtension}");
+            string filePath = Path.Combine(test.DirectoryPath, $"{transferId}{DataMovementConstants.JobPlanFile.FileExtension}");
             var data = Encoding.UTF8.GetBytes("Hello World!");
             using (FileStream fileStream = File.OpenWrite(filePath))
             {

@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing an IntegrationAccountAgreement along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IntegrationAccountAgreementResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIntegrationAccountAgreementResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource" /> using the GetIntegrationAccountAgreement method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IntegrationAccountAgreementResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIntegrationAccountAgreementResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IntegrationAccountResource"/> using the GetIntegrationAccountAgreement method.
     /// </summary>
     public partial class IntegrationAccountAgreementResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IntegrationAccountAgreementResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="integrationAccountName"> The integrationAccountName. </param>
+        /// <param name="agreementName"> The agreementName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string integrationAccountName, string agreementName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/agreements/{agreementName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.Logic
         private readonly IntegrationAccountAgreementsRestOperations _integrationAccountAgreementRestClient;
         private readonly IntegrationAccountAgreementData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/agreements";
+
         /// <summary> Initializes a new instance of the <see cref="IntegrationAccountAgreementResource"/> class for mocking. </summary>
         protected IntegrationAccountAgreementResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IntegrationAccountAgreementResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IntegrationAccountAgreementResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IntegrationAccountAgreementResource(ArmClient client, IntegrationAccountAgreementData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/integrationAccounts/agreements";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -309,7 +313,7 @@ namespace Azure.ResourceManager.Logic
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="info"> The ListOperationCallbackUrlParameterInfo to use. </param>
+        /// <param name="info"> The <see cref="ListOperationCallbackUrlParameterInfo"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowTriggerCallbackUri>> GetContentCallbackUrlAsync(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)
@@ -343,7 +347,7 @@ namespace Azure.ResourceManager.Logic
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="info"> The ListOperationCallbackUrlParameterInfo to use. </param>
+        /// <param name="info"> The <see cref="ListOperationCallbackUrlParameterInfo"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual Response<LogicWorkflowTriggerCallbackUri> GetContentCallbackUrl(ListOperationCallbackUrlParameterInfo info, CancellationToken cancellationToken = default)

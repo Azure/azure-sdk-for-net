@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> File share. </summary>
     public partial class SqlFileShare
     {
-        /// <summary> Initializes a new instance of SqlFileShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlFileShare"/>. </summary>
         public SqlFileShare()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlFileShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlFileShare"/>. </summary>
         /// <param name="path"> Location as SMB share or local drive where backups are placed. </param>
         /// <param name="username"> Username to access the file share location for backups. </param>
         /// <param name="password"> Password for username to access file share location. </param>

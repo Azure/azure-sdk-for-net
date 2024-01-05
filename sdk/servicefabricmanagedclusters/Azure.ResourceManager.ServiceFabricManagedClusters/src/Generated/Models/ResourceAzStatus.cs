@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes Az Resiliency status of Base resources. </summary>
     public partial class ResourceAzStatus
     {
-        /// <summary> Initializes a new instance of ResourceAzStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceAzStatus"/>. </summary>
         internal ResourceAzStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceAzStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceAzStatus"/>. </summary>
         /// <param name="resourceName"> VM Size properties. </param>
         /// <param name="resourceType"> VM Size id. </param>
         /// <param name="isZoneResilient"> VM Size name. </param>

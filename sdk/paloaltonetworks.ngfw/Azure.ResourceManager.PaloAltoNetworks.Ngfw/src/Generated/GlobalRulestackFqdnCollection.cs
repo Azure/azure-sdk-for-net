@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GlobalRulestackFqdnResource" /> and their operations.
-    /// Each <see cref="GlobalRulestackFqdnResource" /> in the collection will belong to the same instance of <see cref="GlobalRulestackResource" />.
-    /// To get a <see cref="GlobalRulestackFqdnCollection" /> instance call the GetGlobalRulestackFqdns method from an instance of <see cref="GlobalRulestackResource" />.
+    /// A class representing a collection of <see cref="GlobalRulestackFqdnResource"/> and their operations.
+    /// Each <see cref="GlobalRulestackFqdnResource"/> in the collection will belong to the same instance of <see cref="GlobalRulestackResource"/>.
+    /// To get a <see cref="GlobalRulestackFqdnCollection"/> instance call the GetGlobalRulestackFqdns method from an instance of <see cref="GlobalRulestackResource"/>.
     /// </summary>
     public partial class GlobalRulestackFqdnCollection : ArmCollection, IEnumerable<GlobalRulestackFqdnResource>, IAsyncEnumerable<GlobalRulestackFqdnResource>
     {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GlobalRulestackFqdnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GlobalRulestackFqdnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GlobalRulestackFqdnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListRequest(Id.Name);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GlobalRulestackFqdnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GlobalRulestackFqdnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GlobalRulestackFqdnResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackFqdnFqdnListGlobalRulestackRestClient.CreateListRequest(Id.Name);
