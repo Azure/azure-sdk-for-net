@@ -18,6 +18,7 @@ public abstract class PipelineResponse : IDisposable
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
     private bool _isError = false;
+    private BinaryData _content = s_emptyBinaryData;
 
     /// <summary>
     /// Gets the HTTP status code.
@@ -40,30 +41,7 @@ public abstract class PipelineResponse : IDisposable
 
     #region Meta-data properties set by the pipeline.
 
-    public BinaryData Content
-    {
-        get
-        {
-            if (ContentStream == null)
-            {
-                return s_emptyBinaryData;
-            }
-
-            if (!TryGetBufferedContent(out MemoryStream bufferedContent))
-            {
-                throw new InvalidOperationException($"The response is not buffered.");
-            }
-
-            if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(bufferedContent.ToArray());
-            }
-        }
-    }
+    public virtual BinaryData Content => _content;
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
@@ -80,6 +58,8 @@ public abstract class PipelineResponse : IDisposable
 
     internal TimeSpan NetworkTimeout { get; set; } = DefaultNetworkTimeout;
 
+    internal bool IsBuffered { get; private set; }
+
     #endregion
 
     public abstract void Dispose();
@@ -89,22 +69,11 @@ public abstract class PipelineResponse : IDisposable
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
-    internal bool TryGetBufferedContent(out MemoryStream bufferedContent)
-    {
-        if (ContentStream is MemoryStream content)
-        {
-            bufferedContent = content;
-            return true;
-        }
-
-        bufferedContent = default!;
-        return false;
-    }
-
-    internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
+    internal void BufferContent(bool preserveStream = false, TimeSpan? timeout = default, CancellationTokenSource? cts = default)
     {
         Stream? responseContentStream = ContentStream;
-        if (responseContentStream == null || TryGetBufferedContent(out _))
+
+        if (responseContentStream == null || IsBuffered)
         {
             // No need to buffer content.
             return;
@@ -112,15 +81,32 @@ public abstract class PipelineResponse : IDisposable
 
         MemoryStream bufferStream = new();
         CopyTo(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource());
+
+        // Dispose the network stream.
         responseContentStream.Dispose();
-        bufferStream.Position = 0;
-        ContentStream = bufferStream;
+
+        if (preserveStream)
+        {
+            bufferStream.Position = 0;
+            ContentStream = bufferStream;
+        }
+        else
+        {
+            ContentStream = null;
+        }
+
+        _content = bufferStream.TryGetBuffer(out ArraySegment<byte> segment) ?
+            new BinaryData(segment.AsMemory()) :
+            new BinaryData(bufferStream.ToArray());
+
+        IsBuffered = true;
     }
 
-    internal async Task BufferContentAsync(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
+    internal async Task BufferContentAsync(bool preserveStream = false, TimeSpan? timeout = default, CancellationTokenSource? cts = default)
     {
         Stream? responseContentStream = ContentStream;
-        if (responseContentStream == null || TryGetBufferedContent(out _))
+
+        if (responseContentStream == null || IsBuffered)
         {
             // No need to buffer content.
             return;
@@ -128,9 +114,25 @@ public abstract class PipelineResponse : IDisposable
 
         MemoryStream bufferStream = new();
         await CopyToAsync(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource()).ConfigureAwait(false);
+
+        // Dispose the network stream.
         responseContentStream.Dispose();
-        bufferStream.Position = 0;
-        ContentStream = bufferStream;
+
+        if (preserveStream)
+        {
+            bufferStream.Position = 0;
+            ContentStream = bufferStream;
+        }
+        else
+        {
+            ContentStream = null;
+        }
+
+        _content = bufferStream.TryGetBuffer(out ArraySegment<byte> segment) ?
+            new BinaryData(segment.AsMemory()) :
+            new BinaryData(bufferStream.ToArray());
+
+        IsBuffered = true;
     }
 
     private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)

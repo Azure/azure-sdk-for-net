@@ -16,8 +16,9 @@ namespace System.ClientModel.Primitives;
 public class ResponseBufferingPolicy : PipelinePolicy
 {
     private readonly TimeSpan _networkTimeout;
+    private readonly bool _preserveBufferStream;
 
-    public ResponseBufferingPolicy(TimeSpan networkTimeout)
+    public ResponseBufferingPolicy(TimeSpan networkTimeout, bool preserveBufferStream = false)
     {
         // Note: we set this in the constructor because we need a value for it and
         // don't want to expect/require a caller to know/remember to set it on the message.
@@ -27,6 +28,8 @@ public class ResponseBufferingPolicy : PipelinePolicy
         // TODO: It feels like this should live on the transport and not a random policy.
         // Revisit this and see if we can do it and what it would look like.
         _networkTimeout = networkTimeout;
+
+        _preserveBufferStream = preserveBufferStream;
     }
 
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -89,8 +92,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
         message.Response!.NetworkTimeout = invocationNetworkTimeout;
 
         Stream? responseContentStream = message.Response!.ContentStream;
-        if (responseContentStream is null ||
-            message.Response.TryGetBufferedContent(out var _))
+        if (responseContentStream is null || message.Response.IsBuffered)
         {
             // There is either no content on the response, or the content has already
             // been buffered.
@@ -108,11 +110,11 @@ public class ResponseBufferingPolicy : PipelinePolicy
         {
             if (async)
             {
-                await message.Response.BufferContentAsync(invocationNetworkTimeout, cts).ConfigureAwait(false);
+                await message.Response.BufferContentAsync(_preserveBufferStream, invocationNetworkTimeout, cts).ConfigureAwait(false);
             }
             else
             {
-                message.Response.BufferContent(invocationNetworkTimeout, cts);
+                message.Response.BufferContent(_preserveBufferStream, invocationNetworkTimeout, cts);
             }
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
