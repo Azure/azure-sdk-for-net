@@ -1,5 +1,11 @@
 namespace System.ClientModel
 {
+    public partial class ApiKeyCredential
+    {
+        public ApiKeyCredential(string key) { }
+        public void Deconstruct(out string key) { throw null; }
+        public void Update(string key) { }
+    }
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
@@ -34,12 +40,6 @@ namespace System.ClientModel
         public sealed override bool HasValue { get { throw null; } }
         public sealed override T Value { get { throw null; } }
     }
-    public partial class KeyCredential
-    {
-        public KeyCredential(string key) { }
-        public string GetValue() { throw null; }
-        public void Update(string key) { }
-    }
     public partial class OptionalClientResult<T> : System.ClientModel.ClientResult
     {
         protected internal OptionalClientResult(T? value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
@@ -49,6 +49,14 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Primitives
 {
+    public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public ApiKeyAuthenticationPolicy(System.ClientModel.ApiKeyCredential credential, string headerName = "Authorization", string? keyPrefix = null) { }
+        public static System.ClientModel.Primitives.ApiKeyAuthenticationPolicy CreateHeaderPolicy(System.ClientModel.ApiKeyCredential credential, string headerName, string? keyPrefix = null) { throw null; }
+        public static System.ClientModel.Primitives.ApiKeyAuthenticationPolicy CreateQueryPolicy(System.ClientModel.ApiKeyCredential credential, string queryName) { throw null; }
+        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
@@ -95,14 +103,6 @@ namespace System.ClientModel.Primitives
         T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
-    }
-    public partial class KeyCredentialAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
-    {
-        public KeyCredentialAuthenticationPolicy(System.ClientModel.KeyCredential credential, string headerName = "Authorization", string? keyPrefix = null) { }
-        public static System.ClientModel.Primitives.KeyCredentialAuthenticationPolicy CreateHeaderPolicy(System.ClientModel.KeyCredential credential, string headerName, string? keyPrefix = null) { throw null; }
-        public static System.ClientModel.Primitives.KeyCredentialAuthenticationPolicy CreateQueryPolicy(System.ClientModel.KeyCredential credential, string queryName) { throw null; }
-        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
     public partial class MessageDelay
     {

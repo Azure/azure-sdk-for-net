@@ -16,7 +16,7 @@ public class OpenAIClientTests
     {
         string key = Environment.GetEnvironmentVariable("OPENAI_KEY");
 
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
         OpenAIClient client = new OpenAIClient(new Uri("https://api.openai.com/"), credential);
 
         CompletionsOptions input = new(new string[] { "tell me something about life." })

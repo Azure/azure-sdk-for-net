@@ -8,56 +8,56 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public class KeyCredentialAuthenticationPolicy : PipelinePolicy
+public class ApiKeyAuthenticationPolicy : PipelinePolicy
 {
     private readonly string _name;
     private readonly string? _keyPrefix;
     private readonly KeyLocation _location;
-    private readonly KeyCredential _credential;
+    private readonly ApiKeyCredential _credential;
 
     /// <summary>
-    /// Create a new instance of the <see cref="KeyCredentialAuthenticationPolicy"/> class, where the
+    /// Create a new instance of the <see cref="ApiKeyAuthenticationPolicy"/> class, where the
     /// credential value will be specified in a request header.
     /// </summary>
-    /// <param name="credential">The <see cref="KeyCredential"/> used to authenticate requests.</param>
+    /// <param name="credential">The <see cref="ApiKeyCredential"/> used to authenticate requests.</param>
     /// <param name="headerName">The name of the request header used to send the key credential in the request.</param>
     /// <param name="keyPrefix">A prefix to prepend before the key credential in the header value.
     /// If provided, the prefix string will be followed by a space and then the credential string.
     /// For example, setting <c>valuePrefix</c> to "SharedAccessKey" will result in the header value
     /// being set fo "SharedAccessKey {credential.Key}".</param>
-    public static KeyCredentialAuthenticationPolicy CreateHeaderPolicy(KeyCredential credential, string headerName, string? keyPrefix = null)
+    public static ApiKeyAuthenticationPolicy CreateHeaderPolicy(ApiKeyCredential credential, string headerName, string? keyPrefix = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
         Argument.AssertNotNullOrEmpty(headerName, nameof(headerName));
 
-        return new KeyCredentialAuthenticationPolicy(credential, headerName, KeyLocation.Header, keyPrefix);
+        return new ApiKeyAuthenticationPolicy(credential, headerName, KeyLocation.Header, keyPrefix);
     }
 
-    public static KeyCredentialAuthenticationPolicy CreateQueryPolicy(KeyCredential credential, string queryName)
+    public static ApiKeyAuthenticationPolicy CreateQueryPolicy(ApiKeyCredential credential, string queryName)
     {
         // TODO: Add tests for this implementation if the API is approved.
         Argument.AssertNotNull(credential, nameof(credential));
         Argument.AssertNotNullOrEmpty(queryName, nameof(queryName));
 
-        return new KeyCredentialAuthenticationPolicy(credential, queryName, KeyLocation.Query);
+        return new ApiKeyAuthenticationPolicy(credential, queryName, KeyLocation.Query);
     }
 
     /// <summary>
-    /// Create a new instance of the <see cref="KeyCredentialAuthenticationPolicy"/> class, where the
+    /// Create a new instance of the <see cref="ApiKeyAuthenticationPolicy"/> class, where the
     /// credential value will be specified in a request header.
     /// </summary>
-    /// <param name="credential">The <see cref="KeyCredential"/> used to authenticate requests.</param>
+    /// <param name="credential">The <see cref="ApiKeyCredential"/> used to authenticate requests.</param>
     /// <param name="headerName">The name of the request header used to send the key credential in the request.</param>
     /// <param name="keyPrefix">A prefix to prepend before the key credential in the header value.
     /// If provided, the prefix string will be followed by a space and then the credential string.
     /// For example, setting <c>valuePrefix</c> to "SharedAccessKey" will result in the header value
     /// being set fo "SharedAccessKey {credential.Key}".</param>
-    public KeyCredentialAuthenticationPolicy(KeyCredential credential, string headerName = "Authorization", string? keyPrefix = null)
+    public ApiKeyAuthenticationPolicy(ApiKeyCredential credential, string headerName = "Authorization", string? keyPrefix = null)
         : this(credential, headerName, KeyLocation.Header, keyPrefix)
     {
     }
 
-    private KeyCredentialAuthenticationPolicy(KeyCredential credential, string name, KeyLocation keyLocation, string? keyPrefix = null)
+    private ApiKeyAuthenticationPolicy(ApiKeyCredential credential, string name, KeyLocation keyLocation, string? keyPrefix = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -100,15 +100,14 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
 
     private void SetHeader(PipelineMessage message)
     {
-        string key = _credential.GetValue();
+        _credential.Deconstruct(out string key);
         message.Request.Headers.Set(_name, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
     }
 
     private void AddQueryParameter(PipelineMessage message)
     {
         // TODO: optimize using Span APIs
-
-        string key = _credential.GetValue();
+        _credential.Deconstruct(out string key);
 
         StringBuilder query = new StringBuilder();
         query.Append(_name);

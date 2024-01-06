@@ -23,7 +23,7 @@ namespace Azure
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AzureKeyCredential : System.ClientModel.KeyCredential
+    public partial class AzureKeyCredential : System.ClientModel.ApiKeyCredential
     {
         public AzureKeyCredential(string key) : base (default(string)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

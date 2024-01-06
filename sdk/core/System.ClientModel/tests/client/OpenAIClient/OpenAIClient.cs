@@ -11,10 +11,10 @@ namespace OpenAI;
 public class OpenAIClient
 {
     private readonly Uri _endpoint;
-    private readonly KeyCredential _credential;
+    private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
 
-    public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options = default)
+    public OpenAIClient(Uri endpoint, ApiKeyCredential credential, OpenAIClientOptions options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
@@ -24,7 +24,7 @@ public class OpenAIClient
         _endpoint = endpoint;
         _credential = credential;
 
-        var authenticationPolicy = KeyCredentialAuthenticationPolicy.CreateHeaderPolicy(_credential, "Authorization", "Bearer");
+        var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderPolicy(_credential, "Authorization", "Bearer");
         _pipeline = ClientPipeline.Create(options, authenticationPolicy);
     }
 

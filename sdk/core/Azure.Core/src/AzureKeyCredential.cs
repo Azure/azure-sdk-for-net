@@ -10,7 +10,7 @@ namespace Azure
     /// Key credential used to authenticate to an Azure Service.
     /// It provides the ability to update the key without creating a new client.
     /// </summary>
-    public class AzureKeyCredential : KeyCredential
+    public class AzureKeyCredential : ApiKeyCredential
     {
         /// <summary>
         /// Key used to authenticate to an Azure service.
@@ -18,7 +18,12 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Key
         {
-            get => GetValue();
+            get
+            {
+                Deconstruct(out string key);
+                return key;
+            }
+
             private set => Update(value);
         }
 

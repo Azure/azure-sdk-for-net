@@ -21,7 +21,7 @@ public class MapsClientTests
     public void TestClientSync()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
         try
@@ -44,7 +44,7 @@ public class MapsClientTests
     public void ChangeServiceVersion()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
 
         // Service version is available on client subtype of ServiceClientOptions
         MapsClientOptions options = new MapsClientOptions(MapsClientOptions.ServiceVersion.V1);
@@ -69,7 +69,7 @@ public class MapsClientTests
     public void SetNetworkTimeout_ClientScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
 
         MapsClientOptions options = new MapsClientOptions();
         options.NetworkTimeout = TimeSpan.FromSeconds(2);
@@ -94,7 +94,7 @@ public class MapsClientTests
     public void AddCustomPolicy_ClientScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
 
         MapsClientOptions options = new MapsClientOptions();
         CustomPolicy customPolicy = new CustomPolicy();
@@ -119,7 +119,7 @@ public class MapsClientTests
     public void OverrideTransport_ClientScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
 
         MapsClientOptions options = new MapsClientOptions();
         options.Transport = new CustomTransport();
@@ -145,7 +145,7 @@ public class MapsClientTests
     public void PassCancellationToken_MethodScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
 
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
@@ -171,7 +171,7 @@ public class MapsClientTests
     public void AddRequestHeader_MethodScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
 
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
@@ -197,7 +197,7 @@ public class MapsClientTests
     public void AddCustomPolicy_MethodScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
 
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
@@ -224,7 +224,7 @@ public class MapsClientTests
     public void ChangeMethodBehaviorOnErrorResponse()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
-        KeyCredential credential = new KeyCredential(key);
+        ApiKeyCredential credential = new ApiKeyCredential(key);
 
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 

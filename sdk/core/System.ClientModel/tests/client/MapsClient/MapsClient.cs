@@ -12,11 +12,11 @@ namespace Maps;
 public class MapsClient
 {
     private readonly Uri _endpoint;
-    private readonly KeyCredential _credential;
+    private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
-    public MapsClient(Uri endpoint, KeyCredential credential, MapsClientOptions options = default)
+    public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
@@ -27,7 +27,7 @@ public class MapsClient
         _credential = credential;
         _apiVersion = options.Version;
 
-        var authenticationPolicy = KeyCredentialAuthenticationPolicy.CreateHeaderPolicy(credential, "subscription-key");
+        var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderPolicy(credential, "subscription-key");
         _pipeline = ClientPipeline.Create(options, authenticationPolicy);
     }
 
