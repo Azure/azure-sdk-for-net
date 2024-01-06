@@ -1,5 +1,11 @@
 namespace System.ClientModel
 {
+    public partial class ApiKeyCredential
+    {
+        public ApiKeyCredential(string key) { }
+        public void Deconstruct(out string key) { throw null; }
+        public void Update(string key) { }
+    }
     public partial class ClientResult
     {
         protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
@@ -23,12 +29,6 @@ namespace System.ClientModel
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public sealed override bool HasValue { get { throw null; } }
         public sealed override T Value { get { throw null; } }
-    }
-    public partial class KeyCredential
-    {
-        public KeyCredential(string key) { }
-        public string GetValue() { throw null; }
-        public void Update(string key) { }
     }
     public partial class OptionalClientResult<T> : System.ClientModel.ClientResult
     {
