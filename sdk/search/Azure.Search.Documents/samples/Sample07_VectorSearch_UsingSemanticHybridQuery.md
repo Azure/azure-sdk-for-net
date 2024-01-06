@@ -173,6 +173,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
              QueryCaption = new(QueryCaptionType.Extractive),
              QueryAnswer = new(QueryAnswerType.Extractive)
          },
+         QueryLanguage = QueryLanguage.EnUs,
          QueryType = SearchQueryType.Semantic,
      });
 

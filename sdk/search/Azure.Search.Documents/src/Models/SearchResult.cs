@@ -121,6 +121,7 @@ namespace Azure.Search.Documents.Models
                     {
                         captionResults.Add(QueryCaptionResult.DeserializeQueryCaptionResult(captionValue));
                     }
+                    result.SemanticSearch.Captions = captionResults;
                 }
                 else if (prop.NameEquals(Constants.SearchDocumentDebugInfoKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
