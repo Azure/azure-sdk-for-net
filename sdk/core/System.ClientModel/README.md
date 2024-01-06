@@ -25,7 +25,7 @@ None needed for `System.ClientModel`.
 
 ### Authenticate the client
 
-The `System.ClientModel` preview package provides a `KeyCredential` type for authentication.
+The `System.ClientModel` package provides a `KeyCredential` type for authentication.
 
 ## Key concepts
 

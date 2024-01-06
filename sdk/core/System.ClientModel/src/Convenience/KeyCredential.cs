@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Threading;
 
 namespace System.ClientModel;
@@ -30,8 +31,7 @@ public class KeyCredential
 
     public void Update(string key)
     {
-        if (key is null) throw new ArgumentNullException(nameof(key));
-        if (key.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(key));
+        ClientUtilities.AssertNotNullOrEmpty(key, nameof(key));
 
         Volatile.Write(ref _key, key);
     }

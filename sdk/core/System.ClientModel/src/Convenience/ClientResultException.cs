@@ -27,7 +27,7 @@ public class ClientResultException : Exception, ISerializable
     }
 
     public ClientResultException(PipelineResponse response, Exception? innerException = default)
-        : base(GetMessage(response), innerException)
+        : base(CreateMessage(response), innerException)
     {
         ClientUtilities.AssertNotNull(response, nameof(response));
 
@@ -65,7 +65,7 @@ public class ClientResultException : Exception, ISerializable
 
     public PipelineResponse? GetRawResponse() => _response;
 
-    private static string GetMessage(PipelineResponse response)
+    private static string CreateMessage(PipelineResponse response)
     {
         response.BufferContent();
 
