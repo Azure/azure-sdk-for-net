@@ -18,7 +18,7 @@ public class OptionalClientResult<T> : ClientResult
     public virtual T? Value => _value;
 
     /// <summary>
-    /// Gets a value indicating whether the current instance has a valid value of its underlying type.
+    /// Gets a value indicating whether the current instance has a non-null value.
     /// </summary>
     public virtual bool HasValue => _value != null;
 }

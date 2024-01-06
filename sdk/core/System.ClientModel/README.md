@@ -25,14 +25,14 @@ None needed for `System.ClientModel`.
 
 ### Authenticate the client
 
-The `System.ClientModel` preview package provides a `KeyCredential` type for authentication.
+The `System.ClientModel` package provides a `KeyCredential` type for authentication.
 
 ## Key concepts
 
 The main shared concepts of `System.ClientModel` include:
 
 - Configuring service clients (`RequestOptions`).
-- Accessing HTTP response details (`OutputMessage`, `OutputMessage<T>`).
+- Accessing HTTP response details (`ClientResult`, `ClientResult<T>`).
 - Exceptions for reporting errors from service requests in a consistent fashion (`ClientResultException`).
 - Providing APIs to read and write models in different formats.
 

@@ -52,7 +52,7 @@ namespace Azure
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
         /// <param name="detailsParser">The parser to use to parse the response content.</param>
         public RequestFailedException(Response response, Exception? innerException, RequestFailedDetailsParser? detailsParser)
-            : this(response, GetRequestFailedExceptionContent(response, detailsParser), innerException)
+            : this(response, CreateRequestFailedExceptionContent(response, detailsParser), innerException)
         {
         }
 
@@ -148,7 +148,7 @@ namespace Azure
         /// </summary>
         public new Response? GetRawResponse() => (Response?)base.GetRawResponse();
 
-        private static ErrorDetails GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
+        private static ErrorDetails CreateRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {
             BufferResponseIfNeeded(response);
 

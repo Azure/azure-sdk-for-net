@@ -34,7 +34,7 @@ public class ClientResult
         if (value is null)
         {
             string message = "ClientResult<T> contract guarantees that ClientResult<T>.Value is non-null. " +
-                "If you need to return an ClientResult where the Value is null, please use OptionalClientResult<T> instead.";
+                "If you need to return a ClientResult where the Value is null, please use OptionalClientResult<T> instead.";
 
             throw new ArgumentNullException(nameof(value), message);
         }
