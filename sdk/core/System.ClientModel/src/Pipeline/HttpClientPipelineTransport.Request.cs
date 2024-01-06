@@ -37,7 +37,7 @@ public partial class HttpClientPipelineTransport
 
         protected override void SetMethodCore(string method)
         {
-            ClientUtilities.AssertNotNull(method, nameof(method));
+            Argument.AssertNotNull(method, nameof(method));
 
             _method = method;
         }
@@ -54,7 +54,7 @@ public partial class HttpClientPipelineTransport
 
         protected override void SetUriCore(Uri uri)
         {
-            ClientUtilities.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(uri, nameof(uri));
 
             _uri = uri;
         }
@@ -145,7 +145,7 @@ public partial class HttpClientPipelineTransport
 
             public MessageBodyAdapter(BinaryContent content, CancellationToken cancellationToken)
             {
-                ClientUtilities.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(content, nameof(content));
 
                 _content = content;
                 _cancellationToken = cancellationToken;

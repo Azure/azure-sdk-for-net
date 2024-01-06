@@ -35,8 +35,8 @@ public class RequestOptions
 
     public void AddHeader(string name, string value)
     {
-        ClientUtilities.AssertNotNull(name, nameof(name));
-        ClientUtilities.AssertNotNull(value, nameof(value));
+        Argument.AssertNotNull(name, nameof(name));
+        Argument.AssertNotNull(value, nameof(value));
 
         AssertNotFrozen();
 
@@ -45,7 +45,7 @@ public class RequestOptions
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
-        ClientUtilities.AssertNotNull(policy, nameof(policy));
+        Argument.AssertNotNull(policy, nameof(policy));
 
         AssertNotFrozen();
 

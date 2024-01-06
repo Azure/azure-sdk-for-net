@@ -29,7 +29,7 @@ public class ClientResultException : Exception, ISerializable
     public ClientResultException(PipelineResponse response, Exception? innerException = default)
         : base(CreateMessage(response), innerException)
     {
-        ClientUtilities.AssertNotNull(response, nameof(response));
+        Argument.AssertNotNull(response, nameof(response));
 
         _response = response;
         _status = response.Status;
@@ -56,7 +56,7 @@ public class ClientResultException : Exception, ISerializable
     /// <inheritdoc />
     public override void GetObjectData(SerializationInfo info, StreamingContext context)
     {
-        ClientUtilities.AssertNotNull(info, nameof(info));
+        Argument.AssertNotNull(info, nameof(info));
 
         info.AddValue(nameof(Status), Status);
 

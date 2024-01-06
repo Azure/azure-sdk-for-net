@@ -136,12 +136,12 @@ public class ResponseBufferingPolicy : PipelinePolicy
     internal static void ThrowIfCancellationRequestedOrTimeout(CancellationToken originalToken, CancellationToken timeoutToken, Exception? inner, TimeSpan timeout)
 #pragma warning restore CA1068
     {
-        ClientUtilities.ThrowIfCancellationRequested(originalToken);
+        CancellationHelper.ThrowIfCancellationRequested(originalToken);
 
         if (timeoutToken.IsCancellationRequested)
         {
             // TODO: Make this error message correct
-            throw ClientUtilities.CreateOperationCanceledException(
+            throw CancellationHelper.CreateOperationCanceledException(
                 inner,
                 timeoutToken,
                 $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. ");

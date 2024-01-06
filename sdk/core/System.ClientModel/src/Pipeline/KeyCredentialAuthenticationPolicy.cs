@@ -27,8 +27,8 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
     /// being set fo "SharedAccessKey {credential.Key}".</param>
     public static KeyCredentialAuthenticationPolicy CreateHeaderPolicy(KeyCredential credential, string headerName, string? keyPrefix = null)
     {
-        ClientUtilities.AssertNotNull(credential, nameof(credential));
-        ClientUtilities.AssertNotNullOrEmpty(headerName, nameof(headerName));
+        Argument.AssertNotNull(credential, nameof(credential));
+        Argument.AssertNotNullOrEmpty(headerName, nameof(headerName));
 
         return new KeyCredentialAuthenticationPolicy(credential, headerName, KeyLocation.Header, keyPrefix);
     }
@@ -36,8 +36,8 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
     public static KeyCredentialAuthenticationPolicy CreateQueryPolicy(KeyCredential credential, string queryName)
     {
         // TODO: Add tests for this implementation if the API is approved.
-        ClientUtilities.AssertNotNull(credential, nameof(credential));
-        ClientUtilities.AssertNotNullOrEmpty(queryName, nameof(queryName));
+        Argument.AssertNotNull(credential, nameof(credential));
+        Argument.AssertNotNullOrEmpty(queryName, nameof(queryName));
 
         return new KeyCredentialAuthenticationPolicy(credential, queryName, KeyLocation.Query);
     }
@@ -59,8 +59,8 @@ public class KeyCredentialAuthenticationPolicy : PipelinePolicy
 
     private KeyCredentialAuthenticationPolicy(KeyCredential credential, string name, KeyLocation keyLocation, string? keyPrefix = null)
     {
-        ClientUtilities.AssertNotNull(credential, nameof(credential));
-        ClientUtilities.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNull(credential, nameof(credential));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
 
         _credential = credential;
 

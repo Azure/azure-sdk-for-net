@@ -29,7 +29,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     public HttpClientPipelineTransport(HttpClient client)
     {
-        ClientUtilities.AssertNotNull(client, nameof(client));
+        Argument.AssertNotNull(client, nameof(client));
 
         _httpClient = client;
 
@@ -144,9 +144,9 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
             }
         }
         // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
-        catch (OperationCanceledException e) when (ClientUtilities.ShouldWrapInOperationCanceledException(e, message.CancellationToken))
+        catch (OperationCanceledException e) when (CancellationHelper.ShouldWrapInOperationCanceledException(e, message.CancellationToken))
         {
-            throw ClientUtilities.CreateOperationCanceledException(e, message.CancellationToken);
+            throw CancellationHelper.CreateOperationCanceledException(e, message.CancellationToken);
         }
         catch (HttpRequestException e)
         {
