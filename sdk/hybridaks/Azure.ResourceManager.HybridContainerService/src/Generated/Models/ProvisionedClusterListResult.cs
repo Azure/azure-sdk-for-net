@@ -11,19 +11,19 @@ using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> A list of provisioned clusters resources. </summary>
-    internal partial class ProvisionedClustersListResult
+    /// <summary> Lists the ProvisionedClusterInstance resource associated with the ConnectedCluster. </summary>
+    internal partial class ProvisionedClusterListResult
     {
-        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersListResult"/>. </summary>
-        internal ProvisionedClustersListResult()
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterListResult"/>. </summary>
+        internal ProvisionedClusterListResult()
         {
             Value = new ChangeTrackingList<ProvisionedClusterData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal ProvisionedClustersListResult(IReadOnlyList<ProvisionedClusterData> value, string nextLink)
+        internal ProvisionedClusterListResult(IReadOnlyList<ProvisionedClusterData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;

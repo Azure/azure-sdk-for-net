@@ -10,35 +10,35 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class VMwareInfraVnetProfile : IUtf8JsonSerializable
+    internal partial class ClusterVmAccessProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SegmentName))
+            if (Optional.IsDefined(AuthorizedIPRanges))
             {
-                writer.WritePropertyName("segmentName"u8);
-                writer.WriteStringValue(SegmentName);
+                writer.WritePropertyName("authorizedIPRanges"u8);
+                writer.WriteStringValue(AuthorizedIPRanges);
             }
             writer.WriteEndObject();
         }
 
-        internal static VMwareInfraVnetProfile DeserializeVMwareInfraVnetProfile(JsonElement element)
+        internal static ClusterVmAccessProfile DeserializeClusterVmAccessProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> segmentName = default;
+            Optional<string> authorizedIPRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("segmentName"u8))
+                if (property.NameEquals("authorizedIPRanges"u8))
                 {
-                    segmentName = property.Value.GetString();
+                    authorizedIPRanges = property.Value.GetString();
                     continue;
                 }
             }
-            return new VMwareInfraVnetProfile(segmentName.Value);
+            return new ClusterVmAccessProfile(authorizedIPRanges.Value);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the supported kubernetes versions from the underlying custom location
+        /// Lists the supported kubernetes versions for the specified custom location
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the supported kubernetes versions from the underlying custom location
+        /// Lists the supported kubernetes versions for the specified custom location
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Delete the kubernetes versions resource type
+        /// Delete the default kubernetes versions resource type
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Delete the kubernetes versions resource type
+        /// Delete the default kubernetes versions resource type
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Puts the kubernetes version resource type
+        /// Puts the default kubernetes version resource type (one time operation, before listing the kubernetes versions)
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Puts the kubernetes version resource type
+        /// Puts the default kubernetes version resource type (one time operation, before listing the kubernetes versions)
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

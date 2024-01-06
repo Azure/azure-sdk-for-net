@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2024-01-15)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-preview-2023-11' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/05c4049bc22f0ec65acc18f9835132397049cb9e/specification/hybridaks/resource-manager/readme.md.
 
 ## 1.0.0-beta.4 (2024-01-03)
 

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Creates the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Creates or updates the agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="data"> The <see cref="HybridContainerServiceAgentPoolData"/> to use. </param>
+        /// <param name="data"> Agent Pool resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Creates the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Creates or updates the agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="data"> The <see cref="HybridContainerServiceAgentPoolData"/> to use. </param>
+        /// <param name="data"> Agent Pool resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Gets the specified agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the agent pool in the Hybrid AKS provisioned cluster instance
+        /// Gets the specified agent pool in the provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the agent pools in the Hybrid AKS provisioned cluster instance
+        /// Gets the list of agent pools in the specified provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,11 +267,12 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual AsyncPageable<HybridContainerServiceAgentPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.Parent);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HybridContainerServiceAgentPoolResource(Client, HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(e)), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, "HybridContainerServiceAgentPoolCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterNextPageRequest(nextLink, Id.Parent);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceAgentPoolResource(Client, HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(e)), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, "HybridContainerServiceAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets the agent pools in the Hybrid AKS provisioned cluster instance
+        /// Gets the list of agent pools in the specified provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -296,7 +297,8 @@ namespace Azure.ResourceManager.HybridContainerService
         public virtual Pageable<HybridContainerServiceAgentPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterRequest(Id.Parent);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new HybridContainerServiceAgentPoolResource(Client, HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(e)), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, "HybridContainerServiceAgentPoolCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridContainerServiceAgentPoolagentPoolRestClient.CreateListByProvisionedClusterNextPageRequest(nextLink, Id.Parent);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceAgentPoolResource(Client, HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(e)), _hybridContainerServiceAgentPoolagentPoolClientDiagnostics, Pipeline, "HybridContainerServiceAgentPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the upgrade profile of a provisioned cluster instance.
+        /// Gets the upgrade profile of a provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the upgrade profile of a provisioned cluster instance.
+        /// Gets the upgrade profile of a provisioned cluster
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

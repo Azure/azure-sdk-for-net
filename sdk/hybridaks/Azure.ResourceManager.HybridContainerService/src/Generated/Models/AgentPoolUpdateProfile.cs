@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> AgentPool update configuration. </summary>
+    /// <summary> Profile for agent pool properties that can be updated. </summary>
     public partial class AgentPoolUpdateProfile
     {
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpdateProfile"/>. </summary>
@@ -16,17 +16,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpdateProfile"/>. </summary>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        internal AgentPoolUpdateProfile(int? count, string vmSize)
+        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
+        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
+        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
+        internal AgentPoolUpdateProfile(int? count, string vmSize, string kubernetesVersion)
         {
             Count = count;
             VmSize = vmSize;
+            KubernetesVersion = kubernetesVersion;
         }
 
-        /// <summary> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </summary>
+        /// <summary> Number of nodes in the agent pool. The default value is 1. </summary>
         public int? Count { get; set; }
-        /// <summary> VmSize - The size of the agent pool VMs. </summary>
+        /// <summary> The VM sku size of the agent pool node VMs. </summary>
         public string VmSize { get; set; }
+        /// <summary> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </summary>
+        public string KubernetesVersion { get; }
     }
 }

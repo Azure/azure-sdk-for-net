@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Puts the Hybrid AKS virtual network
+        /// Creates or updates the virtual network resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
-        /// <param name="data"> The <see cref="HybridContainerServiceVirtualNetworkData"/> to use. </param>
+        /// <param name="data"> Virtual Network resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Puts the Hybrid AKS virtual network
+        /// Creates or updates the virtual network resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
-        /// <param name="data"> The <see cref="HybridContainerServiceVirtualNetworkData"/> to use. </param>
+        /// <param name="data"> Virtual Network resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the Hybrid AKS virtual network
+        /// Gets the specified virtual network resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the Hybrid AKS virtual network
+        /// Gets the specified virtual network resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Lists the Hybrid AKS virtual networks by resource group
+        /// Lists the virtual networks in the specified resource group
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Lists the Hybrid AKS virtual networks by resource group
+        /// Lists the virtual networks in the specified resource group
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
