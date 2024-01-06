@@ -12,7 +12,7 @@ public class ClientResult
 
     protected ClientResult(PipelineResponse response)
     {
-        ClientUtilities.AssertNotNull(response, nameof(response));
+        Argument.AssertNotNull(response, nameof(response));
 
         _response = response;
     }

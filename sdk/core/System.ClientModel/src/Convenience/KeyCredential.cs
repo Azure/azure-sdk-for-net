@@ -31,7 +31,7 @@ public class KeyCredential
 
     public void Update(string key)
     {
-        ClientUtilities.AssertNotNullOrEmpty(key, nameof(key));
+        Argument.AssertNotNullOrEmpty(key, nameof(key));
 
         Volatile.Write(ref _key, key);
     }
