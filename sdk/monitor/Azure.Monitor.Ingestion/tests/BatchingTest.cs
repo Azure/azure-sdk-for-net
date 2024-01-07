@@ -20,15 +20,16 @@ namespace Azure.Monitor.Ingestion.Tests
             {
                 entries.Add(new Object[] {
                     new {
-                        Time = "2021",
+                        Time = i + "2021",
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
                 });
             }
-            IEnumerable<LogsIngestionClient.BatchedLogs> x = LogsIngestionClient.Batch(entries);
-            Assert.AreEqual(1, x.Count());
-            Assert.AreEqual(10, x.First().Logs.Count);
+
+            LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
+            Assert.AreEqual(1, x.Length);
+            Assert.AreEqual(10, x[0].Logs.Count);
         }
 
         [Test]
@@ -45,12 +46,62 @@ namespace Azure.Monitor.Ingestion.Tests
                     }
                 });
             }
-            IEnumerable<LogsIngestionClient.BatchedLogs> x = LogsIngestionClient.Batch(entries);
-            int count = x.Count();
-            Assert.Greater(count, 1); //ideally should be 2 batches
-            Assert.Less(count, 3);
-            Assert.Greater(x.First().Logs.Count, 10000);
-            Assert.Less(x.ToList()[1].Logs.Count, 10000);
+
+            LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
+            Assert.AreEqual(2, x.Length);
+            Assert.Greater(x[0].Logs.Count, 10000);
+            Assert.Less(x[1].Logs.Count, 10000);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ValidateBatchingWithLargeItemNoGzip(bool hasItemAfterLargeItem)
+        {
+            var entries = new List<IEnumerable>()
+            {
+                new Object[] {
+                    new {
+                        Time = "02021",
+                        Computer = "Computer0",
+                        AdditionalContext = 0
+                    }
+                },
+                    new Object[] {
+                    new {
+                        Time = "12021",
+                        Computer = "Computer1",
+                        AdditionalContext = 1
+                    }
+                },
+                new Object[]
+                {
+                    new
+                    {
+                        Time = "22021",
+                        Computer = "Computer2",
+                        AdditionalContext = new string('2', LogsIngestionClient.SingleUploadThreshold + 1)
+                    }
+                }
+            };
+
+            if (hasItemAfterLargeItem)
+            {
+                entries.Add(new Object[]
+                {
+                    new
+                    {
+                        Time = "32021",
+                        Computer = "Computer3",
+                        AdditionalContext = 3
+                    }
+                });
+            };
+
+            LogsIngestionClient.BatchedLogs[] x = LogsIngestionClient.Batch(entries).ToArray();
+            Assert.AreEqual(2, x.Length);
+            Assert.AreEqual(1, x[0].Logs.Count);
+            Assert.AreEqual(hasItemAfterLargeItem ? 3 : 2, x[1].Logs.Count);
         }
     }
 }
