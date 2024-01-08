@@ -272,9 +272,8 @@ namespace Azure.AI.Translator.Document
                 uri.AppendQuery("allowFallback", allowFallback.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/octet-stream");
-            request.Headers.Add("content-type", "multipart/form-data");
             request.Content = content;
+            (content as MultipartFormDataContent).ApplyToRequest(request);
             return message;
         }
 
