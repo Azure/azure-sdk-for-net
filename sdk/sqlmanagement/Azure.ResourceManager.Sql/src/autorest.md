@@ -343,6 +343,7 @@ rename-mapping:
   FailoverGroupUpdate.properties.databases: FailoverDatabases
   Server.properties.minimalTlsVersion: minTlsVersion
   ServerUpdate.properties.minimalTlsVersion: minTlsVersion
+  MinimalTlsVersion: SqlMinimalTlsVersion
 
 # mgmt-debug: 
 #  show-serialized-names: true

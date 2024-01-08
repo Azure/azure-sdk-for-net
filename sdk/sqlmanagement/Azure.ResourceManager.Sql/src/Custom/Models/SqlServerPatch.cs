@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// Gets minimal tls version for a server.
         /// </summary>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public string MinimalTlsVersion
+		public string SqlMinimalTlsVersion
 		{
 			get {
 				return MinTlsVersion.ToString();
