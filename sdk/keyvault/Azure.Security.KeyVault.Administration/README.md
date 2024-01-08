@@ -255,7 +255,7 @@ details, visit <https://cla.microsoft.com>.
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct].
 For more information see the [Code of Conduct FAQ][coc_faq]
-or contact opencode@microsoft.com with any
+or contact <opencode@microsoft.com> with any
 additional questions or comments.
 
 <!-- LINKS -->

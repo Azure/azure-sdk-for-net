@@ -398,7 +398,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                     receivedEventCount,
                     stopWatch.GetElapsedTime().TotalSeconds,
                     firstReceivedEvent?.SequenceNumber.ToString(),
-                    LastReceivedEvent?.SequenceNumber.ToString());
+                    LastReceivedEvent?.SequenceNumber.ToString(),
+                    maximumEventCount,
+                    waitTime.TotalSeconds);
             }
         }
 
