@@ -3,12 +3,8 @@
 
 using System;
 using System.IO;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.Translator.Document.Tests
 {
@@ -21,9 +17,18 @@ namespace Azure.AI.Translator.Document.Tests
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
         [RecordedTest]
-        public void TestOperation()
+        public async Task TestOperation()
         {
-            Assert.IsTrue(true);
+            var client = new DocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            string testInputFileName = "TestInput.txt";
+            string testOutputFileName = "TestOutput.txt";
+            string filePath = Path.Combine("TestData", testInputFileName);
+            using Stream fileStream = File.OpenRead(filePath);
+
+            var translateContent = new DocumentTranslateContent(BinaryData.FromStream(fileStream));
+            translateContent.Filename = testInputFileName;
+            var response = await client.DocumentTranslateAsync("hi", translateContent).ConfigureAwait(false);
+            File.WriteAllBytes(Path.Combine("TestData", testOutputFileName), response.Value.ToArray());
         }
 
         #region Helpers

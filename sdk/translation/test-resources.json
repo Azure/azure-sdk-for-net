@@ -58,6 +58,9 @@
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]",
         "storageAccountName": "[concat(parameters('baseName'), 'prim')]",
+        "documentEndpointValue": "[format('https://flt.document.microsofttranslator.com')]",
+        "documentUniqueSubDomainName": "[format('{0}-document-translator', parameters('baseName'))]",
+        "documentCustomEndpointValue": "[format('https://{0}-document-translator.cognitiveservices.azure.com', parameters('baseName'))]",
         "encryption": {
             "services": {
                 "blob": {
@@ -125,6 +128,19 @@
             "properties": {
                 "customSubDomainName": "[variables('txtUniqueSubDomainName')]"
             }
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
+            "name": "[variables('documentUniqueSubDomainName')]",
+            "location": "global",
+            "sku": {
+                "name": "S1"
+            },
+            "kind": "TextTranslation",
+            "properties": {
+                "customSubDomainName": "[variables('documentUniqueSubDomainName')]"
+            }
         }
     ],
     "outputs": {
@@ -159,6 +175,18 @@
         "TEXT_TRANSLATION_REGION": {
             "type": "string",
             "value": "[variables('txtRegionValue')]"
+        },
+        "DOCUMENT_TRANSLATOR_API_KEY": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('documentUniqueSubDomainName')), '2017-04-18').key1]"
+        },
+        "DOCUMENT_TRANSLATOR_ENDPOINT": {
+            "type": "string",
+            "value": "[variables('documentEndpointValue')]"
+        },
+        "DOCUMENT_TRANSLATOR_CUSTOM_ENDPOINT": {
+            "type": "string",
+            "value": "[variables('documentCustomEndpointValue')]"
         }
     }
 }
