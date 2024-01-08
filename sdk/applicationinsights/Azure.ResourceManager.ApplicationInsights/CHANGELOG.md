@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fix issue [#38783](https://github.com/Azure/azure-sdk-for-net/issues/38783), change `WorkbookTemplates_ListByResourceGroup` response deserialize type to array.
+
 ### Other Changes
 
 ## 1.0.0-beta.4 (2023-11-27)

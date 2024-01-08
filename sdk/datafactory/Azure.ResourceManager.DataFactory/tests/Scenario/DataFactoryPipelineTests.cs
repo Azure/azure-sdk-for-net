@@ -6242,7 +6242,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Ignore this until https://github.com/Azure/azure-sdk-for-net/issues/40940 is fixed")]
         public async Task Pipeline_DelimitedText_GoogleCloud_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
