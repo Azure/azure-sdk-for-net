@@ -145,7 +145,6 @@ namespace Azure.Search.Documents
     public partial class SearchOptions
     {
         public SearchOptions() { }
-        public Azure.Search.Documents.Models.QueryDebugMode? Debug { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Facets { get { throw null; } }
         public string Filter { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> HighlightFields { get { throw null; } }
@@ -3593,6 +3592,7 @@ namespace Azure.Search.Documents.Models
     public partial class SemanticSearchOptions
     {
         public SemanticSearchOptions() { }
+        public Azure.Search.Documents.Models.QueryDebugMode? Debug { get { throw null; } set { } }
         public Azure.Search.Documents.Models.SemanticErrorMode? ErrorMode { get { throw null; } set { } }
         public System.TimeSpan? MaxWait { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryAnswer QueryAnswer { get { throw null; } set { } }
