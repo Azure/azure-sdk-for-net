@@ -25,6 +25,7 @@ public class PipelineMessageTests
         Assert.IsTrue(message.TryGetProperty(GetType(), out object? property));
         Assert.AreEqual("MockProperty", property);
     }
+
     [Test]
     public void TryGetPropertyReturnsFalseIfNotExist()
     {
