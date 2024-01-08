@@ -24,6 +24,10 @@
 
 - Improved efficiency of partition management during load balancing, reducing the number of operations performed and deferring waiting for lost partitions until the processor is stopped or the partition is reclaimed.  Allocations were also non-trivially reduced.
 
+- The "Event Receive Completed" log now includes the maximum batch size and wait time that were used for the operation.
+
+- A new log has been added to capture the end-to-end performance of the cycle to read and process events for a partition owned by an event processor type.  This is emitted as a verbose ETW event with the Id 129 and is highly recommended to capture when troubleshooting processor scenarios.
+
 ## 5.10.0 (2023-11-07)
 
 ### Breaking Changes
