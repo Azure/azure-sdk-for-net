@@ -507,7 +507,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DisposIsSafeToCallMultipleTimes()
+        public async Task DisposeIsSafeToCallMultipleTimes()
         {
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>("fqNamespace", "eventHub", Mock.Of<TokenCredential>(), null)
             {

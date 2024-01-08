@@ -1803,7 +1803,24 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if ((_partitions == null) || (_partitionHash == null))
                 {
-                    await UpdatePartitionInformation(cancellationToken).ConfigureAwait(false);
+                    // Since the retry policy for the buffered producer is extremely generous, link a 5 minute
+                    // timeout for exceptions thrown during setup.
+
+                    var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    linkedCts.CancelAfter(TimeSpan.FromMinutes(3));
+
+                    try
+                    {
+                        await UpdatePartitionInformation(linkedCts.Token).ConfigureAwait(false);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        throw new EventHubsException(true, EventHubName, "Querying the Event Hub metadata took longer than expected and failed.", EventHubsException.FailureReason.ServiceCommunicationProblem);
+                    }
+                    finally
+                    {
+                        linkedCts.Dispose();
+                    }
                 }
 
                 // If there is already a task running for the background management process,
