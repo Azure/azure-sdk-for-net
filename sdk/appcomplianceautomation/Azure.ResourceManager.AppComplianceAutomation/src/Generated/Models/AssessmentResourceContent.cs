@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     /// <summary> A class represent the assessment resource. </summary>
     public partial class AssessmentResourceContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AssessmentResourceContent"/>. </summary>
         internal AssessmentResourceContent()
         {
@@ -20,12 +55,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="resourceStatus"> Resource status. </param>
         /// <param name="reason"> The reason for the N/A resource. </param>
         /// <param name="statusChangeDate"> The status change date for the resource. For unavailable date, set it as N/A. </param>
-        internal AssessmentResourceContent(string resourceId, ResourceStatus? resourceStatus, string reason, string statusChangeDate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssessmentResourceContent(string resourceId, ResourceStatus? resourceStatus, string reason, string statusChangeDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ResourceStatus = resourceStatus;
             Reason = reason;
             StatusChangeDate = statusChangeDate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Id of the resource. </summary>
