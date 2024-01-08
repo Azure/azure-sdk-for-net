@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System.ComponentModel;
 
 #nullable disable
 
@@ -12,6 +13,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterWorkloadAutoScalerProfile
     {
         /// <summary> Whether to enable KEDA. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsKedaEnabled
         {
             get => Keda is null ? default(bool?) : Keda.Enabled;

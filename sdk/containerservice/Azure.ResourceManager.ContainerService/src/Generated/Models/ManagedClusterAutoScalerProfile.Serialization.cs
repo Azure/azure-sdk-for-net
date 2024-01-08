@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAutoScalerProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterAutoScalerProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAutoScalerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAutoScalerProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedClusterAutoScalerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BalanceSimilarNodeGroups))
             {
@@ -100,11 +111,40 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("skip-nodes-with-system-pods"u8);
                 writer.WriteStringValue(SkipNodesWithSystemPods);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterAutoScalerProfile DeserializeManagedClusterAutoScalerProfile(JsonElement element)
+        ManagedClusterAutoScalerProfile IJsonModel<ManagedClusterAutoScalerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
+        }
+
+        internal static ManagedClusterAutoScalerProfile DeserializeManagedClusterAutoScalerProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -126,6 +166,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> scaleDownUtilizationThreshold = default;
             Optional<string> skipNodesWithLocalStorage = default;
             Optional<string> skipNodesWithSystemPods = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("balance-similar-node-groups"u8))
@@ -217,8 +259,44 @@ namespace Azure.ResourceManager.ContainerService.Models
                     skipNodesWithSystemPods = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterAutoScalerProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterAutoScalerProfile IPersistableModel<ManagedClusterAutoScalerProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterAutoScalerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -112,6 +112,59 @@ namespace Azure.ResourceManager.ContainerService
             return new ManagedClusterUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));
         }
 
+        /// <summary> Gets a collection of MeshUpgradeProfileResources in the ContainerServiceManagedCluster. </summary>
+        /// <returns> An object representing collection of MeshUpgradeProfileResources and their operations over a MeshUpgradeProfileResource. </returns>
+        public virtual MeshUpgradeProfileCollection GetMeshUpgradeProfiles()
+        {
+            return GetCachedClient(client => new MeshUpgradeProfileCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets available upgrades for a service mesh in a cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/meshUpgradeProfiles/{mode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_GetMeshUpgradeProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mode"> The mode of the mesh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MeshUpgradeProfileResource>> GetMeshUpgradeProfileAsync(string mode, CancellationToken cancellationToken = default)
+        {
+            return await GetMeshUpgradeProfiles().GetAsync(mode, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets available upgrades for a service mesh in a cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/meshUpgradeProfiles/{mode}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_GetMeshUpgradeProfile</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mode"> The mode of the mesh. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mode"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MeshUpgradeProfileResource> GetMeshUpgradeProfile(string mode, CancellationToken cancellationToken = default)
+        {
+            return GetMeshUpgradeProfiles().Get(mode, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerServiceMaintenanceConfigurationResources in the ContainerServiceManagedCluster. </summary>
         /// <returns> An object representing collection of ContainerServiceMaintenanceConfigurationResources and their operations over a ContainerServiceMaintenanceConfigurationResource. </returns>
         public virtual ContainerServiceMaintenanceConfigurationCollection GetContainerServiceMaintenanceConfigurations()
@@ -380,76 +433,6 @@ namespace Azure.ResourceManager.ContainerService
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ContainerServiceManagedClusterResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ignorePodDisruptionBudget"> ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? ignorePodDisruptionBudget = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _containerServiceManagedClusterManagedClustersRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ignorePodDisruptionBudget, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ignorePodDisruptionBudget).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_Delete</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ignorePodDisruptionBudget"> ignore-pod-disruption-budget=true to delete those pods on a node without considering Pod Disruption Budget. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? ignorePodDisruptionBudget = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _containerServiceManagedClusterManagedClustersRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ignorePodDisruptionBudget, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ignorePodDisruptionBudget).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -869,7 +852,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Reset the AAD Profile of a managed cluster.
+        /// **WARNING**: This API will be deprecated. Please see [AKS-managed Azure Active Directory integration](https://aka.ms/aks-managed-aad) to update your cluster with AKS-managed Azure AD.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -907,7 +890,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Reset the AAD Profile of a managed cluster.
+        /// **WARNING**: This API will be deprecated. Please see [AKS-managed Azure Active Directory integration](https://aka.ms/aks-managed-aad) to update your cluster with AKS-managed Azure AD.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -933,74 +916,6 @@ namespace Azure.ResourceManager.ContainerService
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.ResetAadProfile(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile, cancellationToken);
                 var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateResetAadProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedClusterAadProfile).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Aborts the currently running operation on the managed cluster. The Managed Cluster will be moved to a Canceling state and eventually to a Canceled state when cancellation finishes. If the operation completes before cancellation can take place, an error is returned.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclusters/{resourceName}/abort</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_AbortLatestOperation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> AbortLatestOperationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.AbortLatestOperation");
-            scope.Start();
-            try
-            {
-                var response = await _containerServiceManagedClusterManagedClustersRestClient.AbortLatestOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateAbortLatestOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Aborts the currently running operation on the managed cluster. The Managed Cluster will be moved to a Canceling state and eventually to a Canceled state when cancellation finishes. If the operation completes before cancellation can take place, an error is returned.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclusters/{resourceName}/abort</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedClusters_AbortLatestOperation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation AbortLatestOperation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.AbortLatestOperation");
-            scope.Start();
-            try
-            {
-                var response = _containerServiceManagedClusterManagedClustersRestClient.AbortLatestOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateAbortLatestOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1069,6 +984,74 @@ namespace Azure.ResourceManager.ContainerService
             {
                 var response = _containerServiceManagedClusterManagedClustersRestClient.RotateClusterCertificates(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateRotateClusterCertificatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2017-08-31");
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Aborts the currently running operation on the managed cluster. The Managed Cluster will be moved to a Canceling state and eventually to a Canceled state when cancellation finishes. If the operation completes before cancellation can take place, a 409 error code is returned.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclusters/{resourceName}/abort</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_AbortLatestOperation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> AbortLatestOperationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.AbortLatestOperation");
+            scope.Start();
+            try
+            {
+                var response = await _containerServiceManagedClusterManagedClustersRestClient.AbortLatestOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateAbortLatestOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Aborts the currently running operation on the managed cluster. The Managed Cluster will be moved to a Canceling state and eventually to a Canceled state when cancellation finishes. If the operation completes before cancellation can take place, a 409 error code is returned.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedclusters/{resourceName}/abort</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedClusters_AbortLatestOperation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation AbortLatestOperation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.AbortLatestOperation");
+            scope.Start();
+            try
+            {
+                var response = _containerServiceManagedClusterManagedClustersRestClient.AbortLatestOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ContainerServiceArmOperation(_containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateAbortLatestOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -1449,7 +1432,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint, _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint(e), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1471,7 +1454,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint, _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint(e), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1552,7 +1535,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual AsyncPageable<ContainerServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1573,7 +1556,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual Pageable<ContainerServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
