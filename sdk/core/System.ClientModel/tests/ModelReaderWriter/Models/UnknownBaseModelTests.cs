@@ -4,6 +4,7 @@
 using NUnit.Framework;
 using System.Linq;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -18,6 +19,26 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => "{\"kind\":\"Z\",\"name\":\"zmodel\",\"zProperty\":1.5,\"extra\":\"stuff\"}";
+
+        protected override string GetExpectedResult(string format)
+        {
+            object obj = format switch
+            {
+                "J" => new
+                {
+                    kind = "Z",
+                    name = "zmodel",
+                    zProperty = 1.5f,
+                    extra = "stuff"
+                },
+                _ => new
+                {
+                    kind = "Z",
+                    name = "zmodel"
+                }
+            };
+            return JsonSerializer.Serialize(obj);
+        }
 
         protected override void CompareModels(BaseModel model, BaseModel model2, string format)
         {
@@ -35,15 +56,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 Assert.AreEqual(rawData["zProperty"].ToObjectFromJson<double>(), rawData2["zProperty"].ToObjectFromJson<double>());
                 Assert.AreEqual(rawData["extra"].ToObjectFromJson<string>(), rawData2["extra"].ToObjectFromJson<string>());
             }
-        }
-
-        protected override string GetExpectedResult(string format)
-        {
-            string expected = "{\"kind\":\"Z\",\"name\":\"zmodel\"";
-            if (format == "J")
-                expected += ",\"zProperty\":1.5,\"extra\":\"stuff\"";
-            expected += "}";
-            return expected;
         }
 
         protected override void VerifyModel(BaseModel model, string format)

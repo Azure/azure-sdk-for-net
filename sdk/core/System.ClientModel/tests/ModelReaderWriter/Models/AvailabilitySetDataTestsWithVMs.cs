@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.IO;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -17,18 +18,63 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string GetExpectedResult(string format)
         {
-            var expectedSerializedString = "{";
-            if (format == "J")
-                expectedSerializedString += "\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",";
-            expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
-            //if (!ignoreAdditionalProperties)
-            //    expectedSerializedString += ",\"extraSku\":\"extraSku\"";
-            expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3";
-            //if (!ignoreAdditionalProperties)
-            //    expectedSerializedString += ",\"extraRoot\":\"extraRoot\"";
-            expectedSerializedString += ",\"virtualMachines\":[{\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1\"},{\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2\"}]";
-            expectedSerializedString += "}}";
-            return expectedSerializedString; ;
+            object obj = format switch
+            {
+                "J" => new
+                {
+                    name = "testAS-3375",
+                    id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375",
+                    type = "Microsoft.Compute/availabilitySets",
+                    sku = new
+                    {
+                        name = "Classic"
+                    },
+                    tags = new Dictionary<string, string>
+                    {
+                        ["key"] = "value"
+                    },
+                    location = "eastus",
+                    properties = new
+                    {
+                        platformUpdateDomainCount = 5,
+                        platformFaultDomainCount = 3,
+                        virtualMachines = new[] {
+                            new {
+                                id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1"
+                            },
+                            new {
+                                id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2"
+                            }
+                        }
+                    }
+                },
+                _ => new
+                {
+                    sku = new
+                    {
+                        name = "Classic"
+                    },
+                    tags = new Dictionary<string, string>
+                    {
+                        ["key"] = "value"
+                    },
+                    location = "eastus",
+                    properties = new
+                    {
+                        platformUpdateDomainCount = 5,
+                        platformFaultDomainCount = 3,
+                        virtualMachines = new[] {
+                            new {
+                                id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1"
+                            },
+                            new {
+                                id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2"
+                            }
+                        }
+                    }
+                }
+            };
+            return JsonSerializer.Serialize(obj);
         }
 
         protected override void VerifyModel(AvailabilitySetData model, string format)

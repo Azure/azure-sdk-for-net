@@ -12,7 +12,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     /// <summary> The InputAdditionalPropertiesModelStruct. </summary>
     public readonly partial struct ModelAsStruct : IJsonModel<ModelAsStruct>, IJsonModel<object>
     {
-        private readonly Dictionary<string, BinaryData> _rawData;
+        private readonly Dictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of InputAdditionalPropertiesModelStruct. </summary>
         /// <param name="id"></param>
@@ -22,7 +22,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         public ModelAsStruct(int id, Dictionary<string, BinaryData> rawData)
         {
             Id = id;
-            _rawData = rawData;
+            _serializedAdditionalRawData = rawData;
         }
 
         /// <summary> Gets the id. </summary>
@@ -37,9 +37,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteNumberValue(Id);
-            if (_rawData is not null && options.Format == "J")
+            if (_serializedAdditionalRawData is not null && options.Format == "J")
             {
-                foreach (var property in _rawData)
+                foreach (var property in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER

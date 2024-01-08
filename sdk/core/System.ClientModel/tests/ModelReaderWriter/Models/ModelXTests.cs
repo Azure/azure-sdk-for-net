@@ -5,6 +5,8 @@ using NUnit.Framework;
 using System.IO;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -13,6 +15,42 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelX/ModelXWireFormat.json")).TrimEnd();
+
+        protected override string GetExpectedResult(string format)
+        {
+            object obj = format switch
+            {
+                "J" => new
+                {
+                    kind = "X",
+                    name = "xmodel",
+                    fields = new[]
+                    {
+                        "testField"
+                    },
+                    keyValuePairs = new Dictionary<string, string>
+                    {
+                        ["color"] = "red"
+                    },
+                    xProperty = 100,
+                    extra = "stuff"
+                },
+                _ => new
+                {
+                    kind = "X",
+                    name = "xmodel",
+                    fields = new[]
+                    {
+                        "testField"
+                    },
+                    keyValuePairs = new Dictionary<string, string>
+                    {
+                        ["color"] = "red"
+                    }
+                }
+            };
+            return JsonSerializer.Serialize(obj);
+        }
 
         protected override void CompareModels(ModelX model, ModelX model2, string format)
         {
@@ -33,19 +71,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 Assert.AreEqual(rawData.Count, rawData2.Count);
                 Assert.AreEqual(rawData["extra"].ToObjectFromJson<string>(), rawData2["extra"].ToObjectFromJson<string>());
             }
-        }
-
-        protected override string GetExpectedResult(string format)
-        {
-            string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
-            expected += ",\"fields\":[\"testField\"]";
-            expected += ",\"keyValuePairs\":{\"color\":\"red\"}";
-            if (format == "J")
-                expected += ",\"xProperty\":100";
-            if (format == "J")
-                expected += ",\"extra\":\"stuff\"";
-            expected += "}";
-            return expected;
         }
 
         protected override void VerifyModel(ModelX model, string format)

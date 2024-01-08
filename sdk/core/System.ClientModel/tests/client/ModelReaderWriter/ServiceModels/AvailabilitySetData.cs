@@ -17,6 +17,8 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
     /// </summary>
     public partial class AvailabilitySetData : TrackedResourceData
     {
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         internal AvailabilitySetData() { }
 
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>
@@ -40,7 +42,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
         /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
         /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal AvailabilitySetData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses) : base(id, name, resourceType, systemData, tags, location)
+        internal AvailabilitySetData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             PlatformUpdateDomainCount = platformUpdateDomainCount;
@@ -48,6 +50,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             VirtualMachines = virtualMachines;
             ProximityPlacementGroup = proximityPlacementGroup;
             Statuses = statuses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'. </summary>

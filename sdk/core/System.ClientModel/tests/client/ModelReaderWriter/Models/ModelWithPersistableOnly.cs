@@ -11,7 +11,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     public class ModelWithPersistableOnly : IPersistableModel<ModelWithPersistableOnly>
     {
-        private Dictionary<string, BinaryData> _rawData;
+        private Dictionary<string, BinaryData> _serializedAdditionalRawData;
 
         public ModelWithPersistableOnly()
         {
@@ -24,7 +24,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             NullProperty = nullProperty;
             Fields = fields;
             KeyValuePairs = keyValuePairs;
-            _rawData = rawData;
+            _serializedAdditionalRawData = rawData;
         }
 
         public string Name { get; }
@@ -88,7 +88,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         private void SerializeRawData(Utf8JsonWriter writer)
         {
             //write out the raw data
-            foreach (var property in _rawData)
+            foreach (var property in _serializedAdditionalRawData)
             {
                 writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER

@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.IO;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -36,15 +37,36 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string GetExpectedResult(string format)
         {
-            string expected = "{\"name\":\"xmodel\"";
-            expected += ",\"fields\":[\"testField\"]";
-            expected += ",\"keyValuePairs\":{\"color\":\"red\"}";
-            if (format == "J")
-                expected += ",\"xProperty\":100";
-            if (format == "J")
-                expected += ",\"extra\":\"stuff\"";
-            expected += "}";
-            return expected;
+            object obj = format switch
+            {
+                "J" => new
+                {
+                    name = "xmodel",
+                    fields = new[]
+                    {
+                        "testField"
+                    },
+                    keyValuePairs = new
+                    {
+                        color = "red"
+                    },
+                    xProperty = 100,
+                    extra = "stuff"
+                },
+                _ => new
+                {
+                    name = "xmodel",
+                    fields = new[]
+                    {
+                        "testField"
+                    },
+                    keyValuePairs = new
+                    {
+                        color = "red"
+                    }
+                }
+            };
+            return JsonSerializer.Serialize(obj);
         }
 
         protected override void VerifyModel(ModelWithPersistableOnly model, string format)

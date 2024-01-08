@@ -4,6 +4,7 @@
 using NUnit.Framework;
 using System.Linq;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -36,13 +37,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         protected override string GetExpectedResult(string format)
         {
-            string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
-            if (format == "J")
-                expected += ",\"xProperty\":100";
-            if (format == "J")
-                expected += ",\"extra\":\"stuff\"";
-            expected += "}";
-            return expected;
+            object obj = format switch
+            {
+                "J" => new
+                {
+                    kind = "X",
+                    name = "xmodel",
+                    xProperty = 100,
+                    extra = "stuff"
+                },
+                _ => new
+                {
+                    kind = "X",
+                    name = "xmodel"
+                }
+            };
+            return JsonSerializer.Serialize(obj);
         }
 
         protected override void VerifyModel(BaseModel model, string format)
