@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Batch;
@@ -191,6 +192,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// cannot be used until the batch has been submitted with
         /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DeleteBlob(
             string blobContainerName,
             string blobName,
