@@ -2255,18 +2255,6 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.ManagedTransparentDataEncryptionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct MinimalTlsVersion
-    {
-        private object _dummy;
-        private int _dummyPrimitive;
-        public MinimalTlsVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.MinimalTlsVersion Tls1_0 { get { throw null; } }
-        public static Azure.ResourceManager.Sql.MinimalTlsVersion Tls1_1 { get { throw null; } }
-        public static Azure.ResourceManager.Sql.MinimalTlsVersion Tls1_2 { get { throw null; } }
-        public static Azure.ResourceManager.Sql.MinimalTlsVersion Tls1_3 { get { throw null; } }
-        public static Azure.ResourceManager.Sql.MinimalTlsVersion TlsNone { get { throw null; } }
-    }
     public partial class OutboundFirewallRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.OutboundFirewallRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.OutboundFirewallRuleResource>, System.Collections.IEnumerable
     {
         protected OutboundFirewallRuleCollection() { }
@@ -3703,6 +3691,18 @@ namespace Azure.ResourceManager.Sql
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlFirewallRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sql.SqlFirewallRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sql.SqlFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct SqlMinimalTlsVersion
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public SqlMinimalTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlMinimalTlsVersion Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.Sql.SqlMinimalTlsVersion Tls1_1 { get { throw null; } }
+        public static Azure.ResourceManager.Sql.SqlMinimalTlsVersion Tls1_2 { get { throw null; } }
+        public static Azure.ResourceManager.Sql.SqlMinimalTlsVersion Tls1_3 { get { throw null; } }
+        public static Azure.ResourceManager.Sql.SqlMinimalTlsVersion TlsNone { get { throw null; } }
+    }
     public partial class SqlPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sql.SqlPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.SqlPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected SqlPrivateEndpointConnectionCollection() { }
@@ -4043,13 +4043,13 @@ namespace Azure.ResourceManager.Sql
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? IsIPv6Enabled { get { throw null; } set { } }
         public System.Uri KeyId { get { throw null; } set { } }
         public string Kind { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public string MinimalTlsVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.MinimalTlsVersion? MinTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion? MinTlsVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.SqlServerPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string SqlMinimalTlsVersion { get { throw null; } set { } }
         public string State { get { throw null; } }
         public string Version { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerWorkspaceFeature? WorkspaceFeature { get { throw null; } }
@@ -6032,7 +6032,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.SqlServerBlobAuditingPolicyData SqlServerBlobAuditingPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isDevopsAuditEnabled = default(bool?), int? retentionDays = default(int?), System.Collections.Generic.IEnumerable<string> auditActionsAndGroups = null, bool? isStorageSecondaryKeyInUse = default(bool?), bool? isAzureMonitorTargetEnabled = default(bool?), int? queueDelayMs = default(int?), bool? isManagedIdentityInUse = default(bool?), Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? state = default(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState?), string storageEndpoint = null, string storageAccountAccessKey = null, System.Guid? storageAccountSubscriptionId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerCommunicationLinkData SqlServerCommunicationLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string kind = null, string state = null, string partnerServer = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerConnectionPolicyData SqlServerConnectionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string kind = null, Azure.ResourceManager.Sql.Models.ServerConnectionType? connectionType = default(Azure.ResourceManager.Sql.Models.ServerConnectionType?)) { throw null; }
-        public static Azure.ResourceManager.Sql.SqlServerData SqlServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.SqlServerPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Sql.Models.MinimalTlsVersion? minTlsVersion = default(Azure.ResourceManager.Sql.Models.MinimalTlsVersion?), Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? publicNetworkAccess = default(Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag?), Azure.ResourceManager.Sql.Models.ServerWorkspaceFeature? workspaceFeature = default(Azure.ResourceManager.Sql.Models.ServerWorkspaceFeature?), Azure.Core.ResourceIdentifier primaryUserAssignedIdentityId = null, System.Guid? federatedClientId = default(System.Guid?), System.Uri keyId = null, Azure.ResourceManager.Sql.Models.ServerExternalAdministrator administrators = null, Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag?), Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? isIPv6Enabled = default(Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag?), Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus? externalGovernanceStatus = default(Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus?)) { throw null; }
+        public static Azure.ResourceManager.Sql.SqlServerData SqlServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.SqlServerPrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion? minTlsVersion = default(Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion?), Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? publicNetworkAccess = default(Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag?), Azure.ResourceManager.Sql.Models.ServerWorkspaceFeature? workspaceFeature = default(Azure.ResourceManager.Sql.Models.ServerWorkspaceFeature?), Azure.Core.ResourceIdentifier primaryUserAssignedIdentityId = null, System.Guid? federatedClientId = default(System.Guid?), System.Uri keyId = null, Azure.ResourceManager.Sql.Models.ServerExternalAdministrator administrators = null, Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag?), Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? isIPv6Enabled = default(Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag?), Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus? externalGovernanceStatus = default(Azure.ResourceManager.Sql.Models.ExternalGovernanceStatus?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerDatabaseReplicationLinkData SqlServerDatabaseReplicationLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string partnerServer = null, string partnerDatabase = null, Azure.Core.AzureLocation? partnerLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.SqlServerDatabaseReplicationRole? role = default(Azure.ResourceManager.Sql.Models.SqlServerDatabaseReplicationRole?), Azure.ResourceManager.Sql.Models.SqlServerDatabaseReplicationRole? partnerRole = default(Azure.ResourceManager.Sql.Models.SqlServerDatabaseReplicationRole?), string replicationMode = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), int? percentComplete = default(int?), Azure.ResourceManager.Sql.Models.ReplicationLinkState? replicationState = default(Azure.ResourceManager.Sql.Models.ReplicationLinkState?), bool? isTerminationAllowed = default(bool?), Azure.ResourceManager.Sql.Models.ReplicationLinkType? linkType = default(Azure.ResourceManager.Sql.Models.ReplicationLinkType?)) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerDatabaseRestorePointData SqlServerDatabaseRestorePointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Sql.Models.RestorePointType? restorePointType = default(Azure.ResourceManager.Sql.Models.RestorePointType?), System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), System.DateTimeOffset? restorePointCreatedOn = default(System.DateTimeOffset?), string restorePointLabel = null) { throw null; }
         public static Azure.ResourceManager.Sql.SqlServerDevOpsAuditingSettingData SqlServerDevOpsAuditingSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isAzureMonitorTargetEnabled = default(bool?), bool? isManagedIdentityInUse = default(bool?), Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState? state = default(Azure.ResourceManager.Sql.Models.BlobAuditingPolicyState?), string storageEndpoint = null, string storageAccountAccessKey = null, System.Guid? storageAccountSubscriptionId = default(System.Guid?)) { throw null; }
@@ -7883,27 +7883,6 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? Status { get { throw null; } }
         public double? Value { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MinimalTlsVersion : System.IEquatable<Azure.ResourceManager.Sql.Models.MinimalTlsVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MinimalTlsVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.MinimalTlsVersion None { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.MinimalTlsVersion One0 { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.MinimalTlsVersion One1 { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.MinimalTlsVersion One2 { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.MinimalTlsVersion One3 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.MinimalTlsVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.MinimalTlsVersion left, Azure.ResourceManager.Sql.Models.MinimalTlsVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.MinimalTlsVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.MinimalTlsVersion left, Azure.ResourceManager.Sql.Models.MinimalTlsVersion right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class NetworkIsolationSettings
     {
         public NetworkIsolationSettings() { }
@@ -9075,6 +9054,27 @@ namespace Azure.ResourceManager.Sql.Models
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public double? Total { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlMinimalTlsVersion : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlMinimalTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion None { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion One0 { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion One1 { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion One2 { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion One3 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion left, Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion left, Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SqlNameAvailabilityContent
     {
         public SqlNameAvailabilityContent(string name) { }
@@ -9332,13 +9332,13 @@ namespace Azure.ResourceManager.Sql.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? IsIPv6Enabled { get { throw null; } set { } }
         public System.Uri KeyId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public string MinimalTlsVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.Sql.Models.MinimalTlsVersion? MinTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlMinimalTlsVersion? MinTlsVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Sql.Models.SqlServerPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerNetworkAccessFlag? RestrictOutboundNetworkAccess { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string SqlMinimalTlsVersion { get { throw null; } set { } }
         public string State { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public string Version { get { throw null; } set { } }
