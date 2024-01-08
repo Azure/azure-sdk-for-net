@@ -1,6 +1,6 @@
 # Semantic Search
 
-Semantic search is a collection of query-related capabilities that improve the quality of search result for text-based queries. When you enable semantic search on your service, it performs two primary functions:
+Semantic search is a collection of query-related capabilities that improve the quality of search results for text-based queries. When you enable semantic search on your service, it performs two primary functions:
 * **Improves Search Results**: It adds secondary ranking over an initial search result set by using advanced algorithms that consider the context and meaning of the query, resulting in more relevant search outcomes.
 * **Provides Additional Information**: It also extracts and displays concise captions and answers from the search results, which can be used on a search page to improve the user's search experience.
 
