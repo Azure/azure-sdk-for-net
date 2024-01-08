@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("safetyProfile"u8);
                 writer.WriteObjectValue(SafetyProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
+            if (Optional.IsDefined(SecurityProfile))
             {
-                writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus);
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

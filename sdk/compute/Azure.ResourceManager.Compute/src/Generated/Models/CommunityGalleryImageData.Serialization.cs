@@ -172,6 +172,8 @@ namespace Azure.ResourceManager.Compute
             Optional<ArchitectureType> architecture = default;
             Optional<Uri> privacyStatementUri = default;
             Optional<string> eula = default;
+            Optional<string> disclaimer = default;
+            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
             Optional<string> uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -318,6 +320,25 @@ namespace Azure.ResourceManager.Compute
                             eula = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("disclaimer"u8))
+                        {
+                            disclaimer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("artifactTags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            artifactTags = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -343,8 +364,7 @@ namespace Azure.ResourceManager.Compute
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value);
+            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), Optional.ToList(features), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, disclaimer.Value, Optional.ToDictionary(artifactTags));
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageData>.Write(ModelReaderWriterOptions options)

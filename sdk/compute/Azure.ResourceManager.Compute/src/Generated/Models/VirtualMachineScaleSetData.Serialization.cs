@@ -190,6 +190,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("constrainedMaximumCapacity"u8);
                 writer.WriteBooleanValue(IsMaximumCapacityConstrained.Value);
             }
+            if (Optional.IsDefined(ResiliencyPolicy))
+            {
+                writer.WritePropertyName("resiliencyPolicy"u8);
+                writer.WriteObjectValue(ResiliencyPolicy);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -234,6 +239,7 @@ namespace Azure.ResourceManager.Compute
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IList<string>> zones = default;
             Optional<ExtendedLocation> extendedLocation = default;
+            Optional<string> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -259,8 +265,7 @@ namespace Azure.ResourceManager.Compute
             Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<bool> constrainedMaximumCapacity = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Optional<ResiliencyPolicy> resiliencyPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -311,6 +316,11 @@ namespace Azure.ResourceManager.Compute
                         continue;
                     }
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -528,6 +538,15 @@ namespace Azure.ResourceManager.Compute
                             constrainedMaximumCapacity = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("resiliencyPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resiliencyPolicy = ResiliencyPolicy.DeserializeResiliencyPolicy(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -536,8 +555,7 @@ namespace Azure.ResourceManager.Compute
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, priorityMixPolicy.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(constrainedMaximumCapacity), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, etag.Value, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, priorityMixPolicy.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(constrainedMaximumCapacity), resiliencyPolicy.Value);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetData>.Write(ModelReaderWriterOptions options)

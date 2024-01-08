@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SharingUpdate"/>. </summary>
-        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Add** &lt;br&gt;&lt;br&gt; **Remove** &lt;br&gt;&lt;br&gt; **Reset**. </param>
+        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. Possible values are: **Add,** **Remove,** **Reset.**. </param>
         public SharingUpdate(SharingUpdateOperationType operationType)
         {
             OperationType = operationType;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SharingUpdate"/>. </summary>
-        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Add** &lt;br&gt;&lt;br&gt; **Remove** &lt;br&gt;&lt;br&gt; **Reset**. </param>
+        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. Possible values are: **Add,** **Remove,** **Reset.**. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SharingUpdate(SharingUpdateOperationType operationType, IList<SharingProfileGroup> groups, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
         }
 
-        /// <summary> This property allows you to specify the operation type of gallery sharing update. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Add** &lt;br&gt;&lt;br&gt; **Remove** &lt;br&gt;&lt;br&gt; **Reset**. </summary>
+        /// <summary> This property allows you to specify the operation type of gallery sharing update. Possible values are: **Add,** **Remove,** **Reset.**. </summary>
         public SharingUpdateOperationType OperationType { get; set; }
         /// <summary> A list of sharing profile groups. </summary>
         public IList<SharingProfileGroup> Groups { get; }

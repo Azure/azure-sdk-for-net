@@ -167,6 +167,9 @@ rename-mapping:
   SecurityType: ServiceFabricManagedClusterSecurityType
   UpdateType: ServiceFabricManagedClusterUpdateType
 
+suppress-abstract-base-class:
+- ManagedServiceProperties
+
 directive:
   - remove-operation: OperationStatus_Get
   - remove-operation: OperationResults_Get

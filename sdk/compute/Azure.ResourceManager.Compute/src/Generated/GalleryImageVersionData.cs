@@ -69,20 +69,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="securityProfile"> The security profile of a gallery image version. </param>
+        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile) : base(id, name, resourceType, systemData, tags, location)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
             StorageProfile = storageProfile;
             SafetyProfile = safetyProfile;
             ReplicationStatus = replicationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/> for deserialization. </summary>
-        internal GalleryImageVersionData()
-        {
+            SecurityProfile = securityProfile;
         }
 
         /// <summary> The publishing profile of a gallery image Version. </summary>
@@ -95,5 +90,18 @@ namespace Azure.ResourceManager.Compute
         public GalleryImageVersionSafetyProfile SafetyProfile { get; set; }
         /// <summary> This is the replication status of the gallery image version. </summary>
         public ReplicationStatus ReplicationStatus { get; }
+        /// <summary> The security profile of a gallery image version. </summary>
+        internal ImageVersionSecurityProfile SecurityProfile { get; set; }
+        /// <summary> Contains UEFI settings for the image version. </summary>
+        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        {
+            get => SecurityProfile is null ? default : SecurityProfile.UefiSettings;
+            set
+            {
+                if (SecurityProfile is null)
+                    SecurityProfile = new ImageVersionSecurityProfile();
+                SecurityProfile.UefiSettings = value;
+            }
+        }
     }
 }

@@ -6,9 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -168,8 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachineScaleSetHardwareProfile> hardwareProfile = default;
             Optional<WritableSubResource> serviceArtifactReference = default;
             Optional<ComputeSecurityPostureReference> securityPostureReference = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osProfile"u8))
@@ -317,13 +313,17 @@ namespace Azure.ResourceManager.Compute.Models
                     securityPostureReference = ComputeSecurityPostureReference.DeserializeComputeSecurityPostureReference(property.Value);
                     continue;
                 }
-                if (options.Format != "W")
+                if (property.NameEquals("timeCreated"u8))
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeCreated = property.Value.GetDateTimeOffset("O");
+                    continue;
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value, serviceArtifactReference, securityPostureReference.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value, serviceArtifactReference, securityPostureReference.Value, Optional.ToNullable(timeCreated));
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetVmProfile>.Write(ModelReaderWriterOptions options)

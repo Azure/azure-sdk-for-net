@@ -42,20 +42,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(EncryptionIdentity))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("encryptionIdentity"u8);
+                writer.WriteObjectValue(EncryptionIdentity);
+            }
+            if (Optional.IsDefined(ProxyAgentSettings))
+            {
+                writer.WritePropertyName("proxyAgentSettings"u8);
+                writer.WriteObjectValue(ProxyAgentSettings);
             }
             writer.WriteEndObject();
         }
@@ -83,8 +78,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<UefiSettings> uefiSettings = default;
             Optional<bool> encryptionAtHost = default;
             Optional<SecurityType> securityType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Optional<EncryptionIdentity> encryptionIdentity = default;
+            Optional<ProxyAgentSettings> proxyAgentSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uefiSettings"u8))
@@ -114,13 +109,26 @@ namespace Azure.ResourceManager.Compute.Models
                     securityType = new SecurityType(property.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
+                if (property.NameEquals("encryptionIdentity"u8))
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryptionIdentity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("proxyAgentSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(property.Value);
+                    continue;
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityProfile(uefiSettings.Value, Optional.ToNullable(encryptionAtHost), Optional.ToNullable(securityType), serializedAdditionalRawData);
+            return new SecurityProfile(uefiSettings.Value, Optional.ToNullable(encryptionAtHost), Optional.ToNullable(securityType), encryptionIdentity.Value, proxyAgentSettings.Value);
         }
 
         BinaryData IPersistableModel<SecurityProfile>.Write(ModelReaderWriterOptions options)

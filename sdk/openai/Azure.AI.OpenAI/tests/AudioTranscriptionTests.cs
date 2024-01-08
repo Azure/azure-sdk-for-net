@@ -32,7 +32,7 @@ public class AudioTranscriptionTests : OpenAITestBase
         string transcriptionFormat)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
-        string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.AudioTranscription);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
         using Stream audioFileStream = GetTestAudioInputStream();
 
@@ -40,6 +40,7 @@ public class AudioTranscriptionTests : OpenAITestBase
         {
             DeploymentName = deploymentOrModelName,
             AudioData = BinaryData.FromStream(audioFileStream),
+            Filename = "test.wav",
             Temperature = (float)0.25,
         };
 

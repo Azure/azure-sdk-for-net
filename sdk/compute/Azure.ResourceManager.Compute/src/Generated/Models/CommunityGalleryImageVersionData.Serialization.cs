@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -119,6 +117,8 @@ namespace Azure.ResourceManager.Compute
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<bool> excludeFromLatest = default;
             Optional<SharedGalleryImageVersionStorageProfile> storageProfile = default;
+            Optional<string> disclaimer = default;
+            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
             Optional<string> uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -192,6 +192,25 @@ namespace Azure.ResourceManager.Compute
                             storageProfile = SharedGalleryImageVersionStorageProfile.DeserializeSharedGalleryImageVersionStorageProfile(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("disclaimer"u8))
+                        {
+                            disclaimer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("artifactTags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            artifactTags = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -217,8 +236,7 @@ namespace Azure.ResourceManager.Compute
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageVersionData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(excludeFromLatest), storageProfile.Value);
+            return new CommunityGalleryImageVersionData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(excludeFromLatest), storageProfile.Value, disclaimer.Value, Optional.ToDictionary(artifactTags));
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageVersionData>.Write(ModelReaderWriterOptions options)

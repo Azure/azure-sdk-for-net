@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Redis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> For checking the ongoing status of an operation. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The location at which operation was triggered. </param>
         /// <param name="operationId"> The ID of asynchronous operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> For checking the ongoing status of an operation. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The location at which operation was triggered. </param>
         /// <param name="operationId"> The ID of asynchronous operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -176,41 +176,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public virtual AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
         {
             var annotatedMessage = sbMessage.AmqpMessage;
-            var message = AmqpAnnotatedMessageConverter.ToAmqpMessage(annotatedMessage);
-
-            // Reset the resultant TTL as there is special handling for Service Bus
-            if ((message.Sections & SectionFlag.Header) > 0)
-                message.Header.Ttl = null;
-
-            // If TTL is set, it is used to calculate AbsoluteExpiryTime and CreationTime
-            TimeSpan ttl = annotatedMessage.GetTimeToLive();
-            if (ttl != TimeSpan.MaxValue)
-            {
-               message.Header.Ttl = (uint)ttl.TotalMilliseconds;
-               message.Properties.CreationTime = DateTime.UtcNow;
-
-               if (AmqpConstants.MaxAbsoluteExpiryTime - message.Properties.CreationTime.Value > ttl)
-               {
-                   message.Properties.AbsoluteExpiryTime = message.Properties.CreationTime.Value + ttl;
-               }
-               else
-               {
-                   message.Properties.AbsoluteExpiryTime = AmqpConstants.MaxAbsoluteExpiryTime;
-               }
-            }
-            else
-            {
-               if (annotatedMessage.Properties.CreationTime.HasValue)
-               {
-                   message.Properties.CreationTime = annotatedMessage.Properties.CreationTime.Value.UtcDateTime;
-               }
-               if (annotatedMessage.Properties.AbsoluteExpiryTime.HasValue)
-               {
-                   message.Properties.AbsoluteExpiryTime = annotatedMessage.Properties.AbsoluteExpiryTime.Value.UtcDateTime;
-               }
-            }
-
-            return message;
+            return AmqpAnnotatedMessageConverter.ToAmqpMessage(annotatedMessage);
         }
 
         public virtual ServiceBusReceivedMessage AmqpMessageToSBReceivedMessage(AmqpMessage amqpMessage, bool isPeeked = false)

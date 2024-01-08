@@ -42,20 +42,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(OSRollingUpgradeDeferral))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("osRollingUpgradeDeferral"u8);
+                writer.WriteBooleanValue(OSRollingUpgradeDeferral.Value);
             }
             writer.WriteEndObject();
         }
@@ -83,8 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableAutomaticOSUpgrade = default;
             Optional<bool> disableAutomaticRollback = default;
             Optional<bool> useRollingUpgradePolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Optional<bool> osRollingUpgradeDeferral = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableAutomaticOSUpgrade"u8))
@@ -114,13 +103,17 @@ namespace Azure.ResourceManager.Compute.Models
                     useRollingUpgradePolicy = property.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if (property.NameEquals("osRollingUpgradeDeferral"u8))
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    osRollingUpgradeDeferral = property.Value.GetBoolean();
+                    continue;
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback), Optional.ToNullable(useRollingUpgradePolicy), serializedAdditionalRawData);
+            return new AutomaticOSUpgradePolicy(Optional.ToNullable(enableAutomaticOSUpgrade), Optional.ToNullable(disableAutomaticRollback), Optional.ToNullable(useRollingUpgradePolicy), Optional.ToNullable(osRollingUpgradeDeferral));
         }
 
         BinaryData IPersistableModel<AutomaticOSUpgradePolicy>.Write(ModelReaderWriterOptions options)

@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -91,6 +89,9 @@ namespace Azure.ResourceManager.Compute
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceType> type = default;
+            Optional<string> disclaimer = default;
+            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
+            Optional<CommunityGalleryMetadata> communityMetadata = default;
             Optional<string> uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,6 +120,46 @@ namespace Azure.ResourceManager.Compute
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("disclaimer"u8))
+                        {
+                            disclaimer = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("artifactTags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            artifactTags = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("communityMetadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            communityMetadata = CommunityGalleryMetadata.DeserializeCommunityGalleryMetadata(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (property.NameEquals("identifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -141,8 +182,7 @@ namespace Azure.ResourceManager.Compute
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData);
+            return new CommunityGalleryData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, disclaimer.Value, Optional.ToDictionary(artifactTags), communityMetadata.Value);
         }
 
         BinaryData IPersistableModel<CommunityGalleryData>.Write(ModelReaderWriterOptions options)

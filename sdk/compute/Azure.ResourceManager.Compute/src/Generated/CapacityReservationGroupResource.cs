@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to update a capacity reservation group. When updating a capacity reservation group, only tags may be modified.
+        /// The operation to update a capacity reservation group. When updating a capacity reservation group, only tags and sharing profile may be modified.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to update a capacity reservation group. When updating a capacity reservation group, only tags may be modified.
+        /// The operation to update a capacity reservation group. When updating a capacity reservation group, only tags and sharing profile may be modified.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

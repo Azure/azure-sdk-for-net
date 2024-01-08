@@ -41,30 +41,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
+            if (Optional.IsDefined(SharingProfile))
             {
-                writer.WritePropertyName("capacityReservations"u8);
-                writer.WriteStartArray();
-                foreach (var item in CapacityReservations)
-                {
-                    JsonSerializer.Serialize(writer, item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
-            {
-                writer.WritePropertyName("virtualMachinesAssociated"u8);
-                writer.WriteStartArray();
-                foreach (var item in VirtualMachinesAssociated)
-                {
-                    JsonSerializer.Serialize(writer, item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
-            {
-                writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WritePropertyName("sharingProfile"u8);
+                writer.WriteObjectValue(SharingProfile);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

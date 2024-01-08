@@ -112,6 +112,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("spotRestorePolicy"u8);
                 writer.WriteObjectValue(SpotRestorePolicy);
             }
+            if (Optional.IsDefined(ResiliencyPolicy))
+            {
+                writer.WritePropertyName("resiliencyPolicy"u8);
+                writer.WriteObjectValue(ResiliencyPolicy);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
