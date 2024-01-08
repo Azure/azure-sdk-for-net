@@ -12,6 +12,7 @@ public-clients: false
 head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
+use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:
@@ -229,12 +230,8 @@ override-operation-name:
   Tags_Delete: DeletePredefinedTag
   Providers_ListAtTenantScope: GetTenantResourceProviders
   Providers_GetAtTenantScope: GetTenantResourceProvider
-  Resources_MoveResources: MoveResources
-  Resources_ValidateMoveResources: ValidateMoveResources
   Resources_List: GetGenericResources
   Resources_ListByResourceGroup: GetGenericResources
-  Providers_RegisterAtManagementGroupScope: RegisterResourceProvider
-  ResourceLinks_ListAtSubscription: GetResourceLinks
 
 no-property-type-replacement: ResourceProviderData;ResourceProvider;
 
