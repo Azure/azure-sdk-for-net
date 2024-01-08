@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        internal SqlServerPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, MinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus)
+        internal SqlServerPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus)
         {
             Identity = identity;
             Tags = tags;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> List of private endpoint connections on a server. </summary>
         public IReadOnlyList<SqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> Minimal TLS version. Allowed values: 'None', 1.0', '1.1', '1.2', '1.3'. </summary>
-        public MinimalTlsVersion? MinTlsVersion { get; set; }
+        public SqlMinimalTlsVersion? MinTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </summary>
         public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }
         /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
