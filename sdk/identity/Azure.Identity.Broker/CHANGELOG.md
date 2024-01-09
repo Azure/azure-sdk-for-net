@@ -3,6 +3,7 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
 - Preview support for Proof of Possession (PoP) tokens for `InteractiveBrowserCredential`. This feature is enabled via the `IsProofOfPossessionRequired` property on `InteractiveBrowserCredentialBrokerOptions`.
 
 ### Breaking Changes

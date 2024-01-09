@@ -43,15 +43,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
-        protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message)
-        {
-            if (_popNonce is not null)
-            {
-                var context = new PopTokenRequestContext(_scopes, message.Request.ClientRequestId, proofOfPossessionNonce: _popNonce, request: message.Request);
-                return AuthenticateAndAuthorizeRequestAsync(message, context);
-            }
-            return default;
-        }
+        protected virtual async ValueTask AuthorizeRequestAsync(HttpMessage message)
+            => await AuthorizeRequestInternal(message, true).ConfigureAwait(false);
 
         /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequest(Azure.Core.HttpMessage)" />
         protected void AuthorizeRequest(HttpMessage message)

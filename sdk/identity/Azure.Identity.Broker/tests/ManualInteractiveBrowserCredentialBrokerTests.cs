@@ -35,8 +35,10 @@ namespace Azure.Identity.Broker.Tests
         }
 
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         [Ignore("This test is an integration test which can only be run with user interaction")]
-        public async Task GetPopToken()
+        public async Task GetPopToken(bool isAsync)
         {
             using var logger = AzureEventSourceListener.CreateConsoleLogger();
             IntPtr parentWindowHandle = GetForegroundWindow();
@@ -44,7 +46,9 @@ namespace Azure.Identity.Broker.Tests
             var client = new PopTestClient(new InteractiveBrowserCredential(
                 new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { IsProofOfPossessionRequired = true }),
                 new PopClientOptions() { Diagnostics = { IsLoggingContentEnabled = true, LoggedHeaderNames = { "Authorization" } } });
-            var response = await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
+            var response = isAsync ?
+                await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None) :
+                client.Get(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
             Assert.IsNotNull(response);
             Assert.AreEqual(200, response.Status);
         }

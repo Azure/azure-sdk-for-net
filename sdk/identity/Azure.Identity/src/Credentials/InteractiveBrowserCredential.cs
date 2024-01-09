@@ -175,6 +175,7 @@ namespace Azure.Identity
             return await GetTokenImplAsync(true, PopTokenRequestContext.FromTokenRequestContext(requestContext), cancellationToken).ConfigureAwait(false);
         }
 
+#if PREVIEW_FEATURE_FLAG
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> token for a user account silently if the user has already authenticated, otherwise the
         /// default browser is launched to authenticate the user. Acquired tokens are cached by the credential instance. Token lifetime and
@@ -200,6 +201,7 @@ namespace Azure.Identity
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
+#endif
 
         private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
