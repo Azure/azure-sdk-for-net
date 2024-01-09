@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline
 
         public ResponseBodyPolicy(TimeSpan networkTimeout)
         {
-            _policy = new ResponseBufferingPolicy(networkTimeout, preserveBufferStream: true);
+            _policy = new ResponseBufferingPolicy(networkTimeout);
             _networkTimeout = networkTimeout;
         }
 

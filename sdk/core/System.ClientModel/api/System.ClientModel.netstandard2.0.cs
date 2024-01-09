@@ -197,7 +197,7 @@ namespace System.ClientModel.Primitives
     {
         protected PipelineResponse() { }
         public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
+        public virtual System.IO.Stream? ContentStream { get { throw null; } set { } }
         public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
         public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -241,7 +241,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ResponseBufferingPolicy(System.TimeSpan networkTimeout, bool preserveBufferStream = false) { }
+        public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { }
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
         public static void SetBufferResponse(System.ClientModel.Primitives.PipelineMessage message, bool bufferResponse) { }

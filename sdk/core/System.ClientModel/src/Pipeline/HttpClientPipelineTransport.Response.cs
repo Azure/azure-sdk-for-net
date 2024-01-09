@@ -40,13 +40,13 @@ public partial class HttpClientPipelineTransport
         public override Stream? ContentStream
         {
             get => _contentStream;
-            set
-            {
-                // Make sure we don't dispose the content if the stream was replaced
-                _httpResponse.Content = null;
+            //set
+            //{
+            //    // Make sure we don't dispose the content if the stream was replaced
+            //    _httpResponse.Content = null;
 
-                _contentStream = value;
-            }
+            //    _contentStream = value;
+            //}
         }
 
         #region IDisposable
