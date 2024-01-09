@@ -10,7 +10,6 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests.Shared;
-using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.Storage.Tests
