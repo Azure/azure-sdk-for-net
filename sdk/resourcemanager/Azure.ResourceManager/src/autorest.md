@@ -15,8 +15,8 @@ modelerfour:
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 batch:
   - tag: package-common-type
@@ -275,9 +275,6 @@ acronym-mapping:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-
-# mgmt-debug:
-#   show-serialized-names: true
 
 rename-mapping:
   PolicyAssignment.identity: ManagedIdentity
@@ -701,12 +698,13 @@ input-file:
   - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
 request-path-to-parent:
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
+  /providers/Microsoft.Management/getEntities: /providers/Microsoft.Management/managementGroups/{groupId}
 operation-positions:
   ManagementGroups_CheckNameAvailability: collection
+  Entities_List: collection
 operation-groups-to-omit:
   - HierarchySettings
   - ManagementGroupSubscriptions
-  - Entities
   - TenantBackfill
 no-property-type-replacement: DescendantParentGroupInfo
 
@@ -716,6 +714,11 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+rename-mapping:
+  EntityInfo: EntityData
+  Permissions: EntityPermission
+  SearchOptions: EntitySearchOption
 
 acronym-mapping:
   CPU: Cpu

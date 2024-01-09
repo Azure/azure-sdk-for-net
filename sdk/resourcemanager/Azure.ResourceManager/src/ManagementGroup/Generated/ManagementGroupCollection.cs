@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.ManagementGroups
     {
         private readonly ClientDiagnostics _managementGroupClientDiagnostics;
         private readonly ManagementGroupsRestOperations _managementGroupRestClient;
+        private readonly ClientDiagnostics _entitiesClientDiagnostics;
+        private readonly EntitiesRestOperations _entitiesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagementGroupCollection"/> class for mocking. </summary>
         protected ManagementGroupCollection()
@@ -44,6 +46,8 @@ namespace Azure.ResourceManager.ManagementGroups
             _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", ManagementGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagementGroupResource.ResourceType, out string managementGroupApiVersion);
             _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupApiVersion);
+            _entitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _entitiesRestClient = new EntitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -351,6 +355,58 @@ namespace Azure.ResourceManager.ManagementGroups
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
+        ///
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/getEntities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Entities_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EntityData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EntityData> GetEntitiesAsync(ManagementGroupCollectionGetEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ManagementGroupCollectionGetEntitiesOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _entitiesRestClient.CreateListRequest(options.Skiptoken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entitiesRestClient.CreateListNextPageRequest(nextLink, options.Skiptoken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EntityData.DeserializeEntityData(e), _entitiesClientDiagnostics, Pipeline, "ManagementGroupCollection.GetEntities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
+        ///
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/getEntities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Entities_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EntityData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EntityData> GetEntities(ManagementGroupCollectionGetEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ManagementGroupCollectionGetEntitiesOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _entitiesRestClient.CreateListRequest(options.Skiptoken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entitiesRestClient.CreateListNextPageRequest(nextLink, options.Skiptoken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EntityData.DeserializeEntityData(e), _entitiesClientDiagnostics, Pipeline, "ManagementGroupCollection.GetEntities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
