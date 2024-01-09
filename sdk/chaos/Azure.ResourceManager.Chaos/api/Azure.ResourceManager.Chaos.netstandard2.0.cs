@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.CapabilityResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.CapabilityResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CapabilityData : Azure.ResourceManager.Models.ResourceData
+    public partial class CapabilityData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.CapabilityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.CapabilityData>
     {
         public CapabilityData() { }
         public string Description { get { throw null; } }
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Chaos
         public string Publisher { get { throw null; } }
         public string TargetType { get { throw null; } }
         public string Urn { get { throw null; } }
+        Azure.ResourceManager.Chaos.CapabilityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.CapabilityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.CapabilityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.CapabilityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.CapabilityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.CapabilityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.CapabilityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CapabilityResource : Azure.ResourceManager.ArmResource
     {
@@ -55,7 +60,7 @@ namespace Azure.ResourceManager.Chaos
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.CapabilityTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.CapabilityTypeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CapabilityTypeData : Azure.ResourceManager.Models.ResourceData
+    public partial class CapabilityTypeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.CapabilityTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.CapabilityTypeData>
     {
         public CapabilityTypeData() { }
         public System.Collections.Generic.IList<string> AzureRbacActions { get { throw null; } }
@@ -69,6 +74,11 @@ namespace Azure.ResourceManager.Chaos
         public string RuntimeKind { get { throw null; } }
         public string TargetType { get { throw null; } }
         public string Urn { get { throw null; } }
+        Azure.ResourceManager.Chaos.CapabilityTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.CapabilityTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.CapabilityTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.CapabilityTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.CapabilityTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.CapabilityTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.CapabilityTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CapabilityTypeResource : Azure.ResourceManager.ArmResource
     {
@@ -118,13 +128,18 @@ namespace Azure.ResourceManager.Chaos
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.ExperimentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExperimentData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ExperimentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentData>
     {
         public ExperimentData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Step> steps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Selector> selectors) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Selector> Selectors { get { throw null; } }
         public bool? StartOnCreation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Step> Steps { get { throw null; } }
+        Azure.ResourceManager.Chaos.ExperimentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.ExperimentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ExperimentExecutionDetailCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>, System.Collections.IEnumerable
     {
@@ -141,7 +156,7 @@ namespace Azure.ResourceManager.Chaos
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExperimentExecutionDetailData : Azure.ResourceManager.Models.ResourceData
+    public partial class ExperimentExecutionDetailData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentExecutionDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentExecutionDetailData>
     {
         internal ExperimentExecutionDetailData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -152,6 +167,11 @@ namespace Azure.ResourceManager.Chaos
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? StopOn { get { throw null; } }
+        Azure.ResourceManager.Chaos.ExperimentExecutionDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentExecutionDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentExecutionDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.ExperimentExecutionDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentExecutionDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentExecutionDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentExecutionDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ExperimentExecutionDetailResource : Azure.ResourceManager.ArmResource
     {
@@ -202,12 +222,17 @@ namespace Azure.ResourceManager.Chaos
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.ExperimentStatusResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.ExperimentStatusResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ExperimentStatusData : Azure.ResourceManager.Models.ResourceData
+    public partial class ExperimentStatusData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentStatusData>
     {
         internal ExperimentStatusData() { }
         public System.DateTimeOffset? CreatedDateUtc { get { throw null; } }
         public System.DateTimeOffset? EndDateUtc { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Chaos.ExperimentStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.ExperimentStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.ExperimentStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentStatusData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.ExperimentStatusData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ExperimentStatusResource : Azure.ResourceManager.ArmResource
     {
@@ -236,11 +261,16 @@ namespace Azure.ResourceManager.Chaos
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.TargetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.TargetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TargetData : Azure.ResourceManager.Models.ResourceData
+    public partial class TargetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.TargetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.TargetData>
     {
         public TargetData(System.Collections.Generic.IDictionary<string, System.BinaryData> properties) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Properties { get { throw null; } }
+        Azure.ResourceManager.Chaos.TargetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.TargetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.TargetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.TargetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.TargetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.TargetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.TargetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TargetResource : Azure.ResourceManager.ArmResource
     {
@@ -274,7 +304,7 @@ namespace Azure.ResourceManager.Chaos
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Chaos.TargetTypeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.TargetTypeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TargetTypeData : Azure.ResourceManager.Models.ResourceData
+    public partial class TargetTypeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.TargetTypeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.TargetTypeData>
     {
         public TargetTypeData() { }
         public string Description { get { throw null; } }
@@ -282,6 +312,11 @@ namespace Azure.ResourceManager.Chaos
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string PropertiesSchema { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResourceTypes { get { throw null; } }
+        Azure.ResourceManager.Chaos.TargetTypeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.TargetTypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.TargetTypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.TargetTypeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.TargetTypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.TargetTypeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.TargetTypeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TargetTypeResource : Azure.ResourceManager.ArmResource
     {
@@ -332,12 +367,17 @@ namespace Azure.ResourceManager.Chaos.Mocking
 }
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public abstract partial class Action
+    public abstract partial class Action : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Action>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Action>
     {
         protected Action(string name) { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.Action System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Action>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Action>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.Action System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Action>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Action>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Action>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ActionStatus
+    public partial class ActionStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ActionStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ActionStatus>
     {
         internal ActionStatus() { }
         public string ActionId { get { throw null; } }
@@ -346,6 +386,11 @@ namespace Azure.ResourceManager.Chaos.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties> Targets { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.ActionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ActionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ActionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ActionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ActionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ActionStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ActionStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmChaosModelFactory
     {
@@ -364,51 +409,86 @@ namespace Azure.ResourceManager.Chaos.Models
         public static Azure.ResourceManager.Chaos.TargetData TargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, System.BinaryData> properties = null) { throw null; }
         public static Azure.ResourceManager.Chaos.TargetTypeData TargetTypeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string displayName = null, string description = null, string propertiesSchema = null, System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
     }
-    public partial class Branch
+    public partial class Branch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Branch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Branch>
     {
         public Branch(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Action> actions) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Action> Actions { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.Branch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Branch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Branch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.Branch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Branch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Branch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Branch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BranchStatus
+    public partial class BranchStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.BranchStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.BranchStatus>
     {
         internal BranchStatus() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.ActionStatus> Actions { get { throw null; } }
         public string BranchId { get { throw null; } }
         public string BranchName { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.BranchStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.BranchStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.BranchStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.BranchStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.BranchStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.BranchStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.BranchStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContinuousAction : Azure.ResourceManager.Chaos.Models.Action
+    public partial class ContinuousAction : Azure.ResourceManager.Chaos.Models.Action, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ContinuousAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ContinuousAction>
     {
         public ContinuousAction(string name, System.TimeSpan duration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.KeyValuePair> parameters, string selectorId) : base (default(string)) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.KeyValuePair> Parameters { get { throw null; } }
         public string SelectorId { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.ContinuousAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ContinuousAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ContinuousAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ContinuousAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ContinuousAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ContinuousAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ContinuousAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DelayAction : Azure.ResourceManager.Chaos.Models.Action
+    public partial class DelayAction : Azure.ResourceManager.Chaos.Models.Action, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.DelayAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.DelayAction>
     {
         public DelayAction(string name, System.TimeSpan duration) : base (default(string)) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.DelayAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.DelayAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.DelayAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.DelayAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.DelayAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.DelayAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.DelayAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DiscreteAction : Azure.ResourceManager.Chaos.Models.Action
+    public partial class DiscreteAction : Azure.ResourceManager.Chaos.Models.Action, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.DiscreteAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.DiscreteAction>
     {
         public DiscreteAction(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.KeyValuePair> parameters, string selectorId) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.KeyValuePair> Parameters { get { throw null; } }
         public string SelectorId { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.DiscreteAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.DiscreteAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.DiscreteAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.DiscreteAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.DiscreteAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.DiscreteAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.DiscreteAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExperimentCancelOperationResult
+    public partial class ExperimentCancelOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult>
     {
         internal ExperimentCancelOperationResult() { }
         public string Name { get { throw null; } }
         public string StatusUri { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentCancelOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExperimentExecutionActionTargetDetailsError
+    public partial class ExperimentExecutionActionTargetDetailsError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError>
     {
         internal ExperimentExecutionActionTargetDetailsError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExperimentExecutionActionTargetDetailsProperties
+    public partial class ExperimentExecutionActionTargetDetailsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties>
     {
         internal ExperimentExecutionActionTargetDetailsProperties() { }
         public Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsError Error { get { throw null; } }
@@ -416,70 +496,130 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Target { get { throw null; } }
         public System.DateTimeOffset? TargetCompletedOn { get { throw null; } }
         public System.DateTimeOffset? TargetFailedOn { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentExecutionActionTargetDetailsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExperimentPatch
+    public partial class ExperimentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentPatch>
     {
         public ExperimentPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.ExperimentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ExperimentPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExperimentStartOperationResult
+    public partial class ExperimentStartOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult>
     {
         internal ExperimentStartOperationResult() { }
         public string Name { get { throw null; } }
         public string StatusUri { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ExperimentStartOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class Filter
+    public abstract partial class Filter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Filter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Filter>
     {
         protected Filter() { }
+        Azure.ResourceManager.Chaos.Models.Filter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Filter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Filter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.Filter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Filter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Filter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Filter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class KeyValuePair
+    public partial class KeyValuePair : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.KeyValuePair>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.KeyValuePair>
     {
         public KeyValuePair(string key, string value) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.KeyValuePair System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.KeyValuePair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.KeyValuePair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.KeyValuePair System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.KeyValuePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.KeyValuePair>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.KeyValuePair>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ListSelector : Azure.ResourceManager.Chaos.Models.Selector
+    public partial class ListSelector : Azure.ResourceManager.Chaos.Models.Selector, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ListSelector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ListSelector>
     {
         public ListSelector(string id, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.TargetReference> targets) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.TargetReference> Targets { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.ListSelector System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ListSelector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.ListSelector>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.ListSelector System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ListSelector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ListSelector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.ListSelector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QuerySelector : Azure.ResourceManager.Chaos.Models.Selector
+    public partial class QuerySelector : Azure.ResourceManager.Chaos.Models.Selector, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.QuerySelector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.QuerySelector>
     {
         public QuerySelector(string id, string queryString, System.Collections.Generic.IEnumerable<string> subscriptionIds) : base (default(string)) { }
         public string QueryString { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.QuerySelector System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.QuerySelector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.QuerySelector>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.QuerySelector System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.QuerySelector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.QuerySelector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.QuerySelector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class Selector
+    public abstract partial class Selector : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Selector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Selector>
     {
         protected Selector(string id) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.Filter Filter { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.Selector System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Selector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Selector>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.Selector System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Selector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Selector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Selector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SimpleFilter : Azure.ResourceManager.Chaos.Models.Filter
+    public partial class SimpleFilter : Azure.ResourceManager.Chaos.Models.Filter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.SimpleFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.SimpleFilter>
     {
         public SimpleFilter() { }
         public System.Collections.Generic.IList<string> ParametersZones { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.SimpleFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.SimpleFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.SimpleFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.SimpleFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.SimpleFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.SimpleFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.SimpleFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Step
+    public partial class Step : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Step>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Step>
     {
         public Step(string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Chaos.Models.Branch> branches) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Chaos.Models.Branch> Branches { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.Step System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Step>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.Step>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.Step System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Step>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Step>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.Step>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StepStatus
+    public partial class StepStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.StepStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.StepStatus>
     {
         internal StepStatus() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Chaos.Models.BranchStatus> Branches { get { throw null; } }
         public string Status { get { throw null; } }
         public string StepId { get { throw null; } }
         public string StepName { get { throw null; } }
+        Azure.ResourceManager.Chaos.Models.StepStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.StepStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.StepStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.StepStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.StepStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.StepStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.StepStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TargetReference
+    public partial class TargetReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.TargetReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.TargetReference>
     {
         public TargetReference(Azure.ResourceManager.Chaos.Models.TargetReferenceType referenceType, string id) { }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.Chaos.Models.TargetReferenceType ReferenceType { get { throw null; } set { } }
+        Azure.ResourceManager.Chaos.Models.TargetReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.TargetReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.TargetReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Chaos.Models.TargetReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.TargetReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.TargetReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.TargetReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TargetReferenceType : System.IEquatable<Azure.ResourceManager.Chaos.Models.TargetReferenceType>
