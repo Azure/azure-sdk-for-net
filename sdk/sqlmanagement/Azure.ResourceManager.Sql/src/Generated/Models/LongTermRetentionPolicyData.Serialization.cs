@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> makeBackupsImmutable = default;
-            Optional<BackupStorageAccessTier> backupStorageAccessTier = default;
+            Optional<SqlBackupStorageAccessTier> backupStorageAccessTier = default;
             Optional<string> weeklyRetention = default;
             Optional<string> monthlyRetention = default;
             Optional<string> yearlyRetention = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            backupStorageAccessTier = new BackupStorageAccessTier(property0.Value.GetString());
+                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("weeklyRetention"u8))

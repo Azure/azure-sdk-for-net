@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
             Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<bool> isBackupImmutable = default;
-            Optional<BackupStorageAccessTier> backupStorageAccessTier = default;
+            Optional<SqlBackupStorageAccessTier> backupStorageAccessTier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            backupStorageAccessTier = new BackupStorageAccessTier(property0.Value.GetString());
+                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
                             continue;
                         }
                     }

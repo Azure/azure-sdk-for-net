@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
-        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, BackupStorageAccessTier? backupStorageAccessTier) : base(id, name, resourceType, systemData)
+        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, SqlBackupStorageAccessTier? backupStorageAccessTier) : base(id, name, resourceType, systemData)
         {
             ServerName = serverName;
             ServerCreateOn = serverCreateOn;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The setting whether the LTR backup is immutable. </summary>
         public bool? IsBackupImmutable { get; set; }
         /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
-        public BackupStorageAccessTier? BackupStorageAccessTier { get; }
+        public SqlBackupStorageAccessTier? BackupStorageAccessTier { get; }
     }
 }

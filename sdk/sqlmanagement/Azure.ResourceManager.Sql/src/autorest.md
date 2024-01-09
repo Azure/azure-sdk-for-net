@@ -348,6 +348,7 @@ rename-mapping:
   Server.properties.minimalTlsVersion: minTlsVersion
   ServerUpdate.properties.minimalTlsVersion: minTlsVersion
   MinimalTlsVersion: SqlMinimalTlsVersion
+  BackupStorageAccessTier: SqlBackupStorageAccessTier
 
 # mgmt-debug:
 #  show-serialized-names: true
