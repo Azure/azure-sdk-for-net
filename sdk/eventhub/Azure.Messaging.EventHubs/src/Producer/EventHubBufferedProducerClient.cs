@@ -1824,11 +1824,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                     catch (OperationCanceledException)
                     {
-                        throw new EventHubsException(true, EventHubName, "Querying the Event Hub metadata took longer than expected and failed.", EventHubsException.FailureReason.ServiceCommunicationProblem);
-                    }
-                    finally
-                    {
-                        linkedCts.Dispose();
+                        throw new EventHubsException(true, EventHubName, "The buffered producer took too long to start.", EventHubsException.FailureReason.ServiceTimeout);
                     }
                 }
 

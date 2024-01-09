@@ -1684,7 +1684,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await Task.Yield();
             var thrownException = Assert.ThrowsAsync<EventHubsException>(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), "The attempt to start publishing should have surfaced an exception.");
             Assert.True(thrownException.IsTransient, "Exception thrown should be transient");
-            Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "Exception thrown should have a reason of ServiceCommunicationProblem.");
+            Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "Exception thrown should have a reason of ServiceCommunicationProblem.");
         }
 
         /// <summary>
@@ -1698,9 +1698,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.Zero };
-            var bufferedProducerOptions = new EventHubBufferedProducerClientOptions { RetryOptions = retryOptions };
-            var producerOptions = new EventHubProducerClientOptions { RetryOptions = retryOptions, Identifier = "abc123" };
+            var bufferedProducerOptions = new EventHubBufferedProducerClientOptions { RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.Zero } };
+            var producerOptions = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.Zero }, Identifier = "abc123" };
 
             var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), default);
             var mockProducer = new Mock<EventHubProducerClient>(connection, producerOptions) { CallBase = true };
@@ -1709,7 +1708,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await Task.Yield();
             var thrownException = Assert.ThrowsAsync<EventHubsException>(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), "The attempt to start publishing should have surfaced an exception.");
             Assert.True(thrownException.IsTransient, "Exception thrown should be transient");
-            Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "Exception thrown should have a reason of ServiceCommunicationProblem.");
+            Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "Exception thrown should have a reason of ServiceCommunicationProblem.");
         }
 
         /// <summary>
