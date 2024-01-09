@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,38 +14,6 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters supplied to the Create operation. </summary>
     public partial class BatchAccountCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="BatchAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The region in which to create the account. </param>
         public BatchAccountCreateOrUpdateContent(AzureLocation location)
@@ -67,8 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
         /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, BatchAccountAutoStorageBaseConfiguration autoStorage, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, BatchAccountEncryptionConfiguration encryption, IList<BatchAuthenticationMode> allowedAuthenticationModes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, BatchAccountAutoStorageBaseConfiguration autoStorage, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, BatchAccountEncryptionConfiguration encryption, IList<BatchAuthenticationMode> allowedAuthenticationModes)
         {
             Location = location;
             Tags = tags;
@@ -80,12 +46,6 @@ namespace Azure.ResourceManager.Batch.Models
             NetworkProfile = networkProfile;
             Encryption = encryption;
             AllowedAuthenticationModes = allowedAuthenticationModes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchAccountCreateOrUpdateContent"/> for deserialization. </summary>
-        internal BatchAccountCreateOrUpdateContent()
-        {
         }
 
         /// <summary> The region in which to create the account. </summary>

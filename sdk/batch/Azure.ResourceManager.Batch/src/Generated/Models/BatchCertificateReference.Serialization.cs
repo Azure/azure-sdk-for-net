@@ -5,26 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchCertificateReference : IUtf8JsonSerializable, IJsonModel<BatchCertificateReference>
+    public partial class BatchCertificateReference : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchCertificateReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
-        void IJsonModel<BatchCertificateReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificateReference>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support '{format}' format.");
-            }
-
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -48,40 +38,11 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        BatchCertificateReference IJsonModel<BatchCertificateReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static BatchCertificateReference DeserializeBatchCertificateReference(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificateReference>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchCertificateReference(document.RootElement, options);
-        }
-
-        internal static BatchCertificateReference DeserializeBatchCertificateReference(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,8 +51,6 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<BatchCertificateStoreLocation> storeLocation = default;
             Optional<string> storeName = default;
             Optional<IList<BatchCertificateVisibility>> visibility = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,44 +86,8 @@ namespace Azure.ResourceManager.Batch.Models
                     visibility = array;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchCertificateReference(id, Optional.ToNullable(storeLocation), storeName.Value, Optional.ToList(visibility), serializedAdditionalRawData);
+            return new BatchCertificateReference(id, Optional.ToNullable(storeLocation), storeName.Value, Optional.ToList(visibility));
         }
-
-        BinaryData IPersistableModel<BatchCertificateReference>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificateReference>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support '{options.Format}' format.");
-            }
-        }
-
-        BatchCertificateReference IPersistableModel<BatchCertificateReference>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchCertificateReference>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBatchCertificateReference(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BatchCertificateReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,26 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchUserIdentity : IUtf8JsonSerializable, IJsonModel<BatchUserIdentity>
+    public partial class BatchUserIdentity : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchUserIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
-        void IJsonModel<BatchUserIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchUserIdentity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(BatchUserIdentity)} does not support '{format}' format.");
-            }
-
             writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
             {
@@ -36,48 +25,17 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("autoUser"u8);
                 writer.WriteObjectValue(AutoUser);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
             writer.WriteEndObject();
         }
 
-        BatchUserIdentity IJsonModel<BatchUserIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static BatchUserIdentity DeserializeBatchUserIdentity(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchUserIdentity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(BatchUserIdentity)} does not support '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchUserIdentity(document.RootElement, options);
-        }
-
-        internal static BatchUserIdentity DeserializeBatchUserIdentity(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> userName = default;
             Optional<BatchAutoUserSpecification> autoUser = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userName"u8))
@@ -94,44 +52,8 @@ namespace Azure.ResourceManager.Batch.Models
                     autoUser = BatchAutoUserSpecification.DeserializeBatchAutoUserSpecification(property.Value);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchUserIdentity(userName.Value, autoUser.Value, serializedAdditionalRawData);
+            return new BatchUserIdentity(userName.Value, autoUser.Value);
         }
-
-        BinaryData IPersistableModel<BatchUserIdentity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchUserIdentity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(BatchUserIdentity)} does not support '{options.Format}' format.");
-            }
-        }
-
-        BatchUserIdentity IPersistableModel<BatchUserIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchUserIdentity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBatchUserIdentity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BatchUserIdentity)} does not support '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BatchUserIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
