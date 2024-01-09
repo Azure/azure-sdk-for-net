@@ -104,6 +104,8 @@ namespace Azure
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
         }
 
+        internal void Buffer() => BufferContent();
+
         internal static void DisposeStreamIfNotBuffered(ref Stream? stream)
         {
             // We want to keep the ContentStream readable

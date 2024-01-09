@@ -96,7 +96,8 @@ public abstract class PipelineResponse : IDisposable
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
-    internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
+    // TODO: Prefer an approach that doesn't make this visible outside the dll
+    protected internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
     {
         if (IsBuffered)
         {

@@ -150,7 +150,7 @@ namespace Azure
 
         private static ErrorDetails CreateRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {
-            BufferResponseIfNeeded(response);
+            response.Buffer();
 
             parser ??= response.RequestFailedDetailsParser;
 
@@ -224,24 +224,24 @@ namespace Azure
             return new ErrorDetails(messageBuilder.ToString(), error?.Code, additionalInfo);
         }
 
-        private static void BufferResponseIfNeeded(Response response)
-        {
-            // Buffer into a memory stream if not already buffered
-            if (response.ContentStream is null or MemoryStream)
-            {
-                return;
-            }
+        //private static void BufferResponseIfNeeded(Response response)
+        //{
+        //    // Buffer into a memory stream if not already buffered
+        //    if (response.ContentStream is null or MemoryStream)
+        //    {
+        //        return;
+        //    }
 
-            var bufferedStream = new MemoryStream();
-            response.ContentStream.CopyTo(bufferedStream);
+        //    var bufferedStream = new MemoryStream();
+        //    response.ContentStream.CopyTo(bufferedStream);
 
-            // Dispose the unbuffered stream
-            response.ContentStream.Dispose();
+        //    // Dispose the unbuffered stream
+        //    response.ContentStream.Dispose();
 
-            // Reset the position of the buffered stream and set it on the response
-            bufferedStream.Position = 0;
-            response.ContentStream = bufferedStream;
-        }
+        //    // Reset the position of the buffered stream and set it on the response
+        //    bufferedStream.Position = 0;
+        //    response.ContentStream = bufferedStream;
+        //}
 
         // This class needs to be internal rather than private so that it can be used
         // by the System.Text.Json source generator.
