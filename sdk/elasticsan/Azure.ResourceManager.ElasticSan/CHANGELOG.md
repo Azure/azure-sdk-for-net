@@ -2,6 +2,11 @@
 
 ## 1.0.0 (2024-01-26)
 
+### Features Added
+- Supported snapshot and CMK for ElasticSan
+- Supported private endpoints for ElasticSan
+- Supported ElasticSan basic operations 
+
 ### Other Changes
 This is the first stable release of ElasticSan client library.
 
