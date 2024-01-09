@@ -2768,6 +2768,8 @@ namespace Azure.ResourceManager.Compute.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, Azure.Core.AzureLocation? location, Azure.Core.ResourceType? resourceType, string uniqueId, System.DateTimeOffset? publishedOn, System.DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionStorageProfile storageProfile) { throw null; }
         public static Azure.ResourceManager.Compute.CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string uniqueId = null, System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOfLifeOn = default(System.DateTimeOffset?), bool? isExcludedFromLatest = default(bool?), Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionStorageProfile storageProfile = null, string disclaimer = null, System.Collections.Generic.IReadOnlyDictionary<string, string> artifactTags = null) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.CommunityGalleryInfo CommunityGalleryInfo(string publisherUriString = null, string publisherContact = null, string eula = null, string publicNamePrefix = null, bool? communityGalleryEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> publicNames = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Compute.Models.CommunityGalleryInfo CommunityGalleryInfo(System.Uri publisherUri = null, string publisherContact = null, string eula = null, string publicNamePrefix = null, bool? communityGalleryEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> publicNames = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.CommunityGalleryMetadata CommunityGalleryMetadata(System.Uri publisherUri = null, string publisherContact = null, string eula = null, System.Collections.Generic.IEnumerable<string> publicNames = null, System.Uri privacyStatementUri = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.ComputeApiError ComputeApiError(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.ComputeApiErrorBase> details = null, Azure.ResourceManager.Compute.Models.InnerError innererror = null, string code = null, string target = null, string message = null) { throw null; }
@@ -3200,7 +3202,9 @@ namespace Azure.ResourceManager.Compute.Models
         public string PublicNamePrefix { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> PublicNames { get { throw null; } }
         public string PublisherContact { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Uri PublisherUri { get { throw null; } set { } }
+        public string PublisherUriString { get { throw null; } set { } }
     }
     public partial class CommunityGalleryMetadata
     {
