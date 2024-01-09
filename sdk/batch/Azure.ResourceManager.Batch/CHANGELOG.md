@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -24,10 +26,10 @@
 
 ### Features Added
 
-- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`. 
-    -  This property determines whether this pool should enable accelerated networking, with default value as False. 
-    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)). 
-- Added boolean property `enableAutomaticUpgrade` to `VMExtension`. 
+- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`.
+    -  This property determines whether this pool should enable accelerated networking, with default value as False.
+    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)).
+- Added boolean property `enableAutomaticUpgrade` to `VMExtension`.
     - This property determines whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
 - Added new property `Type` to `ContainerConfiguration`, which now supports two values: `DockerCompatible` and `CriCompatible`.
 
