@@ -65,7 +65,7 @@ public partial class HttpClientPipelineTransport
         protected override void SetContentCore(BinaryContent? content)
             => _content = content;
 
-        protected override MessageHeaders GetHeadersCore()
+        protected override PipelineMessageHeaders GetHeadersCore()
             => _headers;
 
         // PATCH value needed for compat with pre-net5.0 TFMs

@@ -32,7 +32,7 @@ public static class MockSyncAsyncExtensions
         }
     }
 
-    public static async Task DelaySyncOrAsync(this MessageDelay delay, PipelineMessage message, bool isAsync)
+    public static async Task DelaySyncOrAsync(this PipelineMessageDelay delay, PipelineMessage message, bool isAsync)
     {
         if (isAsync)
         {

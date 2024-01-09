@@ -627,7 +627,7 @@ public class CustomPipelineProcessorTests
             throw new NotImplementedException();
         }
 
-        protected override MessageHeaders GetHeadersCore()
+        protected override PipelineMessageHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }

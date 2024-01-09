@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockRetryPolicy : RequestRetryPolicy
+public class MockRetryPolicy : ClientRetryPolicy
 {
     public MockRetryPolicy() : this(3, new MockMessageDelay())
     {
     }
 
-    public MockRetryPolicy(int maxRetries, MessageDelay delay)
+    public MockRetryPolicy(int maxRetries, PipelineMessageDelay delay)
         : base(maxRetries, delay)
     {
     }

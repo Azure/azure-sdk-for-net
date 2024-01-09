@@ -91,7 +91,7 @@ public sealed partial class ClientPipeline
         }
         else
         {
-            policies[index++] = new RequestRetryPolicy();
+            policies[index++] = new ClientRetryPolicy();
         }
 
         perTryPolicies.CopyTo(policies.AsSpan(index));

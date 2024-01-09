@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockMessageDelay : MessageDelay
+public class MockMessageDelay : PipelineMessageDelay
 {
     private int _completionCount;
 

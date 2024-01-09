@@ -29,9 +29,9 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract string ReasonPhrase { get; }
 
-    public MessageHeaders Headers => GetHeadersCore();
+    public PipelineMessageHeaders Headers => GetHeadersCore();
 
-    protected abstract MessageHeaders GetHeadersCore();
+    protected abstract PipelineMessageHeaders GetHeadersCore();
 
     /// <summary>
     /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.

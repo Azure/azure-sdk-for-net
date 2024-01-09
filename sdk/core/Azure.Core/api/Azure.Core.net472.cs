@@ -210,8 +210,7 @@ namespace Azure
     public partial class RequestContext : System.ClientModel.Primitives.RequestOptions
     {
         public RequestContext() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
+        public new Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
@@ -245,7 +244,7 @@ namespace Azure
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        protected override System.ClientModel.Primitives.MessageHeaders GetHeadersCore() { throw null; }
+        protected override System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected sealed override void SetIsErrorCore(bool isError) { }
         public override string ToString() { throw null; }
@@ -525,7 +524,7 @@ namespace Azure.Core
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         protected override System.ClientModel.BinaryContent? GetContentCore() { throw null; }
-        protected override System.ClientModel.Primitives.MessageHeaders GetHeadersCore() { throw null; }
+        protected override System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore() { throw null; }
         protected override string GetMethodCore() { throw null; }
         protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);

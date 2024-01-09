@@ -12,7 +12,7 @@ namespace Azure.Core.Pipeline;
 
 public partial class RetryPolicy
 {
-    internal class AzureCoreRetryPolicy : RequestRetryPolicy
+    internal class AzureCoreRetryPolicy : ClientRetryPolicy
     {
         private readonly RetryPolicy _pipelinePolicy;
 
@@ -86,10 +86,10 @@ public partial class RetryPolicy
             return httpMessage;
         }
 
-        private static MessageDelay CreateDelay(DelayStrategy strategy, RetryPolicy policy)
+        private static PipelineMessageDelay CreateDelay(DelayStrategy strategy, RetryPolicy policy)
             => new AzureCoreRetryDelay(strategy, policy);
 
-        private class AzureCoreRetryDelay : MessageDelay
+        private class AzureCoreRetryDelay : PipelineMessageDelay
         {
             private readonly DelayStrategy _strategy;
             private readonly RetryPolicy _retryPolicy;

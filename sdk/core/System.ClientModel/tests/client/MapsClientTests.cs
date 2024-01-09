@@ -233,7 +233,7 @@ public class MapsClientTests
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
 
             RequestOptions options = new RequestOptions();
-            options.ErrorBehavior = ErrorBehavior.NoThrow;
+            options.ErrorOptions = ResponseErrorOptions.NoThrow;
 
             // Call protocol method in order to pass RequestOptions
             ClientResult output = client.GetCountryCode(ipAddress.ToString(), options);
@@ -311,7 +311,7 @@ public class MapsClientTests
         {
             private string _method;
             private Uri _uri;
-            private MessageHeaders _headers;
+            private PipelineMessageHeaders _headers;
 
             public CustomTransportRequest()
             {
@@ -326,7 +326,7 @@ public class MapsClientTests
             protected override Uri GetUriCore()
                 => _uri;
 
-            protected override MessageHeaders GetHeadersCore()
+            protected override PipelineMessageHeaders GetHeadersCore()
                 => _headers;
 
             protected override BinaryContent GetContentCore()
@@ -371,13 +371,13 @@ public class MapsClientTests
                 _stream?.Dispose();
             }
 
-            protected override MessageHeaders GetHeadersCore()
+            protected override PipelineMessageHeaders GetHeadersCore()
             {
                 throw new NotImplementedException();
             }
         }
 
-        private class CustomHeaders : MessageHeaders
+        private class CustomHeaders : PipelineMessageHeaders
         {
             private readonly Dictionary<string, string> _headers;
 

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public class RequestRetryPolicy : PipelinePolicy
+public class ClientRetryPolicy : PipelinePolicy
 {
     private const int DefaultMaxRetries = 3;
 
     private readonly int _maxRetries;
-    private readonly MessageDelay _delay;
+    private readonly PipelineMessageDelay _delay;
 
-    public RequestRetryPolicy() : this(DefaultMaxRetries, MessageDelay.Default)
+    public ClientRetryPolicy() : this(DefaultMaxRetries, PipelineMessageDelay.Default)
     {
     }
 
-    public RequestRetryPolicy(int maxRetries, MessageDelay delay)
+    public ClientRetryPolicy(int maxRetries, PipelineMessageDelay delay)
     {
         _maxRetries = maxRetries;
         _delay = delay;

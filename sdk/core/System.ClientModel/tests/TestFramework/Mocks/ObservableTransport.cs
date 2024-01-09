@@ -96,7 +96,7 @@ public class ObservableTransport : PipelineTransport
             throw new NotImplementedException();
         }
 
-        protected override MessageHeaders GetHeadersCore()
+        protected override PipelineMessageHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }
@@ -139,7 +139,7 @@ public class ObservableTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override MessageHeaders GetHeadersCore()
+        protected override PipelineMessageHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }

@@ -75,11 +75,18 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
     }
-    [System.FlagsAttribute]
-    public enum ErrorBehavior
+    public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        Default = 0,
-        NoThrow = 1,
+        public ClientRetryPolicy() { }
+        public ClientRetryPolicy(int maxRetries, System.ClientModel.Primitives.PipelineMessageDelay delay) { }
+        protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+        protected virtual bool ShouldRetryCore(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryCoreAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
@@ -103,27 +110,6 @@ namespace System.ClientModel.Primitives
         T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
-    }
-    public partial class MessageDelay
-    {
-        public MessageDelay() { }
-        public void Delay(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { }
-        public System.Threading.Tasks.Task DelayAsync(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.TimeSpan GetDelayCore(System.ClientModel.Primitives.PipelineMessage message, int delayCount) { throw null; }
-        protected virtual void OnDelayComplete(System.ClientModel.Primitives.PipelineMessage message) { }
-        protected virtual void WaitCore(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { }
-        protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-    public abstract partial class MessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
-    {
-        protected MessageHeaders() { }
-        public abstract void Add(string name, string value);
-        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
-        public abstract bool Remove(string name);
-        public abstract void Set(string name, string value);
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public abstract bool TryGetValue(string name, out string? value);
-        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public static partial class ModelReaderWriter
     {
@@ -163,6 +149,27 @@ namespace System.ClientModel.Primitives
         protected internal PipelineMessageClassifier() { }
         public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
+    public partial class PipelineMessageDelay
+    {
+        public PipelineMessageDelay() { }
+        public void Delay(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { }
+        public System.Threading.Tasks.Task DelayAsync(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.TimeSpan GetDelayCore(System.ClientModel.Primitives.PipelineMessage message, int delayCount) { throw null; }
+        protected virtual void OnDelayComplete(System.ClientModel.Primitives.PipelineMessage message) { }
+        protected virtual void WaitCore(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { }
+        protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public abstract partial class PipelineMessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
+    {
+        protected PipelineMessageHeaders() { }
+        public abstract void Add(string name, string value);
+        public abstract System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, string>> GetEnumerator();
+        public abstract bool Remove(string name);
+        public abstract void Set(string name, string value);
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
+    }
     public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
@@ -181,12 +188,12 @@ namespace System.ClientModel.Primitives
     {
         protected PipelineRequest() { }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
-        public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
+        public System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
         public string Method { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public abstract void Dispose();
         protected abstract System.ClientModel.BinaryContent? GetContentCore();
-        protected abstract System.ClientModel.Primitives.MessageHeaders GetHeadersCore();
+        protected abstract System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore();
         protected abstract string GetMethodCore();
         protected abstract System.Uri GetUriCore();
         protected abstract void SetContentCore(System.ClientModel.BinaryContent? content);
@@ -198,12 +205,12 @@ namespace System.ClientModel.Primitives
         protected PipelineResponse() { }
         public System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
-        public System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
+        public System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
         public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
-        protected abstract System.ClientModel.Primitives.MessageHeaders GetHeadersCore();
+        protected abstract System.ClientModel.Primitives.PipelineMessageHeaders GetHeadersCore();
         protected virtual void SetIsErrorCore(bool isError) { }
     }
     public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy
@@ -222,22 +229,9 @@ namespace System.ClientModel.Primitives
     {
         public RequestOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ResponseErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-    }
-    public partial class RequestRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
-    {
-        public RequestRetryPolicy() { }
-        public RequestRetryPolicy(int maxRetries, System.ClientModel.Primitives.MessageDelay delay) { }
-        protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-        protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message) { }
-        protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
-        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-        protected virtual bool ShouldRetryCore(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryCoreAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
@@ -248,6 +242,12 @@ namespace System.ClientModel.Primitives
         public static void SetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, System.TimeSpan networkTimeout) { }
         public static bool TryGetBufferResponse(System.ClientModel.Primitives.PipelineMessage message, out bool bufferResponse) { throw null; }
         public static bool TryGetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, out System.TimeSpan networkTimeout) { throw null; }
+    }
+    [System.FlagsAttribute]
+    public enum ResponseErrorOptions
+    {
+        Default = 0,
+        NoThrow = 1,
     }
     public partial class ResponseStatusClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {

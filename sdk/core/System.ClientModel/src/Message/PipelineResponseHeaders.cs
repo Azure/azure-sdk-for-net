@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Primitives;
 
-internal class PipelineResponseHeaders : MessageHeaders
+internal class PipelineResponseHeaders : PipelineMessageHeaders
 {
     private readonly HttpResponseMessage _httpResponse;
     private readonly HttpContent _httpResponseContent;

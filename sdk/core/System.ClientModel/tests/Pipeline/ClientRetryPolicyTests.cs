@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Pipeline;
 
-public class RequestRetryPolicyTests : SyncAsyncTestBase
+public class ClientRetryPolicyTests : SyncAsyncTestBase
 {
-    public RequestRetryPolicyTests(bool isAsync) : base(isAsync)
+    public ClientRetryPolicyTests(bool isAsync) : base(isAsync)
     {
     }
 
@@ -74,7 +74,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
 
         ClientPipelineOptions options = new()
         {
-            RetryPolicy = new RequestRetryPolicy(maxRetryCount, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
+            RetryPolicy = new ClientRetryPolicy(maxRetryCount, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
             Transport = new RetriableTransport("Transport", i => 500)
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -104,7 +104,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
 
         ClientPipelineOptions options = new()
         {
-            RetryPolicy = new RequestRetryPolicy(maxRetryCount, delay),
+            RetryPolicy = new ClientRetryPolicy(maxRetryCount, delay),
             Transport = new RetriableTransport("Transport", i => 500)
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -124,7 +124,7 @@ public class RequestRetryPolicyTests : SyncAsyncTestBase
 
         ClientPipelineOptions options = new()
         {
-            RetryPolicy = new RequestRetryPolicy(maxRetries: 10, new MockMessageDelay()),
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 10, new MockMessageDelay()),
             Transport = new RetriableTransport("Transport",
                 new int[] { 408, 429, 500, 502, 503, 504, 501 })
         };

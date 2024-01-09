@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
-public class MessageDelay
+public class PipelineMessageDelay
 {
-    internal static readonly MessageDelay Default = new MessageDelay();
+    internal static readonly PipelineMessageDelay Default = new PipelineMessageDelay();
 
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
     private static readonly TimeSpan DefaultMaxDelay = TimeSpan.FromMinutes(1);
 
     private readonly TimeSpan _initialDelay;
 
-    public MessageDelay()
+    public PipelineMessageDelay()
     {
         _initialDelay = DefaultInitialDelay;
     }

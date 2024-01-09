@@ -130,7 +130,7 @@ public class RetriableTransport : PipelineTransport
             throw new NotImplementedException();
         }
 
-        protected override MessageHeaders GetHeadersCore()
+        protected override PipelineMessageHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }
@@ -178,7 +178,7 @@ public class RetriableTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override MessageHeaders GetHeadersCore()
+        protected override PipelineMessageHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }

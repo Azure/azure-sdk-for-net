@@ -19,19 +19,19 @@ public class RequestOptions
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
 
-    private readonly MessageHeaders _requestHeaders;
+    private readonly PipelineMessageHeaders _requestHeaders;
 
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
-        ErrorBehavior = ErrorBehavior.Default;
+        ErrorOptions = ResponseErrorOptions.Default;
 
         _requestHeaders = new PipelineRequestHeaders();
     }
 
     public CancellationToken CancellationToken { get; set; }
 
-    public ErrorBehavior ErrorBehavior { get; set; }
+    public ResponseErrorOptions ErrorOptions { get; set; }
 
     public void AddHeader(string name, string value)
     {

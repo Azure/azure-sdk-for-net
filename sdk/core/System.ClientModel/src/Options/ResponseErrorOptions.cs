@@ -7,7 +7,7 @@ namespace System.ClientModel.Primitives;
 /// ErrorBehavior controls the behavior of an operation when an unexpected response status code is received.
 /// </summary>
 [Flags]
-public enum ErrorBehavior
+public enum ResponseErrorOptions
 {
     /// <summary>
     /// Indicates that an operation should throw an exception when the response indicates a failure.

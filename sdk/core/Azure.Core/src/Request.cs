@@ -121,7 +121,7 @@ namespace Azure.Core
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        protected override MessageHeaders GetHeadersCore()
+        protected override PipelineMessageHeaders GetHeadersCore()
             => new AzureCoreMessageHeaders(Headers);
 
         #endregion
@@ -182,7 +182,7 @@ namespace Azure.Core
         /// <summary>
         /// Backwards adapter to MessageHeaders to implement GetHeadersCore
         /// </summary>
-        private sealed class AzureCoreMessageHeaders : MessageHeaders
+        private sealed class AzureCoreMessageHeaders : PipelineMessageHeaders
         {
             /// <summary>
             /// Headers on the Azure.Core.Request type to adapt to.

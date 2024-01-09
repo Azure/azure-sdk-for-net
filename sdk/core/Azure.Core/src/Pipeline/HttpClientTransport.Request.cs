@@ -77,7 +77,7 @@ namespace Azure.Core.Pipeline
                 _pipelineRequest.Content = content;
             }
 
-            protected override MessageHeaders GetHeadersCore()
+            protected override PipelineMessageHeaders GetHeadersCore()
                 => _pipelineRequest.Headers;
 
             #endregion

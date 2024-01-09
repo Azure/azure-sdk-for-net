@@ -29,32 +29,28 @@ namespace Azure
         /// <summary>
         /// Controls under what conditions the operation raises an exception if the underlying response indicates a failure.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ErrorOptions ErrorOptions
+        public new ErrorOptions ErrorOptions
         {
-            get => FromErrorBehavior(ErrorBehavior);
-            set
-            {
-                ErrorBehavior = ToErrorBehavior(value);
-            }
+            get => FromResponseErrorOptions(base.ErrorOptions);
+            set => base.ErrorOptions = ToResponseErrorOptions(value);
         }
 
-        private ErrorOptions FromErrorBehavior(ErrorBehavior errorOptions)
+        private static ErrorOptions FromResponseErrorOptions(ResponseErrorOptions options)
         {
-            return errorOptions switch
+            return options switch
             {
-                ErrorBehavior.Default => ErrorOptions.Default,
-                ErrorBehavior.NoThrow => ErrorOptions.NoThrow,
+                ResponseErrorOptions.Default => ErrorOptions.Default,
+                ResponseErrorOptions.NoThrow => ErrorOptions.NoThrow,
                 _ => throw new NotSupportedException(),
             };
         }
 
-        private ErrorBehavior ToErrorBehavior(ErrorOptions errorOptions)
+        private static ResponseErrorOptions ToResponseErrorOptions(ErrorOptions options)
         {
-            return errorOptions switch
+            return options switch
             {
-                ErrorOptions.Default => ErrorBehavior.Default,
-                ErrorOptions.NoThrow => ErrorBehavior.NoThrow,
+                ErrorOptions.Default => ResponseErrorOptions.Default,
+                ErrorOptions.NoThrow => ResponseErrorOptions.NoThrow,
                 _ => throw new NotSupportedException(),
             };
         }

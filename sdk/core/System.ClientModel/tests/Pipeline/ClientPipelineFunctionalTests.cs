@@ -187,7 +187,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             NetworkTimeout = TimeSpan.FromMilliseconds(500),
-            RetryPolicy = new RequestRetryPolicy(maxRetries: 0, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 0, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -214,7 +214,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             NetworkTimeout = TimeSpan.FromMilliseconds(500),
-            RetryPolicy = new RequestRetryPolicy(maxRetries: 0, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 0, new MockMessageDelay(i => TimeSpan.FromMilliseconds(10))),
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 

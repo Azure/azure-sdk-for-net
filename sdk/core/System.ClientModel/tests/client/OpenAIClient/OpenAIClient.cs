@@ -57,7 +57,7 @@ public class OpenAIClient
 
         PipelineResponse response = message.Response;
 
-        if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
+        if (response.IsError && options.ErrorOptions == ResponseErrorOptions.Default)
         {
             throw new ClientResultException(response);
         }
