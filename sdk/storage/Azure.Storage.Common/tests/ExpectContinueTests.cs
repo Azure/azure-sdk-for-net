@@ -72,30 +72,28 @@ namespace Azure.Storage.Tests
         public void ThrottlePolicyAddsHeaderOnlyAfterError([Values(429, 500, 503)] int errorStatusCode)
         {
             ExpectContinueOnThrottlePolicy policy = new();
+            MockTransport transport = new(new(202), new(errorStatusCode), new(202));
+            HttpPipeline pipeline = new(transport, new HttpPipelinePolicy[] { policy });
+            ResponseClassifier classifier = new StorageResponseClassifier();
+
             MockRequest MakeRequest() => new()
             {
                 Content = RequestContent.Create(RequestContent.Create("foo"))
             };
-            MockResponse responseOk = new(202);
-            MockResponse responseError = new(errorStatusCode);
 
             // message1 doesn't get expect header
-            HttpMessage message1 = new(MakeRequest(), null);
-            policy.OnSendingRequest(message1);
+            HttpMessage message1 = new(MakeRequest(), classifier);
+            pipeline.Send(message1, default);
             Assert.That(message1.Request.Headers.Contains("Expect"), Is.False);
-            message1.Response = responseOk;
-            policy.OnReceivedResponse(message1);
 
             // message2 doesn't get expect header but will trigger future messages
-            HttpMessage message2 = new(MakeRequest(), null);
-            policy.OnSendingRequest(message2);
+            HttpMessage message2 = new(MakeRequest(), classifier);
+            pipeline.Send(message2, default);
             Assert.That(message2.Request.Headers.Contains("Expect"), Is.False);
-            message2.Response = responseError;
-            policy.OnReceivedResponse(message2);
 
             // message3 gets expect header
-            HttpMessage message3 = new(MakeRequest(), null);
-            policy.OnSendingRequest(message3);
+            HttpMessage message3 = new(MakeRequest(), classifier);
+            pipeline.Send(message3, default);
             Assert.That(message3.Request.Headers.TryGetValue("Expect", out string value), Is.True);
             Assert.That(value, Is.EqualTo("100-continue"));
         }
@@ -151,22 +149,23 @@ namespace Azure.Storage.Tests
             {
                 ContentLengthThreshold = threshold,
             };
+            MockTransport transport = new(req => new MockResponse(429));
+            HttpPipeline pipeline = new(transport, new HttpPipelinePolicy[] { policy });
+            ResponseClassifier classifier = new StorageResponseClassifier();
+
             MockRequest MakeRequest() => new()
             {
                 Content = RequestContent.Create(r.NextMemoryInline(bodyLength))
             };
-            MockResponse responseError = new(429);
 
             // message1 doesn't get expect header but will trigger future messages
-            HttpMessage message1 = new(MakeRequest(), null);
-            policy.OnSendingRequest(message1);
+            HttpMessage message1 = new(MakeRequest(), classifier);
+            pipeline.Send(message1, default);
             Assert.That(message1.Request.Headers.Contains("Expect"), Is.False);
-            message1.Response = responseError;
-            policy.OnReceivedResponse(message1);
 
-            // message2 gets expect header
-            HttpMessage message2 = new(MakeRequest(), null);
-            policy.OnSendingRequest(message2);
+            // message2 gets expect header if body meets threshold
+            HttpMessage message2 = new(MakeRequest(), classifier);
+            pipeline.Send(message2, default);
             if (expectHeader)
             {
                 Assert.That(message2.Request.Headers.TryGetValue("Expect", out string value), Is.True);
@@ -186,6 +185,10 @@ namespace Azure.Storage.Tests
             {
                 ThrottleInterval = backoff,
             };
+            MockTransport transport = new(new(429), new(202), new(202));
+            HttpPipeline pipeline = new(transport, new HttpPipelinePolicy[] { policy });
+            ResponseClassifier classifier = new StorageResponseClassifier();
+
             MockRequest MakeRequest() => new()
             {
                 Content = RequestContent.Create(RequestContent.Create("foo"))
@@ -194,26 +197,22 @@ namespace Azure.Storage.Tests
             MockResponse responseError = new(429);
 
             // message1 doesn't get expect header but will trigger future messages
-            HttpMessage message1 = new(MakeRequest(), null);
-            policy.OnSendingRequest(message1);
+            HttpMessage message1 = new(MakeRequest(), classifier);
+            pipeline.Send(message1, default);
             Assert.That(message1.Request.Headers.Contains("Expect"), Is.False);
-            message1.Response = responseError;
-            policy.OnReceivedResponse(message1);
 
             // message2 gets expect header
-            HttpMessage message2 = new(MakeRequest(), null);
-            policy.OnSendingRequest(message2);
+            HttpMessage message2 = new(MakeRequest(), classifier);
+            pipeline.Send(message2, default);
             Assert.That(message2.Request.Headers.TryGetValue("Expect", out string value), Is.True);
             Assert.That(value, Is.EqualTo("100-continue"));
-            message1.Response = responseOk;
-            policy.OnReceivedResponse(message2);
 
             // wait out policy backoff
             await Task.Delay(backoff);
 
             // message3 doesn't get expect header
-            HttpMessage message3 = new(MakeRequest(), null);
-            policy.OnSendingRequest(message3);
+            HttpMessage message3 = new(MakeRequest(), classifier);
+            pipeline.Send(message3, default);
             Assert.That(message3.Request.Headers.Contains("Expect"), Is.False);
         }
     }

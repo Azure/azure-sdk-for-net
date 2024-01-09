@@ -10,7 +10,7 @@ using System.Net.Sockets;
 
 namespace Azure.Storage;
 
-internal class ExpectContinueOnThrottlePolicy : HttpPipelineSynchronousPolicy
+internal class ExpectContinueOnThrottlePolicy : HttpPipelinePolicy
 {
     private long _lastThrottleTicks = 0;
 
