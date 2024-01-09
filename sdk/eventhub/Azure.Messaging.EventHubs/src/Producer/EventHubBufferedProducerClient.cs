@@ -1803,11 +1803,12 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if ((_partitions == null) || (_partitionHash == null))
                 {
-                    // Since the retry policy for the buffered producer is generous to allow for long running background work to be done
-                    // effectively. For startup, a more conservative retry policy is more helpful, so cancel after one TryTimeout interval.
+                    // The retry policy for the buffered producer is, by default, generous to allow for long running background work to be done
+                    // effectively. For startup, a more conservative retry policy is needed to prevent the producer from hanging, so cancel
+                    // after one TryTimeout interval.
 
                     var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                    linkedCts.CancelAfter(DefaultOptions.RetryOptions.TryTimeout);
+                    linkedCts.CancelAfter(_options.RetryOptions.TryTimeout);
 
                     try
                     {

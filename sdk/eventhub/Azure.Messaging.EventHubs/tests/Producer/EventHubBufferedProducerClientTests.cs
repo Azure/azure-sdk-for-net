@@ -1669,7 +1669,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            //var expectedPartition = "0";
+            var options = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(1) } };
+
             var mockConnection = new Mock<EventHubConnection>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), default);
             mockConnection.Setup(connection => connection.GetPartitionIdsAsync(
                 It.IsAny<EventHubsRetryPolicy>(),
@@ -1679,6 +1680,31 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" }) { CallBase = true };
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            await Task.Yield();
+            var thrownException = Assert.ThrowsAsync<EventHubsException>(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), "The attempt to start publishing should have surfaced an exception.");
+            Assert.True(thrownException.IsTransient, "Exception thrown should be transient");
+            Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "Exception thrown should have a reason of ServiceCommunicationProblem.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StartPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartPublishingRespectsTryTimeoutForServiceErrors()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.Zero };
+            var bufferedProducerOptions = new EventHubBufferedProducerClientOptions { RetryOptions = retryOptions };
+            var producerOptions = new EventHubProducerClientOptions { RetryOptions = retryOptions, Identifier = "abc123" };
+
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), default);
+            var mockProducer = new Mock<EventHubProducerClient>(connection, producerOptions) { CallBase = true };
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, bufferedProducerOptions) { CallBase = true };
 
             await Task.Yield();
             var thrownException = Assert.ThrowsAsync<EventHubsException>(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), "The attempt to start publishing should have surfaced an exception.");
