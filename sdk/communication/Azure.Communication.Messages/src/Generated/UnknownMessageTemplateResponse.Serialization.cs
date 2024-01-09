@@ -7,25 +7,28 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateResponse
+    internal partial class UnknownMessageTemplateResponse
     {
-        internal static MessageTemplateResponse DeserializeMessageTemplateResponse(JsonElement element)
+        internal static UnknownMessageTemplateResponse DeserializeUnknownMessageTemplateResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string kind = "Unknown";
             string name = default;
             string language = default;
-            CommunicationMessagesChannel channelType = default;
             MessageTemplateStatus status = default;
-            Optional<WhatsAppMessageTemplateResponse> whatsApp = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -36,35 +39,21 @@ namespace Azure.Communication.Messages
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelType"u8))
-                {
-                    channelType = new CommunicationMessagesChannel(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("status"u8))
                 {
                     status = new MessageTemplateStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("whatsApp"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    whatsApp = WhatsAppMessageTemplateResponse.DeserializeWhatsAppMessageTemplateResponse(property.Value);
-                    continue;
-                }
             }
-            return new MessageTemplateResponse(name, language, channelType, status, whatsApp.Value);
+            return new UnknownMessageTemplateResponse(kind, name, language, status);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MessageTemplateResponse FromResponse(Response response)
+        internal static new UnknownMessageTemplateResponse FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMessageTemplateResponse(document.RootElement);
+            return DeserializeUnknownMessageTemplateResponse(document.RootElement);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Communication.Messages.Models.Channels;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -11,7 +12,7 @@ namespace Azure.Communication.Messages.Tests
     public class MessageTemplateClientTests : ClientTestBase
     {
         protected const string ConnectionString = "endpoint=https://contoso.azure.com/;accesskey=ZHVtbXlhY2Nlc3NrZXk=";
-        private const string GetTemplatesApiResponsePayload = "{\"value\":[{\"name\":\"optin_confirmation\",\"language\":\"en_US\",\"channelType\":\"whatsApp\",\"status\":\"approved\",\"whatsApp\":{\"content\":[{\"type\":\"BODY\",\"text\":\"Reply {{1}} to receive {{2}}. Txt {{3}} for HELP, Txt {{4}} to opt-out.\"}]}},{\"name\":\"sample_flight_confirmation\",\"language\":\"en_US\",\"channelType\":\"whatsApp\",\"status\":\"approved\",\"whatsApp\":{\"content\":[{\"type\":\"HEADER\",\"format\":\"DOCUMENT\"},{\"type\":\"BODY\",\"text\":\"This is your flight confirmation for {{1}}-{{2}} on {{3}}.\"},{\"type\":\"FOOTER\",\"text\":\"This message is from an unverified business.\"}]}},{\"name\":\"sample_happy_hour_announcement\",\"language\":\"pt_BR\",\"channelType\":\"whatsApp\",\"status\":\"approved\",\"whatsApp\":{\"content\":[{\"type\":\"HEADER\",\"format\":\"VIDEO\"},{\"type\":\"BODY\",\"text\":\"O happy hour chegou! \\ud83c\\udf7a😀\\ud83c\\udf78\\nSeja feliz e aproveite o dia. \\ud83c\\udf89\\nLocal: {{1}}\\nHorário: {{2}}\"},{\"type\":\"FOOTER\",\"text\":\"Esta mensagem é de uma empresa não verificada.\"}]}}]}";
+        private const string GetTemplatesApiResponsePayload = "{\"value\":[{\"name\":\"optin_confirmation\",\"language\":\"en_US\",\"kind\":\"whatsApp\",\"status\":\"approved\",\"whatsApp\":{\"content\":[{\"type\":\"BODY\",\"text\":\"Reply {{1}} to receive {{2}}. Txt {{3}} for HELP, Txt {{4}} to opt-out.\"}]}},{\"name\":\"sample_flight_confirmation\",\"language\":\"en_US\",\"kind\":\"whatsApp\",\"status\":\"approved\",\"whatsApp\":{\"content\":[{\"type\":\"HEADER\",\"format\":\"DOCUMENT\"},{\"type\":\"BODY\",\"text\":\"This is your flight confirmation for {{1}}-{{2}} on {{3}}.\"},{\"type\":\"FOOTER\",\"text\":\"This message is from an unverified business.\"}]}},{\"name\":\"sample_happy_hour_announcement\",\"language\":\"pt_BR\",\"kind\":\"whatsApp\",\"status\":\"approved\",\"whatsApp\":{\"content\":[{\"type\":\"HEADER\",\"format\":\"VIDEO\"},{\"type\":\"BODY\",\"text\":\"O happy hour chegou! \\ud83c\\udf7a😀\\ud83c\\udf78\\nSeja feliz e aproveite o dia. \\ud83c\\udf89\\nLocal: {{1}}\\nHorário: {{2}}\"},{\"type\":\"FOOTER\",\"text\":\"Esta mensagem é de uma empresa não verificada.\"}]}}]}";
 
         public MessageTemplateClientTests(bool isAsync) : base(isAsync)
         {
@@ -42,7 +43,7 @@ namespace Azure.Communication.Messages.Tests
                 Assert.IsNotNull(template.Name);
                 Assert.IsNotNull(template.Language);
                 Assert.IsNotNull(template.Status);
-                Assert.AreEqual(template.ChannelType, CommunicationMessagesChannel.WhatsApp);
+                Assert.IsTrue(template is WhatsAppMessageTemplateItem);
             }
         }
 

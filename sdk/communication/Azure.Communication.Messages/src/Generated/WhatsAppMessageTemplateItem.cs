@@ -6,24 +6,38 @@
 #nullable disable
 
 using System;
+using Azure.Communication.Messages;
+using Azure.Core;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The WhatsApp-specific template response contract. </summary>
-    internal partial class WhatsAppMessageTemplateResponse
+    public partial class WhatsAppMessageTemplateItem : MessageTemplateItem
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateResponse"/>. </summary>
-        internal WhatsAppMessageTemplateResponse()
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/>. </summary>
+        /// <param name="name"> Get the template's Name. </param>
+        /// <param name="language"> Get the template's language. </param>
+        /// <param name="status"> The aggregated template status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
+        internal WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status) : base(name, language, status)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(language, nameof(language));
+
+            Kind = "whatsApp";
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/>. </summary>
+        /// <param name="kind"> Discriminator. </param>
+        /// <param name="name"> Get the template's Name. </param>
+        /// <param name="language"> Get the template's language. </param>
+        /// <param name="status"> The aggregated template status. </param>
         /// <param name="content">
         /// WhatsApp platform's template content
         /// This is the payload returned from WhatsApp
         /// API.
         /// </param>
-        internal WhatsAppMessageTemplateResponse(BinaryData content)
+        internal WhatsAppMessageTemplateItem(string kind, string name, string language, MessageTemplateStatus status, BinaryData content) : base(kind, name, language, status)
         {
             Content = content;
         }

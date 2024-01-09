@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     /// <summary> Options for the notification message. </summary>
-    public class SendMessageOptions
+    public partial class SendMessageOptions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SendMessageOptions"/> class for sending a Text message.

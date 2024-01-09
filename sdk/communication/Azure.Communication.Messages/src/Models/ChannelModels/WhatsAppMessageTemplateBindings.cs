@@ -54,7 +54,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 foreach (var item in Buttons)
                 {
-                    whatsApp.Button.Add(new WhatsAppMessageTemplateBindingsButton(item.Key) { SubType = item.Value });
+                    whatsApp.Button.Add(new WhatsAppMessageTemplateBindingsButton(item.Key) { SubType = item.Value.ToString() });
                 }
             };
 

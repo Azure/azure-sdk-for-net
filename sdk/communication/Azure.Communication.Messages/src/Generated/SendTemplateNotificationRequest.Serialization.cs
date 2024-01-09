@@ -10,11 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class SendNotificationRequest : IUtf8JsonSerializable
+    internal partial class SendTemplateNotificationRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("template"u8);
+            writer.WriteObjectValue(Template);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("channelRegistrationId"u8);
@@ -30,7 +32,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);

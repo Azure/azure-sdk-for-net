@@ -10,23 +10,29 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class WhatsAppMessageTemplateBindingsButton : IUtf8JsonSerializable
+    internal partial class SendTextNotificationRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubType))
+            writer.WritePropertyName("content"u8);
+            writer.WriteStringValue(Content);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind);
+            writer.WritePropertyName("channelRegistrationId"u8);
+            writer.WriteStringValue(ChannelRegistrationId);
+            writer.WritePropertyName("to"u8);
+            writer.WriteStartArray();
+            foreach (var item in To)
             {
-                writer.WritePropertyName("subType"u8);
-                writer.WriteStringValue(SubType);
+                writer.WriteStringValue(item);
             }
-            writer.WritePropertyName("refValue"u8);
-            writer.WriteStringValue(RefValue);
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);
