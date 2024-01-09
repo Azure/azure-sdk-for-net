@@ -19,6 +19,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 update-required-copy:
   GalleryImage: OSType

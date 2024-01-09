@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServicesUpdateDomainRestClient.CreateListUpdateDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServicesUpdateDomainRestClient.CreateListUpdateDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier, _cloudServicesUpdateDomainClientDiagnostics, Pipeline, "CloudServiceResource.GetUpdateDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(e), _cloudServicesUpdateDomainClientDiagnostics, Pipeline, "CloudServiceResource.GetUpdateDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1064,7 +1064,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServicesUpdateDomainRestClient.CreateListUpdateDomainsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServicesUpdateDomainRestClient.CreateListUpdateDomainsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier, _cloudServicesUpdateDomainClientDiagnostics, Pipeline, "CloudServiceResource.GetUpdateDomains", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UpdateDomainIdentifier.DeserializeUpdateDomainIdentifier(e), _cloudServicesUpdateDomainClientDiagnostics, Pipeline, "CloudServiceResource.GetUpdateDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
