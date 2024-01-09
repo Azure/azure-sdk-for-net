@@ -119,8 +119,32 @@ namespace Azure.Communication.Messages
 
             try
             {
-                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal());
-                return await SendAsync(request, cancellationToken).ConfigureAwait(false);
+                switch (options.MessageType.ToString().ToLower())
+                {
+                    case "text":
+                        return await SendAsync(
+                            new SendTextNotificationRequest(
+                                options.ChannelRegistrationId,
+                                options.To,
+                                options.Content), cancellationToken).ConfigureAwait(false);
+                    case "image":
+                        return await SendAsync(
+                            new SendMediaNotificationRequest(
+                                options.ChannelRegistrationId,
+                                options.To,
+                                options.MediaUri)
+                            {
+                                Content = options.Content,
+                            }, cancellationToken).ConfigureAwait(false);
+                    case "template":
+                        return await SendAsync(
+                            new SendTemplateNotificationRequest(
+                                options.ChannelRegistrationId,
+                                options.To,
+                                options.Template.ToMessageTemplateInternal()), cancellationToken).ConfigureAwait(false);
+                    default:
+                        throw new ArgumentNullException(nameof(options));
+                }
             }
             catch (Exception ex)
             {
@@ -141,8 +165,32 @@ namespace Azure.Communication.Messages
 
             try
             {
-                SendNotificationRequest request = new SendNotificationRequest(options.ChannelRegistrationId, options.To, options.MessageType, options.Content, options.MediaUri?.AbsoluteUri, options.Template?.ToMessageTemplateInternal());
-                return Send(request, cancellationToken);
+                switch (options.MessageType.ToString().ToLower())
+                {
+                    case "text":
+                        return Send(
+                            new SendTextNotificationRequest(
+                                options.ChannelRegistrationId,
+                                options.To,
+                                options.Content), cancellationToken);
+                    case "image":
+                        return Send(
+                            new SendMediaNotificationRequest(
+                                options.ChannelRegistrationId,
+                                options.To,
+                                options.MediaUri)
+                            {
+                                Content = options.Content,
+                            }, cancellationToken);
+                    case "template":
+                        return Send(
+                            new SendTemplateNotificationRequest(
+                                options.ChannelRegistrationId,
+                                options.To,
+                                options.Template.ToMessageTemplateInternal()), cancellationToken);
+                    default:
+                        throw new ArgumentNullException(nameof(options));
+                }
             }
             catch (Exception ex)
             {

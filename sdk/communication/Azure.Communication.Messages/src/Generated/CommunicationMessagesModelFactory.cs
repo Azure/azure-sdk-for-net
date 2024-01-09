@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -41,6 +42,32 @@ namespace Azure.Communication.Messages
             }
 
             return new MessageReceipt(messageId, to);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateItem"/>. </summary>
+        /// <param name="kind"> Discriminator. </param>
+        /// <param name="name"> Get the template's Name. </param>
+        /// <param name="language"> Get the template's language. </param>
+        /// <param name="status"> The aggregated template status. </param>
+        /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
+        public static MessageTemplateItem MessageTemplateItem(string kind = null, string name = null, string language = null, MessageTemplateStatus status = default)
+        {
+            return new UnknownMessageTemplateResponse(kind, name, language, status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
+        /// <param name="name"> Get the template's Name. </param>
+        /// <param name="language"> Get the template's language. </param>
+        /// <param name="status"> The aggregated template status. </param>
+        /// <param name="content">
+        /// WhatsApp platform's template content
+        /// This is the payload returned from WhatsApp
+        /// API.
+        /// </param>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
+        public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, BinaryData content = null)
+        {
+            return new WhatsAppMessageTemplateItem("whatsApp", name, language, status, content);
         }
     }
 }

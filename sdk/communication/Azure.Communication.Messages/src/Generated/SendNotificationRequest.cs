@@ -12,57 +12,41 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> Details of the message to send. </summary>
-    internal partial class SendNotificationRequest
+    /// <summary>
+    /// Details of the message to send.
+    /// Please note <see cref="SendNotificationRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SendTextNotificationRequest"/>, <see cref="SendMediaNotificationRequest"/> and <see cref="SendTemplateNotificationRequest"/>.
+    /// </summary>
+    internal abstract partial class SendNotificationRequest
     {
         /// <summary> Initializes a new instance of <see cref="SendNotificationRequest"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="type"> The type of message. Supports text, image, template. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
-        public SendNotificationRequest(Guid channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type)
+        protected SendNotificationRequest(Guid channelRegistrationId, IEnumerable<string> to)
         {
             Argument.AssertNotNull(to, nameof(to));
 
             ChannelRegistrationId = channelRegistrationId;
             To = to.ToList();
-            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="SendNotificationRequest"/>. </summary>
+        /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="type"> The type of message. Supports text, image, template. </param>
-        /// <param name="content"> Message content. </param>
-        /// <param name="mediaUri">
-        /// A media url for the file. Required if the type is one of the supported media
-        /// types, e.g. image
-        /// </param>
-        /// <param name="template"> The template object used to create templates. </param>
-        internal SendNotificationRequest(Guid channelRegistrationId, IList<string> to, CommunicationMessageType type, string content, string mediaUri, MessageTemplateInternal template)
+        internal SendNotificationRequest(string kind, Guid channelRegistrationId, IList<string> to)
         {
+            Kind = kind;
             ChannelRegistrationId = channelRegistrationId;
             To = to;
-            Type = type;
-            Content = content;
-            MediaUri = mediaUri;
-            Template = template;
         }
 
+        /// <summary> Discriminator. </summary>
+        internal string Kind { get; set; }
         /// <summary> The Channel Registration ID for the Business Identifier. </summary>
         public Guid ChannelRegistrationId { get; }
         /// <summary> The native external platform user identifiers of the recipient. </summary>
         public IList<string> To { get; }
-        /// <summary> The type of message. Supports text, image, template. </summary>
-        public CommunicationMessageType Type { get; }
-        /// <summary> Message content. </summary>
-        public string Content { get; set; }
-        /// <summary>
-        /// A media url for the file. Required if the type is one of the supported media
-        /// types, e.g. image
-        /// </summary>
-        public string MediaUri { get; set; }
-        /// <summary> The template object used to create templates. </summary>
-        public MessageTemplateInternal Template { get; set; }
     }
 }

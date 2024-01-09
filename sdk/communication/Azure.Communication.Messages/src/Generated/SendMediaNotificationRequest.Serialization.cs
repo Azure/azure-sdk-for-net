@@ -10,11 +10,18 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class SendNotificationRequest : IUtf8JsonSerializable
+    internal partial class SendMediaNotificationRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Content))
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            writer.WritePropertyName("mediaUri"u8);
+            writer.WriteStringValue(MediaUri.AbsoluteUri);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("channelRegistrationId"u8);
@@ -30,7 +37,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this);
