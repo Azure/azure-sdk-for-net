@@ -18,8 +18,6 @@ public sealed partial class ClientPipeline
 
     private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex, int beforeTransportIndex)
     {
-        if (perCallIndex > 255) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "Cannot create pipeline with more than 255 policies.");
-        if (perTryIndex > 255) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "Cannot create pipeline with more than 255 policies.");
         if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
 
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
@@ -137,9 +135,6 @@ public sealed partial class ClientPipeline
         return new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex); ;
     }
 
-    // TODO: note that without a common base type, nothing validates that MessagePipeline
-    // and Azure.Core.HttpPipeline have the same API shape. This is something a human
-    // must keep track of if we wanted to add a common base class later.
     public PipelineMessage CreateMessage() => _transport.CreateMessage();
 
     public void Send(PipelineMessage message)
