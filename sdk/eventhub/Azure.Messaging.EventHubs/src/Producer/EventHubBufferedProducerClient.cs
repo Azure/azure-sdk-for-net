@@ -889,7 +889,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <exception cref="InvalidOperationException">Occurs when no <see cref="SendEventBatchFailedAsync" /> handler is currently registered.</exception>
         /// <exception cref="InvalidOperationException">Occurs when both a partition identifier and partition key have been specified in the <paramref name="options"/>.</exception>
         /// <exception cref="InvalidOperationException">Occurs when an invalid partition identifier has been specified in the <paramref name="options"/>.</exception>
-        /// <exception cref="EventHubsException">Occurs when querying Event Hub metadata took longer than expected.</exception>
+        /// <exception cref="EventHubsException">Occurs when the <see cref="EventHubBufferedProducerClient" /> was unable to start within the configured timeout period.</exception>
         ///
         /// <remarks>
         ///   Should cancellation or an unexpected exception occur, it is possible for calls to this method to result in a partial failure where some, but not all,
@@ -1815,7 +1815,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     // effectively. For startup, a more conservative retry policy is needed to prevent the producer from hanging, so cancel
                     // after one TryTimeout interval.
 
-                    var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                     linkedCts.CancelAfter(_options.RetryOptions.TryTimeout);
 
                     try
