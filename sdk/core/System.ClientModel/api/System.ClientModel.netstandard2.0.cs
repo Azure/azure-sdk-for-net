@@ -203,7 +203,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public System.BinaryData Content { get { throw null; } }
+        public virtual System.BinaryData Content { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
         public virtual bool IsError { get { throw null; } }

@@ -38,9 +38,7 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract Stream? ContentStream { get; set; }
 
-    #region Meta-data properties set by the pipeline.
-
-    public BinaryData Content
+    public virtual BinaryData Content
     {
         get
         {
@@ -79,8 +77,6 @@ public abstract class PipelineResponse : IDisposable
     protected virtual void SetIsErrorCore(bool isError) => _isError = isError;
 
     internal TimeSpan NetworkTimeout { get; set; } = DefaultNetworkTimeout;
-
-    #endregion
 
     public abstract void Dispose();
 
