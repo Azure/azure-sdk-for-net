@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of data deletion detection policy. </param>
         internal NativeBlobSoftDeleteDeletionDetectionPolicy(string oDataType) : base(oDataType)
         {
             ODataType = oDataType ?? "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy";

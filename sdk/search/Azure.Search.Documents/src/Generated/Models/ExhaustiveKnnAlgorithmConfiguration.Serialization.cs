@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class ExhaustiveKnnVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable
+    public partial class ExhaustiveKnnAlgorithmConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static ExhaustiveKnnVectorSearchAlgorithmConfiguration DeserializeExhaustiveKnnVectorSearchAlgorithmConfiguration(JsonElement element)
+        internal static ExhaustiveKnnAlgorithmConfiguration DeserializeExhaustiveKnnAlgorithmConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ExhaustiveKnnVectorSearchAlgorithmConfiguration(name, kind, exhaustiveKnnParameters.Value);
+            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters.Value);
         }
     }
 }

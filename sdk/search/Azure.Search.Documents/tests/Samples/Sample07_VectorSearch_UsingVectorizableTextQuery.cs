@@ -9,11 +9,11 @@ using Azure.Search.Documents.Models;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
 
-namespace Azure.Search.Documents.Tests.samples.VectorSearch
+namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
-    public partial class VectorSearchUsingTextVectors : SearchTestBase
+    public partial class VectorSearchUsingVectorizableTextQuery : SearchTestBase
     {
-        public VectorSearchUsingTextVectors(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public VectorSearchUsingVectorizableTextQuery(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, SearchClientOptions.ServiceVersion.V2023_10_01_Preview, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
@@ -31,17 +31,19 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingTextVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorizableTextQuery
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
-                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
                     new SearchOptions
                     {
-                        VectorQueries = { new VectorizableTextQuery() {
-                            Text = "Top hotels in town",
+                        VectorSearch = new()
+                        {
+                            Queries = { new VectorizableTextQuery("Top hotels in town") {
                             KNearestNeighborsCount = 3,
                             Fields = { "DescriptionVector" } } },
+                        }
                     });
 
                 int count = 0;
@@ -75,17 +77,19 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingTextVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingVectorizableTextQuery
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
-                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
                     new SearchOptions
                     {
-                        VectorQueries = { new VectorizableTextQuery() {
-                            Text = "Top hotels in town",
+                        VectorSearch = new()
+                        {
+                            Queries = { new VectorizableTextQuery("Top hotels in town") {
                             KNearestNeighborsCount = 3,
                             Fields = { "DescriptionVector" } } },
+                        },
                         Filter = "Category eq 'Luxury'"
                     });
 
@@ -120,19 +124,21 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingTextVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingVectorizableTextQuery
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
-                        "Luxury hotels in town",
-                        new SearchOptions
+                    "Luxury hotels in town",
+                    new SearchOptions
+                    {
+                        VectorSearch = new()
                         {
-                            VectorQueries = { new VectorizableTextQuery() {
-                                Text = "Top hotels in town",
-                                KNearestNeighborsCount = 3,
-                                Fields = { "DescriptionVector" } } },
-                        });
+                            Queries = { new VectorizableTextQuery("Top hotels in town") {
+                            KNearestNeighborsCount = 3,
+                            Fields = { "DescriptionVector" } } },
+                        },
+                    });
 
                 int count = 0;
                 Console.WriteLine($"Simple Hybrid Search Results:");
@@ -165,20 +171,18 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingTextVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorizableTextQuery
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
-                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
                     new SearchOptions
                     {
-                        VectorQueries = {
-                            new VectorizableTextQuery() {
-                                Text = "Top hotels in town", KNearestNeighborsCount = 3, Fields = { "DescriptionVector" }
-                            },
-                            new VectorizableTextQuery() {
-                                Text = "Luxury hotels in town", KNearestNeighborsCount = 3, Fields = { "CategoryVector" }
-                            }
+                        VectorSearch = new()
+                        {
+                            Queries = {
+                                new VectorizableTextQuery("Top hotels in town") { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+                                new VectorizableTextQuery("Luxury hotels in town") { KNearestNeighborsCount = 3, Fields = { "CategoryVector" } } }
                         },
                     });
 
@@ -213,17 +217,17 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingTextVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorizableTextQuery
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
-                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
                     new SearchOptions
                     {
-                        VectorQueries = { new VectorizableTextQuery() {
-                            Text = "Top hotels in town",
-                            KNearestNeighborsCount = 3,
-                            Fields = { "DescriptionVector", "CategoryVector" } } }
+                        VectorSearch = new()
+                        {
+                            Queries = { new VectorizableTextQuery("Top hotels in town") { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
+                        }
                     });
 
                 int count = 0;
@@ -256,8 +260,8 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
             Environment.SetEnvironmentVariable("OPENAI_ENDPOINT", openAIEndpoint);
             Environment.SetEnvironmentVariable("OPENAI_KEY", openAIKey);
 
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingTextVectors
-            string vectorSearchProfile = "my-vector-profile";
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizableTextQuery
+            string vectorSearchProfileName = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
             string modelName = "text-embedding-ada-002";
             int modelDimensions = 1536;
@@ -273,32 +277,22 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
                     new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("Description") { IsFilterable = true },
-                    new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-                    {
-                        IsSearchable = true,
-                        VectorSearchDimensions = modelDimensions,
-                        VectorSearchProfile = vectorSearchProfile
-                    },
+                    new VectorSearchField("DescriptionVector", modelDimensions, vectorSearchProfileName),
                     new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-                    {
-                        IsSearchable = true,
-                        VectorSearchDimensions = modelDimensions,
-                        VectorSearchProfile = vectorSearchProfile
-                    },
+                    new VectorSearchField("CategoryVector", modelDimensions, vectorSearchProfileName),
                 },
                 VectorSearch = new()
                 {
                     Profiles =
                     {
-                        new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+                        new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
                         {
                             Vectorizer = "openai"
                         }
                     },
                     Algorithms =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+                        new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
                     },
                     Vectorizers =
                     {
@@ -319,7 +313,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingTextVectors
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingVectorizableTextQuery
             Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
             AzureKeyCredential credential = new(key);
@@ -340,7 +334,7 @@ namespace Azure.Search.Documents.Tests.samples.VectorSearch
             string key = resources.PrimaryApiKey;
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingTextVectors
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingVectorizableTextQuery
             SearchClient searchClient = new(endpoint, indexName, credential);
 #if !SNIPPET
             searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
