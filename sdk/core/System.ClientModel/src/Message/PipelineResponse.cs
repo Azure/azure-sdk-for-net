@@ -63,6 +63,11 @@ public abstract class PipelineResponse : IDisposable
     {
         get
         {
+            if (_contentStream is not null)
+            {
+                return BinaryData.FromStream(_contentStream);
+            }
+
             if (_content is null)
             {
                 throw new InvalidOperationException($"The response is not fully buffered.");
@@ -96,8 +101,7 @@ public abstract class PipelineResponse : IDisposable
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
-    // TODO: Prefer an approach that doesn't make this visible outside the dll
-    protected internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
+    internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
     {
         if (IsBuffered)
         {
