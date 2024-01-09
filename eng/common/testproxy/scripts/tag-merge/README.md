@@ -11,7 +11,7 @@ This script merely allows the abstraction of some of this "combination" work.
 
 ### PreReqs
 
-- Must have []`pshell 6+`](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows)
+- Must have []`pshell 6+`](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows)
 - Must have `git` available on your PATH
 - Must have the `test-proxy` available on your PATH
   - `test-proxy` is honored when the proxy is installed as a `dotnet tool`
