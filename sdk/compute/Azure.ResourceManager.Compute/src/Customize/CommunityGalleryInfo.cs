@@ -13,6 +13,30 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class CommunityGalleryInfo
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Uri PublisherUri { get; set; }
+        public Uri PublisherUri
+        {
+            get
+            {
+                if (Uri.TryCreate(PublisherUriString,UriKind.Absolute,out Uri result))
+                {
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                if (value == null || !value.IsAbsoluteUri)
+                {
+                    PublisherUriString = null;
+                }
+                else
+                {
+                    PublisherUriString = value.OriginalString;
+                }
+            }
+        }
     }
 }
