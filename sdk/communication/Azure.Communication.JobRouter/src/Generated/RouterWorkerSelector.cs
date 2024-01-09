@@ -29,16 +29,16 @@ namespace Azure.Communication.JobRouter
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the worker selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean. </param>
-        /// <param name="expiresAfterSeconds"> Describes how long this label selector is valid in seconds. </param>
+        /// <param name="expiresAfter"> Describes how long this label selector is valid in seconds. </param>
         /// <param name="expedite"> Pushes a job to the front of the queue as long as this selector is active. </param>
         /// <param name="status"> Status of the worker selector. </param>
         /// <param name="expiresAt"> The time at which this worker selector expires in UTC. </param>
-        internal RouterWorkerSelector(string key, LabelOperator labelOperator, BinaryData value, double? expiresAfterSeconds, bool? expedite, RouterWorkerSelectorStatus? status, DateTimeOffset? expiresAt)
+        internal RouterWorkerSelector(string key, LabelOperator labelOperator, BinaryData value, TimeSpan? expiresAfter, bool? expedite, RouterWorkerSelectorStatus? status, DateTimeOffset? expiresAt)
         {
             Key = key;
             LabelOperator = labelOperator;
             _value = value;
-            _expiresAfterSeconds = expiresAfterSeconds;
+            ExpiresAfter = expiresAfter;
             Expedite = expedite;
             Status = status;
             ExpiresAt = expiresAt;

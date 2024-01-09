@@ -3,13 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ClassificationPolicy: IUtf8JsonSerializable
+    public partial class ClassificationPolicy : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>
@@ -38,21 +37,9 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public RouterRule PrioritizationRule { get; set; }
 
-        [CodeGenMember("Etag")]
-        internal string _etag
-        {
-            get
-            {
-                return ETag.ToString();
-            }
-            set
-            {
-                ETag = new ETag(value);
-            }
-        }
-
         /// <summary> The entity tag for this resource. </summary>
-        public ETag ETag { get; internal set; }
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

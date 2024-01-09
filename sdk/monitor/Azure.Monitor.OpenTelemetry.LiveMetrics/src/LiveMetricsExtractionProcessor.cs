@@ -17,7 +17,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         private bool _disposed;
         private LiveMetricsResource? _resource;
         private readonly Manager _manager;
-        //private readonly DoubleBuffer _doubleBuffer;
 
         internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
@@ -28,15 +27,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         public override void OnEnd(Activity activity)
         {
-            // Validate if live metrics is enabled.
-            if (!_manager._state.IsEnabled())
+            // Check if live metrics is enabled.
+            if (!_manager.ShouldCollect())
             {
                 return;
             }
 
-            if (_manager.liveMetricsResource == null && LiveMetricsResource != null)
+            // Resource is not available at initialization and must be set later.
+            if (_manager.LiveMetricsResource == null && LiveMetricsResource != null)
             {
-                _manager.liveMetricsResource = LiveMetricsResource;
+                _manager.LiveMetricsResource = LiveMetricsResource;
             }
 
             string? statusCodeAttributeValue = null;
@@ -52,50 +52,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
-                _manager._metricsContainer._requests.Add(1);
-                // Export needs to divide by count to get the average.
-                // this.AIRequestDurationAveInMs = requestCount > 0 ? (double)requestDurationInTicks / TimeSpan.TicksPerMillisecond / requestCount : 0;
-                _manager._metricsContainer._requestDuration.Record(activity.Duration.TotalMilliseconds);
-                if (IsSuccess(activity, statusCodeAttributeValue))
-                {
-                    _manager._metricsContainer._requestSucceededPerSecond.Add(1);
-                }
-                else
-                {
-                    _manager._metricsContainer._requestFailedPerSecond.Add(1);
-                }
-
                 AddRequestDocument(activity, statusCodeAttributeValue);
             }
             else
             {
-                _manager._metricsContainer._dependency.Add(1);
-                // Export needs to divide by count to get the average.
-                // this.AIDependencyCallDurationAveInMs = dependencyCount > 0 ? (double)dependencyDurationInTicks / TimeSpan.TicksPerMillisecond / dependencyCount : 0;
-                // Export DependencyDurationLiveMetric, Meter: LiveMetricMeterName
-                // (2023 - 11 - 03T23: 20:56.0282406Z, 2023 - 11 - 03T23: 21:00.9830153Z] Histogram Value: Sum: 798.9463000000001 Count: 7 Min: 4.9172 Max: 651.8997
-                _manager._metricsContainer._dependencyDuration.Record(activity.Duration.TotalMilliseconds);
-                if (IsSuccess(activity, statusCodeAttributeValue))
-                {
-                    _manager._metricsContainer._dependencySucceededPerSecond.Add(1);
-                }
-                else
-                {
-                    _manager._metricsContainer._dependencyFailedPerSecond.Add(1);
-                }
-
-                AddRemoteDependencyDocument(activity);
+                AddRemoteDependencyDocument(activity, statusCodeAttributeValue);
             }
 
             if (activity.Events != null)
             {
                 foreach (ref readonly var @event in activity.EnumerateEvents())
                 {
-                    if (@event.Name == SemanticConventions.AttributeExceptionEventName)
-                    {
-                        _manager._metricsContainer._exceptionsPerSecond.Add(1);
-                    }
-
                     string? exceptionType = null;
                     string? exceptionMessage = null;
 
@@ -145,15 +112,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             {
                 ExceptionType = exceptionType,
                 ExceptionMessage = exceptionMessage,
-                DocumentType = DocumentIngressDocumentType.Request,
+                DocumentType = DocumentIngressDocumentType.Exception,
                 // TODO: DocumentStreamIds = new List<string>(),
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
             };
 
-            _manager._metricsContainer._doubleBuffer.WriteDocument(exceptionDocumentIngress);
+            _manager._documentBuffer.WriteDocument(exceptionDocumentIngress);
         }
 
-        private void AddRemoteDependencyDocument(Activity activity)
+        private void AddRemoteDependencyDocument(Activity activity, string? statusCodeAttributeValue)
         {
             RemoteDependencyDocumentIngress remoteDependencyDocumentIngress = new()
             {
@@ -166,12 +133,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                                                 : SchemaConstants.Duration_MaxValue,
-                DocumentType = DocumentIngressDocumentType.Request,
+                DocumentType = DocumentIngressDocumentType.RemoteDependency,
                 // TODO: DocumentStreamIds = new List<string>(),
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
+
+                Extension_IsSuccess = IsSuccess(activity, statusCodeAttributeValue),
+                Extension_Duration = activity.Duration.TotalMilliseconds,
             };
 
-            _manager._metricsContainer._doubleBuffer.WriteDocument(remoteDependencyDocumentIngress);
+            _manager._documentBuffer.WriteDocument(remoteDependencyDocumentIngress);
         }
 
         private void AddRequestDocument(Activity activity, string? statusCodeAttributeValue)
@@ -189,9 +159,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 DocumentType = DocumentIngressDocumentType.Request,
                 // TODO: DocumentStreamIds = new List<string>(),
                 // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
+
+                Extension_IsSuccess = IsSuccess(activity, statusCodeAttributeValue),
+                Extension_Duration = activity.Duration.TotalMilliseconds,
             };
 
-            _manager._metricsContainer._doubleBuffer.WriteDocument(requestDocumentIngress);
+            _manager._documentBuffer.WriteDocument(requestDocumentIngress);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -5,11 +5,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
     internal enum LiveMetricsState
     {
-        // TODO: THIS COULD BE A FLAGS SO LIVE METRICS CAN BE BOTH PING AND BACKOFF
-
         Disabled = 0,
         Ping,
         Post,
+        Backoff,
     }
 
     internal class State

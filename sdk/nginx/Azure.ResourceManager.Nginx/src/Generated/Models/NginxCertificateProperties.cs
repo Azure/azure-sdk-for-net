@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
         /// <param name="keyVaultSecretId"></param>
-        internal NginxCertificateProperties(ProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId)
+        internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId)
         {
             ProvisioningState = provisioningState;
             KeyVirtualPath = keyVirtualPath;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Gets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NginxProvisioningState? ProvisioningState { get; }
         /// <summary> Gets or sets the key virtual path. </summary>
         public string KeyVirtualPath { get; set; }
         /// <summary> Gets or sets the certificate virtual path. </summary>
