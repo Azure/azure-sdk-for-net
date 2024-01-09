@@ -672,6 +672,7 @@ namespace Azure.ResourceManager.Models
         public static Azure.ResourceManager.Resources.Models.ProviderResourceType ProviderResourceType(string resourceType = null, System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation> locationMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> aliases = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, string defaultApiVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ZoneMapping> zoneMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ApiProfile> apiProfiles = null, string capabilities = null, System.Collections.Generic.IReadOnlyDictionary<string, string> properties = null) { throw null; }
         public static Azure.ResourceManager.Resources.ResourceGroupData ResourceGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string resourceGroupProvisioningState = null, string managedBy = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ResourceGroupExportResult ResourceGroupExportResult(System.BinaryData template = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceNameValidationResult ResourceNameValidationResult(string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus? status = default(Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.Resources.ResourceProviderData ResourceProviderData(Azure.Core.ResourceIdentifier id = null, string @namespace = null, string registrationState = null, string registrationPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ProviderResourceType> resourceTypes = null, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? providerAuthorizationConsentState = default(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ResourceTypeAlias ResourceTypeAlias(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath> paths = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasType? aliasType = default(Azure.ResourceManager.Resources.Models.ResourceTypeAliasType?), string defaultPath = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern defaultPattern = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata defaultMetadata = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ResourceTypeAliases ResourceTypeAliases(string resourceType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> aliases = null) { throw null; }
@@ -1372,6 +1373,8 @@ namespace Azure.ResourceManager.Resources
     public partial class TenantCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TenantResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TenantResource>, System.Collections.IEnumerable
     {
         protected TenantCollection() { }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult> CheckResourceName(Azure.ResourceManager.Resources.Models.ResourceNameValidationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult>> CheckResourceNameAsync(Azure.ResourceManager.Resources.Models.ResourceNameValidationContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.TenantResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.TenantResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.TenantResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TenantResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -2049,6 +2052,47 @@ namespace Azure.ResourceManager.Resources.Models
         Azure.ResourceManager.Resources.Models.ResourceGroupPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceGroupPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResourceNameValidationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationContent>
+    {
+        public ResourceNameValidationContent(string name, Azure.Core.ResourceType resourceType) { }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceNameValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ResourceNameValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResourceNameValidationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult>
+    {
+        internal ResourceNameValidationResult() { }
+        public string Name { get { throw null; } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ResourceNameValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ResourceNameValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceNameValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceNameValidationStatus : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceNameValidationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus Allowed { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus Reserved { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus left, Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus left, Azure.ResourceManager.Resources.Models.ResourceNameValidationStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ResourceSelector : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ResourceSelector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ResourceSelector>
     {

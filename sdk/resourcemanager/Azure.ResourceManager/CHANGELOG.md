@@ -5,6 +5,7 @@
 ### Features Added
 
 - Add `GetEntities` operation.
+- Add `CheckResourceName` operation.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ## 1.9.0 (2023-11-14)
