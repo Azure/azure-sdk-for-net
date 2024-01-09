@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
+// TODO: MessageClassifier will come in a later PR.
+
 public abstract class PipelineTransport : PipelinePolicy
 {
     /// <summary>
@@ -21,9 +23,6 @@ public abstract class PipelineTransport : PipelinePolicy
         {
             throw new InvalidOperationException("Response was not set by transport.");
         }
-
-        // TODO: Classifier will come in a later PR.
-        //message.Response.SetIsError(ClassifyResponse(message));
     }
 
     /// <summary>
@@ -38,15 +37,7 @@ public abstract class PipelineTransport : PipelinePolicy
         {
             throw new InvalidOperationException("Response was not set by transport.");
         }
-
-        // TODO: Classifier will come in a later PR.
-        //message.Response.SetIsError(ClassifyResponse(message));
     }
-
-    // TODO: Classifier will come in a later PR.
-    //private static bool ClassifyResponse(PipelineMessage message) =>
-    //    message.MessageClassifier?.IsErrorResponse(message) ??
-    //    PipelineMessageClassifier.Default.IsErrorResponse(message);
 
     protected abstract void ProcessCore(PipelineMessage message);
 

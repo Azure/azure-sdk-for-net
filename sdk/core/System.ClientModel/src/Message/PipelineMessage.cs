@@ -6,9 +6,10 @@ using System.Threading;
 
 namespace System.ClientModel.Primitives;
 
+// TODO: MessageClassifier and RequestOptions will come in a later PR.
+
 public class PipelineMessage : IDisposable
 {
-    private PipelineResponse? _response;
     private ArrayBackedPropertyBag<ulong, object> _propertyBag;
     private bool _disposed;
 
@@ -24,24 +25,15 @@ public class PipelineMessage : IDisposable
 
     public PipelineResponse? Response
     {
-        get => _response;
+        get;
 
-        // This is set internally by the transport.
-        protected internal set => _response = value;
+        // Set internally by the transport.
+        protected internal set;
     }
 
     #region Pipeline invocation options
 
     public CancellationToken CancellationToken { get; set; }
-
-    // TODO: Classifier and RequestOptions will come in a later PR.
-    //public PipelineMessageClassifier? MessageClassifier { get; protected internal set; }
-
-    //public void Apply(RequestOptions options, PipelineMessageClassifier? messageClassifier = default)
-    //{
-    //    // TODO: Add test to validate CancellationToken is set by Apply
-    //    options.Apply(this, messageClassifier);
-    //}
 
     public bool TryGetProperty(Type type, out object? value) =>
         _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
@@ -89,15 +81,11 @@ public class PipelineMessage : IDisposable
 
             _propertyBag.Dispose();
 
-            // TODO: this means we return a disposed response to the end-user.
-            // Would be nice to possibly introduce an OnMessageDiposed pattern
-            // to notify the response that it needs to dispose network resources
-            // without being officially disposed itself?
-            var response = _response;
+            var response = Response;
             if (response != null)
             {
-                _response = null;
                 response.Dispose();
+                Response = null;
             }
 
             _disposed = true;
