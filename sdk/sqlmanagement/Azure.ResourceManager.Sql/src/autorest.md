@@ -25,6 +25,10 @@ model-namespace: false
 public-clients: false
 head-as-boolean: false
 
+# this is temporary, to be removed when we find the owner of this feature
+operation-groups-to-omit:
+- JobPrivateEndpoints
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
@@ -345,7 +349,7 @@ rename-mapping:
   ServerUpdate.properties.minimalTlsVersion: minTlsVersion
   MinimalTlsVersion: SqlMinimalTlsVersion
 
-# mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 prompted-enum-values:

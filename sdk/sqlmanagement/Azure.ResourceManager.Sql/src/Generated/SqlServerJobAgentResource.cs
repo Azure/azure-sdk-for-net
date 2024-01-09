@@ -167,59 +167,6 @@ namespace Azure.ResourceManager.Sql
             return GetSqlServerJobCredentials().Get(credentialName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of JobPrivateEndpointResources in the SqlServerJobAgent. </summary>
-        /// <returns> An object representing collection of JobPrivateEndpointResources and their operations over a JobPrivateEndpointResource. </returns>
-        public virtual JobPrivateEndpointCollection GetJobPrivateEndpoints()
-        {
-            return GetCachedClient(client => new JobPrivateEndpointCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a private endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/privateEndpoints/{privateEndpointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobPrivateEndpoints_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<JobPrivateEndpointResource>> GetJobPrivateEndpointAsync(string privateEndpointName, CancellationToken cancellationToken = default)
-        {
-            return await GetJobPrivateEndpoints().GetAsync(privateEndpointName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a private endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/privateEndpoints/{privateEndpointName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobPrivateEndpoints_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointName"> The name of the private endpoint to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<JobPrivateEndpointResource> GetJobPrivateEndpoint(string privateEndpointName, CancellationToken cancellationToken = default)
-        {
-            return GetJobPrivateEndpoints().Get(privateEndpointName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SqlServerJobResources in the SqlServerJobAgent. </summary>
         /// <returns> An object representing collection of SqlServerJobResources and their operations over a SqlServerJobResource. </returns>
         public virtual SqlServerJobCollection GetSqlServerJobs()

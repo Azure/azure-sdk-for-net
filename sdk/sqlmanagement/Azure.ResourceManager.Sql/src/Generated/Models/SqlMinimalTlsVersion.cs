@@ -22,22 +22,11 @@ namespace Azure.ResourceManager.Sql.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NoneValue = "None";
-        private const string One0Value = "1.0";
-        private const string One1Value = "1.1";
-        private const string One2Value = "1.2";
-        private const string One3Value = "1.3";
-
-        /// <summary> None. </summary>
-        public static SqlMinimalTlsVersion None { get; } = new SqlMinimalTlsVersion(NoneValue);
-        /// <summary> 1.0. </summary>
-        public static SqlMinimalTlsVersion One0 { get; } = new SqlMinimalTlsVersion(One0Value);
-        /// <summary> 1.1. </summary>
-        public static SqlMinimalTlsVersion One1 { get; } = new SqlMinimalTlsVersion(One1Value);
-        /// <summary> 1.2. </summary>
-        public static SqlMinimalTlsVersion One2 { get; } = new SqlMinimalTlsVersion(One2Value);
-        /// <summary> 1.3. </summary>
-        public static SqlMinimalTlsVersion One3 { get; } = new SqlMinimalTlsVersion(One3Value);
+        private const string TlsNoneValue = "None";
+        private const string Tls1_0Value = "1.0";
+        private const string Tls1_1Value = "1.1";
+        private const string Tls1_2Value = "1.2";
+        private const string Tls1_3Value = "1.3";
         /// <summary> Determines if two <see cref="SqlMinimalTlsVersion"/> values are the same. </summary>
         public static bool operator ==(SqlMinimalTlsVersion left, SqlMinimalTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlMinimalTlsVersion"/> values are not the same. </summary>
