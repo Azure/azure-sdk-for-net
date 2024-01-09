@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core.Pipeline;
@@ -11,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// Base type for all client option types, exposes various common client options like <see cref="Diagnostics"/>, <see cref="Retry"/>, <see cref="Transport"/>.
     /// </summary>
-    public abstract class ClientOptions
+    public abstract class ClientOptions : ClientPipelineOptions
     {
         private HttpPipelineTransport _transport;
         internal bool IsCustomTransportSet { get; private set; }
@@ -71,7 +72,7 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="HttpPipelineTransport"/> to be used for this client. Defaults to an instance of <see cref="HttpClientTransport"/>.
         /// </summary>
-        public HttpPipelineTransport Transport
+        public new HttpPipelineTransport Transport
         {
             get => _transport;
             set
@@ -97,7 +98,7 @@ namespace Azure.Core
         /// If <see cref="RetryPolicy.Process"/> is overridden or a custom <see cref="HttpPipelinePolicy"/> is specified,
         /// it is the implementer's responsibility to update the <see cref="HttpMessage.ProcessingContext"/> values.
         /// </summary>
-        public HttpPipelinePolicy? RetryPolicy { get; set; }
+        public new HttpPipelinePolicy? RetryPolicy { get; set; }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.

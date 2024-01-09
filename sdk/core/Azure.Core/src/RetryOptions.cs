@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Core
 {
@@ -64,6 +65,7 @@ namespace Azure.Core
         /// <summary>
         /// The timeout applied to an individual network operations.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public TimeSpan NetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
     }
 }
