@@ -680,19 +680,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new JobExecutionTarget(targetType, serverName, databaseName);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.JobPrivateEndpointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetServerAzureResourceId"> ARM resource id of the server the private endpoint will target. </param>
-        /// <param name="privateEndpointId"> Private endpoint id of the private endpoint. </param>
-        /// <returns> A new <see cref="Sql.JobPrivateEndpointData"/> instance for mocking. </returns>
-        public static JobPrivateEndpointData JobPrivateEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier targetServerAzureResourceId = null, string privateEndpointId = null)
-        {
-            return new JobPrivateEndpointData(id, name, resourceType, systemData, targetServerAzureResourceId, privateEndpointId);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
