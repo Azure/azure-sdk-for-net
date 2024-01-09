@@ -4,29 +4,25 @@
 #nullable disable
 
 using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A Class representing a SqlServerData
-    /// </summary>
 	public partial class SqlServerData
-	{
-		/// <summary>
+    {
+        /// <summary>
         /// Gets minimal tls version for a server.
         /// </summary>
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		public string MinimalTlsVersion
-		{
-			get {
-				return MinTlsVersion.ToString();
-			}
-			set {
-				MinTlsVersion = value != null ? value : null;
-			}
-		}
-	}
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string MinimalTlsVersion
+        {
+            get
+            {
+                return MinTlsVersion.ToString();
+            }
+            set
+            {
+                MinTlsVersion = value ?? null;
+            }
+        }
+    }
 }
