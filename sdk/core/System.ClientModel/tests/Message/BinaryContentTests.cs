@@ -6,6 +6,7 @@ using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +23,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     {
         string value = "01234";
         BinaryData data = BinaryData.FromString(value);
-        BinaryContent content = BinaryContent.Create(data);
+        using BinaryContent content = BinaryContent.Create(data);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(value.Length, length);
@@ -33,7 +34,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     {
         byte[] bytes = new byte[] { 0, 1, 2, 3, 4 };
         BinaryData data = BinaryData.FromBytes(bytes);
-        BinaryContent content = BinaryContent.Create(data);
+        using BinaryContent content = BinaryContent.Create(data);
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -46,7 +47,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     public void CanGetLengthFromModelBinaryContent()
     {
         MockPersistableModel model = new MockPersistableModel(404, "abcde");
-        BinaryContent content = BinaryContent.Create(model);
+        using BinaryContent content = BinaryContent.Create(model);
 
         Assert.IsTrue(content.TryComputeLength(out long length));
         Assert.AreEqual(model.SerializedValue.Length, length);
@@ -56,7 +57,7 @@ internal class BinaryContentTests : SyncAsyncTestBase
     public async Task CanWriteToStreamFromModelBinaryContent()
     {
         MockPersistableModel model = new MockPersistableModel(404, "abcde");
-        BinaryContent content = BinaryContent.Create(model);
+        using BinaryContent content = BinaryContent.Create(model);
 
         MemoryStream stream = new MemoryStream();
         await content.WriteToSyncOrAsync(stream, CancellationToken.None, IsAsync);
@@ -65,5 +66,35 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         BinaryData serializedContent = ((IPersistableModel<object>)model).Write(ModelReaderWriterOptions.Json);
         Assert.AreEqual(serializedContent.ToArray(), stream.ToArray());
+    }
+
+    [Test]
+    public void CanGetLengthFromJsonModelBinaryContent()
+    {
+        MockPersistableJsonModel model = new MockPersistableJsonModel(404, "abcde");
+        using BinaryContent content = BinaryContent.Create(model, ModelReaderWriterOptions.Json);
+
+        Assert.IsTrue(content.TryComputeLength(out long length));
+        Assert.AreEqual(model.Utf8BytesValue.Length, length);
+    }
+
+    [Test]
+    public async Task CanWriteToStreamFromJsonModelBinaryContent()
+    {
+        MockPersistableJsonModel model = new MockPersistableJsonModel(404, "abcde");
+        using BinaryContent content = BinaryContent.Create(model, ModelReaderWriterOptions.Json);
+
+        MemoryStream contentStream = new MemoryStream();
+        await content.WriteToSyncOrAsync(contentStream, CancellationToken.None, IsAsync);
+
+        Assert.AreEqual(model.Utf8BytesValue.Length, contentStream.Position);
+
+        MemoryStream modelStream = new MemoryStream();
+        using Utf8JsonWriter writer = new Utf8JsonWriter(modelStream);
+
+        ((IJsonModel<object>)model).Write(writer, ModelReaderWriterOptions.Json);
+        writer.Flush();
+
+        Assert.AreEqual(model.Utf8BytesValue, contentStream.ToArray());
     }
 }
