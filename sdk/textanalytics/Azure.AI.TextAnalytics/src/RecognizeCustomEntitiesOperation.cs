@@ -294,5 +294,7 @@ namespace Azure.AI.TextAnalytics
 
             return OperationState<AsyncPageable<RecognizeCustomEntitiesResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
+
+        string IOperation<AsyncPageable<RecognizeCustomEntitiesResultCollection>>.GetOperationId() => null;
     }
 }

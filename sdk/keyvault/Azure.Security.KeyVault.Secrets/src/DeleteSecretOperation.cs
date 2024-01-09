@@ -111,7 +111,6 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        /// <inheritdoc />
-        public string GetOperationId() => _operationInternal.GetOperationId();
+        string IOperation.GetOperationId() => null;
     }
 }

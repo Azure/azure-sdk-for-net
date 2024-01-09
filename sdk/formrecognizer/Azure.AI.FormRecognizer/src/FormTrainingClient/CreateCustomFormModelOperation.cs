@@ -175,5 +175,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             return OperationState<CustomFormModel>.Pending(rawResponse);
         }
+
+        string IOperation<CustomFormModel>.GetOperationId() => null;
     }
 }

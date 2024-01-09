@@ -338,5 +338,7 @@ namespace Azure.AI.TextAnalytics
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
         }
+
+        string IOperation<AsyncPageable<AnalyzeActionsResult>>.GetOperationId() => null;
     }
 }

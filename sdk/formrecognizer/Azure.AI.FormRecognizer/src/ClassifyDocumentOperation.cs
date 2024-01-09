@@ -192,5 +192,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             return OperationState<AnalyzeResult>.Pending(rawResponse);
         }
+
+        string IOperation<AnalyzeResult>.GetOperationId() => null;
     }
 }

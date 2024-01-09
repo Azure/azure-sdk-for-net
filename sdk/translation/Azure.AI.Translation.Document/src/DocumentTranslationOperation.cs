@@ -482,6 +482,8 @@ namespace Azure.AI.Translation.Document
             return new Dictionary<string, string>(1) { { "AdditionalInformation", error.ToString() } };
         }
 
+        string IOperation<AsyncPageable<DocumentStatusResult>>.GetOperationId() => null;
+
         private class DocumentTranslationOperationRequestFailedDetailsParser : RequestFailedDetailsParser
         {
             private readonly ResponseError _error;

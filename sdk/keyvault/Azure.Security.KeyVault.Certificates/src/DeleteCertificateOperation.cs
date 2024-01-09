@@ -115,7 +115,6 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        /// <inheritdoc />
-        public string GetOperationId() => _operationInternal.GetOperationId();
+        string IOperation.GetOperationId() => null;
     }
 }
