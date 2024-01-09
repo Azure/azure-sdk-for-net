@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         public static string ToSerialString(this EntityPermission value) => value switch
         {
-            EntityPermission.Noaccess => "noaccess",
+            EntityPermission.NoAccess => "noaccess",
             EntityPermission.View => "view",
             EntityPermission.Edit => "edit",
             EntityPermission.Delete => "delete",
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         public static EntityPermission ToEntityPermission(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "noaccess")) return EntityPermission.Noaccess;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "noaccess")) return EntityPermission.NoAccess;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "view")) return EntityPermission.View;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "edit")) return EntityPermission.Edit;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "delete")) return EntityPermission.Delete;

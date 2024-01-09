@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     }
     public enum EntityPermission
     {
-        Noaccess = 0,
+        NoAccess = 0,
         View = 1,
         Edit = 2,
         Delete = 3,

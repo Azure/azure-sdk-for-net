@@ -718,6 +718,7 @@ format-by-name-rules:
 rename-mapping:
   EntityInfo: EntityData
   Permissions: EntityPermission
+  Permissions.noaccess: NoAccess
   SearchOptions: EntitySearchOption
 
 acronym-mapping:

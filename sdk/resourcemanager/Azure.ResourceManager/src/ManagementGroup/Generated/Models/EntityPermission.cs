@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     public enum EntityPermission
     {
         /// <summary> noaccess. </summary>
-        Noaccess,
+        NoAccess,
         /// <summary> view. </summary>
         View,
         /// <summary> edit. </summary>
