@@ -35,7 +35,7 @@ public class MessageDelayTests : SyncAsyncTestBase
         PipelineMessage message = pipeline.CreateMessage();
 
         MockMessageDelay delay = new MockMessageDelay();
-        await delay.DelaySyncOrAsync(message, IsAsync);
+        await delay.WaitSyncOrAsync(message, IsAsync);
 
         Assert.IsTrue(delay.IsComplete);
     }

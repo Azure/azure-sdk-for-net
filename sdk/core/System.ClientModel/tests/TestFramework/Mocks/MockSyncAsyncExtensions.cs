@@ -32,15 +32,15 @@ public static class MockSyncAsyncExtensions
         }
     }
 
-    public static async Task DelaySyncOrAsync(this PipelineMessageDelay delay, PipelineMessage message, bool isAsync)
+    public static async Task WaitSyncOrAsync(this PipelineMessageDelay delay, PipelineMessage message, bool isAsync)
     {
         if (isAsync)
         {
-            await delay.DelayAsync(message, default).ConfigureAwait(false);
+            await delay.WaitAsync(message, default).ConfigureAwait(false);
         }
         else
         {
-            delay.Delay(message, default);
+            delay.Wait(message, default);
         }
     }
 }

@@ -152,12 +152,12 @@ namespace System.ClientModel.Primitives
     public partial class PipelineMessageDelay
     {
         public PipelineMessageDelay() { }
-        public void Delay(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { }
-        public System.Threading.Tasks.Task DelayAsync(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        protected virtual System.TimeSpan GetDelayCore(System.ClientModel.Primitives.PipelineMessage message, int delayCount) { throw null; }
-        protected virtual void OnDelayComplete(System.ClientModel.Primitives.PipelineMessage message) { }
-        protected virtual void WaitCore(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { }
-        protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan duration, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int waitCount) { throw null; }
+        protected virtual void OnWaitComplete(System.ClientModel.Primitives.PipelineMessage message) { }
+        public void Wait(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { }
+        public System.Threading.Tasks.Task WaitAsync(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual void WaitCore(System.TimeSpan delay, System.Threading.CancellationToken cancellationToken) { }
+        protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan delay, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class PipelineMessageHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {

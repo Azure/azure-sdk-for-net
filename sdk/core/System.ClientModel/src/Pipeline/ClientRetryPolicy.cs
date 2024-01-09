@@ -86,11 +86,11 @@ public class ClientRetryPolicy : PipelinePolicy
             {
                 if (async)
                 {
-                    await _delay.DelayAsync(message, message.CancellationToken).ConfigureAwait(false);
+                    await _delay.WaitAsync(message, message.CancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    _delay.Delay(message, message.CancellationToken);
+                    _delay.Wait(message, message.CancellationToken);
                 }
 
                 // Dispose the content stream to free up a connection if the request has any

@@ -28,12 +28,12 @@ public class MockMessageDelay : PipelineMessageDelay
 
     public int CompletionCount => _completionCount;
 
-    public TimeSpan GetDelay(int count) => GetDelayCore(null!, count);
+    public TimeSpan GetDelay(int count) => GetNextDelay(null!, count);
 
-    protected override TimeSpan GetDelayCore(PipelineMessage message, int delayCount)
+    protected override TimeSpan GetNextDelay(PipelineMessage message, int delayCount)
         => _delayFactory(delayCount);
 
-    protected override void OnDelayComplete(PipelineMessage message)
+    protected override void OnWaitComplete(PipelineMessage message)
         => _completionCount++;
 
     protected override void WaitCore(TimeSpan duration, CancellationToken cancellationToken)

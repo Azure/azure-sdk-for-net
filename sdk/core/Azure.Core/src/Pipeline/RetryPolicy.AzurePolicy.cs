@@ -100,7 +100,7 @@ public partial class RetryPolicy
                 _retryPolicy = policy;
             }
 
-            protected override TimeSpan GetDelayCore(PipelineMessage message, int delayCount)
+            protected override TimeSpan GetNextDelay(PipelineMessage message, int delayCount)
             {
                 HttpMessage httpMessage = AssertHttpMessage(message);
 
@@ -110,7 +110,7 @@ public partial class RetryPolicy
                 return _strategy.GetNextDelay(response, delayCount + 1);
             }
 
-            protected override void OnDelayComplete(PipelineMessage message)
+            protected override void OnWaitComplete(PipelineMessage message)
                 => _retryPolicy.OnDelayComplete(message);
 
             protected override void WaitCore(TimeSpan duration, CancellationToken cancellationToken)

@@ -20,43 +20,43 @@ public class PipelineMessageDelay
         _initialDelay = DefaultInitialDelay;
     }
 
-    public void Delay(PipelineMessage message, CancellationToken cancellationToken)
+    public void Wait(PipelineMessage message, CancellationToken cancellationToken)
     {
-        TimeSpan delay = GetDelayCore(message, message.RetryCount);
+        TimeSpan delay = GetNextDelay(message, message.RetryCount);
         if (delay > TimeSpan.Zero)
         {
             WaitCore(delay, cancellationToken);
         }
 
-        OnDelayComplete(message);
+        OnWaitComplete(message);
     }
 
-    public async Task DelayAsync(PipelineMessage message, CancellationToken cancellationToken)
+    public async Task WaitAsync(PipelineMessage message, CancellationToken cancellationToken)
     {
-        TimeSpan delay = GetDelayCore(message, message.RetryCount);
+        TimeSpan delay = GetNextDelay(message, message.RetryCount);
         if (delay > TimeSpan.Zero)
         {
             await WaitCoreAsync(delay, cancellationToken).ConfigureAwait(false);
         }
 
-        OnDelayComplete(message);
+        OnWaitComplete(message);
     }
 
-    protected virtual void WaitCore(TimeSpan duration, CancellationToken cancellationToken)
+    protected virtual void WaitCore(TimeSpan delay, CancellationToken cancellationToken)
     {
-        cancellationToken.WaitHandle.WaitOne(duration);
+        cancellationToken.WaitHandle.WaitOne(delay);
     }
 
-    protected virtual async Task WaitCoreAsync(TimeSpan duration, CancellationToken cancellationToken)
+    protected virtual async Task WaitCoreAsync(TimeSpan delay, CancellationToken cancellationToken)
     {
-        await Task.Delay(duration, cancellationToken).ConfigureAwait(false);
+        await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
     }
 
-    protected virtual TimeSpan GetDelayCore(PipelineMessage message, int delayCount)
+    protected virtual TimeSpan GetNextDelay(PipelineMessage message, int waitCount)
     {
         // Default implementation is exponential backoff
-        return TimeSpan.FromMilliseconds((1 << (delayCount - 1)) * _initialDelay.TotalMilliseconds);
+        return TimeSpan.FromMilliseconds((1 << (waitCount - 1)) * _initialDelay.TotalMilliseconds);
     }
 
-    protected virtual void OnDelayComplete(PipelineMessage message) { }
+    protected virtual void OnWaitComplete(PipelineMessage message) { }
 }
