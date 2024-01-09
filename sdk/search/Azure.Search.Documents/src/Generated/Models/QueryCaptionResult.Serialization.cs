@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class CaptionResult
+    public partial class QueryCaptionResult
     {
-        internal static CaptionResult DeserializeCaptionResult(JsonElement element)
+        internal static QueryCaptionResult DeserializeQueryCaptionResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CaptionResult(text.Value, highlights.Value, additionalProperties);
+            return new QueryCaptionResult(text.Value, highlights.Value, additionalProperties);
         }
     }
 }

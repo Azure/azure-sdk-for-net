@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            PrioritizedFields prioritizedFields = default;
+            SemanticPrioritizedFields prioritizedFields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("prioritizedFields"u8))
                 {
-                    prioritizedFields = PrioritizedFields.DeserializePrioritizedFields(property.Value);
+                    prioritizedFields = SemanticPrioritizedFields.DeserializeSemanticPrioritizedFields(property.Value);
                     continue;
                 }
             }

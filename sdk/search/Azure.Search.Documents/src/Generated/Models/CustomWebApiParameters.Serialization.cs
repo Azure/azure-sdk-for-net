@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CustomVectorizerParameters : IUtf8JsonSerializable
+    public partial class CustomWebApiParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomVectorizerParameters DeserializeCustomVectorizerParameters(JsonElement element)
+        internal static CustomWebApiParameters DeserializeCustomWebApiParameters(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomVectorizerParameters(uri.Value, Optional.ToDictionary(httpHeaders), httpMethod.Value, Optional.ToNullable(timeout), authResourceId.Value, authIdentity.Value);
+            return new CustomWebApiParameters(uri.Value, Optional.ToDictionary(httpHeaders), httpMethod.Value, Optional.ToNullable(timeout), authResourceId.Value, authIdentity.Value);
         }
     }
 }
