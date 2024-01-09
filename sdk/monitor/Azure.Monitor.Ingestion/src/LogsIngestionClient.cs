@@ -136,7 +136,7 @@ namespace Azure.Monitor.Ingestion
                 }
 
                 // if adding this entry (and array end) would make stream > 1 Mb send current stream now
-                if ((writer.BytesPending + memory.Length + 1) > SingleUploadThreshold)
+                if ((writer.BytesCommitted + writer.BytesPending + memory.Length + 2) > SingleUploadThreshold)
                 {
                     writer.WriteEndArray();
                     writer.Flush();
