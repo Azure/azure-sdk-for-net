@@ -599,6 +599,61 @@ VirtualMachineResource virtualMachine = virtualMachineOperation.Value;
 
 Finally, as it can be seen here, from the resource group you can get the Virtual Machine collection and create a new one using the `VirtualMachineData` for the parameters.
 
+### Update a Virtual Machine
+
+**Create a new object of VirtualMachineData**
+```C#
+var virtualMachineDataToModify = new VirtualMachineData(AzureLocation.EastUS)
+{
+    NetworkProfile = new VirtualMachineNetworkProfile()
+    {
+        NetworkInterfaces =
+        {
+            new VirtualMachineNetworkInterfaceReference()
+            {
+                Id = networkInterface.Id,
+                Primary = false,
+            }
+        }
+    }
+};
+var virtualMachineModify = (await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virtualMachineDataToModify)).Value;
+```
+**The UpdateAsync method**
+```C#
+ var patch = new VirtualMachinePatch()
+ {
+     NetworkProfile = new VirtualMachineNetworkProfile()
+     {
+         NetworkInterfaces =
+         {
+             new VirtualMachineNetworkInterfaceReference()
+             {
+                 Id = networkInterface.Id,
+                 Primary = false,
+             }
+         }
+     },
+ };
+ var virtualMachineModify = (await virtualMachine.UpdateAsync(WaitUntil.Completed, patch)).Value;
+```
+**Get the virtual machine resource by name and modify its Data property**
+```C#
+var virtualMachineGet = (await virtualMachineCollection.GetAsync(virtualMachineName)).Value;
+ virtualMachineGet.Data.NetworkProfile = new VirtualMachineNetworkProfile()
+ {
+     NetworkInterfaces =
+     {
+             new VirtualMachineNetworkInterfaceReference()
+             {
+                 Id = networkInterface.Id,
+                 Primary = false,
+             }
+     },
+ };
+ var virtualMachineModify = (await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, virtualMachineGet.Data)).Value;
+```
+
 ### List all Virtual Networks
 
 **Old**
