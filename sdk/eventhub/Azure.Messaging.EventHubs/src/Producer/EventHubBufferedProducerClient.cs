@@ -730,6 +730,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <exception cref="InvalidOperationException">Occurs when no <see cref="SendEventBatchFailedAsync" /> handler is currently registered.</exception>
         /// <exception cref="InvalidOperationException">Occurs when both a partition identifier and partition key have been specified in the <paramref name="options"/>.</exception>
         /// <exception cref="InvalidOperationException">Occurs when an invalid partition identifier has been specified in the <paramref name="options"/>.</exception>
+        /// <exception cref="EventHubsException">Occurs when querying Event Hub metadata took longer than expected.</exception>
         ///
         /// <remarks>
         ///   Upon the first attempt to enqueue an event, the <see cref="SendEventBatchSucceededAsync" /> and <see cref="SendEventBatchFailedAsync" /> handlers
@@ -773,6 +774,8 @@ namespace Azure.Messaging.EventHubs.Producer
                         // StartPublishingAsync will verify that publishing is not already taking
                         // place and act appropriately if nothing needs to be restarted; there's no need
                         // to perform a double-check of the conditions here after acquiring the semaphore.
+
+                        // If this call takes too long to complete, an EventHubsException will be thrown.
 
                         await StartPublishingAsync(cancellationToken).ConfigureAwait(false);
                     }
@@ -932,6 +935,8 @@ namespace Azure.Messaging.EventHubs.Producer
                         // StartPublishingAsync will verify that publishing is not already taking
                         // place and act appropriately if nothing needs to be restarted; there's no need
                         // to perform a double-check of the conditions here after acquiring the semaphore.
+
+                        // If this call takes too long to complete, an EventHubsException will be thrown.
 
                         await StartPublishingAsync(cancellationToken).ConfigureAwait(false);
                     }
