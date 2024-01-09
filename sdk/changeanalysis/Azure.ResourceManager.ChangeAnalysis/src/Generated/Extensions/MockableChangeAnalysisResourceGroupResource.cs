@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisResourceGroupResource.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DetectedChangeData.DeserializeDetectedChangeData(e), ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisResourceGroupResource.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChangesRestClient.CreateListChangesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ChangesRestClient.CreateListChangesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisResourceGroupResource.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DetectedChangeData.DeserializeDetectedChangeData(e), ChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisResourceGroupResource.GetChangesByResourceGroup", "value", "nextLink", cancellationToken);
         }
     }
 }
