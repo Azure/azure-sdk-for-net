@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -18,7 +19,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal UnknownWorkloadNetworkDhcpEntity(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision) : base(dhcpType, displayName, segments, provisioningState, revision)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownWorkloadNetworkDhcpEntity(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dhcpType, displayName, segments, provisioningState, revision, serializedAdditionalRawData)
         {
             DhcpType = dhcpType;
         }
