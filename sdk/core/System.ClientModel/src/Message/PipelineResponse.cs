@@ -59,8 +59,6 @@ public abstract class PipelineResponse : IDisposable
         set => _contentStream = value;
     }
 
-    #region Meta-data properties set by the pipeline.
-
     public virtual BinaryData Content
     {
         get
@@ -90,8 +88,6 @@ public abstract class PipelineResponse : IDisposable
     internal TimeSpan NetworkTimeout { get; set; } = DefaultNetworkTimeout;
 
     internal bool IsBuffered { get; private set; }
-
-    #endregion
 
     public abstract void Dispose();
 
