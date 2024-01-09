@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Data.SchemaRegistry.Samples
 {
-    public partial class Samples_SchemaRegistryClient
+    public partial class Samples_Schema
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -24,7 +24,7 @@ namespace Azure.Data.SchemaRegistry.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+            Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
             Response response = client.GetSchemaByVersion("<groupName>", "<name>", 1234, null);
 
@@ -38,7 +38,7 @@ namespace Azure.Data.SchemaRegistry.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+            Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
             Response response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234, null);
 
@@ -52,7 +52,7 @@ namespace Azure.Data.SchemaRegistry.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+            Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
             Response<BinaryData> response = client.GetSchemaByVersion("<groupName>", "<name>", 1234);
         }
@@ -63,7 +63,7 @@ namespace Azure.Data.SchemaRegistry.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+            Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
             Response<BinaryData> response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234);
         }
@@ -74,7 +74,7 @@ namespace Azure.Data.SchemaRegistry.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+            Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
             Response response = client.GetSchemaByVersion("<groupName>", "<name>", 1234, null);
 
@@ -88,7 +88,7 @@ namespace Azure.Data.SchemaRegistry.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+            Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
             Response response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234, null);
 
@@ -102,7 +102,7 @@ namespace Azure.Data.SchemaRegistry.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+            Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
             Response<BinaryData> response = client.GetSchemaByVersion("<groupName>", "<name>", 1234);
         }
@@ -113,7 +113,7 @@ namespace Azure.Data.SchemaRegistry.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+            Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
             Response<BinaryData> response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234);
         }

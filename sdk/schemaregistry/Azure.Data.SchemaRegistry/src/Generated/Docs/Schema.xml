@@ -7,7 +7,7 @@ This sample shows how to call GetSchemaByVersionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
 Response<BinaryData> response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234);
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetSchemaByVersionAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
 Response<BinaryData> response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234);
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetSchemaByVersion.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
 Response<BinaryData> response = client.GetSchemaByVersion("<groupName>", "<name>", 1234);
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetSchemaByVersion with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
 Response<BinaryData> response = client.GetSchemaByVersion("<groupName>", "<name>", 1234);
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetSchemaByVersionAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
 Response response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234, null);
 
@@ -56,7 +56,7 @@ This sample shows how to call GetSchemaByVersionAsync with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
 Response response = await client.GetSchemaByVersionAsync("<groupName>", "<name>", 1234, null);
 
@@ -70,7 +70,7 @@ This sample shows how to call GetSchemaByVersion and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
 Response response = client.GetSchemaByVersion("<groupName>", "<name>", 1234, null);
 
@@ -81,7 +81,7 @@ This sample shows how to call GetSchemaByVersion with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-SchemaRegistryClient client = new SchemaRegistryClient(endpoint, credential);
+Schema client = new SchemaRegistryClient(endpoint, credential).GetSchemaClient(apiVersion: "2023-07-01");
 
 Response response = client.GetSchemaByVersion("<groupName>", "<name>", 1234, null);
 

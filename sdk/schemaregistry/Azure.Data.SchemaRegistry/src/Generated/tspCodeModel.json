@@ -1,0 +1,1950 @@
+{
+ "$id": "1",
+ "Name": "Azure.SchemaRegistry",
+ "Description": "SchemaRegistryClient is a client for registering and retrieving schemas from the Azure Schema Registry service.",
+ "ApiVersions": [
+  "2021-10",
+  "2022-10",
+  "2023-07-01"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Name": "AuthType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "http",
+     "Value": "http",
+     "Description": "HTTP"
+    },
+    {
+     "$id": "4",
+     "Name": "apiKey",
+     "Value": "apiKey",
+     "Description": "API key"
+    },
+    {
+     "$id": "5",
+     "Name": "oauth2",
+     "Value": "oauth2",
+     "Description": "OAuth2"
+    },
+    {
+     "$id": "6",
+     "Name": "openIdConnect",
+     "Value": "openIdConnect",
+     "Description": "OpenID connect"
+    }
+   ],
+   "Namespace": "TypeSpec.Http",
+   "Description": "Authentication type",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "7",
+   "Name": "SchemaFormat",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "8",
+     "Name": "avro",
+     "Value": "Avro",
+     "Description": "Represents the Apache Avro schema format."
+    },
+    {
+     "$id": "9",
+     "Name": "json",
+     "Value": "Json",
+     "Description": "Represents the JSON schema format."
+    },
+    {
+     "$id": "10",
+     "Name": "custom",
+     "Value": "Custom",
+     "Description": "Represents a custom schema format."
+    },
+    {
+     "$id": "11",
+     "Name": "protobuf",
+     "Value": "Protobuf",
+     "Description": "Represents a protobuf schema format."
+    }
+   ],
+   "Namespace": "Azure.SchemaRegistry",
+   "Accessibility": "internal",
+   "Description": "Represents the format of the schema to be stored by the Schema Registry service.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "RoundTrip"
+  },
+  {
+   "$id": "12",
+   "Name": "ServiceApiVersions",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "13",
+     "Name": "V2021_10",
+     "Value": "2021-10",
+     "Description": "Azure Schema Registry 2021-10 Version"
+    },
+    {
+     "$id": "14",
+     "Name": "V2022_10",
+     "Value": "2022-10",
+     "Description": "Azure Schema Registry 2022-10 Version"
+    },
+    {
+     "$id": "15",
+     "Name": "V2023_07_01",
+     "Value": "2023-07-01",
+     "Description": "Azure Schema Registry 2023-07-01 Version. This is the default version."
+    }
+   ],
+   "Namespace": "Azure.SchemaRegistry",
+   "Description": "Represents the Schema Registry API version to use for requests.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "None"
+  },
+  {
+   "$id": "16",
+   "Name": "ContentType",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "17",
+     "Name": "avro",
+     "Value": "application/json; serialization=Avro",
+     "Description": "The Avro schema content type."
+    },
+    {
+     "$id": "18",
+     "Name": "json",
+     "Value": "application/json; serialization=json",
+     "Description": "The JSON schema content type."
+    },
+    {
+     "$id": "19",
+     "Name": "custom",
+     "Value": "text/plain; charset=utf-8",
+     "Description": "The custom schema content type."
+    },
+    {
+     "$id": "20",
+     "Name": "protobuf",
+     "Value": "text/vnd.ms.protobuf",
+     "Description": "The protobuf schema content type."
+    }
+   ],
+   "Namespace": "Azure.SchemaRegistry",
+   "Accessibility": "internal",
+   "Description": "The content type for the schema.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "RoundTrip"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "21",
+   "Name": "PagedSchemaGroup",
+   "Namespace": "Azure.Core.Foundations",
+   "Description": "Paged collection of SchemaGroup items",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "22",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The SchemaGroup items on this page",
+     "Type": {
+      "$id": "23",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "24",
+       "Name": "SchemaGroup",
+       "Namespace": "Azure.SchemaRegistry",
+       "Accessibility": "internal",
+       "Description": "Schema Group resource.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "25",
+         "Name": "groupName",
+         "SerializedName": "groupName",
+         "Description": "Name of schema group.",
+         "Type": {
+          "$id": "26",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": true
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "27",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "28",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "24"
+  },
+  {
+   "$id": "29",
+   "Name": "PagedVersion",
+   "Namespace": "Azure.Core.Foundations",
+   "Description": "Paged collection of Version items",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "30",
+     "Name": "value",
+     "SerializedName": "value",
+     "Description": "The Version items on this page",
+     "Type": {
+      "$id": "31",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "32",
+       "Name": "SchemaVersion",
+       "Namespace": "Azure.SchemaRegistry",
+       "Accessibility": "internal",
+       "Description": "Schema versions resource.",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "33",
+         "Name": "schemaVersion",
+         "SerializedName": "schemaVersion",
+         "Description": "Version number of specific schema.",
+         "Type": {
+          "$id": "34",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": true
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "35",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "The link to the next page of items",
+     "Type": {
+      "$id": "36",
+      "Name": "ResourceLocation",
+      "Kind": "Uri",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "32"
+  },
+  {
+   "$id": "37",
+   "Name": "AzureAuth",
+   "Namespace": "Azure.SchemaRegistry",
+   "Description": "Azure Active Directory OAuth2 Flow",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "38",
+     "Name": "type",
+     "SerializedName": "type",
+     "Description": "OAuth2 authentication",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "39",
+     "Name": "flows",
+     "SerializedName": "flows",
+     "Description": "Supported OAuth2 flows",
+     "Type": {
+      "$id": "40",
+      "Name": "Intrinsic",
+      "Kind": "unknown",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "41",
+   "Name": "SchemaId",
+   "Namespace": "Azure.SchemaRegistry",
+   "Description": "Object received from the registry containing schema identifiers.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "42",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "Schema ID that uniquely identifies a schema in the registry namespace.",
+     "Type": {
+      "$id": "43",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    }
+   ]
+  },
+  {
+   "$id": "44",
+   "Name": "SchemaHeaders",
+   "Namespace": "Azure.SchemaRegistry",
+   "Description": "No Content.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "45",
+   "Name": "SchemaContent",
+   "Namespace": "Azure.SchemaRegistry",
+   "Description": "Content of the schema.",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "46",
+     "Name": "content",
+     "SerializedName": "content",
+     "Description": "String representation (UTF-8) of the schema.",
+     "Type": {
+      "$id": "47",
+      "Name": "bytes",
+      "Kind": "Bytes",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "48",
+   "Name": "SchemaContentType",
+   "Namespace": "Azure.SchemaRegistry",
+   "Description": "The content type for given schema. Each schema type has an associated content-type.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "49",
+   "Name": "SchemaNameContent",
+   "Namespace": "Azure.SchemaRegistry",
+   "Description": "Schemas resource.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": [
+    {
+     "$id": "50",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "Name of schema.",
+     "Type": {
+      "$id": "51",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": true
+    },
+    {
+     "$id": "52",
+     "Name": "schemaContent",
+     "SerializedName": "schemaContent",
+     "Description": "String representation (UTF-8) of the registered schema.",
+     "Type": {
+      "$id": "53",
+      "Name": "bytes",
+      "Kind": "Bytes",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "54",
+   "Name": "SchemaProperties",
+   "Namespace": "Azure.SchemaRegistry",
+   "Accessibility": "internal",
+   "Description": "Meta properties of a schema.",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "55",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "References a specific schema in the registry namespace.",
+     "Type": {
+      "$id": "56",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "57",
+     "Name": "format",
+     "SerializedName": "format",
+     "Description": "Format for the schema being stored.",
+     "Type": {
+      "$ref": "7"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "58",
+     "Name": "groupName",
+     "SerializedName": "groupName",
+     "Description": "Schema group under which schema is stored.",
+     "Type": {
+      "$id": "59",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "60",
+     "Name": "name",
+     "SerializedName": "name",
+     "Description": "Name of schema.",
+     "Type": {
+      "$id": "61",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "62",
+     "Name": "version",
+     "SerializedName": "version",
+     "Description": "Version of schema.",
+     "Type": {
+      "$id": "63",
+      "Name": "int32",
+      "Kind": "Int32",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "64",
+   "Name": "Schema",
+   "Namespace": "Azure.SchemaRegistry",
+   "Accessibility": "internal",
+   "Description": "The schema content of a schema, along with id and meta properties.",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "65",
+     "Name": "definition",
+     "SerializedName": "definition",
+     "Description": "The content of the schema.",
+     "Type": {
+      "$id": "66",
+      "Name": "string",
+      "Kind": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "67",
+     "Name": "properties",
+     "SerializedName": "properties",
+     "Description": "The properties of the schema.",
+     "Type": {
+      "$ref": "54"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "68",
+   "Name": "SchemaRegistryClient",
+   "Description": "",
+   "Operations": [],
+   "Protocol": {
+    "$id": "69"
+   },
+   "Creatable": true
+  },
+  {
+   "$id": "70",
+   "Name": "SchemaOperations",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "71",
+     "Name": "listSchemaGroups",
+     "ResourceName": "SchemaGroup",
+     "Summary": "Get list of schema groups.",
+     "Description": "Gets the list of schema groups user is authorized to access.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$id": "72",
+       "Name": "fullyQualifiedNamespace",
+       "NameInRequest": "fullyQualifiedNamespace",
+       "Description": "The Schema Registry service endpoint, for example 'my-namespace.servicebus.windows.net'.",
+       "Type": {
+        "$id": "73",
+        "Name": "Uri",
+        "Kind": "Uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "74",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "75",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$id": "76",
+        "Type": {
+         "$id": "77",
+         "Name": "String",
+         "Kind": "String",
+         "IsNullable": false
+        },
+        "Value": "2023-07-01"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "78",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "79",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "80",
+        "Type": {
+         "$ref": "79"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "81",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "21"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{fullyQualifiedNamespace}",
+     "Path": "/$schemaGroups",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "82",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "83",
+     "Name": "getSchemaById",
+     "ResourceName": "SchemaOperations",
+     "Summary": "Get a registered schema by its unique ID reference.",
+     "Description": "Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "72"
+      },
+      {
+       "$id": "84",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "85",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "76"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "86",
+       "Name": "id",
+       "NameInRequest": "id",
+       "Description": "Schema ID that uniquely identifies a schema in the registry namespace.",
+       "Type": {
+        "$id": "87",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "88",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "89",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "90",
+        "Type": {
+         "$ref": "89"
+        },
+        "Value": "application/json; serialization=Avro"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "91",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "92",
+        "Name": "bytes",
+        "Kind": "Bytes",
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "93",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "URL location of schema, identified by schema group, schema name, and version.",
+         "Type": {
+          "$id": "94",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "95",
+         "Name": "Schema-Id",
+         "NameInResponse": "schemaId",
+         "Description": "References specific schema in registry namespace.",
+         "Type": {
+          "$id": "96",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "97",
+         "Name": "Schema-Id-Location",
+         "NameInResponse": "schemaIdLocation",
+         "Description": "URL location of schema, identified by schema ID.",
+         "Type": {
+          "$id": "98",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "99",
+         "Name": "Schema-Group-Name",
+         "NameInResponse": "schemaGroupName",
+         "Description": "References schema group.",
+         "Type": {
+          "$id": "100",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "101",
+         "Name": "Schema-Name",
+         "NameInResponse": "schemaName",
+         "Description": "References schema name.",
+         "Type": {
+          "$id": "102",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "103",
+         "Name": "Schema-Version",
+         "NameInResponse": "schemaVersion",
+         "Description": "Version of the returned schema.",
+         "Type": {
+          "$id": "104",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "105",
+         "Name": "Content-Type",
+         "NameInResponse": "contentType",
+         "Description": "The content type for given schema.",
+         "Type": {
+          "$id": "106",
+          "Name": "Union",
+          "UnionItemTypes": [
+           {
+            "$id": "107",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "108",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "application/json; serialization=Avro",
+            "IsNullable": false
+           },
+           {
+            "$id": "109",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "110",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "application/json; serialization=json",
+            "IsNullable": false
+           },
+           {
+            "$id": "111",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "112",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "text/plain; charset=utf-8",
+            "IsNullable": false
+           },
+           {
+            "$id": "113",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "114",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "text/vnd.ms.protobuf",
+            "IsNullable": false
+           }
+          ],
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json; serialization=Avro",
+        "application/json; serialization=json",
+        "text/plain; charset=utf-8",
+        "text/vnd.ms.protobuf"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{fullyQualifiedNamespace}",
+     "Path": "/$schemaGroups/$schemas/{id}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "115",
+     "Name": "listSchemaVersions",
+     "ResourceName": "Version",
+     "Summary": "List schema versions.",
+     "Description": "Gets the list of all versions of one schema.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "72"
+      },
+      {
+       "$id": "116",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "117",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "76"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "118",
+       "Name": "groupName",
+       "NameInRequest": "groupName",
+       "Description": "Name of schema group.",
+       "Type": {
+        "$id": "119",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "120",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Description": "Name of schema.",
+       "Type": {
+        "$id": "121",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "122",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "123",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "124",
+        "Type": {
+         "$ref": "123"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "125",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "29"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{fullyQualifiedNamespace}",
+     "Path": "/$schemaGroups/{groupName}/schemas/{name}/versions",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "126",
+      "NextLinkName": "nextLink",
+      "ItemName": "value"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "127",
+     "Name": "getSchemaByVersion",
+     "ResourceName": "SchemaOperations",
+     "Summary": "Get specific schema versions.",
+     "Description": "Gets one specific version of one schema.",
+     "Parameters": [
+      {
+       "$ref": "72"
+      },
+      {
+       "$id": "128",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "129",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "76"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "130",
+       "Name": "groupName",
+       "NameInRequest": "groupName",
+       "Description": "Name of schema group.",
+       "Type": {
+        "$id": "131",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "132",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Description": "Name of schema.",
+       "Type": {
+        "$id": "133",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "134",
+       "Name": "schemaVersion",
+       "NameInRequest": "schemaVersion",
+       "Description": "Version number of specific schema.",
+       "Type": {
+        "$id": "135",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "136",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "137",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "138",
+        "Type": {
+         "$ref": "137"
+        },
+        "Value": "application/json; serialization=Avro"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "139",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "140",
+        "Name": "bytes",
+        "Kind": "Bytes",
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "141",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "URL location of schema, identified by schema group, schema name, and version.",
+         "Type": {
+          "$id": "142",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "143",
+         "Name": "Schema-Id",
+         "NameInResponse": "schemaId",
+         "Description": "References specific schema in registry namespace.",
+         "Type": {
+          "$id": "144",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "145",
+         "Name": "Schema-Id-Location",
+         "NameInResponse": "schemaIdLocation",
+         "Description": "URL location of schema, identified by schema ID.",
+         "Type": {
+          "$id": "146",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "147",
+         "Name": "Schema-Group-Name",
+         "NameInResponse": "schemaGroupName",
+         "Description": "References schema group.",
+         "Type": {
+          "$id": "148",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "149",
+         "Name": "Schema-Name",
+         "NameInResponse": "schemaName",
+         "Description": "References schema name.",
+         "Type": {
+          "$id": "150",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "151",
+         "Name": "Schema-Version",
+         "NameInResponse": "schemaVersion",
+         "Description": "Version of the returned schema.",
+         "Type": {
+          "$id": "152",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "153",
+         "Name": "Content-Type",
+         "NameInResponse": "contentType",
+         "Description": "The content type for given schema.",
+         "Type": {
+          "$id": "154",
+          "Name": "Union",
+          "UnionItemTypes": [
+           {
+            "$id": "155",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "156",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "application/json; serialization=Avro",
+            "IsNullable": false
+           },
+           {
+            "$id": "157",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "158",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "application/json; serialization=json",
+            "IsNullable": false
+           },
+           {
+            "$id": "159",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "160",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "text/plain; charset=utf-8",
+            "IsNullable": false
+           },
+           {
+            "$id": "161",
+            "Name": "Literal",
+            "LiteralValueType": {
+             "$id": "162",
+             "Name": "String",
+             "Kind": "String",
+             "IsNullable": false
+            },
+            "Value": "text/vnd.ms.protobuf",
+            "IsNullable": false
+           }
+          ],
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json; serialization=Avro",
+        "application/json; serialization=json",
+        "text/plain; charset=utf-8",
+        "text/vnd.ms.protobuf"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{fullyQualifiedNamespace}",
+     "Path": "/$schemaGroups/{groupName}/schemas/{name}/versions/{schemaVersion}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "163",
+     "Name": "getSchemaIdByContent",
+     "ResourceName": "SchemaOperations",
+     "Summary": "Get ID for existing schema.",
+     "Description": "Gets the ID referencing an existing schema within the specified schema group, as matched by schema content comparison.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "72"
+      },
+      {
+       "$id": "164",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "165",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "76"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "166",
+       "Name": "groupName",
+       "NameInRequest": "groupName",
+       "Description": "Name of schema group.",
+       "Type": {
+        "$id": "167",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "168",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Description": "Name of schema.",
+       "Type": {
+        "$id": "169",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "170",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "The content type for given schema.",
+       "Type": {
+        "$id": "171",
+        "Name": "Union",
+        "UnionItemTypes": [
+         {
+          "$id": "172",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$id": "173",
+           "Name": "String",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "Value": "application/json; serialization=Avro",
+          "IsNullable": false
+         },
+         {
+          "$id": "174",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$id": "175",
+           "Name": "String",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "Value": "application/json; serialization=json",
+          "IsNullable": false
+         },
+         {
+          "$id": "176",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$id": "177",
+           "Name": "String",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "Value": "text/plain; charset=utf-8",
+          "IsNullable": false
+         },
+         {
+          "$id": "178",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$id": "179",
+           "Name": "String",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "Value": "text/vnd.ms.protobuf",
+          "IsNullable": false
+         }
+        ],
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "180",
+       "Name": "schemaContent",
+       "NameInRequest": "schemaContent",
+       "Description": "String representation (UTF-8) of the registered schema.",
+       "Type": {
+        "$id": "181",
+        "Name": "bytes",
+        "Kind": "Bytes",
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "182",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "183",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "184",
+        "Type": {
+         "$ref": "183"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "185",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "186",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "URL location of schema, identified by schema group, schema name, and version.",
+         "Type": {
+          "$id": "187",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "188",
+         "Name": "Schema-Id",
+         "NameInResponse": "schemaId",
+         "Description": "References specific schema in registry namespace.",
+         "Type": {
+          "$id": "189",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "190",
+         "Name": "Schema-Id-Location",
+         "NameInResponse": "schemaIdLocation",
+         "Description": "URL location of schema, identified by schema ID.",
+         "Type": {
+          "$id": "191",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "192",
+         "Name": "Schema-Group-Name",
+         "NameInResponse": "schemaGroupName",
+         "Description": "References schema group.",
+         "Type": {
+          "$id": "193",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "194",
+         "Name": "Schema-Name",
+         "NameInResponse": "schemaName",
+         "Description": "References schema name.",
+         "Type": {
+          "$id": "195",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "196",
+         "Name": "Schema-Version",
+         "NameInResponse": "schemaVersion",
+         "Description": "Version of the returned schema.",
+         "Type": {
+          "$id": "197",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Binary",
+     "Uri": "{fullyQualifiedNamespace}",
+     "Path": "/$schemaGroups/{groupName}/schemas/{name}:get-id",
+     "RequestMediaTypes": [
+      "application/json; serialization=Avro",
+      "application/json; serialization=json",
+      "text/plain; charset=utf-8",
+      "text/vnd.ms.protobuf"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "198",
+     "Name": "registerSchema",
+     "ResourceName": "SchemaOperations",
+     "Summary": "Register new schema",
+     "Description": "Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$ref": "72"
+      },
+      {
+       "$id": "199",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "200",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "76"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "201",
+       "Name": "groupName",
+       "NameInRequest": "groupName",
+       "Description": "Name of schema group.",
+       "Type": {
+        "$id": "202",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "203",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Description": "Name of schema.",
+       "Type": {
+        "$id": "204",
+        "Name": "string",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "205",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "The content type for given schema.",
+       "Type": {
+        "$id": "206",
+        "Name": "Union",
+        "UnionItemTypes": [
+         {
+          "$id": "207",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$id": "208",
+           "Name": "String",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "Value": "application/json; serialization=Avro",
+          "IsNullable": false
+         },
+         {
+          "$id": "209",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$id": "210",
+           "Name": "String",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "Value": "application/json; serialization=json",
+          "IsNullable": false
+         },
+         {
+          "$id": "211",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$id": "212",
+           "Name": "String",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "Value": "text/plain; charset=utf-8",
+          "IsNullable": false
+         },
+         {
+          "$id": "213",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$id": "214",
+           "Name": "String",
+           "Kind": "String",
+           "IsNullable": false
+          },
+          "Value": "text/vnd.ms.protobuf",
+          "IsNullable": false
+         }
+        ],
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "215",
+       "Name": "content",
+       "NameInRequest": "content",
+       "Description": "String representation (UTF-8) of the schema.",
+       "Type": {
+        "$id": "216",
+        "Name": "bytes",
+        "Kind": "Bytes",
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "217",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "218",
+        "Name": "String",
+        "Kind": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "219",
+        "Type": {
+         "$ref": "218"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "220",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "221",
+         "Name": "Location",
+         "NameInResponse": "location",
+         "Description": "URL location of schema, identified by schema group, schema name, and version.",
+         "Type": {
+          "$id": "222",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "223",
+         "Name": "Schema-Id",
+         "NameInResponse": "schemaId",
+         "Description": "References specific schema in registry namespace.",
+         "Type": {
+          "$id": "224",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "225",
+         "Name": "Schema-Id-Location",
+         "NameInResponse": "schemaIdLocation",
+         "Description": "URL location of schema, identified by schema ID.",
+         "Type": {
+          "$id": "226",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "227",
+         "Name": "Schema-Group-Name",
+         "NameInResponse": "schemaGroupName",
+         "Description": "References schema group.",
+         "Type": {
+          "$id": "228",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "229",
+         "Name": "Schema-Name",
+         "NameInResponse": "schemaName",
+         "Description": "References schema name.",
+         "Type": {
+          "$id": "230",
+          "Name": "string",
+          "Kind": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "231",
+         "Name": "Schema-Version",
+         "NameInResponse": "schemaVersion",
+         "Description": "Version of the returned schema.",
+         "Type": {
+          "$id": "232",
+          "Name": "int32",
+          "Kind": "Int32",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Binary",
+     "Uri": "{fullyQualifiedNamespace}",
+     "Path": "/$schemaGroups/{groupName}/schemas/{name}",
+     "RequestMediaTypes": [
+      "application/json; serialization=Avro",
+      "application/json; serialization=json",
+      "text/plain; charset=utf-8",
+      "text/vnd.ms.protobuf"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "233"
+   },
+   "Creatable": false,
+   "Parent": "SchemaRegistryClient"
+  }
+ ],
+ "Auth": {
+  "$id": "234",
+  "OAuth2": {
+   "$id": "235",
+   "Scopes": [
+    "https://eventhubs.azure.net/.default"
+   ]
+  }
+ }
+}

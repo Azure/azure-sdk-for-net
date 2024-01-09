@@ -1,0 +1,9 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Data.SchemaRegistry",
+  "library-name": "Azure.Data.SchemaRegistry",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/SchemaRegistry/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/SchemaRegistry/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ]
+}
