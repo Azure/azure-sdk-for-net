@@ -649,6 +649,41 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
         }
 
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Avro_Create()
+        {
+            string name = "avro";
+            // Get the resource group
+            string rgName = Recording.GenerateAssetName($"adf-rg-{name}-");
+            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
+            // Create a DataFactory
+            string dataFactoryName = Recording.GenerateAssetName($"adf-{name}-");
+            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+            // Create a LinkedService
+            string accessKey = GetStorageAccountAccessKey(resourceGroup);
+            string linkedServiceName = Recording.GenerateAssetName($"adf-linkedservice-{name}-");
+
+            string datasetName = Recording.GenerateAssetName($"adf-dataset-{name}-");
+
+            await CreateAzureDataLakeGen2LinkedService(dataFactory, linkedServiceName, accessKey);
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AvroDataset(dataFactoryLinkedServiceReference)
+            {
+                Schema = new Dictionary<string, BinaryData>(){
+                    { "name", BinaryData.FromString("123") }
+                },
+                DataLocation = new AzureBlobFSLocation()
+                {
+                    FileName = "TestQuerySchema.avro",
+                    FileSystem = "0-querytest",
+                    FolderPath = "querytest"
+                }
+            }); ;
+
+            await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
+        }
+
         private async Task<DataFactoryLinkedServiceResource> CreateSapCloudForCustomerLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
             DataFactoryLinkedServiceData lkSapCloudForCustomer = new DataFactoryLinkedServiceData(new SapCloudForCustomerLinkedService("www.fakeuri.com")
