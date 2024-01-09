@@ -59,8 +59,6 @@ public abstract class PipelineResponse : IDisposable
         set => _contentStream = value;
     }
 
-    #region Meta-data properties set by the pipeline.
-
     public virtual BinaryData Content
     {
         get
@@ -91,8 +89,6 @@ public abstract class PipelineResponse : IDisposable
 
     internal bool IsBuffered { get; private set; }
 
-    #endregion
-
     public abstract void Dispose();
 
     #region Response Buffering
@@ -107,7 +103,7 @@ public abstract class PipelineResponse : IDisposable
             return;
         }
 
-        Stream? responseContentStream = _contentStream;
+        Stream? responseContentStream = ContentStream;
         if (responseContentStream == null)
         {
             _content = s_emptyBinaryData;
@@ -135,8 +131,8 @@ public abstract class PipelineResponse : IDisposable
             return;
         }
 
-        Stream? responseContentStream = _contentStream;
-        if (responseContentStream == null || IsBuffered)
+        Stream? responseContentStream = ContentStream;
+        if (responseContentStream == null)
         {
             _content = s_emptyBinaryData;
             return;
