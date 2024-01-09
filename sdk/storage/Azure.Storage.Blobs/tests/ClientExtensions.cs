@@ -11,9 +11,6 @@ using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Tests;
 
-/// <summary>
-/// Data movement extension methods for the <see cref="Azure.Storage.Blobs.BlobContainerClient"/>.
-/// </summary>
 internal static class ClientExtensions
 {
     public static List<string> GetBlobVersions(this BlobBaseClient client)

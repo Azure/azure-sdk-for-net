@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs.Batch.Tests;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
@@ -19,8 +17,6 @@ using Moq;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
 using Azure.Core.TestFramework.Models;
-using Azure.Storage.Tests.Shared;
-using Gee.External.Capstone.M68K;
 using Azure.Storage.Blobs.Batch.Models;
 
 namespace Azure.Storage.Blobs.Test
