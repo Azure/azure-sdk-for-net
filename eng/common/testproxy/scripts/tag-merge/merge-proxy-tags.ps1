@@ -1,3 +1,6 @@
+#Requires -Version 6.0
+#Requires -PSEdition Core
+
 <#
 .SYNOPSIS
 Merge multiple asset tagss worth of content into a single asset tag.
@@ -181,7 +184,13 @@ function Start-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDire
 function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDirectory) {
     $len = $TargetTags.Length
 
-    Write-Host "`nSuccessfully combined $len tags. Invoke `"test-proxy push " -NoNewLine
+    if ($TargetTags.GetType().Name -eq "String") {
+        $len = 1
+    }
+
+    $suffix = if ($len -gt 1) { "s" } else { "" }
+
+    Write-Host "`nSuccessfully combined $len tag$suffix. Invoke `"test-proxy push " -NoNewLine
     Write-Host $AssetsJson -ForegroundColor Green -NoNewLine
     Write-Host "`" to push the results as a new tag."
 }
