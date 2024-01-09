@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Chaos.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="Selector"/> for deserialization. </summary>
+        internal Selector()
+        {
+        }
+
         /// <summary> Enum of the selector type. </summary>
         internal SelectorType SelectorType { get; set; }
         /// <summary> String of the selector ID. </summary>
