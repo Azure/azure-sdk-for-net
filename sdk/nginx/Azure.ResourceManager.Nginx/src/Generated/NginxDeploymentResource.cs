@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get a certificate of given Nginx deployment
+        /// Get a certificate of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get a certificate of given Nginx deployment
+        /// Get a certificate of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx configuration of given Nginx deployment
+        /// Get the NGINX configuration of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx configuration of given Nginx deployment
+        /// Get the NGINX configuration of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of NGINX conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx deployment
+        /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx deployment
+        /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Delete the Nginx deployment resource
+        /// Delete the NGINX deployment resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Delete the Nginx deployment resource
+        /// Delete the NGINX deployment resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Update the Nginx deployment
+        /// Update the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Update the Nginx deployment
+        /// Update the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

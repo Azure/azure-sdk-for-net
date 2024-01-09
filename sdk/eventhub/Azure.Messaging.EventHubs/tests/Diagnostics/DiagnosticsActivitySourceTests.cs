@@ -620,7 +620,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options) => Mock.Of<TransportClient>();
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true) => Mock.Of<TransportClient>();
         }
     }
 #endif

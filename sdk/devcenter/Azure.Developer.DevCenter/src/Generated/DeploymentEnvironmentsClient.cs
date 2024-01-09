@@ -738,7 +738,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -778,7 +778,7 @@ namespace Azure.Developer.DevCenter
             try
             {
                 using HttpMessage message = CreateDeleteEnvironmentRequest(projectName, userId, environmentName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeploymentEnvironmentsClient.DeleteEnvironment", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
             {

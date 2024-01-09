@@ -5,17 +5,40 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
+// CUSTOM CODE NOTE:
+// Suppress the parameterized constructor that only receives the messages in favor of a custom
+// parameterized constructor that receives the deployment name as well.
+
+[CodeGenSuppress("ChatCompletionsOptions", typeof(IEnumerable<ChatRequestMessage>))]
 public partial class ChatCompletionsOptions
 {
-    /// <inheritdoc cref="CompletionsOptions.ChoicesPerPrompt"/>
-    public int? ChoiceCount { get; set; }
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
 
     /// <summary>
-    /// Gets or sets the deployment name to use for a chat completions request.
+    ///     Gets or sets the number of choices that should be generated per provided prompt.
+    ///     Has a valid range of 1 to 128.
+    /// </summary>
+    /// <remarks>
+    ///     Because this parameter generates many completions, it can quickly consume your token quota. Use
+    ///     carefully and ensure reasonable settings for <see cref="MaxTokens"/> and <see cref="StopSequences"/>.
+    ///
+    ///     <see cref="ChoiceCount"/> is equivalent to 'n' in the REST request schema.
+    /// </remarks>
+    public int? ChoiceCount { get; set; }
+
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
+    /// <summary>
+    /// The deployment name to use for a chat completions request.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -27,32 +50,110 @@ public partial class ChatCompletionsOptions
     /// appropriate name of the model (example: gpt-4).
     /// </para>
     /// </remarks>
-    [CodeGenMember("InternalNonAzureModelName")]
     public string DeploymentName { get; set; }
 
-    /// <inheritdoc cref="CompletionsOptions.FrequencyPenalty"/>
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
+    /// <summary>
+    ///     Gets or sets a value that influences the probability of generated tokens appearing based on their
+    ///     cumulative frequency in generated text.
+    ///     Has a valid range of -2.0 to 2.0.
+    /// </summary>
+    /// <remarks>
+    ///     Positive values will make tokens less likely to appear as their frequency increases and decrease the
+    ///     model's likelihood of repeating the same statements verbatim.
+    /// </remarks>
     public float? FrequencyPenalty { get; set; }
 
-    /// <inheritdoc cref="CompletionsOptions.MaxTokens"/>
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
+    /// <summary> Gets the maximum number of tokens to generate. Has minimum of 0. </summary>
+    /// <remarks>
+    ///     <see cref="MaxTokens"/> is equivalent to 'max_tokens' in the REST request schema.
+    /// </remarks>
     public int? MaxTokens { get; set; }
 
-    /// <inheritdoc cref="CompletionsOptions.NucleusSamplingFactor"/>
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
+    /// <summary>
+    ///     Gets or set a an alternative value to <see cref="Temperature"/>, called nucleus sampling, that causes
+    ///     the model to consider the results of the tokens with <see cref="NucleusSamplingFactor"/> probability
+    ///     mass.
+    /// </summary>
+    /// <remarks>
+    ///     As an example, a value of 0.1 will cause only the tokens comprising the top 10% of probability mass to
+    ///     be considered.
+    ///
+    ///     It is not recommended to modify <see cref="Temperature"/> and <see cref="NucleusSamplingFactor"/>
+    ///     for the same chat completions request as the interaction of these two settings is difficult to predict.
+    ///
+    ///     <see cref="NucleusSamplingFactor"/> is equivalent to 'top_p' in the REST request schema.
+    /// </remarks>
     public float? NucleusSamplingFactor { get; set; }
 
-    /// <inheritdoc cref="CompletionsOptions.PresencePenalty"/>
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
+    /// <summary>
+    ///     Gets or sets a value that influences the probability of generated tokens appearing based on their
+    ///     existing presence in generated text.
+    ///     Has a valid range of -2.0 to 2.0.
+    /// </summary>
+    /// <remarks>
+    ///     Positive values will make tokens less likely to appear when they already exist and increase the
+    ///     model's likelihood to output new topics.
+    /// </remarks>
     public float? PresencePenalty { get; set; }
 
-    /// <inheritdoc cref="CompletionsOptions.StopSequences"/>
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
+    /// <summary>
+    ///     Gets a list of textual sequences that will end completions generation.
+    ///     A maximum of four stop sequences are allowed.
+    /// </summary>
+    /// <remarks>
+    ///     <see cref="StopSequences"/> is equivalent to 'stop' in the REST request schema.
+    /// </remarks>
     public IList<string> StopSequences { get; }
 
-    /// <inheritdoc cref="CompletionsOptions.Temperature"/>
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
+    /// <summary>
+    ///     Gets or sets the sampling temperature to use that controls the apparent creativity of generated
+    ///     completions.
+    ///     Has a valid range of 0.0 to 2.0 and defaults to 1.0 if not otherwise specified.
+    /// </summary>
+    /// <remarks>
+    ///     Higher values will make output more random while lower values will make results more focused and
+    ///     deterministic.
+    ///
+    ///     It is not recommended to modify <see cref="Temperature"/> and <see cref="NucleusSamplingFactor"/>
+    ///     for the same chat completions request as the interaction of these two settings is difficult to predict.
+    /// </remarks>
     public float? Temperature { get; set; }
 
-    /// <inheritdoc cref="CompletionsOptions.TokenSelectionBiases"/>
-    public IDictionary<int, int> TokenSelectionBiases { get; }
+    // CUSTOM CODE NOTE:
+    // - Add custom serialization hook.
+    // - Add custom doc comment.
 
-    /// <inheritdoc cref="CompletionsOptions.User"/>
-    public string User { get; set; }
+    /// <summary>
+    ///     Gets a dictionary of modifications to the likelihood of specified GPT tokens appearing in a chat completions
+    ///     result. Maps token IDs to associated bias scores from -100 to 100, with minimum and maximum values
+    ///     corresponding to a ban or exclusive selection of that token, respectively.
+    /// </summary>
+    /// <remarks>
+    ///     Token IDs are computed via external tokenizer tools.
+    ///     The exact effect of specific bias values varies per model.
+    ///
+    ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
+    /// </remarks>
+    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeTokenSelectionBiases))]
+    public IDictionary<int, int> TokenSelectionBiases { get; }
 
     /// <summary> A list of functions the model may generate JSON inputs for. </summary>
     public IList<FunctionDefinition> Functions { get; set; }
@@ -88,15 +189,36 @@ public partial class ChatCompletionsOptions
     /// </remarks>
     public AzureChatExtensionsOptions AzureExtensionsOptions { get; set; }
 
+    /// <summary>
+    /// If specified, the model will configure which of the provided tools it can use for the chat completions response.
+    /// </summary>
+    public ChatCompletionsToolChoice ToolChoice { get; set; }
+
+    internal AzureChatEnhancementConfiguration Enhancements { get; set; }
+
+    // CUSTOM CODE NOTE:
+    //  Retaining the generated "ToolChoice" as a renamed, internal property facilitates the change of type of
+    //  ToolChoice to the custom abstraction seen above.
+
+    [CodeGenMember("ToolChoice")]
+    internal BinaryData InternalSuppressedToolChoice { get; set; }
+
     // CUSTOM CODE NOTE: the following properties are forward declared here as internal as their behavior is
     //                      otherwise handled in the custom implementation.
     internal IList<AzureChatExtensionConfiguration> InternalAzureExtensionsDataSources { get; set; }
-    internal AzureChatEnhancementConfiguration Enhancements { get; set; }
-    internal bool? InternalShouldStreamResponse { get; set; }
-    internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
 
-    /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
-    /// <param name="deploymentName"> The deployment name to use for chat completions. </param>
+    // CUSTOM CODE NOTE:
+    // Mark the `stream` property as internal. This functionality will be handled by unique method
+    // signatures for the different request types (i.e. streaming versus non-streaming methods).
+
+    internal bool? InternalShouldStreamResponse { get; set; }
+
+    // CUSTOM CODE NOTE:
+    // Add a parameterized constructor that receives the deployment name as a parameter in addition
+    // to the other required properties.
+
+    /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
+    /// <param name="deploymentName"> The deployment name to use for a chat completions request. </param>
     /// <param name="messages">
     /// The collection of context messages associated with this chat completions request.
     /// Typical usage begins with a chat message for the System role that provides instructions for
@@ -109,44 +231,47 @@ public partial class ChatCompletionsOptions
     /// <exception cref="ArgumentException">
     ///     <paramref name="deploymentName"/> is an empty string.
     /// </exception>
-    public ChatCompletionsOptions(string deploymentName, IEnumerable<ChatRequestMessage> messages) : this()
+    public ChatCompletionsOptions(string deploymentName, IEnumerable<ChatRequestMessage> messages)
     {
         Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
         Argument.AssertNotNull(messages, nameof(messages));
 
         DeploymentName = deploymentName;
-
-        foreach (ChatRequestMessage chatMessage in messages)
-        {
-            Messages.Add(chatMessage);
-        }
-    }
-
-    /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
-    public ChatCompletionsOptions()
-    {
-        // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
-        //                      may be reconsidered for required payload constituents in the future.
-        Messages = new ChangeTrackingList<ChatRequestMessage>();
-        TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
-        InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
-        StopSequences = new ChangeTrackingList<string>();
+        Messages = messages.ToList();
         Functions = new ChangeTrackingList<FunctionDefinition>();
+        TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
+        StopSequences = new ChangeTrackingList<string>();
         InternalAzureExtensionsDataSources = new ChangeTrackingList<AzureChatExtensionConfiguration>();
-        AzureExtensionsOptions = null;
-        Enhancements = null;
         Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
     }
 
-    /// <summary>
-    /// If specified, the model will configure which of the provided tools it can use for the chat completions response.
-    /// </summary>
-    public ChatCompletionsToolChoice ToolChoice { get; set; }
+    // CUSTOM CODE NOTE:
+    // Add a public default constructor to allow for an "init" pattern using property setters.
+
+    /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
+    public ChatCompletionsOptions()
+    {
+        Messages = new ChangeTrackingList<ChatRequestMessage>();
+        Functions = new ChangeTrackingList<FunctionDefinition>();
+        TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
+        StopSequences = new ChangeTrackingList<string>();
+        InternalAzureExtensionsDataSources = new ChangeTrackingList<AzureChatExtensionConfiguration>();
+        Tools = new ChangeTrackingList<ChatCompletionsToolDefinition>();
+    }
 
     // CUSTOM CODE NOTE:
-    //  Retaining the generated "ToolChoice" as a renamed, internal property facilitates the change of type of
-    //  ToolChoice to the custom abstraction seen above.
+    // Implement custom serialization code for the `logit_bias` property to serialize it as a
+    // IDictionary<string, int> instead of a IDictionary<int, int>.
 
-    [CodeGenMember("ToolChoice")]
-    internal BinaryData InternalSuppressedToolChoice { get; set; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void SerializeTokenSelectionBiases(Utf8JsonWriter writer)
+    {
+        writer.WriteStartObject();
+        foreach (var item in TokenSelectionBiases)
+        {
+            writer.WritePropertyName(item.Key.ToString());
+            writer.WriteNumberValue(item.Value);
+        }
+        writer.WriteEndObject();
+    }
 }

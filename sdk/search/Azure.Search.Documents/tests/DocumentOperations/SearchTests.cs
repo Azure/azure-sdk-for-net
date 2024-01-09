@@ -238,6 +238,23 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task TestNormalizer()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            Response<SearchResults<Hotel>> response =
+                await resources.GetQueryClient().SearchAsync<Hotel>(
+                    null,
+                    new SearchOptions
+                    {
+                        Filter = "address/city eq 'New york'"
+                    });
+            await AssertKeysEqual(
+                response,
+                h => h.Document.HotelId,
+                "5", "9");
+        }
+
+        [Test]
         public async Task HitHighlighting()
         {
             const string Description = "description";

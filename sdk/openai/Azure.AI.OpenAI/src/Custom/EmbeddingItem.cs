@@ -8,9 +8,9 @@ namespace Azure.AI.OpenAI;
 public partial class EmbeddingItem
 {
     // CUSTOM CODE NOTE:
-    //   The change of the Embedding property to ReadOnlyMemory<float> results in the constructor below being
-    //   generated twice and thus a build error. We're adding it here verbatim as custom code to work around
-    //   this issue.
+    // Changing the type of the Embedding property to ReadOnlyMemory<float> results in the
+    // constructor below being generated twice and thus a build error. Add the constructor here
+    // verbatim as custom code to work around this issue.
 
     /// <summary> Initializes a new instance of EmbeddingItem. </summary>
     /// <param name="embedding">
@@ -24,7 +24,9 @@ public partial class EmbeddingItem
         Index = index;
     }
 
-    // CUSTOM CODE NOTE: We want to represent embeddings as ReadOnlyMemory<float> instead
-    // of IReadOnlyList<float>.
+    // CUSTOM CODE NOTE:
+    // Represent embeddings as ReadOnlyMemory<float> instead of IReadOnlyList<float> in order to
+    // align with the other .NET libraries.
+
     public ReadOnlyMemory<float> Embedding { get; }
 }

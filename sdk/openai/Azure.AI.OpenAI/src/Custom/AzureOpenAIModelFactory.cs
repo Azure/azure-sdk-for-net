@@ -29,7 +29,7 @@ public static partial class AzureOpenAIModelFactory
     public static ChatChoice ChatChoice(
         ChatResponseMessage message = null,
         int index = default,
-        CompletionsFinishReason finishReason = default,
+        CompletionsFinishReason? finishReason = null,
         ChatFinishDetails finishDetails = null,
         ChatResponseMessage deltaMessage = null,
         ContentFilterResultsForChoice contentFilterResults = null,
@@ -49,7 +49,7 @@ public static partial class AzureOpenAIModelFactory
         CompletionsFinishReason? finishReason = null,
         string functionName = null,
         string functionArgumentsUpdate = null,
-        ChatCompletionsToolCall toolCall = null,
+        StreamingToolCallUpdate toolCallUpdate = null,
         AzureChatExtensionsMessageContext azureExtensionsContext = null)
     {
         return new StreamingChatCompletionsUpdate(
@@ -63,9 +63,22 @@ public static partial class AzureOpenAIModelFactory
             finishReason,
             functionName,
             functionArgumentsUpdate,
-            toolCall,
+            toolCallUpdate,
             azureExtensionsContext);
     }
+
+    public static StreamingFunctionToolCallUpdate StreamingFunctionToolCallUpdate(
+        string id,
+        int toolCallIndex,
+        string functionName,
+        string functionArgumentsUpdate)
+    {
+        return new StreamingFunctionToolCallUpdate(id, toolCallIndex, functionName, functionArgumentsUpdate);
+    }
+
+    // CUSTOM CODE NOTE:
+    // Because we customized one of the properties to be internal, this method cannot be
+    // auto-generated and must be added manually.
 
     /// <summary> Initializes a new instance of AudioTranscription. </summary>
     /// <param name="text"> Transcribed text. </param>
@@ -77,6 +90,10 @@ public static partial class AzureOpenAIModelFactory
     {
         return new AudioTranscription(text, default, language, duration, segments);
     }
+
+    // CUSTOM CODE NOTE:
+    // Because we customized one of the properties to be internal, this method cannot be
+    // auto-generated and must be added manually.
 
     /// <summary> Initializes a new instance of AudioTranslation. </summary>
     /// <param name="text"> Translated text. </param>

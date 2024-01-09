@@ -449,9 +449,9 @@ namespace Azure.ResourceManager.Chaos.Models
         public string QueryString { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
     }
-    public partial class Selector
+    public abstract partial class Selector
     {
-        public Selector(string id) { }
+        protected Selector(string id) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.Filter Filter { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
