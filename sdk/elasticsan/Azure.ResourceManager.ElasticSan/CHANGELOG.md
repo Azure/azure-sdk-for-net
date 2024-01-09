@@ -1,14 +1,9 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0 (2024-01-26)
 
 ### Other Changes
+This is the first stable release of ElasticSan client library.
 
 ## 1.0.0-beta.6 (2023-11-29)
 
