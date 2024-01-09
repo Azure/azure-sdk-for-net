@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
@@ -17,8 +18,6 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
-        internal long? _length;
-        internal ETag? _etagDownloadLock = default;
 
         protected override string ResourceId => "PageBlob";
 
@@ -41,7 +40,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        protected override long? Length => _length;
+        protected override long? Length => ResourceProperties?.ContentLength;
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="PageBlobStorageResource"/>
@@ -59,18 +58,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Internal Constructor for constructing the resource retrieved by a GetStorageResources
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
-        /// <param name="length">The content length of the blob.</param>
-        /// <param name="etagLock">Preset etag to lock on for reads.</param>
+        /// <param name="resourceProperties">Properties specific to the resource.</param>
         /// <param name="options">Options for the storage resource. See <see cref="PageBlobStorageResourceOptions"/>.</param>
         internal PageBlobStorageResource(
             PageBlobClient blobClient,
-            long? length,
-            ETag? etagLock,
+            StorageResourceProperties2 resourceProperties,
             PageBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
-            _length = length;
-            _etagDownloadLock = etagLock;
+            ResourceProperties = resourceProperties;
         }
 
         /// <summary>
@@ -93,7 +89,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
-                _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
+                _options.ToBlobDownloadOptions(new HttpRange(position, length), ResourceProperties?.ETag),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -242,8 +238,35 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            GrabEtag(response.GetRawResponse());
             return response.Value.ToStorageResourceProperties();
+        }
+
+        protected override async Task<StorageResourceProperties2> GetPropertiesAsync2(CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            // The properties could be populated during construction (from enumeration)
+            if (ResourceProperties != default)
+            {
+                return ResourceProperties;
+            }
+            // Else we need to fetch the properties
+            // TODO this should be behind a separate toggle
+            else
+            {
+                BlobProperties blobProperties = (await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
+                StorageResourceProperties2 resourceProperties = blobProperties.ToStorageResourceProperties2();
+
+                // If there are blob tags, they need to be fetched separately
+                if (blobProperties.TagCount > 0)
+                {
+                    GetBlobTagResult tagResult = (await BlobClient.GetTagsAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
+                    resourceProperties.Properties.Add(DataMovementConstants.ResourceProperties.Tags, tagResult.Tags);
+                }
+
+                ResourceProperties = resourceProperties;
+                return ResourceProperties;
+            }
         }
 
         /// <summary>
@@ -300,14 +323,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.AccessTier,
                 _options?.Metadata,
                 _options?.Tags);
-        }
-
-        private void GrabEtag(Response response)
-        {
-            if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
-            {
-                _etagDownloadLock = etag;
-            }
         }
     }
 }

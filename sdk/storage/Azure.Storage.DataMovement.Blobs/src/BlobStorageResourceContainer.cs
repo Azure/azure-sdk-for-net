@@ -65,18 +65,16 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
         /// <param name="blobName">Full path to the blob in flat namespace.</param>
-        /// <param name="length">The content length of the blob.</param>
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
-        /// <param name="etagLock">Etag for the resource to lock on.</param>
+        /// <param name="resourceProperties">The properties for the storage resource.</param>
         /// <returns>
         /// <see cref="StorageResourceItem"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
         private StorageResourceItem GetBlobAsStorageResource(
             string blobName,
-            long? length = default,
             BlobType type = BlobType.Block,
-            ETag? etagLock = null)
+            StorageResourceProperties2 resourceProperties = default)
         {
             // Recreate the blobName using the existing parent directory path
             if (type == BlobType.Append)
@@ -84,8 +82,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 AppendBlobClient client = BlobContainerClient.GetAppendBlobClient(blobName);
                 return new AppendBlobStorageResource(
                     client,
-                    length,
-                    etagLock,
+                    resourceProperties,
                     _options.ToAppendBlobStorageResourceOptions());
             }
             else if (type == BlobType.Page)
@@ -93,8 +90,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 PageBlobClient client = BlobContainerClient.GetPageBlobClient(blobName);
                 return new PageBlobStorageResource(
                     client,
-                    length,
-                    etagLock,
+                    resourceProperties,
                     _options.ToPageBlobStorageResourceOptions());
             }
             else // (type == BlobType.Block)
@@ -102,8 +98,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlockBlobClient client = BlobContainerClient.GetBlockBlobClient(blobName);
                 return new BlockBlobStorageResource(
                     client,
-                    length,
-                    etagLock,
+                    resourceProperties,
                     _options.ToBlockBlobStorageResourceOptions());
             }
         }
@@ -124,6 +119,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 string.Concat(DirectoryPrefix, Constants.PathBackSlashDelimiter);
 
             AsyncPageable<BlobItem> pages = BlobContainerClient.GetBlobsAsync(
+                traits: BlobTraits.Metadata | BlobTraits.Tags,
                 prefix: fullPrefix,
                 cancellationToken: cancellationToken);
 
@@ -163,9 +159,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Return the blob as a StorageResourceItem
                 yield return GetBlobAsStorageResource(
                     blobItem.Name,
-                    blobItem.Properties.ContentLength,
                     blobItem.Properties.BlobType.HasValue ? blobItem.Properties.BlobType.Value : BlobType.Block,
-                    blobItem.Properties.ETag);
+                    blobItem.ToResourceProperties());
             }
         }
 

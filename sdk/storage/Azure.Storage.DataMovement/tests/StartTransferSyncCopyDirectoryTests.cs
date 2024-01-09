@@ -13,6 +13,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 
@@ -812,5 +813,49 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
         #endregion
+
+        [Test]
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        public async Task CopyPropertiesTest()
+        {
+            // Arrange
+            await using DisposingContainer source = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer destination = await GetTestContainerAsync();
+
+            var metadata = DataProvider.BuildMetadata();
+            var tags = DataProvider.BuildTags();
+            byte[] data = TestHelper.GetRandomBuffer(1024);
+
+            BlobUploadOptions options = new()
+            {
+                Metadata = metadata,
+                AccessTier = AccessTier.Cool,
+                Tags = tags,
+            };
+            using (MemoryStream stream = new MemoryStream(data))
+            {
+                await source.Container.GetBlockBlobClient("testblob1").UploadAsync(stream, options);
+            }
+
+            TransferManager transferManager = new TransferManager();
+
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(source.Container);
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(destination.Container);
+
+            DataTransferOptions transferOptions = new();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+
+            // Act
+            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+            await transfer.WaitForCompletionAsync();
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+
+            BlobProperties properties = (await destination.Container.GetBlockBlobClient("testblob1").GetPropertiesAsync()).Value;
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.Metadata, Is.EqualTo(metadata));
+            Assert.That(properties.AccessTier, Is.EqualTo(AccessTier.Cool.ToString()));
+        }
     }
 }

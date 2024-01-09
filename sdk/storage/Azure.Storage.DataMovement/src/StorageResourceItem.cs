@@ -45,6 +45,11 @@ namespace Azure.Storage.DataMovement
         protected internal abstract long? Length { get; }
 
         /// <summary>
+        /// TODO
+        /// </summary>
+        protected StorageResourceProperties2 ResourceProperties { get; set; }
+
+        /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
         /// <param name="position">
@@ -114,6 +119,27 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="sourceResource"></param>
+        /// <param name="overwrite"></param>
+        /// <param name="completeLength"></param>
+        /// <param name="options"></param>
+        /// <param name="sourceResourceProperties"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected internal virtual Task CopyFromUriAsync2(
+            StorageResourceItem sourceResource,
+            bool overwrite,
+            long completeLength,
+            StorageResourceCopyFromUriOptions options = default,
+            StorageResourceProperties2 sourceResourceProperties = default,
+            CancellationToken cancellationToken = default)
+        {
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
         /// <param name="sourceResource"></param>
@@ -145,6 +171,16 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         protected internal abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        protected internal virtual Task<StorageResourceProperties2> GetPropertiesAsync2(CancellationToken token = default)
+        {
+            return Task.FromResult(new StorageResourceProperties2());
+        }
 
         /// <summary>
         /// Gets the Authorization Header for the storage resource if available.

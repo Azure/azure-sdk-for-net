@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -32,6 +33,21 @@ namespace Azure.Storage.DataMovement.Blobs
                 isLatestVersion: blobProperties.IsLatestVersion,
                 expiresOn: blobProperties.ExpiresOn,
                 lastAccessed: blobProperties.LastAccessed);
+        }
+
+        internal static StorageResourceProperties2 ToStorageResourceProperties2(this BlobProperties blobProperties)
+        {
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            if (blobProperties.Metadata != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.Metadata, blobProperties.Metadata);
+            }
+
+            return new StorageResourceProperties2()
+            {
+                ContentLength = blobProperties.ContentLength,
+                Properties = properties
+            };
         }
 
         internal static StorageResourceProperties ToStorageResourceProperties(this BlobDownloadDetails blobProperties)
@@ -257,18 +273,26 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static BlobSyncUploadFromUriOptions ToSyncUploadFromUriOptions(
             this BlockBlobStorageResourceOptions options,
             bool overwrite,
-            HttpAuthorization sourceAuthorization)
+            HttpAuthorization sourceAuthorization,
+            StorageResourceProperties2 resourceProperties = default)
         {
             // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
             // We need to omit them, but still apply them to other requests that do accept them.
             // See https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob-from-url#request-headers
             // to see what headers are accepted.
+            AccessTier? accessTier = default;
+            if (resourceProperties != default)
+            {
+                resourceProperties.Properties.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object tier);
+                accessTier = (AccessTier?)tier;
+            }
+
             return new BlobSyncUploadFromUriOptions()
             {
                 HttpHeaders = options?.HttpHeaders,
                 Metadata = options?.Metadata,
                 Tags = options?.Tags,
-                AccessTier = options?.AccessTier,
+                AccessTier = accessTier,
                 SourceConditions = new BlobRequestConditions()
                 {
                     IfMatch = options?.SourceConditions?.IfMatch,
@@ -466,5 +490,29 @@ namespace Azure.Storage.DataMovement.Blobs
                     AccessTier = options?.BlobOptions?.AccessTier,
                 }
             };
+
+        internal static StorageResourceProperties2 ToResourceProperties(this BlobItem blobItem)
+        {
+            Dictionary<string, object> properties = new();
+            if (blobItem.Metadata != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.Metadata, blobItem.Metadata);
+            }
+            if (blobItem.Tags != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.Tags, blobItem.Tags);
+            }
+            if (blobItem.Properties.AccessTier.HasValue)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.AccessTier, blobItem.Properties.AccessTier.Value);
+            }
+
+            return new StorageResourceProperties2()
+            {
+                ContentLength = blobItem.Properties.ContentLength,
+                ETag = blobItem.Properties.ETag,
+                Properties = properties
+            };
+        }
     }
 }

@@ -125,7 +125,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            BlockBlobStorageResource storageResource = new(mock.Object, length: default, etag);
+            StorageResourceProperties2 resourceProperties = new()
+            {
+                ContentLength = default,
+                ETag = etag,
+                Properties = new()
+            };
+
+            BlockBlobStorageResource storageResource = new(mock.Object, resourceProperties);
             await storageResource.ReadStreamInternalAsync();
 
             mock.Verify(
@@ -147,7 +154,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            PageBlobStorageResource storageResource = new(mock.Object, length: default, etag);
+            StorageResourceProperties2 resourceProperties = new()
+            {
+                ContentLength = default,
+                ETag = etag,
+                Properties = new()
+            };
+
+            PageBlobStorageResource storageResource = new(mock.Object, resourceProperties);
             await storageResource.ReadStreamInternalAsync();
 
             mock.Verify(
