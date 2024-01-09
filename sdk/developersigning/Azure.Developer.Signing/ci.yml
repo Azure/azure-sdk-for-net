@@ -1,0 +1,35 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/developer-signing
+    - sdk/developer-signing/ci.yml
+    - sdk/developer-signing/Azure.Developer.Signing
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/developer-signing
+    - sdk/developer-signing/ci.yml
+    - sdk/developer-signing/Azure.Developer.Signing
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: developer-signing
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Developer.Signing
+      safeName: AzureDeveloperSigning
