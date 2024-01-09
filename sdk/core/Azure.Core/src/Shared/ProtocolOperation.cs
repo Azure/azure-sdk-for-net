@@ -69,5 +69,10 @@ namespace Azure.Core
 
             return OperationState<T>.Pending(state.RawResponse);
         }
+
+        public string GetOperationId()
+        {
+            return _nextLinkOperation.GetOperationId();
+        }
     }
 }
