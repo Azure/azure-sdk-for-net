@@ -12,7 +12,7 @@ public class MockPipelineRequest : PipelineRequest
     private string _method;
     private Uri? _uri;
     private BinaryContent? _content;
-    private readonly MessageHeaders _headers;
+    private readonly PipelineMessageHeaders _headers;
 
     private bool _disposed;
 
@@ -25,7 +25,7 @@ public class MockPipelineRequest : PipelineRequest
     protected override BinaryContent? GetContentCore()
         => _content;
 
-    protected override MessageHeaders GetHeadersCore()
+    protected override PipelineMessageHeaders GetHeadersCore()
         => _headers;
 
     protected override string GetMethodCore()

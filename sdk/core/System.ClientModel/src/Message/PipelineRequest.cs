@@ -28,9 +28,9 @@ public abstract class PipelineRequest : IDisposable
 
     protected abstract void SetUriCore(Uri uri);
 
-    public MessageHeaders Headers { get => GetHeadersCore(); }
+    public PipelineMessageHeaders Headers { get => GetHeadersCore(); }
 
-    protected abstract MessageHeaders GetHeadersCore();
+    protected abstract PipelineMessageHeaders GetHeadersCore();
 
     public BinaryContent? Content
     {
