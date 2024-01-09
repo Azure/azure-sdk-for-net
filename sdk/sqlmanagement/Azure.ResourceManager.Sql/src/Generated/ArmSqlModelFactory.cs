@@ -3815,7 +3815,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <returns> A new <see cref="Sql.LongTermRetentionBackupData"/> instance for mocking. </returns>
-        public static LongTermRetentionBackupData LongTermRetentionBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverName = null, DateTimeOffset? serverCreateOn = null, string databaseName = null, DateTimeOffset? databaseDeletedOn = null, DateTimeOffset? backupOn = null, DateTimeOffset? backupExpireOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isBackupImmutable = null, BackupStorageAccessTier? backupStorageAccessTier = null)
+        public static LongTermRetentionBackupData LongTermRetentionBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverName = null, DateTimeOffset? serverCreateOn = null, string databaseName = null, DateTimeOffset? databaseDeletedOn = null, DateTimeOffset? backupOn = null, DateTimeOffset? backupExpireOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isBackupImmutable = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null)
         {
             return new LongTermRetentionBackupData(id, name, resourceType, systemData, serverName, serverCreateOn, databaseName, databaseDeletedOn, backupOn, backupExpireOn, backupStorageRedundancy, requestedBackupStorageRedundancy, isBackupImmutable, backupStorageAccessTier);
         }
@@ -3850,7 +3850,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
         /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
         /// <returns> A new <see cref="Sql.LongTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static LongTermRetentionPolicyData LongTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? makeBackupsImmutable = null, BackupStorageAccessTier? backupStorageAccessTier = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = null)
+        public static LongTermRetentionPolicyData LongTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? makeBackupsImmutable = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = null)
         {
             return new LongTermRetentionPolicyData(id, name, resourceType, systemData, makeBackupsImmutable, backupStorageAccessTier, weeklyRetention, monthlyRetention, yearlyRetention, weekOfYear);
         }
