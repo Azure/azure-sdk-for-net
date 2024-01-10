@@ -1,22 +1,23 @@
 # Release History
 
-## 1.3.0 (2024-01-09)
+## 1.3.0-beta.1 (2024-01-09)
 
 ### Features Added
+
 - Add `ResourceTags` support to Pool Creation
-   - Added `resourceTags` property to `BatchAccountPoolData` definition
-   - Added `resourceTags` property to `ArmBatchModelFactory` definition
+  - Added `resourceTags` property to `BatchAccountPoolData` definition
+  - Added `resourceTags` property to `ArmBatchModelFactory` definition
 
 - Add `SecurityProfile` support to Pool Creation
-   - Added `serviceArtifactReference` property to `BatchVmConfiguration`definition
-   - Added `securityProfile` property to `BatchVmConfiguration` definition
-   
+  - Added `serviceArtifactReference` property to `BatchVmConfiguration`definition
+  - Added `securityProfile` property to `BatchVmConfiguration` definition
+
 - Add `ServiceArtifactReference` and `OSDisk` support to Pool Creation
-   - Added `standardssd_lrs` value to `BatchStorageAccountType` enum
-   - Added `caching` property to `BatchNodePlacementPolicyType` definition
-   - Added `managedDisk` property to `BatchNodePlacementPolicyType` definition
-   - Added `diskSizeGB` property to `BatchNodePlacementPolicyType` definition
-   - Added `writeAcceleratorEnabled` property to `BatchNodePlacementPolicyType` definition
+  - Added `standardssd_lrs` value to `BatchStorageAccountType` enum
+  - Added `caching` property to `BatchNodePlacementPolicyType` definition
+  - Added `managedDisk` property to `BatchNodePlacementPolicyType` definition
+  - Added `diskSizeGB` property to `BatchNodePlacementPolicyType` definition
+  - Added `writeAcceleratorEnabled` property to `BatchNodePlacementPolicyType` definition
 
 ## 1.2.1 (2023-11-27)
 
@@ -32,10 +33,10 @@
 
 ### Features Added
 
-- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`. 
-    -  This property determines whether this pool should enable accelerated networking, with default value as False. 
-    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)). 
-- Added boolean property `enableAutomaticUpgrade` to `VMExtension`. 
+- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`.
+    -  This property determines whether this pool should enable accelerated networking, with default value as False.
+    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)).
+- Added boolean property `enableAutomaticUpgrade` to `VMExtension`.
     - This property determines whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
 - Added new property `Type` to `ContainerConfiguration`, which now supports two values: `DockerCompatible` and `CriCompatible`.
 
