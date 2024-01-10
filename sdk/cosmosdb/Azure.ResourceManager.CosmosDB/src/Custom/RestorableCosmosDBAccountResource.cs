@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = _restorableMongoDBResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableMongoDBResourceData(x)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableMongoDBResourceData(x, null)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = await _restorableMongoDBResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableMongoDBResourceData(x)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableMongoDBResourceData(x, null)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = await _restorableSqlResourcesRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableSqlResourceData(x)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableSqlResourceData(x,null)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB
                 try
                 {
                     var response = _restorableSqlResourcesRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restoreLocation, restoreTimestampInUtc, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableSqlResourceData(x)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(x => ConvertFromRestorableSqlResourceData(x, null)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid, CancellationToken cancellationToken)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBCollectionsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableMongoDBDatabaseRid, null, null);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection, _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection(e), _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -135,17 +136,17 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongoDBDatabaseRid, CancellationToken cancellationToken)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableMongoDBCollectionsRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableMongoDBDatabaseRid, null, null);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection, _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RestorableMongoDBCollection.DeserializeRestorableMongoDBCollection(e), _restorableMongoDBCollectionsClientDiagnostics, Pipeline, "RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections", "value", null, cancellationToken);
         }
 
-        private static DatabaseRestoreResourceInfo ConvertFromRestorableMongoDBResourceData(RestorableMongoDBResourceData value)
+        private static DatabaseRestoreResourceInfo ConvertFromRestorableMongoDBResourceData(RestorableMongoDBResourceData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList());
+            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList(), serializedAdditionalRawData);
         }
 
-        private static DatabaseRestoreResourceInfo ConvertFromRestorableSqlResourceData(RestorableSqlResourceData value)
+        private static DatabaseRestoreResourceInfo ConvertFromRestorableSqlResourceData(RestorableSqlResourceData value , IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList());
+            return new DatabaseRestoreResourceInfo(value.DatabaseName, value.CollectionNames.ToList(), serializedAdditionalRawData);
         }
     }
 }
