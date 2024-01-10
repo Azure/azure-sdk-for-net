@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, int queueLength)
         {
-            int concurrency = !context.InstanceConcurrency.HasValue ? _options.BatchSize : context.InstanceConcurrency.Value;
+            int concurrency = !context.InstanceConcurrency.HasValue ? _options.BatchSize + _options.NewBatchThreshold : context.InstanceConcurrency.Value;
 
             if (concurrency < 0)
             {
