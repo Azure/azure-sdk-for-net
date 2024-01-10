@@ -7,14 +7,15 @@ param (
   [Parameter(Position = 1)]
   [ValidateNotNullOrEmpty()]
   [string] $PackageName,
+  [ValidateNotNullOrEmpty()]
+  [string] $ArtifactLocation,
   [Parameter(Position = 2)]
   [ValidateNotNullOrEmpty()]
   [string]$GitHubPat
 )
 
-. $PSScriptRoot/common.ps1
-. $PSScriptRoot/Helpers/PSModule-Helpers.ps1
-. $PSScriptRoot/Invoke-GitHubAPI.ps1
+. (Join-Path $PSScriptRoot common.ps1)
+. (Join-Path $PSScriptRoot Helpers/PSModule-Helpers.ps1)
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 # This function is used to verify the 'require' and 'input-file' settings in autorest.md point to the main branch of Azure/azure-rest-api-specs repository
@@ -22,18 +23,8 @@ Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 # https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/purview/data-plane/Azure.Analytics.Purview.MetadataPolicies/preview/2021-07-01-preview/purviewMetadataPolicy.json
 # or 
 # https://github.com/Azure/azure-rest-api-specs/blob/0ebd4949e8e1cd9537ca5a07384c7661162cc7a6/specification/purview/data-plane/Azure.Analytics.Purview.Account/preview/2019-11-01-preview/account.json
-function Verify-AutorestMd([string]$fileUrl) {
-  if($fileUrl -match "^https://raw.githubusercontent.com/(?<repo>[^/]*/azure-rest-api-specs)/(?<commit>[^\/]+(\/[^\/]+)*|[0-9a-f]{40})/(?<path>specification/.*)") {
-    $repo = $matches['repo']
-    $commit = $matches['commit']
-    if($repo -ne "Azure/azure-rest-api-specs") {
-      LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid repo in the file url: $fileUrl. Repo should be 'Azure/azure-rest-api-specs'."
-      exit 1
-    }
-    # check the commit hash belongs to main branch
-    Verify-CommitFromMainBranch $commit
-  }
-  elseif($fileUrl -match "^https://github.com/(?<repo>[^/]*/azure-rest-api-specs)/(blob|tree)/(?<commit>[^\/]+(\/[^\/]+)*|[0-9a-f]{40})/(?<path>specification/.*)") {
+function Verify-Url([string]$fileUrl) {
+  if($fileUrl -match "^https://(raw\.githubusercontent\.com|github\.com)/(?<repo>[^/]*/azure-rest-api-specs)(/(blob|tree))?/(?<commit>[^\/]+(\/[^\/]+)*|[0-9a-f]{40})/(?<path>specification/.*)") {
     $repo = $matches['repo']
     $commit = $matches['commit']
     if($repo -ne "Azure/azure-rest-api-specs") {
@@ -88,7 +79,7 @@ function Verify-CommitFromMainBranch([string]$commit) {
   }
 }
 
-function Verify-Content([string]$markdownContent) {
+function Verify-YamlContent([string]$markdownContent) {
   $splitString = '``` yaml|```yaml|```'
   $yamlContent = $markdownContent -split $splitString
   foreach($yamlSection in $yamlContent) {
@@ -103,12 +94,12 @@ function Verify-Content([string]$markdownContent) {
           $inputFileValue = $yamlobj["input-file"]
           if ($requireValue) {
             LogDebug "require is set as:$requireValue"
-            Verify-AutorestMd $requireValue
+            Verify-Url $requireValue
           }
           elseif ($inputFileValue) {
             LogDebug "input-file is set as:$inputFileValue"
             foreach($inputFile in $inputFileValue) {
-              Verify-AutorestMd $inputFile
+              Verify-Url $inputFile
             }
           }
           elseif ($batchValue) {
@@ -118,12 +109,12 @@ function Verify-Content([string]$markdownContent) {
               $inputFileValue = $batch["input-file"]
               if ($requireValue) {
                 LogDebug "require is set as:$requireValue"
-                Verify-AutorestMd $requireValue
+                Verify-Url $requireValue
               }
               elseif ($inputFileValue) {
                 LogDebug "input-file is set as:$inputFileValue"
                 foreach($inputFile in $inputFileValue) {
-                  Verify-AutorestMd $inputFile
+                  Verify-Url $inputFile
                 }
               }
             }
@@ -137,7 +128,44 @@ function Verify-Content([string]$markdownContent) {
   }
 }
 
+function Verify-PackageVersion() {
+  try {
+    $resolvedPath = Resolve-Path -Path $ArtifactLocation
+    if(-not (Test-Path -Path $resolvedPath -IsValid)) {
+      LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid artifact location: $ArtifactLocation"
+      exit(1)
+    }
+    $pkgs, $parsePkgInfoFn = RetrievePackages -artifactLocation $resolvedPath
+    if ($parsePkgInfoFn -and (Test-Path "Function:$parsePkgInfoFn")) {
+      foreach ($pkg in $pkgs) {
+        $parsedPackage = &$parsePkgInfoFn -pkg $pkg -workingDirectory ''
+
+        if ($parsedPackage -eq $null) {
+          continue
+        }
+
+        if ($parsedPackage.Deployable -ne $True) {
+          LogDebug "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository or the version hasn't been updated properly."
+          exit(0)
+        }
+        $isPrerelease = [AzureEngSemanticVersion]::ParseVersionString($parsedPackage.PackageVersion).IsPrerelease
+        if ($isPrerelease -eq $True) {
+          LogDebug "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) is a prerelease version and the validation of spec location is ignored."
+          exit(0)
+        }
+      }
+    }
+  }
+  catch {
+    LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to retrieve package and package version with exception:`n$_ "
+    exit(1)
+  }
+}
+
 try{
+  # Verify package version is not a prerelease version, only continue the validation if the package is GA version
+  Verify-PackageVersion
+
   $ServiceDir = Join-Path $RepoRoot 'sdk' $ServiceDirectory
   $PackageDirectory = Join-Path $ServiceDir $PackageName
   Push-Location $PackageDirectory
@@ -157,19 +185,25 @@ try{
     if (Test-Path -Path $autorestMdPath) {
       try {
         $autorestMdContent = Get-Content -Path $autorestMdPath -Raw
-        Verify-Content $autorestMdContent
+        Verify-YamlContent $autorestMdContent
       }
       catch {
         Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse autorest.md file with exception:`n$_ "
       }
     }
   }
-  elseif ($Language -eq "java" -or $Language -eq "js") {
-    # java language sdk uses 'swagger/readme.md' to configure the sdk generation
+  elseif ($Language -eq "java" -or $Language -eq "js" -or $Language -eq "python" -or $Language -eq "go") {
+    # for these languages we ignore the validation because they always use the latest spec from main branch to release SDK
+    # mgmt plane packages: azure-core-management|azure-resourcemanager|azure-resourcemanager-advisor (java), azure-mgmt-devcenter (python), arm-advisor (js), armaad (go)
+    if($PackageName -match "^(arm|azure-mgmt|azure-resourcemanager|azure-core-management)[-a-z]*$") {
+      Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Ignore the validation for $Language management plane package."
+      exit 0
+    }
+    # for these languages they use 'swagger/readme.md' to configure the sdk generation for data plane scenarios
     if (Test-Path -Path $swaggerReadmePath) {
       try {
         $swaggerReadmeContent = Get-Content -Path $swaggerReadmePath -Raw
-        Verify-Content $swaggerReadmeContent
+        Verify-YamlContent $swaggerReadmeContent
       }
       catch {
         Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse swagger/readme.md file with exception:`n$_ "

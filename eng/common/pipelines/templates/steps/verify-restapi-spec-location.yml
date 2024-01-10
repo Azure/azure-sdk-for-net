@@ -5,6 +5,9 @@ parameters:
 - name: PackageName
   type: string
   default: ''
+- name: ArtifactLocation
+  type: string
+  default: ''
 - name: GitHubSpecRepoPat
   type: string
   default: ''
@@ -16,6 +19,7 @@ steps:
       arguments: >
         -ServiceDirectory "${{ parameters.ServiceDirectory }}"
         -PackageName "${{ parameters.PackageName }}"
+        -ArtifactLocation: "${{ parameters.ArtifactLocation }}"
         -GitHubPat "${{  parameters.GitHubSpecRepoPat }}"
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
