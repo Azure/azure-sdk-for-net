@@ -82,8 +82,8 @@ namespace Azure.Core
         /// </summary>
         public bool BufferResponse
         {
-            get => ResponseBufferingPolicy.TryGetBufferResponse(this, out bool bufferResponse) ? bufferResponse : true;
-            set => ResponseBufferingPolicy.SetBufferResponse(this, value);
+            get => PipelineTransport.TryGetBufferResponse(this, out bool bufferResponse) ? bufferResponse : true;
+            set => PipelineTransport.SetBufferResponse(this, value);
         }
 
         /// <summary>
@@ -92,12 +92,12 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout
         {
-            get => ResponseBufferingPolicy.TryGetNetworkTimeout(this, out TimeSpan timeout) ? timeout : null;
+            get => PipelineTransport.TryGetNetworkTimeout(this, out TimeSpan timeout) ? timeout : null;
             set
             {
                 if (value.HasValue)
                 {
-                    ResponseBufferingPolicy.SetNetworkTimeout(this, value.Value);
+                    PipelineTransport.SetNetworkTimeout(this, value.Value);
                 }
             }
         }

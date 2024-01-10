@@ -72,7 +72,6 @@ public sealed partial class ClientPipeline
         }
 
         pipelineLength++; // for retry policy
-        pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -111,8 +110,6 @@ public sealed partial class ClientPipeline
         int perTryIndex = index;
 
         TimeSpan networkTimeout = options.NetworkTimeout ?? PipelineResponse.DefaultNetworkTimeout;
-        ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
-        policies[index++] = bufferingPolicy;
 
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;

@@ -14,12 +14,10 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal class ResponseBodyPolicy : HttpPipelinePolicy
     {
-        private readonly ResponseBufferingPolicy _policy;
         private readonly TimeSpan _networkTimeout;
 
         public ResponseBodyPolicy(TimeSpan networkTimeout)
         {
-            _policy = new ResponseBufferingPolicy(networkTimeout);
             _networkTimeout = networkTimeout;
         }
 
@@ -31,14 +29,12 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            AzureCorePipelineProcessor processor = new(pipeline);
-
             // Get the network timeout for this particular invocation of the pipeline.
             // We either use the default that the policy was constructed with at
             // pipeline-creation time, or we get an override value from the message that
             // we use for the duration of this invocation only.
             TimeSpan invocationNetworkTimeout = _networkTimeout;
-            if (ResponseBufferingPolicy.TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
+            if (PipelineTransport.TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
             {
                 invocationNetworkTimeout = networkTimeoutOverride;
             }
@@ -47,14 +43,14 @@ namespace Azure.Core.Pipeline
             {
                 if (async)
                 {
-                    await _policy.ProcessAsync(message, processor, -1).ConfigureAwait(false);
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                 }
                 else
                 {
-                    _policy.Process(message, processor, -1);
+                    ProcessNext(message, pipeline);
                 }
 
-                if (!ResponseBufferingPolicy.TryGetBufferResponse(message, out bool bufferResponse))
+                if (!PipelineTransport.TryGetBufferResponse(message, out bool bufferResponse))
                 {
                     // We default to buffering the response if not set on message.
                     bufferResponse = true;

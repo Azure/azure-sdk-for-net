@@ -81,7 +81,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
             using (PipelineMessage message = pipeline.CreateMessage())
             {
                 message.Request.Uri = testServer.Address;
-                ResponseBufferingPolicy.SetBufferResponse(message, true);
+                PipelineTransport.SetBufferResponse(message, true);
 
                 await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -120,7 +120,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
             using (PipelineMessage message = pipeline.CreateMessage())
             {
                 message.Request.Uri = testServer.Address;
-                ResponseBufferingPolicy.SetBufferResponse(message, false);
+                PipelineTransport.SetBufferResponse(message, false);
 
                 await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -169,7 +169,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         {
             using PipelineMessage message = pipeline.CreateMessage();
             message.Request.Uri = testServer.Address;
-            ResponseBufferingPolicy.SetBufferResponse(message, false);
+            PipelineTransport.SetBufferResponse(message, false);
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -199,7 +199,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = testServer.Address;
-        ResponseBufferingPolicy.SetBufferResponse(message, true);
+        PipelineTransport.SetBufferResponse(message, true);
 
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
         Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
@@ -231,7 +231,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = testServer.Address;
-        ResponseBufferingPolicy.SetBufferResponse(message, true);
+        PipelineTransport.SetBufferResponse(message, true);
 
         var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
         Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. ", exception!.Message);
@@ -306,7 +306,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = testServer.Address;
-        ResponseBufferingPolicy.SetBufferResponse(message, false);
+        PipelineTransport.SetBufferResponse(message, false);
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -338,7 +338,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = testServer.Address;
-        ResponseBufferingPolicy.SetBufferResponse(message, false);
+        PipelineTransport.SetBufferResponse(message, false);
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -414,7 +414,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Uri = testServer.Address;
-        ResponseBufferingPolicy.SetBufferResponse(message, true);
+        PipelineTransport.SetBufferResponse(message, true);
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
