@@ -978,8 +978,8 @@ namespace Azure.ResourceManager.Batch.Models
         public Azure.ResourceManager.Batch.Models.BatchDiskCachingType? Caching { get { throw null; } set { } }
         public int? DiskSizeGB { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
+        public bool? IsWriteAcceleratorEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? ManagedDiskStorageAccountType { get { throw null; } set { } }
-        public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BatchPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState>
@@ -1075,8 +1075,25 @@ namespace Azure.ResourceManager.Batch.Models
     {
         public BatchSecurityProfile() { }
         public bool? EncryptionAtHost { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.SecurityType? SecurityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchSecurityType? SecurityType { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchUefiSettings UefiSettings { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BatchSecurityType : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchSecurityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BatchSecurityType(string value) { throw null; }
+        public static Azure.ResourceManager.Batch.Models.BatchSecurityType TrustedLaunch { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Batch.Models.BatchSecurityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Batch.Models.BatchSecurityType left, Azure.ResourceManager.Batch.Models.BatchSecurityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Batch.Models.BatchSecurityType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Batch.Models.BatchSecurityType left, Azure.ResourceManager.Batch.Models.BatchSecurityType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class BatchSkuCapability
     {
@@ -1088,7 +1105,7 @@ namespace Azure.ResourceManager.Batch.Models
     {
         StandardLrs = 0,
         PremiumLrs = 1,
-        StandardSSDLRS = 2,
+        StandardSsdLrs = 2,
     }
     public partial class BatchSupportedSku
     {
@@ -1229,22 +1246,5 @@ namespace Azure.ResourceManager.Batch.Models
         Default = 0,
         Classic = 1,
         Simplified = 2,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SecurityType : System.IEquatable<Azure.ResourceManager.Batch.Models.SecurityType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SecurityType(string value) { throw null; }
-        public static Azure.ResourceManager.Batch.Models.SecurityType TrustedLaunch { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Batch.Models.SecurityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Batch.Models.SecurityType left, Azure.ResourceManager.Batch.Models.SecurityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Batch.Models.SecurityType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Batch.Models.SecurityType left, Azure.ResourceManager.Batch.Models.SecurityType right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }
