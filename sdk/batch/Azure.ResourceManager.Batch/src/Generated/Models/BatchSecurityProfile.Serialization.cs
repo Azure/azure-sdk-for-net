@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<SecurityType> securityType = default;
+            Optional<BatchSecurityType> securityType = default;
             Optional<bool> encryptionAtHost = default;
             Optional<BatchUefiSettings> uefiSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityType = new SecurityType(property.Value.GetString());
+                    securityType = new BatchSecurityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("encryptionAtHost"u8))

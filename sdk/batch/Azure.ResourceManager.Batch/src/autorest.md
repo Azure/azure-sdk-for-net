@@ -193,11 +193,10 @@ rename-mapping:
   CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
   OSDisk: BatchOSDisk
   SecurityProfile: BatchSecurityProfile
-  securityType: BatchSecurityType
   UefiSettings: BatchUefiSettings
   UefiSettings.secureBootEnabled: IsSecureBootEnabled
   UefiSettings.vTpmEnabled: IsVTpmEnabled
-  SecurityType: BatchSecurityType
+  SecurityTypes: BatchSecurityType
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported
