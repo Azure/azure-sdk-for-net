@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+- The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.  
+
+  This is a behavioral breaking change that will impacts only those callers who were explicitly casting system property values to `AmqpAddress` or `AmqpMessageId` before calling `ToString`.   The affected system properties are:
+  - MessageId
+  - CorelationId
+  - To
+  - ReplyTo
+
 ### Bugs Fixed
 
 - Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping the processor.
