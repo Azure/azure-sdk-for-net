@@ -18,7 +18,7 @@ namespace Azure.Communication.Messages
             if (Optional.IsDefined(SubType))
             {
                 writer.WritePropertyName("subType"u8);
-                writer.WriteStringValue(SubType);
+                writer.WriteStringValue(SubType.Value.ToString());
             }
             writer.WritePropertyName("refValue"u8);
             writer.WriteStringValue(RefValue);

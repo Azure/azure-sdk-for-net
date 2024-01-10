@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class MessageTemplateInternal : IUtf8JsonSerializable
+    public partial class MessageTemplate : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

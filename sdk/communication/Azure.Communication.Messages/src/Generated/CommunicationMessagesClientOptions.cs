@@ -13,6 +13,8 @@ namespace Azure.Communication.Messages
     /// <summary> Client options for Azure.Communication.Messages library clients. </summary>
     public partial class CommunicationMessagesClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_02_01;
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
@@ -21,5 +23,15 @@ namespace Azure.Communication.Messages
         }
 
         internal string Version { get; }
+
+        /// <summary> Initializes new instance of CommunicationMessagesClientOptions. </summary>
+        public CommunicationMessagesClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version switch
+            {
+                ServiceVersion.V2024_02_01 => "2024-02-01",
+                _ => throw new NotSupportedException()
+            };
+        }
     }
 }

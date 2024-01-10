@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetMessageTemplateItemsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetMessageTemplateItemsAsync.
+<code><![CDATA[
+MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+await foreach (MessageTemplateItem item in client.GetMessageTemplateItemsAsync("<channelId>"))
+{
+}
+]]></code>
+This sample shows how to call GetMessageTemplateItemsAsync with all parameters.
+<code><![CDATA[
+MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+await foreach (MessageTemplateItem item in client.GetMessageTemplateItemsAsync("<channelId>"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetMessageTemplateItems(string,CancellationToken)">
+      <example>
+This sample shows how to call GetMessageTemplateItems.
+<code><![CDATA[
+MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+foreach (MessageTemplateItem item in client.GetMessageTemplateItems("<channelId>"))
+{
+}
+]]></code>
+This sample shows how to call GetMessageTemplateItems with all parameters.
+<code><![CDATA[
+MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+foreach (MessageTemplateItem item in client.GetMessageTemplateItems("<channelId>"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetMessageTemplateItemsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetMessageTemplateItemsAsync and parse the result.
+<code><![CDATA[
+MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+await foreach (BinaryData item in client.GetMessageTemplateItemsAsync("<channelId>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+}
+]]></code>
+This sample shows how to call GetMessageTemplateItemsAsync with all parameters and parse the result.
+<code><![CDATA[
+MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+await foreach (BinaryData item in client.GetMessageTemplateItemsAsync("<channelId>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetMessageTemplateItems(string,RequestContext)">
+      <example>
+This sample shows how to call GetMessageTemplateItems and parse the result.
+<code><![CDATA[
+MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+foreach (BinaryData item in client.GetMessageTemplateItems("<channelId>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+}
+]]></code>
+This sample shows how to call GetMessageTemplateItems with all parameters and parse the result.
+<code><![CDATA[
+MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+foreach (BinaryData item in client.GetMessageTemplateItems("<channelId>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("kind").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The SendTemplateNotificationRequest. </summary>
-    internal partial class SendTemplateNotificationRequest : SendNotificationRequest
+    /// <summary> A request to send a template notification. </summary>
+    public partial class TemplateNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="SendTemplateNotificationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="template"> The template object used to create templates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="template"/> is null. </exception>
-        public SendTemplateNotificationRequest(Guid channelRegistrationId, IEnumerable<string> to, MessageTemplateInternal template) : base(channelRegistrationId, to)
+        public TemplateNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, MessageTemplate template) : base(channelRegistrationId, to)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(template, nameof(template));
@@ -28,17 +28,17 @@ namespace Azure.Communication.Messages
             Template = template;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendTemplateNotificationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateNotificationContent"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="template"> The template object used to create templates. </param>
-        internal SendTemplateNotificationRequest(string kind, Guid channelRegistrationId, IList<string> to, MessageTemplateInternal template) : base(kind, channelRegistrationId, to)
+        internal TemplateNotificationContent(string kind, Guid channelRegistrationId, IList<string> to, MessageTemplate template) : base(kind, channelRegistrationId, to)
         {
             Template = template;
         }
 
         /// <summary> The template object used to create templates. </summary>
-        public MessageTemplateInternal Template { get; }
+        public MessageTemplate Template { get; }
     }
 }

@@ -13,8 +13,8 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// The Azure Communication Services Message Template client.
     /// </summary>
-    [CodeGenSuppress("MessageTemplateClient", typeof(Uri))]
-    [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(CommunicationMessagesClientOptions))]
+    //[CodeGenSuppress("MessageTemplateClient", typeof(Uri))]
+    //[CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(CommunicationMessagesClientOptions))]
 
     public partial class MessageTemplateClient
     {
@@ -60,10 +60,6 @@ namespace Azure.Communication.Messages
            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
         { }
 
-        private MessageTemplateClient(string endpoint, TokenCredential tokenCredential, CommunicationMessagesClientOptions options)
-            : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
-        { }
-
         private MessageTemplateClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
         { }
@@ -73,7 +69,7 @@ namespace Azure.Communication.Messages
             ClientDiagnostics = new ClientDiagnostics(options);
             _pipeline = httpPipeline;
             _endpoint = endpoint;
-            _apiVersion = options.ApiVersion;
+            _apiVersion = options.Version;
         }
 
         #endregion
@@ -104,41 +100,6 @@ namespace Azure.Communication.Messages
         protected MessageTemplateClient()
         {
             ClientDiagnostics = null!;
-        }
-
-        #region List Templates Operations
-        /// <summary> List all templates for given ACS channel asynchronously. </summary>
-        /// <param name="channelRegistrationId"> The registration ID of the channel. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(string channelRegistrationId, CancellationToken cancellationToken = default)
-        {
-            _ = channelRegistrationId ?? throw new ArgumentNullException(nameof(channelRegistrationId));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelRegistrationId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelRegistrationId, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MessageTemplateItem.DeserializeMessageTemplateItem, ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
-        }
-
-        /// <summary> List all templates for given ACS channel. </summary>
-        /// <param name="channelRegistrationId"> The registration ID of the channel. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Pageable<MessageTemplateItem> GetTemplates(string channelRegistrationId, CancellationToken cancellationToken = default)
-        {
-            _ = channelRegistrationId ?? throw new ArgumentNullException(nameof(channelRegistrationId));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelRegistrationId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelRegistrationId, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MessageTemplateItem.DeserializeMessageTemplateItem, ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
-        }
-        #endregion
-
-        private static HttpPipeline CreatePipelineFromOptions(ConnectionString connectionString, CommunicationMessagesClientOptions options)
-        {
-            return options.BuildHttpPipeline(connectionString);
         }
     }
 }

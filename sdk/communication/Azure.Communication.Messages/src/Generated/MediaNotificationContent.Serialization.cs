@@ -10,13 +10,18 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class SendTextNotificationRequest : IUtf8JsonSerializable
+    public partial class MediaNotificationContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
+            if (Optional.IsDefined(Content))
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            writer.WritePropertyName("mediaUri"u8);
+            writer.WriteStringValue(MediaUri.AbsoluteUri);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             writer.WritePropertyName("channelRegistrationId"u8);

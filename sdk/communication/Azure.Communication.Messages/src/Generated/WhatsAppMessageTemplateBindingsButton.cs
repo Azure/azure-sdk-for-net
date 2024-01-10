@@ -34,14 +34,14 @@ namespace Azure.Communication.Messages
         /// Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.VNext.Notifications.Requests.MessageTemplate.Values
         /// dictionary.
         /// </param>
-        internal WhatsAppMessageTemplateBindingsButton(string subType, string refValue)
+        internal WhatsAppMessageTemplateBindingsButton(WhatsAppMessageTemplateBindingsButtonSubType? subType, string refValue)
         {
             SubType = subType;
             RefValue = refValue;
         }
 
         /// <summary> The WhatsApp button sub type. </summary>
-        public string SubType { get; set; }
+        public WhatsAppMessageTemplateBindingsButtonSubType? SubType { get; set; }
         /// <summary>
         /// The reference to the value in the
         /// Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.VNext.Notifications.Requests.MessageTemplate.Values
