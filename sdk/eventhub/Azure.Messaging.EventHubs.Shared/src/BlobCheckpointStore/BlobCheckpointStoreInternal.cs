@@ -444,31 +444,31 @@ namespace Azure.Messaging.EventHubs.Primitives
             var sequenceNumber = default(long?);
             var clientIdentifier = default(string);
 
-            if (metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
+            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out var sequenceStr) && long.TryParse(sequenceStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var sequenceResult))
             {
-                offset = result;
-                if (offset != long.MinValue) // This means no value was passed.
-                {
-                    startingPosition = EventPosition.FromOffset(result, false);
-                }
-            }
-            if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
-            {
-                sequenceNumber = result;
+                sequenceNumber = sequenceResult;
                 if (sequenceNumber != long.MinValue) // This means no value was passed.
                 {
-                    startingPosition ??= EventPosition.FromSequenceNumber(result, false);
+                    startingPosition = EventPosition.FromSequenceNumber(sequenceResult, false);
                 }
             }
-            if (metadata.TryGetValue(BlobMetadataKey.ClientIdentifier, out str))
+            if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && long.TryParse(offsetStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offsetResult))
             {
-                clientIdentifier = str;
+                offset = offsetResult;
+                if (offset != long.MinValue) // If no offset was provided then it would have a value of long.MinValue
+                {
+                    startingPosition ??= EventPosition.FromOffset(offsetResult, false);
+                }
+            }
+            if (metadata.TryGetValue(BlobMetadataKey.ClientIdentifier, out var idStr))
+            {
+                clientIdentifier = idStr;
             }
 
-                // If either the offset or the sequence number was not populated,
-                // this is not a valid checkpoint.
+            // If either the offset or the sequence number was not populated,
+            // this is not a valid checkpoint.
 
-                if (!startingPosition.HasValue)
+            if (!startingPosition.HasValue)
             {
                 InvalidCheckpointFound(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
                 return null;
@@ -519,9 +519,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                 out long? offset,
                 out long? sequenceNumber))
             {
-                if (offset.HasValue)
+                if (sequenceNumber.HasValue && sequenceNumber.Value != long.MinValue)
                 {
-                    startingPosition = EventPosition.FromOffset(offset.Value, false);
+                    startingPosition = EventPosition.FromSequenceNumber(sequenceNumber.Value, false);
+                }
+                else if (offset.HasValue)
+                {
+                    startingPosition ??= EventPosition.FromOffset(offset.Value, false);
                 }
                 else
                 {
