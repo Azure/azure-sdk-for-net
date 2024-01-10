@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,6 +82,14 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

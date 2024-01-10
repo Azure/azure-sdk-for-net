@@ -23,10 +23,10 @@ namespace Azure.Search.Documents.Models
             Optional<long> odataCount = default;
             Optional<double> searchCoverage = default;
             Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
-            Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
+            Optional<IReadOnlyList<QueryAnswerResult>> searchAnswers = default;
             Optional<SearchOptions> searchNextPageParameters = default;
-            Optional<SemanticPartialResponseReason> searchSemanticPartialResponseReason = default;
-            Optional<SemanticPartialResponseType> searchSemanticPartialResponseType = default;
+            Optional<SemanticErrorReason> searchSemanticPartialResponseReason = default;
+            Optional<SemanticSearchResultsType> searchSemanticPartialResponseType = default;
             IReadOnlyList<SearchResult> value = default;
             Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -82,10 +82,10 @@ namespace Azure.Search.Documents.Models
                         searchAnswers = null;
                         continue;
                     }
-                    List<AnswerResult> array = new List<AnswerResult>();
+                    List<QueryAnswerResult> array = new List<QueryAnswerResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnswerResult.DeserializeAnswerResult(item));
+                        array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item));
                     }
                     searchAnswers = array;
                     continue;
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchSemanticPartialResponseReason = new SemanticPartialResponseReason(property.Value.GetString());
+                    searchSemanticPartialResponseReason = new SemanticErrorReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("@search.semanticPartialResponseType"u8))
@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchSemanticPartialResponseType = new SemanticPartialResponseType(property.Value.GetString());
+                    searchSemanticPartialResponseType = new SemanticSearchResultsType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))

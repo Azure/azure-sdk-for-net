@@ -76,6 +76,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The version of the Extension being received. </param>
@@ -112,6 +120,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,6 +166,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -171,6 +195,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -191,6 +223,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,6 +267,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The version of the Extension being received. </param>
@@ -261,6 +309,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +354,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

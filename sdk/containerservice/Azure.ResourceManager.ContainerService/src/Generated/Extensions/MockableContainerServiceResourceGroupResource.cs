@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

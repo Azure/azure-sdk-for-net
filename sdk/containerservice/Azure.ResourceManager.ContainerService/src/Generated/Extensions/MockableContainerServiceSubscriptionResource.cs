@@ -76,6 +76,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetMeshRevisionProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetMeshRevisionProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MeshRevisionProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
@@ -123,6 +139,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListKubernetesVersions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,6 +175,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_ListKubernetesVersions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -207,6 +239,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceManagedClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,6 +270,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,6 +330,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
@@ -296,6 +356,10 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TrustedAccessRoles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
