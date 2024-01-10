@@ -3,6 +3,7 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +33,30 @@ public static class MockSyncAsyncExtensions
         else
         {
             content.WriteTo(stream, cancellationToken);
+        }
+    }
+
+    public static async Task ProcessSyncOrAsync(this PipelinePolicy policy, PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await policy.ProcessAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        }
+        else
+        {
+            policy.Process(message, pipeline, currentIndex);
+        }
+    }
+
+    public static async Task ProcessNextSyncOrAsync(this MockPipelinePolicy policy, PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await policy.ProcessNextAsync(message, pipeline, currentIndex, isAsync).ConfigureAwait(false);
+        }
+        else
+        {
+            policy.ProcessNext(message, pipeline, currentIndex, isAsync);
         }
     }
 }
