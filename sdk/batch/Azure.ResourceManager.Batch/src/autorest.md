@@ -191,6 +191,13 @@ rename-mapping:
   BatchAccountRegenerateKeyParameters.keyName: KeyType
   Certificate.properties.thumbprint: ThumbprintString
   CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
+  OSDisk: BatchOSDisk
+  SecurityProfile: BatchSecurityProfile
+  securityType: BatchSecurityType
+  UefiSettings: BatchUefiSettings
+  UefiSettings.secureBootEnabled: IsSecureBootEnabled
+  UefiSettings.vTpmEnabled: IsVTpmEnabled
+  SecurityType: BatchSecurityType
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported

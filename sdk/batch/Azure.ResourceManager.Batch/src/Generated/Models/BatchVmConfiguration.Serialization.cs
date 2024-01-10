@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<DiskEncryptionConfiguration> diskEncryptionConfiguration = default;
             Optional<NodePlacementConfiguration> nodePlacementConfiguration = default;
             Optional<IList<BatchVmExtension>> extensions = default;
-            Optional<OSDisk> osDisk = default;
-            Optional<SecurityProfile> securityProfile = default;
+            Optional<BatchOSDisk> osDisk = default;
+            Optional<BatchSecurityProfile> securityProfile = default;
             Optional<WritableSubResource> serviceArtifactReference = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(property.Value);
+                    osDisk = BatchOSDisk.DeserializeBatchOSDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value);
+                    securityProfile = BatchSecurityProfile.DeserializeBatchSecurityProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("serviceArtifactReference"u8))

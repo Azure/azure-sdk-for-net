@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="osDisk"> Contains configuration for ephemeral OSDisk settings. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the virtual machine or virtual machine scale set. </param>
         /// <param name="serviceArtifactReference"> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </param>
-        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, OSDisk osDisk, SecurityProfile securityProfile, WritableSubResource serviceArtifactReference)
+        internal BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<BatchVmDataDisk> dataDisks, string licenseType, BatchVmContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, NodePlacementConfiguration nodePlacementConfiguration, IList<BatchVmExtension> extensions, BatchOSDisk osDisk, BatchSecurityProfile securityProfile, WritableSubResource serviceArtifactReference)
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> If specified, the extensions mentioned in this configuration will be installed on each node. </summary>
         public IList<BatchVmExtension> Extensions { get; }
         /// <summary> Contains configuration for ephemeral OSDisk settings. </summary>
-        public OSDisk OSDisk { get; set; }
+        public BatchOSDisk OSDisk { get; set; }
         /// <summary> Specifies the security profile settings for the virtual machine or virtual machine scale set. </summary>
-        public SecurityProfile SecurityProfile { get; set; }
+        public BatchSecurityProfile SecurityProfile { get; set; }
         /// <summary> The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}. </summary>
         internal WritableSubResource ServiceArtifactReference { get; set; }
         /// <summary> Gets or sets Id. </summary>

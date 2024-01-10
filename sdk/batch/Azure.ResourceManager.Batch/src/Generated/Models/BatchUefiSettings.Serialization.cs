@@ -10,25 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class UefiSettings : IUtf8JsonSerializable
+    public partial class BatchUefiSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecureBootEnabled))
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
-                writer.WriteBooleanValue(SecureBootEnabled.Value);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (Optional.IsDefined(VTpmEnabled))
+            if (Optional.IsDefined(IsVTpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
-                writer.WriteBooleanValue(VTpmEnabled.Value);
+                writer.WriteBooleanValue(IsVTpmEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static UefiSettings DeserializeUefiSettings(JsonElement element)
+        internal static BatchUefiSettings DeserializeBatchUefiSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new UefiSettings(Optional.ToNullable(secureBootEnabled), Optional.ToNullable(vTpmEnabled));
+            return new BatchUefiSettings(Optional.ToNullable(secureBootEnabled), Optional.ToNullable(vTpmEnabled));
         }
     }
 }

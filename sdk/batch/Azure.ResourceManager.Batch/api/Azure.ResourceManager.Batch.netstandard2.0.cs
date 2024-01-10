@@ -972,6 +972,15 @@ namespace Azure.ResourceManager.Batch.Models
         Regional = 0,
         Zonal = 1,
     }
+    public partial class BatchOSDisk
+    {
+        public BatchOSDisk() { }
+        public Azure.ResourceManager.Batch.Models.BatchDiskCachingType? Caching { get { throw null; } set { } }
+        public int? DiskSizeGB { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? ManagedDiskStorageAccountType { get { throw null; } set { } }
+        public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BatchPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Batch.Models.BatchPrivateEndpointConnectionProvisioningState>
     {
@@ -1062,6 +1071,13 @@ namespace Azure.ResourceManager.Batch.Models
         public System.Uri HttpUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
     }
+    public partial class BatchSecurityProfile
+    {
+        public BatchSecurityProfile() { }
+        public bool? EncryptionAtHost { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.SecurityType? SecurityType { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchUefiSettings UefiSettings { get { throw null; } set { } }
+    }
     public partial class BatchSkuCapability
     {
         internal BatchSkuCapability() { }
@@ -1088,6 +1104,12 @@ namespace Azure.ResourceManager.Batch.Models
         public string ImageName { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchVmContainerRegistry Registry { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchContainerWorkingDirectory? WorkingDirectory { get { throw null; } set { } }
+    }
+    public partial class BatchUefiSettings
+    {
+        public BatchUefiSettings() { }
+        public bool? IsSecureBootEnabled { get { throw null; } set { } }
+        public bool? IsVTpmEnabled { get { throw null; } set { } }
     }
     public partial class BatchUserAccount
     {
@@ -1122,8 +1144,8 @@ namespace Azure.ResourceManager.Batch.Models
         public string LicenseType { get { throw null; } set { } }
         public string NodeAgentSkuId { get { throw null; } set { } }
         public Azure.ResourceManager.Batch.Models.BatchNodePlacementPolicyType? NodePlacementPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.OSDisk OSDisk { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchOSDisk OSDisk { get { throw null; } set { } }
+        public Azure.ResourceManager.Batch.Models.BatchSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ServiceArtifactReferenceId { get { throw null; } set { } }
     }
     public partial class BatchVmContainerConfiguration
@@ -1208,22 +1230,6 @@ namespace Azure.ResourceManager.Batch.Models
         Classic = 1,
         Simplified = 2,
     }
-    public partial class OSDisk
-    {
-        public OSDisk() { }
-        public Azure.ResourceManager.Batch.Models.BatchDiskCachingType? Caching { get { throw null; } set { } }
-        public int? DiskSizeGB { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchDiffDiskPlacement? EphemeralOSDiskPlacement { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.BatchStorageAccountType? ManagedDiskStorageAccountType { get { throw null; } set { } }
-        public bool? WriteAcceleratorEnabled { get { throw null; } set { } }
-    }
-    public partial class SecurityProfile
-    {
-        public SecurityProfile() { }
-        public bool? EncryptionAtHost { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.SecurityType? SecurityType { get { throw null; } set { } }
-        public Azure.ResourceManager.Batch.Models.UefiSettings UefiSettings { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SecurityType : System.IEquatable<Azure.ResourceManager.Batch.Models.SecurityType>
     {
@@ -1240,11 +1246,5 @@ namespace Azure.ResourceManager.Batch.Models
         public static implicit operator Azure.ResourceManager.Batch.Models.SecurityType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Batch.Models.SecurityType left, Azure.ResourceManager.Batch.Models.SecurityType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class UefiSettings
-    {
-        public UefiSettings() { }
-        public bool? SecureBootEnabled { get { throw null; } set { } }
-        public bool? VTpmEnabled { get { throw null; } set { } }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class OSDisk : IUtf8JsonSerializable
+    public partial class BatchOSDisk : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        internal static OSDisk DeserializeOSDisk(JsonElement element)
+        internal static BatchOSDisk DeserializeBatchOSDisk(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new OSDisk(ephemeralOSDiskSettings.Value, Optional.ToNullable(caching), managedDisk.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(writeAcceleratorEnabled));
+            return new BatchOSDisk(ephemeralOSDiskSettings.Value, Optional.ToNullable(caching), managedDisk.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(writeAcceleratorEnabled));
         }
     }
 }

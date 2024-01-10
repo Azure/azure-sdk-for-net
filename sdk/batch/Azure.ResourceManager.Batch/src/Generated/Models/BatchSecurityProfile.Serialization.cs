@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class SecurityProfile : IUtf8JsonSerializable
+    public partial class BatchSecurityProfile : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteEndObject();
         }
 
-        internal static SecurityProfile DeserializeSecurityProfile(JsonElement element)
+        internal static BatchSecurityProfile DeserializeBatchSecurityProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
             Optional<SecurityType> securityType = default;
             Optional<bool> encryptionAtHost = default;
-            Optional<UefiSettings> uefiSettings = default;
+            Optional<BatchUefiSettings> uefiSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityType"u8))
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    uefiSettings = UefiSettings.DeserializeUefiSettings(property.Value);
+                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value);
                     continue;
                 }
             }
-            return new SecurityProfile(Optional.ToNullable(securityType), Optional.ToNullable(encryptionAtHost), uefiSettings.Value);
+            return new BatchSecurityProfile(Optional.ToNullable(securityType), Optional.ToNullable(encryptionAtHost), uefiSettings.Value);
         }
     }
 }

@@ -8,20 +8,20 @@
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Settings for the operating system disk of the virtual machine. </summary>
-    public partial class OSDisk
+    public partial class BatchOSDisk
     {
-        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
-        public OSDisk()
+        /// <summary> Initializes a new instance of <see cref="BatchOSDisk"/>. </summary>
+        public BatchOSDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchOSDisk"/>. </summary>
         /// <param name="ephemeralOSDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
         /// <param name="caching"> The type of caching to enable for the disk. </param>
         /// <param name="managedDisk"></param>
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
         /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        internal OSDisk(DiffDiskSettings ephemeralOSDiskSettings, BatchDiskCachingType? caching, ManagedDisk managedDisk, int? diskSizeGB, bool? writeAcceleratorEnabled)
+        internal BatchOSDisk(DiffDiskSettings ephemeralOSDiskSettings, BatchDiskCachingType? caching, ManagedDisk managedDisk, int? diskSizeGB, bool? writeAcceleratorEnabled)
         {
             EphemeralOSDiskSettings = ephemeralOSDiskSettings;
             Caching = caching;
