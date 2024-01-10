@@ -122,14 +122,27 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         List<string> observations = ObservablePolicy.GetData(message);
 
         int index = 0;
-        Assert.AreEqual(11, observations.Count);
+        Assert.AreEqual(13, observations.Count);
+
+        Assert.AreEqual("Request:PerCallPolicyA", observations[index++]);
+        Assert.AreEqual("Request:PerCallPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:PerTryPolicyA", observations[index++]);
+        Assert.AreEqual("Request:PerTryPolicyB", observations[index++]);
+
         Assert.AreEqual("Request:BeforeTransportPolicyA", observations[index++]);
         Assert.AreEqual("Request:BeforeTransportPolicyB", observations[index++]);
 
-        // TODO: Validate that before transport policy comes after retry policy
-
         Assert.AreEqual("Transport:Transport", observations[index++]);
-        Assert.AreEqual("Response:BeforeTransportPolicy", observations[index++]);
+
+        Assert.AreEqual("Response:BeforeTransportPolicyB", observations[index++]);
+        Assert.AreEqual("Response:BeforeTransportPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:PerTryPolicyB", observations[index++]);
+        Assert.AreEqual("Response:PerTryPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:PerCallPolicyB", observations[index++]);
+        Assert.AreEqual("Response:PerCallPolicyA", observations[index++]);
     }
 
     #region Helpers

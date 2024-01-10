@@ -69,6 +69,7 @@ public class ClientPipelineOptions
         {
             PipelinePolicy[] policiesProperty = new PipelinePolicy[policies.Length + 1];
             policies.CopyTo(policiesProperty.AsSpan());
+            policies = policiesProperty;
         }
 
         policies[policies.Length - 1] = policy;
