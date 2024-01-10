@@ -120,3 +120,12 @@ directive:
   transform: >
     $["format"] = "duration";
 ```
+
+### Remove subscription scoped operations
+
+``` yaml
+directive:
+  - remove-operation: MetricDefinitions_ListAtSubscriptionScope
+  - remove-operation: Metrics_ListAtSubscriptionScope
+  - remove-operation: Metrics_ListAtSubscriptionScopePost
+```

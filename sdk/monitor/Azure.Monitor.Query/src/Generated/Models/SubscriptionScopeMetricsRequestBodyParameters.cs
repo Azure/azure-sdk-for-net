@@ -8,10 +8,10 @@
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Query parameters can also be specified in the body, specifying the same parameter in both the body and query parameters will result in an error. </summary>
-    public partial class SubscriptionScopeMetricsRequestBodyParameters
+    internal partial class SubscriptionScopeMetricsRequestBodyParameters
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricsRequestBodyParameters"/>. </summary>
-        public SubscriptionScopeMetricsRequestBodyParameters()
+        internal SubscriptionScopeMetricsRequestBodyParameters()
         {
         }
 
@@ -56,39 +56,39 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </summary>
-        public string Timespan { get; set; }
+        public string Timespan { get; }
         /// <summary>
         /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
         /// *Examples: PT15M, PT1H, P1D, FULL*
         /// </summary>
-        public string Interval { get; set; }
+        public string Interval { get; }
         /// <summary> The names of the metrics (comma separated) to retrieve. </summary>
-        public string MetricNames { get; set; }
+        public string MetricNames { get; }
         /// <summary> The list of aggregation types (comma separated) to retrieve. </summary>
-        public string Aggregation { get; set; }
+        public string Aggregation { get; }
         /// <summary> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </summary>
-        public string Filter { get; set; }
+        public string Filter { get; }
         /// <summary>
         /// The maximum number of records to retrieve.
         /// Valid only if $filter is specified.
         /// Defaults to 10.
         /// </summary>
-        public int? Top { get; set; }
+        public int? Top { get; }
         /// <summary>
         /// The aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
         /// Examples: sum asc.
         /// </summary>
-        public string OrderBy { get; set; }
+        public string OrderBy { get; }
         /// <summary> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </summary>
-        public string RollUpBy { get; set; }
+        public string RollUpBy { get; }
         /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </summary>
-        public MetricResultType? ResultType { get; set; }
+        public MetricResultType? ResultType { get; }
         /// <summary> Metric namespace where the metrics you want reside. </summary>
-        public string MetricNamespace { get; set; }
+        public string MetricNamespace { get; }
         /// <summary> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </summary>
-        public bool? AutoAdjustTimegrain { get; set; }
+        public bool? AutoAdjustTimegrain { get; }
         /// <summary> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </summary>
-        public bool? ValidateDimensions { get; set; }
+        public bool? ValidateDimensions { get; }
     }
 }

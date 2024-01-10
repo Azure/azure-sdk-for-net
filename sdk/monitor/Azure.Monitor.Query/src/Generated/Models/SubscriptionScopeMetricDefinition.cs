@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Metric definition class specifies the metadata for a metric. </summary>
-    public partial class SubscriptionScopeMetricDefinition
+    internal partial class SubscriptionScopeMetricDefinition
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinition"/>. </summary>
         internal SubscriptionScopeMetricDefinition()

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </summary>
-    public readonly partial struct MetricResultType : IEquatable<MetricResultType>
+    internal readonly partial struct MetricResultType : IEquatable<MetricResultType>
     {
         private readonly string _value;
 
