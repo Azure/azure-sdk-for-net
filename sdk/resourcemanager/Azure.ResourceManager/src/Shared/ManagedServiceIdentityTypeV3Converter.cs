@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Models
     /// <summary> JsonConverter for managed service identity type v3. </summary>
     internal class ManagedServiceIdentityTypeV3Converter : JsonConverter<ManagedServiceIdentityType>
     {
-        internal const string SystemAssignedUserAssignedV3Value = "SystemAssigned,UserAssigned";
+        internal const string SystemAssignedUserAssignedV3Value = "SystemAssigned, UserAssigned";
 
         /// <summary> Serialize managed service identity type to v3 format. </summary>
         /// <param name="writer"> The writer. </param>
