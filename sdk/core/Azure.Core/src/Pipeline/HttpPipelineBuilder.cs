@@ -181,7 +181,7 @@ namespace Azure.Core.Pipeline
                 policies.Add(new LoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit, sanitizer, assemblyName));
             }
 
-            policies.Add(new ResponseBodyPolicy(buildOptions.ClientOptions.Retry.NetworkTimeout));
+            //policies.Add(new ResponseBodyPolicy(buildOptions.ClientOptions.Retry.NetworkTimeout));
 
             policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(buildOptions.ClientOptions.GetType().Assembly), sanitizer));
 

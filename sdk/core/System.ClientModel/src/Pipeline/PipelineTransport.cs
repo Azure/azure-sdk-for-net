@@ -75,16 +75,18 @@ public abstract class PipelineTransport : PipelinePolicy
             cts.CancelAfter(Timeout.Infinite);
         }
 
-        // Default to true if property is not present
-        if (TryGetBufferResponse(message, out bool bufferResponse) && !bufferResponse)
+        // Validate that we have a response
+        if (message.Response is null)
         {
-            return;
+            throw new InvalidOperationException("Response was not set by transport.");
         }
 
-        message.AssertResponse();
-
-        // Set the network timeout on the response.
+        // Set meta-data on the response
+        message.Response.SetIsError(ClassifyResponse(message));
         message.Response!.NetworkTimeout = invocationNetworkTimeout;
+
+        // The remainder of this method does response buffering and returns
+        // early as various checks are completed.
 
         Stream? responseContentStream = message.Response!.ContentStream;
         if (responseContentStream is null ||
@@ -92,6 +94,15 @@ public abstract class PipelineTransport : PipelinePolicy
         {
             // There is either no content on the response, or the content has already
             // been buffered.
+            return;
+        }
+
+        if (TryGetBufferResponse(message, out bool bufferResponse) && !bufferResponse)
+        {
+            // Response buffering has been disabled for this pipeline message.
+            // We'll wrap the network stream in a special stream that respects
+            // the network timeout instead of buffering it.
+
             return;
         }
 
@@ -123,13 +134,6 @@ public abstract class PipelineTransport : PipelinePolicy
             ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, invocationNetworkTimeout);
             throw;
         }
-
-        if (message.Response is null)
-        {
-            throw new InvalidOperationException("Response was not set by transport.");
-        }
-
-        message.Response.SetIsError(ClassifyResponse(message));
     }
 
     private static bool ClassifyResponse(PipelineMessage message) =>
