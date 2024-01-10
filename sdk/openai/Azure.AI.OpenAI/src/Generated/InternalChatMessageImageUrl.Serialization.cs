@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatMessageImageUrl : IUtf8JsonSerializable
+    internal partial class InternalChatMessageImageUrl : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url.AbsoluteUri);
+            writer.WriteStringValue(Url);
             if (Optional.IsDefined(Detail))
             {
                 writer.WritePropertyName("detail"u8);

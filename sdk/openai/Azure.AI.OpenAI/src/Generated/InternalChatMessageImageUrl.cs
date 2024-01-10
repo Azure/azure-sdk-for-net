@@ -10,33 +10,33 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> An internet location from which the model may retrieve an image. </summary>
-    public partial class ChatMessageImageUrl
+    /// <summary> A representation of the image data in a chat message content item. </summary>
+    internal partial class InternalChatMessageImageUrl
     {
-        /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/>. </summary>
-        /// <param name="url"> The URL of the image. </param>
+        /// <summary> Initializes a new instance of <see cref="InternalChatMessageImageUrl"/>. </summary>
+        /// <param name="url"> The URL or base64-encoded binary data of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public ChatMessageImageUrl(Uri url)
+        public InternalChatMessageImageUrl(string url)
         {
             Argument.AssertNotNull(url, nameof(url));
 
             Url = url;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatMessageImageUrl"/>. </summary>
-        /// <param name="url"> The URL of the image. </param>
+        /// <summary> Initializes a new instance of <see cref="InternalChatMessageImageUrl"/>. </summary>
+        /// <param name="url"> The URL or base64-encoded binary data of the image. </param>
         /// <param name="detail">
         /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
         /// accuracy.
         /// </param>
-        internal ChatMessageImageUrl(Uri url, ChatMessageImageDetailLevel? detail)
+        internal InternalChatMessageImageUrl(string url, ChatMessageImageDetailLevel? detail)
         {
             Url = url;
             Detail = detail;
         }
 
-        /// <summary> The URL of the image. </summary>
-        public Uri Url { get; }
+        /// <summary> The URL or base64-encoded binary data of the image. </summary>
+        public string Url { get; }
         /// <summary>
         /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
         /// accuracy.

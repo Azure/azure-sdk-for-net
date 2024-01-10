@@ -697,7 +697,9 @@ Console.WriteLine(translation.Text);
 
 The `gpt-4-vision-preview` model allows you to use images as input components into chat completions.
 
-To do this, provide distinct content items on the user message(s) for the chat completions request:
+To do this, provide distinct content items on the user message(s) for the chat completions request, as per below.
+You can provide images as internet URLs, local file paths, or `BinaryData` instances created from a variety of sources
+that include streams.
 
 ```C# Snippet:AddImageToChat
 const string rawImageUri = "<URI to your image>";
@@ -708,8 +710,10 @@ ChatCompletionsOptions chatCompletionsOptions = new()
     {
         new ChatRequestSystemMessage("You are a helpful assistant that describes images."),
         new ChatRequestUserMessage(
-            new ChatMessageTextContentItem("Hi! Please describe this image"),
-            new ChatMessageImageContentItem(new Uri(rawImageUri))),
+            new ChatMessageTextContentItem("Hi! Please describe these images."),
+            new ChatMessageImageContentItem(new Uri(rawImageUri)),
+            new ChatMessageImageContentItem(BinaryData.FromStream(imageDataStream), "image/png"),
+            new ChatMessageImageContentItem(@"C:\image_file.gif", ChatMessageImageDetailLevel.Low)),
     },
 };
 ```

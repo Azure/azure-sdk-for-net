@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI
         {
             writer.WriteStartObject();
             writer.WritePropertyName("image_url"u8);
-            writer.WriteObjectValue(ImageUrl);
+            writer.WriteObjectValue(InternalImageUrlOrData);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
