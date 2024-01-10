@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.WebJobs.Host.Scale;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using static Azure.Messaging.EventHubs.Primitives.BlobCheckpointStoreInternal;
 
 namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 {
@@ -20,6 +19,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// </summary>
         public int PartitionCount { get; set; }
 
-        public Dictionary<string, long?> CheckpointSequences { get; set; }
+        public List<BlobStorageCheckpoint> Checkpoints {get; set;}
     }
 }

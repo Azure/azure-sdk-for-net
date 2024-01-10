@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         private readonly ILogger _logger;
         private readonly EventHubMetricsProvider _metricsProvider;
         private readonly EventHubOptions _options;
-        private readonly TargetScaleThrottler _metricsStats;
+        private readonly TargetScaleThrottler _throttler;
 
         public EventHubsTargetScaler(string functionId,
             IEventHubConsumerClient client,
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             _options = options;
 
             TargetScalerDescriptor = new TargetScalerDescriptor(_functionId);
-            _metricsStats = new TargetScaleThrottler(_logger);
+            _throttler = new TargetScaleThrottler(_logger);
         }
 
         public TargetScalerDescriptor TargetScalerDescriptor { get; }
@@ -46,17 +46,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
 
             long eventCount = latestMetric.EventCount;
             int partitionCount = latestMetric.PartitionCount;
-
-            TargetScalerResult currentResult = GetScaleResultInternal(context, eventCount, partitionCount);
-            currentResult = _metricsStats.ThrottleIfNeeded(currentResult, latestMetric, DateTime.UtcNow);
-
-            return currentResult;
-        }
-
-        internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context,long eventCount, int partitionCount)
-        {
             int desiredConcurrency = GetDesiredConcurrencyInternal(context);
 
+            TargetScalerResult currentResult = GetScaleResultInternal(desiredConcurrency, eventCount, partitionCount);
+            string scaleResultLog = $"Target worker count for function '{_functionId}' is '{currentResult.TargetWorkerCount}' (EventHubName='{_client.EventHubName}', EventCount ='{eventCount}', Concurrency='{desiredConcurrency}', PartitionCount='{partitionCount}'";
+            TargetScalerResult throttledResult = _throttler.ThrottleIfNeeded(currentResult, latestMetric, latestMetric.Timestamp, out string throttlingLog);
+            scaleResultLog = currentResult != throttledResult ? $"[Throttled] {scaleResultLog} {throttlingLog})" : $"{scaleResultLog} {throttlingLog})";
+
+            _logger.LogInformation(scaleResultLog);
+            _logger.LogInformation($"Throttled target worker count for function '{_functionId}' is '{throttledResult.TargetWorkerCount}'");
+            return throttledResult;
+        }
+
+        internal TargetScalerResult GetScaleResultInternal(int desiredConcurrency, long eventCount, int partitionCount)
+        {
             int desiredWorkerCount;
             try
             {
@@ -77,8 +80,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             {
                 _logger.LogInformation($"Desired target worker count of '{desiredWorkerCount}' is not in list of valid sorted workers: '{string.Join(",", sortedValidWorkerCounts)}'. Using next largest valid worker as target worker count.");
             }
-
-            _logger.LogInformation($"Target worker count for function '{_functionId}' is '{validatedTargetWorkerCount}' (EventHubName='{_client.EventHubName}', EventCount ='{eventCount}', Concurrency='{desiredConcurrency}', PartitionCount='{partitionCount}').");
 
             return new TargetScalerResult
             {

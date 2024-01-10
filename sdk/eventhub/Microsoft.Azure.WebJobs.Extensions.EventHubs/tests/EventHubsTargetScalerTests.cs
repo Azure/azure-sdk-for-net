@@ -67,9 +67,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(150, 10, 10, 10)]
         [TestCase(2147483650, 1, 1, 1)] // Testing eventCount > int.MaxInt is 2147483647
         [TestCase(21474836500, 1000, 1, 1000)] // Testing eventCount > int.MaxInt is 2147483647, with concurrency 1 to force overflow
-        public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int? concurrency, int expectedTargetWorkerCount)
+        public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int concurrency, int expectedTargetWorkerCount)
         {
-            TargetScalerResult result = _targetScaler.GetScaleResultInternal(new TargetScalerContext { InstanceConcurrency = concurrency }, eventCount, partitionCount);
+            TargetScalerResult result = _targetScaler.GetScaleResultInternal(concurrency, eventCount, partitionCount);
             Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
         }
 

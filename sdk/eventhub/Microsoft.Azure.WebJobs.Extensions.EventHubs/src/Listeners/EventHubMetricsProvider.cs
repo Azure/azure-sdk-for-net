@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         private EventHubsTriggerMetrics CreateTriggerMetrics(List<PartitionProperties> partitionRuntimeInfo, EventProcessorCheckpoint[] checkpoints, bool alwaysLog = false)
         {
             long totalUnprocessedEventCount = 0;
-            Dictionary<string, long?> checkpointSequences = new Dictionary<string, long?>();
+            List<BlobCheckpointStoreInternal.BlobStorageCheckpoint> eventProcessorCheckpoints = new List<BlobCheckpointStoreInternal.BlobStorageCheckpoint>();
 
             DateTime utcNow = DateTime.UtcNow;
             bool logPartitionInfo = alwaysLog ? true : utcNow >= _nextPartitionLogTime;
@@ -109,15 +109,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                 // Check for the unprocessed messages when there are messages on the Event Hub partition
                 // In that case, LastEnqueuedSequenceNumber will be >= 0
 
+                if (checkpoint != null)
+                {
+                    eventProcessorCheckpoints.Add(checkpoint);
+                }
+
                 if ((partitionProperties.LastEnqueuedSequenceNumber != -1 && partitionProperties.LastEnqueuedSequenceNumber != (checkpoint?.SequenceNumber ?? -1))
                     || (checkpoint == null && partitionProperties.LastEnqueuedSequenceNumber >= 0)
                     || (checkpoint != null && checkpoint.Offset == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
                 {
                     long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionProperties, checkpoint);
-                    if (checkpoint != null)
-                    {
-                        checkpointSequences[checkpoint.PartitionId] = checkpoint.SequenceNumber;
-                    }
                     totalUnprocessedEventCount += partitionUnprocessedEventCount;
                 }
             }
@@ -141,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                 Timestamp = DateTime.UtcNow,
                 PartitionCount = partitionRuntimeInfo.Count,
                 EventCount = totalUnprocessedEventCount,
-                CheckpointSequences = checkpointSequences
+                Checkpoints = eventProcessorCheckpoints
             };
         }
 
