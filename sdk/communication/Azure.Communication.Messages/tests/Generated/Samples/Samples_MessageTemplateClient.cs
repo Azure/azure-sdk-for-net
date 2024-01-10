@@ -19,11 +19,11 @@ namespace Azure.Communication.Messages.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MessageTemplateItem_GetMessageTemplateItems_ShortVersion()
+        public void Example_MessageTemplateItem_GetTemplates_ShortVersion()
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (BinaryData item in client.GetMessageTemplateItems("<channelId>", null))
+            foreach (BinaryData item in client.GetTemplates("<channelId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -35,11 +35,11 @@ namespace Azure.Communication.Messages.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MessageTemplateItem_GetMessageTemplateItems_ShortVersion_Async()
+        public async Task Example_MessageTemplateItem_GetTemplates_ShortVersion_Async()
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            await foreach (BinaryData item in client.GetMessageTemplateItemsAsync("<channelId>", null))
+            await foreach (BinaryData item in client.GetTemplatesAsync("<channelId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -51,49 +51,33 @@ namespace Azure.Communication.Messages.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MessageTemplateItem_GetMessageTemplateItems_ShortVersion_Convenience()
+        public void Example_MessageTemplateItem_GetTemplates_ShortVersion_Convenience()
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (MessageTemplateItem item in client.GetMessageTemplateItems("<channelId>"))
+            foreach (MessageTemplateItem item in client.GetTemplates("<channelId>"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MessageTemplateItem_GetMessageTemplateItems_ShortVersion_Convenience_Async()
+        public async Task Example_MessageTemplateItem_GetTemplates_ShortVersion_Convenience_Async()
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            await foreach (MessageTemplateItem item in client.GetMessageTemplateItemsAsync("<channelId>"))
+            await foreach (MessageTemplateItem item in client.GetTemplatesAsync("<channelId>"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MessageTemplateItem_GetMessageTemplateItems_AllParameters()
+        public void Example_MessageTemplateItem_GetTemplates_AllParameters()
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (BinaryData item in client.GetMessageTemplateItems("<channelId>", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("language").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_MessageTemplateItem_GetMessageTemplateItems_AllParameters_Async()
-        {
-            MessageTemplateClient client = new MessageTemplateClient((string)null);
-
-            await foreach (BinaryData item in client.GetMessageTemplateItemsAsync("<channelId>", null))
+            foreach (BinaryData item in client.GetTemplates("<channelId>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -105,22 +89,38 @@ namespace Azure.Communication.Messages.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_MessageTemplateItem_GetMessageTemplateItems_AllParameters_Convenience()
+        public async Task Example_MessageTemplateItem_GetTemplates_AllParameters_Async()
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            foreach (MessageTemplateItem item in client.GetMessageTemplateItems("<channelId>"))
+            await foreach (BinaryData item in client.GetTemplatesAsync("<channelId>", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("language").ToString());
+                Console.WriteLine(result.GetProperty("status").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_MessageTemplateItem_GetTemplates_AllParameters_Convenience()
+        {
+            MessageTemplateClient client = new MessageTemplateClient((string)null);
+
+            foreach (MessageTemplateItem item in client.GetTemplates("<channelId>"))
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_MessageTemplateItem_GetMessageTemplateItems_AllParameters_Convenience_Async()
+        public async Task Example_MessageTemplateItem_GetTemplates_AllParameters_Convenience_Async()
         {
             MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-            await foreach (MessageTemplateItem item in client.GetMessageTemplateItemsAsync("<channelId>"))
+            await foreach (MessageTemplateItem item in client.GetTemplatesAsync("<channelId>"))
             {
             }
         }

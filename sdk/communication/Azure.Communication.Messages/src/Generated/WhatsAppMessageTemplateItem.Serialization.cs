@@ -8,9 +8,10 @@
 using System;
 using System.Text.Json;
 using Azure;
+using Azure.Communication.Messages;
 using Azure.Core;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     public partial class WhatsAppMessageTemplateItem
     {
@@ -24,7 +25,7 @@ namespace Azure.Communication.Messages
             string kind = default;
             string name = default;
             string language = default;
-            MessageTemplateItemStatus status = default;
+            MessageTemplateStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -53,7 +54,7 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new MessageTemplateItemStatus(property.Value.GetString());
+                    status = new MessageTemplateStatus(property.Value.GetString());
                     continue;
                 }
             }

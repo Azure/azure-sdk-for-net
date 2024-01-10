@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -49,12 +50,12 @@ namespace Azure.Communication.Messages
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
-        public static MessageTemplateItem MessageTemplateItem(string kind = null, string name = null, string language = null, MessageTemplateItemStatus status = default)
+        public static MessageTemplateItem MessageTemplateItem(string kind = null, string name = null, string language = null, MessageTemplateStatus status = default)
         {
             return new UnknownMessageTemplateItem(kind, name, language, status);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppMessageTemplateItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
@@ -63,8 +64,8 @@ namespace Azure.Communication.Messages
         /// This is the payload returned from WhatsApp
         /// API.
         /// </param>
-        /// <returns> A new <see cref="Messages.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
-        public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateItemStatus status = default, BinaryData content = null)
+        /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
+        public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, BinaryData content = null)
         {
             return new WhatsAppMessageTemplateItem("whatsApp", name, language, status, content);
         }

@@ -17,7 +17,7 @@ namespace Azure.Communication.Messages
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
-        internal UnknownMessageTemplateItem(string language, MessageTemplateItemStatus status) : base(language, status)
+        internal UnknownMessageTemplateItem(string language, MessageTemplateStatus status) : base(language, status)
         {
             Argument.AssertNotNull(language, nameof(language));
         }
@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
-        internal UnknownMessageTemplateItem(string kind, string name, string language, MessageTemplateItemStatus status) : base(kind, name, language, status)
+        internal UnknownMessageTemplateItem(string kind, string name, string language, MessageTemplateStatus status) : base(kind, name, language, status)
         {
         }
     }

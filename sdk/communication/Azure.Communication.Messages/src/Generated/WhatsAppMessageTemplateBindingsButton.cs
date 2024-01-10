@@ -8,17 +8,13 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The template bindings component button for WhatsApp. </summary>
     public partial class WhatsAppMessageTemplateBindingsButton
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
-        /// <param name="refValue">
-        /// The reference to the value in the
-        /// Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.VNext.Notifications.Requests.MessageTemplate.Values
-        /// dictionary.
-        /// </param>
+        /// <param name="refValue"> The name of the referenced item in the template values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
         public WhatsAppMessageTemplateBindingsButton(string refValue)
         {
@@ -29,24 +25,16 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
         /// <param name="subType"> The WhatsApp button sub type. </param>
-        /// <param name="refValue">
-        /// The reference to the value in the
-        /// Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.VNext.Notifications.Requests.MessageTemplate.Values
-        /// dictionary.
-        /// </param>
-        internal WhatsAppMessageTemplateBindingsButton(WhatsAppMessageTemplateBindingsButtonSubType? subType, string refValue)
+        /// <param name="refValue"> The name of the referenced item in the template values. </param>
+        internal WhatsAppMessageTemplateBindingsButton(string subType, string refValue)
         {
             SubType = subType;
             RefValue = refValue;
         }
 
         /// <summary> The WhatsApp button sub type. </summary>
-        public WhatsAppMessageTemplateBindingsButtonSubType? SubType { get; set; }
-        /// <summary>
-        /// The reference to the value in the
-        /// Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.VNext.Notifications.Requests.MessageTemplate.Values
-        /// dictionary.
-        /// </summary>
+        public string SubType { get; set; }
+        /// <summary> The name of the referenced item in the template values. </summary>
         public string RefValue { get; }
     }
 }

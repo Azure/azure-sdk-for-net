@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetMessageTemplateItemsAsync(string,CancellationToken)">
+    <member name="GetTemplatesAsync(string,CancellationToken)">
       <example>
-This sample shows how to call GetMessageTemplateItemsAsync.
+This sample shows how to call GetTemplatesAsync.
 <code><![CDATA[
 MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-await foreach (MessageTemplateItem item in client.GetMessageTemplateItemsAsync("<channelId>"))
+await foreach (MessageTemplateItem item in client.GetTemplatesAsync("<channelId>"))
 {
 }
 ]]></code>
-This sample shows how to call GetMessageTemplateItemsAsync with all parameters.
+This sample shows how to call GetTemplatesAsync with all parameters.
 <code><![CDATA[
 MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-await foreach (MessageTemplateItem item in client.GetMessageTemplateItemsAsync("<channelId>"))
+await foreach (MessageTemplateItem item in client.GetTemplatesAsync("<channelId>"))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetMessageTemplateItems(string,CancellationToken)">
+    <member name="GetTemplates(string,CancellationToken)">
       <example>
-This sample shows how to call GetMessageTemplateItems.
+This sample shows how to call GetTemplates.
 <code><![CDATA[
 MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-foreach (MessageTemplateItem item in client.GetMessageTemplateItems("<channelId>"))
+foreach (MessageTemplateItem item in client.GetTemplates("<channelId>"))
 {
 }
 ]]></code>
-This sample shows how to call GetMessageTemplateItems with all parameters.
+This sample shows how to call GetTemplates with all parameters.
 <code><![CDATA[
 MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-foreach (MessageTemplateItem item in client.GetMessageTemplateItems("<channelId>"))
+foreach (MessageTemplateItem item in client.GetTemplates("<channelId>"))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetMessageTemplateItemsAsync(string,RequestContext)">
+    <member name="GetTemplatesAsync(string,RequestContext)">
       <example>
-This sample shows how to call GetMessageTemplateItemsAsync and parse the result.
+This sample shows how to call GetTemplatesAsync and parse the result.
 <code><![CDATA[
 MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-await foreach (BinaryData item in client.GetMessageTemplateItemsAsync("<channelId>", null))
+await foreach (BinaryData item in client.GetTemplatesAsync("<channelId>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
@@ -54,11 +54,11 @@ await foreach (BinaryData item in client.GetMessageTemplateItemsAsync("<channelI
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
-This sample shows how to call GetMessageTemplateItemsAsync with all parameters and parse the result.
+This sample shows how to call GetTemplatesAsync with all parameters and parse the result.
 <code><![CDATA[
 MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-await foreach (BinaryData item in client.GetMessageTemplateItemsAsync("<channelId>", null))
+await foreach (BinaryData item in client.GetTemplatesAsync("<channelId>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
@@ -68,13 +68,13 @@ await foreach (BinaryData item in client.GetMessageTemplateItemsAsync("<channelI
 }
 ]]></code></example>
     </member>
-    <member name="GetMessageTemplateItems(string,RequestContext)">
+    <member name="GetTemplates(string,RequestContext)">
       <example>
-This sample shows how to call GetMessageTemplateItems and parse the result.
+This sample shows how to call GetTemplates and parse the result.
 <code><![CDATA[
 MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-foreach (BinaryData item in client.GetMessageTemplateItems("<channelId>", null))
+foreach (BinaryData item in client.GetTemplates("<channelId>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());
@@ -83,11 +83,11 @@ foreach (BinaryData item in client.GetMessageTemplateItems("<channelId>", null))
     Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code>
-This sample shows how to call GetMessageTemplateItems with all parameters and parse the result.
+This sample shows how to call GetTemplates with all parameters and parse the result.
 <code><![CDATA[
 MessageTemplateClient client = new MessageTemplateClient((string)null);
 
-foreach (BinaryData item in client.GetMessageTemplateItems("<channelId>", null))
+foreach (BinaryData item in client.GetTemplates("<channelId>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("kind").ToString());

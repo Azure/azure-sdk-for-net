@@ -6,9 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Communication.Messages;
 using Azure.Core;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The template bindings for WhatsApp. </summary>
     public partial class WhatsAppMessageTemplateBindings : MessageTemplateBindings
@@ -20,7 +21,7 @@ namespace Azure.Communication.Messages
             Header = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
             Body = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
             Footer = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
-            Button = new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>();
+            Buttons = new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>
@@ -28,13 +29,13 @@ namespace Azure.Communication.Messages
         /// <param name="header"> The header template bindings. </param>
         /// <param name="body"> The body template bindings. </param>
         /// <param name="footer"> The footer template bindings. </param>
-        /// <param name="button"> The button template bindings. </param>
-        internal WhatsAppMessageTemplateBindings(string kind, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> button) : base(kind)
+        /// <param name="buttons"> The button template bindings. </param>
+        internal WhatsAppMessageTemplateBindings(string kind, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> buttons) : base(kind)
         {
             Header = header;
             Body = body;
             Footer = footer;
-            Button = button;
+            Buttons = buttons;
         }
 
         /// <summary> The header template bindings. </summary>
@@ -44,6 +45,6 @@ namespace Azure.Communication.Messages
         /// <summary> The footer template bindings. </summary>
         public IList<WhatsAppMessageTemplateBindingsComponent> Footer { get; }
         /// <summary> The button template bindings. </summary>
-        public IList<WhatsAppMessageTemplateBindingsButton> Button { get; }
+        public IList<WhatsAppMessageTemplateBindingsButton> Buttons { get; }
     }
 }

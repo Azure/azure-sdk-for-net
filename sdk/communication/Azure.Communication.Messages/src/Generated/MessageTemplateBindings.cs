@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Communication.Messages.Models.Channels;
+
 namespace Azure.Communication.Messages
 {
     /// <summary>
