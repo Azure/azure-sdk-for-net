@@ -233,7 +233,7 @@ namespace Azure.Communication.CallAutomation
             return message;
         }
 
-        /// <summary> Update a dialog targeting a particular participant on the call. </summary>
+        /// <summary> Update an ongoing dialog in a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="dialogId"> The dialog id. </param>
         /// <param name="updateDialogRequest"> The update dialog request. </param>
@@ -271,7 +271,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// <summary> Update a dialog targeting a particular participant on the call. </summary>
+        /// <summary> Update an ongoing dialog in a call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="dialogId"> The dialog id. </param>
         /// <param name="updateDialogRequest"> The update dialog request. </param>

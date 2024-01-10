@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The AzureOpenAIDialogUpdate. </summary>
+    /// <summary> Azure Open AI Dialog for UpdateDialog API Call. </summary>
     public partial class AzureOpenAIDialogUpdate : DialogUpdateBase
     {
     }
