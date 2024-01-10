@@ -11,21 +11,21 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Metric definition class specifies the metadata for a metric. </summary>
-    public partial class MetricDefinition
+    public partial class SubscriptionScopeMetricDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
-        internal MetricDefinition()
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinition"/>. </summary>
+        internal SubscriptionScopeMetricDefinition()
         {
             SupportedAggregationTypes = new ChangeTrackingList<MetricAggregationType>();
             MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
-            LocalizedDimensions = new ChangeTrackingList<LocalizableString>();
+            Dimensions = new ChangeTrackingList<LocalizableString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinition"/>. </summary>
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
         /// <param name="resourceId"> The resource identifier of the resource that emitted the metric. </param>
         /// <param name="namespace"> The namespace the metric belongs to. </param>
-        /// <param name="localizedName"> The name and the display name of the metric, i.e. it is a localizable string. </param>
+        /// <param name="name"> The name and the display name of the metric, i.e. it is a localizable string. </param>
         /// <param name="displayDescription"> Detailed description of this metric. </param>
         /// <param name="category"> Custom category name for this metric. </param>
         /// <param name="metricClass"> The class of the metric. </param>
@@ -34,13 +34,13 @@ namespace Azure.Monitor.Query.Models
         /// <param name="supportedAggregationTypes"> The collection of what aggregation types are supported. </param>
         /// <param name="metricAvailabilities"> The collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> The resource identifier of the metric definition. </param>
-        /// <param name="localizedDimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
-        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString localizedName, string displayDescription, string category, MetricClass? metricClass, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> localizedDimensions)
+        /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
+        internal SubscriptionScopeMetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString name, string displayDescription, string category, MetricClass? metricClass, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> dimensions)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
             Namespace = @namespace;
-            LocalizedName = localizedName;
+            Name = name;
             DisplayDescription = displayDescription;
             Category = category;
             MetricClass = metricClass;
@@ -49,7 +49,7 @@ namespace Azure.Monitor.Query.Models
             SupportedAggregationTypes = supportedAggregationTypes;
             MetricAvailabilities = metricAvailabilities;
             Id = id;
-            LocalizedDimensions = localizedDimensions;
+            Dimensions = dimensions;
         }
 
         /// <summary> Flag to indicate whether the dimension is required. </summary>
@@ -58,6 +58,8 @@ namespace Azure.Monitor.Query.Models
         public string ResourceId { get; }
         /// <summary> The namespace the metric belongs to. </summary>
         public string Namespace { get; }
+        /// <summary> The name and the display name of the metric, i.e. it is a localizable string. </summary>
+        public LocalizableString Name { get; }
         /// <summary> Detailed description of this metric. </summary>
         public string DisplayDescription { get; }
         /// <summary> Custom category name for this metric. </summary>
@@ -74,5 +76,7 @@ namespace Azure.Monitor.Query.Models
         public IReadOnlyList<MetricAvailability> MetricAvailabilities { get; }
         /// <summary> The resource identifier of the metric definition. </summary>
         public string Id { get; }
+        /// <summary> The name and the display name of the dimension, i.e. it is a localizable string. </summary>
+        public IReadOnlyList<LocalizableString> Dimensions { get; }
     }
 }

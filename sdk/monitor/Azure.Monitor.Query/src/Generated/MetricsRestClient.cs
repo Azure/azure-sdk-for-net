@@ -19,6 +19,7 @@ namespace Azure.Monitor.Query
     internal partial class MetricsRestClient
     {
         private readonly HttpPipeline _pipeline;
+        private readonly string _subscriptionId;
         private readonly Uri _endpoint;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -27,16 +28,370 @@ namespace Azure.Monitor.Query
         /// <summary> Initializes a new instance of MetricsRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
-        public MetricsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public MetricsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string subscriptionId, Uri endpoint = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _subscriptionId = subscriptionId ?? throw new ArgumentNullException(nameof(subscriptionId));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
         }
 
-        internal HttpMessage CreateListRequest(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, ResultType? resultType, string metricnamespace)
+        internal HttpMessage CreateListAtSubscriptionScopeRequest(string region, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            uri.AppendQuery("api-version", "2023-10-01", true);
+            uri.AppendQuery("region", region, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToString(), true);
+            }
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            if (rollupby != null)
+            {
+                uri.AppendQuery("rollupby", rollupby, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> **Lists the metric data for a subscription**. </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// *Examples: average, minimum, maximum*
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// *Examples: sum asc*
+        /// </param>
+        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        public async Task<Response<MetricsQueryResult>> ListAtSubscriptionScopeAsync(string region, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, string rollupby = null, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+
+            using var message = CreateListAtSubscriptionScopeRequest(region, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MetricsQueryResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = MetricsQueryResult.DeserializeMetricsQueryResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> **Lists the metric data for a subscription**. </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// *Examples: average, minimum, maximum*
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// *Examples: sum asc*
+        /// </param>
+        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        public Response<MetricsQueryResult> ListAtSubscriptionScope(string region, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, string rollupby = null, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+
+            using var message = CreateListAtSubscriptionScopeRequest(region, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MetricsQueryResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = MetricsQueryResult.DeserializeMetricsQueryResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListAtSubscriptionScopePostRequest(string region, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby, SubscriptionScopeMetricsRequestBodyParameters body)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            uri.AppendQuery("api-version", "2023-10-01", true);
+            uri.AppendQuery("region", region, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToString(), true);
+            }
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            if (rollupby != null)
+            {
+                uri.AppendQuery("rollupby", rollupby, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (body != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// *Examples: average, minimum, maximum*
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// *Examples: sum asc*
+        /// </param>
+        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="body"> Parameters serialized in the body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        public async Task<Response<MetricsQueryResult>> ListAtSubscriptionScopePostAsync(string region, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, string rollupby = null, SubscriptionScopeMetricsRequestBodyParameters body = null, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+
+            using var message = CreateListAtSubscriptionScopePostRequest(region, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, body);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MetricsQueryResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = MetricsQueryResult.DeserializeMetricsQueryResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// *Examples: PT15M, PT1H, P1D, FULL*
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// *Examples: average, minimum, maximum*
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// *Examples: sum asc*
+        /// </param>
+        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="body"> Parameters serialized in the body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        public Response<MetricsQueryResult> ListAtSubscriptionScopePost(string region, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, string rollupby = null, SubscriptionScopeMetricsRequestBodyParameters body = null, CancellationToken cancellationToken = default)
+        {
+            if (region == null)
+            {
+                throw new ArgumentNullException(nameof(region));
+            }
+
+            using var message = CreateListAtSubscriptionScopePostRequest(region, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, body);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        MetricsQueryResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = MetricsQueryResult.DeserializeMetricsQueryResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListRequest(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, ResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -78,10 +433,22 @@ namespace Azure.Monitor.Query
             {
                 uri.AppendQuery("resultType", resultType.Value.ToSerialString(), true);
             }
-            uri.AppendQuery("api-version", "2018-01-01", true);
+            uri.AppendQuery("api-version", "2023-10-01", true);
             if (metricnamespace != null)
             {
                 uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            if (rollupby != null)
+            {
+                uri.AppendQuery("rollupby", rollupby, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -95,31 +462,37 @@ namespace Azure.Monitor.Query
         /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
         /// *Examples: PT15M, PT1H, P1D, FULL*
         /// </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
-        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// *Examples: average, minimum, maximum*
+        /// </param>
         /// <param name="top">
-        /// The maximum number of records to retrieve.
-        /// Valid only if $filter is specified.
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
         /// Defaults to 10.
         /// </param>
         /// <param name="orderby">
         /// The aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
-        /// Examples: sum asc.
+        /// *Examples: sum asc*
         /// </param>
-        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned. Example: Metric contains metadata A, B and C. - Return all time series of C where A = a1 and B = b1 or b2 **$filter=A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '*'** - Invalid variant: **$filter=A eq 'a1' and B eq 'b1' and C eq '*' or B = 'b2'** This is invalid because the logical or operator cannot separate two different metadata names. - Return all time series where A = a1, B = b1 and C = c1: **$filter=A eq 'a1' and B eq 'b1' and C eq 'c1'** - Return all time series where A = a1 **$filter=A eq 'a1' and B eq '*' and C eq '*'**. Special case: When dimension name or dimension value uses round brackets. Eg: When dimension name is **dim (test) 1** Instead of using $filter= "dim (test) 1 eq '*' " use **$filter= "dim %2528test%2529 1 eq '*' "** When dimension name is **dim (test) 3** and dimension value is **dim3 (test) val** Instead of using $filter= "dim (test) 3 eq 'dim3 (test) val' " use **$filter= "dim %2528test%2529 3 eq 'dim3 %2528test%2529 val' "**. </param>
+        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
         /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<MetricsQueryResult>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MetricsQueryResult>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, string rollupby = null, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
                 throw new ArgumentNullException(nameof(resourceUri));
             }
 
-            using var message = CreateListRequest(resourceUri, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace);
+            using var message = CreateListRequest(resourceUri, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -142,31 +515,37 @@ namespace Azure.Monitor.Query
         /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
         /// *Examples: PT15M, PT1H, P1D, FULL*
         /// </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
-        /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// *Examples: average, minimum, maximum*
+        /// </param>
         /// <param name="top">
-        /// The maximum number of records to retrieve.
-        /// Valid only if $filter is specified.
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
         /// Defaults to 10.
         /// </param>
         /// <param name="orderby">
         /// The aggregation to use for sorting results and the direction of the sort.
         /// Only one order can be specified.
-        /// Examples: sum asc.
+        /// *Examples: sum asc*
         /// </param>
-        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned. Example: Metric contains metadata A, B and C. - Return all time series of C where A = a1 and B = b1 or b2 **$filter=A eq 'a1' and B eq 'b1' or B eq 'b2' and C eq '*'** - Invalid variant: **$filter=A eq 'a1' and B eq 'b1' and C eq '*' or B = 'b2'** This is invalid because the logical or operator cannot separate two different metadata names. - Return all time series where A = a1, B = b1 and C = c1: **$filter=A eq 'a1' and B eq 'b1' and C eq 'c1'** - Return all time series where A = a1 **$filter=A eq 'a1' and B eq '*' and C eq '*'**. Special case: When dimension name or dimension value uses round brackets. Eg: When dimension name is **dim (test) 1** Instead of using $filter= "dim (test) 1 eq '*' " use **$filter= "dim %2528test%2529 1 eq '*' "** When dimension name is **dim (test) 3** and dimension value is **dim3 (test) val** Instead of using $filter= "dim (test) 3 eq 'dim3 (test) val' " use **$filter= "dim %2528test%2529 3 eq 'dim3 %2528test%2529 val' "**. </param>
+        /// <param name="filter"> The **$filter** is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**&lt;br&gt;- Invalid variant:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**&lt;br&gt;- Return all time series where A = a1&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**. </param>
         /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<MetricsQueryResult> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, CancellationToken cancellationToken = default)
+        public Response<MetricsQueryResult> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, ResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, string rollupby = null, CancellationToken cancellationToken = default)
         {
             if (resourceUri == null)
             {
                 throw new ArgumentNullException(nameof(resourceUri));
             }
 
-            using var message = CreateListRequest(resourceUri, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace);
+            using var message = CreateListRequest(resourceUri, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
