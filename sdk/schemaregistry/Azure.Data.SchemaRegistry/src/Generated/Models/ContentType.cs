@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.SchemaRegistry
 {
-    /// <summary> The ContentType. </summary>
+    /// <summary> The content type for the schema. </summary>
     internal readonly partial struct ContentType : IEquatable<ContentType>
     {
         /// <summary> Initializes a new instance of <see cref="ContentType"/>. </summary>
@@ -20,9 +20,9 @@ namespace Azure.Data.SchemaRegistry
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string CustomValue = "application/octet-stream";
         private const string AvroValue = "application/json; serialization=Avro";
         private const string JsonValue = "application/json; serialization=json";
-        private const string CustomValue = "text/plain; charset=utf-8";
         private const string ProtobufValue = "text/vnd.ms.protobuf";
         /// <summary> Determines if two <see cref="ContentType"/> values are the same. </summary>
         public static bool operator ==(ContentType left, ContentType right) => left.Equals(right);
