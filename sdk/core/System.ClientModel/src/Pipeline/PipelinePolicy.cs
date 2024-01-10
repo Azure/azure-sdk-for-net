@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -12,31 +13,21 @@ public abstract class PipelinePolicy
 
     public abstract ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex);
 
-    protected static bool ProcessNext(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    protected static void ProcessNext(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         currentIndex++;
 
-        bool hasNext = currentIndex < pipeline.Count;
+        Debug.Assert(currentIndex < pipeline.Count);
 
-        if (hasNext)
-        {
-            pipeline[currentIndex].Process(message, pipeline, currentIndex);
-        }
-
-        return hasNext;
+        pipeline[currentIndex].Process(message, pipeline, currentIndex);
     }
 
-    protected static async ValueTask<bool> ProcessNextAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    protected static async ValueTask ProcessNextAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         currentIndex++;
 
-        bool hasNext = currentIndex < pipeline.Count;
+        Debug.Assert(currentIndex < pipeline.Count);
 
-        if (hasNext)
-        {
-            await pipeline[currentIndex].ProcessAsync(message, pipeline, currentIndex).ConfigureAwait(false);
-        }
-
-        return hasNext;
+        await pipeline[currentIndex].ProcessAsync(message, pipeline, currentIndex).ConfigureAwait(false);
     }
 }

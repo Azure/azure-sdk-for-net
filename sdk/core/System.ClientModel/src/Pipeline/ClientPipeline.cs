@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,8 +19,6 @@ public sealed partial class ClientPipeline
 
     private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex, int beforeTransportIndex)
     {
-        if (perCallIndex > 255) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "Cannot create pipeline with more than 255 policies.");
-        if (perTryIndex > 255) throw new ArgumentOutOfRangeException(nameof(perTryIndex), "Cannot create pipeline with more than 255 policies.");
         if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
 
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
@@ -36,10 +35,16 @@ public sealed partial class ClientPipeline
     }
 
     public static ClientPipeline Create()
-        => Create(ClientPipelineOptions.Default, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
+        => Create(ClientPipelineOptions.Default,
+            ReadOnlySpan<PipelinePolicy>.Empty,
+            ReadOnlySpan<PipelinePolicy>.Empty,
+            ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static ClientPipeline Create(ClientPipelineOptions options, params PipelinePolicy[] perCallPolicies)
-        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
+        => Create(options,
+            perCallPolicies,
+            ReadOnlySpan<PipelinePolicy>.Empty,
+            ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static ClientPipeline Create(
         ClientPipelineOptions options,
@@ -47,9 +52,9 @@ public sealed partial class ClientPipeline
         ReadOnlySpan<PipelinePolicy> perTryPolicies,
         ReadOnlySpan<PipelinePolicy> beforeTransportPolicies)
     {
-        if (options is null) throw new ArgumentNullException(nameof(options));
+        Argument.AssertNotNull(options, nameof(options));
 
-        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
+        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
 
         if (options.PerTryPolicies != null)
         {
@@ -133,9 +138,6 @@ public sealed partial class ClientPipeline
         return new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex); ;
     }
 
-    // TODO: note that without a common base type, nothing validates that MessagePipeline
-    // and Azure.Core.HttpPipeline have the same API shape. This is something a human
-    // must keep track of if we wanted to add a common base class later.
     public PipelineMessage CreateMessage() => _transport.CreateMessage();
 
     public void Send(PipelineMessage message)

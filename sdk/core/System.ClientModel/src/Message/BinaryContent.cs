@@ -18,7 +18,7 @@ public abstract class BinaryContent : IDisposable
     /// </summary>
     /// <param name="value">The <see cref="BinaryData"/> to use.</param>
     /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-    public static BinaryContent Create(BinaryData value) => new BinaryDataMessageBody(value.ToMemory());
+    public static BinaryContent Create(BinaryData value) => new BinaryDataBinaryContent(value.ToMemory());
 
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.
@@ -26,8 +26,8 @@ public abstract class BinaryContent : IDisposable
     /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
     /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
-    public static BinaryContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T: IPersistableModel<T>
-        => new ModelMessageBody<T>(model, options ?? ModelWriteWireOptions);
+    public static BinaryContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
+        => new ModelBinaryContent<T>(model, options ?? ModelWriteWireOptions);
 
     /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
@@ -52,7 +52,34 @@ public abstract class BinaryContent : IDisposable
     /// <inheritdoc/>
     public abstract void Dispose();
 
-    private sealed class ModelMessageBody<T> : BinaryContent where T: IPersistableModel<T>
+    private sealed class BinaryDataBinaryContent : BinaryContent
+    {
+        private readonly ReadOnlyMemory<byte> _bytes;
+
+        public BinaryDataBinaryContent(ReadOnlyMemory<byte> bytes)
+        {
+            _bytes = bytes;
+        }
+
+        public override bool TryComputeLength(out long length)
+        {
+            length = _bytes.Length;
+            return true;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellation)
+        {
+            byte[] buffer = _bytes.ToArray();
+            stream.Write(buffer, 0, buffer.Length);
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+
+        public override void Dispose() { }
+    }
+
+    private sealed class ModelBinaryContent<T> : BinaryContent where T : IPersistableModel<T>
     {
         private readonly T _model;
         private readonly ModelReaderWriterOptions _options;
@@ -63,7 +90,7 @@ public abstract class BinaryContent : IDisposable
         // Used when _model is an IModel
         private BinaryData? _data;
 
-        public ModelMessageBody(T model, ModelReaderWriterOptions options)
+        public ModelBinaryContent(T model, ModelReaderWriterOptions options)
         {
             _model = model;
             _options = options;
@@ -148,32 +175,5 @@ public abstract class BinaryContent : IDisposable
                 writer.Dispose();
             }
         }
-    }
-
-    private sealed class BinaryDataMessageBody : BinaryContent
-    {
-        private readonly ReadOnlyMemory<byte> _bytes;
-
-        public BinaryDataMessageBody(ReadOnlyMemory<byte> bytes)
-        {
-            _bytes = bytes;
-        }
-
-        public override bool TryComputeLength(out long length)
-        {
-            length = _bytes.Length;
-            return true;
-        }
-
-        public override void WriteTo(Stream stream, CancellationToken cancellation)
-        {
-            byte[] buffer = _bytes.ToArray();
-            stream.Write(buffer, 0, buffer.Length);
-        }
-
-        public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
-            => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
-
-        public override void Dispose() { }
     }
 }
