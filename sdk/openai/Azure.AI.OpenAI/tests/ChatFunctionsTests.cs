@@ -174,6 +174,41 @@ public class ChatFunctionsTests : OpenAITestBase
         Assert.That(argumentsBuilder.Length, Is.GreaterThan(0));
     }
 
+    //[RecordedTest]
+    [TestCase(Service.Azure)]
+    [TestCase(Service.NonAzure)]
+    public async Task CallWithNullFunctionsListWorks(Service serviceTarget)
+    {
+        OpenAIClient client = GetTestClient(serviceTarget);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+
+        var requestOptions = new ChatCompletionsOptions()
+        {
+            DeploymentName = deploymentOrModelName,
+            Functions = null,
+            Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("Can you help me?"),
+                    new ChatRequestAssistantMessage("Of course! What do you need help with?"),
+                    new ChatRequestUserMessage("What temperature should I bake pizza at?"),
+                },
+        };
+
+        Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
+        Assert.That(response, Is.Not.Null);
+        Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+        Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
+        Assert.That(response.Value.Created, Is.Not.Null.Or.Empty);
+        Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+        Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
+        ChatChoice choice = response.Value.Choices[0];
+        Assert.That(choice.Index, Is.EqualTo(0));
+        Assert.That(choice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+        Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+        Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
+    }
+
     private static readonly FunctionDefinition s_futureTemperatureFunction = new()
     {
         Name = "get_future_temperature",

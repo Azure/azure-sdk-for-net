@@ -13,7 +13,7 @@ namespace Azure.Core
     {
         public static bool IsCollectionDefined<T>(IEnumerable<T> collection)
         {
-            return !(collection is ChangeTrackingList<T> changeTrackingList && changeTrackingList.IsUndefined);
+            return !(collection is ChangeTrackingList<T> changeTrackingList && changeTrackingList.IsUndefined) && collection != null;
         }
 
         public static bool IsCollectionDefined<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> collection)
