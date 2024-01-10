@@ -174,7 +174,7 @@ public class ChatFunctionsTests : OpenAITestBase
         Assert.That(argumentsBuilder.Length, Is.GreaterThan(0));
     }
 
-    //[RecordedTest]
+    [RecordedTest]
     [TestCase(Service.Azure)]
     [TestCase(Service.NonAzure)]
     public async Task CallWithNullFunctionsListWorks(Service serviceTarget)
