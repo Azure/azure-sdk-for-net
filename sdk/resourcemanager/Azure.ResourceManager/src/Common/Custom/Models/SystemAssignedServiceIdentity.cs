@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Models
         [SerializationConstructor]
         internal SystemAssignedServiceIdentity(Guid? principalId, Guid? tenantId, SystemAssignedServiceIdentityType systemAssignedServiceIdentityType)
         {
-            Identity = new ManagedServiceIdentity(principalId, tenantId, systemAssignedServiceIdentityType.ToString(), null, null);
+            Identity = new ManagedServiceIdentity(principalId, tenantId, systemAssignedServiceIdentityType.ToString(), null);
         }
 
         /// <summary> Initializes a new instance of SystemAssignedServiceIdentity by given ManagedServiceIdentity. </summary>

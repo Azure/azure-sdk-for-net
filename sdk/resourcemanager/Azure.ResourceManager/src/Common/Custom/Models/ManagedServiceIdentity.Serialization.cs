@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Models
             }
             if (Optional.IsDefined(ManagedServiceIdentityType))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ManagedServiceIdentityType.ToString());
+                //writer.WritePropertyName("type"u8);
+                JsonSerializer.Serialize(writer, ManagedServiceIdentityType);
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
@@ -52,21 +52,6 @@ namespace Azure.ResourceManager.Models
                     JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -95,8 +80,6 @@ namespace Azure.ResourceManager.Models
             Optional<Guid> tenantId = default;
             ManagedServiceIdentityType type = default;
             Optional<IDictionary<ResourceIdentifier, UserAssignedIdentity>> userAssignedIdentities = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -144,13 +127,8 @@ namespace Azure.ResourceManager.Models
                     userAssignedIdentities = dictionary;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServiceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type, Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new ManagedServiceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type, Optional.ToDictionary(userAssignedIdentities));
         }
 
         BinaryData IPersistableModel<ManagedServiceIdentity>.Write(ModelReaderWriterOptions options)

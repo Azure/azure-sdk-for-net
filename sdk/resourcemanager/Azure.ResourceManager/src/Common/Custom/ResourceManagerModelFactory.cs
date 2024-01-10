@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
         public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType managedServiceIdentityType, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities)
         {
-            return new ManagedServiceIdentity(principalId, tenantId, managedServiceIdentityType, userAssignedIdentities, null);
+            return new ManagedServiceIdentity(principalId, tenantId, managedServiceIdentityType, userAssignedIdentities);
         }
     }
 }
