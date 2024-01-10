@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     principalId = property.Value.GetGuid();
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
@@ -106,7 +104,6 @@ namespace Azure.ResourceManager.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ManagedServiceIdentityType(property.Value.GetString());
