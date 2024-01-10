@@ -23,7 +23,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task Completions(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
             CompletionsOptions requestOptions = new()
             {
@@ -51,7 +51,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task CompletionsWithTokenCredential(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget, Scenario.Completions, TestAuthType.Token);
-            string deploymentName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
+            string deploymentName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
                 DeploymentName = deploymentName,
@@ -70,8 +70,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task CompletionsContentFilterCategories(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName
-                = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
                 DeploymentName = deploymentOrModelName,
@@ -100,7 +99,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task AdvancedCompletionsOptions(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
             string promptText = "Are bananas especially radioactive?";
             var requestOptions = new CompletionsOptions()
             {
@@ -168,7 +167,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task TokenCutoff(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget, Scenario.LegacyCompletions);
-            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
                 DeploymentName = deploymentOrModelName,
@@ -194,7 +193,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task StreamingCompletions(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget, Scenario.LegacyCompletions);
-            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
                 DeploymentName = deploymentOrModelName,

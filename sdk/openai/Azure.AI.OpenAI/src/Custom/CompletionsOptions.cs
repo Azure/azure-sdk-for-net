@@ -6,13 +6,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
+// CUSTOM CODE NOTE:
+// Suppress the parameterized constructor that only receives the prompts in favor of a custom
+// parameterized constructor that receives the deployment name as well.
+
 [CodeGenSuppress("CompletionsOptions", typeof(IEnumerable<string>))]
 public partial class CompletionsOptions
 {
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
     /// <summary>
     ///     Gets or sets the number of choices that should be generated per provided prompt.
     ///     Has a valid range of 1 to 128.
@@ -25,8 +34,11 @@ public partial class CompletionsOptions
     /// </remarks>
     public int? ChoicesPerPrompt { get; set; }
 
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
     /// <summary>
-    /// Gets or sets the deployment name to use for a completions request.
+    /// The deployment name to use for a completions request.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -38,14 +50,10 @@ public partial class CompletionsOptions
     /// appropriate name of the model (example: gpt-4).
     /// </para>
     /// </remarks>
-    [CodeGenMember("InternalNonAzureModelName")]
     public string DeploymentName { get; set; }
 
-    /// <summary>
-    ///     Gets or sets a value specifying whether a completion should include its input prompt as a prefix to
-    ///     its generated output.
-    /// </summary>
-    public bool? Echo { get; set; }
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
 
     /// <summary>
     ///     Gets or sets a value that influences the probability of generated tokens appearing based on their
@@ -57,6 +65,9 @@ public partial class CompletionsOptions
     ///     model's likelihood of repeating the same statements verbatim.
     /// </remarks>
     public float? FrequencyPenalty { get; set; }
+
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
 
     /// <summary>
     ///     Gets or sets a value that controls how many completions will be internally generated prior to response
@@ -73,6 +84,9 @@ public partial class CompletionsOptions
     /// </remarks>.
     public int? GenerationSampleCount { get; set; }
 
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
     /// <summary>
     ///     Gets or sets a value that controls generation of log probabilities on the
     ///     <see cref="LogProbabilityCount"/> most likely tokens.
@@ -83,11 +97,17 @@ public partial class CompletionsOptions
     /// </remarks>
     public int? LogProbabilityCount { get; set; }
 
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
     /// <summary> Gets the maximum number of tokens to generate. Has minimum of 0. </summary>
     /// <remarks>
     ///     <see cref="MaxTokens"/> is equivalent to 'max_tokens' in the REST request schema.
     /// </remarks>
     public int? MaxTokens { get; set; }
+
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
 
     /// <summary>
     ///     Gets or set a an alternative value to <see cref="Temperature"/>, called nucleus sampling, that causes
@@ -105,6 +125,9 @@ public partial class CompletionsOptions
     /// </remarks>
     public float? NucleusSamplingFactor { get; set; }
 
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
     /// <summary>
     ///     Gets or sets a value that influences the probability of generated tokens appearing based on their
     ///     existing presence in generated text.
@@ -116,6 +139,9 @@ public partial class CompletionsOptions
     /// </remarks>
     public float? PresencePenalty { get; set; }
 
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
     /// <summary>
     ///     Gets the prompts to generate completions from. Defaults to a single prompt of &lt;|endoftext|&gt;
     ///     if not otherwise provided.
@@ -125,6 +151,9 @@ public partial class CompletionsOptions
     /// </remarks>
     public IList<string> Prompts { get; }
 
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
+
     /// <summary>
     ///     Gets a list of textual sequences that will end completions generation.
     ///     A maximum of four stop sequences are allowed.
@@ -133,6 +162,9 @@ public partial class CompletionsOptions
     ///     <see cref="StopSequences"/> is equivalent to 'stop' in the REST request schema.
     /// </remarks>
     public IList<string> StopSequences { get; }
+
+    // CUSTOM CODE NOTE:
+    // Add custom doc comment.
 
     /// <summary>
     ///     Gets or sets the sampling temperature to use that controls the apparent creativity of generated
@@ -148,6 +180,10 @@ public partial class CompletionsOptions
     /// </remarks>
     public float? Temperature { get; set; }
 
+    // CUSTOM CODE NOTE:
+    // - Add custom serialization hook.
+    // - Add custom doc comment.
+
     /// <summary>
     ///     Gets a dictionary of modifications to the likelihood of specified GPT tokens appearing in a completions
     ///     result. Maps token IDs to associated bias scores from -100 to 100, with minimum and maximum values
@@ -159,38 +195,63 @@ public partial class CompletionsOptions
     ///
     ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
     /// </remarks>
+    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeTokenSelectionBiases))]
     public IDictionary<int, int> TokenSelectionBiases { get; }
+
+    // CUSTOM CODE NOTE:
+    // Mark the `stream` property as internal. This functionality will be handled by unique method
+    // signatures for the different request types (i.e. streaming versus non-streaming methods).
 
     internal bool? InternalShouldStreamResponse { get; set; }
 
-    internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
+    // CUSTOM CODE NOTE:
+    // Add a parameterized constructor that receives the deployment name as a parameter in addition
+    // to the other required properties.
 
-    /// <summary> Initializes a new instance of CompletionsOptions. </summary>
-    /// <param name="deploymentName"> The deployment name to use for this request. </param>
+    /// <summary> Initializes a new instance of <see cref="CompletionsOptions"/>. </summary>
+    /// <param name="deploymentName"> The deployment name to use for a completions request. </param>
     /// <param name="prompts"> The prompts to generate completions from. </param>
-    /// <exception cref="ArgumentException">
-    ///     <paramref name="deploymentName"/> is an empty string.
-    /// </exception>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="deploymentName"/> or <paramref name="prompts"/> is null.
     /// </exception>
+    /// <exception cref="ArgumentException">
+    ///     <paramref name="deploymentName"/> is an empty string.
+    /// </exception>
     public CompletionsOptions(string deploymentName, IEnumerable<string> prompts)
-        : this()
     {
         Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
         Argument.AssertNotNull(prompts, nameof(prompts));
 
+        DeploymentName = deploymentName;
         Prompts = prompts.ToList();
-    }
-
-    /// <summary> Initializes a new instance of CompletionsOptions. </summary>
-    public CompletionsOptions()
-    {
-        // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
-        //                      may be reconsidered for required payload constituents in the future.
-        Prompts = new ChangeTrackingList<string>();
-        InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
         TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
         StopSequences = new ChangeTrackingList<string>();
+    }
+
+    // CUSTOM CODE NOTE:
+    // Add a public default constructor to allow for an "init" pattern using property setters.
+
+    /// <summary> Initializes a new instance of <see cref="CompletionsOptions"/>. </summary>
+    public CompletionsOptions()
+    {
+        Prompts = new ChangeTrackingList<string>();
+        TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
+        StopSequences = new ChangeTrackingList<string>();
+    }
+
+    // CUSTOM CODE NOTE:
+    // Implement custom serialization code for the `logit_bias` property to serialize it as a
+    // IDictionary<string, int> instead of a IDictionary<int, int>.
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void SerializeTokenSelectionBiases(Utf8JsonWriter writer)
+    {
+        writer.WriteStartObject();
+        foreach (var item in TokenSelectionBiases)
+        {
+            writer.WritePropertyName(item.Key.ToString());
+            writer.WriteNumberValue(item.Value);
+        }
+        writer.WriteEndObject();
     }
 }

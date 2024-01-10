@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal AgentConfiguration()
         {
             IncomingConnectionsPorts = new ChangeTrackingList<string>();
-            ExtensionsAllowList = new ChangeTrackingList<ConfigurationExtension>();
-            ExtensionsBlockList = new ChangeTrackingList<ConfigurationExtension>();
+            ExtensionsAllowList = new ChangeTrackingList<HybridComputeConfigurationExtension>();
+            ExtensionsBlockList = new ChangeTrackingList<HybridComputeConfigurationExtension>();
             ProxyBypass = new ChangeTrackingList<string>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="extensionsEnabled"> Specifies whether the extension service is enabled or disabled. </param>
         /// <param name="guestConfigurationEnabled"> Specified whether the guest configuration service is enabled or disabled. </param>
         /// <param name="configMode"> Name of configuration mode to use. Modes are pre-defined configurations of security controls, extension allowlists and guest configuration, maintained by Microsoft. </param>
-        internal AgentConfiguration(Uri proxyUri, IReadOnlyList<string> incomingConnectionsPorts, IReadOnlyList<ConfigurationExtension> extensionsAllowList, IReadOnlyList<ConfigurationExtension> extensionsBlockList, IReadOnlyList<string> proxyBypass, string extensionsEnabled, string guestConfigurationEnabled, AgentConfigurationMode? configMode)
+        internal AgentConfiguration(Uri proxyUri, IReadOnlyList<string> incomingConnectionsPorts, IReadOnlyList<HybridComputeConfigurationExtension> extensionsAllowList, IReadOnlyList<HybridComputeConfigurationExtension> extensionsBlockList, IReadOnlyList<string> proxyBypass, string extensionsEnabled, string guestConfigurationEnabled, AgentConfigurationMode? configMode)
         {
             ProxyUri = proxyUri;
             IncomingConnectionsPorts = incomingConnectionsPorts;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the list of ports that the agent will be able to listen on. </summary>
         public IReadOnlyList<string> IncomingConnectionsPorts { get; }
         /// <summary> Array of extensions that are allowed to be installed or updated. </summary>
-        public IReadOnlyList<ConfigurationExtension> ExtensionsAllowList { get; }
+        public IReadOnlyList<HybridComputeConfigurationExtension> ExtensionsAllowList { get; }
         /// <summary> Array of extensions that are blocked (cannot be installed or updated). </summary>
-        public IReadOnlyList<ConfigurationExtension> ExtensionsBlockList { get; }
+        public IReadOnlyList<HybridComputeConfigurationExtension> ExtensionsBlockList { get; }
         /// <summary> List of service names which should not use the specified proxy server. </summary>
         public IReadOnlyList<string> ProxyBypass { get; }
         /// <summary> Specifies whether the extension service is enabled or disabled. </summary>

@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Base information about the community gallery resource in pir. </summary>
+    /// <summary> Base information about the community gallery resource in azure compute gallery. </summary>
     public partial class PirCommunityGalleryResourceData
     {
         /// <summary> Initializes a new instance of <see cref="PirCommunityGalleryResourceData"/>. </summary>

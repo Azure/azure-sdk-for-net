@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Compute
             }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
+            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,6 +37,32 @@ namespace Azure.ResourceManager.Compute
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("artifactTags"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            artifactTags = dictionary;
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (property.NameEquals("identifier"u8))
@@ -55,7 +83,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryData(name.Value, Optional.ToNullable(location), uniqueId.Value);
+            return new SharedGalleryData(name.Value, Optional.ToNullable(location), uniqueId.Value, Optional.ToDictionary(artifactTags));
         }
     }
 }

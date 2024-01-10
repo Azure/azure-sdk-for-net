@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>SignalR_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the region. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +146,14 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>SignalR_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,6 +175,14 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,6 +206,10 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the location like "eastus". </param>
@@ -196,6 +232,10 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
         /// </item>
         /// </list>
         /// </summary>

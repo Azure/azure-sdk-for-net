@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
@@ -66,7 +65,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 writer.WriteValue(ReadOnlyProperty);
                 writer.WriteEndElement();
             }
-            var childModelXml = System.ClientModel.ModelReaderWriter.Write(ChildModelXml, options);
+            var childModelXml = ModelReaderWriter.Write(ChildModelXml, options);
             var bytes = childModelXml.ToArray();
             int start = bytes.AsSpan(1).IndexOf((byte)'>') + 2;
             var chars = Encoding.UTF8.GetChars(bytes, start, bytes.Length - start);

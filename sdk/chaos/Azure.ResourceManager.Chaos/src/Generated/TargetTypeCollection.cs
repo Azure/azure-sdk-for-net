@@ -70,6 +70,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,6 +160,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
@@ -167,6 +191,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
@@ -189,6 +221,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +265,14 @@ namespace Azure.ResourceManager.Chaos
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetTypeName"> String that represents a Target Type resource name. </param>
@@ -259,6 +307,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +352,14 @@ namespace Azure.ResourceManager.Chaos
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TargetTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TargetTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

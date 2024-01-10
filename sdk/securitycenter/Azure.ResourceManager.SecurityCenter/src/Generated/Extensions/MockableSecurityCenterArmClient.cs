@@ -76,6 +76,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>ComplianceResults_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComplianceResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -99,6 +107,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComplianceResults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComplianceResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,6 +156,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>DeviceSecurityGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -163,6 +187,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeviceSecurityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +228,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Compliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Compliances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityComplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,6 +300,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Assessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -276,6 +332,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,6 +374,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>GovernanceRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -333,6 +405,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GovernanceRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GovernanceRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -366,6 +446,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVulnerabilityAssessmentScans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVulnerabilityAssessmentScanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -390,6 +478,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlVulnerabilityAssessmentScans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVulnerabilityAssessmentScanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -424,6 +520,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -449,6 +553,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVulnerabilityAssessmentBaselineRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVulnerabilityAssessmentBaselineRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -473,6 +585,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InformationProtectionPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -511,6 +627,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>InformationProtectionPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -548,6 +668,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>InformationProtectionPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -573,6 +697,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>InformationProtectionPolicies_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -600,6 +728,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>SubAssessments_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -625,6 +761,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubAssessments_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -652,6 +796,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Assessments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -677,6 +829,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assessments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

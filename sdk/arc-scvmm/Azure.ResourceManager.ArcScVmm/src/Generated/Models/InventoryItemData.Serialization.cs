@@ -17,16 +17,13 @@ namespace Azure.ResourceManager.ArcScVmm
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("inventoryType"u8);
-            writer.WriteStringValue(InventoryType.ToString());
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -36,18 +33,19 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 return null;
             }
+            InventoryItemProperties properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            InventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> uuid = default;
-            Optional<string> inventoryItemName = default;
-            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = InventoryItemProperties.DeserializeInventoryItemProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
@@ -77,45 +75,8 @@ namespace Azure.ResourceManager.ArcScVmm
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("inventoryType"u8))
-                        {
-                            inventoryType = new InventoryType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("managedResourceId"u8))
-                        {
-                            managedResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("uuid"u8))
-                        {
-                            uuid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("inventoryItemName"u8))
-                        {
-                            inventoryItemName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new InventoryItemData(id, name, type, systemData.Value, kind.Value, inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value);
+            return new InventoryItemData(id, name, type, systemData.Value, properties, kind.Value);
         }
     }
 }

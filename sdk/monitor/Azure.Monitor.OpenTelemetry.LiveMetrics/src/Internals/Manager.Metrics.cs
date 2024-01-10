@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -15,9 +16,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     internal partial class Manager
     {
         internal readonly DoubleBuffer _documentBuffer = new();
+        internal static bool? s_isAzureWebApp = null;
 
-        private PerformanceCounter _performanceCounter_ProcessorTime = new PerformanceCounter(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
-        private PerformanceCounter _performanceCounter_CommittedBytes = new PerformanceCounter(categoryName: "Memory", counterName: "Committed Bytes");
+        private readonly PerformanceCounter _performanceCounter_ProcessorTime = new(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
+        private readonly PerformanceCounter _performanceCounter_CommittedBytes = new(categoryName: "Memory", counterName: "Committed Bytes");
 
         public MonitoringDataPoint GetDataPoint()
         {
@@ -25,8 +27,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 Version = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
                 InvariantVersion = 5,
-                Instance = liveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                RoleName = liveMetricsResource?.RoleName,
+                Instance = LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
+                RoleName = LiveMetricsResource?.RoleName,
                 MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
                                                        // TODO: Is the Stream ID expected to be unique per post? Testing suggests this is not necessary.
                 StreamId = _streamId,
@@ -115,6 +117,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 Value = _performanceCounter_ProcessorTime.NextValue(),
                 Weight = 1
             };
+        }
+
+        /// <summary>
+        /// Searches for the environment variable specific to Azure Web App.
+        /// </summary>
+        /// <returns>Boolean, which is true if the current application is an Azure Web App.</returns>
+        internal static bool? IsWebAppRunningInAzure()
+        {
+            const string WebSiteEnvironmentVariable = "WEBSITE_SITE_NAME";
+            const string WebSiteIsolationEnvironmentVariable = "WEBSITE_ISOLATION";
+            const string WebSiteIsolationHyperV = "hyperv";
+
+            if (!s_isAzureWebApp.HasValue)
+            {
+                try
+                {
+                    // Presence of "WEBSITE_SITE_NAME" indicate web apps.
+                    // "WEBSITE_ISOLATION"!="hyperv" indicate premium containers. In this case, perf counters
+                    // can be read using regular mechanism and hence this method retuns false for
+                    // premium containers.
+                    // TODO: switch to platform. Not necessary for POC.
+                    s_isAzureWebApp = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(WebSiteEnvironmentVariable)) &&
+                                    Environment.GetEnvironmentVariable(WebSiteIsolationEnvironmentVariable) != WebSiteIsolationHyperV;
+                }
+                catch (Exception ex)
+                {
+                    LiveMetricsExporterEventSource.Log.AccessingEnvironmentVariableFailedWarning(WebSiteEnvironmentVariable, ex);
+                    return false;
+                }
+            }
+
+            return s_isAzureWebApp;
         }
     }
 }

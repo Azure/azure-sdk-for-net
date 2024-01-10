@@ -25,8 +25,5 @@ namespace Azure.AI.OpenAI
         {
             Role = role;
         }
-
-        /// <summary> The chat role associated with this message. </summary>
-        internal ChatRole Role { get; set; }
     }
 }

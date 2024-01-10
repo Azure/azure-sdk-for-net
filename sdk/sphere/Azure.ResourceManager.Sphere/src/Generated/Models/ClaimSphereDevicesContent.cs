@@ -12,17 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Request to the action call to bulk claim devices.
-    /// Serialized Name: ClaimDevicesRequest
-    /// </summary>
+    /// <summary> Request to the action call to bulk claim devices. </summary>
     public partial class ClaimSphereDevicesContent
     {
         /// <summary> Initializes a new instance of <see cref="ClaimSphereDevicesContent"/>. </summary>
-        /// <param name="deviceIdentifiers">
-        /// Device identifiers of the devices to be claimed.
-        /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
-        /// </param>
+        /// <param name="deviceIdentifiers"> Device identifiers of the devices to be claimed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceIdentifiers"/> is null. </exception>
         public ClaimSphereDevicesContent(IEnumerable<string> deviceIdentifiers)
         {
@@ -32,19 +26,13 @@ namespace Azure.ResourceManager.Sphere.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClaimSphereDevicesContent"/>. </summary>
-        /// <param name="deviceIdentifiers">
-        /// Device identifiers of the devices to be claimed.
-        /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
-        /// </param>
+        /// <param name="deviceIdentifiers"> Device identifiers of the devices to be claimed. </param>
         internal ClaimSphereDevicesContent(IList<string> deviceIdentifiers)
         {
             DeviceIdentifiers = deviceIdentifiers;
         }
 
-        /// <summary>
-        /// Device identifiers of the devices to be claimed.
-        /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
-        /// </summary>
+        /// <summary> Device identifiers of the devices to be claimed. </summary>
         public IList<string> DeviceIdentifiers { get; }
     }
 }
