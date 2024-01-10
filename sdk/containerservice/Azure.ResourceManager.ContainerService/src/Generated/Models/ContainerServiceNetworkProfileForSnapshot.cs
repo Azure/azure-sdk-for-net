@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> network profile for managed cluster snapshot, these properties are read only. </summary>
     public partial class ContainerServiceNetworkProfileForSnapshot
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkProfileForSnapshot"/>. </summary>
         internal ContainerServiceNetworkProfileForSnapshot()
         {
@@ -21,13 +56,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="networkPolicy"> networkPolicy for managed cluster snapshot. </param>
         /// <param name="networkMode"> networkMode for managed cluster snapshot. </param>
         /// <param name="loadBalancerSku"> loadBalancerSku for managed cluster snapshot. </param>
-        internal ContainerServiceNetworkProfileForSnapshot(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, ContainerServiceLoadBalancerSku? loadBalancerSku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceNetworkProfileForSnapshot(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, ContainerServiceLoadBalancerSku? loadBalancerSku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
             NetworkPolicy = networkPolicy;
             NetworkMode = networkMode;
             LoadBalancerSku = loadBalancerSku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> networkPlugin for managed cluster snapshot. </summary>

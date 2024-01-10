@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceFleetCredentialResults
+    public partial class ContainerServiceFleetCredentialResults : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetCredentialResults>
     {
-        internal static ContainerServiceFleetCredentialResults DeserializeContainerServiceFleetCredentialResults(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetCredentialResults>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceFleetCredentialResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetCredentialResults>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceFleetCredentialResults)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
+            {
+                writer.WritePropertyName("kubeconfigs"u8);
+                writer.WriteStartArray();
+                foreach (var item in Kubeconfigs)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerServiceFleetCredentialResults IJsonModel<ContainerServiceFleetCredentialResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetCredentialResults>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceFleetCredentialResults)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceFleetCredentialResults(document.RootElement, options);
+        }
+
+        internal static ContainerServiceFleetCredentialResults DeserializeContainerServiceFleetCredentialResults(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ContainerServiceFleetCredentialResult>> kubeconfigs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubeconfigs"u8))
@@ -36,8 +93,44 @@ namespace Azure.ResourceManager.ContainerService.Models
                     kubeconfigs = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceFleetCredentialResults(Optional.ToList(kubeconfigs));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceFleetCredentialResults(Optional.ToList(kubeconfigs), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceFleetCredentialResults>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetCredentialResults>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetCredentialResults)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerServiceFleetCredentialResults IPersistableModel<ContainerServiceFleetCredentialResults>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetCredentialResults>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerServiceFleetCredentialResults(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetCredentialResults)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerServiceFleetCredentialResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

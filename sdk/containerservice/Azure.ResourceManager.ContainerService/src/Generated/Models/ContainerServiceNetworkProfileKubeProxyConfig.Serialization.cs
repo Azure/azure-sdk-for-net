@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceNetworkProfileKubeProxyConfig : IUtf8JsonSerializable
+    public partial class ContainerServiceNetworkProfileKubeProxyConfig : IUtf8JsonSerializable, IJsonModel<ContainerServiceNetworkProfileKubeProxyConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceNetworkProfileKubeProxyConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceNetworkProfileKubeProxyConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfileKubeProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfileKubeProxyConfig)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("ipvsConfig"u8);
                 writer.WriteObjectValue(IPVSConfig);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerServiceNetworkProfileKubeProxyConfig DeserializeContainerServiceNetworkProfileKubeProxyConfig(JsonElement element)
+        ContainerServiceNetworkProfileKubeProxyConfig IJsonModel<ContainerServiceNetworkProfileKubeProxyConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfileKubeProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceNetworkProfileKubeProxyConfig)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceNetworkProfileKubeProxyConfig(document.RootElement, options);
+        }
+
+        internal static ContainerServiceNetworkProfileKubeProxyConfig DeserializeContainerServiceNetworkProfileKubeProxyConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<bool> enabled = default;
             Optional<ContainerServiceNetworkProfileKubeProxyMode> mode = default;
             Optional<ContainerServiceNetworkProfileKubeProxyIPVSConfig> ipvsConfig = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,8 +113,44 @@ namespace Azure.ResourceManager.ContainerService.Models
                     ipvsConfig = ContainerServiceNetworkProfileKubeProxyIPVSConfig.DeserializeContainerServiceNetworkProfileKubeProxyIPVSConfig(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceNetworkProfileKubeProxyConfig(Optional.ToNullable(enabled), Optional.ToNullable(mode), ipvsConfig.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceNetworkProfileKubeProxyConfig(Optional.ToNullable(enabled), Optional.ToNullable(mode), ipvsConfig.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceNetworkProfileKubeProxyConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfileKubeProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfileKubeProxyConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerServiceNetworkProfileKubeProxyConfig IPersistableModel<ContainerServiceNetworkProfileKubeProxyConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceNetworkProfileKubeProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerServiceNetworkProfileKubeProxyConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceNetworkProfileKubeProxyConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerServiceNetworkProfileKubeProxyConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

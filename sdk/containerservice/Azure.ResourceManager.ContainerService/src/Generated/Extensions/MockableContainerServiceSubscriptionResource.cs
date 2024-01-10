@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrustedAccessRolesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrustedAccessRolesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole, TrustedAccessRolesClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole(e), TrustedAccessRolesClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrustedAccessRolesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrustedAccessRolesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole, TrustedAccessRolesClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerServiceTrustedAccessRole.DeserializeContainerServiceTrustedAccessRole(e), TrustedAccessRolesClientDiagnostics, Pipeline, "MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
