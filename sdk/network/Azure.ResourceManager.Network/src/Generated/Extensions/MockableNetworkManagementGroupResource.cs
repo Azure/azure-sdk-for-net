@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagementGroupNetworkManagerConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkManagerConnectionName"> Name for the network manager connection. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementGroupNetworkManagerConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

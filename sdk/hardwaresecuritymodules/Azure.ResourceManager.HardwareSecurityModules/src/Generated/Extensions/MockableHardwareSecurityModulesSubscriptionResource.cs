@@ -57,6 +57,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
@@ -79,6 +87,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudHsmClusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,6 +119,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
@@ -125,6 +149,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
