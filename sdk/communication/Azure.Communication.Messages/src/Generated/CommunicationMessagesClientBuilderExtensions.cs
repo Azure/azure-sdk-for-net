@@ -18,18 +18,18 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         public static IAzureClientBuilder<NotificationMessagesClient, CommunicationMessagesClientOptions> AddNotificationMessagesClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilder
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<NotificationMessagesClient, CommunicationMessagesClientOptions>((options) => new NotificationMessagesClient(endpoint, options));
+            return builder.RegisterClientFactory<NotificationMessagesClient, CommunicationMessagesClientOptions>((options, cred) => new NotificationMessagesClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="MessageTemplateClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         public static IAzureClientBuilder<MessageTemplateClient, CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilder
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>((options) => new MessageTemplateClient(endpoint, options));
+            return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>((options, cred) => new MessageTemplateClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>

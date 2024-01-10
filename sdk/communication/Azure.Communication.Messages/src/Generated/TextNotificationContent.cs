@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The SendTextNotificationRequest. </summary>
-    internal partial class SendTextNotificationRequest : SendNotificationRequest
+    /// <summary> A request to send a text notification. </summary>
+    public partial class TextNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="SendTextNotificationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="content"> Message content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        public SendTextNotificationRequest(Guid channelRegistrationId, IEnumerable<string> to, string content) : base(channelRegistrationId, to)
+        public TextNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, string content) : base(channelRegistrationId, to)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(content, nameof(content));
@@ -28,12 +28,12 @@ namespace Azure.Communication.Messages
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendTextNotificationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextNotificationContent"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="content"> Message content. </param>
-        internal SendTextNotificationRequest(string kind, Guid channelRegistrationId, IList<string> to, string content) : base(kind, channelRegistrationId, to)
+        internal TextNotificationContent(string kind, Guid channelRegistrationId, IList<string> to, string content) : base(kind, channelRegistrationId, to)
         {
             Content = content;
         }

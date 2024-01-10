@@ -10,9 +10,9 @@ using Azure;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class UnknownMessageTemplateResponse
+    internal partial class UnknownMessageTemplateItem
     {
-        internal static UnknownMessageTemplateResponse DeserializeUnknownMessageTemplateResponse(JsonElement element)
+        internal static UnknownMessageTemplateItem DeserializeUnknownMessageTemplateItem(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -21,7 +21,7 @@ namespace Azure.Communication.Messages
             string kind = "Unknown";
             string name = default;
             string language = default;
-            MessageTemplateStatus status = default;
+            MessageTemplateItemStatus status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -41,19 +41,19 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new MessageTemplateStatus(property.Value.GetString());
+                    status = new MessageTemplateItemStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownMessageTemplateResponse(kind, name, language, status);
+            return new UnknownMessageTemplateItem(kind, name, language, status);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownMessageTemplateResponse FromResponse(Response response)
+        internal static new UnknownMessageTemplateItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeUnknownMessageTemplateResponse(document.RootElement);
+            return DeserializeUnknownMessageTemplateItem(document.RootElement);
         }
     }
 }

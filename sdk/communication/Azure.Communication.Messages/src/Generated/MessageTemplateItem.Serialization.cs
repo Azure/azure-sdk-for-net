@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -26,7 +25,7 @@ namespace Azure.Communication.Messages
                     case "whatsApp": return WhatsAppMessageTemplateItem.DeserializeWhatsAppMessageTemplateItem(element);
                 }
             }
-            return UnknownMessageTemplateResponse.DeserializeUnknownMessageTemplateResponse(element);
+            return UnknownMessageTemplateItem.DeserializeUnknownMessageTemplateItem(element);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

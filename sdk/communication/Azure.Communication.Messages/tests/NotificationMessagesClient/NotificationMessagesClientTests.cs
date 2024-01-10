@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Communication.Messages.Tests
@@ -36,8 +35,8 @@ namespace Azure.Communication.Messages.Tests
             NotificationMessagesClient notificationMessagesClient = CreateMockNotificationMessagesClient(202, SendMessageApiResponsePayload);
 
             //act
-            SendMessageOptions sendMessageOptions = new SendMessageOptions(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
-            SendMessageResult sendMessageResult = await notificationMessagesClient.SendMessageAsync(sendMessageOptions);
+            TextNotificationContent content = new(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
+            SendMessageResult sendMessageResult = await notificationMessagesClient.SendAsync(content);
 
             //assert
             Assert.IsNotNull(sendMessageResult.Receipts[0].MessageId);
@@ -53,7 +52,7 @@ namespace Azure.Communication.Messages.Tests
             NotificationMessagesClient notificationMessagesClient = CreateMockNotificationMessagesClient();
 
             //act & assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.SendMessageAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.SendAsync((NotificationContent)null));
         }
 
         [Test]
@@ -65,8 +64,8 @@ namespace Azure.Communication.Messages.Tests
             try
             {
                 //act
-                SendMessageOptions sendMessageOptions = new SendMessageOptions(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
-                await notificationMessagesClient.SendMessageAsync(sendMessageOptions);
+                TextNotificationContent content = new(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
+                await notificationMessagesClient.SendAsync(content);
             }
             catch (RequestFailedException requestFailedException)
             {
@@ -75,7 +74,7 @@ namespace Azure.Communication.Messages.Tests
             }
         }
 
-        private NotificationMessagesClient CreateMockNotificationMessagesClient(int responseCode = 202, string responseContent = null)
+        private static NotificationMessagesClient CreateMockNotificationMessagesClient(int responseCode = 202, string responseContent = null)
         {
             var mockResponse = new MockResponse(responseCode);
             if (responseContent != null)

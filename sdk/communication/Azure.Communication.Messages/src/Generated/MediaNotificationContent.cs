@@ -11,10 +11,10 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The SendMediaNotificationRequest. </summary>
-    internal partial class SendMediaNotificationRequest : SendNotificationRequest
+    /// <summary> A request to send a media notification. </summary>
+    public partial class MediaNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="SendMediaNotificationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="mediaUri">
@@ -22,7 +22,7 @@ namespace Azure.Communication.Messages
         /// types, e.g. image
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="mediaUri"/> is null. </exception>
-        public SendMediaNotificationRequest(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri) : base(channelRegistrationId, to)
+        public MediaNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, Uri mediaUri) : base(channelRegistrationId, to)
         {
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(mediaUri, nameof(mediaUri));
@@ -31,22 +31,22 @@ namespace Azure.Communication.Messages
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendMediaNotificationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaNotificationContent"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        /// <param name="content"> Message content. </param>
+        /// <param name="content"> Optional text content. </param>
         /// <param name="mediaUri">
         /// A media url for the file. Required if the type is one of the supported media
         /// types, e.g. image
         /// </param>
-        internal SendMediaNotificationRequest(string kind, Guid channelRegistrationId, IList<string> to, string content, Uri mediaUri) : base(kind, channelRegistrationId, to)
+        internal MediaNotificationContent(string kind, Guid channelRegistrationId, IList<string> to, string content, Uri mediaUri) : base(kind, channelRegistrationId, to)
         {
             Content = content;
             MediaUri = mediaUri;
         }
 
-        /// <summary> Message content. </summary>
+        /// <summary> Optional text content. </summary>
         public string Content { get; set; }
         /// <summary>
         /// A media url for the file. Required if the type is one of the supported media

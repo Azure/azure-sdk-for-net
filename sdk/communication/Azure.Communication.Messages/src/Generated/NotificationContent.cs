@@ -14,16 +14,16 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of the message to send.
-    /// Please note <see cref="SendNotificationRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SendTextNotificationRequest"/>, <see cref="SendMediaNotificationRequest"/> and <see cref="SendTemplateNotificationRequest"/>.
+    /// Please note <see cref="NotificationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TextNotificationContent"/>, <see cref="MediaNotificationContent"/> and <see cref="TemplateNotificationContent"/>.
     /// </summary>
-    internal abstract partial class SendNotificationRequest
+    public abstract partial class NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="SendNotificationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
-        protected SendNotificationRequest(Guid channelRegistrationId, IEnumerable<string> to)
+        protected NotificationContent(Guid channelRegistrationId, IEnumerable<string> to)
         {
             Argument.AssertNotNull(to, nameof(to));
 
@@ -31,11 +31,11 @@ namespace Azure.Communication.Messages
             To = to.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendNotificationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
-        internal SendNotificationRequest(string kind, Guid channelRegistrationId, IList<string> to)
+        internal NotificationContent(string kind, Guid channelRegistrationId, IList<string> to)
         {
             Kind = kind;
             ChannelRegistrationId = channelRegistrationId;

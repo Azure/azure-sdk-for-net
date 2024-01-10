@@ -18,6 +18,8 @@ namespace Azure.Communication.Messages
     /// <summary> The NotificationMessages service client. </summary>
     public partial class NotificationMessagesClient
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -28,30 +30,58 @@ namespace Azure.Communication.Messages
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Sends a notification message from Business to User. </summary>
-        /// <param name="sendNotificationRequest"> Details of the message to send. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sendNotificationRequest"/> is null. </exception>
-        internal virtual async Task<Response<SendMessageResult>> SendAsync(SendNotificationRequest sendNotificationRequest, CancellationToken cancellationToken = default)
+        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public NotificationMessagesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
         {
-            Argument.AssertNotNull(sendNotificationRequest, nameof(sendNotificationRequest));
+        }
+
+        /// <summary> Initializes a new instance of NotificationMessagesClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public NotificationMessagesClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new CommunicationMessagesClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Sends a notification message from Business to User. </summary>
+        /// <param name="notificationContent"> Details of the message to send. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(NotificationContent,CancellationToken)']/*" />
+        public virtual async Task<Response<SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = sendNotificationRequest.ToRequestContent();
+            using RequestContent content = notificationContent.ToRequestContent();
             Response response = await SendAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
 
         /// <summary> Sends a notification message from Business to User. </summary>
-        /// <param name="sendNotificationRequest"> Details of the message to send. </param>
+        /// <param name="notificationContent"> Details of the message to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sendNotificationRequest"/> is null. </exception>
-        internal virtual Response<SendMessageResult> Send(SendNotificationRequest sendNotificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(NotificationContent,CancellationToken)']/*" />
+        public virtual Response<SendMessageResult> Send(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sendNotificationRequest, nameof(sendNotificationRequest));
+            Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = sendNotificationRequest.ToRequestContent();
+            using RequestContent content = notificationContent.ToRequestContent();
             Response response = Send(content, context);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
@@ -66,7 +96,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SendAsync(SendNotificationRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SendAsync(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -76,7 +106,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> SendAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> SendAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -104,7 +135,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Send(SendNotificationRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Send(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -114,7 +145,8 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response Send(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(RequestContent,RequestContext)']/*" />
+        public virtual Response Send(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -133,7 +165,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Download the Media payload from a User to Business message. </summary>
-        /// <param name="id"> The <see cref="string"/> to use. </param>
+        /// <param name="id"> The stream ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -147,7 +179,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Download the Media payload from a User to Business message. </summary>
-        /// <param name="id"> The <see cref="string"/> to use. </param>
+        /// <param name="id"> The stream ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -175,7 +207,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> The <see cref="string"/> to use. </param>
+        /// <param name="id"> The stream ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -214,7 +246,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> The <see cref="string"/> to use. </param>
+        /// <param name="id"> The stream ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>

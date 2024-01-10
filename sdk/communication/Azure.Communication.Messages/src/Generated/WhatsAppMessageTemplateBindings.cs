@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.Communication.Messages
 {
     /// <summary> The template bindings for WhatsApp. </summary>
-    internal partial class WhatsAppMessageTemplateBindingsInternal : MessageTemplateBindingsInternal
+    public partial class WhatsAppMessageTemplateBindings : MessageTemplateBindings
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsInternal"/>. </summary>
-        public WhatsAppMessageTemplateBindingsInternal()
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>
+        public WhatsAppMessageTemplateBindings()
         {
             Kind = "whatsApp";
             Header = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
@@ -23,13 +23,13 @@ namespace Azure.Communication.Messages
             Button = new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="header"> The header template bindings. </param>
         /// <param name="body"> The body template bindings. </param>
         /// <param name="footer"> The footer template bindings. </param>
         /// <param name="button"> The button template bindings. </param>
-        internal WhatsAppMessageTemplateBindingsInternal(string kind, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> button) : base(kind)
+        internal WhatsAppMessageTemplateBindings(string kind, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> button) : base(kind)
         {
             Header = header;
             Body = body;

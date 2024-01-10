@@ -10,22 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class SendNotificationRequest : IUtf8JsonSerializable
+    public partial class MessageTemplateBindings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            writer.WritePropertyName("channelRegistrationId"u8);
-            writer.WriteStringValue(ChannelRegistrationId);
-            writer.WritePropertyName("to"u8);
-            writer.WriteStartArray();
-            foreach (var item in To)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 

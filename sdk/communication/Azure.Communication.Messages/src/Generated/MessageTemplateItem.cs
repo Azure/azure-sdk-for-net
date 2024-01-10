@@ -6,39 +6,35 @@
 #nullable disable
 
 using System;
-using Azure.Communication.Messages.Models.Channels;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
     /// <summary>
-    /// The Message Template Response.
+    /// The message template as returned from the service.
     /// Please note <see cref="MessageTemplateItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WhatsAppMessageTemplateItem"/>.
     /// </summary>
     public abstract partial class MessageTemplateItem
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateItem"/>. </summary>
-        /// <param name="name"> Get the template's Name. </param>
-        /// <param name="language"> Get the template's language. </param>
+        /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
-        protected MessageTemplateItem(string name, string language, MessageTemplateStatus status)
+        /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
+        protected MessageTemplateItem(string language, MessageTemplateItemStatus status)
         {
-            Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(language, nameof(language));
 
-            Name = name;
             Language = language;
             Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateItem"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
-        /// <param name="name"> Get the template's Name. </param>
-        /// <param name="language"> Get the template's language. </param>
+        /// <param name="name"> The template's name. </param>
+        /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
-        internal MessageTemplateItem(string kind, string name, string language, MessageTemplateStatus status)
+        internal MessageTemplateItem(string kind, string name, string language, MessageTemplateItemStatus status)
         {
             Kind = kind;
             Name = name;
@@ -48,11 +44,11 @@ namespace Azure.Communication.Messages
 
         /// <summary> Discriminator. </summary>
         internal string Kind { get; set; }
-        /// <summary> Get the template's Name. </summary>
+        /// <summary> The template's name. </summary>
         public string Name { get; }
-        /// <summary> Get the template's language. </summary>
+        /// <summary> The template's language. </summary>
         public string Language { get; }
         /// <summary> The aggregated template status. </summary>
-        public MessageTemplateStatus Status { get; }
+        public MessageTemplateItemStatus Status { get; }
     }
 }
