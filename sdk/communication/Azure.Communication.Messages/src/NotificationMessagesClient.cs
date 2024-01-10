@@ -14,8 +14,6 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// The Azure Communication Services Notification Messages client.
     /// </summary>
-    //[CodeGenSuppress("NotificationMessagesClient", typeof(Uri))]
-    //[CodeGenSuppress("NotificationMessagesClient", typeof(Uri), typeof(CommunicationMessagesClientOptions))]
     public partial class NotificationMessagesClient
     {
         #region public constructors
