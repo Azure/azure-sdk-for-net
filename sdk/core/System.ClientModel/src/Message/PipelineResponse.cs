@@ -44,6 +44,11 @@ public abstract class PipelineResponse : IDisposable
     {
         get
         {
+            if (_contentStream is not null)
+            {
+                return BinaryData.FromStream(_contentStream);
+            }
+
             if (_content is null)
             {
                 throw new InvalidOperationException($"The response is not fully buffered.");
@@ -112,7 +117,7 @@ public abstract class PipelineResponse : IDisposable
         }
 
         Stream? responseContentStream = ContentStream;
-        if (responseContentStream == null || IsBuffered)
+        if (responseContentStream == null)
         {
             _content = s_emptyBinaryData;
             return;
