@@ -204,7 +204,7 @@ public sealed partial class ClientPipeline
                     return _policies[_current];
                 }
 
-                return null!;
+                throw new InvalidOperationException("'Current' is outside the bounds of the policy collection.");
             }
         }
 
