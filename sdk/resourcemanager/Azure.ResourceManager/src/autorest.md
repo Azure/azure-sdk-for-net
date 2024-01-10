@@ -13,6 +13,7 @@ head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
 
 # mgmt-debug:
 #   show-serialized-names: true
