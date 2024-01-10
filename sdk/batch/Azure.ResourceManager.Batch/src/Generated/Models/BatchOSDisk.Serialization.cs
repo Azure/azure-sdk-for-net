@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
-                writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
+                writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);
             }
             writer.WriteEndObject();
         }

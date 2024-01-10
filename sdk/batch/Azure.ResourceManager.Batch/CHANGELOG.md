@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2023-12-20)
+## 1.3.0 (2024-1-9)
 
 ### Features Added
 - Add `ResourceTags` support to Pool Creation

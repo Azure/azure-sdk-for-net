@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="caching"> The type of caching to enable for the disk. </param>
         /// <param name="managedDisk"></param>
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        internal BatchOSDisk(DiffDiskSettings ephemeralOSDiskSettings, BatchDiskCachingType? caching, ManagedDisk managedDisk, int? diskSizeGB, bool? writeAcceleratorEnabled)
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        internal BatchOSDisk(DiffDiskSettings ephemeralOSDiskSettings, BatchDiskCachingType? caching, ManagedDisk managedDisk, int? diskSizeGB, bool? isWriteAcceleratorEnabled)
         {
             EphemeralOSDiskSettings = ephemeralOSDiskSettings;
             Caching = caching;
             ManagedDisk = managedDisk;
             DiskSizeGB = diskSizeGB;
-            WriteAcceleratorEnabled = writeAcceleratorEnabled;
+            IsWriteAcceleratorEnabled = isWriteAcceleratorEnabled;
         }
 
         /// <summary> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </summary>
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The initial disk size in GB when creating new OS disk. </summary>
         public int? DiskSizeGB { get; set; }
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
-        public bool? WriteAcceleratorEnabled { get; set; }
+        public bool? IsWriteAcceleratorEnabled { get; set; }
     }
 }

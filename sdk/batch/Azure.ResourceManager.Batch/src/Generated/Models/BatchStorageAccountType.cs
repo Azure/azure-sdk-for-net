@@ -15,6 +15,6 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> The data disk / OS disk should use premium locally redundant storage. </summary>
         PremiumLrs,
         /// <summary> The data disk / OS disk should use standard SSD locally redundant storage. </summary>
-        StandardSSDLRS
+        StandardSsdLrs
     }
 }
