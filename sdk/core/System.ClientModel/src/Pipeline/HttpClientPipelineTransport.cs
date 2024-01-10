@@ -160,13 +160,6 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
         OnReceivedResponse(message, responseMessage);
 
-        // We set derived values on the MessageResponse here, including Content and IsError
-        // to ensure these things happen in the transport.  If derived implementations need
-        // to override these default transport values, they can do so in pipeline policies.
-
-        // TODO: a possible alternative is to make instantiating the Response a specific
-        // extensibilty point and let OnReceivedResponse enable transport-specific logic.
-        // Consider which is preferred as part of holistic extensibility-point review.
         if (contentStream is not null)
         {
             message.Response.ContentStream = contentStream;

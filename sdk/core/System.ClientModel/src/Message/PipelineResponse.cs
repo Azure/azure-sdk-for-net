@@ -18,8 +18,8 @@ public abstract class PipelineResponse : IDisposable
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
 
     private bool _isError = false;
+
     private BinaryData? _content;
-    private Stream? _contentStream;
 
     /// <summary>
     /// Gets the HTTP status code.
@@ -38,26 +38,7 @@ public abstract class PipelineResponse : IDisposable
     /// <summary>
     /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
     /// </summary>
-    public virtual Stream? ContentStream
-    {
-        get
-        {
-            if (_contentStream is not null)
-            {
-                // Content stream was set externally.  Return what was set.
-                return _contentStream;
-            }
-
-            if (_content is not null)
-            {
-                return _content.ToStream();
-            }
-
-            return null;
-        }
-
-        set => _contentStream = value;
-    }
+    public abstract Stream? ContentStream { get; set; }
 
     public virtual BinaryData Content
     {
@@ -103,7 +84,7 @@ public abstract class PipelineResponse : IDisposable
             return;
         }
 
-        Stream? responseContentStream = _contentStream;
+        Stream? responseContentStream = ContentStream;
         if (responseContentStream == null)
         {
             _content = s_emptyBinaryData;
@@ -113,9 +94,8 @@ public abstract class PipelineResponse : IDisposable
         MemoryStream bufferStream = new();
         CopyTo(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource());
 
-        // Dispose the network stream and discard the PipelineResponse stream field.
+        // Dispose the network stream.
         responseContentStream.Dispose();
-        _contentStream = null;
 
         _content = bufferStream.TryGetBuffer(out ArraySegment<byte> segment) ?
             new BinaryData(segment.AsMemory()) :
@@ -131,7 +111,7 @@ public abstract class PipelineResponse : IDisposable
             return;
         }
 
-        Stream? responseContentStream = _contentStream;
+        Stream? responseContentStream = ContentStream;
         if (responseContentStream == null || IsBuffered)
         {
             _content = s_emptyBinaryData;
@@ -141,9 +121,8 @@ public abstract class PipelineResponse : IDisposable
         MemoryStream bufferStream = new();
         await CopyToAsync(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource()).ConfigureAwait(false);
 
-        // Dispose the network stream and discard the PipelineResponse stream field.
+        // Dispose the network stream.
         responseContentStream.Dispose();
-        _contentStream = null;
 
         _content = bufferStream.TryGetBuffer(out ArraySegment<byte> segment) ?
             new BinaryData(segment.AsMemory()) :
