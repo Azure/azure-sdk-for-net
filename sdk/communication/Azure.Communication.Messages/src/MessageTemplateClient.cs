@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
-using Autorest.CSharp.Core;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -13,8 +11,6 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// The Azure Communication Services Message Template client.
     /// </summary>
-    //[CodeGenSuppress("MessageTemplateClient", typeof(Uri))]
-    //[CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(CommunicationMessagesClientOptions))]
 
     public partial class MessageTemplateClient
     {
