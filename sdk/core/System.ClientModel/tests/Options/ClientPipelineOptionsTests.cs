@@ -64,7 +64,7 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
         Assert.AreEqual(3, observations.Count);
         Assert.AreEqual("Request:PerTryPolicy", observations[index++]);
 
-        // TODO: Validate that per call policy comes after retry policy
+        // TODO: Validate that per try policy comes after retry policy
 
         Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Response:PerTryPolicy", observations[index++]);

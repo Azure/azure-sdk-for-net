@@ -4,16 +4,29 @@
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Controls the creation of the pipeline.
-/// Works with RequestOptions which controls the behavior of the pipeline.
+/// Controls the creation of a pipeline used by a service client.
+/// Service clients must create a client-specific subtype of this class
+/// to pass to their constructors to allow for service-specific options
+/// with a client-wide scope.
 /// </summary>
-// TODO: we've made this non-abstract in ClientModel, so to make sure service
-// clients always inherit from it rather than using it directly, we will need to
-// add an analyzer to validate it via static analysis.
 public class ClientPipelineOptions
 {
     private static readonly ClientPipelineOptions _defaultOptions = new();
     internal static ClientPipelineOptions Default => _defaultOptions;
+
+    #region Pipeline creation: Overrides of default pipeline policies
+
+    public PipelinePolicy? RetryPolicy { get; set; }
+
+    public PipelineTransport? Transport { get; set; }
+
+    #endregion
+
+    #region Pipeline creation: Policy settings
+
+    public TimeSpan? NetworkTimeout { get; set; }
+
+    #endregion
 
     #region Pipeline creation: User-specified policies
 
@@ -22,22 +35,6 @@ public class ClientPipelineOptions
     internal PipelinePolicy[]? PerTryPolicies { get; set; }
 
     internal PipelinePolicy[]? BeforeTransportPolicies { get; set; }
-
-    #endregion
-
-    #region Pipeline creation: Required policy overrides
-
-    public PipelinePolicy? RetryPolicy { get; set; }
-
-    public PipelineTransport? Transport { get; set; }
-
-    #endregion
-
-    #region Pipeline creation: Policy-specific settings
-
-    public TimeSpan? NetworkTimeout { get; set; }
-
-    #endregion
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
@@ -75,4 +72,6 @@ public class ClientPipelineOptions
         policies[policies.Length - 1] = policy;
         return policies;
     }
+
+    #endregion
 }

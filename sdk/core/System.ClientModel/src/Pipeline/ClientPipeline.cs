@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -34,10 +35,16 @@ public sealed partial class ClientPipeline
     }
 
     public static ClientPipeline Create()
-        => Create(ClientPipelineOptions.Default, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
+        => Create(ClientPipelineOptions.Default,
+            ReadOnlySpan<PipelinePolicy>.Empty,
+            ReadOnlySpan<PipelinePolicy>.Empty,
+            ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static ClientPipeline Create(ClientPipelineOptions options, params PipelinePolicy[] perCallPolicies)
-        => Create(options, perCallPolicies, ReadOnlySpan<PipelinePolicy>.Empty, ReadOnlySpan<PipelinePolicy>.Empty);
+        => Create(options,
+            perCallPolicies,
+            ReadOnlySpan<PipelinePolicy>.Empty,
+            ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static ClientPipeline Create(
         ClientPipelineOptions options,
@@ -45,9 +52,9 @@ public sealed partial class ClientPipeline
         ReadOnlySpan<PipelinePolicy> perTryPolicies,
         ReadOnlySpan<PipelinePolicy> beforeTransportPolicies)
     {
-        if (options is null) throw new ArgumentNullException(nameof(options));
+        Argument.AssertNotNull(options, nameof(options));
 
-        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
+        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
 
         if (options.PerTryPolicies != null)
         {
