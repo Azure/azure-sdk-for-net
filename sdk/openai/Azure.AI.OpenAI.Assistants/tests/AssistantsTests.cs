@@ -19,9 +19,21 @@ public class AssistantsTests : AssistantsTestBase
 
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
+    public async Task CanListAssistants(OpenAIClientServiceTarget target)
+    {
+        AssistantsClient client = GetTestClient(target);
+        Response<PageableList<Assistant>> listResponse = await client.GetAssistantsAsync();
+        AssertSuccessfulResponse(listResponse);
+    }
+
+    [RecordedTest]
+    [TestCase(OpenAIClientServiceTarget.NonAzure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task CanCreateRetrieveListAndDeleteAssistants(OpenAIClientServiceTarget target)
     {
         AssistantsClient client = GetTestClient(target);
+        string deploymentName = GetDeploymentOrModelName(target);
 
         // No assistant should exist with the metadata K/V pair we're going to use
         Response<PageableList<Assistant>> listResponse = await client.GetAssistantsAsync();
@@ -30,7 +42,7 @@ public class AssistantsTests : AssistantsTestBase
 
         // Now create that assistant
         Response<Assistant> assistantCreationResponse
-            = await client.CreateAssistantAsync(new AssistantCreationOptions("gpt-4-1106-preview")
+            = await client.CreateAssistantAsync(new AssistantCreationOptions(deploymentName)
             {
                 Name = "AOAI SDK Test Assistant - Delete Me",
                 Description = "Created by automated tests to exercise the API; should not be used",

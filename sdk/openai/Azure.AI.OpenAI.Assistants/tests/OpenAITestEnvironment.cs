@@ -9,34 +9,7 @@ public class OpenAITestEnvironment : TestEnvironment
 {
     public string NonAzureOpenAIApiKey => GetOptionalVariable("OPENAI_API_KEY");
 
-    public string AzureCognitiveSearchApiKey => GetOptionalVariable("ACS_BYOD_API_KEY");
+    public string AzureOpenAIResourceUri => GetOptionalVariable("AZURE_OPENAI_RESOURCE_URI");
 
-    public string TestAudioInputPathEnglish => GetOptionalVariable("OAI_TEST_AUDIO_INPUT_ENGLISH_PATH");
-
-    public Uri GetUrlVariable(string variableName) => new(GetRecordedVariable(variableName));
-
-    public AzureKeyCredential GetKeyVariable(string variableName) => new(GetOptionalVariable(variableName) ?? "placeholder");
-
-    public void ThrowIfCannotDeploy()
-    {
-        string[] requiredVariableNames = new string[]
-        {
-                "TENANT_ID",
-                "AUTHORITY_HOST",
-                "SUBSCRIPTION_ID",
-                "CLIENT_ID",
-                "CLIENT_SECRET",
-        };
-
-        foreach (string requiredVariableName in requiredVariableNames)
-        {
-            string optionalVariableValue = GetOptionalVariable(requiredVariableName);
-            if (string.IsNullOrEmpty(optionalVariableValue))
-            {
-                throw new InvalidOperationException($"Resource deployment is required and no environment value was found for required variable '{requiredVariableName}'.\n"
-                    + $"'{Mode}' mode requires full environment specification of an Azure application (service principal) "
-                    + "that manages test resources. This includes: Azure tenant ID; Azure authority host; managed subscription ID; and application ID + secret.");
-            }
-        }
-    }
+    public string AzureOpenAIApiKey => GetOptionalVariable("AZURE_OPENAI_API_KEY");
 }

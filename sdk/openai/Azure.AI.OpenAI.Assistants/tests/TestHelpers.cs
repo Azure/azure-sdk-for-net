@@ -28,8 +28,8 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
     {
         return (target, authenticationType) switch
         {
-            (OpenAIClientServiceTarget.NonAzure, OpenAIClientAuthenticationType.ApiKey)
-                => new AssistantsClient(GetNonAzureApiKey(), GetInstrumentedClientOptions()),
+            (OpenAIClientServiceTarget.NonAzure, OpenAIClientAuthenticationType.ApiKey) => GetNonAzureClientWithKey(),
+            (OpenAIClientServiceTarget.Azure, OpenAIClientAuthenticationType.ApiKey) => GetAzureClientWithKey(),
             _ => throw new NotImplementedException()
         };
     }
@@ -40,10 +40,14 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
     protected AssistantsClient GetNonAzureClientWithKey() => InstrumentClient(
         new AssistantsClient(GetNonAzureApiKey(), GetInstrumentedClientOptions()));
 
-    protected string GetNonAzureApiKey()
-    {
-        return TestEnvironment.NonAzureOpenAIApiKey;
-    }
+    protected AssistantsClient GetAzureClientWithKey() => InstrumentClient(
+        new AssistantsClient(GetAzureResourceUri(), new AzureKeyCredential(GetAzureApiKey()), GetInstrumentedClientOptions()));
+
+    protected string GetNonAzureApiKey() => TestEnvironment.NonAzureOpenAIApiKey;
+
+    protected Uri GetAzureResourceUri() => new(TestEnvironment.AzureOpenAIResourceUri);
+
+    protected string GetAzureApiKey() => TestEnvironment.AzureOpenAIApiKey;
 
     private AssistantsClientOptions GetInstrumentedClientOptions(
         AssistantsClientOptions.ServiceVersion? azureServiceVersionOverride = null)
@@ -53,4 +57,12 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
             : new AssistantsClientOptions();
         return InstrumentClientOptions(uninstrumentedClientOptions);
     }
+
+    protected string GetDeploymentOrModelName(OpenAIClientServiceTarget target)
+        => target switch
+        {
+            OpenAIClientServiceTarget.Azure => "gpt-4-1106",
+            OpenAIClientServiceTarget.NonAzure => "gpt-4-1106-preview",
+            _ => throw new NotImplementedException(),
+        };
 }

@@ -47,11 +47,16 @@ public partial class AssistantsClient
         ClientDiagnostics = new ClientDiagnostics(options, true);
         _isConfiguredForAzure = true;
         _keyCredential = keyCredential;
-        _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+        _pipeline = HttpPipelineBuilder.Build(
+            options,
+            Array.Empty<HttpPipelinePolicy>(),
+            new HttpPipelinePolicy[]
+            {
+                new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader)
+            },
+            new ResponseClassifier());
         _endpoint = endpoint;
         _apiVersion = options.Version;
-
-        throw new NotSupportedException(s_aoaiNotYetSupportedMessage);
     }
 
     /// <summary>
@@ -170,6 +175,8 @@ public partial class AssistantsClient
     /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
     public virtual Response<bool> DeleteAssistant(string assistantId, CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteAssistant");
+        scope.Start();
         Response<InternalAssistantDeletionStatus> baseResponse = InternalDeleteAssistant(assistantId, cancellationToken);
         bool simplifiedValue =
             baseResponse.GetRawResponse() != null
@@ -188,6 +195,8 @@ public partial class AssistantsClient
         string assistantId,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteAssistant");
+        scope.Start();
         Response<InternalAssistantDeletionStatus> baseResponse
             = await InternalDeleteAssistantAsync(assistantId, cancellationToken).ConfigureAwait(false);
         bool simplifiedValue =
@@ -207,6 +216,8 @@ public partial class AssistantsClient
         string threadId,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteThread");
+        scope.Start();
         Response<ThreadDeletionStatus> baseResponse
             = InternalDeleteThread(threadId, cancellationToken);
         bool simplifiedValue =
@@ -226,6 +237,8 @@ public partial class AssistantsClient
         string threadId,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteThread");
+        scope.Start();
         Response<ThreadDeletionStatus> baseResponse
             = await InternalDeleteThreadAsync(threadId, cancellationToken).ConfigureAwait(false);
         bool simplifiedValue =
@@ -247,6 +260,8 @@ public partial class AssistantsClient
         string fileId,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.UnlinkAssistantFile");
+        scope.Start();
         Response<InternalAssistantFileDeletionStatus> baseResponse
             = InternalUnlinkAssistantFile(assistantId, fileId, cancellationToken);
         bool simplifiedValue =
@@ -275,6 +290,8 @@ public partial class AssistantsClient
         string fileId,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.UnlinkAssistantFile");
+        scope.Start();
         Response<InternalAssistantFileDeletionStatus> baseResponse
             = await InternalUnlinkAssistantFileAsync(assistantId, fileId, cancellationToken).ConfigureAwait(false);
         bool simplifiedValue =
@@ -290,6 +307,8 @@ public partial class AssistantsClient
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     public virtual Response<IReadOnlyList<OpenAIFile>> GetFiles(OpenAIFilePurpose? purpose = null, CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFiles");
+        scope.Start();
         Response<InternalFileListResponse> baseResponse = InternalListFiles(purpose, cancellationToken);
         return Response.FromValue(baseResponse.Value?.Data, baseResponse.GetRawResponse());
     }
@@ -301,6 +320,8 @@ public partial class AssistantsClient
         OpenAIFilePurpose? purpose = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFiles");
+        scope.Start();
         Response<InternalFileListResponse> baseResponse = await InternalListFilesAsync(purpose, cancellationToken).ConfigureAwait(false);
         return Response.FromValue(baseResponse.Value?.Data, baseResponse.GetRawResponse());
     }
@@ -312,6 +333,8 @@ public partial class AssistantsClient
     /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
     public virtual Response<bool> DeleteFile(string fileId, CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteFile");
+        scope.Start();
         Response<InternalFileDeletionStatus> baseResponse = InternalDeleteFile(fileId, cancellationToken);
         bool simplifiedValue =
             baseResponse.GetRawResponse() != null
@@ -328,6 +351,8 @@ public partial class AssistantsClient
     /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
     public virtual async Task<Response<bool>> DeleteFileAsync(string fileId, CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.DeleteFile");
+        scope.Start();
         Response<InternalFileDeletionStatus> baseResponse = await InternalDeleteFileAsync(fileId, cancellationToken).ConfigureAwait(false);
         bool simplifiedValue =
             baseResponse.GetRawResponse() != null
@@ -345,6 +370,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistants");
+        scope.Start();
         Response<InternalOpenAIPageableListOfAssistant> baseResponse = InternalGetAssistants(limit, order, after, before, cancellationToken);
         return Response.FromValue(PageableList<Assistant>.Create(baseResponse.Value), baseResponse.GetRawResponse());
     }
@@ -357,6 +384,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistants");
+        scope.Start();
         Response<InternalOpenAIPageableListOfAssistant> baseResponse
             = await InternalGetAssistantsAsync(limit, order, after, before, cancellationToken).ConfigureAwait(false);
         return Response.FromValue(PageableList<Assistant>.Create(baseResponse.Value), baseResponse.GetRawResponse());
@@ -371,6 +400,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistantFiles");
+        scope.Start();
         Response<InternalOpenAIPageableListOfAssistantFile> baseResponse = InternalGetAssistantFiles(assistantId, limit, order, after, before, cancellationToken);
         return Response.FromValue(PageableList<AssistantFile>.Create(baseResponse.Value), baseResponse.GetRawResponse());
     }
@@ -384,6 +415,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetAssistantFiles");
+        scope.Start();
         Response<InternalOpenAIPageableListOfAssistantFile> baseResponse
             = await InternalGetAssistantFilesAsync(assistantId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
         return Response.FromValue(PageableList<AssistantFile>.Create(baseResponse.Value), baseResponse.GetRawResponse());
@@ -399,6 +432,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessageFiles");
+        scope.Start();
         Response<InternalOpenAIPageableListOfMessageFile> baseResponse = InternalGetMessageFiles(threadId, messageId, limit, order, after, before, cancellationToken);
         return Response.FromValue(PageableList<MessageFile>.Create(baseResponse.Value), baseResponse.GetRawResponse());
     }
@@ -413,6 +448,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessageFiles");
+        scope.Start();
         Response<InternalOpenAIPageableListOfMessageFile> baseResponse
             = await InternalGetMessageFilesAsync(threadId, messageId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
         return Response.FromValue(PageableList<MessageFile>.Create(baseResponse.Value), baseResponse.GetRawResponse());
@@ -428,6 +465,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetRunSteps");
+        scope.Start();
         Response<InternalOpenAIPageableListOfRunStep> baseResponse = InternalGetRunSteps(threadId, runId, limit, order, after, before, cancellationToken);
         return Response.FromValue(PageableList<RunStep>.Create(baseResponse.Value), baseResponse.GetRawResponse());
     }
@@ -442,6 +481,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetRunSteps");
+        scope.Start();
         Response<InternalOpenAIPageableListOfRunStep> baseResponse
             = await InternalGetRunStepsAsync(threadId, runId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
         return Response.FromValue(PageableList<RunStep>.Create(baseResponse.Value), baseResponse.GetRawResponse());
@@ -456,6 +497,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessages");
+        scope.Start();
         Response<InternalOpenAIPageableListOfThreadMessage> baseResponse = InternalGetMessages(threadId, limit, order, after, before, cancellationToken);
         return Response.FromValue(PageableList<ThreadMessage>.Create(baseResponse.Value), baseResponse.GetRawResponse());
     }
@@ -469,6 +512,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetMessages");
+        scope.Start();
         Response<InternalOpenAIPageableListOfThreadMessage> baseResponse
             = await InternalGetMessagesAsync(threadId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
         return Response.FromValue(PageableList<ThreadMessage>.Create(baseResponse.Value), baseResponse.GetRawResponse());
@@ -483,6 +528,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetRuns");
+        scope.Start();
         Response<InternalOpenAIPageableListOfThreadRun> baseResponse = InternalGetRuns(threadId, limit, order, after, before, cancellationToken);
         return Response.FromValue(PageableList<ThreadRun>.Create(baseResponse.Value), baseResponse.GetRawResponse());
     }
@@ -496,6 +543,8 @@ public partial class AssistantsClient
         string before = null,
         CancellationToken cancellationToken = default)
     {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AssistantsClient.GetRuns");
+        scope.Start();
         Response<InternalOpenAIPageableListOfThreadRun> baseResponse
             = await InternalGetRunsAsync(threadId, limit, order, after, before, cancellationToken).ConfigureAwait(false);
         return Response.FromValue(PageableList<ThreadRun>.Create(baseResponse.Value), baseResponse.GetRawResponse());
@@ -522,14 +571,16 @@ public partial class AssistantsClient
         request.Headers.Add(HttpHeader.Common.JsonContentType);
         var uri = new RawRequestUriBuilder();
         uri.Reset(_endpoint);
-        uri.AppendPath(operationPath, escape: false);
         if (_isConfiguredForAzure)
         {
-            uri.AppendQuery("api-version", _apiVersion, true);
-            throw new NotImplementedException();
+            uri.AppendPath("openai");
+            uri.AppendPath(operationPath, escape: false);
+            // uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("api-version", "2024-01-01-preview", true);
         }
         else
         {
+            uri.AppendPath(operationPath, escape: false);
             request.Headers.Add("OpenAI-Beta", "assistants=v1");
         }
         foreach ((string key, string value) in queryParameters)
