@@ -331,7 +331,7 @@ namespace Azure.AI.OpenAI
         public string DeploymentName { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionDefinition FunctionCall { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.OpenAI.FunctionDefinition> Functions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.FunctionDefinition> Functions { get { throw null; } }
         public int? MaxTokens { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatRequestMessage> Messages { get { throw null; } }
         public float? NucleusSamplingFactor { get { throw null; } set { } }
