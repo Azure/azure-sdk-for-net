@@ -101,8 +101,8 @@ public abstract class PipelineTransport : PipelinePolicy
         {
             // Response buffering has been disabled for this pipeline message.
             // We'll wrap the network stream in a special stream that respects
-            // the network timeout instead of buffering it.
-
+            // the network timeout instead of buffering it, and exit the method.
+            message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
             return;
         }
 
