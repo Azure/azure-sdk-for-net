@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataExportDetails : IUtf8JsonSerializable
+    public partial class DataExportDetails : IUtf8JsonSerializable, IJsonModel<DataExportDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExportDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataExportDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataExportDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataExportDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfiguration"u8);
             writer.WriteObjectValue(TransferConfiguration);
@@ -24,11 +35,40 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("accountDetails"u8);
             writer.WriteObjectValue(AccountDetails);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataExportDetails DeserializeDataExportDetails(JsonElement element)
+        DataExportDetails IJsonModel<DataExportDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataExportDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataExportDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataExportDetails(document.RootElement, options);
+        }
+
+        internal static DataExportDetails DeserializeDataExportDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.DataBox.Models
             TransferConfiguration transferConfiguration = default;
             Optional<LogCollectionLevel> logCollectionLevel = default;
             DataAccountDetails accountDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transferConfiguration"u8))
@@ -57,8 +99,44 @@ namespace Azure.ResourceManager.DataBox.Models
                     accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataExportDetails(transferConfiguration, Optional.ToNullable(logCollectionLevel), accountDetails);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataExportDetails(transferConfiguration, Optional.ToNullable(logCollectionLevel), accountDetails, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataExportDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataExportDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataExportDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataExportDetails IPersistableModel<DataExportDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataExportDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataExportDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataExportDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataExportDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
