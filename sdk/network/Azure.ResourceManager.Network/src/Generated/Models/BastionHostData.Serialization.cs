@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -117,6 +127,7 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
+            Optional<IList<string>> zones = default;
             Optional<ETag> etag = default;
             Optional<NetworkSku> sku = default;
             Optional<ResourceIdentifier> id = default;
@@ -138,6 +149,20 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableKerberos = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -324,7 +349,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, virtualNetwork, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
+            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, virtualNetwork, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
         }
     }
 }

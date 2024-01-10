@@ -1637,6 +1637,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> The sku of this Bastion Host. </param>
         /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
@@ -1652,13 +1653,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
         /// <returns> A new <see cref="Network.BastionHostData"/> instance for mocking. </returns>
-        public static BastionHostData BastionHostData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, BastionHostSkuName? skuName = null, IEnumerable<BastionHostIPConfiguration> ipConfigurations = null, string dnsName = null, ResourceIdentifier virtualNetworkId = null, IEnumerable<BastionHostIPRule> networkAclsIPRules = null, NetworkProvisioningState? provisioningState = null, int? scaleUnits = null, bool? disableCopyPaste = null, bool? enableFileCopy = null, bool? enableIPConnect = null, bool? enableShareableLink = null, bool? enableTunneling = null, bool? enableKerberos = null)
+        public static BastionHostData BastionHostData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, IEnumerable<string> zones = null, ETag? etag = null, BastionHostSkuName? skuName = null, IEnumerable<BastionHostIPConfiguration> ipConfigurations = null, string dnsName = null, ResourceIdentifier virtualNetworkId = null, IEnumerable<BastionHostIPRule> networkAclsIPRules = null, NetworkProvisioningState? provisioningState = null, int? scaleUnits = null, bool? disableCopyPaste = null, bool? enableFileCopy = null, bool? enableIPConnect = null, bool? enableShareableLink = null, bool? enableTunneling = null, bool? enableKerberos = null)
         {
             tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
             ipConfigurations ??= new List<BastionHostIPConfiguration>();
             networkAclsIPRules ??= new List<BastionHostIPRule>();
 
-            return new BastionHostData(id, name, resourceType, location, tags, etag, skuName != null ? new NetworkSku(skuName) : null, ipConfigurations?.ToList(), dnsName, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, networkAclsIPRules != null ? new BastionHostPropertiesFormatNetworkAcls(networkAclsIPRules?.ToList()) : null, provisioningState, scaleUnits, disableCopyPaste, enableFileCopy, enableIPConnect, enableShareableLink, enableTunneling, enableKerberos);
+            return new BastionHostData(id, name, resourceType, location, tags, zones?.ToList(), etag, skuName != null ? new NetworkSku(skuName) : null, ipConfigurations?.ToList(), dnsName, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, networkAclsIPRules != null ? new BastionHostPropertiesFormatNetworkAcls(networkAclsIPRules?.ToList()) : null, provisioningState, scaleUnits, disableCopyPaste, enableFileCopy, enableIPConnect, enableShareableLink, enableTunneling, enableKerberos);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BastionHostIPConfiguration"/>. </summary>
