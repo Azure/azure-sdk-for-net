@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     public partial class WhatsAppMessageTemplateBindingsButton : IUtf8JsonSerializable
     {
@@ -18,7 +18,7 @@ namespace Azure.Communication.Messages
             if (Optional.IsDefined(SubType))
             {
                 writer.WritePropertyName("subType"u8);
-                writer.WriteStringValue(SubType.Value.ToString());
+                writer.WriteStringValue(SubType);
             }
             writer.WritePropertyName("refValue"u8);
             writer.WriteStringValue(RefValue);

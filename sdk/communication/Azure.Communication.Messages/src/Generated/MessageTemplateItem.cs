@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication.Messages.Models.Channels;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -21,7 +22,7 @@ namespace Azure.Communication.Messages
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
-        protected MessageTemplateItem(string language, MessageTemplateItemStatus status)
+        protected MessageTemplateItem(string language, MessageTemplateStatus status)
         {
             Argument.AssertNotNull(language, nameof(language));
 
@@ -34,7 +35,7 @@ namespace Azure.Communication.Messages
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
-        internal MessageTemplateItem(string kind, string name, string language, MessageTemplateItemStatus status)
+        internal MessageTemplateItem(string kind, string name, string language, MessageTemplateStatus status)
         {
             Kind = kind;
             Name = name;
@@ -49,6 +50,6 @@ namespace Azure.Communication.Messages
         /// <summary> The template's language. </summary>
         public string Language { get; }
         /// <summary> The aggregated template status. </summary>
-        public MessageTemplateItemStatus Status { get; }
+        public MessageTemplateStatus Status { get; }
     }
 }

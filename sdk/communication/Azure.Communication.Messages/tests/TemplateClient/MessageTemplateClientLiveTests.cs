@@ -3,6 +3,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Communication.Messages.Models.Channels;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ namespace Azure.Communication.Messages.Tests
             string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
 
             // Act
-            AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetMessageTemplateItemsAsync(channelRegistrationId);
+            AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
             // Assert
             Assert.IsNotNull(templates);
@@ -46,7 +47,7 @@ namespace Azure.Communication.Messages.Tests
             string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
 
             // Act
-            AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetMessageTemplateItemsAsync(channelRegistrationId);
+            AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
             // Assert
             Assert.IsNotNull(templates);

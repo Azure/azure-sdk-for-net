@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Communication.Messages.Models.Channels;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -34,7 +35,7 @@ namespace Azure.Communication.Messages.Tests
             var channelId = Guid.NewGuid().ToString();
 
             //act
-            AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetMessageTemplateItemsAsync(channelId);
+            AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelId);
 
             //assert
             await foreach (MessageTemplateItem template in templates)
@@ -53,7 +54,7 @@ namespace Azure.Communication.Messages.Tests
             MessageTemplateClient messageTemplateClient = CreateMockMessageTemplateClient();
 
             //act & assert
-            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetMessageTemplateItemsAsync(null));
+            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync(null));
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace Azure.Communication.Messages.Tests
             try
             {
                 //act
-                messageTemplateClient.GetMessageTemplateItemsAsync("invalidChannelRegistrationId");
+                messageTemplateClient.GetTemplatesAsync("invalidChannelRegistrationId");
             }
             catch (RequestFailedException requestFailedException)
             {

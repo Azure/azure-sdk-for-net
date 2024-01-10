@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {

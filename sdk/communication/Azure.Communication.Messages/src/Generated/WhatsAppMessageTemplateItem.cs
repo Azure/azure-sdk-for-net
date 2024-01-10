@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
+using Azure.Communication.Messages;
 using Azure.Core;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The WhatsApp-specific template response contract. </summary>
     public partial class WhatsAppMessageTemplateItem : MessageTemplateItem
@@ -17,7 +18,7 @@ namespace Azure.Communication.Messages
         /// <param name="language"> The template's language. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
-        internal WhatsAppMessageTemplateItem(string language, MessageTemplateItemStatus status) : base(language, status)
+        internal WhatsAppMessageTemplateItem(string language, MessageTemplateStatus status) : base(language, status)
         {
             Argument.AssertNotNull(language, nameof(language));
 
@@ -34,7 +35,7 @@ namespace Azure.Communication.Messages
         /// This is the payload returned from WhatsApp
         /// API.
         /// </param>
-        internal WhatsAppMessageTemplateItem(string kind, string name, string language, MessageTemplateItemStatus status, BinaryData content) : base(kind, name, language, status)
+        internal WhatsAppMessageTemplateItem(string kind, string name, string language, MessageTemplateStatus status, BinaryData content) : base(kind, name, language, status)
         {
             Content = content;
         }

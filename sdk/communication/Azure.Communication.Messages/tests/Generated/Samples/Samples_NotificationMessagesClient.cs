@@ -20,7 +20,7 @@ namespace Azure.Communication.Messages.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_NotificationMessagesClient_Send_ShortVersion()
+        public void Example_NotificationMessagesClient_SendMessage_ShortVersion()
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
@@ -34,7 +34,7 @@ namespace Azure.Communication.Messages.Samples
 "<to>"
             },
             });
-            Response response = client.Send(content);
+            Response response = client.SendMessage(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
@@ -43,7 +43,7 @@ namespace Azure.Communication.Messages.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_NotificationMessagesClient_Send_ShortVersion_Async()
+        public async Task Example_NotificationMessagesClient_SendMessage_ShortVersion_Async()
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
@@ -57,7 +57,7 @@ namespace Azure.Communication.Messages.Samples
 "<to>"
             },
             });
-            Response response = await client.SendAsync(content);
+            Response response = await client.SendMessageAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
@@ -66,27 +66,27 @@ namespace Azure.Communication.Messages.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_NotificationMessagesClient_Send_ShortVersion_Convenience()
+        public void Example_NotificationMessagesClient_SendMessage_ShortVersion_Convenience()
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
-            Response<SendMessageResult> response = client.Send(notificationContent);
+            Response<SendMessageResult> response = client.SendMessage(notificationContent);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_NotificationMessagesClient_Send_ShortVersion_Convenience_Async()
+        public async Task Example_NotificationMessagesClient_SendMessage_ShortVersion_Convenience_Async()
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
-            Response<SendMessageResult> response = await client.SendAsync(notificationContent);
+            Response<SendMessageResult> response = await client.SendMessageAsync(notificationContent);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_NotificationMessagesClient_Send_AllParameters()
+        public void Example_NotificationMessagesClient_SendMessage_AllParameters()
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
@@ -100,7 +100,7 @@ namespace Azure.Communication.Messages.Samples
 "<to>"
             },
             });
-            Response response = client.Send(content);
+            Response response = client.SendMessage(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
@@ -109,7 +109,7 @@ namespace Azure.Communication.Messages.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_NotificationMessagesClient_Send_AllParameters_Async()
+        public async Task Example_NotificationMessagesClient_SendMessage_AllParameters_Async()
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
@@ -123,7 +123,7 @@ namespace Azure.Communication.Messages.Samples
 "<to>"
             },
             });
-            Response response = await client.SendAsync(content);
+            Response response = await client.SendMessageAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
@@ -132,22 +132,22 @@ namespace Azure.Communication.Messages.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_NotificationMessagesClient_Send_AllParameters_Convenience()
+        public void Example_NotificationMessagesClient_SendMessage_AllParameters_Convenience()
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
-            Response<SendMessageResult> response = client.Send(notificationContent);
+            Response<SendMessageResult> response = client.SendMessage(notificationContent);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_NotificationMessagesClient_Send_AllParameters_Convenience_Async()
+        public async Task Example_NotificationMessagesClient_SendMessage_AllParameters_Convenience_Async()
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
-            Response<SendMessageResult> response = await client.SendAsync(notificationContent);
+            Response<SendMessageResult> response = await client.SendMessageAsync(notificationContent);
         }
     }
 }
