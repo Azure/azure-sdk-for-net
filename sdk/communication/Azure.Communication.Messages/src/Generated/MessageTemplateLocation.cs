@@ -13,21 +13,6 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's location value information. </summary>
     public partial class MessageTemplateLocation : MessageTemplateValue
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        /// <param name="name"> Name of the Template value. </param>
-        /// <param name="locationName"> The [Optional] name of the location. </param>
-        /// <param name="address"> The [Optional] address of the location. </param>
-        /// <param name="latitudeInternal"> The latitude of the location. </param>
-        /// <param name="longitudeInternal"> The longitude of the location. </param>
-        internal MessageTemplateLocation(string kind, string name, string locationName, string address, double? latitudeInternal, double? longitudeInternal) : base(kind, name)
-        {
-            LocationName = locationName;
-            Address = address;
-            LatitudeInternal = latitudeInternal;
-            LongitudeInternal = longitudeInternal;
-        }
-
         /// <summary> The [Optional] name of the location. </summary>
         public string LocationName { get; set; }
         /// <summary> The [Optional] address of the location. </summary>

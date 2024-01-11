@@ -18,15 +18,26 @@ namespace Azure.Communication.Messages
 
         /// <summary> The latitude of the location. </summary>
         [CodeGenMember("Latitude")]
-        internal double? LatitudeInternal { get; set; }
+        internal double? LatitudeInternal {
+            get
+            {
+                return Position.Latitude;
+            }
+        }
 
         /// <summary> The longitude of the location. </summary>
         [CodeGenMember("Longitude")]
-        internal double? LongitudeInternal { get; set; }
+        internal double? LongitudeInternal
+        {
+            get
+            {
+                return Position.Longitude;
+            }
+        }
 
 
         /// <summary> The geo position of the location. </summary>
-        public GeoPosition Position {  get; set; }
+        public GeoPosition Position { get; set; } = new GeoPosition();
 
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
@@ -36,9 +47,21 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(name, nameof(name));
             Kind = "location";
-            LatitudeInternal = Position.Latitude;
-            LongitudeInternal = Position.Longitude;
         }
 
+
+        // This is a direct copy of the auto-rest generated constructor but we want to make the internal Latitude and Longitude read only
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateLocation"/>. </summary>
+        /// <param name="kind"> Discriminator. </param>
+        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="locationName"> The [Optional] name of the location. </param>
+        /// <param name="address"> The [Optional] address of the location. </param>
+        /// <param name="latitudeInternal"> The latitude of the location. </param>
+        /// <param name="longitudeInternal"> The longitude of the location. </param>
+        internal MessageTemplateLocation(string kind, string name, string locationName, string address, double? latitudeInternal, double? longitudeInternal) : base(kind, name)
+        {
+            LocationName = locationName;
+            Address = address;
+        }
     }
 }
