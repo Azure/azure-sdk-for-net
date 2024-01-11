@@ -40,6 +40,17 @@ namespace Azure.Data.SchemaRegistry
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetByIdRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/$schemaGroups/$schemas/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByIdRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -108,6 +119,20 @@ namespace Azure.Data.SchemaRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetVersionsRequestUri(string groupName, string schemaName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/$schemaGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetVersionsRequest(string groupName, string schemaName)
@@ -195,6 +220,21 @@ namespace Azure.Data.SchemaRegistry
             }
         }
 
+        internal RequestUriBuilder CreateGetSchemaVersionRequestUri(string groupName, string schemaName, int schemaVersion)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/$schemaGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(schemaVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSchemaVersionRequest(string groupName, string schemaName, int schemaVersion)
         {
             var message = _pipeline.CreateMessage();
@@ -279,6 +319,20 @@ namespace Azure.Data.SchemaRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateQueryIdByContentRequestUri(string groupName, string schemaName, ContentType contentType, Stream schemaContent)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/$schemaGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendPath(":get-id", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateQueryIdByContentRequest(string groupName, string schemaName, ContentType contentType, Stream schemaContent)
@@ -370,6 +424,19 @@ namespace Azure.Data.SchemaRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterRequestUri(string groupName, string schemaName, string contentType, Stream schemaContent)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/$schemaGroups/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendPath("/schemas/", false);
+            uri.AppendPath(schemaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterRequest(string groupName, string schemaName, string contentType, Stream schemaContent)
@@ -474,6 +541,15 @@ namespace Azure.Data.SchemaRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetVersionsNextPageRequestUri(string nextLink, string groupName, string schemaName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetVersionsNextPageRequest(string nextLink, string groupName, string schemaName)

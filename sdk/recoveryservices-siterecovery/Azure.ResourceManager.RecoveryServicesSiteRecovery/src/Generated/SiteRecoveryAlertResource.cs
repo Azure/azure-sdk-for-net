@@ -206,7 +206,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryAlertResource>(Response.FromValue(new SiteRecoveryAlertResource(Client, response), response.GetRawResponse()));
+                var uri = _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryAlertResource>(Response.FromValue(new SiteRecoveryAlertResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -252,7 +254,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryAlertReplicationAlertSettingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryAlertResource>(Response.FromValue(new SiteRecoveryAlertResource(Client, response), response.GetRawResponse()));
+                var uri = _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryAlertResource>(Response.FromValue(new SiteRecoveryAlertResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

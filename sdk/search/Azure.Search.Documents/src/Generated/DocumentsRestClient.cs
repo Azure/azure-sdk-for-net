@@ -47,6 +47,18 @@ namespace Azure.Search.Documents
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCountRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/indexes('", false);
+            uri.AppendRaw(_indexName, true);
+            uri.AppendRaw("')", false);
+            uri.AppendPath("/docs/$count", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCountRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +114,18 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchPostRequestUri(SearchOptions searchRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/indexes('", false);
+            uri.AppendRaw(_indexName, true);
+            uri.AppendRaw("')", false);
+            uri.AppendPath("/docs/search.post.search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSearchPostRequest(SearchOptions searchRequest)
@@ -177,6 +201,24 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string key, IEnumerable<string> selectedFields)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/indexes('", false);
+            uri.AppendRaw(_indexName, true);
+            uri.AppendRaw("')", false);
+            uri.AppendPath("/docs('", false);
+            uri.AppendPath(key, true);
+            uri.AppendPath("')", false);
+            if (selectedFields != null && Optional.IsCollectionDefined(selectedFields))
+            {
+                uri.AppendQueryDelimited("$select", selectedFields, ",", true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string key, IEnumerable<string> selectedFields)
@@ -282,6 +324,18 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateSuggestPostRequestUri(SuggestOptions suggestRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/indexes('", false);
+            uri.AppendRaw(_indexName, true);
+            uri.AppendRaw("')", false);
+            uri.AppendPath("/docs/search.post.suggest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSuggestPostRequest(SuggestOptions suggestRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -355,6 +409,18 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateIndexRequestUri(IndexBatch batch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/indexes('", false);
+            uri.AppendRaw(_indexName, true);
+            uri.AppendRaw("')", false);
+            uri.AppendPath("/docs/search.index", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateIndexRequest(IndexBatch batch)
@@ -432,6 +498,18 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAutocompletePostRequestUri(AutocompleteOptions autocompleteRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/indexes('", false);
+            uri.AppendRaw(_indexName, true);
+            uri.AppendRaw("')", false);
+            uri.AppendPath("/docs/search.post.autocomplete", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAutocompletePostRequest(AutocompleteOptions autocompleteRequest)

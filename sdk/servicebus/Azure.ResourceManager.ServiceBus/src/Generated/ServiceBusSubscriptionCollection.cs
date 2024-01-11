@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = await _serviceBusSubscriptionSubscriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, subscriptionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<ServiceBusSubscriptionResource>(Response.FromValue(new ServiceBusSubscriptionResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusSubscriptionSubscriptionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, subscriptionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ServiceBusArmOperation<ServiceBusSubscriptionResource>(Response.FromValue(new ServiceBusSubscriptionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.ServiceBus
             try
             {
                 var response = _serviceBusSubscriptionSubscriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, subscriptionName, data, cancellationToken);
-                var operation = new ServiceBusArmOperation<ServiceBusSubscriptionResource>(Response.FromValue(new ServiceBusSubscriptionResource(Client, response), response.GetRawResponse()));
+                var uri = _serviceBusSubscriptionSubscriptionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, subscriptionName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ServiceBusArmOperation<ServiceBusSubscriptionResource>(Response.FromValue(new ServiceBusSubscriptionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

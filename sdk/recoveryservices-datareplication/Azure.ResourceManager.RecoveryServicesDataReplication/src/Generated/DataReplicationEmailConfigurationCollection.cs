@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             try
             {
                 var response = await _dataReplicationEmailConfigurationEmailConfigurationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, emailConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationEmailConfigurationResource>(Response.FromValue(new DataReplicationEmailConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _dataReplicationEmailConfigurationEmailConfigurationRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, emailConfigurationName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationEmailConfigurationResource>(Response.FromValue(new DataReplicationEmailConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             try
             {
                 var response = _dataReplicationEmailConfigurationEmailConfigurationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, emailConfigurationName, data, cancellationToken);
-                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationEmailConfigurationResource>(Response.FromValue(new DataReplicationEmailConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _dataReplicationEmailConfigurationEmailConfigurationRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, emailConfigurationName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationEmailConfigurationResource>(Response.FromValue(new DataReplicationEmailConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

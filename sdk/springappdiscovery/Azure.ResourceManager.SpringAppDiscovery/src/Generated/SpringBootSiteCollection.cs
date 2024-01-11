@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             try
             {
                 var response = await _springBootSitespringbootsitesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, springbootsitesName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SpringAppDiscoveryArmOperation<SpringBootSiteResource>(Response.FromValue(new SpringBootSiteResource(Client, response), response.GetRawResponse()));
+                var uri = _springBootSitespringbootsitesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, springbootsitesName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SpringAppDiscoveryArmOperation<SpringBootSiteResource>(Response.FromValue(new SpringBootSiteResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             try
             {
                 var response = _springBootSitespringbootsitesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, springbootsitesName, data, cancellationToken);
-                var operation = new SpringAppDiscoveryArmOperation<SpringBootSiteResource>(Response.FromValue(new SpringBootSiteResource(Client, response), response.GetRawResponse()));
+                var uri = _springBootSitespringbootsitesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, springbootsitesName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SpringAppDiscoveryArmOperation<SpringBootSiteResource>(Response.FromValue(new SpringBootSiteResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

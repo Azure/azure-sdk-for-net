@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.ServiceNetworking
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByTrafficControllerRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
+            uri.AppendPath(trafficControllerName, true);
+            uri.AppendPath("/frontends", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByTrafficControllerRequest(string subscriptionId, string resourceGroupName, string trafficControllerName)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +129,22 @@ namespace Azure.ResourceManager.ServiceNetworking
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
+            uri.AppendPath(trafficControllerName, true);
+            uri.AppendPath("/frontends/", false);
+            uri.AppendPath(frontendName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
@@ -204,6 +235,22 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
+            uri.AppendPath(trafficControllerName, true);
+            uri.AppendPath("/frontends/", false);
+            uri.AppendPath(frontendName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendData data)
         {
             var message = _pipeline.CreateMessage();
@@ -286,6 +333,22 @@ namespace Azure.ResourceManager.ServiceNetworking
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
+            uri.AppendPath(trafficControllerName, true);
+            uri.AppendPath("/frontends/", false);
+            uri.AppendPath(frontendName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendPatch patch)
@@ -380,6 +443,22 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
+            uri.AppendPath(trafficControllerName, true);
+            uri.AppendPath("/frontends/", false);
+            uri.AppendPath(frontendName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
         {
             var message = _pipeline.CreateMessage();
@@ -456,6 +535,14 @@ namespace Azure.ResourceManager.ServiceNetworking
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTrafficControllerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string trafficControllerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByTrafficControllerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string trafficControllerName)
