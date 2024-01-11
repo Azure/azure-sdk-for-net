@@ -24,7 +24,7 @@ public class OpenAIClient
         _endpoint = endpoint;
         _credential = credential;
 
-        var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderPolicy(_credential, "Authorization", "Bearer");
+        var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(_credential);
         _pipeline = ClientPipeline.Create(options, authenticationPolicy);
     }
 

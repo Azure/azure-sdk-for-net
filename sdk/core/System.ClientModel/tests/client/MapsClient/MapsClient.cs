@@ -27,7 +27,7 @@ public class MapsClient
         _credential = credential;
         _apiVersion = options.Version;
 
-        var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderPolicy(credential, "subscription-key");
+        var authenticationPolicy = ApiKeyAuthenticationPolicy.CreateHeaderApiKeyPolicy(credential, "subscription-key");
         _pipeline = ClientPipeline.Create(options, authenticationPolicy);
     }
 
