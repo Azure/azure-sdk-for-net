@@ -11,7 +11,7 @@ namespace Azure.Core.Pipeline
     {
         private class AzureCoreHttpPipelineTransport : HttpClientPipelineTransport
         {
-            public AzureCoreHttpPipelineTransport(HttpClient client) : base(client, default)
+            public AzureCoreHttpPipelineTransport(HttpClient client) : base(client)
             {
             }
 

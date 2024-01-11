@@ -92,7 +92,7 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout
         {
-            get => PipelineTransport.TryGetNetworkTimeout(this, out TimeSpan timeout) ? timeout : null;
+            get => PipelineTransport.GetNetworkTimeout(this);
             set
             {
                 if (value.HasValue)

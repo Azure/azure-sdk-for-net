@@ -15,11 +15,12 @@ public sealed partial class ClientPipeline
     private readonly int _perCallIndex;
     private readonly int _perTryIndex;
     private readonly int _beforeTransportIndex;
+    private readonly TimeSpan _networkTimeout;
 
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex, int beforeTransportIndex)
+    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, TimeSpan networkTimeout, int perCallIndex, int perTryIndex, int beforeTransportIndex)
     {
         if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
 
@@ -34,7 +35,29 @@ public sealed partial class ClientPipeline
         _perCallIndex = perCallIndex;
         _perTryIndex = perTryIndex;
         _beforeTransportIndex = beforeTransportIndex;
+
+        _networkTimeout = networkTimeout;
     }
+
+    public PipelineMessage CreateMessage() => _transport.CreateMessage();
+
+    public void Send(PipelineMessage message)
+    {
+        message.NetworkTimeout = _networkTimeout;
+
+        IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
+        policies[0].Process(message, policies, 0);
+    }
+
+    public async ValueTask SendAsync(PipelineMessage message)
+    {
+        message.NetworkTimeout = _networkTimeout;
+
+        IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
+        await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
+    }
+
+    #region Factory methods for Pipeline
 
     public static ClientPipeline Create()
         => Create(ClientPipelineOptions.Default,
@@ -131,26 +154,13 @@ public sealed partial class ClientPipeline
         else
         {
             // Add default transport.
-            policies[index++] = new HttpClientPipelineTransport(networkTimeout);
-            //policies[index++] = HttpClientPipelineTransport.Shared;
+            policies[index++] = HttpClientPipelineTransport.Shared;
         }
 
-        return new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex); ;
+        return new ClientPipeline(policies, networkTimeout, perCallIndex, perTryIndex, beforeTransportIndex); ;
     }
 
-    public PipelineMessage CreateMessage() => _transport.CreateMessage();
-
-    public void Send(PipelineMessage message)
-    {
-        IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
-        policies[0].Process(message, policies, 0);
-    }
-
-    public async ValueTask SendAsync(PipelineMessage message)
-    {
-        IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
-        await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
-    }
+    #endregion
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
     {

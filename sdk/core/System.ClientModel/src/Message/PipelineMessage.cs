@@ -55,6 +55,8 @@ public class PipelineMessage : IDisposable
 
     internal int RetryCount { get; set; }
 
+    internal TimeSpan NetworkTimeout { get; set; }
+
     #endregion
 
     #region Per-request pipeline

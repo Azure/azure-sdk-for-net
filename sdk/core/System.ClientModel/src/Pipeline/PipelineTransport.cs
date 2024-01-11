@@ -12,14 +12,6 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelineTransport : PipelinePolicy
 {
-    private readonly TimeSpan _networkTimeout;
-
-    // TODO: Solve where client-option network timeout lives.
-    public PipelineTransport(TimeSpan? networkTimeout = default)
-    {
-        _networkTimeout = networkTimeout ?? ClientPipeline.DefaultNetworkTimeout;
-    }
-
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
@@ -41,17 +33,7 @@ public abstract class PipelineTransport : PipelinePolicy
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-        // Get the network timeout for this particular invocation of the pipeline.
-        // We either use the default that the policy was constructed with at
-        // pipeline-creation time, or we get an override value from the message that
-        // we use for the duration of this invocation only.
-        TimeSpan invocationNetworkTimeout = _networkTimeout;
-        if (TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
-        {
-            invocationNetworkTimeout = networkTimeoutOverride;
-        }
-
-        cts.CancelAfter(invocationNetworkTimeout);
+        cts.CancelAfter(message.NetworkTimeout);
         try
         {
             message.CancellationToken = cts.Token;
@@ -66,7 +48,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (OperationCanceledException ex)
         {
-            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, invocationNetworkTimeout);
+            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, message.NetworkTimeout);
             throw;
         }
         finally
@@ -83,7 +65,7 @@ public abstract class PipelineTransport : PipelinePolicy
 
         // Set meta-data on the response
         message.Response.SetIsError(ClassifyResponse(message));
-        message.Response!.NetworkTimeout = invocationNetworkTimeout;
+        message.Response!.NetworkTimeout = message.NetworkTimeout;
 
         // The remainder of this method does response buffering and returns
         // early as various checks are completed.
@@ -102,13 +84,13 @@ public abstract class PipelineTransport : PipelinePolicy
             // Response buffering has been disabled for this pipeline message.
             // We'll wrap the network stream in a special stream that respects
             // the network timeout instead of buffering it, and exit the method.
-            message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
+            message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, message.NetworkTimeout);
             return;
         }
 
         // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
         // register callback to dispose the stream on cancellation.
-        if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
+        if (message.NetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
         {
             cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
         }
@@ -117,11 +99,11 @@ public abstract class PipelineTransport : PipelinePolicy
         {
             if (async)
             {
-                await message.Response.BufferContentAsync(invocationNetworkTimeout, cts).ConfigureAwait(false);
+                await message.Response.BufferContentAsync(message.NetworkTimeout, cts).ConfigureAwait(false);
             }
             else
             {
-                message.Response.BufferContent(invocationNetworkTimeout, cts);
+                message.Response.BufferContent(message.NetworkTimeout, cts);
             }
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
@@ -131,7 +113,7 @@ public abstract class PipelineTransport : PipelinePolicy
                       or OperationCanceledException
                       or NotSupportedException)
         {
-            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, invocationNetworkTimeout);
+            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, message.NetworkTimeout);
             throw;
         }
     }
@@ -228,22 +210,9 @@ public abstract class PipelineTransport : PipelinePolicy
     #region Network Timeout Override
 
     public static void SetNetworkTimeout(PipelineMessage message, TimeSpan networkTimeout)
-        => message.SetProperty(typeof(NetworkTimeoutPropertyKey), networkTimeout);
+        => message.NetworkTimeout = networkTimeout;
 
-    public static bool TryGetNetworkTimeout(PipelineMessage message, out TimeSpan networkTimeout)
-    {
-        if (message.TryGetProperty(typeof(NetworkTimeoutPropertyKey), out object? value) &&
-            value is TimeSpan timeout)
-        {
-            networkTimeout = timeout;
-            return true;
-        }
-
-        networkTimeout = default;
-        return false;
-    }
-
-    private struct NetworkTimeoutPropertyKey { }
-
+    public static TimeSpan GetNetworkTimeout(PipelineMessage message)
+        => message.NetworkTimeout;
     #endregion
 }

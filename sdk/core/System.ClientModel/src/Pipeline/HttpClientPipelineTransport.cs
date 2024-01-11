@@ -14,21 +14,20 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
     /// </summary>
-    //internal static readonly HttpClientPipelineTransport Shared = new();
+    internal static readonly HttpClientPipelineTransport Shared = new();
 
     private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
     private bool _disposed;
 
-    public HttpClientPipelineTransport(TimeSpan? networkTimeout = default) : this(CreateDefaultClient(), networkTimeout)
+    public HttpClientPipelineTransport() : this(CreateDefaultClient())
     {
         // We will dispose the httpClient.
         _ownsClient = true;
     }
 
-    public HttpClientPipelineTransport(HttpClient client, TimeSpan? networkTimeout = default)
-        : base(networkTimeout)
+    public HttpClientPipelineTransport(HttpClient client)
     {
         Argument.AssertNotNull(client, nameof(client));
 
@@ -200,8 +199,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     {
         if (disposing && !_disposed)
         {
-            //if (this != Shared && _ownsClient)
-            if (_ownsClient)
+            if (this != Shared && _ownsClient)
             {
                 HttpClient httpClient = _httpClient;
                 httpClient?.Dispose();
