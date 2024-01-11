@@ -57,7 +57,7 @@ namespace Azure.Communication.Messages.Tests
 
             var ThreeDays = new MessageTemplateText("threeDays", "3");
             WhatsAppMessageTemplateBindings bindings = new();
-            bindings.Body.Add(new(ThreeDays.Name));
+            bindings.Body.Add(ThreeDays.Name);
 
             MessageTemplate template = new("sample_shipping_confirmation", "en_us")
             {
@@ -86,8 +86,8 @@ namespace Azure.Communication.Messages.Tests
             var product = new MessageTemplateText("product", "Microsoft Office");
 
             WhatsAppMessageTemplateBindings bindings = new();
-            bindings.Header.Add(new(image.Name));
-            bindings.Body.Add(new(product.Name));
+            bindings.Header.Add(image.Name);
+            bindings.Body.Add(product.Name);
 
             MessageTemplate template = new("sample_purchase_feedback", "en_us");
             template.Values.Add(image);
@@ -114,10 +114,14 @@ namespace Azure.Communication.Messages.Tests
             var yes = new MessageTemplateQuickAction("yes") { Payload = "Yay!" };
             var no = new MessageTemplateQuickAction("no") { Payload = "Nay!" };
 
-            WhatsAppMessageTemplateBindings bindings = new();
-            bindings.Body.Add(new(name.Name));
-            bindings.Buttons.Add(new(yes.Name) { SubType = WhatsAppMessageButtonSubType.QuickReply.ToString() });
-            bindings.Buttons.Add(new(no.Name) { SubType = WhatsAppMessageButtonSubType.QuickReply.ToString() });
+            WhatsAppMessageTemplateBindings bindings = new()
+            {
+                Body = new[] { name.Name },
+                Buttons = new[] {
+                    new KeyValuePair<string, WhatsAppMessageButtonSubType>(yes.Name, WhatsAppMessageButtonSubType.QuickReply),
+                    new KeyValuePair<string, WhatsAppMessageButtonSubType>(no.Name, WhatsAppMessageButtonSubType.QuickReply),
+                }
+            };
 
             MessageTemplate template = new("sample_issue_resolution", "en_us")
             {
@@ -149,9 +153,9 @@ namespace Azure.Communication.Messages.Tests
             var video = new MessageTemplateVideo("video", new Uri(VideoUrl));
 
             WhatsAppMessageTemplateBindings bindings = new();
-            bindings.Header.Add(new(video.Name));
-            bindings.Body.Add(new(venue.Name));
-            bindings.Body.Add(new(time.Name));
+            bindings.Header.Add(video.Name);
+            bindings.Body.Add(venue.Name);
+            bindings.Body.Add(time.Name);
 
             MessageTemplate template = new("sample_happy_hour_announcement", "en_us");
             template.Values.Add(venue);
@@ -182,10 +186,10 @@ namespace Azure.Communication.Messages.Tests
             var date = new MessageTemplateText("date", "July 1st, 2023");
 
             WhatsAppMessageTemplateBindings bindings = new();
-            bindings.Header.Add(new(document.Name));
-            bindings.Body.Add(new(firstName.Name));
-            bindings.Body.Add(new(lastName.Name));
-            bindings.Body.Add(new(date.Name));
+            bindings.Header.Add(document.Name);
+            bindings.Body.Add(firstName.Name);
+            bindings.Body.Add(lastName.Name);
+            bindings.Body.Add(date.Name);
 
             MessageTemplate template = new("sample_flight_confirmation", "en_us");
             template.Values.Add(document);
@@ -218,11 +222,11 @@ namespace Azure.Communication.Messages.Tests
             var seats = new MessageTemplateText("seats", "Seat 1A");
 
             WhatsAppMessageTemplateBindings bindings = new();
-            bindings.Header.Add(new(image.Name));
-            bindings.Body.Add(new(title.Name));
-            bindings.Body.Add(new(time.Name));
-            bindings.Body.Add(new(venue.Name));
-            bindings.Body.Add(new(seats.Name));
+            bindings.Header.Add(image.Name);
+            bindings.Body.Add(title.Name);
+            bindings.Body.Add(time.Name);
+            bindings.Body.Add(venue.Name);
+            bindings.Body.Add(seats.Name);
 
             MessageTemplate template = new("sample_movie_ticket_confirmation", "en_us");
             template.Values.Add(image);
