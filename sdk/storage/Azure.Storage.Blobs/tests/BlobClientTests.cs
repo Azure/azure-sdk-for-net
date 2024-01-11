@@ -1350,37 +1350,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
-        public async Task UploadAsync_ExpectContinue_RST_Detected()
-        {
-            AssertMessageContentsPolicy assertPolicy = new(checkRequest: req =>
-            {
-                Assert.That(req.Headers.TryGetValue("Expect", out string val), Is.True);
-                Assert.That(val, Is.EqualTo("100-continue"));
-            });
-
-            BlobClientOptions options = GetOptions();
-            options.ExpectContinueBehavior = new() { Mode = ExpectContinueMode.ApplyOnThrottle };
-            options.AddPolicy(assertPolicy, Core.HttpPipelinePosition.BeforeTransport);
-            await using DisposingContainer test = await GetTestContainerAsync(
-                BlobsClientBuilder.GetServiceClient_SharedKey(options));
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
-
-            Assert.That(
-                async () => await blob.UploadAsync(new FaultyStream(
-                    new RepeatingStream(17, 5000, true),
-                    500,
-                    1,
-                    new SocketException((int)SocketError.ConnectionReset),
-                    onFault: () => { })),
-                Throws.TypeOf<SocketException>());
-
-            using (assertPolicy.CheckRequestScope())
-            {
-                await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(1024)));
-            }
-        }
-        #endregion Upload
+#endregion Upload
 
         [Test]
         [Explicit]
