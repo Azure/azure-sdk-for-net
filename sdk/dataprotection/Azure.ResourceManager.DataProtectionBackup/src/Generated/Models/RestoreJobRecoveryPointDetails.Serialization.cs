@@ -6,21 +6,78 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreJobRecoveryPointDetails
+    public partial class RestoreJobRecoveryPointDetails : IUtf8JsonSerializable, IJsonModel<RestoreJobRecoveryPointDetails>
     {
-        internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreJobRecoveryPointDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RestoreJobRecoveryPointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RestoreJobRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecoveryPointId))
+            {
+                writer.WritePropertyName("recoveryPointID"u8);
+                writer.WriteStringValue(RecoveryPointId);
+            }
+            if (Optional.IsDefined(RecoverOn))
+            {
+                writer.WritePropertyName("recoveryPointTime"u8);
+                writer.WriteStringValue(RecoverOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RestoreJobRecoveryPointDetails IJsonModel<RestoreJobRecoveryPointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestoreJobRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreJobRecoveryPointDetails(document.RootElement, options);
+        }
+
+        internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> recoveryPointId = default;
             Optional<DateTimeOffset> recoveryPointTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointID"u8))
@@ -37,8 +94,44 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     recoveryPointTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RestoreJobRecoveryPointDetails(recoveryPointId.Value, Optional.ToNullable(recoveryPointTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RestoreJobRecoveryPointDetails(recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RestoreJobRecoveryPointDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestoreJobRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RestoreJobRecoveryPointDetails IPersistableModel<RestoreJobRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestoreJobRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRestoreJobRecoveryPointDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RestoreJobRecoveryPointDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
