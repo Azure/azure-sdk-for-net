@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationCertificateCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationCertificateResource>(Response.FromValue(new AutomationCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _automationCertificateCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<AutomationCertificateResource>(Response.FromValue(new AutomationCertificateResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationCertificateCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationCertificateResource>(Response.FromValue(new AutomationCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _automationCertificateCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<AutomationCertificateResource>(Response.FromValue(new AutomationCertificateResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

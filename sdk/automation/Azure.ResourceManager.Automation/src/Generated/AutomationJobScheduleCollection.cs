@@ -89,7 +89,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationJobScheduleJobScheduleRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobScheduleId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationJobScheduleResource>(Response.FromValue(new AutomationJobScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _automationJobScheduleJobScheduleRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobScheduleId, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<AutomationJobScheduleResource>(Response.FromValue(new AutomationJobScheduleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,7 +138,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationJobScheduleJobScheduleRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobScheduleId, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationJobScheduleResource>(Response.FromValue(new AutomationJobScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _automationJobScheduleJobScheduleRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobScheduleId, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<AutomationJobScheduleResource>(Response.FromValue(new AutomationJobScheduleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

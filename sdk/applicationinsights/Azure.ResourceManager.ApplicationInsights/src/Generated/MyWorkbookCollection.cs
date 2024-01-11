@@ -92,7 +92,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = await _myWorkbookRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, sourceId, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationInsightsArmOperation<MyWorkbookResource>(Response.FromValue(new MyWorkbookResource(Client, response), response.GetRawResponse()));
+                var uri = _myWorkbookRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, sourceId);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApplicationInsightsArmOperation<MyWorkbookResource>(Response.FromValue(new MyWorkbookResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,7 +144,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = _myWorkbookRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, sourceId, cancellationToken);
-                var operation = new ApplicationInsightsArmOperation<MyWorkbookResource>(Response.FromValue(new MyWorkbookResource(Client, response), response.GetRawResponse()));
+                var uri = _myWorkbookRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, sourceId);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApplicationInsightsArmOperation<MyWorkbookResource>(Response.FromValue(new MyWorkbookResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

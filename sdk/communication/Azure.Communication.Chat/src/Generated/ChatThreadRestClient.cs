@@ -41,6 +41,25 @@ namespace Azure.Communication.Chat
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateListChatReadReceiptsRequestUri(string chatThreadId, int? maxPageSize, int? skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/readReceipts", false);
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListChatReadReceiptsRequest(string chatThreadId, int? maxPageSize, int? skip)
         {
             var message = _pipeline.CreateMessage();
@@ -123,6 +142,17 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateSendChatReadReceiptRequestUri(string chatThreadId, string chatMessageId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/readReceipts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSendChatReadReceiptRequest(string chatThreadId, string chatMessageId)
         {
             var message = _pipeline.CreateMessage();
@@ -196,6 +226,17 @@ namespace Azure.Communication.Chat
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSendChatMessageRequestUri(string chatThreadId, string content, string senderDisplayName, ChatMessageType? type, IDictionary<string, string> metadata)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/messages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSendChatMessageRequest(string chatThreadId, string content, string senderDisplayName, ChatMessageType? type, IDictionary<string, string> metadata)
@@ -301,6 +342,25 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateListChatMessagesRequestUri(string chatThreadId, int? maxPageSize, DateTimeOffset? startTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/messages", false);
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime.Value, "O", true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListChatMessagesRequest(string chatThreadId, int? maxPageSize, DateTimeOffset? startTime)
         {
             var message = _pipeline.CreateMessage();
@@ -383,6 +443,18 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateGetChatMessageRequestUri(string chatThreadId, string chatMessageId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/messages/", false);
+            uri.AppendPath(chatMessageId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetChatMessageRequest(string chatThreadId, string chatMessageId)
         {
             var message = _pipeline.CreateMessage();
@@ -462,6 +534,18 @@ namespace Azure.Communication.Chat
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateChatMessageRequestUri(string chatThreadId, string chatMessageId, string content, IDictionary<string, string> metadata)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/messages/", false);
+            uri.AppendPath(chatMessageId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateChatMessageRequest(string chatThreadId, string chatMessageId, string content, IDictionary<string, string> metadata)
@@ -555,6 +639,18 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateDeleteChatMessageRequestUri(string chatThreadId, string chatMessageId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/messages/", false);
+            uri.AppendPath(chatMessageId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteChatMessageRequest(string chatThreadId, string chatMessageId)
         {
             var message = _pipeline.CreateMessage();
@@ -624,6 +720,25 @@ namespace Azure.Communication.Chat
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListChatParticipantsRequestUri(string chatThreadId, int? maxPageSize, int? skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/participants", false);
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListChatParticipantsRequest(string chatThreadId, int? maxPageSize, int? skip)
@@ -708,6 +823,17 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateRemoveChatParticipantRequestUri(string chatThreadId, CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/participants/:remove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRemoveChatParticipantRequest(string chatThreadId, CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
         {
             var message = _pipeline.CreateMessage();
@@ -788,6 +914,17 @@ namespace Azure.Communication.Chat
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAddChatParticipantsRequestUri(string chatThreadId, IEnumerable<ChatParticipantInternal> participants)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/participants/:add", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddChatParticipantsRequest(string chatThreadId, IEnumerable<ChatParticipantInternal> participants)
@@ -875,6 +1012,16 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateUpdateChatThreadPropertiesRequestUri(string chatThreadId, string topic)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic)
         {
             var message = _pipeline.CreateMessage();
@@ -942,6 +1089,16 @@ namespace Azure.Communication.Chat
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetChatThreadPropertiesRequestUri(string chatThreadId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetChatThreadPropertiesRequest(string chatThreadId)
@@ -1013,6 +1170,17 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateSendTypingNotificationRequestUri(string chatThreadId, string senderDisplayName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/typing", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSendTypingNotificationRequest(string chatThreadId, string senderDisplayName)
         {
             var message = _pipeline.CreateMessage();
@@ -1081,6 +1249,14 @@ namespace Azure.Communication.Chat
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListChatReadReceiptsNextPageRequestUri(string nextLink, string chatThreadId, int? maxPageSize, int? skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListChatReadReceiptsNextPageRequest(string nextLink, string chatThreadId, int? maxPageSize, int? skip)
@@ -1164,6 +1340,14 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal RequestUriBuilder CreateListChatMessagesNextPageRequestUri(string nextLink, string chatThreadId, int? maxPageSize, DateTimeOffset? startTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListChatMessagesNextPageRequest(string nextLink, string chatThreadId, int? maxPageSize, DateTimeOffset? startTime)
         {
             var message = _pipeline.CreateMessage();
@@ -1243,6 +1427,14 @@ namespace Azure.Communication.Chat
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListChatParticipantsNextPageRequestUri(string nextLink, string chatThreadId, int? maxPageSize, int? skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListChatParticipantsNextPageRequest(string nextLink, string chatThreadId, int? maxPageSize, int? skip)

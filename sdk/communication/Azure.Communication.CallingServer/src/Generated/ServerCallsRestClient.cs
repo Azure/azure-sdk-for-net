@@ -38,6 +38,16 @@ namespace Azure.Communication.CallingServer
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetRecordingPropertiesRequestUri(string recordingId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/recordings/", false);
+            uri.AppendPath(recordingId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRecordingPropertiesRequest(string recordingId)
         {
             var message = _pipeline.CreateMessage();
@@ -107,6 +117,16 @@ namespace Azure.Communication.CallingServer
             }
         }
 
+        internal RequestUriBuilder CreateStopRecordingRequestUri(string recordingId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/recordings/", false);
+            uri.AppendPath(recordingId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStopRecordingRequest(string recordingId)
         {
             var message = _pipeline.CreateMessage();
@@ -163,6 +183,17 @@ namespace Azure.Communication.CallingServer
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePauseRecordingRequestUri(string recordingId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/recordings/", false);
+            uri.AppendPath(recordingId, true);
+            uri.AppendPath(":pause", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePauseRecordingRequest(string recordingId)
@@ -222,6 +253,17 @@ namespace Azure.Communication.CallingServer
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResumeRecordingRequestUri(string recordingId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/calling/recordings/", false);
+            uri.AppendPath(recordingId, true);
+            uri.AppendPath(":resume", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResumeRecordingRequest(string recordingId)

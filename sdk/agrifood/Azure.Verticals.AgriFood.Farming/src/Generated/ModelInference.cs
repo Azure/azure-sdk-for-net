@@ -487,6 +487,16 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        internal RequestUriBuilder CreateCreateBiomassModelJobRequestUri(string jobId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/model-inference/models/microsoft-biomass/infer-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateBiomassModelJobRequest(string jobId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -504,6 +514,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetBiomassModelJobRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/model-inference/models/microsoft-biomass/infer-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBiomassModelJobRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -517,6 +537,16 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateSensorPlacementModelJobRequestUri(string jobId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/model-inference/models/microsoft-sensor-placement/infer-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateSensorPlacementModelJobRequest(string jobId, RequestContent content, RequestContext context)
@@ -536,6 +566,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSensorPlacementModelJobRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/model-inference/models/microsoft-sensor-placement/infer-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSensorPlacementModelJobRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -549,6 +589,16 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateSoilMoistureModelJobRequestUri(string jobId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/model-inference/models/microsoft-soil-moisture/infer-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateSoilMoistureModelJobRequest(string jobId, RequestContent content, RequestContext context)
@@ -566,6 +616,16 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetSoilMoistureModelJobRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/model-inference/models/microsoft-soil-moisture/infer-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSoilMoistureModelJobRequest(string jobId, RequestContext context)

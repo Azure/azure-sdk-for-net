@@ -601,6 +601,97 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        internal RequestUriBuilder CreateGetPlantTissueAnalysesByPartyIdRequestUri(string partyId, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/plant-tissue-analyses", false);
+            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
+            {
+                foreach (var param in seasonIds)
+                {
+                    uri.AppendQuery("seasonIds", param, true);
+                }
+            }
+            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
+            {
+                foreach (var param in cropIds)
+                {
+                    uri.AppendQuery("cropIds", param, true);
+                }
+            }
+            if (cropProductsIds != null && Optional.IsCollectionDefined(cropProductsIds))
+            {
+                foreach (var param in cropProductsIds)
+                {
+                    uri.AppendQuery("cropProductsIds", param, true);
+                }
+            }
+            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
+            {
+                foreach (var param in fieldIds)
+                {
+                    uri.AppendQuery("fieldIds", param, true);
+                }
+            }
+            if (ids != null && Optional.IsCollectionDefined(ids))
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null && Optional.IsCollectionDefined(names))
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPlantTissueAnalysesByPartyIdRequest(string partyId, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -697,6 +788,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetPlantTissueAnalysisRequestUri(string partyId, string plantTissueAnalysisId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/plant-tissue-analyses/", false);
+            uri.AppendPath(plantTissueAnalysisId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPlantTissueAnalysisRequest(string partyId, string plantTissueAnalysisId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -712,6 +815,18 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string partyId, string plantTissueAnalysisId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/plant-tissue-analyses/", false);
+            uri.AppendPath(plantTissueAnalysisId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string plantTissueAnalysisId, RequestContent content, RequestContext context)
@@ -733,6 +848,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string partyId, string plantTissueAnalysisId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/plant-tissue-analyses/", false);
+            uri.AppendPath(plantTissueAnalysisId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string partyId, string plantTissueAnalysisId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -748,6 +875,95 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetPlantTissueAnalysesRequestUri(IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/plant-tissue-analyses", false);
+            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
+            {
+                foreach (var param in seasonIds)
+                {
+                    uri.AppendQuery("seasonIds", param, true);
+                }
+            }
+            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
+            {
+                foreach (var param in cropIds)
+                {
+                    uri.AppendQuery("cropIds", param, true);
+                }
+            }
+            if (cropProductsIds != null && Optional.IsCollectionDefined(cropProductsIds))
+            {
+                foreach (var param in cropProductsIds)
+                {
+                    uri.AppendQuery("cropProductsIds", param, true);
+                }
+            }
+            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
+            {
+                foreach (var param in fieldIds)
+                {
+                    uri.AppendQuery("fieldIds", param, true);
+                }
+            }
+            if (ids != null && Optional.IsCollectionDefined(ids))
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null && Optional.IsCollectionDefined(names))
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPlantTissueAnalysesRequest(IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -844,6 +1060,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateCascadeDeleteJobRequestUri(string jobId, string partyId, string plantTissueAnalysisId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/plant-tissue-analyses/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("partyId", partyId, true);
+            uri.AppendQuery("plantTissueAnalysisId", plantTissueAnalysisId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string partyId, string plantTissueAnalysisId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -861,6 +1089,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCascadeDeleteJobDetailsRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/plant-tissue-analyses/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -876,6 +1114,14 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetPlantTissueAnalysesByPartyIdNextPageRequestUri(string nextLink, string partyId, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPlantTissueAnalysesByPartyIdNextPageRequest(string nextLink, string partyId, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -887,6 +1133,14 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetPlantTissueAnalysesNextPageRequestUri(string nextLink, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetPlantTissueAnalysesNextPageRequest(string nextLink, IEnumerable<string> seasonIds, IEnumerable<string> cropIds, IEnumerable<string> cropProductsIds, IEnumerable<string> fieldIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

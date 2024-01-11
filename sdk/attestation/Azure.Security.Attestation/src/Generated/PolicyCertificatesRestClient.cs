@@ -38,6 +38,15 @@ namespace Azure.Security.Attestation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/certificates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -90,6 +99,15 @@ namespace Azure.Security.Attestation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAddRequestUri(string policyCertificateToAdd)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/certificates:add", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddRequest(string policyCertificateToAdd)
@@ -162,6 +180,15 @@ namespace Azure.Security.Attestation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRemoveRequestUri(string policyCertificateToRemove)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/certificates:remove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRemoveRequest(string policyCertificateToRemove)

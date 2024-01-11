@@ -273,6 +273,17 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        internal RequestUriBuilder CreateCancelRequestUri(string solutionId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/solutions/", false);
+            uri.AppendPath(solutionId, true);
+            uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelRequest(string solutionId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -291,6 +302,17 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string solutionId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/solutions/", false);
+            uri.AppendPath(solutionId, true);
+            uri.AppendPath(":create", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string solutionId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -307,6 +329,17 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateFetchRequestUri(string solutionId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/solutions/", false);
+            uri.AppendPath(solutionId, true);
+            uri.AppendPath(":fetch", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateFetchRequest(string solutionId, RequestContent content, RequestContext context)

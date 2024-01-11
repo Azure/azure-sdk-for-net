@@ -92,7 +92,9 @@ namespace Azure.ResourceManager.Attestation
             try
             {
                 var response = await _attestationProviderRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _attestationProviderRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, providerName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +143,9 @@ namespace Azure.ResourceManager.Attestation
             try
             {
                 var response = _attestationProviderRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, providerName, content, cancellationToken);
-                var operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response), response.GetRawResponse()));
+                var uri = _attestationProviderRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, providerName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AttestationArmOperation<AttestationProviderResource>(Response.FromValue(new AttestationProviderResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

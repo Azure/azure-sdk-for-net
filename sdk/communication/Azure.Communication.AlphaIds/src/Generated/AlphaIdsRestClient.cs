@@ -39,6 +39,15 @@ namespace Azure.Communication.AlphaIds
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetConfigurationRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/alphaIds/configuration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetConfigurationRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -91,6 +100,15 @@ namespace Azure.Communication.AlphaIds
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpsertConfigurationRequestUri(bool enabled)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/alphaIds/configuration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpsertConfigurationRequest(bool enabled)

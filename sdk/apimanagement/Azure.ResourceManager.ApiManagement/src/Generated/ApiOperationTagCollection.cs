@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiOperationTagTagRestClient.AssignToOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tagId, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiOperationTagResource>(Response.FromValue(new ApiOperationTagResource(Client, response), response.GetRawResponse()));
+                var uri = _apiOperationTagTagRestClient.CreateAssignToOperationRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tagId);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<ApiOperationTagResource>(Response.FromValue(new ApiOperationTagResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +137,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiOperationTagTagRestClient.AssignToOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tagId, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiOperationTagResource>(Response.FromValue(new ApiOperationTagResource(Client, response), response.GetRawResponse()));
+                var uri = _apiOperationTagTagRestClient.CreateAssignToOperationRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, tagId);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<ApiOperationTagResource>(Response.FromValue(new ApiOperationTagResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -291,7 +291,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -338,7 +340,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

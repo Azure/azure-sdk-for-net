@@ -1508,6 +1508,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             }
         }
 
+        internal RequestUriBuilder CreateGetProjectsRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetProjectsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1521,6 +1531,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetProjectDetailsRequestUri(string projectName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetProjectDetailsRequest(string projectName, RequestContext context)
@@ -1537,6 +1558,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateProjectRequestUri(string projectName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateProjectRequest(string projectName, RequestContent content, RequestContext context)
@@ -1557,6 +1589,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteProjectRequestUri(string projectName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteProjectRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -1573,6 +1616,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeleteStatusRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/deletion-jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeleteStatusRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1587,6 +1641,26 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateExportRequestUri(string projectName, string format, string assetKind, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/:export", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (assetKind != null)
+            {
+                uri.AppendQuery("assetKind", assetKind, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateExportRequest(string projectName, string format, string assetKind, RequestContext context)
@@ -1614,6 +1688,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetExportStatusRequestUri(string projectName, string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/export/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetExportStatusRequest(string projectName, string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1630,6 +1717,26 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateImportRequestUri(string projectName, RequestContent content, string format, string assetKind, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (format != null)
+            {
+                uri.AppendQuery("format", format, true);
+            }
+            if (assetKind != null)
+            {
+                uri.AppendQuery("assetKind", assetKind, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateImportRequest(string projectName, RequestContent content, string format, string assetKind, RequestContext context)
@@ -1659,6 +1766,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetImportStatusRequestUri(string projectName, string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/import/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetImportStatusRequest(string projectName, string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1677,6 +1797,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateDeployProjectRequestUri(string projectName, string deploymentName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeployProjectRequest(string projectName, string deploymentName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
@@ -1693,6 +1826,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeployStatusRequestUri(string projectName, string deploymentName, string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeployStatusRequest(string projectName, string deploymentName, string jobId, RequestContext context)
@@ -1715,6 +1863,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeploymentsRequestUri(string projectName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/deployments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeploymentsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1732,6 +1892,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSynonymsRequestUri(string projectName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/synonyms", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSynonymsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1747,6 +1919,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateSynonymsRequestUri(string projectName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/synonyms", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSynonymsRequest(string projectName, RequestContent content, RequestContext context)
@@ -1768,6 +1952,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSourcesRequestUri(string projectName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/sources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSourcesRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1783,6 +1979,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateSourcesRequestUri(string projectName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/sources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateSourcesRequest(string projectName, RequestContent content, RequestContext context)
@@ -1804,6 +2012,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetUpdateSourcesStatusRequestUri(string projectName, string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/sources/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateSourcesStatusRequest(string projectName, string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1820,6 +2041,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetQnasRequestUri(string projectName, string source, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/qnas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (source != null)
+            {
+                uri.AppendQuery("source", source, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetQnasRequest(string projectName, string source, RequestContext context)
@@ -1843,6 +2080,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateUpdateQnasRequestUri(string projectName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/qnas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateQnasRequest(string projectName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
@@ -1862,6 +2111,19 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetUpdateQnasStatusRequestUri(string projectName, string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/qnas/jobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateQnasStatusRequest(string projectName, string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1878,6 +2140,18 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateAddFeedbackRequestUri(string projectName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/query-knowledgebases/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/feedback", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddFeedbackRequest(string projectName, RequestContent content, RequestContext context)
@@ -1899,6 +2173,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetProjectsNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1911,6 +2194,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeploymentsNextPageRequestUri(string nextLink, string projectName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeploymentsNextPageRequest(string nextLink, string projectName, RequestContext context)
@@ -1927,6 +2219,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSynonymsNextPageRequestUri(string nextLink, string projectName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSynonymsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1939,6 +2240,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetSourcesNextPageRequestUri(string nextLink, string projectName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSourcesNextPageRequest(string nextLink, string projectName, RequestContext context)
@@ -1955,6 +2265,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateGetQnasNextPageRequestUri(string nextLink, string projectName, string source, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1969,6 +2288,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
+        internal RequestUriBuilder CreateUpdateSourcesNextPageRequestUri(string nextLink, string projectName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateSourcesNextPageRequest(string nextLink, string projectName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1981,6 +2309,15 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateQnasNextPageRequestUri(string nextLink, string projectName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateQnasNextPageRequest(string nextLink, string projectName, RequestContent content, RequestContext context)

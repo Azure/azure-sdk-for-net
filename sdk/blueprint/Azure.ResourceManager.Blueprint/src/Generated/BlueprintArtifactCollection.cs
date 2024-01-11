@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _blueprintArtifactArtifactsRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, artifactName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<BlueprintArtifactResource>(Response.FromValue(new BlueprintArtifactResource(Client, response), response.GetRawResponse()));
+                var uri = _blueprintArtifactArtifactsRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, artifactName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new BlueprintArmOperation<BlueprintArtifactResource>(Response.FromValue(new BlueprintArtifactResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _blueprintArtifactArtifactsRestClient.CreateOrUpdate(Id.Parent, Id.Name, artifactName, data, cancellationToken);
-                var operation = new BlueprintArmOperation<BlueprintArtifactResource>(Response.FromValue(new BlueprintArtifactResource(Client, response), response.GetRawResponse()));
+                var uri = _blueprintArtifactArtifactsRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, artifactName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new BlueprintArmOperation<BlueprintArtifactResource>(Response.FromValue(new BlueprintArtifactResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

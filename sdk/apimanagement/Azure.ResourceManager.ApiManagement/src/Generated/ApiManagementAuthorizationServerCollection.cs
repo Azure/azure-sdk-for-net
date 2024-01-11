@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementAuthorizationServerResource>(Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<ApiManagementAuthorizationServerResource>(Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +143,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementAuthorizationServerResource>(Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authsid, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<ApiManagementAuthorizationServerResource>(Response.FromValue(new ApiManagementAuthorizationServerResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

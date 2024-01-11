@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _tenantAccessInfoTenantAccessRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantAccessInfoTenantAccessRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +140,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _tenantAccessInfoTenantAccessRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content, cancellationToken);
-                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantAccessInfoTenantAccessRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, accessName, ifMatch, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<TenantAccessInfoResource>(Response.FromValue(new TenantAccessInfoResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

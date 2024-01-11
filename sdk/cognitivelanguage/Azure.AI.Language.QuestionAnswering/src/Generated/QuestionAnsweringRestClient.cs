@@ -38,6 +38,18 @@ namespace Azure.AI.Language.QuestionAnswering
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetAnswersRequestUri(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/:query-knowledgebases", false);
+            uri.AppendQuery("projectName", projectName, true);
+            uri.AppendQuery("deploymentName", deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAnswersRequest(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -131,6 +143,16 @@ namespace Azure.AI.Language.QuestionAnswering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAnswersFromTextRequestUri(AnswersFromTextOptions textQueryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendPath("/:query-text", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAnswersFromTextRequest(AnswersFromTextOptions textQueryOptions)

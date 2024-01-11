@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateConvertGraphRunbookContentRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, GraphicalRunbookContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/convertGraphRunbookContent", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateConvertGraphRunbookContentRequest(string subscriptionId, string resourceGroupName, string automationAccountName, GraphicalRunbookContent content)
         {
             var message = _pipeline.CreateMessage();

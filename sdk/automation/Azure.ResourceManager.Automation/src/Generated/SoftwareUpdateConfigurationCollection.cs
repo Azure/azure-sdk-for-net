@@ -92,7 +92,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _softwareUpdateConfigurationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _softwareUpdateConfigurationRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,7 +144,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _softwareUpdateConfigurationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId, cancellationToken);
-                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _softwareUpdateConfigurationRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationName, data, clientRequestId);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<SoftwareUpdateConfigurationResource>(Response.FromValue(new SoftwareUpdateConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

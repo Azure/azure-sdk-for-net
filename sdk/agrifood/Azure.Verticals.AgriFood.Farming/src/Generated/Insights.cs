@@ -607,6 +607,21 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        internal RequestUriBuilder CreateCreateCascadeDeleteJobRequestUri(string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/insights/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("partyId", partyId, true);
+            uri.AppendQuery("modelId", modelId, true);
+            uri.AppendQuery("resourceType", resourceType, true);
+            uri.AppendQuery("resourceId", resourceId, true);
+            uri.AppendQuery("insightId", insightId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -627,6 +642,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCascadeDeleteJobDetailsRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/insights/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -640,6 +665,98 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetInsightsByPartyIdModelIdAndResourceRequestUri(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/resource-types/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resources/", false);
+            uri.AppendPath(resourceId, true);
+            uri.AppendPath("/insights", false);
+            if (minInsightStartDateTime != null)
+            {
+                uri.AppendQuery("minInsightStartDateTime", minInsightStartDateTime.Value, "O", true);
+            }
+            if (maxInsightStartDateTime != null)
+            {
+                uri.AppendQuery("maxInsightStartDateTime", maxInsightStartDateTime.Value, "O", true);
+            }
+            if (minInsightEndDateTime != null)
+            {
+                uri.AppendQuery("minInsightEndDateTime", minInsightEndDateTime.Value, "O", true);
+            }
+            if (maxInsightEndDateTime != null)
+            {
+                uri.AppendQuery("maxInsightEndDateTime", maxInsightEndDateTime.Value, "O", true);
+            }
+            if (measurementFilters != null && Optional.IsCollectionDefined(measurementFilters))
+            {
+                foreach (var param in measurementFilters)
+                {
+                    uri.AppendQuery("measurementFilters", param, true);
+                }
+            }
+            if (ids != null && Optional.IsCollectionDefined(ids))
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null && Optional.IsCollectionDefined(names))
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetInsightsByPartyIdModelIdAndResourceRequest(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -739,6 +856,24 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/resource-types/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resources/", false);
+            uri.AppendPath(resourceId, true);
+            uri.AppendPath("/insights/", false);
+            uri.AppendPath(insightId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
@@ -764,6 +899,24 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetInsightRequestUri(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/resource-types/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resources/", false);
+            uri.AppendPath(resourceId, true);
+            uri.AppendPath("/insights/", false);
+            uri.AppendPath(insightId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetInsightRequest(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -787,6 +940,24 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/resource-types/", false);
+            uri.AppendPath(resourceType, true);
+            uri.AppendPath("/resources/", false);
+            uri.AppendPath(resourceId, true);
+            uri.AppendPath("/insights/", false);
+            uri.AppendPath(insightId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -808,6 +979,14 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequestUri(string nextLink, string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(string nextLink, string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
