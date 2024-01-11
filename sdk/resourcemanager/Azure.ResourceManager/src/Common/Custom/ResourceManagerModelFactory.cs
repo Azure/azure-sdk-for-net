@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
         /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
-        public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType managedServiceIdentityType, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities)
+        public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId = null, Guid? tenantId = null, ManagedServiceIdentityType managedServiceIdentityType = default, IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = null)
         {
             return new ManagedServiceIdentity(principalId, tenantId, managedServiceIdentityType, userAssignedIdentities);
         }

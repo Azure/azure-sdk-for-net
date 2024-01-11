@@ -560,6 +560,16 @@ namespace Azure.ResourceManager.Models
             return new TenantData(id, tenantId, tenantCategory, country, countryCode, displayName, domains?.ToList(), defaultDomain, tenantType, tenantBrandingLogoUri, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceNameValidationResult"/>. </summary>
+        /// <param name="name"> Name of Resource. </param>
+        /// <param name="resourceType"> Type of Resource. </param>
+        /// <param name="status"> Is the resource name Allowed or Reserved. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceNameValidationResult"/> instance for mocking. </returns>
+        public static ResourceNameValidationResult ResourceNameValidationResult(string name = null, ResourceType? resourceType = null, ResourceNameValidationStatus? status = null)
+        {
+            return new ResourceNameValidationResult(name, resourceType, status, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Resources.FeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
