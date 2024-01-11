@@ -21,11 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{4E159B41-7
 		docs\Sample3_CreatingAVirtualNetwork.md = docs\Sample3_CreatingAVirtualNetwork.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{E0F3952A-D1C7-4CE4-B2A8-5C34945EBED8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Perf", "perf\Azure.ResourceManager.Perf.csproj", "{138A2FF1-F1AB-480A-9588-136FB875026E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{AD397048-D114-4A32-8F35-64E5C72A4697}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Samples", "samples\Azure.ResourceManager.Samples.csproj", "{0D3137B9-8FB5-46E3-9033-84EF6DBE8D1E}"
 EndProject

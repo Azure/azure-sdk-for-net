@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Samples
                     Permission = GallerySharingPermissionType.Community,
                     CommunityGalleryInfo = new CommunityGalleryInfo()
                     {
-                        PublisherUri = new Uri("uri"),
+                        PublisherUriString = "uri",
                         PublisherContact = "pir@microsoft.com",
                         Eula = "eula",
                         PublicNamePrefix = "PirPublic",
