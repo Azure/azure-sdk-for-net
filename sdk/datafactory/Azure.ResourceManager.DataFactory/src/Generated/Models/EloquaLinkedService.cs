@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Eloqua";
         }
 
+        /// <summary> Initializes a new instance of <see cref="EloquaLinkedService"/> for deserialization. </summary>
+        internal EloquaLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Eloqua server. (i.e. eloqua.example.com). </summary>
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The site name and user name of your Eloqua account in the form: sitename/username. (i.e. Eloqua/Alice). </summary>

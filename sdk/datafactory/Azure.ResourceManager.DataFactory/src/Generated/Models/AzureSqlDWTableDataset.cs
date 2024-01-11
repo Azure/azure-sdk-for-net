@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "AzureSqlDWTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSqlDWTableDataset"/> for deserialization. </summary>
+        internal AzureSqlDWTableDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> The schema name of the Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>

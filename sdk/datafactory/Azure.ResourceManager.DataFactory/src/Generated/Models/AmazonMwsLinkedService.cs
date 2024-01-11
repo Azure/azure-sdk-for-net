@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AmazonMWS";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonMwsLinkedService"/> for deserialization. </summary>
+        internal AmazonMwsLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </summary>
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </summary>

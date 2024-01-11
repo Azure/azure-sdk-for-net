@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "GoogleBigQueryObject";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryObjectDataset"/> for deserialization. </summary>
+        internal GoogleBigQueryObjectDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using database + table properties instead.
         /// <para>

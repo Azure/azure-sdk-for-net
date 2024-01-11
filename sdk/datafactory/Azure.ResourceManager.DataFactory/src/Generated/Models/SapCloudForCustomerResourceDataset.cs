@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapCloudForCustomerResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDataset"/> for deserialization. </summary>
+        internal SapCloudForCustomerResourceDataset()
+        {
+        }
+
         /// <summary> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Path { get; set; }
     }

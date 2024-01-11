@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapEccResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapEccResourceDataset"/> for deserialization. </summary>
+        internal SapEccResourceDataset()
+        {
+        }
+
         /// <summary> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Path { get; set; }
     }

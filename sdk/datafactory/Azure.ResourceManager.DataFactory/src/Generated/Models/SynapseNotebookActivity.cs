@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "SynapseNotebook";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookActivity"/> for deserialization. </summary>
+        internal SynapseNotebookActivity()
+        {
+        }
+
         /// <summary> Synapse notebook reference. </summary>
         public SynapseNotebookReference Notebook { get; set; }
         /// <summary> The name of the big data pool which will be used to execute the notebook. </summary>

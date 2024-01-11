@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SharePointOnlineListResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListResourceDataset"/> for deserialization. </summary>
+        internal SharePointOnlineListResourceDataset()
+        {
+        }
+
         /// <summary> The name of the SharePoint Online list. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ListName { get; set; }
     }

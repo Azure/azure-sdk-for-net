@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "MySqlTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MySqlTableDataset"/> for deserialization. </summary>
+        internal MySqlTableDataset()
+        {
+        }
+
         /// <summary> The MySQL table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }

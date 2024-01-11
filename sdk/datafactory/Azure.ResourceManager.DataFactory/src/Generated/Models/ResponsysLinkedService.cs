@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Responsys";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResponsysLinkedService"/> for deserialization. </summary>
+        internal ResponsysLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Responsys server. </summary>
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </summary>

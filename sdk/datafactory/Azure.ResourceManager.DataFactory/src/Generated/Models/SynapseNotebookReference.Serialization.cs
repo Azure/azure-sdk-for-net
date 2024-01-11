@@ -5,32 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SynapseNotebookReference : IUtf8JsonSerializable
+    public partial class SynapseNotebookReference : IUtf8JsonSerializable, IJsonModel<SynapseNotebookReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseNotebookReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseNotebookReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseNotebookReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseNotebookReference)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(NotebookReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
             JsonSerializer.Serialize(writer, ReferenceName);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseNotebookReference DeserializeSynapseNotebookReference(JsonElement element)
+        SynapseNotebookReference IJsonModel<SynapseNotebookReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseNotebookReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseNotebookReference)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseNotebookReference(document.RootElement, options);
+        }
+
+        internal static SynapseNotebookReference DeserializeSynapseNotebookReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             NotebookReferenceType type = default;
             DataFactoryElement<string> referenceName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -43,8 +85,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     referenceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseNotebookReference(type, referenceName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseNotebookReference(type, referenceName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseNotebookReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseNotebookReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseNotebookReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SynapseNotebookReference IPersistableModel<SynapseNotebookReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseNotebookReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseNotebookReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseNotebookReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseNotebookReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
