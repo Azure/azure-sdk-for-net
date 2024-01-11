@@ -25,7 +25,7 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
     /// If provided, the prefix string will be followed by a space and then the credential string.
     /// For example, setting <c>valuePrefix</c> to "SharedAccessKey" will result in the header value
     /// being set fo "SharedAccessKey {credential.Key}".</param>
-    public static ApiKeyAuthenticationPolicy CreateHeaderPolicy(ApiKeyCredential credential, string headerName, string? keyPrefix = null)
+    public static ApiKeyAuthenticationPolicy CreateHeaderApiKeyPolicy(ApiKeyCredential credential, string headerName, string? keyPrefix = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
         Argument.AssertNotNullOrEmpty(headerName, nameof(headerName));
@@ -33,7 +33,7 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
         return new ApiKeyAuthenticationPolicy(credential, headerName, KeyLocation.Header, keyPrefix);
     }
 
-    public static ApiKeyAuthenticationPolicy CreateQueryPolicy(ApiKeyCredential credential, string queryName)
+    public static ApiKeyAuthenticationPolicy CreateQueryApiKeyPolicy(ApiKeyCredential credential, string queryName)
     {
         // TODO: Add tests for this implementation if the API is approved.
         Argument.AssertNotNull(credential, nameof(credential));
@@ -42,19 +42,20 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
         return new ApiKeyAuthenticationPolicy(credential, queryName, KeyLocation.Query);
     }
 
-    /// <summary>
-    /// Create a new instance of the <see cref="ApiKeyAuthenticationPolicy"/> class, where the
-    /// credential value will be specified in a request header.
-    /// </summary>
-    /// <param name="credential">The <see cref="ApiKeyCredential"/> used to authenticate requests.</param>
-    /// <param name="headerName">The name of the request header used to send the key credential in the request.</param>
-    /// <param name="keyPrefix">A prefix to prepend before the key credential in the header value.
-    /// If provided, the prefix string will be followed by a space and then the credential string.
-    /// For example, setting <c>valuePrefix</c> to "SharedAccessKey" will result in the header value
-    /// being set fo "SharedAccessKey {credential.Key}".</param>
-    public ApiKeyAuthenticationPolicy(ApiKeyCredential credential, string headerName = "Authorization", string? keyPrefix = null)
-        : this(credential, headerName, KeyLocation.Header, keyPrefix)
+    public static ApiKeyAuthenticationPolicy CreateBasicAuthorizationPolicy(ApiKeyCredential credential)
     {
+        // TODO: Add tests for this implementation if the API is approved.
+        Argument.AssertNotNull(credential, nameof(credential));
+
+        return new ApiKeyAuthenticationPolicy(credential, "Authorization", KeyLocation.Header, "Basic");
+    }
+
+    public static ApiKeyAuthenticationPolicy CreateBearerAuthorizationPolicy(ApiKeyCredential credential)
+    {
+        // TODO: Add tests for this implementation if the API is approved.
+        Argument.AssertNotNull(credential, nameof(credential));
+
+        return new ApiKeyAuthenticationPolicy(credential, "Authorization", KeyLocation.Header, "Bearer");
     }
 
     private ApiKeyAuthenticationPolicy(ApiKeyCredential credential, string name, KeyLocation keyLocation, string? keyPrefix = null)
