@@ -1,14 +1,11 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (1/11/2024)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag from 'package-2023-06' to 'package-2023-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2f74f79b243484837a6d7b6dfa78b3e16274d006/specification/network/resource-manager/readme.md
 
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.6.0 (2023-11-21)
 
