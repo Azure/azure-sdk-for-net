@@ -324,6 +324,15 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/relationship", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -340,6 +349,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/relationship", false);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -354,6 +372,20 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetPurviewRelationshipRequestUri(string guid, bool? extendedInfo, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/relationship/guid/", false);
+            uri.AppendPath(guid, true);
+            if (extendedInfo != null)
+            {
+                uri.AppendQuery("extendedInfo", extendedInfo.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetPurviewRelationshipRequest(string guid, bool? extendedInfo, RequestContext context)
@@ -373,6 +405,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/relationship/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string guid, RequestContext context)

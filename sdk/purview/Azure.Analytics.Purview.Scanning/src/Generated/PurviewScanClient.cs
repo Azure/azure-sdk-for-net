@@ -755,6 +755,19 @@ namespace Azure.Analytics.Purview.Scanning
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewScanClient.GetRuns", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetFilterRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendPath("/filters/custom", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetFilterRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -771,6 +784,19 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateFilterRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendPath("/filters/custom", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateFilterRequest(RequestContent content, RequestContext context)
@@ -793,6 +819,18 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
@@ -812,6 +850,18 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -829,6 +879,18 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
@@ -844,6 +906,24 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateRunScanRequestUri(string runId, string scanLevel, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            if (scanLevel != null)
+            {
+                uri.AppendQuery("scanLevel", scanLevel, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRunScanRequest(string runId, string scanLevel, RequestContext context)
@@ -869,6 +949,21 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
+        internal RequestUriBuilder CreateCancelScanRequestUri(string runId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/:cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelScanRequest(string runId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -889,6 +984,19 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
+        internal RequestUriBuilder CreateGetRunsRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendPath("/runs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRunsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -907,6 +1015,19 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTriggerRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendPath("/triggers/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTriggerRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -923,6 +1044,19 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateTriggerRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendPath("/triggers/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateTriggerRequest(RequestContent content, RequestContext context)
@@ -945,6 +1079,19 @@ namespace Azure.Analytics.Purview.Scanning
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteTriggerRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/datasources/", false);
+            uri.AppendPath(_dataSourceName, true);
+            uri.AppendPath("/scans/", false);
+            uri.AppendPath(_scanName, true);
+            uri.AppendPath("/triggers/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteTriggerRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200204);
@@ -961,6 +1108,14 @@ namespace Azure.Analytics.Purview.Scanning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetRunsNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetRunsNextPageRequest(string nextLink, RequestContext context)

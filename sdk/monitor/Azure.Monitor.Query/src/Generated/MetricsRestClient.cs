@@ -36,6 +36,53 @@ namespace Azure.Monitor.Query
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, ResultType? resultType, string metricnamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToSerialString(), true);
+            }
+            uri.AppendQuery("api-version", "2018-01-01", true);
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, ResultType? resultType, string metricnamespace)
         {
             var message = _pipeline.CreateMessage();

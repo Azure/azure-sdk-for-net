@@ -219,6 +219,16 @@ namespace Azure.Analytics.Purview.Administration
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataPolicyClient.GetMetadataPolicies", "values", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetMetadataPoliciesRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/policyStore", false);
+            uri.AppendPath("/metadataPolicies", false);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetMetadataPoliciesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -232,6 +242,17 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateMetadataPolicyRequestUri(string policyId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/policyStore", false);
+            uri.AppendPath("/metadataPolicies/", false);
+            uri.AppendPath(policyId, true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateMetadataPolicyRequest(string policyId, RequestContent content, RequestContext context)
@@ -252,6 +273,17 @@ namespace Azure.Analytics.Purview.Administration
             return message;
         }
 
+        internal RequestUriBuilder CreateGetMetadataPolicyRequestUri(string policyId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/policyStore", false);
+            uri.AppendPath("/metadataPolicies/", false);
+            uri.AppendPath(policyId, true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetMetadataPolicyRequest(string policyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -266,6 +298,15 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetMetadataPoliciesNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/policyStore", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetMetadataPoliciesNextPageRequest(string nextLink, RequestContext context)

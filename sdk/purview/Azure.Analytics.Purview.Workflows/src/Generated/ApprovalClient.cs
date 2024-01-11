@@ -200,6 +200,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
+        internal RequestUriBuilder CreateApproveRequestUri(Guid taskId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflowtasks/", false);
+            uri.AppendPath(taskId, true);
+            uri.AppendPath("/approve-approval", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateApproveRequest(Guid taskId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -217,6 +229,18 @@ namespace Azure.Analytics.Purview.Workflows
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateRejectRequestUri(Guid taskId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflowtasks/", false);
+            uri.AppendPath(taskId, true);
+            uri.AppendPath("/reject-approval", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRejectRequest(Guid taskId, RequestContent content, RequestContext context)

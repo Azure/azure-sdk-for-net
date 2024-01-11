@@ -117,6 +117,18 @@ namespace Azure.Monitor.Ingestion
             }
         }
 
+        internal RequestUriBuilder CreateUploadRequestUri(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dataCollectionRules/", false);
+            uri.AppendPath(ruleId, true);
+            uri.AppendPath("/streams/", false);
+            uri.AppendPath(streamName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         private static ResponseClassifier _responseClassifier204;
         private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }

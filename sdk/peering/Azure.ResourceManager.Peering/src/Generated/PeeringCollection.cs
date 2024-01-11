@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _peeringRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, peeringName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<PeeringResource>(Response.FromValue(new PeeringResource(Client, response), response.GetRawResponse()));
+                var uri = _peeringRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, peeringName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new PeeringArmOperation<PeeringResource>(Response.FromValue(new PeeringResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _peeringRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, peeringName, data, cancellationToken);
-                var operation = new PeeringArmOperation<PeeringResource>(Response.FromValue(new PeeringResource(Client, response), response.GetRawResponse()));
+                var uri = _peeringRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, peeringName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new PeeringArmOperation<PeeringResource>(Response.FromValue(new PeeringResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

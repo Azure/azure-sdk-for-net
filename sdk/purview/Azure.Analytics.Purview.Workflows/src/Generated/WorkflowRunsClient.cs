@@ -117,6 +117,44 @@ namespace Azure.Analytics.Purview.Workflows
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetWorkflowRunsRequestUri(string viewMode, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, IEnumerable<string> requestors, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflowruns", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (viewMode != null)
+            {
+                uri.AppendQuery("viewMode", viewMode, true);
+            }
+            if (timeWindow != null)
+            {
+                uri.AppendQuery("timeWindow", timeWindow, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (runStatuses != null && Optional.IsCollectionDefined(runStatuses))
+            {
+                uri.AppendQueryDelimited("runStatuses", runStatuses, ",", true);
+            }
+            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
+            {
+                uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
+            }
+            if (requestors != null && Optional.IsCollectionDefined(requestors))
+            {
+                uri.AppendQueryDelimited("requestors", requestors, ",", true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetWorkflowRunsRequest(string viewMode, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, IEnumerable<string> requestors, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -158,6 +196,15 @@ namespace Azure.Analytics.Purview.Workflows
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetWorkflowRunsNextPageRequestUri(string nextLink, string viewMode, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, IEnumerable<string> requestors, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetWorkflowRunsNextPageRequest(string nextLink, string viewMode, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, IEnumerable<string> requestors, int? maxpagesize, RequestContext context)

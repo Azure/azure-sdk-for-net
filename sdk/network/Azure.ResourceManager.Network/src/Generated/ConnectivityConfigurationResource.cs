@@ -290,7 +290,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _connectivityConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ConnectivityConfigurationResource>(Response.FromValue(new ConnectivityConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _connectivityConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new NetworkArmOperation<ConnectivityConfigurationResource>(Response.FromValue(new ConnectivityConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -336,7 +338,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _connectivityConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<ConnectivityConfigurationResource>(Response.FromValue(new ConnectivityConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _connectivityConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new NetworkArmOperation<ConnectivityConfigurationResource>(Response.FromValue(new ConnectivityConfigurationResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

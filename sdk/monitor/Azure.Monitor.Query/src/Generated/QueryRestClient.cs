@@ -36,6 +36,21 @@ namespace Azure.Monitor.Query
             _endpoint = endpoint ?? new Uri("https://api.loganalytics.io/v1");
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string workspaceId, string query, TimeSpan? timespan)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceId, true);
+            uri.AppendPath("/query", false);
+            uri.AppendQuery("query", query, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan.Value, "P", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string workspaceId, string query, TimeSpan? timespan)
         {
             var message = _pipeline.CreateMessage();
@@ -122,6 +137,16 @@ namespace Azure.Monitor.Query
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExecuteRequestUri(string workspaceId, QueryBody body, string prefer)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/workspaces/", false);
+            uri.AppendPath(workspaceId, true);
+            uri.AppendPath("/query", false);
+            return uri;
         }
 
         internal HttpMessage CreateExecuteRequest(string workspaceId, QueryBody body, string prefer)
@@ -215,6 +240,21 @@ namespace Azure.Monitor.Query
             }
         }
 
+        internal RequestUriBuilder CreateResourceGetRequestUri(ResourceIdentifier resourceId, string query, TimeSpan? timespan)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/query", false);
+            uri.AppendQuery("query", query, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan.Value, "P", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateResourceGetRequest(ResourceIdentifier resourceId, string query, TimeSpan? timespan)
         {
             var message = _pipeline.CreateMessage();
@@ -301,6 +341,16 @@ namespace Azure.Monitor.Query
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResourceExecuteRequestUri(ResourceIdentifier resourceId, QueryBody body, string prefer)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/query", false);
+            return uri;
         }
 
         internal HttpMessage CreateResourceExecuteRequest(ResourceIdentifier resourceId, QueryBody body, string prefer)
@@ -394,6 +444,14 @@ namespace Azure.Monitor.Query
             }
         }
 
+        internal RequestUriBuilder CreateBatchRequestUri(BatchRequest body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/$batch", false);
+            return uri;
+        }
+
         internal HttpMessage CreateBatchRequest(BatchRequest body)
         {
             var message = _pipeline.CreateMessage();
@@ -465,6 +523,21 @@ namespace Azure.Monitor.Query
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResourceGetXmsRequestUri(ResourceIdentifier resourceId, string query, TimeSpan? timespan)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/query", false);
+            uri.AppendQuery("query", query, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan.Value, "P", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateResourceGetXmsRequest(ResourceIdentifier resourceId, string query, TimeSpan? timespan)
@@ -553,6 +626,16 @@ namespace Azure.Monitor.Query
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResourceExecuteXmsRequestUri(ResourceIdentifier resourceId, QueryBody body, string prefer)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/query", false);
+            return uri;
         }
 
         internal HttpMessage CreateResourceExecuteXmsRequest(ResourceIdentifier resourceId, QueryBody body, string prefer)

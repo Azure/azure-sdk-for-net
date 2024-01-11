@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.MixedReality
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityLocalRequestUri(string subscriptionId, AzureLocation location, MixedRealityNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MixedReality/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityLocalRequest(string subscriptionId, AzureLocation location, MixedRealityNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();

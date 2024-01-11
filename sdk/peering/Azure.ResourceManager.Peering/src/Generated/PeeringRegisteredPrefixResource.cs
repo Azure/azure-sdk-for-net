@@ -200,7 +200,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation(response);
+                var uri = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new PeeringArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,7 +244,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new PeeringArmOperation(response);
+                var uri = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new PeeringArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -288,7 +292,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response), response.GetRawResponse()));
+                var uri = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -334,7 +340,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response), response.GetRawResponse()));
+                var uri = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

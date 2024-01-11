@@ -192,6 +192,16 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
+        internal RequestUriBuilder CreateGetWorkflowTaskRequestUri(Guid taskId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflowtasks/", false);
+            uri.AppendPath(taskId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetWorkflowTaskRequest(Guid taskId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -205,6 +215,18 @@ namespace Azure.Analytics.Purview.Workflows
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateReassignRequestUri(Guid taskId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflowtasks/", false);
+            uri.AppendPath(taskId, true);
+            uri.AppendPath("/reassign", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReassignRequest(Guid taskId, RequestContent content, RequestContext context)
