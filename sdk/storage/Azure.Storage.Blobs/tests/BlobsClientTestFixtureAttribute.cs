@@ -32,6 +32,10 @@ namespace Azure.Storage.Blobs.Tests
                     BlobClientOptions.ServiceVersion.V2023_08_03,
                     BlobClientOptions.ServiceVersion.V2023_11_03,
                     BlobClientOptions.ServiceVersion.V2024_02_04,
+                    BlobClientOptions.ServiceVersion.V2024_05_04,
+                    BlobClientOptions.ServiceVersion.V2024_08_04,
+                    BlobClientOptions.ServiceVersion.V2024_11_04,
+                    BlobClientOptions.ServiceVersion.V2025_01_05,
                     StorageVersionExtensions.LatestVersion,
                     StorageVersionExtensions.MaxVersion
                 },
