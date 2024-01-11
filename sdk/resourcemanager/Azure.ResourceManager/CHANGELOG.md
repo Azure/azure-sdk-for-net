@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Add operation group `ManagementGroupSubscriptions`
+
 ### Breaking Changes
 
 ### Bugs Fixed

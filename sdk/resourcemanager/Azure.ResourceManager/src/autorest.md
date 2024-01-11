@@ -708,7 +708,6 @@ operation-positions:
   ManagementGroups_CheckNameAvailability: collection
 operation-groups-to-omit:
   - HierarchySettings
-  - ManagementGroupSubscriptions
   - Entities
   - TenantBackfill
 no-property-type-replacement: DescendantParentGroupInfo

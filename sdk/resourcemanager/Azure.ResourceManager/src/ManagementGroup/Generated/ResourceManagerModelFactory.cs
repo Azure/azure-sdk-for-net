@@ -98,6 +98,21 @@ namespace Azure.ResourceManager.Models
             return new DescendantData(id, name, resourceType, systemData, displayName, parentId != null ? new DescendantParentGroupInfo(parentId) : null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.SubscriptionUnderManagementGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tenant"> The AAD Tenant ID associated with the subscription. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="displayName"> The friendly name of the subscription. </param>
+        /// <param name="parentId"> The ID of the parent management group. </param>
+        /// <param name="state"> The state of the subscription. </param>
+        /// <returns> A new <see cref="ManagementGroups.SubscriptionUnderManagementGroupData"/> instance for mocking. </returns>
+        public static SubscriptionUnderManagementGroupData SubscriptionUnderManagementGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string tenant = null, string displayName = null, ResourceIdentifier parentId = null, string state = null)
+        {
+            return new SubscriptionUnderManagementGroupData(id, name, resourceType, systemData, tenant, displayName, parentId != null ? new DescendantParentGroupInfo(parentId) : null, state);
+        }
+
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Required. True indicates name is valid and available. False indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> Required if nameAvailable == false. Invalid indicates the name provided does not match the resource provider's naming requirements (incorrect length, unsupported characters, etc.) AlreadyExists indicates that the name is already in use and is therefore unavailable. </param>
