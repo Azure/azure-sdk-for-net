@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Avro dataset. </summary>
     [CodeGenSuppress(nameof(AvroDataset), typeof(string), typeof(string), typeof(DataFactoryElement<IList<DatasetDataElement>>),
-        typeof(DataFactoryElement<IDictionary<string, BinaryData>>), typeof(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference), typeof(IDictionary<string, EntityParameterSpecification>),
+        typeof(DataFactoryElement<BinaryData>), typeof(Core.Expressions.DataFactory.DataFactoryLinkedServiceReference), typeof(IDictionary<string, EntityParameterSpecification>),
         typeof(IList<BinaryData>), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(DatasetLocation), typeof(DataFactoryElement<string>), typeof(int))]
     public partial class AvroDataset : DataFactoryDatasetProperties
     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </param>
         /// <param name="avroCompressionCodec"> The data avroCompressionCodec. Type: string (or Expression with resultType string). </param>
         /// <param name="avroCompressionLevel"></param>
-        internal AvroDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IDictionary<string, BinaryData>> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, DataFactoryElement<string> avroCompressionCodec, int? avroCompressionLevel) : base(datasetType, description, structure, null, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AvroDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<BinaryData> schema, Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, DataFactoryElement<string> avroCompressionCodec, int? avroCompressionLevel) : base(datasetType, description, structure, null, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             DataLocation = dataLocation;
             AvroCompressionCodec = avroCompressionCodec;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array), itemType: DatasetSchemaDataElement. </summary>
-        public new DataFactoryElement<IDictionary<string, BinaryData>> Schema { get; set; }
+        public new DataFactoryElement<BinaryData> Schema { get; set; }
 
         internal static AvroDataset DeserializeAvroDataset(JsonElement element)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<string> description = default;
             Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IDictionary<string, BinaryData>>> schema = default;
+            Optional<DataFactoryElement<BinaryData>> schema = default;
             Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, BinaryData>>>(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<BinaryData>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
