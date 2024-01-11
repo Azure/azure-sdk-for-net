@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </list>
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementGroupResource> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagementGroupResource> GetAllAsync(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "@nextLink", cancellationToken);
         }
 
@@ -323,17 +323,17 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </list>
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementGroupResource> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagementGroupResource> GetAll(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "@nextLink", cancellationToken);
         }
 
@@ -446,8 +446,8 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             options ??= new ManagementGroupCollectionGetEntitiesOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _entitiesRestClient.CreateListRequest(options.Skiptoken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entitiesRestClient.CreateListNextPageRequest(nextLink, options.Skiptoken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _entitiesRestClient.CreateListRequest(options.SkipToken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entitiesRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EntityData.DeserializeEntityData(e), _entitiesClientDiagnostics, Pipeline, "ManagementGroupCollection.GetEntities", "value", "nextLink", cancellationToken);
         }
 
@@ -476,8 +476,8 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             options ??= new ManagementGroupCollectionGetEntitiesOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _entitiesRestClient.CreateListRequest(options.Skiptoken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entitiesRestClient.CreateListNextPageRequest(nextLink, options.Skiptoken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _entitiesRestClient.CreateListRequest(options.SkipToken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entitiesRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EntityData.DeserializeEntityData(e), _entitiesClientDiagnostics, Pipeline, "ManagementGroupCollection.GetEntities", "value", "nextLink", cancellationToken);
         }
 

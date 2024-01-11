@@ -758,6 +758,10 @@ directive:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
   - from: management.json
+    where: $.parameters.SkipTokenParameter
+    transform: >
+      $['x-ms-client-name'] = 'SkipToken'
+  - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
       $['x-ms-enum'] = {

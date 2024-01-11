@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </summary>
-        public string Skiptoken { get; set; }
+        public string SkipToken { get; set; }
         /// <summary> Number of entities to skip over when retrieving results. Passing this in will override $skipToken. </summary>
         public int? Skip { get; set; }
         /// <summary> Number of elements to return when retrieving results. Passing this in will override $skipToken. </summary>
