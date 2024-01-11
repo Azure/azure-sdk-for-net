@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Sql
         public LongTermRetentionBackupData() { }
         public System.DateTimeOffset? BackupExpireOn { get { throw null; } }
         public System.DateTimeOffset? BackupOn { get { throw null; } }
-        public Azure.ResourceManager.Sql.Models.BackupStorageAccessTier? BackupStorageAccessTier { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? BackupStorageAccessTier { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? BackupStorageRedundancy { get { throw null; } }
         public System.DateTimeOffset? DatabaseDeletedOn { get { throw null; } }
         public string DatabaseName { get { throw null; } }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.Sql
     public partial class LongTermRetentionPolicyData : Azure.ResourceManager.Models.ResourceData
     {
         public LongTermRetentionPolicyData() { }
-        public Azure.ResourceManager.Sql.Models.BackupStorageAccessTier? BackupStorageAccessTier { get { throw null; } set { } }
+        public Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? BackupStorageAccessTier { get { throw null; } set { } }
         public bool? MakeBackupsImmutable { get { throw null; } set { } }
         public string MonthlyRetention { get { throw null; } set { } }
         public string WeeklyRetention { get { throw null; } set { } }
@@ -5866,9 +5866,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static Azure.ResourceManager.Sql.Models.LicenseTypeCapability LicenseTypeCapability(string name = null, Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.LogicalDatabaseTransparentDataEncryptionData LogicalDatabaseTransparentDataEncryptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Sql.Models.TransparentDataEncryptionState? state = default(Azure.ResourceManager.Sql.Models.TransparentDataEncryptionState?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.LogSizeCapability LogSizeCapability(int? limit = default(int?), Azure.ResourceManager.Sql.Models.LogSizeUnit? unit = default(Azure.ResourceManager.Sql.Models.LogSizeUnit?)) { throw null; }
-        public static Azure.ResourceManager.Sql.LongTermRetentionBackupData LongTermRetentionBackupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string serverName = null, System.DateTimeOffset? serverCreateOn = default(System.DateTimeOffset?), string databaseName = null, System.DateTimeOffset? databaseDeletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? backupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), bool? isBackupImmutable = default(bool?), Azure.ResourceManager.Sql.Models.BackupStorageAccessTier? backupStorageAccessTier = default(Azure.ResourceManager.Sql.Models.BackupStorageAccessTier?)) { throw null; }
+        public static Azure.ResourceManager.Sql.LongTermRetentionBackupData LongTermRetentionBackupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string serverName = null, System.DateTimeOffset? serverCreateOn = default(System.DateTimeOffset?), string databaseName = null, System.DateTimeOffset? databaseDeletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupOn = default(System.DateTimeOffset?), System.DateTimeOffset? backupExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? backupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), bool? isBackupImmutable = default(bool?), Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? backupStorageAccessTier = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.LongTermRetentionBackupOperationResult LongTermRetentionBackupOperationResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? requestId = default(System.Guid?), string operationType = null, Azure.Core.ResourceIdentifier fromBackupResourceId = null, Azure.Core.ResourceIdentifier toBackupResourceId = null, Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? targetBackupStorageRedundancy = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy?), string status = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.Sql.LongTermRetentionPolicyData LongTermRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? makeBackupsImmutable = default(bool?), Azure.ResourceManager.Sql.Models.BackupStorageAccessTier? backupStorageAccessTier = default(Azure.ResourceManager.Sql.Models.BackupStorageAccessTier?), string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Sql.LongTermRetentionPolicyData LongTermRetentionPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? makeBackupsImmutable = default(bool?), Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier? backupStorageAccessTier = default(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier?), string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = default(int?)) { throw null; }
         public static Azure.ResourceManager.Sql.Models.MaintenanceConfigurationCapability MaintenanceConfigurationCapability(string name = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.Sql.Models.SqlCapabilityStatus? status = default(Azure.ResourceManager.Sql.Models.SqlCapabilityStatus?), string reason = null) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowOptionData MaintenanceWindowOptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaintenanceWindowTimeRange> maintenanceWindowCycles = null, int? minDurationInMinutes = default(int?), int? defaultDurationInMinutes = default(int?), int? minCycles = default(int?), int? timeGranularityInMinutes = default(int?), bool? allowMultipleMaintenanceWindowsPerCycle = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Sql.MaintenanceWindowsData MaintenanceWindowsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sql.Models.MaintenanceWindowTimeRange> timeRanges = null) { throw null; }
@@ -6131,24 +6131,6 @@ namespace Azure.ResourceManager.Sql.Models
         public int? MinValue { get { throw null; } }
         public int? StepSize { get { throw null; } }
         public Azure.ResourceManager.Sql.Models.PauseDelayTimeUnit? Unit { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BackupStorageAccessTier : System.IEquatable<Azure.ResourceManager.Sql.Models.BackupStorageAccessTier>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BackupStorageAccessTier(string value) { throw null; }
-        public static Azure.ResourceManager.Sql.Models.BackupStorageAccessTier Archive { get { throw null; } }
-        public static Azure.ResourceManager.Sql.Models.BackupStorageAccessTier Hot { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Sql.Models.BackupStorageAccessTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Sql.Models.BackupStorageAccessTier left, Azure.ResourceManager.Sql.Models.BackupStorageAccessTier right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Sql.Models.BackupStorageAccessTier (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Sql.Models.BackupStorageAccessTier left, Azure.ResourceManager.Sql.Models.BackupStorageAccessTier right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlobAuditingPolicyName : System.IEquatable<Azure.ResourceManager.Sql.Models.BlobAuditingPolicyName>
@@ -8565,6 +8547,24 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType left, Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType left, Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlBackupStorageAccessTier : System.IEquatable<Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlBackupStorageAccessTier(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier Archive { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier Hot { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier left, Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier left, Azure.ResourceManager.Sql.Models.SqlBackupStorageAccessTier right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
