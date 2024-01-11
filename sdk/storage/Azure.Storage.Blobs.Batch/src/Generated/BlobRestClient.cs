@@ -41,6 +41,30 @@ namespace Azure.Storage.Blobs.Batch
             _snapshot = snapshot;
         }
 
+        internal RequestUriBuilder CreateSetAccessTierRequestUri(string containerName, string blob, BatchAccessTier tier, string versionId, int? timeout, BatchRehydratePriority? rehydratePriority, string leaseId, string ifTags)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(containerName, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(blob, false);
+            uri.AppendQuery("comp", "tier", true);
+            if (_snapshot != null)
+            {
+                uri.AppendQuery("snapshot", _snapshot, true);
+            }
+            if (versionId != null)
+            {
+                uri.AppendQuery("versionid", versionId, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetAccessTierRequest(string containerName, string blob, BatchAccessTier tier, string versionId, int? timeout, BatchRehydratePriority? rehydratePriority, string leaseId, string ifTags)
         {
             var message = _pipeline.CreateMessage();
@@ -152,6 +176,33 @@ namespace Azure.Storage.Blobs.Batch
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string containerName, string blob, string versionId, int? timeout, string leaseId, DeleteSnapshotsOptionType? deleteSnapshots, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, BlobDeleteType? blobDeleteType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(containerName, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(blob, false);
+            if (_snapshot != null)
+            {
+                uri.AppendQuery("snapshot", _snapshot, true);
+            }
+            if (versionId != null)
+            {
+                uri.AppendQuery("versionid", versionId, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (blobDeleteType != null)
+            {
+                uri.AppendQuery("deletetype", blobDeleteType.Value.ToSerialString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string containerName, string blob, string versionId, int? timeout, string leaseId, DeleteSnapshotsOptionType? deleteSnapshots, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, BlobDeleteType? blobDeleteType)

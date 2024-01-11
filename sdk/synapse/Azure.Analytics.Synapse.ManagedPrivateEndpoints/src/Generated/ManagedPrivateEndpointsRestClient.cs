@@ -39,6 +39,18 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string managedVirtualNetworkName, string managedPrivateEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string managedVirtualNetworkName, string managedPrivateEndpointName)
         {
             var message = _pipeline.CreateMessage();
@@ -118,6 +130,18 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint)
@@ -215,6 +239,18 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string managedVirtualNetworkName, string managedPrivateEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string managedVirtualNetworkName, string managedPrivateEndpointName)
         {
             var message = _pipeline.CreateMessage();
@@ -287,6 +323,17 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string managedVirtualNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string managedVirtualNetworkName)
         {
             var message = _pipeline.CreateMessage();
@@ -355,6 +402,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string managedVirtualNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string managedVirtualNetworkName)

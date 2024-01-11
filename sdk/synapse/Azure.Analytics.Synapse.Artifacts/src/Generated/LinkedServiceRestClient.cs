@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateGetLinkedServicesByWorkspaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkedservices", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLinkedServicesByWorkspaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -88,6 +97,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateLinkedServiceRequestUri(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkedservices/", false);
+            uri.AppendPath(linkedServiceName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateLinkedServiceRequest(string linkedServiceName, LinkedServiceResource linkedService, string ifMatch)
@@ -171,6 +190,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetLinkedServiceRequestUri(string linkedServiceName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkedservices/", false);
+            uri.AppendPath(linkedServiceName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLinkedServiceRequest(string linkedServiceName, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -250,6 +279,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteLinkedServiceRequestUri(string linkedServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkedservices/", false);
+            uri.AppendPath(linkedServiceName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteLinkedServiceRequest(string linkedServiceName)
         {
             var message = _pipeline.CreateMessage();
@@ -311,6 +350,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameLinkedServiceRequestUri(string linkedServiceName, ArtifactRenameRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/linkedservices/", false);
+            uri.AppendPath(linkedServiceName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameLinkedServiceRequest(string linkedServiceName, ArtifactRenameRequest request)
@@ -387,6 +437,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLinkedServicesByWorkspaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetLinkedServicesByWorkspaceNextPageRequest(string nextLink)

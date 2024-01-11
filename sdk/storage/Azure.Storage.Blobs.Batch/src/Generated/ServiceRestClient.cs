@@ -38,6 +38,19 @@ namespace Azure.Storage.Blobs.Batch
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateSubmitBatchRequestUri(long contentLength, string multipartContentType, Stream body, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("comp", "batch", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="multipartContentType"> Required. The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
@@ -102,6 +115,19 @@ namespace Azure.Storage.Blobs.Batch
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSubmitBatchRequestUri(long contentLength, string multipartContentType, RequestContent content, int? timeout, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("comp", "batch", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSubmitBatchRequest(long contentLength, string multipartContentType, RequestContent content, int? timeout, RequestContext context)

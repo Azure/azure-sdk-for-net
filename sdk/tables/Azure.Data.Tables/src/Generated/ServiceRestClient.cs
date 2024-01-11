@@ -39,6 +39,20 @@ namespace Azure.Data.Tables
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateSetPropertiesRequestUri(TableServiceProperties tableServiceProperties, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetPropertiesRequest(TableServiceProperties tableServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -111,6 +125,20 @@ namespace Azure.Data.Tables
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -179,6 +207,20 @@ namespace Azure.Data.Tables
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStatisticsRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "stats", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetStatisticsRequest(int? timeout)

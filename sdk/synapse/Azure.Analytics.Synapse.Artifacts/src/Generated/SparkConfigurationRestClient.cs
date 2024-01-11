@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateGetSparkConfigurationsByWorkspaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkconfigurations", false);
+            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkConfigurationsByWorkspaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -88,6 +97,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateSparkConfigurationRequestUri(string sparkConfigurationName, SparkConfigurationResource sparkConfiguration, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkconfigurations/", false);
+            uri.AppendPath(sparkConfigurationName, true);
+            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateSparkConfigurationRequest(string sparkConfigurationName, SparkConfigurationResource sparkConfiguration, string ifMatch)
@@ -171,6 +190,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetSparkConfigurationRequestUri(string sparkConfigurationName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkconfigurations/", false);
+            uri.AppendPath(sparkConfigurationName, true);
+            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkConfigurationRequest(string sparkConfigurationName, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -250,6 +279,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSparkConfigurationRequestUri(string sparkConfigurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkconfigurations/", false);
+            uri.AppendPath(sparkConfigurationName, true);
+            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSparkConfigurationRequest(string sparkConfigurationName)
         {
             var message = _pipeline.CreateMessage();
@@ -311,6 +350,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameSparkConfigurationRequestUri(string sparkConfigurationName, ArtifactRenameRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkconfigurations/", false);
+            uri.AppendPath(sparkConfigurationName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", "2021-06-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameSparkConfigurationRequest(string sparkConfigurationName, ArtifactRenameRequest request)
@@ -387,6 +437,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSparkConfigurationsByWorkspaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSparkConfigurationsByWorkspaceNextPageRequest(string nextLink)

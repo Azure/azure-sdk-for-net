@@ -38,6 +38,16 @@ namespace Azure.IoT.TimeSeriesInsights
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string continuationToken, string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/timeseries/instances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string continuationToken, string clientSessionId)
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +113,16 @@ namespace Azure.IoT.TimeSeriesInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExecuteBatchRequestUri(InstancesBatchRequest parameters, string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/timeseries/instances/$batch", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExecuteBatchRequest(InstancesBatchRequest parameters, string clientSessionId)
@@ -184,6 +204,16 @@ namespace Azure.IoT.TimeSeriesInsights
             }
         }
 
+        internal RequestUriBuilder CreateSuggestRequestUri(InstancesSuggestRequest parameters, string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/timeseries/instances/suggest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSuggestRequest(InstancesSuggestRequest parameters, string clientSessionId)
         {
             var message = _pipeline.CreateMessage();
@@ -261,6 +291,16 @@ namespace Azure.IoT.TimeSeriesInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSearchRequestUri(SearchInstancesRequest parameters, string continuationToken, string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/timeseries/instances/search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSearchRequest(SearchInstancesRequest parameters, string continuationToken, string clientSessionId)

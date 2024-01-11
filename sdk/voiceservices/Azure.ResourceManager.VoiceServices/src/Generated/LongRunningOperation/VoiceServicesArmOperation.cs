@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.VoiceServices
         {
         }
 
-        internal VoiceServicesArmOperation(Response response)
+        internal VoiceServicesArmOperation(Response response, string operationId)
         {
-            _operation = OperationInternal.Succeeded(response);
+            _operation = OperationInternal.Succeeded(response, operationId);
         }
 
         internal VoiceServicesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <inheritdoc />
 #pragma warning disable CA1822
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
+        public override string Id => _operation.GetOperationId();
 #pragma warning restore CA1822
 
         /// <inheritdoc />

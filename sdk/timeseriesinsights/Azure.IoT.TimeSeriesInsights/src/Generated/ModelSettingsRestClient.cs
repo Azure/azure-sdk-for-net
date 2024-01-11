@@ -38,6 +38,16 @@ namespace Azure.IoT.TimeSeriesInsights
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/timeseries/modelSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string clientSessionId)
         {
             var message = _pipeline.CreateMessage();
@@ -97,6 +107,16 @@ namespace Azure.IoT.TimeSeriesInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(UpdateModelSettingsRequest parameters, string clientSessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_environmentFqdn, false);
+            uri.AppendPath("/timeseries/modelSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(UpdateModelSettingsRequest parameters, string clientSessionId)

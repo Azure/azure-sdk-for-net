@@ -40,6 +40,20 @@ namespace Azure.Storage.Files.Shares
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateSetPropertiesRequestUri(ShareServiceProperties storageServiceProperties, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetPropertiesRequest(ShareServiceProperties storageServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -112,6 +126,20 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -180,6 +208,35 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSharesSegmentRequestUri(string prefix, string marker, int? maxresults, IEnumerable<ListSharesIncludeType> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListSharesSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListSharesIncludeType> include, int? timeout)
@@ -273,6 +330,14 @@ namespace Azure.Storage.Files.Shares
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSharesSegmentNextPageRequestUri(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListSharesIncludeType> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSharesSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListSharesIncludeType> include, int? timeout)

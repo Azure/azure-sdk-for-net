@@ -254,6 +254,23 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
+        internal RequestUriBuilder CreateGetRoleDefinitionsRequestUri(bool? isBuiltIn, string scope, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/roleDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (isBuiltIn != null)
+            {
+                uri.AppendQuery("isBuiltIn", isBuiltIn.Value, true);
+            }
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRoleDefinitionsRequest(bool? isBuiltIn, string scope, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -276,6 +293,16 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
+        internal RequestUriBuilder CreateGetRoleDefinitionByIdRequestUri(string roleDefinitionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRoleDefinitionByIdRequest(string roleDefinitionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -289,6 +316,15 @@ namespace Azure.Analytics.Synapse.AccessControl
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetScopesRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/rbacScopes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetScopesRequest(RequestContext context)

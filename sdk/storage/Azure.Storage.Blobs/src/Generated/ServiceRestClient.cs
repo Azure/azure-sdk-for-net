@@ -41,6 +41,20 @@ namespace Azure.Storage.Blobs
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateSetPropertiesRequestUri(BlobServiceProperties storageServiceProperties, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetPropertiesRequest(BlobServiceProperties storageServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +127,20 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "properties", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetPropertiesRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -183,6 +211,20 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateGetStatisticsRequestUri(int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "stats", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetStatisticsRequest(int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -251,6 +293,35 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListContainersSegmentRequestUri(string prefix, string marker, int? maxresults, IEnumerable<ListContainersIncludeType> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListContainersSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListContainersIncludeType> include, int? timeout)
@@ -346,6 +417,20 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateGetUserDelegationKeyRequestUri(KeyInfo keyInfo, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "userdelegationkey", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetUserDelegationKeyRequest(KeyInfo keyInfo, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -434,6 +519,16 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateGetAccountInfoRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "account", true);
+            uri.AppendQuery("comp", "properties", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAccountInfoRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -480,6 +575,19 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSubmitBatchRequestUri(long contentLength, string multipartContentType, Stream body, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("comp", "batch", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSubmitBatchRequest(long contentLength, string multipartContentType, Stream body, int? timeout)
@@ -568,6 +676,35 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFilterBlobsRequestUri(int? timeout, string @where, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("comp", "blobs", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (@where != null)
+            {
+                uri.AppendQuery("where", @where, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (include != null && Optional.IsCollectionDefined(include))
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateFilterBlobsRequest(int? timeout, string @where, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include)
@@ -661,6 +798,14 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListContainersSegmentNextPageRequestUri(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListContainersIncludeType> include, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListContainersSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListContainersIncludeType> include, int? timeout)

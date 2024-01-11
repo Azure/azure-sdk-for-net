@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.VoiceServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckLocalRequestUri(string subscriptionId, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.VoiceServices/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckLocalRequest(string subscriptionId, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();

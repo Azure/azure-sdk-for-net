@@ -36,6 +36,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateDataFlowRequestUri(string dataFlowName, DataFlowResource dataFlow, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateDataFlowRequest(string dataFlowName, DataFlowResource dataFlow, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -117,6 +127,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetDataFlowRequestUri(string dataFlowName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDataFlowRequest(string dataFlowName, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -192,6 +212,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteDataFlowRequestUri(string dataFlowName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDataFlowRequest(string dataFlowName)
         {
             var message = _pipeline.CreateMessage();
@@ -253,6 +283,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameDataFlowRequestUri(string dataFlowName, ArtifactRenameRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameDataFlowRequest(string dataFlowName, ArtifactRenameRequest request)
@@ -331,6 +372,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetDataFlowsByWorkspaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/dataflows", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDataFlowsByWorkspaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -383,6 +433,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDataFlowsByWorkspaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDataFlowsByWorkspaceNextPageRequest(string nextLink)
