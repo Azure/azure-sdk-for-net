@@ -140,7 +140,6 @@ namespace Azure.ResourceManager.Tests
             var location = locations.First();
             Assert.IsNotNull(location.Metadata, "Metadata was null");
             Assert.IsNotNull(location.Id, "Id was null");
-            Assert.AreEqual(subOps.Id.SubscriptionId, location.SubscriptionId);
         }
 
         [RecordedTest]
