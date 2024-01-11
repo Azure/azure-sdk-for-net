@@ -453,9 +453,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public float? Savings { get { throw null; } }
         public float? TotalReservationCost { get { throw null; } }
     }
-    public partial class ConsumptionChargeSummary : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class ConsumptionChargeSummary : Azure.ResourceManager.Models.ResourceData
     {
-        public ConsumptionChargeSummary() { }
+        protected ConsumptionChargeSummary() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
     }
     public partial class ConsumptionCreditSummary : Azure.ResourceManager.Models.ResourceData
@@ -909,9 +909,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? TotalReservedQuantity { get { throw null; } }
         public decimal? UsedHours { get { throw null; } }
     }
-    public partial class ConsumptionReservationRecommendation : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class ConsumptionReservationRecommendation : Azure.ResourceManager.Models.ResourceData
     {
-        internal ConsumptionReservationRecommendation() { }
+        protected ConsumptionReservationRecommendation() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Sku { get { throw null; } }
@@ -1075,9 +1075,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public string PreviousLink { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Consumption.Models.ConsumptionTag> Tags { get { throw null; } }
     }
-    public partial class ConsumptionUsageDetail : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class ConsumptionUsageDetail : Azure.ResourceManager.Models.ResourceData
     {
-        internal ConsumptionUsageDetail() { }
+        protected ConsumptionUsageDetail() { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
     }

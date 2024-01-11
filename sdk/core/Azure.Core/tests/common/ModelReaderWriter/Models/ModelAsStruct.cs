@@ -4,9 +4,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
 

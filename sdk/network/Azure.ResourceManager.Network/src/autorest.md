@@ -308,6 +308,9 @@ override-operation-name:
   VirtualMachineScaleSetVMs_ListNetworkInterfaces: GetNetworkInterfaces
   VirtualMachineScaleSetVMs_ListPublicIPAddresses: GetPublicIPAddresses
 
+suppress-abstract-base-class:
+- BaseAdminRuleData
+
 directive:
   - remove-operation: 'PutBastionShareableLink'
   - remove-operation: 'DeleteBastionShareableLink'

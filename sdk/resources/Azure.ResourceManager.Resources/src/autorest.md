@@ -98,6 +98,9 @@ acronym-mapping:
 models-to-treat-empty-string-as-null:
   - ArmApplicationPackageSupportUris
 
+suppress-abstract-base-class:
+- ArmDeploymentScriptData
+
 directive:
   - remove-operation: checkResourceName
   # Use AtScope methods to replace the following operations

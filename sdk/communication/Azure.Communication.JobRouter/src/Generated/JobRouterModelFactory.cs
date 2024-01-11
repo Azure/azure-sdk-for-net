@@ -8,12 +8,42 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Model factory for models. </summary>
     public static partial class JobRouterModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="JobRouter.DistributionPolicy"/>. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a distribution policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
+        /// <param name="mode"> Mode governing the specific distribution method. </param>
+        /// <returns> A new <see cref="JobRouter.DistributionPolicy"/> instance for mocking. </returns>
+        public static DistributionPolicy DistributionPolicy(ETag eTag = default, string id = null, string name = null, TimeSpan? offerExpiresAfter = null, DistributionMode mode = null)
+        {
+            return new DistributionPolicy(eTag, id, name, offerExpiresAfter, mode);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ClassificationPolicy"/>. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a classification policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="fallbackQueueId"> Id of a fallback queue to select if queue selector attachments doesn't find a match. </param>
+        /// <param name="queueSelectorAttachments"> Queue selector attachments used to resolve a queue for a job. </param>
+        /// <param name="prioritizationRule"> A rule to determine a priority score for a job. </param>
+        /// <param name="workerSelectorAttachments"> Worker selector attachments used to attach worker selectors to a job. </param>
+        /// <returns> A new <see cref="JobRouter.ClassificationPolicy"/> instance for mocking. </returns>
+        public static ClassificationPolicy ClassificationPolicy(ETag eTag = default, string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectorAttachments = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectorAttachments = null)
+        {
+            queueSelectorAttachments ??= new List<QueueSelectorAttachment>();
+            workerSelectorAttachments ??= new List<WorkerSelectorAttachment>();
+
+            return new ClassificationPolicy(eTag, id, name, fallbackQueueId, queueSelectorAttachments?.ToList(), prioritizationRule, workerSelectorAttachments?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionRule"/>. </summary>
         /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
@@ -56,6 +86,28 @@ namespace Azure.Communication.JobRouter
             return new RouterJobNote(message, addedAt);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobPositionDetails"/>. </summary>
+        /// <param name="jobId"> Id of the job these details are about. </param>
+        /// <param name="position"> Position of the job in question within that queue. </param>
+        /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
+        /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTime"> Estimated wait time of the job rounded up to the nearest minute. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="queueId"/> is null. </exception>
+        /// <returns> A new <see cref="JobRouter.RouterJobPositionDetails"/> instance for mocking. </returns>
+        public static RouterJobPositionDetails RouterJobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default, TimeSpan estimatedWaitTime = default)
+        {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (queueId == null)
+            {
+                throw new ArgumentNullException(nameof(queueId));
+            }
+
+            return new RouterJobPositionDetails(jobId, position, queueId, queueLength, estimatedWaitTime);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.UnassignJobResult"/>. </summary>
         /// <param name="jobId"> Id of an unassigned job. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
@@ -93,6 +145,19 @@ namespace Azure.Communication.JobRouter
             }
 
             return new AcceptJobOfferResult(assignmentId, jobId, workerId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueueStatistics"/>. </summary>
+        /// <param name="queueId"> Id of the queue these details are about. </param>
+        /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTimes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
+        /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
+        /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
+        public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, IDictionary<int, TimeSpan> estimatedWaitTimes = null, double? longestJobWaitTimeMinutes = null)
+        {
+            estimatedWaitTimes ??= new Dictionary<int, TimeSpan>();
+
+            return new RouterQueueStatistics(queueId, length, estimatedWaitTimes, longestJobWaitTimeMinutes);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterChannel"/>. </summary>
@@ -207,6 +272,16 @@ namespace Azure.Communication.JobRouter
         public static PassThroughQueueSelectorAttachment PassThroughQueueSelectorAttachment(string key = null, LabelOperator labelOperator = default)
         {
             return new PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind.PassThrough, key, labelOperator);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/>. </summary>
+        /// <param name="key"> The label key to query against. </param>
+        /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
+        /// <param name="expiresAfter"> Describes how long the attached label selector is valid in seconds. </param>
+        /// <returns> A new <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/> instance for mocking. </returns>
+        public static PassThroughWorkerSelectorAttachment PassThroughWorkerSelectorAttachment(string key = null, LabelOperator labelOperator = default, TimeSpan? expiresAfter = null)
+        {
+            return new PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind.PassThrough, key, labelOperator, expiresAfter);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.QueueLengthExceptionTrigger"/>. </summary>

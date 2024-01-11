@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.Communication.JobRouter
             }
             string key = default;
             LabelOperator labelOperator = default;
-            Optional<double> expiresAfterSeconds = default;
+            Optional<TimeSpan> expiresAfterSeconds = default;
             WorkerSelectorAttachmentKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,11 +38,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("expiresAfterSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    expiresAfterSeconds = property.Value.GetDouble();
+                    ReadExpiresAfter(property, ref expiresAfterSeconds);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

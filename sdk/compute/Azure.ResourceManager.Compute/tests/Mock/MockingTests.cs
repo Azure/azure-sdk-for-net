@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             // the mocking test
             var rg = rgMock.Object;
             var setCollection = rg.GetAvailabilitySets();
-            var setLro = await setCollection.CreateOrUpdateAsync(WaitUntil.Completed, setName, setData);
+            var setLro = await setCollection.CreateOrUpdateAsync(WaitUntil.Completed, setName, setData, default);
             var setResource = setLro.Value;
             var vmCollection = rg.GetVirtualMachines();
-            var vmLro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, vmData);
+            var vmLro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmName, vmData, default);
             var vmResource = vmLro.Value;
 
             Assert.AreEqual(setId, setResource.Id);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 
@@ -22,7 +23,7 @@ namespace Azure.Communication.JobRouter
             int position = default;
             string queueId = default;
             int queueLength = default;
-            double estimatedWaitTimeMinutes = default;
+            TimeSpan estimatedWaitTimeMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -47,7 +48,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("estimatedWaitTimeMinutes"u8))
                 {
-                    estimatedWaitTimeMinutes = property.Value.GetDouble();
+                    ReadEstimatedWaitTime(property, ref estimatedWaitTimeMinutes);
                     continue;
                 }
             }

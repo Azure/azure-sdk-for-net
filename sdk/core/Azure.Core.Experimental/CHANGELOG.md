@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added types `PopTokenRequestContext`, `PopTokenAuthenticationPolicy`, and `ISupportsProofOfPossession` to support Proof of Possession tokens.
+
 ### Breaking Changes
 
 ### Bugs Fixed
