@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Name), collectionId, info, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), collectionId, info);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +137,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdate(Guid.Parse(Id.Name), collectionId, info, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), collectionId, info);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

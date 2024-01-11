@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = await _firmwareWorkspaceWorkspacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotFirmwareDefenseArmOperation<FirmwareWorkspaceResource>(Response.FromValue(new FirmwareWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _firmwareWorkspaceWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new IotFirmwareDefenseArmOperation<FirmwareWorkspaceResource>(Response.FromValue(new FirmwareWorkspaceResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = _firmwareWorkspaceWorkspacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var operation = new IotFirmwareDefenseArmOperation<FirmwareWorkspaceResource>(Response.FromValue(new FirmwareWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _firmwareWorkspaceWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new IotFirmwareDefenseArmOperation<FirmwareWorkspaceResource>(Response.FromValue(new FirmwareWorkspaceResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

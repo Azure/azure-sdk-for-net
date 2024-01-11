@@ -40,6 +40,18 @@ namespace Azure.IoT.Hub.Service
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetTwinRequestUri(string id, string mid)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/twins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(mid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTwinRequest(string id, string mid)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +131,18 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReplaceTwinRequestUri(string id, string mid, TwinData deviceTwinInfo, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/twins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(mid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReplaceTwinRequest(string id, string mid, TwinData deviceTwinInfo, string ifMatch)
@@ -222,6 +246,18 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateUpdateTwinRequestUri(string id, string mid, TwinData deviceTwinInfo, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/twins/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(mid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateTwinRequest(string id, string mid, TwinData deviceTwinInfo, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -323,6 +359,17 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateGetModulesOnDeviceRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/modules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetModulesOnDeviceRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -401,6 +448,18 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetIdentityRequestUri(string id, string mid)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(mid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetIdentityRequest(string id, string mid)
@@ -482,6 +541,18 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateIdentityRequestUri(string id, string mid, ModuleIdentity module, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(mid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateIdentityRequest(string id, string mid, ModuleIdentity module, string ifMatch)
@@ -587,6 +658,18 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateDeleteIdentityRequestUri(string id, string mid, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(mid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteIdentityRequest(string id, string mid, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -661,6 +744,19 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateInvokeMethodRequestUri(string deviceId, string moduleId, CloudToDeviceMethodRequest directMethodRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/twins/", false);
+            uri.AppendPath(deviceId, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(moduleId, true);
+            uri.AppendPath("/methods", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateInvokeMethodRequest(string deviceId, string moduleId, CloudToDeviceMethodRequest directMethodRequest)

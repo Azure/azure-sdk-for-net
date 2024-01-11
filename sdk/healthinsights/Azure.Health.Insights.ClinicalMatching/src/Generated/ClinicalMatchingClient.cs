@@ -176,6 +176,16 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
         }
 
+        internal RequestUriBuilder CreateMatchTrialsRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/healthinsights", false);
+            uri.AppendPath("/trialmatcher/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMatchTrialsRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);

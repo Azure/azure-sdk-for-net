@@ -40,6 +40,19 @@ namespace Azure.Security.KeyVault.Storage
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetStorageAccountsRequestUri(int? maxresults)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStorageAccountsRequest(int? maxresults)
         {
             var message = _pipeline.CreateMessage();
@@ -98,6 +111,19 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeletedStorageAccountsRequestUri(int? maxresults)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/deletedstorage", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedStorageAccountsRequest(int? maxresults)
@@ -160,6 +186,16 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeletedStorageAccountRequestUri(string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/deletedstorage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedStorageAccountRequest(string storageAccountName)
@@ -233,6 +269,16 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreatePurgeDeletedStorageAccountRequestUri(string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/deletedstorage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePurgeDeletedStorageAccountRequest(string storageAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -292,6 +338,17 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRecoverDeletedStorageAccountRequestUri(string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/deletedstorage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/recover", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRecoverDeletedStorageAccountRequest(string storageAccountName)
@@ -366,6 +423,17 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateBackupStorageAccountRequestUri(string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/backup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateBackupStorageAccountRequest(string storageAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -436,6 +504,15 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRestoreStorageAccountRequestUri(byte[] storageBundleBackup)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/restore", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRestoreStorageAccountRequest(byte[] storageBundleBackup)
@@ -513,6 +590,16 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateDeleteStorageAccountRequestUri(string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteStorageAccountRequest(string storageAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -582,6 +669,16 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateGetStorageAccountRequestUri(string storageAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStorageAccountRequest(string storageAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -649,6 +746,16 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetStorageAccountRequestUri(string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes storageAccountAttributes, IDictionary<string, string> tags)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSetStorageAccountRequest(string storageAccountName, string resourceId, string activeKeyName, bool autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes storageAccountAttributes, IDictionary<string, string> tags)
@@ -765,6 +872,16 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateUpdateStorageAccountRequestUri(string storageAccountName, string activeKeyName, bool? autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes storageAccountAttributes, IDictionary<string, string> tags)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateStorageAccountRequest(string storageAccountName, string activeKeyName, bool? autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes storageAccountAttributes, IDictionary<string, string> tags)
         {
             var message = _pipeline.CreateMessage();
@@ -863,6 +980,17 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateRegenerateStorageAccountKeyRequestUri(string storageAccountName, string keyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/regeneratekey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegenerateStorageAccountKeyRequest(string storageAccountName, string keyName)
         {
             var message = _pipeline.CreateMessage();
@@ -948,6 +1076,21 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateGetSasDefinitionsRequestUri(string storageAccountName, int? maxresults)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/sas", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSasDefinitionsRequest(string storageAccountName, int? maxresults)
         {
             var message = _pipeline.CreateMessage();
@@ -1022,6 +1165,21 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeletedSasDefinitionsRequestUri(string storageAccountName, int? maxresults)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/deletedstorage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/sas", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedSasDefinitionsRequest(string storageAccountName, int? maxresults)
@@ -1100,6 +1258,18 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeletedSasDefinitionRequestUri(string storageAccountName, string sasDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/deletedstorage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/sas/", false);
+            uri.AppendPath(sasDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedSasDefinitionRequest(string storageAccountName, string sasDefinitionName)
@@ -1183,6 +1353,19 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRecoverDeletedSasDefinitionRequestUri(string storageAccountName, string sasDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/deletedstorage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/sas/", false);
+            uri.AppendPath(sasDefinitionName, true);
+            uri.AppendPath("/recover", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRecoverDeletedSasDefinitionRequest(string storageAccountName, string sasDefinitionName)
@@ -1269,6 +1452,18 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSasDefinitionRequestUri(string storageAccountName, string sasDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/sas/", false);
+            uri.AppendPath(sasDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSasDefinitionRequest(string storageAccountName, string sasDefinitionName)
         {
             var message = _pipeline.CreateMessage();
@@ -1350,6 +1545,18 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateGetSasDefinitionRequestUri(string storageAccountName, string sasDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/sas/", false);
+            uri.AppendPath(sasDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSasDefinitionRequest(string storageAccountName, string sasDefinitionName)
         {
             var message = _pipeline.CreateMessage();
@@ -1429,6 +1636,18 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetSasDefinitionRequestUri(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes, IDictionary<string, string> tags)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/sas/", false);
+            uri.AppendPath(sasDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSetSasDefinitionRequest(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes, IDictionary<string, string> tags)
@@ -1554,6 +1773,18 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateUpdateSasDefinitionRequestUri(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType? sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes, IDictionary<string, string> tags)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/storage/", false);
+            uri.AppendPath(storageAccountName, true);
+            uri.AppendPath("/sas/", false);
+            uri.AppendPath(sasDefinitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateSasDefinitionRequest(string storageAccountName, string sasDefinitionName, string templateUri, SasTokenType? sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes, IDictionary<string, string> tags)
         {
             var message = _pipeline.CreateMessage();
@@ -1664,6 +1895,14 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
+        internal RequestUriBuilder CreateGetStorageAccountsNextPageRequestUri(string nextLink, int? maxresults)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStorageAccountsNextPageRequest(string nextLink, int? maxresults)
         {
             var message = _pipeline.CreateMessage();
@@ -1731,6 +1970,14 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeletedStorageAccountsNextPageRequestUri(string nextLink, int? maxresults)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedStorageAccountsNextPageRequest(string nextLink, int? maxresults)
@@ -1802,6 +2049,14 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSasDefinitionsNextPageRequestUri(string nextLink, string storageAccountName, int? maxresults)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSasDefinitionsNextPageRequest(string nextLink, string storageAccountName, int? maxresults)
@@ -1881,6 +2136,14 @@ namespace Azure.Security.KeyVault.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDeletedSasDefinitionsNextPageRequestUri(string nextLink, string storageAccountName, int? maxresults)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeletedSasDefinitionsNextPageRequest(string nextLink, string storageAccountName, int? maxresults)
