@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages.Tests
 
             //act
             TextNotificationContent content = new(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
-            SendMessageResult sendMessageResult = await notificationMessagesClient.SendMessageAsync(content);
+            SendMessageResult sendMessageResult = await notificationMessagesClient.SendAsync(content);
 
             //assert
             Assert.IsNotNull(sendMessageResult.Receipts[0].MessageId);
@@ -52,7 +52,7 @@ namespace Azure.Communication.Messages.Tests
             NotificationMessagesClient notificationMessagesClient = CreateMockNotificationMessagesClient();
 
             //act & assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.SendMessageAsync((NotificationContent)null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await notificationMessagesClient.SendAsync((NotificationContent)null));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Azure.Communication.Messages.Tests
             {
                 //act
                 TextNotificationContent content = new(Guid.NewGuid(), new List<string> { "+1(123)456-7890" }, "testMessage");
-                await notificationMessagesClient.SendMessageAsync(content);
+                await notificationMessagesClient.SendAsync(content);
             }
             catch (RequestFailedException requestFailedException)
             {

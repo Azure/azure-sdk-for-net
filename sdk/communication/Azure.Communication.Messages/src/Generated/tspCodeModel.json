@@ -1198,7 +1198,7 @@
    "Operations": [
     {
      "$id": "147",
-     "Name": "sendMessage",
+     "Name": "send",
      "ResourceName": "NotificationMessagesClient",
      "Description": "Sends a notification message from Business to User.",
      "Parameters": [
@@ -1457,7 +1457,7 @@
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
      "Uri": "{endpoint}",
-     "Path": "/messages/notifications:sendMessage",
+     "Path": "/messages/notifications:send",
      "RequestMediaTypes": [
       "application/json"
      ],

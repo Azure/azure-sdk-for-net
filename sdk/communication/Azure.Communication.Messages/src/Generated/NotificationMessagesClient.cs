@@ -60,14 +60,14 @@ namespace Azure.Communication.Messages
         /// <param name="notificationContent"> Details of the message to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendMessageAsync(NotificationContent,CancellationToken)']/*" />
-        public virtual async Task<Response<SendMessageResult>> SendMessageAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(NotificationContent,CancellationToken)']/*" />
+        public virtual async Task<Response<SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = notificationContent.ToRequestContent();
-            Response response = await SendMessageAsync(content, context).ConfigureAwait(false);
+            Response response = await SendAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
 
@@ -75,14 +75,14 @@ namespace Azure.Communication.Messages
         /// <param name="notificationContent"> Details of the message to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendMessage(NotificationContent,CancellationToken)']/*" />
-        public virtual Response<SendMessageResult> SendMessage(NotificationContent notificationContent, CancellationToken cancellationToken = default)
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(NotificationContent,CancellationToken)']/*" />
+        public virtual Response<SendMessageResult> Send(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = notificationContent.ToRequestContent();
-            Response response = SendMessage(content, context);
+            Response response = Send(content, context);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SendMessageAsync(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SendAsync(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -106,16 +106,16 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendMessageAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> SendMessageAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> SendAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendMessage");
+            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendMessageRequest(content, context);
+                using HttpMessage message = CreateSendRequest(content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -135,7 +135,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SendMessage(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Send(NotificationContent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -145,16 +145,16 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendMessage(RequestContent,RequestContext)']/*" />
-        public virtual Response SendMessage(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(RequestContent,RequestContext)']/*" />
+        public virtual Response Send(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.SendMessage");
+            using var scope = ClientDiagnostics.CreateScope("NotificationMessagesClient.Send");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSendMessageRequest(content, context);
+                using HttpMessage message = CreateSendRequest(content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -270,14 +270,14 @@ namespace Azure.Communication.Messages
             }
         }
 
-        internal HttpMessage CreateSendMessageRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateSendRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/messages/notifications:sendMessage", false);
+            uri.AppendPath("/messages/notifications:send", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

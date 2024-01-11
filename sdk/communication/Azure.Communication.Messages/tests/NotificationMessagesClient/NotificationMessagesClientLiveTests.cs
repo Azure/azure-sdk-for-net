@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages.Tests
             TextNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
 
             // Act
-            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(content);
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
 
             // Assert
             validateResponse(response);
@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages.Tests
             TextNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
 
             // Act
-            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(content);
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
 
             // Assert
             validateResponse(response);
@@ -68,7 +68,7 @@ namespace Azure.Communication.Messages.Tests
             NotificationContent content = new TemplateNotificationContent(channelRegistrationId, recipients, template);
 
             // Act
-            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(content);
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
 
             // Assert
             validateResponse(response);
@@ -96,7 +96,7 @@ namespace Azure.Communication.Messages.Tests
             var content = new TemplateNotificationContent(channelRegistrationId, recipients, template);
 
             // Act
-            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(content);
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
 
             // Assert
             validateResponse(response);
@@ -130,7 +130,7 @@ namespace Azure.Communication.Messages.Tests
             TemplateNotificationContent content = new(channelRegistrationId, recipients, template);
 
             // Act
-            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(content);
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
 
             // Assert
             validateResponse(response);
@@ -162,7 +162,7 @@ namespace Azure.Communication.Messages.Tests
             TemplateNotificationContent content = new(channelRegistrationId, recipients, template);
 
             // Act
-            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(content);
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
 
             // Assert
             validateResponse(response);
@@ -197,7 +197,7 @@ namespace Azure.Communication.Messages.Tests
             TemplateNotificationContent content = new(channelRegistrationId, recipients, template);
 
             // Act
-            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(content);
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
 
             // Assert
             validateResponse(response);
@@ -235,7 +235,7 @@ namespace Azure.Communication.Messages.Tests
             TemplateNotificationContent content = new(channelRegistrationId, recipients, template);
 
             // Act
-            Response<SendMessageResult> response = await notificationMessagesClient.SendMessageAsync(content);
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(content);
 
             // Assert
             validateResponse(response);

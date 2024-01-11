@@ -39,14 +39,14 @@ MessageTemplateClient messageTemplateClient = new MessageTemplateClient(connecti
 
 ## Examples
 ### Send an Notification Message
-To send a notification message, call the `SendMessage` or `SendMessageAsync` function from the `NotificationMessagesClient`.
+To send a notification message, call the `SendMessage` or `SendAsync` function from the `NotificationMessagesClient`.
 
 #### Send a text message
 ```C#
 // Create the recipient list, currently only one recipient is supported 
 var recipient = new List<string> { "<to-phone-number>" };
 var options = new SendMessageOptions("<channel-registration-id>", recipient, "Come on everyone, let's go for lunch together.");
-SendMessageResult result = await notificationMessagesClient.SendMessageAsync(options);
+SendMessageResult result = await notificationMessagesClient.SendAsync(options);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
@@ -58,7 +58,7 @@ string templateName = "sample_template";
 string templateLanguage = "en_us";
 var messageTemplate = new MessageTemplate(templateName, templateLanguage);
 var sendTemplateMessageOptions = new SendMessageOptions(channelRegistrationId, recipientList, messageTemplate);
-SendMessageResult result = await notificationMessagesClient.SendMessageAsync(sendTemplateMessageOptions);
+SendMessageResult result = await notificationMessagesClient.SendAsync(sendTemplateMessageOptions);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
@@ -68,7 +68,7 @@ Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 var recipient = new List<string> { "<to-phone-number>" };
 var uri = new Uri("https://aka.ms/acsicon1");
 var sendMediaMessageOptions = new SendMessageOptions(channelRegistrationId, recipientList, uri);
-SendMessageResult result = await notificationMessagesClient.SendMessageAsync(sendMediaMessageOptions);
+SendMessageResult result = await notificationMessagesClient.SendAsync(sendMediaMessageOptions);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```
 
