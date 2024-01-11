@@ -240,7 +240,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="updateDialogRequest"/> is null. </exception>
         /// <remarks> Update a dialog. </remarks>
-        public async Task<Response<DialogStateResponseInternal>> UpdateDialogAsync(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateDialogAsync(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -260,12 +260,7 @@ namespace Azure.Communication.CallAutomation
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        DialogStateResponseInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DialogStateResponseInternal.DeserializeDialogStateResponseInternal(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -278,7 +273,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/>, <paramref name="dialogId"/> or <paramref name="updateDialogRequest"/> is null. </exception>
         /// <remarks> Update a dialog. </remarks>
-        public Response<DialogStateResponseInternal> UpdateDialog(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, CancellationToken cancellationToken = default)
+        public Response UpdateDialog(string callConnectionId, string dialogId, UpdateDialogRequestInternal updateDialogRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -298,12 +293,7 @@ namespace Azure.Communication.CallAutomation
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        DialogStateResponseInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DialogStateResponseInternal.DeserializeDialogStateResponseInternal(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
