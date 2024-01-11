@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.BastionHostData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BastionHostData BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, BastionHostSkuName? skuName, IEnumerable<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos)
-            => BastionHostData(id, name, resourceType, location, tags, etag, skuName, ipConfigurations, dnsName, null, null, provisioningState, scaleUnits, disableCopyPaste, enableFileCopy, enableIPConnect, enableShareableLink, enableTunneling, enableKerberos);
+            => BastionHostData(id, name, resourceType, location, tags, null, etag, skuName, ipConfigurations, dnsName, null, null, provisioningState, scaleUnits, disableCopyPaste, enableFileCopy, enableIPConnect, enableShareableLink, enableTunneling, enableKerberos);
 
         /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
         /// <param name="id"> Resource ID. </param>
