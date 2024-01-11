@@ -1,4 +1,29 @@
-# Description: This script is used to verify the specs used to generate SDK package point to the main branch of Azure/azure-rest-api-specs repository
+<#
+.SYNOPSIS
+  Verifies the location of the REST API specification.
+
+.DESCRIPTION
+  This script is used to verify the REST API specifications used to generate SDK package are from the main branch of Azure/azure-rest-api-specs repository.
+
+.PARAMETER ServiceDirectory
+  The directory path of the service.
+
+.PARAMETER PackageName
+  The name of the package.
+
+.PARAMETER ArtifactLocation
+  The location of the generated artifact for the package.
+
+.PARAMETER GitHubPat
+  The GitHub personal access token used for authentication.
+
+.PARAMETER PackageInfoDirectory
+  The directory path where the package information is stored.
+
+.EXAMPLE
+  Verify-RestApiSpecLocation -ServiceDirectory "/home/azure-sdk-for-net/sdk/serviceab" -PackageName "MyPackage" -ArtifactLocation "/home/ab/artifacts" -GitHubPat "xxxxxxxxxxxx" -PackageInfoDirectory "/home/ab/artifacts/PackageInfo"
+
+#>
 [CmdletBinding()]
 param (
   [Parameter(Position = 0)]
@@ -11,7 +36,8 @@ param (
   [string] $ArtifactLocation,
   [Parameter(Position = 2)]
   [ValidateNotNullOrEmpty()]
-  [string]$GitHubPat
+  [string]$GitHubPat,
+  [string]$PackageInfoDirectory
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -130,34 +156,67 @@ function Verify-YamlContent([string]$markdownContent) {
 
 function Verify-PackageVersion() {
   try {
-    $resolvedPath = Resolve-Path -Path $ArtifactLocation
-    if(-not (Test-Path -Path $resolvedPath -IsValid)) {
-      LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Invalid artifact location: $ArtifactLocation"
+    $packages = @{}
+    if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn"))
+    {
+      $packages = &$FindArtifactForApiReviewFn $ArtifactLocation $PackageName
+    }
+    else
+    {
+      LogError "The function for 'FindArtifactForApiReviewFn' was not found.`
+      Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
+      See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
       exit(1)
     }
-    $pkgs, $parsePkgInfoFn = RetrievePackages -artifactLocation $resolvedPath
-    if ($parsePkgInfoFn -and (Test-Path "Function:$parsePkgInfoFn")) {
-      foreach ($pkg in $pkgs) {
-        $parsedPackage = &$parsePkgInfoFn -pkg $pkg -workingDirectory ''
-
-        if ($parsedPackage -eq $null) {
-          continue
-        }
-
-        if ($parsedPackage.Deployable -ne $True) {
-          LogDebug "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository or the version hasn't been updated properly."
-          exit(0)
-        }
-        $isPrerelease = [AzureEngSemanticVersion]::ParseVersionString($parsedPackage.PackageVersion).IsPrerelease
-        if ($isPrerelease -eq $True) {
-          LogDebug "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) is a prerelease version and the validation of spec location is ignored."
-          exit(0)
-        }
+    if (-not $PackageInfoDirectory)
+    {
+      $PackageInfoDirectory = Join-Path -Path $ArtifactLocation "PackageInfo"
+      if (-not (Test-Path -Path $PackageInfoDirectory)) {
+        # Call Save-Package-Properties.ps1 script to generate package info json files
+        $savePropertiesScriptPath = Join-Path -Path $PSScriptRoot "Save-Package-Properties.ps1"
+        & $savePropertiesScriptPath -serviceDirectory $ServiceDirectory -outDirectory $PackageInfoDirectory
       }
+    }
+
+    $continueValidation = $false
+    if ($packages)
+    {
+      foreach($pkgPath in $packages.Values)
+      {
+        $pkgPropPath = Join-Path -Path $PackageInfoDirectory "$PackageName.json"
+        if (-Not (Test-Path $pkgPropPath))
+        {
+            Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Package property file path $($pkgPropPath) is invalid."
+            continue
+        }
+        # Get package info from json file
+        $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
+        $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
+        if ($null -eq $version)
+        {
+            LogError "ServiceDir:$ServiceDirectory, Version info is not available for package $PackageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
+            exit 1
+        }
+
+        Write-Host "Version: $($version)"
+        Write-Host "SDK Type: $($pkgInfo.SdkType)"
+        Write-Host "Release Status: $($pkgInfo.ReleaseStatus)"
+
+        # Ignore the validation if the package is not GA version
+        if ($version.IsPrerelease) {
+          Write-Host "ServiceDir:$ServiceDirectory, Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version is a prerelease version and the validation of spec location is ignored."
+          exit(0)
+        }
+        $continueValidation = $true
+      }
+    }
+    if($continueValidation -eq $false) {
+      Write-Host "ServiceDir:$ServiceDirectory, no package info is found for package $PackageName, the validation of spec location is ignored."
+      exit(0)
     }
   }
   catch {
-    LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to retrieve package and package version with exception:`n$_ "
+    LogError "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to retrieve package and validate package version with exception:`n$_ "
     exit(1)
   }
 }
