@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BenefitRecommendationProperties properties, BillingAccountBenefitKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, BenefitRecommendationProperties properties, BillingAccountBenefitKind? kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;

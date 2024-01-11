@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CostManagementDimension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, bool? isFilterEnabled, bool? isGroupingEnabled, IReadOnlyList<string> data, int? total, string category, DateTimeOffset? usageStart, DateTimeOffset? usageEnd, string nextLink, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CostManagementDimension(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string description, bool? isFilterEnabled, bool? isGroupingEnabled, IReadOnlyList<string> data, int? total, string category, DateTimeOffset? usageStart, DateTimeOffset? usageEnd, string nextLink, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             IsFilterEnabled = isFilterEnabled;

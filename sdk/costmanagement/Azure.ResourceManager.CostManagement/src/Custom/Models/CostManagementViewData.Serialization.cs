@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<ResourceIdentifier> scope = default;
             Optional<DateTimeOffset> createdOn = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CostManagement
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
