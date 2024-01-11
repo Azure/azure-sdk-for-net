@@ -89,7 +89,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedInstanceStartStopScheduleResource>(Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SqlArmOperation<ManagedInstanceStartStopScheduleResource>(Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,7 +138,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedInstanceStartStopScheduleResource>(Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SqlArmOperation<ManagedInstanceStartStopScheduleResource>(Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

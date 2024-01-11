@@ -43,6 +43,25 @@ namespace Azure.Search.Documents
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string skillsetName, SearchIndexerSkillset skillset, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/skillsets('", false);
+            uri.AppendPath(skillsetName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipIndexerResetRequirementForCache != null)
+            {
+                uri.AppendQuery("ignoreResetRequirements", skipIndexerResetRequirementForCache.Value, true);
+            }
+            if (disableCacheReprocessingChangeDetection != null)
+            {
+                uri.AppendQuery("disableCacheReprocessingChangeDetection", disableCacheReprocessingChangeDetection.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string skillsetName, SearchIndexerSkillset skillset, string ifMatch, string ifNoneMatch, bool? skipIndexerResetRequirementForCache, bool? disableCacheReprocessingChangeDetection)
         {
             var message = _pipeline.CreateMessage();
@@ -154,6 +173,17 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string skillsetName, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/skillsets('", false);
+            uri.AppendPath(skillsetName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string skillsetName, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -228,6 +258,17 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string skillsetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/skillsets('", false);
+            uri.AppendPath(skillsetName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string skillsetName)
         {
             var message = _pipeline.CreateMessage();
@@ -298,6 +339,19 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/skillsets", false);
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string select)
         {
             var message = _pipeline.CreateMessage();
@@ -356,6 +410,15 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(SearchIndexerSkillset skillset)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/skillsets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(SearchIndexerSkillset skillset)
@@ -428,6 +491,17 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResetSkillsRequestUri(string skillsetName, ResetSkillsOptions skillNames)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/skillsets('", false);
+            uri.AppendPath(skillsetName, true);
+            uri.AppendPath("')/search.resetskills", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResetSkillsRequest(string skillsetName, ResetSkillsOptions skillNames)

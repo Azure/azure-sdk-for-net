@@ -42,6 +42,15 @@ namespace Azure.Search.Documents
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(SearchAlias @alias)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/aliases", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(SearchAlias @alias)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +123,15 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/aliases", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -166,6 +184,17 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string aliasName, SearchAlias @alias, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/aliases('", false);
+            uri.AppendPath(aliasName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string aliasName, SearchAlias @alias, string ifMatch, string ifNoneMatch)
@@ -267,6 +296,17 @@ namespace Azure.Search.Documents
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string aliasName, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/aliases('", false);
+            uri.AppendPath(aliasName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string aliasName, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -339,6 +379,17 @@ namespace Azure.Search.Documents
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string aliasName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/aliases('", false);
+            uri.AppendPath(aliasName, true);
+            uri.AppendPath("')", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string aliasName)
