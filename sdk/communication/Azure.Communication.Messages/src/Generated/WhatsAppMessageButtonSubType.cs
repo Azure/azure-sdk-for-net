@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> The WhatsApp button sub type. </summary>
     public readonly partial struct WhatsAppMessageButtonSubType : IEquatable<WhatsAppMessageButtonSubType>

@@ -6,6 +6,9 @@ using Azure.Core;
 #pragma warning disable SA1402 // File may only contain a single type
 namespace Azure.Communication.Messages.Models.Channels
 {
+    [CodeGenModel("WhatsAppMessageButtonSubType")]
+    public partial struct WhatsAppMessageButtonSubType { }
+
     [CodeGenModel("WhatsAppMessageTemplateBindings")]
     public partial class WhatsAppMessageTemplateBindings { }
 
