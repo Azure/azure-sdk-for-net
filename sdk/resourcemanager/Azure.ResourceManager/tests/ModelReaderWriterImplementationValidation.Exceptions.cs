@@ -11,9 +11,9 @@ namespace Azure.ResourceManager.TestFramework
             {
                 "Azure.ResourceManager.Resources.Models.SubResource",
                 "Azure.ResourceManager.Resources.Models.WritableSubResource",
-                "Azure.ResourceManager.Models.ManagedServiceIdentity", // TODO -- we should remove this when we support it
                 "Azure.ResourceManager.Models.ResourceData",
-                "Azure.ResourceManager.Models.TrackedResourceData"
+                "Azure.ResourceManager.Models.TrackedResourceData",
+                "Azure.ResourceManager.ManagementGroups.Models.ManagementGroupCollectionGetEntitiesOptions"
             };
         }
     }
