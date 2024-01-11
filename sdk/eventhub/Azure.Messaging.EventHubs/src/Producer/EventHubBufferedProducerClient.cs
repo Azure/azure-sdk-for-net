@@ -1824,7 +1824,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     }
                     catch (OperationCanceledException)
                     {
-                        throw new EventHubsException(true, EventHubName, "The buffered producer took too long to start.", EventHubsException.FailureReason.ServiceTimeout);
+                        throw new EventHubsException(true, EventHubName, Resources.BufferedProducerStartupTimeout, EventHubsException.FailureReason.ServiceTimeout);
                     }
                 }
 
