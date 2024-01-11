@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="encryption"> Type of encryption. </param>
         /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
-        internal ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, EncryptionProperties encryptionProperties, NetworkRuleSet networkAcls)
+        internal ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, NetworkRuleSet networkAcls)
         {
             Identity = identity;
             ProtocolType = protocolType;
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Type of storage target. </summary>
-        public StorageTargetType? ProtocolType { get; set; }
+        public ElasticSanStorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>
         public ElasticSanEncryptionType? Encryption { get; set; }
         /// <summary> Encryption Properties describing Key Vault and Identity information. </summary>
-        public EncryptionProperties EncryptionProperties { get; set; }
+        public ElasticSanEncryptionProperties EncryptionProperties { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>

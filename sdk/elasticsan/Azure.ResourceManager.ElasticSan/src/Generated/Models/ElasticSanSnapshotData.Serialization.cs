@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ElasticSan
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            SnapshotCreationData creationData = default;
+            SnapshotCreationInfo creationData = default;
             Optional<ElasticSanProvisioningState> provisioningState = default;
             Optional<long> sourceVolumeSizeGiB = default;
             Optional<string> volumeName = default;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         if (property0.NameEquals("creationData"u8))
                         {
-                            creationData = SnapshotCreationData.DeserializeSnapshotCreationData(property0.Value);
+                            creationData = SnapshotCreationInfo.DeserializeSnapshotCreationInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<long> totalMbps = default;
             Optional<long> totalSizeTiB = default;
             Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<ElasticSanPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new ElasticSanPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

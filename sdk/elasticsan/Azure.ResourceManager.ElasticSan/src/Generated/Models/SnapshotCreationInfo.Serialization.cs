@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class SnapshotCreationData : IUtf8JsonSerializable
+    public partial class SnapshotCreationInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteEndObject();
         }
 
-        internal static SnapshotCreationData DeserializeSnapshotCreationData(JsonElement element)
+        internal static SnapshotCreationInfo DeserializeSnapshotCreationInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SnapshotCreationData(sourceId);
+            return new SnapshotCreationInfo(sourceId);
         }
     }
 }

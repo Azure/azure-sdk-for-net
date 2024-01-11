@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, Models.EncryptionProperties encryptionProperties, NetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData)
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, NetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> State of the operation on the resource. </summary>
         public ElasticSanProvisioningState? ProvisioningState { get; }
         /// <summary> Type of storage target. </summary>
-        public StorageTargetType? ProtocolType { get; set; }
+        public ElasticSanStorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>
         public ElasticSanEncryptionType? Encryption { get; set; }
         /// <summary> Encryption Properties describing Key Vault and Identity information. </summary>
-        public Models.EncryptionProperties EncryptionProperties { get; set; }
+        public ElasticSanEncryptionProperties EncryptionProperties { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>

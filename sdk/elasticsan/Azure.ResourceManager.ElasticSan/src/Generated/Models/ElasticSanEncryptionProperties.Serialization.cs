@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class EncryptionProperties : IUtf8JsonSerializable
+    public partial class ElasticSanEncryptionProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteEndObject();
         }
 
-        internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element)
+        internal static ElasticSanEncryptionProperties DeserializeElasticSanEncryptionProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<KeyVaultProperties> keyVaultProperties = default;
+            Optional<ElasticSanKeyVaultProperties> keyVaultProperties = default;
             Optional<EncryptionIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = ElasticSanKeyVaultProperties.DeserializeElasticSanKeyVaultProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new EncryptionProperties(keyVaultProperties.Value, identity.Value);
+            return new ElasticSanEncryptionProperties(keyVaultProperties.Value, identity.Value);
         }
     }
 }

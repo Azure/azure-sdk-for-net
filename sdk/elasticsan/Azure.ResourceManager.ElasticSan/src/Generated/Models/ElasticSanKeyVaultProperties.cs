@@ -10,21 +10,21 @@ using System;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Properties of key vault. </summary>
-    public partial class KeyVaultProperties
+    public partial class ElasticSanKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
-        public KeyVaultProperties()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanKeyVaultProperties"/>. </summary>
+        public ElasticSanKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="currentVersionedKeyIdentifier"> The object identifier of the current versioned Key Vault Key in use. </param>
         /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
         /// <param name="currentVersionedKeyExpirationTimestamp"> This is a read only property that represents the expiration time of the current version of the customer managed key used for encryption. </param>
-        internal KeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, DateTimeOffset? currentVersionedKeyExpirationTimestamp)
+        internal ElasticSanKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, DateTimeOffset? currentVersionedKeyExpirationTimestamp)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;

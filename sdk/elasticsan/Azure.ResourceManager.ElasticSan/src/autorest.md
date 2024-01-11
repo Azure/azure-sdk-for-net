@@ -51,6 +51,7 @@ acronym-mapping:
   MBps: Mbps
   LRS: Lrs
   ZRS: Zrs
+  XMs: Xms
 
 prepend-rp-prefix:
   - EncryptionType
@@ -64,10 +65,15 @@ prepend-rp-prefix:
   - SkuInformationList
   - SkuLocationInfo
   - Snapshot
+  - KeyVaultProperties
+  - EncryptionProperties
+  - PublicNetworkAccess
+  - StorageTargetType
 
 rename-mapping:
   Volume.properties.volumeId: -|uuid
   VirtualNetworkRule.id: -|arm-id
+  EncryptionIdentity.userAssignedIdentity: -|arm-id
   Action: ElasticSanVirtualNetworkRuleAction
   OperationalStatus: ResourceOperationalStatus
   ProvisioningStates: ElasticSanProvisioningState
@@ -75,6 +81,7 @@ rename-mapping:
   SKUCapability: ElasticSanSkuCapability
   SourceCreationData: ElasticSanVolumeDataSourceInfo
   VirtualNetworkRule: ElasticSanVirtualNetworkRule
+  SnapshotCreationData: SnapshotCreationInfo
 
 directive:
 - from: elasticsan.json

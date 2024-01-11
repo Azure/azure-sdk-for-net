@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <summary> Initializes a new instance of <see cref="ElasticSanSnapshotData"/>. </summary>
         /// <param name="creationData"> Data used when creating a volume snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationData"/> is null. </exception>
-        public ElasticSanSnapshotData(SnapshotCreationData creationData)
+        public ElasticSanSnapshotData(SnapshotCreationInfo creationData)
         {
             Argument.AssertNotNull(creationData, nameof(creationData));
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="sourceVolumeSizeGiB"> Size of Source Volume. </param>
         /// <param name="volumeName"> Source Volume Name of a snapshot. </param>
-        internal ElasticSanSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotCreationData creationData, ElasticSanProvisioningState? provisioningState, long? sourceVolumeSizeGiB, string volumeName) : base(id, name, resourceType, systemData)
+        internal ElasticSanSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotCreationInfo creationData, ElasticSanProvisioningState? provisioningState, long? sourceVolumeSizeGiB, string volumeName) : base(id, name, resourceType, systemData)
         {
             CreationData = creationData;
             ProvisioningState = provisioningState;
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Data used when creating a volume snapshot. </summary>
-        internal SnapshotCreationData CreationData { get; set; }
+        internal SnapshotCreationInfo CreationData { get; set; }
         /// <summary> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </summary>
         public ResourceIdentifier CreationDataSourceId
         {
             get => CreationData is null ? default : CreationData.SourceId;
-            set => CreationData = new SnapshotCreationData(value);
+            set => CreationData = new SnapshotCreationInfo(value);
         }
 
         /// <summary> State of the operation on the resource. </summary>

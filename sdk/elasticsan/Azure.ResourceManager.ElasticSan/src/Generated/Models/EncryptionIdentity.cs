@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Encryption identity for the volume group. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
         /// <param name="encryptionUserAssignedIdentity"> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </param>
-        internal EncryptionIdentity(string encryptionUserAssignedIdentity)
+        internal EncryptionIdentity(ResourceIdentifier encryptionUserAssignedIdentity)
         {
             EncryptionUserAssignedIdentity = encryptionUserAssignedIdentity;
         }
 
         /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </summary>
-        public string EncryptionUserAssignedIdentity { get; set; }
+        public ResourceIdentifier EncryptionUserAssignedIdentity { get; set; }
     }
 }

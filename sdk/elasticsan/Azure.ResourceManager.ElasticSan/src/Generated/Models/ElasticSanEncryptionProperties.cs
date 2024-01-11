@@ -5,31 +5,33 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> The encryption settings on the volume group. </summary>
-    public partial class EncryptionProperties
+    public partial class ElasticSanEncryptionProperties
     {
-        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
-        public EncryptionProperties()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanEncryptionProperties"/>. </summary>
+        public ElasticSanEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanEncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
         /// <param name="encryptionIdentity"> The identity to be used with service-side encryption at rest. </param>
-        internal EncryptionProperties(KeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity)
+        internal ElasticSanEncryptionProperties(ElasticSanKeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity)
         {
             KeyVaultProperties = keyVaultProperties;
             EncryptionIdentity = encryptionIdentity;
         }
 
         /// <summary> Properties provided by key vault. </summary>
-        public KeyVaultProperties KeyVaultProperties { get; set; }
+        public ElasticSanKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> The identity to be used with service-side encryption at rest. </summary>
         internal EncryptionIdentity EncryptionIdentity { get; set; }
         /// <summary> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </summary>
-        public string EncryptionUserAssignedIdentity
+        public ResourceIdentifier EncryptionUserAssignedIdentity
         {
             get => EncryptionIdentity is null ? default : EncryptionIdentity.EncryptionUserAssignedIdentity;
             set

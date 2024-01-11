@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Data used when creating a volume snapshot. </summary>
-    public partial class SnapshotCreationData
+    public partial class SnapshotCreationInfo
     {
-        /// <summary> Initializes a new instance of <see cref="SnapshotCreationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotCreationInfo"/>. </summary>
         /// <param name="sourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public SnapshotCreationData(ResourceIdentifier sourceId)
+        public SnapshotCreationInfo(ResourceIdentifier sourceId)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 

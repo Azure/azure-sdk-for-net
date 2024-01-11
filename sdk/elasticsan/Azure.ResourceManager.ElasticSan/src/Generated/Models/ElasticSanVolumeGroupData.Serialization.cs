@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<StorageTargetType> protocolType = default;
+            Optional<ElasticSanStorageTargetType> protocolType = default;
             Optional<ElasticSanEncryptionType> encryption = default;
-            Optional<Models.EncryptionProperties> encryptionProperties = default;
+            Optional<ElasticSanEncryptionProperties> encryptionProperties = default;
             Optional<NetworkRuleSet> networkAcls = default;
             Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            protocolType = new StorageTargetType(property0.Value.GetString());
+                            protocolType = new ElasticSanStorageTargetType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            encryptionProperties = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
