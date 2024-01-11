@@ -574,6 +574,10 @@ public partial class AssistantsClient
         if (_isConfiguredForAzure)
         {
             uri.AppendPath("openai");
+            if (operationPath.ToLowerInvariant().StartsWith("/files"))
+            {
+                uri.AppendPath("/beta", escape: false);
+            }
             uri.AppendPath(operationPath, escape: false);
             // uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("api-version", "2024-01-01-preview", true);

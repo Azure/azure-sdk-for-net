@@ -19,6 +19,7 @@ public class FunctionsTests : AssistantsTestBase
 
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task CanCallParallelFunctions(OpenAIClientServiceTarget target)
     {
         AssistantsClient client = GetTestClient(target);

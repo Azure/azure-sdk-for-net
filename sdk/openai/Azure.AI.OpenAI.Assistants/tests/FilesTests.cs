@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Assistants;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -21,6 +20,7 @@ public class FilesTests : AssistantsTestBase
 
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task CanWorkWithFiles(OpenAIClientServiceTarget target)
     {
         AssistantsClient client = GetTestClient(target);
@@ -52,12 +52,15 @@ public class FilesTests : AssistantsTestBase
         Assert.That(matchingPurposeFiles.Any(file => file.Id == uploadedFile.Id));
 
         // Listing files with a different purpose should work, and our uploaded file should not be there
-        Response<IReadOnlyList<OpenAIFile>> listNotMatchingPurposeFilesResponse
-            = await client.GetFilesAsync(OpenAIFilePurpose.FineTuneResults);
-        AssertSuccessfulResponse(listNotMatchingPurposeFilesResponse);
-        IReadOnlyList<OpenAIFile> notMatchingPurposeFiles = listNotMatchingPurposeFilesResponse.Value;
-        Assert.That(notMatchingPurposeFiles.All(file => file.Purpose == OpenAIFilePurpose.FineTuneResults));
-        Assert.That(!notMatchingPurposeFiles.Any(file => file.Id == uploadedFile.Id));
+        if (target != OpenAIClientServiceTarget.Azure)
+        {
+            Response<IReadOnlyList<OpenAIFile>> listNotMatchingPurposeFilesResponse
+                = await client.GetFilesAsync(OpenAIFilePurpose.FineTuneResults);
+            AssertSuccessfulResponse(listNotMatchingPurposeFilesResponse);
+            IReadOnlyList<OpenAIFile> notMatchingPurposeFiles = listNotMatchingPurposeFilesResponse.Value;
+            Assert.That(notMatchingPurposeFiles.All(file => file.Purpose == OpenAIFilePurpose.FineTuneResults));
+            Assert.That(!notMatchingPurposeFiles.Any(file => file.Id == uploadedFile.Id));
+        }
 
         // Retrieving file information should work
         Response<OpenAIFile> retrieveFileResponse = await client.RetrieveFileAsync(uploadedFile.Id);
@@ -77,6 +80,7 @@ public class FilesTests : AssistantsTestBase
 
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task ConvenienceMethodWorks(OpenAIClientServiceTarget target)
     {
         AssistantsClient client = GetTestClient(target);

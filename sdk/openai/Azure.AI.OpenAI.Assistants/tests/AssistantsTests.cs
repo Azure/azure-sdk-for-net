@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Assistants.Tests;
 public class AssistantsTests : AssistantsTestBase
 {
     public AssistantsTests(bool isAsync)
-        : base(isAsync)//, RecordedTestMode.Live)
+        : base(isAsync) // , RecordedTestMode.Live)
     {
     }
 
@@ -73,6 +73,7 @@ public class AssistantsTests : AssistantsTestBase
             assistantCreationResponse.Value.Id,
             new AssistantModificationOptions()
             {
+                Model = deploymentName,
                 Metadata =
                 {
                     [s_testMetadataKey] = TestMetadataValue,
@@ -92,7 +93,7 @@ public class AssistantsTests : AssistantsTestBase
     }
 
     [RecordedTest]
-    // [TestCase(OpenAIClientServiceTarget.Azure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     public async Task CanCreateRetrieveAndDeleteThreads(OpenAIClientServiceTarget serviceTarget)
     {
@@ -118,7 +119,7 @@ public class AssistantsTests : AssistantsTestBase
     }
 
     [RecordedTest]
-    // [TestCase(OpenAIClientServiceTarget.Azure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     public async Task CanCreateAndModifyMessages(OpenAIClientServiceTarget serviceTarget)
     {
@@ -173,7 +174,7 @@ public class AssistantsTests : AssistantsTestBase
     }
 
     [RecordedTest]
-    // [TestCase(OpenAIClientServiceTarget.Azure)]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     public async Task CanRunAThread(OpenAIClientServiceTarget serviceTarget)
     {
