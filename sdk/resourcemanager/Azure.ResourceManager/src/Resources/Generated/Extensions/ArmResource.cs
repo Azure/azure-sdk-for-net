@@ -34,14 +34,6 @@ namespace Azure.ResourceManager
         /// <term>Operation Id</term>
         /// <description>PolicyAssignments_Get</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAssignmentResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
@@ -64,14 +56,6 @@ namespace Azure.ResourceManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,14 +87,6 @@ namespace Azure.ResourceManager
         /// <term>Operation Id</term>
         /// <description>ManagementLocks_GetByScope</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementLockResource"/></description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
@@ -133,14 +109,6 @@ namespace Azure.ResourceManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementLocks_GetByScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementLockResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

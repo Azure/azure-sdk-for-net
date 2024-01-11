@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support '{format}' format.");
+                throw new InvalidOperationException($"The model {nameof(ManagementGroupPatch)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support '{format}' format.");
+                throw new InvalidOperationException($"The model {nameof(ManagementGroupPatch)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support '{options.Format}' format.");
+                    throw new InvalidOperationException($"The model {nameof(ManagementGroupPatch)} does not support '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         return DeserializeManagementGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupPatch)} does not support '{options.Format}' format.");
+                    throw new InvalidOperationException($"The model {nameof(ManagementGroupPatch)} does not support '{options.Format}' format.");
             }
         }
 

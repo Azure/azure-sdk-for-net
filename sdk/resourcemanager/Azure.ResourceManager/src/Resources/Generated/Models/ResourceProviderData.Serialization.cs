@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderData)} does not support '{format}' format.");
+                throw new InvalidOperationException($"The model {nameof(ResourceProviderData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderData)} does not support '{format}' format.");
+                throw new InvalidOperationException($"The model {nameof(ResourceProviderData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Resources
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderData)} does not support '{options.Format}' format.");
+                    throw new InvalidOperationException($"The model {nameof(ResourceProviderData)} does not support '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeResourceProviderData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderData)} does not support '{options.Format}' format.");
+                    throw new InvalidOperationException($"The model {nameof(ResourceProviderData)} does not support '{options.Format}' format.");
             }
         }
 
