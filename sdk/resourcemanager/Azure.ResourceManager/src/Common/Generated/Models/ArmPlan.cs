@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.Models
             Version = version;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/> for deserialization. </summary>
+        internal ArmPlan()
+        {
+        }
+
         /// <summary> A user defined name of the 3rd Party Artifact that is being procured. </summary>
         public string Name { get; set; }
         /// <summary> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </summary>

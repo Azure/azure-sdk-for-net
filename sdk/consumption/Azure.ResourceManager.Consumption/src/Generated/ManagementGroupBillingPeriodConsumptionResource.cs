@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -101,6 +105,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AggregatedCost_GetForBillingPeriodByManagementGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

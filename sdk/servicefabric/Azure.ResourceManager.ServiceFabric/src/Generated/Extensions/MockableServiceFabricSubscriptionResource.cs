@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,6 +88,14 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -100,6 +116,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +148,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -154,6 +178,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_GetByEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +211,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_GetByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -211,6 +243,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -232,6 +268,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,6 +295,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_ListByEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
@@ -277,6 +321,10 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ClusterVersions_ListByEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// </summary>

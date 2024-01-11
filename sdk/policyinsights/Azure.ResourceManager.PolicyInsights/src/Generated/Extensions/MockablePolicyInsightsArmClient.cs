@@ -76,6 +76,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -99,6 +107,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +148,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -156,6 +180,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -179,6 +211,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyTrackedResources_ListQueryResultsForResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +244,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyTrackedResources_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -235,6 +275,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,6 +308,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -291,6 +339,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,6 +372,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -348,6 +404,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -374,6 +434,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

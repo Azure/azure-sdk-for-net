@@ -82,6 +82,14 @@ namespace Azure.ResourceManager.Analysis
         /// <term>Operation Id</term>
         /// <description>Servers_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +119,14 @@ namespace Azure.ResourceManager.Analysis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -142,6 +158,14 @@ namespace Azure.ResourceManager.Analysis
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -169,6 +193,14 @@ namespace Azure.ResourceManager.Analysis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -198,6 +230,14 @@ namespace Azure.ResourceManager.Analysis
         /// <term>Operation Id</term>
         /// <description>Servers_ListSkusForNew</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +265,14 @@ namespace Azure.ResourceManager.Analysis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_ListSkusForNew</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -254,6 +302,14 @@ namespace Azure.ResourceManager.Analysis
         /// <term>Operation Id</term>
         /// <description>Servers_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -282,6 +338,14 @@ namespace Azure.ResourceManager.Analysis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AnalysisServerResource"/></description>
         /// </item>
         /// </list>
         /// <item>

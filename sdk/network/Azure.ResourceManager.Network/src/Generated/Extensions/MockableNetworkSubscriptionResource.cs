@@ -268,6 +268,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region where the nrp are located at. </param>
@@ -288,6 +296,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,6 +333,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
@@ -340,6 +364,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +404,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerport"> The name of the provider port. </param>
@@ -394,6 +434,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,6 +473,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePortsLocations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortsLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> Name of the requested ExpressRoutePort peering location. </param>
@@ -447,6 +503,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePortsLocations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortsLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -478,6 +542,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkManagerConnectionName"> Name for the network manager connection. </param>
@@ -500,6 +572,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -531,6 +611,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> Name of the Sku. </param>
@@ -553,6 +641,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualApplianceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -577,6 +673,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -598,6 +702,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -621,6 +733,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableServerVariables</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -641,6 +761,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableServerVariables</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -663,6 +791,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableRequestHeaders</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -683,6 +819,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableRequestHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -705,6 +849,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableResponseHeaders</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -725,6 +877,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableResponseHeaders</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -747,6 +907,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableWafRuleSets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -768,6 +936,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableWafRuleSets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -788,6 +964,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableSslOptions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -819,6 +1003,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableSslOptions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -849,6 +1041,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableSslPredefinedPolicies</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -871,6 +1071,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_ListAvailableSslPredefinedPolicies</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -892,6 +1100,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_GetSslPredefinedPolicy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -928,6 +1144,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationGateways_GetSslPredefinedPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
@@ -963,6 +1187,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationSecurityGroups_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -985,6 +1217,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ApplicationSecurityGroups_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1006,6 +1246,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableDelegations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1030,6 +1274,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableDelegations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the subnet. </param>
@@ -1052,6 +1300,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableServiceAliases_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1076,6 +1328,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableServiceAliases_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location. </param>
@@ -1099,6 +1355,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureFirewalls_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1120,6 +1384,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureFirewalls_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureFirewallResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1143,6 +1415,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureFirewallFqdnTags_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1164,6 +1440,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureFirewallFqdnTags_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1187,6 +1467,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>BastionHosts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BastionHostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1209,6 +1497,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>BastionHosts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BastionHostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1230,6 +1526,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckDnsNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1266,6 +1570,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckDnsNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
@@ -1301,6 +1613,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>CustomIPPrefixes_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomIPPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1322,6 +1642,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CustomIPPrefixes_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomIPPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1345,6 +1673,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>DdosProtectionPlans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DdosProtectionPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1366,6 +1702,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DdosProtectionPlans_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DdosProtectionPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1389,6 +1733,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>DscpConfiguration_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscpConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1411,6 +1763,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>DscpConfiguration_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscpConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1432,6 +1792,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableEndpointServices_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1456,6 +1820,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableEndpointServices_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location to check available endpoint services. </param>
@@ -1479,6 +1847,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRouteCircuits_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1500,6 +1876,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteCircuits_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1523,6 +1907,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRouteServiceProviders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1544,6 +1932,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteServiceProviders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1567,6 +1959,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRouteCrossConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCrossConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1588,6 +1988,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteCrossConnections_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCrossConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1611,6 +2019,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePorts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1632,6 +2048,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRoutePorts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRoutePortResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1655,6 +2079,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1676,6 +2108,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1699,6 +2139,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>IpAllocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IPAllocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1720,6 +2168,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpAllocations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IPAllocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1743,6 +2199,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>IpGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IPGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1764,6 +2228,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IpGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IPGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1787,6 +2259,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1809,6 +2289,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1830,6 +2318,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_SwapPublicIpAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1870,6 +2366,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>LoadBalancers_SwapPublicIpAddresses</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadBalancerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1909,6 +2413,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NatGateways_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NatGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1930,6 +2442,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NatGateways_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NatGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1953,6 +2473,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1975,6 +2503,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1996,6 +2532,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2021,6 +2565,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkManagers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
@@ -2045,6 +2597,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkProfiles_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2066,6 +2626,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkProfiles_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2089,6 +2657,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2110,6 +2686,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2133,6 +2717,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkVirtualAppliances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2154,6 +2746,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkVirtualAppliances_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2177,6 +2777,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkWatchers_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkWatcherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2198,6 +2806,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkWatchers_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkWatcherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2218,6 +2834,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpoints_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2241,6 +2865,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateEndpoints_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2262,6 +2894,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailablePrivateEndpointTypes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2286,6 +2922,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailablePrivateEndpointTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
@@ -2309,6 +2949,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateLinkServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2331,6 +2979,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateLinkServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2352,6 +3008,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibility</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2392,6 +3052,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibility</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -2431,6 +3095,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServices</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the domain name. </param>
@@ -2453,6 +3121,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2477,6 +3149,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PublicIPAddresses_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2498,6 +3178,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicIPAddresses_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublicIPAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2521,6 +3209,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>PublicIPPrefixes_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublicIPPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2542,6 +3238,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicIPPrefixes_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublicIPPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2565,6 +3269,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>RouteFilters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RouteFilterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2586,6 +3298,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RouteFilters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RouteFilterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2609,6 +3329,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>RouteTables_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RouteTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2630,6 +3358,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RouteTables_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RouteTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2653,6 +3389,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>SecurityPartnerProviders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityPartnerProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2674,6 +3418,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityPartnerProviders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityPartnerProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2697,6 +3449,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>BgpServiceCommunities_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2718,6 +3474,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BgpServiceCommunities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2741,6 +3501,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ServiceEndpointPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2763,6 +3531,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ServiceEndpointPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2784,6 +3560,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServiceTags_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2816,6 +3596,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ServiceTags_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
@@ -2847,6 +3631,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ServiceTagInformation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location that will be used as a reference for cloud (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
@@ -2871,6 +3659,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServiceTagInformation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2897,6 +3689,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location where resource usage is queried. </param>
@@ -2919,6 +3715,10 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2943,6 +3743,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2964,6 +3772,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworks_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2987,6 +3803,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkTaps_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkTapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3008,6 +3832,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualNetworkTaps_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualNetworkTapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3031,6 +3863,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualRouters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualRouterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3052,6 +3892,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualRouters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualRouterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3075,6 +3923,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualWans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3096,6 +3952,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualWans_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3119,6 +3983,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VpnSites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3140,6 +4012,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnSites_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3163,6 +4043,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VpnServerConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnServerConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3184,6 +4072,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnServerConfigurations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnServerConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3207,6 +4103,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3228,6 +4132,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3251,6 +4163,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>VpnGateways_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3272,6 +4192,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3295,6 +4223,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>P2sVpnGateways_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="P2SVpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3316,6 +4252,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>P2sVpnGateways_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="P2SVpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3339,6 +4283,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>ExpressRouteGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3359,6 +4311,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteGateways_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3381,6 +4341,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term>Operation Id</term>
         /// <description>WebApplicationFirewallPolicies_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebApplicationFirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3402,6 +4370,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApplicationFirewallPolicies_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebApplicationFirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

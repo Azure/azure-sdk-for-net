@@ -12,6 +12,7 @@ public-clients: false
 head-as-boolean: false
 modelerfour:
   lenient-model-deduplication: true
+use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:
@@ -278,9 +279,6 @@ acronym-mapping:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-
-# mgmt-debug:
-#   show-serialized-names: true
 
 rename-mapping:
   PolicyAssignment.identity: ManagedIdentity

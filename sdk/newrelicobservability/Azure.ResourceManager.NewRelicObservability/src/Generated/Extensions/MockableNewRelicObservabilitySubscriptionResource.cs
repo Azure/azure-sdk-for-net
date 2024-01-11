@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userEmail"> User Email. </param>
@@ -93,6 +97,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +129,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +188,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organizations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,6 +220,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Organizations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userEmail"> User Email. </param>
@@ -219,6 +251,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Plans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountId"> Account Id. </param>
@@ -242,6 +278,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Plans_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
