@@ -291,6 +291,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceConfigResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -320,6 +328,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceStorageConfigsNonCRR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceConfigResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -369,6 +385,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -401,6 +425,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -451,6 +483,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -480,6 +520,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceVaultConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceVaultConfigResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -528,6 +576,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupResourceEncryptionConfigs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceEncryptionConfigExtendedResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -557,6 +613,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupResourceEncryptionConfigs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupResourceEncryptionConfigExtendedResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -605,6 +669,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -635,6 +707,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -687,6 +767,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -718,6 +806,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -769,6 +865,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>JobDetails_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupJobResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -799,6 +903,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobDetails_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupJobResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -850,6 +962,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupEngines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupEngineResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -882,6 +1002,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupEngineResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -933,6 +1061,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -964,6 +1100,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -1016,6 +1160,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuardProxy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardProxyResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1047,6 +1199,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuardProxy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardProxyResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1077,6 +1237,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupProtectionIntent_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1110,6 +1274,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupProtectionIntent_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1141,6 +1309,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupUsageSummaries_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1174,6 +1346,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupUsageSummaries_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1206,6 +1382,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>Jobs_Export</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1236,6 +1416,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>Jobs_Export</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1265,6 +1449,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupProtectedItems_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1298,6 +1486,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupProtectedItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1330,6 +1522,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectableContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1361,6 +1557,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProtectableContainers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1395,6 +1595,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Refresh</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1427,6 +1635,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionContainers_Refresh</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionContainerResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1458,6 +1674,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupProtectableItems_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1492,6 +1712,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupProtectableItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1524,6 +1748,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupProtectionContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1554,6 +1782,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupProtectionContainers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1586,6 +1818,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>DeletedProtectionContainers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1616,6 +1852,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedProtectionContainers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1648,6 +1888,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>SecurityPINs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1677,6 +1921,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityPINs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1708,6 +1956,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FetchTieringCost_Post</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1741,6 +1993,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>FetchTieringCost_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1772,6 +2028,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>GetTieringCostOperationResult_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1801,6 +2061,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetTieringCostOperationResult_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1835,6 +2099,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1867,6 +2139,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>ProtectionIntent_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1895,6 +2175,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1925,6 +2209,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>BackupStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1954,6 +2242,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <term>Operation Id</term>
         /// <description>FeatureSupport_Validate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -1982,6 +2274,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FeatureSupport_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>

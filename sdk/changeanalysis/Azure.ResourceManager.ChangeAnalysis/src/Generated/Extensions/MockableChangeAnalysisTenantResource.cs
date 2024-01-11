@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceChanges_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
@@ -84,6 +88,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceChanges_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
         /// </item>
         /// </list>
         /// </summary>

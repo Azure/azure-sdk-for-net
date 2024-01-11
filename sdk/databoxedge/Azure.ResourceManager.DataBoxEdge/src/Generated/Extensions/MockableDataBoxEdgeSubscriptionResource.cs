@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableSkus_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <term>Operation Id</term>
         /// <description>Devices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
@@ -124,6 +140,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
