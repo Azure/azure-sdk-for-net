@@ -38,6 +38,15 @@ namespace Azure.DigitalTwins.Core
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateQueryTwinsRequestUri(QuerySpecification querySpecification, QueryOptions queryTwinsOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/query", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification, QueryOptions queryTwinsOptions)
         {
             var message = _pipeline.CreateMessage();

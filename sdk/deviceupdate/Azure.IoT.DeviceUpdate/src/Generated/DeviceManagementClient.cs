@@ -2638,6 +2638,22 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
+        internal RequestUriBuilder CreateGetDeviceClassesRequestUri(string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceClasses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceClassesRequest(string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2659,6 +2675,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeviceClassRequestUri(string deviceClassId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceClasses/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceClassRequest(string deviceClassId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2675,6 +2704,19 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateDeviceClassRequestUri(string deviceClassId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceClasses/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateDeviceClassRequest(string deviceClassId, RequestContent content, RequestContext context)
@@ -2697,6 +2739,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteDeviceClassRequestUri(string deviceClassId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceClasses/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDeviceClassRequest(string deviceClassId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2713,6 +2768,20 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetInstallableUpdatesForDeviceClassesRequestUri(string deviceClassId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceClasses/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/installableUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetInstallableUpdatesForDeviceClassesRequest(string deviceClassId, RequestContext context)
@@ -2732,6 +2801,22 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDevicesRequestUri(string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/devices", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDevicesRequest(string filter, RequestContext context)
@@ -2755,6 +2840,18 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateImportDevicesRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/devices:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateImportDevicesRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -2774,6 +2871,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeviceRequestUri(string deviceId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/devices/", false);
+            uri.AppendPath(deviceId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceRequest(string deviceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2790,6 +2900,21 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeviceModuleRequestUri(string deviceId, string moduleId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/devices/", false);
+            uri.AppendPath(deviceId, true);
+            uri.AppendPath("/modules/", false);
+            uri.AppendPath(moduleId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeviceModuleRequest(string deviceId, string moduleId, RequestContext context)
@@ -2812,6 +2937,18 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetUpdateComplianceRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/updateCompliance", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdateComplianceRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2827,6 +2964,22 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetGroupsRequestUri(string orderBy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups", false);
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderby", orderBy, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetGroupsRequest(string orderBy, RequestContext context)
@@ -2850,6 +3003,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetGroupRequestUri(string groupId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetGroupRequest(string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2868,6 +3034,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteGroupRequestUri(string groupId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteGroupRequest(string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2884,6 +3063,20 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetUpdateComplianceForGroupRequestUri(string groupId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/updateCompliance", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUpdateComplianceForGroupRequest(string groupId, RequestContext context)
@@ -2905,6 +3098,20 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetBestUpdatesForGroupsRequestUri(string groupId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/bestUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBestUpdatesForGroupsRequest(string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2922,6 +3129,24 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeploymentsForGroupsRequestUri(string groupId, string orderBy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deployments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderby", orderBy, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetDeploymentsForGroupsRequest(string groupId, string orderBy, RequestContext context)
@@ -2947,6 +3172,21 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeploymentRequestUri(string groupId, string deploymentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeploymentRequest(string groupId, string deploymentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2965,6 +3205,21 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateDeploymentRequestUri(string groupId, string deploymentId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateDeploymentRequest(string groupId, string deploymentId, RequestContent content, RequestContext context)
@@ -2989,6 +3244,21 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteDeploymentRequestUri(string groupId, string deploymentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDeploymentRequest(string groupId, string deploymentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3007,6 +3277,22 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeploymentStatusRequestUri(string groupId, string deploymentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendPath("/status", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeploymentStatusRequest(string groupId, string deploymentId, RequestContext context)
@@ -3028,6 +3314,24 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeviceClassSubgroupsForGroupsRequestUri(string groupId, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeviceClassSubgroupsForGroupsRequest(string groupId, string filter, RequestContext context)
@@ -3053,6 +3357,21 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeviceClassSubgroupRequestUri(string groupId, string deviceClassId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceClassSubgroupRequest(string groupId, string deviceClassId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3073,6 +3392,21 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteDeviceClassSubgroupRequestUri(string groupId, string deviceClassId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDeviceClassSubgroupRequest(string groupId, string deviceClassId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3091,6 +3425,22 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeviceClassSubgroupUpdateComplianceRequestUri(string groupId, string deviceClassId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/updateCompliance", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeviceClassSubgroupUpdateComplianceRequest(string groupId, string deviceClassId, RequestContext context)
@@ -3114,6 +3464,22 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetBestUpdatesForDeviceClassSubgroupRequestUri(string groupId, string deviceClassId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/bestUpdates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBestUpdatesForDeviceClassSubgroupRequest(string groupId, string deviceClassId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3133,6 +3499,26 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeploymentsForDeviceClassSubgroupsRequestUri(string groupId, string deviceClassId, string orderBy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/deployments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderby", orderBy, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetDeploymentsForDeviceClassSubgroupsRequest(string groupId, string deviceClassId, string orderBy, RequestContext context)
@@ -3160,6 +3546,23 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeploymentForDeviceClassSubgroupRequestUri(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeploymentForDeviceClassSubgroupRequest(string groupId, string deviceClassId, string deploymentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3182,6 +3585,23 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteDeploymentForDeviceClassSubgroupRequestUri(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDeploymentForDeviceClassSubgroupRequest(string groupId, string deviceClassId, string deploymentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3202,6 +3622,24 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateStopDeploymentRequestUri(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendPath(":cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopDeploymentRequest(string groupId, string deviceClassId, string deploymentId, RequestContext context)
@@ -3227,6 +3665,24 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateRetryDeploymentRequestUri(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendPath(":retry", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRetryDeploymentRequest(string groupId, string deviceClassId, string deploymentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3250,6 +3706,24 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeviceClassSubgroupDeploymentStatusRequestUri(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendPath("/status", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceClassSubgroupDeploymentStatusRequest(string groupId, string deviceClassId, string deploymentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3271,6 +3745,28 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequestUri(string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/groups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/deviceClassSubgroups/", false);
+            uri.AppendPath(deviceClassId, true);
+            uri.AppendPath("/deployments/", false);
+            uri.AppendPath(deploymentId, true);
+            uri.AppendPath("/devicestates", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
@@ -3300,6 +3796,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetOperationStatusRequestUri(string operationId, ETag? ifNoneMatch, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetOperationStatusRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
@@ -3320,6 +3829,26 @@ namespace Azure.IoT.DeviceUpdate
                 request.Headers.Add("If-None-Match", ifNoneMatch.Value);
             }
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetOperationStatusesRequestUri(string filter, int? top, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/operations", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? top, RequestContext context)
@@ -3347,6 +3876,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateStartLogCollectionRequestUri(string logCollectionId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceDiagnostics/logCollections/", false);
+            uri.AppendPath(logCollectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartLogCollectionRequest(string logCollectionId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
@@ -3367,6 +3909,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetLogCollectionRequestUri(string logCollectionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceDiagnostics/logCollections/", false);
+            uri.AppendPath(logCollectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLogCollectionRequest(string logCollectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3385,6 +3940,18 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetLogCollectionsRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceDiagnostics/logCollections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLogCollectionsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3400,6 +3967,20 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetLogCollectionDetailedStatusRequestUri(string logCollectionId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceDiagnostics/logCollections/", false);
+            uri.AppendPath(logCollectionId, true);
+            uri.AppendPath("/detailedStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetLogCollectionDetailedStatusRequest(string logCollectionId, RequestContext context)
@@ -3421,6 +4002,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetHealthOfDevicesRequestUri(string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/management/deviceDiagnostics/deviceHealth", false);
+            uri.AppendQuery("filter", filter, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetHealthOfDevicesRequest(string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3439,6 +4033,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeviceClassesNextPageRequestUri(string nextLink, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceClassesNextPageRequest(string nextLink, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3451,6 +4054,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetInstallableUpdatesForDeviceClassesNextPageRequestUri(string nextLink, string deviceClassId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetInstallableUpdatesForDeviceClassesNextPageRequest(string nextLink, string deviceClassId, RequestContext context)
@@ -3467,6 +4079,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDevicesNextPageRequestUri(string nextLink, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDevicesNextPageRequest(string nextLink, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3479,6 +4100,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetGroupsNextPageRequestUri(string nextLink, string orderBy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetGroupsNextPageRequest(string nextLink, string orderBy, RequestContext context)
@@ -3495,6 +4125,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetBestUpdatesForGroupsNextPageRequestUri(string nextLink, string groupId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBestUpdatesForGroupsNextPageRequest(string nextLink, string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3507,6 +4146,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeploymentsForGroupsNextPageRequestUri(string nextLink, string groupId, string orderBy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeploymentsForGroupsNextPageRequest(string nextLink, string groupId, string orderBy, RequestContext context)
@@ -3523,6 +4171,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeviceClassSubgroupsForGroupsNextPageRequestUri(string nextLink, string groupId, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceClassSubgroupsForGroupsNextPageRequest(string nextLink, string groupId, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3535,6 +4192,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequestUri(string nextLink, string groupId, string deviceClassId, string orderBy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(string nextLink, string groupId, string deviceClassId, string orderBy, RequestContext context)
@@ -3551,6 +4217,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequestUri(string nextLink, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequest(string nextLink, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3563,6 +4238,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetOperationStatusesNextPageRequestUri(string nextLink, string filter, int? top, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetOperationStatusesNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
@@ -3579,6 +4263,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetLogCollectionsNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLogCollectionsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3591,6 +4284,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetHealthOfDevicesNextPageRequestUri(string nextLink, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetHealthOfDevicesNextPageRequest(string nextLink, string filter, RequestContext context)

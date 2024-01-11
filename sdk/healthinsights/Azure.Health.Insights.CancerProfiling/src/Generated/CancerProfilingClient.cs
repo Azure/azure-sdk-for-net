@@ -176,6 +176,16 @@ namespace Azure.Health.Insights.CancerProfiling
             }
         }
 
+        internal RequestUriBuilder CreateInferCancerProfileRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/healthinsights", false);
+            uri.AppendPath("/oncophenotype/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateInferCancerProfileRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);

@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.EdgeOrder
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListAddressesAtSubscriptionLevelRequestUri(string subscriptionId, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListAddressesAtSubscriptionLevelRequest(string subscriptionId, string filter, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +133,25 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesRequestUri(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/listProductFamilies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesRequest(string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
@@ -203,6 +241,21 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListConfigurationsRequestUri(string subscriptionId, ConfigurationsContent content, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/listConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListConfigurationsRequest(string subscriptionId, ConfigurationsContent content, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -284,6 +337,21 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListProductFamiliesMetadataRequestUri(string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/productFamiliesMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListProductFamiliesMetadataRequest(string subscriptionId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -357,6 +425,21 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListOrderAtSubscriptionLevelRequestUri(string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListOrderAtSubscriptionLevelRequest(string subscriptionId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -428,6 +511,29 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtSubscriptionLevelRequestUri(string subscriptionId, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtSubscriptionLevelRequest(string subscriptionId, string filter, string expand, string skipToken)
@@ -515,6 +621,27 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListAddressesAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListAddressesAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string filter, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -600,6 +727,20 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateGetAddressByNameRequestUri(string subscriptionId, string resourceGroupName, string addressName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAddressByNameRequest(string subscriptionId, string resourceGroupName, string addressName)
         {
             var message = _pipeline.CreateMessage();
@@ -682,6 +823,20 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateCreateAddressRequestUri(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data)
         {
             var message = _pipeline.CreateMessage();
@@ -760,6 +915,20 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateDeleteAddressByNameRequestUri(string subscriptionId, string resourceGroupName, string addressName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteAddressByNameRequest(string subscriptionId, string resourceGroupName, string addressName)
         {
             var message = _pipeline.CreateMessage();
@@ -830,6 +999,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateAddressRequestUri(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/addresses/", false);
+            uri.AppendPath(addressName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch)
@@ -916,6 +1099,23 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListOrderAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListOrderAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -993,6 +1193,22 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOrderByNameRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/orders/", false);
+            uri.AppendPath(orderName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOrderByNameRequest(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
@@ -1079,6 +1295,31 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtResourceGroupLevelRequestUri(string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtResourceGroupLevelRequest(string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
@@ -1172,6 +1413,24 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateGetOrderItemByNameRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetOrderItemByNameRequest(string subscriptionId, string resourceGroupName, string orderItemName, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -1260,6 +1519,20 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data)
         {
             var message = _pipeline.CreateMessage();
@@ -1338,6 +1611,20 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateDeleteOrderItemByNameRequestUri(string subscriptionId, string resourceGroupName, string orderItemName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteOrderItemByNameRequest(string subscriptionId, string resourceGroupName, string orderItemName)
         {
             var message = _pipeline.CreateMessage();
@@ -1408,6 +1695,20 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch)
@@ -1494,6 +1795,21 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateCancelOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason)
         {
             var message = _pipeline.CreateMessage();
@@ -1571,6 +1887,21 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReturnOrderItemRequestUri(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EdgeOrder/orderItems/", false);
+            uri.AppendPath(orderItemName, true);
+            uri.AppendPath("/return", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReturnOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content)
@@ -1652,6 +1983,14 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListAddressesAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAddressesAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string filter, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -1722,6 +2061,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListProductFamiliesNextPageRequestUri(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListProductFamiliesNextPageRequest(string nextLink, string subscriptionId, ProductFamiliesContent content, string expand, string skipToken)
@@ -1800,6 +2147,14 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListConfigurationsNextPageRequestUri(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListConfigurationsNextPageRequest(string nextLink, string subscriptionId, ConfigurationsContent content, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -1874,6 +2229,14 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListProductFamiliesMetadataNextPageRequestUri(string nextLink, string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListProductFamiliesMetadataNextPageRequest(string nextLink, string subscriptionId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -1944,6 +2307,14 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListOrderAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListOrderAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -2012,6 +2383,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtSubscriptionLevelNextPageRequestUri(string nextLink, string subscriptionId, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtSubscriptionLevelNextPageRequest(string nextLink, string subscriptionId, string filter, string expand, string skipToken)
@@ -2086,6 +2465,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAddressesAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string filter, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAddressesAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, string skipToken)
@@ -2164,6 +2551,14 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
+        internal RequestUriBuilder CreateListOrderAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListOrderAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -2236,6 +2631,14 @@ namespace Azure.ResourceManager.EdgeOrder
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOrderItemsAtResourceGroupLevelNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOrderItemsAtResourceGroupLevelNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string filter, string expand, string skipToken)

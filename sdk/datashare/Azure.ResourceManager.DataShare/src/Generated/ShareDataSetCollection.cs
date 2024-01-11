@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _shareDataSetDataSetsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<ShareDataSetResource>(Response.FromValue(new ShareDataSetResource(Client, response), response.GetRawResponse()));
+                var uri = _shareDataSetDataSetsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DataShareArmOperation<ShareDataSetResource>(Response.FromValue(new ShareDataSetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _shareDataSetDataSetsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetName, data, cancellationToken);
-                var operation = new DataShareArmOperation<ShareDataSetResource>(Response.FromValue(new ShareDataSetResource(Client, response), response.GetRawResponse()));
+                var uri = _shareDataSetDataSetsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DataShareArmOperation<ShareDataSetResource>(Response.FromValue(new ShareDataSetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

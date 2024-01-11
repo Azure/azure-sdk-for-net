@@ -44,6 +44,34 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateDocumentModelsAnalyzeDocumentRequestUri(string modelId, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, AnalyzeDocumentRequest analyzeRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (features != null && Optional.IsCollectionDefined(features))
+            {
+                uri.AppendQueryDelimited("features", features, ",", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, AnalyzeDocumentRequest analyzeRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -138,6 +166,34 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentModelsAnalyzeDocumentRequestUri(string modelId, InternalContentType contentType, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, Stream analyzeRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (features != null && Optional.IsCollectionDefined(features))
+            {
+                uri.AppendQueryDelimited("features", features, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, InternalContentType contentType, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, Stream analyzeRequest)
@@ -236,6 +292,34 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentModelsAnalyzeDocumentRequestUri(string modelId, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, string analyzeRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (features != null && Optional.IsCollectionDefined(features))
+            {
+                uri.AppendQueryDelimited("features", features, ",", true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, string analyzeRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -330,6 +414,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentModelsGetAnalyzeResultRequestUri(string modelId, string resultId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath("/analyzeResults/", false);
+            uri.AppendPath(resultId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentModelsGetAnalyzeResultRequest(string modelId, string resultId)
         {
             var message = _pipeline.CreateMessage();
@@ -412,6 +509,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentModelsBuildModelRequestUri(BuildDocumentModelRequest buildRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels:build", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentModelsBuildModelRequest(BuildDocumentModelRequest buildRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -477,6 +584,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentModelsComposeModelRequestUri(ComposeDocumentModelRequest composeRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels:compose", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentModelsComposeModelRequest(ComposeDocumentModelRequest composeRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -540,6 +657,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentModelsAuthorizeModelCopyRequestUri(AuthorizeCopyRequest authorizeCopyRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels:authorizeCopy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDocumentModelsAuthorizeModelCopyRequest(AuthorizeCopyRequest authorizeCopyRequest)
@@ -613,6 +740,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentModelsCopyModelToRequestUri(string modelId, DocumentModelCopyAuthorization copyToRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":copyTo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDocumentModelsCopyModelToRequest(string modelId, DocumentModelCopyAuthorization copyToRequest)
@@ -692,6 +831,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateMiscellaneousListOperationsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMiscellaneousListOperationsRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -745,6 +894,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMiscellaneousGetOperationRequestUri(string operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateMiscellaneousGetOperationRequest(string operationId)
@@ -817,6 +977,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentModelsListModelsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentModelsListModelsRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -870,6 +1040,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentModelsGetModelRequestUri(string modelId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDocumentModelsGetModelRequest(string modelId)
@@ -942,6 +1123,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentModelsDeleteModelRequestUri(string modelId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentModelsDeleteModelRequest(string modelId)
         {
             var message = _pipeline.CreateMessage();
@@ -1000,6 +1192,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentClassifiersBuildClassifierRequestUri(BuildDocumentClassifierRequest buildRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers:build", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDocumentClassifiersBuildClassifierRequest(BuildDocumentClassifierRequest buildRequest)
@@ -1067,6 +1269,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentClassifiersListClassifiersRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentClassifiersListClassifiersRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -1120,6 +1332,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentClassifiersGetClassifierRequestUri(string classifierId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDocumentClassifiersGetClassifierRequest(string classifierId)
@@ -1192,6 +1415,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentClassifiersDeleteClassifierRequestUri(string classifierId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentClassifiersDeleteClassifierRequest(string classifierId)
         {
             var message = _pipeline.CreateMessage();
@@ -1250,6 +1484,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentClassifiersClassifyDocumentRequestUri(string classifierId, StringIndexType? stringIndexType, ClassifyDocumentRequest classifyRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":analyze", false);
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDocumentClassifiersClassifyDocumentRequest(string classifierId, StringIndexType? stringIndexType, ClassifyDocumentRequest classifyRequest)
@@ -1330,6 +1580,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentClassifiersClassifyDocumentRequestUri(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType, Stream classifyRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":analyze", false);
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentClassifiersClassifyDocumentRequest(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType, Stream classifyRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -1408,6 +1674,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentClassifiersClassifyDocumentRequestUri(string classifierId, StringIndexType? stringIndexType, string classifyRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":analyze", false);
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentClassifiersClassifyDocumentRequest(string classifierId, StringIndexType? stringIndexType, string classifyRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -1482,6 +1764,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentClassifiersGetClassifyResultRequestUri(string classifierId, string resultId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath("/analyzeResults/", false);
+            uri.AppendPath(resultId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDocumentClassifiersGetClassifyResultRequest(string classifierId, string resultId)
@@ -1566,6 +1861,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateMiscellaneousGetResourceInfoRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/info", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMiscellaneousGetResourceInfoRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -1619,6 +1924,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMiscellaneousListOperationsNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateMiscellaneousListOperationsNextPageRequest(string nextLink)
@@ -1689,6 +2003,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateDocumentModelsListModelsNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateDocumentModelsListModelsNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -1755,6 +2078,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDocumentClassifiersListClassifiersNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateDocumentClassifiersListClassifiersNextPageRequest(string nextLink)

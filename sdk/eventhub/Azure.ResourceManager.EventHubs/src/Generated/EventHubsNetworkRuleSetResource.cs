@@ -203,7 +203,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = await _eventHubsNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<EventHubsNetworkRuleSetResource>(Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubsNetworkRuleSetNamespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new EventHubsArmOperation<EventHubsNetworkRuleSetResource>(Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -249,7 +251,9 @@ namespace Azure.ResourceManager.EventHubs
             try
             {
                 var response = _eventHubsNetworkRuleSetNamespacesRestClient.CreateOrUpdateNetworkRuleSet(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new EventHubsArmOperation<EventHubsNetworkRuleSetResource>(Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response), response.GetRawResponse()));
+                var uri = _eventHubsNetworkRuleSetNamespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new EventHubsArmOperation<EventHubsNetworkRuleSetResource>(Response.FromValue(new EventHubsNetworkRuleSetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

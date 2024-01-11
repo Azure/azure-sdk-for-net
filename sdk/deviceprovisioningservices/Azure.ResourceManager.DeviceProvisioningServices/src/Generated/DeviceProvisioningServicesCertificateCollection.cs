@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             try
             {
                 var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +143,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             try
             {
                 var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServicesCertificateResource>(Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
