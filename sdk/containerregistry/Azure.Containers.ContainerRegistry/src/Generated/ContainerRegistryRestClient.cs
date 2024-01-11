@@ -39,6 +39,14 @@ namespace Azure.Containers.ContainerRegistry
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCheckDockerV2SupportRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckDockerV2SupportRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -80,6 +88,17 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetManifestRequestUri(string name, string reference, string accept)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/manifests/", false);
+            uri.AppendPath(reference, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetManifestRequest(string name, string reference, string accept)
@@ -166,6 +185,17 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateManifestRequestUri(string name, string reference, Stream payload, string contentType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/manifests/", false);
+            uri.AppendPath(reference, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateManifestRequest(string name, string reference, Stream payload, string contentType)
@@ -257,6 +287,17 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateDeleteManifestRequestUri(string name, string reference)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/manifests/", false);
+            uri.AppendPath(reference, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteManifestRequest(string name, string reference)
         {
             var message = _pipeline.CreateMessage();
@@ -329,6 +370,23 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateGetRepositoriesRequestUri(string last, int? n)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/_catalog", false);
+            if (last != null)
+            {
+                uri.AppendQuery("last", last, true);
+            }
+            if (n != null)
+            {
+                uri.AppendQuery("n", n.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRepositoriesRequest(string last, int? n)
         {
             var message = _pipeline.CreateMessage();
@@ -395,6 +453,16 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPropertiesRequestUri(string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPropertiesRequest(string name)
@@ -466,6 +534,16 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRepositoryRequestUri(string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRepositoryRequest(string name)
         {
             var message = _pipeline.CreateMessage();
@@ -525,6 +603,16 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdatePropertiesRequestUri(string name, RepositoryWriteableProperties value)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdatePropertiesRequest(string name, RepositoryWriteableProperties value)
@@ -603,6 +691,33 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetTagsRequestUri(string name, string last, int? n, string orderby, string digest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_tags", false);
+            if (last != null)
+            {
+                uri.AppendQuery("last", last, true);
+            }
+            if (n != null)
+            {
+                uri.AppendQuery("n", n.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (digest != null)
+            {
+                uri.AppendQuery("digest", digest, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetTagsRequest(string name, string last, int? n, string orderby, string digest)
@@ -701,6 +816,18 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateGetTagPropertiesRequestUri(string name, string reference)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_tags/", false);
+            uri.AppendPath(reference, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTagPropertiesRequest(string name, string reference)
         {
             var message = _pipeline.CreateMessage();
@@ -780,6 +907,18 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateTagAttributesRequestUri(string name, string reference, TagWriteableProperties value)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_tags/", false);
+            uri.AppendPath(reference, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateTagAttributesRequest(string name, string reference, TagWriteableProperties value)
@@ -872,6 +1011,18 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateDeleteTagRequestUri(string name, string reference)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_tags/", false);
+            uri.AppendPath(reference, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteTagRequest(string name, string reference)
         {
             var message = _pipeline.CreateMessage();
@@ -943,6 +1094,29 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetManifestsRequestUri(string name, string last, int? n, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_manifests", false);
+            if (last != null)
+            {
+                uri.AppendQuery("last", last, true);
+            }
+            if (n != null)
+            {
+                uri.AppendQuery("n", n.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetManifestsRequest(string name, string last, int? n, string orderby)
@@ -1035,6 +1209,18 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateGetManifestPropertiesRequestUri(string name, string digest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_manifests/", false);
+            uri.AppendPath(digest, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetManifestPropertiesRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
@@ -1114,6 +1300,18 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateManifestPropertiesRequestUri(string name, string digest, ManifestWriteableProperties value)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/acr/v1/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/_manifests/", false);
+            uri.AppendPath(digest, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateManifestPropertiesRequest(string name, string digest, ManifestWriteableProperties value)
@@ -1206,6 +1404,14 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateGetRepositoriesNextPageRequestUri(string nextLink, string last, int? n)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRepositoriesNextPageRequest(string nextLink, string last, int? n)
         {
             var message = _pipeline.CreateMessage();
@@ -1277,6 +1483,14 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetTagsNextPageRequestUri(string nextLink, string name, string last, int? n, string orderby, string digest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetTagsNextPageRequest(string nextLink, string name, string last, int? n, string orderby, string digest)
@@ -1364,6 +1578,14 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetManifestsNextPageRequestUri(string nextLink, string name, string last, int? n, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetManifestsNextPageRequest(string nextLink, string name, string last, int? n, string orderby)

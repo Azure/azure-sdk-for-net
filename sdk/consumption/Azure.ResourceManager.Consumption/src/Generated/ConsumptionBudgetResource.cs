@@ -198,7 +198,9 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = await _consumptionBudgetBudgetsRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConsumptionArmOperation(response);
+                var uri = _consumptionBudgetBudgetsRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ConsumptionArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +242,9 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = _consumptionBudgetBudgetsRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ConsumptionArmOperation(response);
+                var uri = _consumptionBudgetBudgetsRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ConsumptionArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -286,7 +290,9 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = await _consumptionBudgetBudgetsRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()));
+                var uri = _consumptionBudgetBudgetsRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -332,7 +338,9 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = _consumptionBudgetBudgetsRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()));
+                var uri = _consumptionBudgetBudgetsRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

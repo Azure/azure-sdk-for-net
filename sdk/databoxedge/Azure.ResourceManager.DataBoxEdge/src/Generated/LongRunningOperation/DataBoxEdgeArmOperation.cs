@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
         }
 
-        internal DataBoxEdgeArmOperation(Response response)
+        internal DataBoxEdgeArmOperation(Response response, string operationId)
         {
-            _operation = OperationInternal.Succeeded(response);
+            _operation = OperationInternal.Succeeded(response, operationId);
         }
 
         internal DataBoxEdgeArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <inheritdoc />
 #pragma warning disable CA1822
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
+        public override string Id => _operation.GetOperationId();
 #pragma warning restore CA1822
 
         /// <inheritdoc />

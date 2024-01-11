@@ -38,6 +38,16 @@ namespace Azure.Communication.Email
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetSendResultRequestUri(string operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/emails/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSendResultRequest(string operationId)
         {
             var message = _pipeline.CreateMessage();
@@ -107,6 +117,15 @@ namespace Azure.Communication.Email
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSendRequestUri(EmailMessage message, Guid? operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/emails:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSendRequest(EmailMessage message, Guid? operationId)

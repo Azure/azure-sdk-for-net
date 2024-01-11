@@ -198,7 +198,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _costManagementViewsViewsRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation(response);
+                var uri = _costManagementViewsViewsRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CostManagementArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +242,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _costManagementViewsViewsRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
-                var operation = new CostManagementArmOperation(response);
+                var uri = _costManagementViewsViewsRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CostManagementArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -286,7 +290,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = await _costManagementViewsViewsRestClient.CreateOrUpdateByScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
+                var uri = _costManagementViewsViewsRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -332,7 +338,9 @@ namespace Azure.ResourceManager.CostManagement
             try
             {
                 var response = _costManagementViewsViewsRestClient.CreateOrUpdateByScope(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()));
+                var uri = _costManagementViewsViewsRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

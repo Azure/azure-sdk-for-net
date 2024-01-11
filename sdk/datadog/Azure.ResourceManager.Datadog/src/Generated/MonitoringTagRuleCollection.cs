@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.Datadog
             try
             {
                 var response = await _monitoringTagRuleTagRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DatadogArmOperation<MonitoringTagRuleResource>(Response.FromValue(new MonitoringTagRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _monitoringTagRuleTagRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DatadogArmOperation<MonitoringTagRuleResource>(Response.FromValue(new MonitoringTagRuleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.Datadog
             try
             {
                 var response = _monitoringTagRuleTagRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken);
-                var operation = new DatadogArmOperation<MonitoringTagRuleResource>(Response.FromValue(new MonitoringTagRuleResource(Client, response), response.GetRawResponse()));
+                var uri = _monitoringTagRuleTagRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DatadogArmOperation<MonitoringTagRuleResource>(Response.FromValue(new MonitoringTagRuleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

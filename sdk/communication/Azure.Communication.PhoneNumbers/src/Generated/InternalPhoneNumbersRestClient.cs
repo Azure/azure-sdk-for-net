@@ -38,6 +38,38 @@ namespace Azure.Communication.PhoneNumbers
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateListAreaCodesRequestUri(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/countries/", false);
+            uri.AppendPath(twoLetterIsoCountryName, true);
+            uri.AppendPath("/areaCodes", false);
+            uri.AppendQuery("phoneNumberType", phoneNumberType.ToString(), true);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (assignmentType != null)
+            {
+                uri.AppendQuery("assignmentType", assignmentType.Value.ToString(), true);
+            }
+            if (locality != null)
+            {
+                uri.AppendQuery("locality", locality, true);
+            }
+            if (administrativeDivision != null)
+            {
+                uri.AppendQuery("administrativeDivision", administrativeDivision, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAreaCodesRequest(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
@@ -79,6 +111,23 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
+        internal RequestUriBuilder CreateListAvailableCountriesRequestUri(int? skip, int? maxPageSize, string acceptLanguage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/countries", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAvailableCountriesRequest(int? skip, int? maxPageSize, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +152,29 @@ namespace Azure.Communication.PhoneNumbers
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateListAvailableLocalitiesRequestUri(string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/countries/", false);
+            uri.AppendPath(twoLetterIsoCountryName, true);
+            uri.AppendPath("/localities", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (administrativeDivision != null)
+            {
+                uri.AppendQuery("administrativeDivision", administrativeDivision, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAvailableLocalitiesRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
@@ -135,6 +207,33 @@ namespace Azure.Communication.PhoneNumbers
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateListOfferingsRequestUri(string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/countries/", false);
+            uri.AppendPath(twoLetterIsoCountryName, true);
+            uri.AppendPath("/offerings", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (phoneNumberType != null)
+            {
+                uri.AppendQuery("phoneNumberType", phoneNumberType.Value.ToString(), true);
+            }
+            if (assignmentType != null)
+            {
+                uri.AppendQuery("assignmentType", assignmentType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListOfferingsRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
@@ -171,6 +270,17 @@ namespace Azure.Communication.PhoneNumbers
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateSearchAvailablePhoneNumbersRequestUri(string twoLetterIsoCountryName, PhoneNumberSearchRequest body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/countries/", false);
+            uri.AppendPath(twoLetterIsoCountryName, true);
+            uri.AppendPath("/:search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSearchAvailablePhoneNumbersRequest(string twoLetterIsoCountryName, PhoneNumberSearchRequest body)
@@ -249,6 +359,16 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
+        internal RequestUriBuilder CreateGetSearchResultRequestUri(string searchId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/searchResults/", false);
+            uri.AppendPath(searchId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSearchResultRequest(string searchId)
         {
             var message = _pipeline.CreateMessage();
@@ -318,6 +438,15 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
+        internal RequestUriBuilder CreatePurchasePhoneNumbersRequestUri(string searchId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/availablePhoneNumbers/:purchase", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePurchasePhoneNumbersRequest(string searchId)
         {
             var message = _pipeline.CreateMessage();
@@ -372,6 +501,37 @@ namespace Azure.Communication.PhoneNumbers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOperationRequestUri(string operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/phoneNumbers/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateCancelOperationRequestUri(string operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/phoneNumbers/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateUpdateCapabilitiesRequestUri(string phoneNumber, PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/phoneNumbers/", false);
+            uri.AppendPath(phoneNumber, true);
+            uri.AppendPath("/capabilities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateCapabilitiesRequest(string phoneNumber, PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
@@ -449,6 +609,16 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
+        internal RequestUriBuilder CreateGetByNumberRequestUri(string phoneNumber)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/phoneNumbers/", false);
+            uri.AppendPath(phoneNumber, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByNumberRequest(string phoneNumber)
         {
             var message = _pipeline.CreateMessage();
@@ -518,6 +688,16 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
+        internal RequestUriBuilder CreateReleasePhoneNumberRequestUri(string phoneNumber)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/phoneNumbers/", false);
+            uri.AppendPath(phoneNumber, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReleasePhoneNumberRequest(string phoneNumber)
         {
             var message = _pipeline.CreateMessage();
@@ -579,6 +759,23 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
+        internal RequestUriBuilder CreateListPhoneNumbersRequestUri(int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/phoneNumbers", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListPhoneNumbersRequest(int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -601,6 +798,14 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
+        internal RequestUriBuilder CreateListAreaCodesNextPageRequestUri(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAreaCodesNextPageRequest(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
@@ -616,6 +821,14 @@ namespace Azure.Communication.PhoneNumbers
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateListAvailableCountriesNextPageRequestUri(string nextLink, int? skip, int? maxPageSize, string acceptLanguage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAvailableCountriesNextPageRequest(string nextLink, int? skip, int? maxPageSize, string acceptLanguage)
@@ -635,6 +848,14 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
+        internal RequestUriBuilder CreateListAvailableLocalitiesNextPageRequestUri(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
@@ -652,6 +873,14 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
+        internal RequestUriBuilder CreateListOfferingsNextPageRequestUri(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListOfferingsNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
@@ -667,6 +896,14 @@ namespace Azure.Communication.PhoneNumbers
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateListPhoneNumbersNextPageRequestUri(string nextLink, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListPhoneNumbersNextPageRequest(string nextLink, int? skip, int? top)

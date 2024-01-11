@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.DataFactory
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetFeatureValueRequestUri(string subscriptionId, AzureLocation locationId, ExposureControlContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/locations/", false);
+            uri.AppendPath(locationId, true);
+            uri.AppendPath("/getFeatureValue", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetFeatureValueRequest(string subscriptionId, AzureLocation locationId, ExposureControlContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +127,21 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetFeatureValueByFactoryRequestUri(string subscriptionId, string resourceGroupName, string factoryName, ExposureControlContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/getFeatureValue", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetFeatureValueByFactoryRequest(string subscriptionId, string resourceGroupName, string factoryName, ExposureControlContent content)
@@ -201,6 +229,21 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateQueryFeatureValuesByFactoryRequestUri(string subscriptionId, string resourceGroupName, string factoryName, ExposureControlBatchContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/queryFeaturesValue", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateQueryFeatureValuesByFactoryRequest(string subscriptionId, string resourceGroupName, string factoryName, ExposureControlBatchContent content)

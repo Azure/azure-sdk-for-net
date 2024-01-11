@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             try
             {
                 var response = await _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computePolicyName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeAnalyticsArmOperation<DataLakeAnalyticsComputePolicyResource>(Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computePolicyName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DataLakeAnalyticsArmOperation<DataLakeAnalyticsComputePolicyResource>(Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             try
             {
                 var response = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computePolicyName, content, cancellationToken);
-                var operation = new DataLakeAnalyticsArmOperation<DataLakeAnalyticsComputePolicyResource>(Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _dataLakeAnalyticsComputePolicyComputePoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computePolicyName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DataLakeAnalyticsArmOperation<DataLakeAnalyticsComputePolicyResource>(Response.FromValue(new DataLakeAnalyticsComputePolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

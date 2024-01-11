@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.ContainerRegistry
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateImportImageRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryImportImageContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/importImage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateImportImageRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryImportImageContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -115,6 +130,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, ContainerRegistryNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, ContainerRegistryNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -190,6 +216,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -255,6 +292,19 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -328,6 +378,20 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string registryName)
@@ -412,6 +476,20 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryData data)
         {
             var message = _pipeline.CreateMessage();
@@ -490,6 +568,20 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string registryName)
         {
             var message = _pipeline.CreateMessage();
@@ -559,6 +651,20 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryPatch patch)
@@ -637,6 +743,21 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListUsagesRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/listUsages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListUsagesRequest(string subscriptionId, string resourceGroupName, string registryName)
@@ -718,6 +839,21 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateListPrivateLinkResourcesRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string registryName)
         {
             var message = _pipeline.CreateMessage();
@@ -795,6 +931,22 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateLinkResourceRequestUri(string subscriptionId, string resourceGroupName, string registryName, string groupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/privateLinkResources/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateLinkResourceRequest(string subscriptionId, string resourceGroupName, string registryName, string groupName)
@@ -885,6 +1037,21 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateListCredentialsRequestUri(string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/listCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListCredentialsRequest(string subscriptionId, string resourceGroupName, string registryName)
         {
             var message = _pipeline.CreateMessage();
@@ -962,6 +1129,21 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegenerateCredentialRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryCredentialRegenerateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/regenerateCredential", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegenerateCredentialRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryCredentialRegenerateContent content)
@@ -1051,6 +1233,21 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateGenerateCredentialsRequestUri(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryGenerateCredentialsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/generateCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGenerateCredentialsRequest(string subscriptionId, string resourceGroupName, string registryName, ContainerRegistryGenerateCredentialsContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1130,6 +1327,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1196,6 +1401,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1268,6 +1481,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListPrivateLinkResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string registryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListPrivateLinkResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string registryName)

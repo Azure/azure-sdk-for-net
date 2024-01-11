@@ -39,6 +39,23 @@ namespace Azure.Communication.ShortCodes
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetShortCodesRequestUri(int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/shortCodes", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetShortCodesRequest(int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +120,16 @@ namespace Azure.Communication.ShortCodes
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpsertUSProgramBriefRequestUri(Guid programBriefId, USProgramBrief body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/shortCodes/countries/US/programBriefs/", false);
+            uri.AppendPath(programBriefId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpsertUSProgramBriefRequest(Guid programBriefId, USProgramBrief body)
@@ -173,6 +200,16 @@ namespace Azure.Communication.ShortCodes
             }
         }
 
+        internal RequestUriBuilder CreateDeleteUSProgramBriefRequestUri(Guid programBriefId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/shortCodes/countries/US/programBriefs/", false);
+            uri.AppendPath(programBriefId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteUSProgramBriefRequest(Guid programBriefId)
         {
             var message = _pipeline.CreateMessage();
@@ -218,6 +255,16 @@ namespace Azure.Communication.ShortCodes
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUSProgramBriefRequestUri(Guid programBriefId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/shortCodes/countries/US/programBriefs/", false);
+            uri.AppendPath(programBriefId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUSProgramBriefRequest(Guid programBriefId)
@@ -277,6 +324,17 @@ namespace Azure.Communication.ShortCodes
             }
         }
 
+        internal RequestUriBuilder CreateSubmitUSProgramBriefRequestUri(Guid programBriefId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/shortCodes/countries/US/programBriefs/", false);
+            uri.AppendPath(programBriefId, true);
+            uri.AppendPath("/:submit", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSubmitUSProgramBriefRequest(Guid programBriefId)
         {
             var message = _pipeline.CreateMessage();
@@ -333,6 +391,23 @@ namespace Azure.Communication.ShortCodes
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUSProgramBriefsRequestUri(int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/shortCodes/countries/US/programBriefs", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUSProgramBriefsRequest(int? skip, int? top)
@@ -399,6 +474,14 @@ namespace Azure.Communication.ShortCodes
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetShortCodesNextPageRequestUri(string nextLink, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetShortCodesNextPageRequest(string nextLink, int? skip, int? top)
@@ -470,6 +553,14 @@ namespace Azure.Communication.ShortCodes
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUSProgramBriefsNextPageRequestUri(string nextLink, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetUSProgramBriefsNextPageRequest(string nextLink, int? skip, int? top)

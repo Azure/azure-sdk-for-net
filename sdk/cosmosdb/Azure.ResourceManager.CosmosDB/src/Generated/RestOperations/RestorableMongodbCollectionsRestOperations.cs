@@ -37,6 +37,33 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid, string startTime, string endTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/restorableDatabaseAccounts/", false);
+            uri.AppendPath(instanceId, true);
+            uri.AppendPath("/restorableMongodbCollections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (restorableMongoDBDatabaseRid != null)
+            {
+                uri.AppendQuery("restorableMongodbDatabaseRid", restorableMongoDBDatabaseRid, true);
+            }
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime, true);
+            }
+            if (endTime != null)
+            {
+                uri.AppendQuery("endTime", endTime, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, Guid instanceId, string restorableMongoDBDatabaseRid, string startTime, string endTime)
         {
             var message = _pipeline.CreateMessage();

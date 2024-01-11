@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/rollingUpgrades/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
         {
             var message = _pipeline.CreateMessage();
@@ -105,6 +120,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartOSUpgradeRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/osRollingUpgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartOSUpgradeRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
@@ -178,6 +208,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateStartExtensionUpgradeRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/extensionRollingUpgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartExtensionUpgradeRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
         {
             var message = _pipeline.CreateMessage();
@@ -247,6 +292,21 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetLatestRequestUri(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachineScaleSets/", false);
+            uri.AppendPath(virtualMachineScaleSetName, true);
+            uri.AppendPath("/rollingUpgrades/latest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetLatestRequest(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName)

@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryLinkedServiceLinkedServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryLinkedServiceResource>(Response.FromValue(new DataFactoryLinkedServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DataFactoryArmOperation<DataFactoryLinkedServiceResource>(Response.FromValue(new DataFactoryLinkedServiceResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +143,9 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryLinkedServiceLinkedServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, ifMatch, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryLinkedServiceResource>(Response.FromValue(new DataFactoryLinkedServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _dataFactoryLinkedServiceLinkedServicesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedServiceName, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DataFactoryArmOperation<DataFactoryLinkedServiceResource>(Response.FromValue(new DataFactoryLinkedServiceResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

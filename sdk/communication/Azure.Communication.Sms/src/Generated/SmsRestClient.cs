@@ -41,6 +41,15 @@ namespace Azure.Communication.Sms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateSendRequestUri(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/sms", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSendRequest(string @from, IEnumerable<SmsRecipient> smsRecipients, string message, SmsSendOptions smsSendOptions)
         {
             var message0 = _pipeline.CreateMessage();

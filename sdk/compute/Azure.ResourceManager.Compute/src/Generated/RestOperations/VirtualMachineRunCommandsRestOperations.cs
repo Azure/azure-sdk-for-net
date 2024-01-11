@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/runCommands", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -106,6 +119,20 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string commandId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(commandId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string commandId)
@@ -182,6 +209,22 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(vmName, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(runCommandName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandData data)
@@ -268,6 +311,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandUpdate runCommand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(vmName, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(runCommandName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, VirtualMachineRunCommandUpdate runCommand)
         {
             var message = _pipeline.CreateMessage();
@@ -350,6 +409,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vmName, string runCommandName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(vmName, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(runCommandName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName)
         {
             var message = _pipeline.CreateMessage();
@@ -426,6 +501,26 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByVirtualMachineRequestUri(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(vmName, true);
+            uri.AppendPath("/runCommands/", false);
+            uri.AppendPath(runCommandName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByVirtualMachineRequest(string subscriptionId, string resourceGroupName, string vmName, string runCommandName, string expand)
@@ -522,6 +617,25 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListByVirtualMachineRequestUri(string subscriptionId, string resourceGroupName, string vmName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines/", false);
+            uri.AppendPath(vmName, true);
+            uri.AppendPath("/runCommands", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByVirtualMachineRequest(string subscriptionId, string resourceGroupName, string vmName, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -607,6 +721,14 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -675,6 +797,14 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVirtualMachineNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string vmName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByVirtualMachineNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string vmName, string expand)

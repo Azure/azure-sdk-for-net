@@ -908,6 +908,18 @@ namespace Azure.AI.ContentSafety
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BlocklistClient.GetTextBlocklists", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateAddOrUpdateBlocklistItemsRequestUri(string name, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text/blocklists/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath(":addOrUpdateBlocklistItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAddOrUpdateBlocklistItemsRequest(string name, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -925,6 +937,17 @@ namespace Azure.AI.ContentSafety
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateTextBlocklistRequestUri(string name, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text/blocklists/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateTextBlocklistRequest(string name, RequestContent content, RequestContext context)
@@ -945,6 +968,17 @@ namespace Azure.AI.ContentSafety
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteTextBlocklistRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text/blocklists/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteTextBlocklistRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -959,6 +993,17 @@ namespace Azure.AI.ContentSafety
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTextBlocklistRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text/blocklists/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetTextBlocklistRequest(string name, RequestContext context)
@@ -977,6 +1022,19 @@ namespace Azure.AI.ContentSafety
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTextBlocklistItemRequestUri(string name, string blocklistItemId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text/blocklists/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blocklistItems/", false);
+            uri.AppendPath(blocklistItemId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTextBlocklistItemRequest(string name, string blocklistItemId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -993,6 +1051,30 @@ namespace Azure.AI.ContentSafety
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTextBlocklistItemsRequestUri(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text/blocklists/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blocklistItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxCount != null)
+            {
+                uri.AppendQuery("top", maxCount.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetTextBlocklistItemsRequest(string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1024,6 +1106,16 @@ namespace Azure.AI.ContentSafety
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTextBlocklistsRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text/blocklists", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTextBlocklistsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1037,6 +1129,18 @@ namespace Azure.AI.ContentSafety
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateRemoveBlocklistItemsRequestUri(string name, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text/blocklists/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath(":removeBlocklistItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRemoveBlocklistItemsRequest(string name, RequestContent content, RequestContext context)
@@ -1058,6 +1162,15 @@ namespace Azure.AI.ContentSafety
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTextBlocklistItemsNextPageRequestUri(string nextLink, string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTextBlocklistItemsNextPageRequest(string nextLink, string name, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1070,6 +1183,15 @@ namespace Azure.AI.ContentSafety
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTextBlocklistsNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetTextBlocklistsNextPageRequest(string nextLink, RequestContext context)

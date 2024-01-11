@@ -39,6 +39,15 @@ namespace Azure.Communication.Rooms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled, IDictionary<string, ParticipantProperties> participants)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/rooms", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled, IDictionary<string, ParticipantProperties> participants)
         {
             var message = _pipeline.CreateMessage();
@@ -121,6 +130,15 @@ namespace Azure.Communication.Rooms
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/rooms", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -173,6 +191,16 @@ namespace Azure.Communication.Rooms
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string roomId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string roomId)
@@ -242,6 +270,16 @@ namespace Azure.Communication.Rooms
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string roomId, DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string roomId, DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled)
@@ -329,6 +367,16 @@ namespace Azure.Communication.Rooms
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string roomId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string roomId)
         {
             var message = _pipeline.CreateMessage();
@@ -386,6 +434,14 @@ namespace Azure.Communication.Rooms
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink)

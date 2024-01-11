@@ -37,6 +37,24 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListMetricsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string region, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/region/", false);
+            uri.AppendPath(region, true);
+            uri.AppendPath("/metrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("$filter", filter, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListMetricsRequest(string subscriptionId, string resourceGroupName, string accountName, string region, string filter)
         {
             var message = _pipeline.CreateMessage();

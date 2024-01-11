@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _sshPublicKeyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response), response.GetRawResponse()));
+                var uri = _sshPublicKeyRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _sshPublicKeyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, data, cancellationToken);
-                var operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response), response.GetRawResponse()));
+                var uri = _sshPublicKeyRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, sshPublicKeyName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = await _proximityPlacementGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _proximityPlacementGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.Compute
             try
             {
                 var response = _proximityPlacementGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, data, cancellationToken);
-                var operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _proximityPlacementGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, proximityPlacementGroupName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ComputeArmOperation<ProximityPlacementGroupResource>(Response.FromValue(new ProximityPlacementGroupResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

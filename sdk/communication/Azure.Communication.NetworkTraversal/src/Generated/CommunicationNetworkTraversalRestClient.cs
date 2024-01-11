@@ -38,6 +38,15 @@ namespace Azure.Communication.NetworkTraversal
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateIssueRelayConfigurationRequestUri(string id, RouteType? routeType, int? ttl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/networkTraversal/:issueRelayConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateIssueRelayConfigurationRequest(string id, RouteType? routeType, int? ttl)
         {
             var message = _pipeline.CreateMessage();
