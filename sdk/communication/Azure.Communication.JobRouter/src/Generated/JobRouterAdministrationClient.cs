@@ -1349,6 +1349,16 @@ namespace Azure.Communication.JobRouter
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterAdministrationClient.GetQueues", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateUpsertDistributionPolicyRequestUri(string distributionPolicyId, RequestContent content, RequestConditions requestConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/distributionPolicies/", false);
+            uri.AppendPath(distributionPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpsertDistributionPolicyRequest(string distributionPolicyId, RequestContent content, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
@@ -1370,6 +1380,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDistributionPolicyRequestUri(string distributionPolicyId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/distributionPolicies/", false);
+            uri.AppendPath(distributionPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDistributionPolicyRequest(string distributionPolicyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1383,6 +1403,19 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDistributionPoliciesRequestUri(int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/distributionPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetDistributionPoliciesRequest(int? maxpagesize, RequestContext context)
@@ -1403,6 +1436,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteDistributionPolicyRequestUri(string distributionPolicyId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/distributionPolicies/", false);
+            uri.AppendPath(distributionPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDistributionPolicyRequest(string distributionPolicyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1416,6 +1459,16 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpsertClassificationPolicyRequestUri(string classificationPolicyId, RequestContent content, RequestConditions requestConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/classificationPolicies/", false);
+            uri.AppendPath(classificationPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpsertClassificationPolicyRequest(string classificationPolicyId, RequestContent content, RequestConditions requestConditions, RequestContext context)
@@ -1439,6 +1492,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetClassificationPolicyRequestUri(string classificationPolicyId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/classificationPolicies/", false);
+            uri.AppendPath(classificationPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetClassificationPolicyRequest(string classificationPolicyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1452,6 +1515,19 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetClassificationPoliciesRequestUri(int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/classificationPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetClassificationPoliciesRequest(int? maxpagesize, RequestContext context)
@@ -1472,6 +1548,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteClassificationPolicyRequestUri(string classificationPolicyId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/classificationPolicies/", false);
+            uri.AppendPath(classificationPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteClassificationPolicyRequest(string classificationPolicyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1485,6 +1571,16 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpsertExceptionPolicyRequestUri(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/exceptionPolicies/", false);
+            uri.AppendPath(exceptionPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpsertExceptionPolicyRequest(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions, RequestContext context)
@@ -1508,6 +1604,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetExceptionPolicyRequestUri(string exceptionPolicyId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/exceptionPolicies/", false);
+            uri.AppendPath(exceptionPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetExceptionPolicyRequest(string exceptionPolicyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1521,6 +1627,19 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetExceptionPoliciesRequestUri(int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/exceptionPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetExceptionPoliciesRequest(int? maxpagesize, RequestContext context)
@@ -1541,6 +1660,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteExceptionPolicyRequestUri(string exceptionPolicyId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/exceptionPolicies/", false);
+            uri.AppendPath(exceptionPolicyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteExceptionPolicyRequest(string exceptionPolicyId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1554,6 +1683,16 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpsertQueueRequestUri(string queueId, RequestContent content, RequestConditions requestConditions, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/queues/", false);
+            uri.AppendPath(queueId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpsertQueueRequest(string queueId, RequestContent content, RequestConditions requestConditions, RequestContext context)
@@ -1577,6 +1716,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateGetQueueRequestUri(string queueId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/queues/", false);
+            uri.AppendPath(queueId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetQueueRequest(string queueId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1590,6 +1739,19 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetQueuesRequestUri(int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/queues", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetQueuesRequest(int? maxpagesize, RequestContext context)
@@ -1610,6 +1772,16 @@ namespace Azure.Communication.JobRouter
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteQueueRequestUri(string queueId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/routing/queues/", false);
+            uri.AppendPath(queueId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteQueueRequest(string queueId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1623,6 +1795,38 @@ namespace Azure.Communication.JobRouter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetDistributionPoliciesNextPageRequestUri(string nextLink, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateGetClassificationPoliciesNextPageRequestUri(string nextLink, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateGetExceptionPoliciesNextPageRequestUri(string nextLink, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateGetQueuesNextPageRequestUri(string nextLink, int? maxpagesize, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         private static RequestContext DefaultRequestContext = new RequestContext();

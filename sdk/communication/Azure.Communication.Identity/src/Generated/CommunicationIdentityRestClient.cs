@@ -41,6 +41,15 @@ namespace Azure.Communication.Identity
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/identities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(IEnumerable<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
         {
             var message = _pipeline.CreateMessage();
@@ -115,6 +124,16 @@ namespace Azure.Communication.Identity
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/identities/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -172,6 +191,17 @@ namespace Azure.Communication.Identity
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRevokeAccessTokensRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/identities/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/:revokeAccessTokens", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRevokeAccessTokensRequest(string id)
@@ -232,6 +262,15 @@ namespace Azure.Communication.Identity
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExchangeTeamsUserAccessTokenRequestUri(string token, string appId, string userId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/teamsUser/:exchangeAccessToken", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExchangeTeamsUserAccessTokenRequest(string token, string appId, string userId)
@@ -325,6 +364,17 @@ namespace Azure.Communication.Identity
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateIssueAccessTokenRequestUri(string id, IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/identities/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/:issueAccessToken", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateIssueAccessTokenRequest(string id, IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)

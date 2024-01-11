@@ -40,6 +40,15 @@ namespace Azure.Communication.Messages
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateSendMessageRequestUri(string channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type, string content, string mediaUri, MessageTemplateInternal template)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/messages/notifications/:send", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSendMessageRequest(string channelRegistrationId, IEnumerable<string> to, CommunicationMessageType type, string content, string mediaUri, MessageTemplateInternal template)
         {
             var message = _pipeline.CreateMessage();

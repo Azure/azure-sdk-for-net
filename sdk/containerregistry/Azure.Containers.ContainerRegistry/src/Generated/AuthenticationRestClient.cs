@@ -38,6 +38,15 @@ namespace Azure.Containers.ContainerRegistry
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateExchangeAadAccessTokenForAcrRefreshTokenRequestUri(PostContentSchemaGrantType grantType, string service, string tenant, string refreshToken, string accessToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/oauth2/exchange", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(PostContentSchemaGrantType grantType, string service, string tenant, string refreshToken, string accessToken)
         {
             var message = _pipeline.CreateMessage();
@@ -129,6 +138,15 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExchangeAcrRefreshTokenForAcrAccessTokenRequestUri(string service, string scope, string refreshToken, TokenGrantType grantType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/oauth2/token", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(string service, string scope, string refreshToken, TokenGrantType grantType)

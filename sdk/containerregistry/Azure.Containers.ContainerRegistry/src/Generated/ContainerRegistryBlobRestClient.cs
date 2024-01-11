@@ -35,6 +35,17 @@ namespace Azure.Containers.ContainerRegistry
             _url = url ?? throw new ArgumentNullException(nameof(url));
         }
 
+        internal RequestUriBuilder CreateGetBlobRequestUri(string name, string digest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBlobRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +131,17 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateCheckBlobExistsRequestUri(string name, string digest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckBlobExistsRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
@@ -196,6 +218,17 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateDeleteBlobRequestUri(string name, string digest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteBlobRequest(string name, string digest)
         {
             var message = _pipeline.CreateMessage();
@@ -265,6 +298,18 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateMountBlobRequestUri(string name, string @from, string mount)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/uploads/", false);
+            uri.AppendQuery("from", @from, true);
+            uri.AppendQuery("mount", mount, true);
+            return uri;
         }
 
         internal HttpMessage CreateMountBlobRequest(string name, string @from, string mount)
@@ -350,6 +395,15 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateGetUploadStatusRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUploadStatusRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -408,6 +462,15 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUploadChunkRequestUri(string nextLink, Stream value, string contentRange, string contentLength)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateUploadChunkRequest(string nextLink, Stream value, string contentRange, string contentLength)
@@ -494,6 +557,16 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateCompleteUploadRequestUri(string digest, string nextLink, Stream value)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendQuery("digest", digest, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCompleteUploadRequest(string digest, string nextLink, Stream value)
         {
             var message = _pipeline.CreateMessage();
@@ -572,6 +645,15 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        internal RequestUriBuilder CreateCancelUploadRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelUploadRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -628,6 +710,16 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartUploadRequestUri(string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/uploads/", false);
+            return uri;
         }
 
         internal HttpMessage CreateStartUploadRequest(string name)
@@ -689,6 +781,17 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetChunkRequestUri(string name, string digest, string range)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetChunkRequest(string name, string digest, string range)
@@ -779,6 +882,17 @@ namespace Azure.Containers.ContainerRegistry
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckChunkExistsRequestUri(string name, string digest, string range)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/v2/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/blobs/", false);
+            uri.AppendPath(digest, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckChunkExistsRequest(string name, string digest, string range)

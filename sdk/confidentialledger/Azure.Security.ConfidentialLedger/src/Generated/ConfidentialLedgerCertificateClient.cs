@@ -105,6 +105,16 @@ namespace Azure.Security.ConfidentialLedger.Certificate
             }
         }
 
+        internal RequestUriBuilder CreateGetLedgerIdentityRequestUri(string ledgerId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_certificateEndpoint);
+            uri.AppendPath("/ledgerIdentity/", false);
+            uri.AppendPath(ledgerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLedgerIdentityRequest(string ledgerId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

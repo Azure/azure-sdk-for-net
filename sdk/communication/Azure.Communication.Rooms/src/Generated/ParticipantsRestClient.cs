@@ -39,6 +39,17 @@ namespace Azure.Communication.Rooms
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string roomId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendPath("/participants", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string roomId)
         {
             var message = _pipeline.CreateMessage();
@@ -107,6 +118,17 @@ namespace Azure.Communication.Rooms
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string roomId, IDictionary<string, ParticipantProperties> participants)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/rooms/", false);
+            uri.AppendPath(roomId, true);
+            uri.AppendPath("/participants", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string roomId, IDictionary<string, ParticipantProperties> participants)
@@ -192,6 +214,14 @@ namespace Azure.Communication.Rooms
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string roomId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string roomId)

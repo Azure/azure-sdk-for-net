@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGenerateBenefitUtilizationSummariesReportAsyncRequestUri(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/savingsPlans/", false);
+            uri.AppendPath(savingsPlanId, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/generateBenefitUtilizationSummariesReport", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content)
         {
             var message = _pipeline.CreateMessage();
