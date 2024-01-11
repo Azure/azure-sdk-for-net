@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<GenericResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new InvalidOperationException($"The model {nameof(GenericResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericResourceData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<GenericResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new InvalidOperationException($"The model {nameof(GenericResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericResourceData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Resources
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new InvalidOperationException($"The model {nameof(GenericResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericResourceData)} does not support '{options.Format}' format.");
             }
         }
 
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeGenericResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new InvalidOperationException($"The model {nameof(GenericResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericResourceData)} does not support '{options.Format}' format.");
             }
         }
 

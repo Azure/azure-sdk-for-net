@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SearchServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -87,6 +95,14 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SearchServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
@@ -109,6 +125,14 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SearchServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,6 +169,14 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SearchServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The resource name and type to check. </param>
@@ -180,6 +212,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
@@ -204,6 +240,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
@@ -227,6 +267,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UsageBySubscriptionSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,6 +308,10 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UsageBySubscriptionSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>

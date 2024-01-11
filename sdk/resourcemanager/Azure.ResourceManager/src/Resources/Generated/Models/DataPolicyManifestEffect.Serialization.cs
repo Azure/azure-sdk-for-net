@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestEffect>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new InvalidOperationException($"The model {nameof(DataPolicyManifestEffect)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPolicyManifestEffect)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestEffect>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new InvalidOperationException($"The model {nameof(DataPolicyManifestEffect)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPolicyManifestEffect)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new InvalidOperationException($"The model {nameof(DataPolicyManifestEffect)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPolicyManifestEffect)} does not support '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeDataPolicyManifestEffect(document.RootElement, options);
                     }
                 default:
-                    throw new InvalidOperationException($"The model {nameof(DataPolicyManifestEffect)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPolicyManifestEffect)} does not support '{options.Format}' format.");
             }
         }
 

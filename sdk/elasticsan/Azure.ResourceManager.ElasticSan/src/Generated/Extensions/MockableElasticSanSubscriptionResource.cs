@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
@@ -79,6 +83,10 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <term>Operation Id</term>
         /// <description>ElasticSans_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -123,6 +139,14 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticSans_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

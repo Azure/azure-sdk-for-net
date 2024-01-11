@@ -110,12 +110,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Optional.IsDefined(VectorSearchProfile))
+            if (Optional.IsDefined(VectorSearchProfileName))
             {
-                if (VectorSearchProfile != null)
+                if (VectorSearchProfileName != null)
                 {
                     writer.WritePropertyName("vectorSearchProfile"u8);
-                    writer.WriteStringValue(VectorSearchProfile);
+                    writer.WriteStringValue(VectorSearchProfileName);
                 }
                 else
                 {
