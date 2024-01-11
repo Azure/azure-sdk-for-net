@@ -2236,7 +2236,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             //var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dataFunc(linkedServiceName));
             //Assert.NotNull(result.Value.Id);
 
-            await CreateAzureDataLakeGen2LinkedService(dataFactory, linkedServiceName, "QHWfL5OTbdfSvulrKII/nObjiTfMcVcaYKVkcGWwXw3KYiwLx9RzTYyx3x5+KvNGrpYhiuGEE1T+H9aO3aIfew==");
+            await CreateAzureDataLakeGen2LinkedService(dataFactory, linkedServiceName, "fakePassword");
 
             DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
             DataFactoryDatasetData data = new DataFactoryDatasetData(new AvroDataset(dataFactoryLinkedServiceReference)
