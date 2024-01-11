@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+- The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.  
+
+  This is a behavioral breaking change that will impacts only those callers who were explicitly casting system property values to `AmqpAddress` or `AmqpMessageId` before calling `ToString()`.   The affected system properties are:
+  - MessageId
+  - CorelationId
+  - To
+  - ReplyTo
+
 ### Bugs Fixed
 
 - Load balancing is no longer blocked when event processing for a lost partition does not honor the cancellation token.  Previously, long-running processing could cause delays in load balancing that resulted in ownership not being renewed for all partitions.
