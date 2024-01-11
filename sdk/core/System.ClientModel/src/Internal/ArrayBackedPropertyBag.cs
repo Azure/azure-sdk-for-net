@@ -91,7 +91,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         if (index < 0)
             AddInternal(key, value);
         else
-            SetAt(index, new(key, value));
+            SetAt(index, (key, value));
     }
 
     public bool TryRemove(TKey key)
@@ -176,17 +176,17 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         switch (_count)
         {
             case 0:
-                _first = new(key, value);
+                _first = (key, value);
                 _count = 1;
                 return;
             case 1:
                 if (IsFirst(key))
                 {
-                    _first = new(_first.Key, value);
+                    _first = (_first.Key, value);
                 }
                 else
                 {
-                    _second = new(key, value);
+                    _second = (key, value);
                     _count = 2;
                 }
 
@@ -195,7 +195,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
                 if (_rest == null)
                 {
                     _rest = ArrayPool<(TKey Key, TValue Value)>.Shared.Rent(8);
-                    _rest[_count++ - 2] = new(key, value);
+                    _rest[_count++ - 2] = (key, value);
                     return;
                 }
 
@@ -207,7 +207,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
                     _rest = larger;
                     ArrayPool<(TKey Key, TValue Value)>.Shared.Return(old, true);
                 }
-                _rest[_count++ - 2] = new(key, value);
+                _rest[_count++ - 2] = (key, value);
                 return;
         }
     }
