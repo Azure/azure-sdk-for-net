@@ -182,7 +182,7 @@ namespace Azure.Storage.DataMovement
             long? fileLength = _sourceResource.Length;
             try
             {
-                StorageResourceProperties2 properties = await _sourceResource.GetPropertiesAsync2(_cancellationToken).ConfigureAwait(false);
+                StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 fileLength = properties.ContentLength;
             }
             catch (Exception ex)
@@ -242,14 +242,12 @@ namespace Azure.Storage.DataMovement
             {
                 StorageResourceCopyFromUriOptions options =
                     await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
-                StorageResourceProperties2 sourceResourceProperties = await _sourceResource.GetPropertiesAsync2().ConfigureAwait(false);
 
-                await _destinationResource.CopyFromUriAsync2(
+                await _destinationResource.CopyFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
                     completeLength: completeLength,
                     options: options,
-                    sourceResourceProperties: sourceResourceProperties,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 ReportBytesWritten(completeLength);

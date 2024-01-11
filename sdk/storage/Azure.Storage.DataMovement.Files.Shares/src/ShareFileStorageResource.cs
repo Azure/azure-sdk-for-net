@@ -181,7 +181,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(

@@ -57,6 +57,12 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override long? Length => ResourceProperties?.ContentLength;
 
         /// <summary>
+        /// ETag Download lock. Used when reading from the storage resource to confirm the storage resource has not changed
+        /// since the start of the transfer.
+        /// </summary>
+        protected ETag? ETagDownloadLock;
+
+        /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
         /// class.
         /// </summary>
@@ -80,11 +86,12 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options">Options for the storage resource. See <see cref="BlockBlobStorageResourceOptions"/>.</param>
         internal BlockBlobStorageResource(
             BlockBlobClient blobClient,
-            StorageResourceProperties2 resourceProperties,
+            StorageResourceItemProperties resourceProperties,
             BlockBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
             ResourceProperties = resourceProperties;
+            ETagDownloadLock = resourceProperties?.RawProperties?.ParseETagProperty();
         }
 
         /// <summary>
@@ -108,7 +115,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<BlobDownloadStreamingResult> response =
                 await BlobClient.DownloadStreamingAsync(
-                    _options.ToBlobDownloadOptions(new HttpRange(position, length), ResourceProperties?.ETag),
+                    _options.ToBlobDownloadOptions(new HttpRange(position, length), ETagDownloadLock),
                     cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -203,24 +210,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task CopyFromUriAsync2(
-            StorageResourceItem sourceResource,
-            bool overwrite,
-            long completeLength,
-            StorageResourceCopyFromUriOptions options = default,
-            StorageResourceProperties2 sourceResourceProperties = default,
-            CancellationToken cancellationToken = default)
-        {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
-            // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
-            // TODO: subject to change as we scale to support resource types outside of blobs.
-            await BlobClient.SyncUploadFromUriAsync(
-                sourceResource.Uri,
-                _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication, sourceResourceProperties),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// Uploads/copy the blob from a URL. Supports ranged operations.
         /// </summary>
@@ -264,21 +253,14 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Get properties of the resource.
         ///
-        /// See <see cref="StorageResourceProperties"/>.
+        /// See <see cref="StorageResourceItemProperties"/>.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/>.</returns>
-        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
-        {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            return response.Value.ToStorageResourceProperties();
-        }
-
-        protected override async Task<StorageResourceProperties2> GetPropertiesAsync2(CancellationToken cancellationToken = default)
+        /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceItemProperties"/>.</returns>
+        protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
@@ -291,14 +273,14 @@ namespace Azure.Storage.DataMovement.Blobs
             else
             {
                 BlobProperties blobProperties = (await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
-                StorageResourceProperties2 resourceProperties = blobProperties.ToStorageResourceProperties2();
+                StorageResourceItemProperties resourceProperties = blobProperties.ToStorageResourceProperties();
 
                 // If there are blob tags, they need to be fetched separately
                 // TODO this should be behind a separate toggle
                 if (blobProperties.TagCount > 0)
                 {
                     GetBlobTagResult tagResult = (await BlobClient.GetTagsAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
-                    resourceProperties.Properties.Add(DataMovementConstants.ResourceProperties.Tags, tagResult.Tags);
+                    resourceProperties.RawProperties.Add(DataMovementConstants.ResourceProperties.Tags, tagResult.Tags);
                 }
 
                 ResourceProperties = resourceProperties;

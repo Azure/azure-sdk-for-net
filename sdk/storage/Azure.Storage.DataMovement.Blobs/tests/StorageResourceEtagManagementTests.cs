@@ -30,22 +30,20 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<BlockBlobClient> mock = new(
                 new Uri("https://storageaccount.blob.core.windows.net/container/blob"),
                 new BlobClientOptions());
-            mock.Setup(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    new BlobProperties(),
-                    new MockResponse(200).WithHeader(ETag, etag.ToString()))));
             mock.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            BlockBlobStorageResource storageResource = new(mock.Object);
-            await storageResource.GetPropertiesInternalAsync();
+            Dictionary<string, object> etagProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ETag, etag }
+            };
+            StorageResourceItemProperties properties = new(0, etagProperties);
+
+            BlockBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
 
-            mock.Verify(
-                b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
-                Times.Once());
             mock.Verify(
                 b => b.DownloadStreamingAsync(
                     It.Is<BlobDownloadOptions>(options => options.Conditions.IfMatch == etag),
@@ -54,28 +52,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public async Task PageBlobBlobMaintainsEtagForDownloads()
+        public async Task PageBlobMaintainsEtagForDownloads()
         {
             ETag etag = new ETag("foo");
             Mock<PageBlobClient> mock = new(
                 new Uri("https://storageaccount.blob.core.windows.net/container/blob"),
                 new BlobClientOptions());
-            mock.Setup(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    new BlobProperties(),
-                    new MockResponse(200).WithHeader(ETag, etag.ToString()))));
             mock.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            PageBlobStorageResource storageResource = new(mock.Object);
-            await storageResource.GetPropertiesInternalAsync();
+            Dictionary<string, object> etagProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ETag, etag }
+            };
+            StorageResourceItemProperties properties = new(0, etagProperties);
+
+            PageBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
 
-            mock.Verify(
-                b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
-                Times.Once());
             mock.Verify(
                 b => b.DownloadStreamingAsync(
                     It.Is<BlobDownloadOptions>(options => options.Conditions.IfMatch == etag),
@@ -90,22 +86,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<AppendBlobClient> mock = new(
                 new Uri("https://storageaccount.blob.core.windows.net/container/blob"),
                 new BlobClientOptions());
-            mock.Setup(b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    new BlobProperties(),
-                    new MockResponse(200).WithHeader(ETag, etag.ToString()))));
             mock.Setup(b => b.DownloadStreamingAsync(It.IsAny<BlobDownloadOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            AppendBlobStorageResource storageResource = new(mock.Object);
+            Dictionary<string, object> etagProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ETag, etag }
+            };
+            StorageResourceItemProperties properties = new(0, etagProperties);
+
+            AppendBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.GetPropertiesInternalAsync();
             await storageResource.ReadStreamInternalAsync();
 
-            mock.Verify(
-                b => b.GetPropertiesAsync(It.IsAny<BlobRequestConditions>(), It.IsAny<CancellationToken>()),
-                Times.Once());
             mock.Verify(
                 b => b.DownloadStreamingAsync(
                     It.Is<BlobDownloadOptions>(options => options.Conditions.IfMatch == etag),
@@ -125,12 +120,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceProperties2 resourceProperties = new()
+            Dictionary<string, object> properties = new()
             {
-                ContentLength = default,
-                ETag = etag,
-                Properties = new()
+                { DataMovementConstants.ResourceProperties.ETag, etag }
             };
+
+            StorageResourceItemProperties resourceProperties = new(
+                contentLength: default,
+                properties: properties
+            );
 
             BlockBlobStorageResource storageResource = new(mock.Object, resourceProperties);
             await storageResource.ReadStreamInternalAsync();
@@ -154,12 +152,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            StorageResourceProperties2 resourceProperties = new()
+            Dictionary<string, object> properties = new()
             {
-                ContentLength = default,
-                ETag = etag,
-                Properties = new()
+                { DataMovementConstants.ResourceProperties.ETag, etag }
             };
+
+            StorageResourceItemProperties resourceProperties = new(
+                contentLength: default,
+                properties: properties
+            );
 
             PageBlobStorageResource storageResource = new(mock.Object, resourceProperties);
             await storageResource.ReadStreamInternalAsync();
@@ -183,7 +184,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     BlobsModelFactory.BlobDownloadStreamingResult(Stream.Null, new BlobDownloadDetails()),
                     new MockResponse(201))));
 
-            AppendBlobStorageResource storageResource = new(mock.Object, length: default, etag);
+            Dictionary<string, object> etagProperties = new()
+            {
+                { DataMovementConstants.ResourceProperties.ETag, etag }
+            };
+            StorageResourceItemProperties properties = new(0, etagProperties);
+
+            AppendBlobStorageResource storageResource = new(mock.Object, properties, default);
             await storageResource.ReadStreamInternalAsync();
 
             mock.Verify(

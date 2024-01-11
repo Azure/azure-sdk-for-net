@@ -9,81 +9,103 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal static partial class DataMovementBlobsExtensions
     {
-        internal static StorageResourceProperties ToStorageResourceProperties(this BlobProperties blobProperties)
-        {
-            return new StorageResourceProperties(
-                lastModified: blobProperties.LastModified,
-                createdOn: blobProperties.CreatedOn,
-                metadata: blobProperties.Metadata,
-                copyCompletedOn: blobProperties.CopyCompletedOn,
-                copyStatusDescription: blobProperties.CopyStatusDescription,
-                copyId: blobProperties.CopyId,
-                copyProgress: blobProperties.CopyProgress,
-                copySource: blobProperties.CopySource,
-                contentLength: blobProperties.ContentLength,
-                contentType: blobProperties.ContentType,
-                eTag: blobProperties.ETag,
-                contentHash: blobProperties.ContentHash,
-                blobSequenceNumber: blobProperties.BlobSequenceNumber,
-                blobCommittedBlockCount: blobProperties.BlobCommittedBlockCount,
-                isServerEncrypted: blobProperties.IsServerEncrypted,
-                encryptionKeySha256: blobProperties.EncryptionKeySha256,
-                encryptionScope: blobProperties.EncryptionScope,
-                versionId: blobProperties.VersionId,
-                isLatestVersion: blobProperties.IsLatestVersion,
-                expiresOn: blobProperties.ExpiresOn,
-                lastAccessed: blobProperties.LastAccessed);
-        }
-
-        internal static StorageResourceProperties2 ToStorageResourceProperties2(this BlobProperties blobProperties)
+        internal static StorageResourceItemProperties ToStorageResourceProperties(this BlobProperties blobProperties)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
             if (blobProperties.Metadata != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, blobProperties.Metadata);
             }
-
-            return new StorageResourceProperties2()
+            if (blobProperties.ETag != default)
             {
-                ContentLength = blobProperties.ContentLength,
-                Properties = properties
-            };
+                properties.Add(DataMovementConstants.ResourceProperties.ETag, blobProperties.ETag);
+            }
+            if (blobProperties.LastModified != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.LastModified, blobProperties.LastModified);
+            }
+            if (blobProperties.CreatedOn != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.CreationTime, blobProperties.CreatedOn);
+            }
+            if (blobProperties.BlobType != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.BlobType, blobProperties.BlobType);
+            }
+            if (blobProperties.ContentType != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ContentType, blobProperties.ContentType);
+            }
+            if (blobProperties.ContentHash != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ContentHash, blobProperties.ContentHash);
+            }
+            if (blobProperties.ContentEncoding != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ContentEncoding, blobProperties.ContentEncoding);
+            }
+            if (blobProperties.ContentLanguage != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ContentLanguage, blobProperties.ContentLanguage);
+            }
+            if (blobProperties.ContentDisposition != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ContentDisposition, blobProperties.ContentDisposition);
+            }
+            if (blobProperties.CacheControl != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.CacheControl, blobProperties.CacheControl);
+            }
+
+            return new StorageResourceItemProperties(
+                contentLength: blobProperties.ContentLength,
+                properties: properties);
         }
 
-        internal static StorageResourceProperties ToStorageResourceProperties(this BlobDownloadDetails blobProperties)
+        internal static StorageResourceItemProperties ToStorageResourceProperties(this BlobDownloadDetails blobProperties)
         {
-            return new StorageResourceProperties(
-                lastModified: blobProperties.LastModified,
-                createdOn: default,
-                metadata: blobProperties.Metadata,
-                copyCompletedOn: blobProperties.CopyCompletedOn,
-                copyStatusDescription: blobProperties.CopyStatusDescription,
-                copyId: blobProperties.CopyId,
-                copyProgress: blobProperties.CopyProgress,
-                copySource: blobProperties.CopySource,
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            if (blobProperties.ETag != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ETag, blobProperties.ETag);
+            }
+            if (blobProperties.LastModified != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.LastModified, blobProperties.LastModified);
+            }
+
+            return new StorageResourceItemProperties(
                 contentLength: blobProperties.ContentLength,
-                contentType: blobProperties.ContentType,
-                eTag: blobProperties.ETag,
-                contentHash: blobProperties.ContentHash,
-                blobSequenceNumber: blobProperties.BlobSequenceNumber,
-                blobCommittedBlockCount: blobProperties.BlobCommittedBlockCount,
-                isServerEncrypted: blobProperties.IsServerEncrypted,
-                encryptionKeySha256: blobProperties.EncryptionKeySha256,
-                encryptionScope: blobProperties.EncryptionScope,
-                versionId: blobProperties.VersionId,
-                isLatestVersion: default,
-                expiresOn: default,
-                lastAccessed: blobProperties.LastAccessed);
+                properties: properties);
         }
 
         internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
         {
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            if (result.Details.ETag != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ETag, result.Details.ETag);
+            }
+            if (result.Details.LastModified != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.LastModified, result.Details.LastModified);
+            }
+
+            HttpRange range = default;
+            long? size = default;
+            ContentRange contentRange = ContentRange.Parse(result.Details.ContentRange);
+            if (contentRange != default)
+            {
+                range = ContentRange.ToHttpRange(contentRange);
+                size = contentRange.Size;
+            }
+
             return new StorageResourceReadStreamResult(
                 content: result.Content,
-                contentRange: result.Details.ContentRange,
-                acceptRanges: result.Details.AcceptRanges,
-                rangeContentHash: result.Details.BlobContentHash,
-                properties: result.Details.ToStorageResourceProperties());
+                range: range,
+                properties: new StorageResourceItemProperties(
+                    contentLength: size.HasValue ? size : result.Details.ContentLength,
+                    properties: properties));
         }
 
         /// <summary>
@@ -274,7 +296,7 @@ namespace Azure.Storage.DataMovement.Blobs
             this BlockBlobStorageResourceOptions options,
             bool overwrite,
             HttpAuthorization sourceAuthorization,
-            StorageResourceProperties2 resourceProperties = default)
+            StorageResourceItemProperties resourceProperties = default)
         {
             // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
             // We need to omit them, but still apply them to other requests that do accept them.
@@ -283,7 +305,7 @@ namespace Azure.Storage.DataMovement.Blobs
             AccessTier? accessTier = default;
             if (resourceProperties != default)
             {
-                resourceProperties.Properties.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object tier);
+                resourceProperties.RawProperties.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object tier);
                 accessTier = (AccessTier?)tier;
             }
 
@@ -491,12 +513,16 @@ namespace Azure.Storage.DataMovement.Blobs
                 }
             };
 
-        internal static StorageResourceProperties2 ToResourceProperties(this BlobItem blobItem)
+        internal static StorageResourceItemProperties ToResourceProperties(this BlobItem blobItem)
         {
             Dictionary<string, object> properties = new();
             if (blobItem.Metadata != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.Metadata, blobItem.Metadata);
+            }
+            if (blobItem.Properties.ETag != default)
+            {
+                properties.Add(DataMovementConstants.ResourceProperties.ETag, blobItem.Properties.ETag);
             }
             if (blobItem.Tags != default)
             {
@@ -507,12 +533,18 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties.Add(DataMovementConstants.ResourceProperties.AccessTier, blobItem.Properties.AccessTier.Value);
             }
 
-            return new StorageResourceProperties2()
+            return new StorageResourceItemProperties(
+                contentLength: blobItem.Properties.ContentLength,
+                properties: properties);
+        }
+
+        internal static ETag? ParseETagProperty(this Dictionary<string, object> properties)
+        {
+            if (properties.TryGetValue(DataMovementConstants.ResourceProperties.ETag, out object rawETag))
             {
-                ContentLength = blobItem.Properties.ContentLength,
-                ETag = blobItem.Properties.ETag,
-                Properties = properties
-            };
+                return (ETag?) rawETag;
+            }
+            return default;
         }
     }
 }

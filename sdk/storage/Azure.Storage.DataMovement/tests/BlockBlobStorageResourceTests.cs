@@ -576,12 +576,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(blobClient);
 
             // Act
-            StorageResourceProperties result = await storageResource.GetPropertiesAsync();
+            StorageResourceItemProperties result = await storageResource.GetPropertiesAsync();
 
             // Assert
             Assert.NotNull(result);
             Assert.AreEqual(result.ContentLength, Constants.KB);
-            Assert.NotNull(result.ETag);
+            Assert.NotNull(result.RawProperties);
         }
 
         [RecordedTest]

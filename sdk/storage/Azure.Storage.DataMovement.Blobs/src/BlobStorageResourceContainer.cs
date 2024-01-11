@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private StorageResourceItem GetBlobAsStorageResource(
             string blobName,
             BlobType type = BlobType.Block,
-            StorageResourceProperties2 resourceProperties = default)
+            StorageResourceItemProperties resourceProperties = default)
         {
             // Recreate the blobName using the existing parent directory path
             if (type == BlobType.Append)
