@@ -37,11 +37,7 @@ namespace Azure.Core.Pipeline
             // We either use the default that the policy was constructed with at
             // pipeline-creation time, or we get an override value from the message that
             // we use for the duration of this invocation only.
-            TimeSpan invocationNetworkTimeout = _networkTimeout;
-            if (ResponseBufferingPolicy.TryGetNetworkTimeout(message, out TimeSpan networkTimeoutOverride))
-            {
-                invocationNetworkTimeout = networkTimeoutOverride;
-            }
+            TimeSpan invocationNetworkTimeout = message.NetworkTimeout ?? _networkTimeout;
 
             try
             {
@@ -54,13 +50,8 @@ namespace Azure.Core.Pipeline
                     _policy.Process(message, processor, -1);
                 }
 
-                if (!ResponseBufferingPolicy.TryGetBufferResponse(message, out bool bufferResponse))
-                {
-                    // We default to buffering the response if not set on message.
-                    bufferResponse = true;
-                }
-
-                if (!bufferResponse && invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
+                if (!ResponseBufferingPolicy.GetBufferingEnabled(message) &&
+                    invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
                 {
                     Stream? responseContentStream = message.Response.ContentStream;
                     if (responseContentStream == null || responseContentStream.CanSeek)

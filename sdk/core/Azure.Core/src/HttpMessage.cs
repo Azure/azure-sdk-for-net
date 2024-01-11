@@ -82,8 +82,8 @@ namespace Azure.Core
         /// </summary>
         public bool BufferResponse
         {
-            get => ResponseBufferingPolicy.TryGetBufferResponse(this, out bool bufferResponse) ? bufferResponse : true;
-            set => ResponseBufferingPolicy.SetBufferResponse(this, value);
+            get => ResponseBufferingPolicy.GetBufferingEnabled(this);
+            set => ResponseBufferingPolicy.SetBufferingEnabled(this, value);
         }
 
         /// <summary>
@@ -92,14 +92,8 @@ namespace Azure.Core
         /// </summary>
         public TimeSpan? NetworkTimeout
         {
-            get => ResponseBufferingPolicy.TryGetNetworkTimeout(this, out TimeSpan timeout) ? timeout : null;
-            set
-            {
-                if (value.HasValue)
-                {
-                    ResponseBufferingPolicy.SetNetworkTimeout(this, value.Value);
-                }
-            }
+            get => ResponseBufferingPolicy.GetNetworkTimeout(this);
+            set => ResponseBufferingPolicy.SetNetworkTimeout(this, value);
         }
 
         internal int RetryNumber { get; set; }

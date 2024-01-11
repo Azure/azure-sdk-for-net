@@ -237,12 +237,12 @@ namespace System.ClientModel.Primitives
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { }
+        public static bool GetBufferingEnabled(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public static System.TimeSpan? GetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-        public static void SetBufferResponse(System.ClientModel.Primitives.PipelineMessage message, bool bufferResponse) { }
-        public static void SetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, System.TimeSpan networkTimeout) { }
-        public static bool TryGetBufferResponse(System.ClientModel.Primitives.PipelineMessage message, out bool bufferResponse) { throw null; }
-        public static bool TryGetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, out System.TimeSpan networkTimeout) { throw null; }
+        public static void SetBufferingEnabled(System.ClientModel.Primitives.PipelineMessage message, bool bufferingEnabled) { }
+        public static void SetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, System.TimeSpan? networkTimeout) { }
     }
     [System.FlagsAttribute]
     public enum ResponseErrorOptions
