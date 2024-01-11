@@ -503,6 +503,64 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        internal RequestUriBuilder CreateGetScenesRequestUri(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/scenes", false);
+            uri.AppendQuery("provider", provider, true);
+            uri.AppendQuery("partyId", partyId, true);
+            uri.AppendQuery("boundaryId", boundaryId, true);
+            uri.AppendQuery("source", source, true);
+            if (startDateTime != null)
+            {
+                uri.AppendQuery("startDateTime", startDateTime.Value, "O", true);
+            }
+            if (endDateTime != null)
+            {
+                uri.AppendQuery("endDateTime", endDateTime.Value, "O", true);
+            }
+            if (maxCloudCoveragePercentage != null)
+            {
+                uri.AppendQuery("maxCloudCoveragePercentage", maxCloudCoveragePercentage.Value, true);
+            }
+            if (maxDarkPixelCoveragePercentage != null)
+            {
+                uri.AppendQuery("maxDarkPixelCoveragePercentage", maxDarkPixelCoveragePercentage.Value, true);
+            }
+            if (imageNames != null && Optional.IsCollectionDefined(imageNames))
+            {
+                foreach (var param in imageNames)
+                {
+                    uri.AppendQuery("imageNames", param, true);
+                }
+            }
+            if (imageResolutions != null && Optional.IsCollectionDefined(imageResolutions))
+            {
+                foreach (var param in imageResolutions)
+                {
+                    uri.AppendQuery("imageResolutions", param, true);
+                }
+            }
+            if (imageFormats != null && Optional.IsCollectionDefined(imageFormats))
+            {
+                foreach (var param in imageFormats)
+                {
+                    uri.AppendQuery("imageFormats", param, true);
+                }
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetScenesRequest(string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -566,6 +624,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateDownloadRequestUri(string filePath, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/scenes/downloadFiles", false);
+            uri.AppendQuery("filePath", filePath, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDownloadRequest(string filePath, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -579,6 +647,16 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, application/octet-stream");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateSatelliteDataIngestionJobRequestUri(string jobId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/scenes/satellite/ingest-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateSatelliteDataIngestionJobRequest(string jobId, RequestContent content, RequestContext context)
@@ -598,6 +676,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSatelliteDataIngestionJobDetailsRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/scenes/satellite/ingest-data/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSatelliteDataIngestionJobDetailsRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -611,6 +699,25 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateSearchFeaturesRequestUri(string collectionId, RequestContent content, int? maxpagesize, int? skip, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/scenes/stac-collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath(":search", false);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSearchFeaturesRequest(string collectionId, RequestContent content, int? maxpagesize, int? skip, RequestContext context)
@@ -639,6 +746,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetStacFeatureRequestUri(string collectionId, string featureId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/scenes/stac-collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/features/", false);
+            uri.AppendPath(featureId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStacFeatureRequest(string collectionId, string featureId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -654,6 +773,14 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetScenesNextPageRequestUri(string nextLink, string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetScenesNextPageRequest(string nextLink, string provider, string partyId, string boundaryId, string source, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, double? maxCloudCoveragePercentage, double? maxDarkPixelCoveragePercentage, IEnumerable<string> imageNames, IEnumerable<double> imageResolutions, IEnumerable<string> imageFormats, int? maxPageSize, string skipToken, RequestContext context)

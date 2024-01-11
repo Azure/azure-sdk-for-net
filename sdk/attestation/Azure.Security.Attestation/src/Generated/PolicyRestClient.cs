@@ -38,6 +38,16 @@ namespace Azure.Security.Attestation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(AttestationType attestationType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/policies/", false);
+            uri.AppendPath(attestationType.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(AttestationType attestationType)
         {
             var message = _pipeline.CreateMessage();
@@ -93,6 +103,16 @@ namespace Azure.Security.Attestation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetRequestUri(AttestationType attestationType, string newAttestationPolicy)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/policies/", false);
+            uri.AppendPath(attestationType.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSetRequest(AttestationType attestationType, string newAttestationPolicy)
@@ -166,6 +186,17 @@ namespace Azure.Security.Attestation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResetRequestUri(AttestationType attestationType, string policyJws)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_instanceUrl, false);
+            uri.AppendPath("/policies/", false);
+            uri.AppendPath(attestationType.ToString(), true);
+            uri.AppendPath(":reset", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResetRequest(AttestationType attestationType, string policyJws)

@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationCredentialCredentialRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _automationCredentialCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationCredentialCredentialRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _automationCredentialCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialName, content);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AutomationArmOperation<AutomationCredentialResource>(Response.FromValue(new AutomationCredentialResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

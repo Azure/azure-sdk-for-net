@@ -673,6 +673,161 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        internal RequestUriBuilder CreateGetAllHarvestDataRequestUri(double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/harvest-data", false);
+            if (minTotalYield != null)
+            {
+                uri.AppendQuery("minTotalYield", minTotalYield.Value, true);
+            }
+            if (maxTotalYield != null)
+            {
+                uri.AppendQuery("maxTotalYield", maxTotalYield.Value, true);
+            }
+            if (minAvgYield != null)
+            {
+                uri.AppendQuery("minAvgYield", minAvgYield.Value, true);
+            }
+            if (maxAvgYield != null)
+            {
+                uri.AppendQuery("maxAvgYield", maxAvgYield.Value, true);
+            }
+            if (minTotalWetMass != null)
+            {
+                uri.AppendQuery("minTotalWetMass", minTotalWetMass.Value, true);
+            }
+            if (maxTotalWetMass != null)
+            {
+                uri.AppendQuery("maxTotalWetMass", maxTotalWetMass.Value, true);
+            }
+            if (minAvgWetMass != null)
+            {
+                uri.AppendQuery("minAvgWetMass", minAvgWetMass.Value, true);
+            }
+            if (maxAvgWetMass != null)
+            {
+                uri.AppendQuery("maxAvgWetMass", maxAvgWetMass.Value, true);
+            }
+            if (minAvgMoisture != null)
+            {
+                uri.AppendQuery("minAvgMoisture", minAvgMoisture.Value, true);
+            }
+            if (maxAvgMoisture != null)
+            {
+                uri.AppendQuery("maxAvgMoisture", maxAvgMoisture.Value, true);
+            }
+            if (minAvgSpeed != null)
+            {
+                uri.AppendQuery("minAvgSpeed", minAvgSpeed.Value, true);
+            }
+            if (maxAvgSpeed != null)
+            {
+                uri.AppendQuery("maxAvgSpeed", maxAvgSpeed.Value, true);
+            }
+            if (sources != null && Optional.IsCollectionDefined(sources))
+            {
+                foreach (var param in sources)
+                {
+                    uri.AppendQuery("sources", param, true);
+                }
+            }
+            if (associatedBoundaryIds != null && Optional.IsCollectionDefined(associatedBoundaryIds))
+            {
+                foreach (var param in associatedBoundaryIds)
+                {
+                    uri.AppendQuery("associatedBoundaryIds", param, true);
+                }
+            }
+            if (minOperationStartDateTime != null)
+            {
+                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
+            }
+            if (maxOperationStartDateTime != null)
+            {
+                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
+            }
+            if (minOperationEndDateTime != null)
+            {
+                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
+            }
+            if (maxOperationEndDateTime != null)
+            {
+                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
+            }
+            if (minOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
+            }
+            if (maxOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
+            }
+            if (minArea != null)
+            {
+                uri.AppendQuery("minArea", minArea.Value, true);
+            }
+            if (maxArea != null)
+            {
+                uri.AppendQuery("maxArea", maxArea.Value, true);
+            }
+            if (harvestDataIds != null && Optional.IsCollectionDefined(harvestDataIds))
+            {
+                foreach (var param in harvestDataIds)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null && Optional.IsCollectionDefined(names))
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllHarvestDataRequest(double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -833,6 +988,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateCascadeDeleteJobRequestUri(string jobId, string partyId, string harvestDataId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/harvest-data/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("partyId", partyId, true);
+            uri.AppendQuery("harvestDataId", harvestDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateCascadeDeleteJobRequest(string jobId, string partyId, string harvestDataId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -850,6 +1017,16 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCascadeDeleteJobDetailsRequestUri(string jobId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/harvest-data/cascade-delete/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCascadeDeleteJobDetailsRequest(string jobId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -863,6 +1040,163 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetAllHarvestDataByPartyIdRequestUri(string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/harvest-data", false);
+            if (minTotalYield != null)
+            {
+                uri.AppendQuery("minTotalYield", minTotalYield.Value, true);
+            }
+            if (maxTotalYield != null)
+            {
+                uri.AppendQuery("maxTotalYield", maxTotalYield.Value, true);
+            }
+            if (minAvgYield != null)
+            {
+                uri.AppendQuery("minAvgYield", minAvgYield.Value, true);
+            }
+            if (maxAvgYield != null)
+            {
+                uri.AppendQuery("maxAvgYield", maxAvgYield.Value, true);
+            }
+            if (minTotalWetMass != null)
+            {
+                uri.AppendQuery("minTotalWetMass", minTotalWetMass.Value, true);
+            }
+            if (maxTotalWetMass != null)
+            {
+                uri.AppendQuery("maxTotalWetMass", maxTotalWetMass.Value, true);
+            }
+            if (minAvgWetMass != null)
+            {
+                uri.AppendQuery("minAvgWetMass", minAvgWetMass.Value, true);
+            }
+            if (maxAvgWetMass != null)
+            {
+                uri.AppendQuery("maxAvgWetMass", maxAvgWetMass.Value, true);
+            }
+            if (minAvgMoisture != null)
+            {
+                uri.AppendQuery("minAvgMoisture", minAvgMoisture.Value, true);
+            }
+            if (maxAvgMoisture != null)
+            {
+                uri.AppendQuery("maxAvgMoisture", maxAvgMoisture.Value, true);
+            }
+            if (minAvgSpeed != null)
+            {
+                uri.AppendQuery("minAvgSpeed", minAvgSpeed.Value, true);
+            }
+            if (maxAvgSpeed != null)
+            {
+                uri.AppendQuery("maxAvgSpeed", maxAvgSpeed.Value, true);
+            }
+            if (sources != null && Optional.IsCollectionDefined(sources))
+            {
+                foreach (var param in sources)
+                {
+                    uri.AppendQuery("sources", param, true);
+                }
+            }
+            if (associatedBoundaryIds != null && Optional.IsCollectionDefined(associatedBoundaryIds))
+            {
+                foreach (var param in associatedBoundaryIds)
+                {
+                    uri.AppendQuery("associatedBoundaryIds", param, true);
+                }
+            }
+            if (minOperationStartDateTime != null)
+            {
+                uri.AppendQuery("minOperationStartDateTime", minOperationStartDateTime.Value, "O", true);
+            }
+            if (maxOperationStartDateTime != null)
+            {
+                uri.AppendQuery("maxOperationStartDateTime", maxOperationStartDateTime.Value, "O", true);
+            }
+            if (minOperationEndDateTime != null)
+            {
+                uri.AppendQuery("minOperationEndDateTime", minOperationEndDateTime.Value, "O", true);
+            }
+            if (maxOperationEndDateTime != null)
+            {
+                uri.AppendQuery("maxOperationEndDateTime", maxOperationEndDateTime.Value, "O", true);
+            }
+            if (minOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("minOperationModifiedDateTime", minOperationModifiedDateTime.Value, "O", true);
+            }
+            if (maxOperationModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxOperationModifiedDateTime", maxOperationModifiedDateTime.Value, "O", true);
+            }
+            if (minArea != null)
+            {
+                uri.AppendQuery("minArea", minArea.Value, true);
+            }
+            if (maxArea != null)
+            {
+                uri.AppendQuery("maxArea", maxArea.Value, true);
+            }
+            if (ids != null && Optional.IsCollectionDefined(ids))
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null && Optional.IsCollectionDefined(names))
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAllHarvestDataByPartyIdRequest(string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -1027,6 +1361,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetHarvestDataRequestUri(string partyId, string harvestDataId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/harvest-data/", false);
+            uri.AppendPath(harvestDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetHarvestDataRequest(string partyId, string harvestDataId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1042,6 +1388,18 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string partyId, string harvestDataId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/harvest-data/", false);
+            uri.AppendPath(harvestDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string partyId, string harvestDataId, RequestContent content, RequestContext context)
@@ -1063,6 +1421,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string partyId, string harvestDataId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/parties/", false);
+            uri.AppendPath(partyId, true);
+            uri.AppendPath("/harvest-data/", false);
+            uri.AppendPath(harvestDataId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string partyId, string harvestDataId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1080,6 +1450,14 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetAllHarvestDataNextPageRequestUri(string nextLink, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllHarvestDataNextPageRequest(string nextLink, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1091,6 +1469,14 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetAllHarvestDataByPartyIdNextPageRequestUri(string nextLink, string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAllHarvestDataByPartyIdNextPageRequest(string nextLink, string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

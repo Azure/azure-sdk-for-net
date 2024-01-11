@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Automanage
         {
         }
 
-        internal AutomanageArmOperation(Response<T> response)
+        internal AutomanageArmOperation(Response<T> response, string operationId)
         {
-            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value, operationId);
         }
 
         internal AutomanageArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automanage
         /// <inheritdoc />
 #pragma warning disable CA1822
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
+        public override string Id => _operation.GetOperationId();
 #pragma warning restore CA1822
 
         /// <inheritdoc />

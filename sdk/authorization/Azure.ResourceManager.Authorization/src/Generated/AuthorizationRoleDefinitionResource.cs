@@ -198,7 +198,9 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.DeleteAsync(Id.Parent, new ResourceIdentifier(Id.Name), cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var uri = _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateDeleteRequestUri(Id.Parent, new ResourceIdentifier(Id.Name));
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +242,9 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.Delete(Id.Parent, new ResourceIdentifier(Id.Name), cancellationToken);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var uri = _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateDeleteRequestUri(Id.Parent, new ResourceIdentifier(Id.Name));
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -286,7 +290,9 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = await _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateOrUpdateAsync(Id.Parent, new ResourceIdentifier(Id.Name), data, cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var uri = _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, new ResourceIdentifier(Id.Name), data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -332,7 +338,9 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateOrUpdate(Id.Parent, new ResourceIdentifier(Id.Name), data, cancellationToken);
-                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()));
+                var uri = _authorizationRoleDefinitionRoleDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, new ResourceIdentifier(Id.Name), data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AuthorizationArmOperation<AuthorizationRoleDefinitionResource>(Response.FromValue(new AuthorizationRoleDefinitionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.BotService
             try
             {
                 var response = await _botRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BotServiceArmOperation<BotResource>(Response.FromValue(new BotResource(Client, response), response.GetRawResponse()));
+                var uri = _botRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new BotServiceArmOperation<BotResource>(Response.FromValue(new BotResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.BotService
             try
             {
                 var response = _botRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new BotServiceArmOperation<BotResource>(Response.FromValue(new BotResource(Client, response), response.GetRawResponse()));
+                var uri = _botRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new BotServiceArmOperation<BotResource>(Response.FromValue(new BotResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

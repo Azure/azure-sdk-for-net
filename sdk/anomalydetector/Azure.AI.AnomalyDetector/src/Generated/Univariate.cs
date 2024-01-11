@@ -347,6 +347,16 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+        internal RequestUriBuilder CreateDetectUnivariateEntireSeriesRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/timeseries/entire/detect", false);
+            return uri;
+        }
+
         internal HttpMessage CreateDetectUnivariateEntireSeriesRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -364,6 +374,16 @@ namespace Azure.AI.AnomalyDetector
             return message;
         }
 
+        internal RequestUriBuilder CreateDetectUnivariateLastPointRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/timeseries/last/detect", false);
+            return uri;
+        }
+
         internal HttpMessage CreateDetectUnivariateLastPointRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -379,6 +399,16 @@ namespace Azure.AI.AnomalyDetector
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateDetectUnivariateChangePointRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/anomalydetector/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/timeseries/changepoint/detect", false);
+            return uri;
         }
 
         internal HttpMessage CreateDetectUnivariateChangePointRequest(RequestContent content, RequestContext context)

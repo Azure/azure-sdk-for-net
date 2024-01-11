@@ -141,6 +141,29 @@ namespace Azure.Verticals.AgriFood.Farming
             }
         }
 
+        internal RequestUriBuilder CreateGetSensorEventsRequestUri(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, bool? excludeDuplicateEvents, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sensor-events", false);
+            uri.AppendQuery("sensorId", sensorId, true);
+            uri.AppendQuery("sensorPartnerId", sensorPartnerId, true);
+            if (startDateTime != null)
+            {
+                uri.AppendQuery("startDateTime", startDateTime.Value, "O", true);
+            }
+            if (endDateTime != null)
+            {
+                uri.AppendQuery("endDateTime", endDateTime.Value, "O", true);
+            }
+            if (excludeDuplicateEvents != null)
+            {
+                uri.AppendQuery("excludeDuplicateEvents", excludeDuplicateEvents.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSensorEventsRequest(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, bool? excludeDuplicateEvents, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

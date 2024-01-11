@@ -519,6 +519,90 @@ namespace Azure.Verticals.AgriFood.Farming
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Sensors.GetSensors", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetSensorsRequestUri(string sensorPartnerId, IEnumerable<string> sensorDataModelIds, IEnumerable<string> sensorMappingIds, IEnumerable<string> deviceIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sensor-partners/", false);
+            uri.AppendPath(sensorPartnerId, true);
+            uri.AppendPath("/sensors", false);
+            if (sensorDataModelIds != null && Optional.IsCollectionDefined(sensorDataModelIds))
+            {
+                foreach (var param in sensorDataModelIds)
+                {
+                    uri.AppendQuery("sensorDataModelIds", param, true);
+                }
+            }
+            if (sensorMappingIds != null && Optional.IsCollectionDefined(sensorMappingIds))
+            {
+                foreach (var param in sensorMappingIds)
+                {
+                    uri.AppendQuery("sensorMappingIds", param, true);
+                }
+            }
+            if (deviceIds != null && Optional.IsCollectionDefined(deviceIds))
+            {
+                foreach (var param in deviceIds)
+                {
+                    uri.AppendQuery("deviceIds", param, true);
+                }
+            }
+            if (ids != null && Optional.IsCollectionDefined(ids))
+            {
+                foreach (var param in ids)
+                {
+                    uri.AppendQuery("ids", param, true);
+                }
+            }
+            if (names != null && Optional.IsCollectionDefined(names))
+            {
+                foreach (var param in names)
+                {
+                    uri.AppendQuery("names", param, true);
+                }
+            }
+            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            {
+                foreach (var param in propertyFilters)
+                {
+                    uri.AppendQuery("propertyFilters", param, true);
+                }
+            }
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            {
+                foreach (var param in statuses)
+                {
+                    uri.AppendQuery("statuses", param, true);
+                }
+            }
+            if (minCreatedDateTime != null)
+            {
+                uri.AppendQuery("minCreatedDateTime", minCreatedDateTime.Value, "O", true);
+            }
+            if (maxCreatedDateTime != null)
+            {
+                uri.AppendQuery("maxCreatedDateTime", maxCreatedDateTime.Value, "O", true);
+            }
+            if (minLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("minLastModifiedDateTime", minLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxLastModifiedDateTime != null)
+            {
+                uri.AppendQuery("maxLastModifiedDateTime", maxLastModifiedDateTime.Value, "O", true);
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSensorsRequest(string sensorPartnerId, IEnumerable<string> sensorDataModelIds, IEnumerable<string> sensorMappingIds, IEnumerable<string> deviceIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -608,6 +692,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string sensorPartnerId, string sensorId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sensor-partners/", false);
+            uri.AppendPath(sensorPartnerId, true);
+            uri.AppendPath("/sensors/", false);
+            uri.AppendPath(sensorId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string sensorPartnerId, string sensorId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
@@ -627,6 +723,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSensorRequestUri(string sensorPartnerId, string sensorId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sensor-partners/", false);
+            uri.AppendPath(sensorPartnerId, true);
+            uri.AppendPath("/sensors/", false);
+            uri.AppendPath(sensorId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSensorRequest(string sensorPartnerId, string sensorId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -644,6 +752,18 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string sensorPartnerId, string sensorId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sensor-partners/", false);
+            uri.AppendPath(sensorPartnerId, true);
+            uri.AppendPath("/sensors/", false);
+            uri.AppendPath(sensorId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string sensorPartnerId, string sensorId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -659,6 +779,19 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetConnectionStringRequestUri(string sensorPartnerId, string sensorId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sensor-partners/", false);
+            uri.AppendPath(sensorPartnerId, true);
+            uri.AppendPath("/sensors/", false);
+            uri.AppendPath(sensorId, true);
+            uri.AppendPath("/connection-strings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetConnectionStringRequest(string sensorPartnerId, string sensorId, RequestContext context)
@@ -679,6 +812,19 @@ namespace Azure.Verticals.AgriFood.Farming
             return message;
         }
 
+        internal RequestUriBuilder CreateRenewConnectionStringRequestUri(string sensorPartnerId, string sensorId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sensor-partners/", false);
+            uri.AppendPath(sensorPartnerId, true);
+            uri.AppendPath("/sensors/", false);
+            uri.AppendPath(sensorId, true);
+            uri.AppendPath("/connection-strings/:renew", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRenewConnectionStringRequest(string sensorPartnerId, string sensorId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -697,6 +843,14 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetSensorsNextPageRequestUri(string nextLink, string sensorPartnerId, IEnumerable<string> sensorDataModelIds, IEnumerable<string> sensorMappingIds, IEnumerable<string> deviceIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSensorsNextPageRequest(string nextLink, string sensorPartnerId, IEnumerable<string> sensorDataModelIds, IEnumerable<string> sensorMappingIds, IEnumerable<string> deviceIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)

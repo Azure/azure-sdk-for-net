@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiVersionSetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()));
+                var uri = _apiVersionSetRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +143,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiVersionSetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()));
+                var uri = _apiVersionSetRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionSetId, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new ApiManagementArmOperation<ApiVersionSetResource>(Response.FromValue(new ApiVersionSetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
