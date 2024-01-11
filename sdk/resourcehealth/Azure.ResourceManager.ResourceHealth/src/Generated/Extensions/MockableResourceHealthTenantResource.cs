@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>Metadata_GetEntity</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthMetadataEntityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of metadata entity. </param>
@@ -77,6 +85,14 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Metadata_GetEntity</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthMetadataEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,6 +124,14 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>Event_GetByTenantIdAndTrackingId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventTrackingId"> Event Id which uniquely identifies ServiceHealth event. </param>
@@ -132,6 +156,14 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_GetByTenantIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +197,14 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>EmergingIssues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceEmergingIssueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="issueName"> The name of the emerging issue. </param>
@@ -185,6 +225,14 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmergingIssues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceEmergingIssueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

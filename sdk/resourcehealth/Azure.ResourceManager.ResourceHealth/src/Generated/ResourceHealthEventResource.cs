@@ -112,6 +112,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
@@ -157,6 +173,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,6 +216,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>Event_GetBySubscriptionIdAndTrackingId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -226,6 +258,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>SecurityAdvisoryImpactedResources_ListBySubscriptionIdAndEventId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -249,6 +285,10 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>SecurityAdvisoryImpactedResources_ListBySubscriptionIdAndEventId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
@@ -271,6 +311,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_fetchDetailsBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +349,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Event_fetchDetailsBySubscriptionIdAndTrackingId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceHealthEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

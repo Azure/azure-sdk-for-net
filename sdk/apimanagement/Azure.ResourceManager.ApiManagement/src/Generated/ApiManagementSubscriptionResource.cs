@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +181,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +225,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -235,6 +267,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,6 +317,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
@@ -318,6 +366,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_RegeneratePrimaryKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -347,6 +403,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_RegeneratePrimaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,6 +442,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_RegenerateSecondaryKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -407,6 +479,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_RegenerateSecondaryKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,6 +518,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_ListSecrets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -467,6 +555,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_ListSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -498,6 +594,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Subscription_GetEntityTag</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -527,6 +631,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_GetEntityTag</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

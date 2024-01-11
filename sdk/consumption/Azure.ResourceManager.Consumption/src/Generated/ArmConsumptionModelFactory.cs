@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionUsageDetail(id, name, resourceType, systemData, kind, etag, tags);
+            return new UnknownUsageDetail(id, name, resourceType, systemData, kind, etag, tags);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMarketplace"/>. </summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionChargeSummary"/> instance for mocking. </returns>
         public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
         {
-            return new ConsumptionChargeSummary(id, name, resourceType, systemData, kind, etag);
+            return new UnknownChargeSummary(id, name, resourceType, systemData, kind, etag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionReservationRecommendation(id, name, resourceType, systemData, kind, etag, tags, location, sku);
+            return new UnknownReservationRecommendation(id, name, resourceType, systemData, kind, etag, tags, location, sku);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendationDetails"/>. </summary>

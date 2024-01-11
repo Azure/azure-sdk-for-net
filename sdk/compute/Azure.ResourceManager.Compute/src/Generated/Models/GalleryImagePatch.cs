@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="eula"> The Eula agreement for the gallery image definition. </param>
         /// <param name="privacyStatementUri"> The privacy statement uri. </param>
         /// <param name="releaseNoteUri"> The release note uri. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </param>
         /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Uri PrivacyStatementUri { get; set; }
         /// <summary> The release note uri. </summary>
         public Uri ReleaseNoteUri { get; set; }
-        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
+        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </summary>
         public SupportedOperatingSystemType? OSType { get; set; }
         /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
         public OperatingSystemStateType? OSState { get; set; }

@@ -39,12 +39,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
         /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
         /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        internal CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, IReadOnlyList<SubResource> capacityReservations, IReadOnlyList<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="sharingProfile"> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. Pls. keep in mind the capacity reservation group resource generally can be shared across subscriptions belonging to a single azure AAD tenant or cross AAD tenant if there is a trust relationship established between the AAD tenants. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
+        internal CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, IReadOnlyList<SubResource> capacityReservations, IReadOnlyList<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, ResourceSharingProfile sharingProfile) : base(id, name, resourceType, systemData, tags, location)
         {
             Zones = zones;
             CapacityReservations = capacityReservations;
             VirtualMachinesAssociated = virtualMachinesAssociated;
             InstanceView = instanceView;
+            SharingProfile = sharingProfile;
         }
 
         /// <summary> Availability Zones to use for this capacity reservation group. The zones can be assigned only during creation. If not provided, the group supports only regional resources in the region. If provided, enforces each capacity reservation in the group to be in one of the zones. </summary>
@@ -54,11 +56,18 @@ namespace Azure.ResourceManager.Compute
         /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
         public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; }
         /// <summary> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </summary>
-        internal CapacityReservationGroupInstanceView InstanceView { get; }
-        /// <summary> List of instance view of the capacity reservations under the capacity reservation group. </summary>
-        public IReadOnlyList<CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations
+        public CapacityReservationGroupInstanceView InstanceView { get; }
+        /// <summary> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. Pls. keep in mind the capacity reservation group resource generally can be shared across subscriptions belonging to a single azure AAD tenant or cross AAD tenant if there is a trust relationship established between the AAD tenants. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
+        internal ResourceSharingProfile SharingProfile { get; set; }
+        /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
+        public IList<WritableSubResource> SharingSubscriptionIds
         {
-            get => InstanceView?.CapacityReservations;
+            get
+            {
+                if (SharingProfile is null)
+                    SharingProfile = new ResourceSharingProfile();
+                return SharingProfile.SubscriptionIds;
+            }
         }
     }
 }

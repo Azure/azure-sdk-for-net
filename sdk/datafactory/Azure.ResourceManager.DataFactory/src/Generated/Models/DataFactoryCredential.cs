@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="DataFactoryCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ServicePrincipalCredential"/> and <see cref="DataFactoryManagedIdentityCredentialProperties"/>.
     /// </summary>
-    public partial class DataFactoryCredential
+    public abstract partial class DataFactoryCredential
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryCredential"/>. </summary>
-        public DataFactoryCredential()
+        protected DataFactoryCredential()
         {
             Annotations = new ChangeTrackingList<BinaryData>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();

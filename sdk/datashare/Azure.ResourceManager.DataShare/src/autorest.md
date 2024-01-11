@@ -103,6 +103,12 @@ request-path-to-parent:
 operation-positions:
   ConsumerInvitations_ListInvitations: collection
 
+suppress-abstract-base-class:
+- ShareDataSetMappingData
+- DataShareTriggerData
+- ShareDataSetData
+- DataShareSynchronizationSettingData
+
 directive:
   - from: DataShare.json
     where: $.definitions

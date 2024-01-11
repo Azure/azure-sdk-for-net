@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,6 +183,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>AgentPools_GetUpgradeProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolUpgradeProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AgentPools_GetUpgradeProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgentPoolUpgradeProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
