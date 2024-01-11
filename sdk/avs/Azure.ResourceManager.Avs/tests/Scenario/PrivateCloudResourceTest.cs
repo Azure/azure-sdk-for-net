@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         public async Task Get()
         {
             var privateCloudResource = await  getAvsPrivateCloudResource();
-            Assert.AreEqual(privateCloudResource.Data.Name, "avs-sdk-test");
+            Assert.AreEqual(privateCloudResource.Data.Name, PRIVATE_CLOUD_NAME);
         }
 
         [TestCase, Order(2)]

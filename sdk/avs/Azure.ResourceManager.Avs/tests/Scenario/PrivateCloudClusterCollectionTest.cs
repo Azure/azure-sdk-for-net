@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Avs.Tests
         public async Task Get()
         {
             var collection = await GetPrivateCloudClusterCollectionAsync();
-            AvsPrivateCloudClusterResource result = await collection.GetAsync("Cluster-1");
-            Assert.AreEqual(result.Data.Name, "Cluster-1");
+            AvsPrivateCloudClusterResource result = await collection.GetAsync(CLUSTER1_NAME);
+            Assert.AreEqual(result.Data.Name, CLUSTER1_NAME);
         }
 
         [TestCase]
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Tests
             {
                 ClusterSize = 3,
             };
-            await collection.CreateOrUpdateAsync(WaitUntil.Started, "Cluster-2", data);
+            await collection.CreateOrUpdateAsync(WaitUntil.Started, CLUSTER2_NAME, data);
         }
     }
 }

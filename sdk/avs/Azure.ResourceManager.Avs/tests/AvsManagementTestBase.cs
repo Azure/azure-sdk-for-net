@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Tests
         public const string RESOURCE_GROUP_NAME = "avs-sdk-test";
         public const string PRIVATE_CLOUD_NAME = "avs-sdk-test";
         public const string CLUSTER1_NAME = "Cluster-1";
-
+        public const string CLUSTER2_NAME = "Cluster-2";
         protected AvsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -51,9 +51,7 @@ namespace Azure.ResourceManager.Avs.Tests
         protected async Task<AvsPrivateCloudResource> getAvsPrivateCloudResource()
         {
             string subscriptionId = DefaultSubscription.Data.SubscriptionId;
-            string resourceGroupName = "avs-sdk-test";
-            string privateCloudName = "avs-sdk-test";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME);
             AvsPrivateCloudResource avsPrivateCloud = Client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
             avsPrivateCloud = await avsPrivateCloud.GetAsync();
             Console.WriteLine(avsPrivateCloud.Data.Name);
@@ -63,10 +61,7 @@ namespace Azure.ResourceManager.Avs.Tests
         protected async Task<AvsPrivateCloudClusterResource> getAvsPrivateCloudClusterResource()
         {
             string subscriptionId = DefaultSubscription.Data.SubscriptionId;
-            string resourceGroupName = "avs-sdk-test";
-            string privateCloudName = "avs-sdk-test";
-            string clusterName = "Cluster-1";
-            ResourceIdentifier avsPrivateCloudClusterResourceId = AvsPrivateCloudClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, clusterName);
+            ResourceIdentifier avsPrivateCloudClusterResourceId = AvsPrivateCloudClusterResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME, CLUSTER1_NAME);
             AvsPrivateCloudClusterResource avsPrivateCloudCluster = Client.GetAvsPrivateCloudClusterResource(avsPrivateCloudClusterResourceId);
             avsPrivateCloudCluster = await avsPrivateCloudCluster.GetAsync();
             return avsPrivateCloudCluster;

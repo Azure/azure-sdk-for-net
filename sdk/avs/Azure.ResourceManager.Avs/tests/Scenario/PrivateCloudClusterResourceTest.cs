@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         public async Task Get()
         {
             var privateCloudClusterResource = await getAvsPrivateCloudClusterResource();
-            Assert.AreEqual(privateCloudClusterResource.Data.Name, "Cluster-1");
+            Assert.AreEqual(privateCloudClusterResource.Data.Name, CLUSTER1_NAME);
         }
 
         [TestCase, Order(2)]

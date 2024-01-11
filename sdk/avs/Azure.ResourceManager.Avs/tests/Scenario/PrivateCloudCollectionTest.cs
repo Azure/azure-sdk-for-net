@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Tests
 
         protected async  Task<AvsPrivateCloudCollection> GetPrivateCloudCollectionAsync()
         {
-            _resourceGroup = await DefaultSubscription.GetResourceGroupAsync("avs-sdk-test");
+            _resourceGroup = await DefaultSubscription.GetResourceGroupAsync(RESOURCE_GROUP_NAME);
             return _resourceGroup.GetAvsPrivateClouds();
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Tests
         public async Task CreateOrUpdateStretched()
         {
             var collection = await GetPrivateCloudCollectionAsync();
-            string privateCloudName = Recording.GenerateAssetName("avs-sdk-test-stretched-");
+            string privateCloudName = Recording.GenerateAssetName(PRIVATE_CLOUD_NAME + "-stretched-");
             AvsPrivateCloudData data = new AvsPrivateCloudData(DefaultLocation, new AvsSku("AV36"))
             {
                 ManagementCluster = new AvsManagementCluster()
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Avs.Tests
         public async Task Get()
         {
             var collection = await GetPrivateCloudCollectionAsync();
-            AvsPrivateCloudResource result = await collection.GetAsync("avs-sdk-test");
-            Assert.AreEqual(result.Data.Name, "avs-sdk-test");
+            AvsPrivateCloudResource result = await collection.GetAsync(PRIVATE_CLOUD_NAME);
+            Assert.AreEqual(result.Data.Name, PRIVATE_CLOUD_NAME);
         }
     }
 }
