@@ -40,6 +40,15 @@ namespace Azure.IoT.Hub.Service
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateCreateImportExportJobRequestUri(JobProperties jobProperties)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/create", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateImportExportJobRequest(JobProperties jobProperties)
         {
             var message = _pipeline.CreateMessage();
@@ -112,6 +121,15 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateGetImportExportJobsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetImportExportJobsRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -174,6 +192,16 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetImportExportJobRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetImportExportJobRequest(string id)
@@ -245,6 +273,26 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateCancelImportExportJobRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal RequestUriBuilder CreateGetScheduledJobRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/v2/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetScheduledJobRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -312,6 +360,16 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateScheduledJobRequestUri(string id, JobRequest jobRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/v2/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateScheduledJobRequest(string id, JobRequest jobRequest)
@@ -397,6 +455,17 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateCancelScheduledJobRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/v2/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelScheduledJobRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -465,6 +534,23 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateQueryScheduledJobsRequestUri(string jobType, string jobStatus)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/jobs/v2/query", false);
+            if (jobType != null)
+            {
+                uri.AppendQuery("jobType", jobType, true);
+            }
+            if (jobStatus != null)
+            {
+                uri.AppendQuery("jobStatus", jobStatus, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateQueryScheduledJobsRequest(string jobType, string jobStatus)

@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaAssetAssetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaAssetResource>(Response.FromValue(new MediaAssetResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaAssetAssetsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assetName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MediaArmOperation<MediaAssetResource>(Response.FromValue(new MediaAssetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaAssetAssetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assetName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaAssetResource>(Response.FromValue(new MediaAssetResource(Client, response), response.GetRawResponse()));
+                var uri = _mediaAssetAssetsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assetName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MediaArmOperation<MediaAssetResource>(Response.FromValue(new MediaAssetResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

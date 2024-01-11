@@ -40,6 +40,16 @@ namespace Azure.IoT.Hub.Service
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string id)
         {
             var message = _pipeline.CreateMessage();
@@ -107,6 +117,16 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string id, TwinConfiguration configuration, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string id, TwinConfiguration configuration, string ifMatch)
@@ -200,6 +220,16 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string id, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string id, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -262,6 +292,19 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetConfigurationsRequestUri(int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/configurations", false);
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetConfigurationsRequest(int? top)
@@ -334,6 +377,15 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
+        internal RequestUriBuilder CreateTestQueriesRequestUri(ConfigurationQueriesTestInput input)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/configurations/testQueries", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateTestQueriesRequest(ConfigurationQueriesTestInput input)
         {
             var message = _pipeline.CreateMessage();
@@ -404,6 +456,17 @@ namespace Azure.IoT.Hub.Service
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateApplyOnEdgeDeviceRequestUri(string id, ConfigurationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/devices/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/applyConfigurationContent", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateApplyOnEdgeDeviceRequest(string id, ConfigurationContent content)

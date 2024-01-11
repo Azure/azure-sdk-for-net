@@ -43,6 +43,91 @@ namespace Azure.Maps.Routing
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateRequestRouteMatrixRequestUri(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/matrix/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (waitForResults != null)
+            {
+                uri.AppendQuery("waitForResults", waitForResults.Value, true);
+            }
+            if (computeTravelTime != null)
+            {
+                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
+            }
+            if (filterSectionType != null)
+            {
+                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+            }
+            if (arriveAt != null)
+            {
+                uri.AppendQuery("arriveAt", arriveAt.Value, "O", true);
+            }
+            if (departAt != null)
+            {
+                uri.AppendQuery("departAt", departAt.Value, "O", true);
+            }
+            if (vehicleAxleWeight != null)
+            {
+                uri.AppendQuery("vehicleAxleWeight", vehicleAxleWeight.Value, true);
+            }
+            if (vehicleLength != null)
+            {
+                uri.AppendQuery("vehicleLength", vehicleLength.Value, true);
+            }
+            if (vehicleHeight != null)
+            {
+                uri.AppendQuery("vehicleHeight", vehicleHeight.Value, true);
+            }
+            if (vehicleWidth != null)
+            {
+                uri.AppendQuery("vehicleWidth", vehicleWidth.Value, true);
+            }
+            if (vehicleMaxSpeed != null)
+            {
+                uri.AppendQuery("vehicleMaxSpeed", vehicleMaxSpeed.Value, true);
+            }
+            if (vehicleWeight != null)
+            {
+                uri.AppendQuery("vehicleWeight", vehicleWeight.Value, true);
+            }
+            if (windingness != null)
+            {
+                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+            }
+            if (inclineLevel != null)
+            {
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+            }
+            if (travelMode != null)
+            {
+                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+            }
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            {
+                foreach (var param in avoid)
+                {
+                    uri.AppendQuery("avoid", param.ToString(), true);
+                }
+            }
+            if (useTrafficData != null)
+            {
+                uri.AppendQuery("traffic", useTrafficData.Value, true);
+            }
+            if (routeType != null)
+            {
+                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+            }
+            if (vehicleLoadType != null)
+            {
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateRequestRouteMatrixRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
         {
             var message = _pipeline.CreateMessage();
@@ -389,6 +474,16 @@ namespace Azure.Maps.Routing
             }
         }
 
+        internal RequestUriBuilder CreateGetRouteMatrixRequestUri(string matrixId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/matrix/", false);
+            uri.AppendPath(matrixId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRouteMatrixRequest(string matrixId)
         {
             var message = _pipeline.CreateMessage();
@@ -506,6 +601,91 @@ namespace Azure.Maps.Routing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRequestRouteMatrixSyncRequestUri(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/matrix/sync/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (waitForResults != null)
+            {
+                uri.AppendQuery("waitForResults", waitForResults.Value, true);
+            }
+            if (computeTravelTime != null)
+            {
+                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
+            }
+            if (filterSectionType != null)
+            {
+                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+            }
+            if (arriveAt != null)
+            {
+                uri.AppendQuery("arriveAt", arriveAt.Value, "O", true);
+            }
+            if (departAt != null)
+            {
+                uri.AppendQuery("departAt", departAt.Value, "O", true);
+            }
+            if (vehicleAxleWeight != null)
+            {
+                uri.AppendQuery("vehicleAxleWeight", vehicleAxleWeight.Value, true);
+            }
+            if (vehicleLength != null)
+            {
+                uri.AppendQuery("vehicleLength", vehicleLength.Value, true);
+            }
+            if (vehicleHeight != null)
+            {
+                uri.AppendQuery("vehicleHeight", vehicleHeight.Value, true);
+            }
+            if (vehicleWidth != null)
+            {
+                uri.AppendQuery("vehicleWidth", vehicleWidth.Value, true);
+            }
+            if (vehicleMaxSpeed != null)
+            {
+                uri.AppendQuery("vehicleMaxSpeed", vehicleMaxSpeed.Value, true);
+            }
+            if (vehicleWeight != null)
+            {
+                uri.AppendQuery("vehicleWeight", vehicleWeight.Value, true);
+            }
+            if (windingness != null)
+            {
+                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+            }
+            if (inclineLevel != null)
+            {
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+            }
+            if (travelMode != null)
+            {
+                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+            }
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            {
+                foreach (var param in avoid)
+                {
+                    uri.AppendQuery("avoid", param.ToString(), true);
+                }
+            }
+            if (useTrafficData != null)
+            {
+                uri.AppendQuery("traffic", useTrafficData.Value, true);
+            }
+            if (routeType != null)
+            {
+                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+            }
+            if (vehicleLoadType != null)
+            {
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateRequestRouteMatrixSyncRequest(JsonFormat format, RouteMatrixQuery routeMatrixQuery, bool? waitForResults, TravelTimeType? computeTravelTime, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType)
@@ -858,6 +1038,184 @@ namespace Azure.Maps.Routing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRouteDirectionsRequestUri(ResponseFormat format, string routePoints, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, SectionType? filterSectionType, int? vehicleAxleWeight, double? vehicleWidth, double? vehicleHeight, double? vehicleLength, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/directions/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("query", routePoints, true);
+            if (maxAlternatives != null)
+            {
+                uri.AppendQuery("maxAlternatives", maxAlternatives.Value, true);
+            }
+            if (alternativeType != null)
+            {
+                uri.AppendQuery("alternativeType", alternativeType.Value.ToString(), true);
+            }
+            if (minDeviationDistance != null)
+            {
+                uri.AppendQuery("minDeviationDistance", minDeviationDistance.Value, true);
+            }
+            if (arriveAt != null)
+            {
+                uri.AppendQuery("arriveAt", arriveAt.Value, "O", true);
+            }
+            if (departAt != null)
+            {
+                uri.AppendQuery("departAt", departAt.Value, "O", true);
+            }
+            if (minDeviationTime != null)
+            {
+                uri.AppendQuery("minDeviationTime", minDeviationTime.Value, true);
+            }
+            if (instructionsType != null)
+            {
+                uri.AppendQuery("instructionsType", instructionsType.Value.ToString(), true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (computeBestWaypointOrder != null)
+            {
+                uri.AppendQuery("computeBestOrder", computeBestWaypointOrder.Value, true);
+            }
+            if (routeRepresentationForBestOrder != null)
+            {
+                uri.AppendQuery("routeRepresentation", routeRepresentationForBestOrder.Value.ToString(), true);
+            }
+            if (computeTravelTime != null)
+            {
+                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
+            }
+            if (vehicleHeading != null)
+            {
+                uri.AppendQuery("vehicleHeading", vehicleHeading.Value, true);
+            }
+            if (report != null)
+            {
+                uri.AppendQuery("report", report.Value.ToString(), true);
+            }
+            if (filterSectionType != null)
+            {
+                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+            }
+            if (vehicleAxleWeight != null)
+            {
+                uri.AppendQuery("vehicleAxleWeight", vehicleAxleWeight.Value, true);
+            }
+            if (vehicleWidth != null)
+            {
+                uri.AppendQuery("vehicleWidth", vehicleWidth.Value, true);
+            }
+            if (vehicleHeight != null)
+            {
+                uri.AppendQuery("vehicleHeight", vehicleHeight.Value, true);
+            }
+            if (vehicleLength != null)
+            {
+                uri.AppendQuery("vehicleLength", vehicleLength.Value, true);
+            }
+            if (vehicleMaxSpeed != null)
+            {
+                uri.AppendQuery("vehicleMaxSpeed", vehicleMaxSpeed.Value, true);
+            }
+            if (vehicleWeight != null)
+            {
+                uri.AppendQuery("vehicleWeight", vehicleWeight.Value, true);
+            }
+            if (isCommercialVehicle != null)
+            {
+                uri.AppendQuery("vehicleCommercial", isCommercialVehicle.Value, true);
+            }
+            if (windingness != null)
+            {
+                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+            }
+            if (inclineLevel != null)
+            {
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+            }
+            if (travelMode != null)
+            {
+                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+            }
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            {
+                foreach (var param in avoid)
+                {
+                    uri.AppendQuery("avoid", param.ToString(), true);
+                }
+            }
+            if (useTrafficData != null)
+            {
+                uri.AppendQuery("traffic", useTrafficData.Value, true);
+            }
+            if (routeType != null)
+            {
+                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+            }
+            if (vehicleLoadType != null)
+            {
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+            }
+            if (vehicleEngineType != null)
+            {
+                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToString(), true);
+            }
+            if (constantSpeedConsumptionInLitersPerHundredKm != null)
+            {
+                uri.AppendQuery("constantSpeedConsumptionInLitersPerHundredkm", constantSpeedConsumptionInLitersPerHundredKm, true);
+            }
+            if (currentFuelInLiters != null)
+            {
+                uri.AppendQuery("currentFuelInLiters", currentFuelInLiters.Value, true);
+            }
+            if (auxiliaryPowerInLitersPerHour != null)
+            {
+                uri.AppendQuery("auxiliaryPowerInLitersPerHour", auxiliaryPowerInLitersPerHour.Value, true);
+            }
+            if (fuelEnergyDensityInMegajoulesPerLiter != null)
+            {
+                uri.AppendQuery("fuelEnergyDensityInMJoulesPerLiter", fuelEnergyDensityInMegajoulesPerLiter.Value, true);
+            }
+            if (accelerationEfficiency != null)
+            {
+                uri.AppendQuery("accelerationEfficiency", accelerationEfficiency.Value, true);
+            }
+            if (decelerationEfficiency != null)
+            {
+                uri.AppendQuery("decelerationEfficiency", decelerationEfficiency.Value, true);
+            }
+            if (uphillEfficiency != null)
+            {
+                uri.AppendQuery("uphillEfficiency", uphillEfficiency.Value, true);
+            }
+            if (downhillEfficiency != null)
+            {
+                uri.AppendQuery("downhillEfficiency", downhillEfficiency.Value, true);
+            }
+            if (constantSpeedConsumptionInKwHPerHundredKm != null)
+            {
+                uri.AppendQuery("constantSpeedConsumptionInkWhPerHundredkm", constantSpeedConsumptionInKwHPerHundredKm, true);
+            }
+            if (currentChargeInKwH != null)
+            {
+                uri.AppendQuery("currentChargeInkWh", currentChargeInKwH.Value, true);
+            }
+            if (maxChargeInKwH != null)
+            {
+                uri.AppendQuery("maxChargeInkWh", maxChargeInKwH.Value, true);
+            }
+            if (auxiliaryPowerInKw != null)
+            {
+                uri.AppendQuery("auxiliaryPowerInkW", auxiliaryPowerInKw.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRouteDirectionsRequest(ResponseFormat format, string routePoints, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, SectionType? filterSectionType, int? vehicleAxleWeight, double? vehicleWidth, double? vehicleHeight, double? vehicleLength, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
@@ -1511,6 +1869,184 @@ namespace Azure.Maps.Routing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRouteDirectionsWithAdditionalParametersRequestUri(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/directions/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("query", routePoints, true);
+            if (maxAlternatives != null)
+            {
+                uri.AppendQuery("maxAlternatives", maxAlternatives.Value, true);
+            }
+            if (alternativeType != null)
+            {
+                uri.AppendQuery("alternativeType", alternativeType.Value.ToString(), true);
+            }
+            if (minDeviationDistance != null)
+            {
+                uri.AppendQuery("minDeviationDistance", minDeviationDistance.Value, true);
+            }
+            if (minDeviationTime != null)
+            {
+                uri.AppendQuery("minDeviationTime", minDeviationTime.Value, true);
+            }
+            if (instructionsType != null)
+            {
+                uri.AppendQuery("instructionsType", instructionsType.Value.ToString(), true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (computeBestWaypointOrder != null)
+            {
+                uri.AppendQuery("computeBestOrder", computeBestWaypointOrder.Value, true);
+            }
+            if (routeRepresentationForBestOrder != null)
+            {
+                uri.AppendQuery("routeRepresentation", routeRepresentationForBestOrder.Value.ToString(), true);
+            }
+            if (computeTravelTime != null)
+            {
+                uri.AppendQuery("computeTravelTimeFor", computeTravelTime.Value.ToString(), true);
+            }
+            if (vehicleHeading != null)
+            {
+                uri.AppendQuery("vehicleHeading", vehicleHeading.Value, true);
+            }
+            if (report != null)
+            {
+                uri.AppendQuery("report", report.Value.ToString(), true);
+            }
+            if (filterSectionType != null)
+            {
+                uri.AppendQuery("sectionType", filterSectionType.Value.ToString(), true);
+            }
+            if (arriveAt != null)
+            {
+                uri.AppendQuery("arriveAt", arriveAt.Value, "O", true);
+            }
+            if (departAt != null)
+            {
+                uri.AppendQuery("departAt", departAt.Value, "O", true);
+            }
+            if (vehicleAxleWeight != null)
+            {
+                uri.AppendQuery("vehicleAxleWeight", vehicleAxleWeight.Value, true);
+            }
+            if (vehicleLength != null)
+            {
+                uri.AppendQuery("vehicleLength", vehicleLength.Value, true);
+            }
+            if (vehicleHeight != null)
+            {
+                uri.AppendQuery("vehicleHeight", vehicleHeight.Value, true);
+            }
+            if (vehicleWidth != null)
+            {
+                uri.AppendQuery("vehicleWidth", vehicleWidth.Value, true);
+            }
+            if (vehicleMaxSpeed != null)
+            {
+                uri.AppendQuery("vehicleMaxSpeed", vehicleMaxSpeed.Value, true);
+            }
+            if (vehicleWeight != null)
+            {
+                uri.AppendQuery("vehicleWeight", vehicleWeight.Value, true);
+            }
+            if (isCommercialVehicle != null)
+            {
+                uri.AppendQuery("vehicleCommercial", isCommercialVehicle.Value, true);
+            }
+            if (windingness != null)
+            {
+                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+            }
+            if (inclineLevel != null)
+            {
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+            }
+            if (travelMode != null)
+            {
+                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+            }
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            {
+                foreach (var param in avoid)
+                {
+                    uri.AppendQuery("avoid", param.ToString(), true);
+                }
+            }
+            if (useTrafficData != null)
+            {
+                uri.AppendQuery("traffic", useTrafficData.Value, true);
+            }
+            if (routeType != null)
+            {
+                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+            }
+            if (vehicleLoadType != null)
+            {
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+            }
+            if (vehicleEngineType != null)
+            {
+                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToString(), true);
+            }
+            if (constantSpeedConsumptionInLitersPerHundredKm != null)
+            {
+                uri.AppendQuery("constantSpeedConsumptionInLitersPerHundredkm", constantSpeedConsumptionInLitersPerHundredKm, true);
+            }
+            if (currentFuelInLiters != null)
+            {
+                uri.AppendQuery("currentFuelInLiters", currentFuelInLiters.Value, true);
+            }
+            if (auxiliaryPowerInLitersPerHour != null)
+            {
+                uri.AppendQuery("auxiliaryPowerInLitersPerHour", auxiliaryPowerInLitersPerHour.Value, true);
+            }
+            if (fuelEnergyDensityInMegajoulesPerLiter != null)
+            {
+                uri.AppendQuery("fuelEnergyDensityInMJoulesPerLiter", fuelEnergyDensityInMegajoulesPerLiter.Value, true);
+            }
+            if (accelerationEfficiency != null)
+            {
+                uri.AppendQuery("accelerationEfficiency", accelerationEfficiency.Value, true);
+            }
+            if (decelerationEfficiency != null)
+            {
+                uri.AppendQuery("decelerationEfficiency", decelerationEfficiency.Value, true);
+            }
+            if (uphillEfficiency != null)
+            {
+                uri.AppendQuery("uphillEfficiency", uphillEfficiency.Value, true);
+            }
+            if (downhillEfficiency != null)
+            {
+                uri.AppendQuery("downhillEfficiency", downhillEfficiency.Value, true);
+            }
+            if (constantSpeedConsumptionInKwHPerHundredKm != null)
+            {
+                uri.AppendQuery("constantSpeedConsumptionInkWhPerHundredkm", constantSpeedConsumptionInKwHPerHundredKm, true);
+            }
+            if (currentChargeInKwH != null)
+            {
+                uri.AppendQuery("currentChargeInkWh", currentChargeInKwH.Value, true);
+            }
+            if (maxChargeInKwH != null)
+            {
+                uri.AppendQuery("maxChargeInkWh", maxChargeInKwH.Value, true);
+            }
+            if (auxiliaryPowerInKw != null)
+            {
+                uri.AppendQuery("auxiliaryPowerInkW", auxiliaryPowerInKw.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRouteDirectionsWithAdditionalParametersRequest(ResponseFormat format, string routePoints, RouteDirectionParameters routeDirectionParameters, int? maxAlternatives, AlternativeRouteType? alternativeType, int? minDeviationDistance, int? minDeviationTime, RouteInstructionsType? instructionsType, string language, bool? computeBestWaypointOrder, RouteRepresentationForBestOrder? routeRepresentationForBestOrder, TravelTimeType? computeTravelTime, int? vehicleHeading, Report? report, SectionType? filterSectionType, DateTimeOffset? arriveAt, DateTimeOffset? departAt, int? vehicleAxleWeight, double? vehicleLength, double? vehicleHeight, double? vehicleWidth, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, WindingnessLevel? windingness, InclineLevel? inclineLevel, TravelMode? travelMode, IEnumerable<RouteAvoidType> avoid, bool? useTrafficData, RouteType? routeType, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
@@ -2192,6 +2728,151 @@ namespace Azure.Maps.Routing
             }
         }
 
+        internal RequestUriBuilder CreateGetRouteRangeRequestUri(ResponseFormat format, IEnumerable<double> query, double? fuelBudgetInLiters, double? energyBudgetInKwH, double? timeBudgetInSec, double? distanceBudgetInMeters, DateTimeOffset? departAt, RouteType? routeType, bool? useTrafficData, IEnumerable<RouteAvoidType> avoid, TravelMode? travelMode, InclineLevel? inclineLevel, WindingnessLevel? windingness, int? vehicleAxleWeight, double? vehicleWidth, double? vehicleHeight, double? vehicleLength, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/range/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (query != null && Optional.IsCollectionDefined(query))
+            {
+                uri.AppendQueryDelimited("query", query, ",", true);
+            }
+            if (fuelBudgetInLiters != null)
+            {
+                uri.AppendQuery("fuelBudgetInLiters", fuelBudgetInLiters.Value, true);
+            }
+            if (energyBudgetInKwH != null)
+            {
+                uri.AppendQuery("energyBudgetInkWh", energyBudgetInKwH.Value, true);
+            }
+            if (timeBudgetInSec != null)
+            {
+                uri.AppendQuery("timeBudgetInSec", timeBudgetInSec.Value, true);
+            }
+            if (distanceBudgetInMeters != null)
+            {
+                uri.AppendQuery("distanceBudgetInMeters", distanceBudgetInMeters.Value, true);
+            }
+            if (departAt != null)
+            {
+                uri.AppendQuery("departAt", departAt.Value, "O", true);
+            }
+            if (routeType != null)
+            {
+                uri.AppendQuery("routeType", routeType.Value.ToString(), true);
+            }
+            if (useTrafficData != null)
+            {
+                uri.AppendQuery("traffic", useTrafficData.Value, true);
+            }
+            if (avoid != null && Optional.IsCollectionDefined(avoid))
+            {
+                foreach (var param in avoid)
+                {
+                    uri.AppendQuery("avoid", param.ToString(), true);
+                }
+            }
+            if (travelMode != null)
+            {
+                uri.AppendQuery("travelMode", travelMode.Value.ToString(), true);
+            }
+            if (inclineLevel != null)
+            {
+                uri.AppendQuery("hilliness", inclineLevel.Value.ToString(), true);
+            }
+            if (windingness != null)
+            {
+                uri.AppendQuery("windingness", windingness.Value.ToString(), true);
+            }
+            if (vehicleAxleWeight != null)
+            {
+                uri.AppendQuery("vehicleAxleWeight", vehicleAxleWeight.Value, true);
+            }
+            if (vehicleWidth != null)
+            {
+                uri.AppendQuery("vehicleWidth", vehicleWidth.Value, true);
+            }
+            if (vehicleHeight != null)
+            {
+                uri.AppendQuery("vehicleHeight", vehicleHeight.Value, true);
+            }
+            if (vehicleLength != null)
+            {
+                uri.AppendQuery("vehicleLength", vehicleLength.Value, true);
+            }
+            if (vehicleMaxSpeed != null)
+            {
+                uri.AppendQuery("vehicleMaxSpeed", vehicleMaxSpeed.Value, true);
+            }
+            if (vehicleWeight != null)
+            {
+                uri.AppendQuery("vehicleWeight", vehicleWeight.Value, true);
+            }
+            if (isCommercialVehicle != null)
+            {
+                uri.AppendQuery("vehicleCommercial", isCommercialVehicle.Value, true);
+            }
+            if (vehicleLoadType != null)
+            {
+                uri.AppendQuery("vehicleLoadType", vehicleLoadType.Value.ToString(), true);
+            }
+            if (vehicleEngineType != null)
+            {
+                uri.AppendQuery("vehicleEngineType", vehicleEngineType.Value.ToString(), true);
+            }
+            if (constantSpeedConsumptionInLitersPerHundredKm != null)
+            {
+                uri.AppendQuery("constantSpeedConsumptionInLitersPerHundredkm", constantSpeedConsumptionInLitersPerHundredKm, true);
+            }
+            if (currentFuelInLiters != null)
+            {
+                uri.AppendQuery("currentFuelInLiters", currentFuelInLiters.Value, true);
+            }
+            if (auxiliaryPowerInLitersPerHour != null)
+            {
+                uri.AppendQuery("auxiliaryPowerInLitersPerHour", auxiliaryPowerInLitersPerHour.Value, true);
+            }
+            if (fuelEnergyDensityInMegajoulesPerLiter != null)
+            {
+                uri.AppendQuery("fuelEnergyDensityInMJoulesPerLiter", fuelEnergyDensityInMegajoulesPerLiter.Value, true);
+            }
+            if (accelerationEfficiency != null)
+            {
+                uri.AppendQuery("accelerationEfficiency", accelerationEfficiency.Value, true);
+            }
+            if (decelerationEfficiency != null)
+            {
+                uri.AppendQuery("decelerationEfficiency", decelerationEfficiency.Value, true);
+            }
+            if (uphillEfficiency != null)
+            {
+                uri.AppendQuery("uphillEfficiency", uphillEfficiency.Value, true);
+            }
+            if (downhillEfficiency != null)
+            {
+                uri.AppendQuery("downhillEfficiency", downhillEfficiency.Value, true);
+            }
+            if (constantSpeedConsumptionInKwHPerHundredKm != null)
+            {
+                uri.AppendQuery("constantSpeedConsumptionInkWhPerHundredkm", constantSpeedConsumptionInKwHPerHundredKm, true);
+            }
+            if (currentChargeInKwH != null)
+            {
+                uri.AppendQuery("currentChargeInkWh", currentChargeInKwH.Value, true);
+            }
+            if (maxChargeInKwH != null)
+            {
+                uri.AppendQuery("maxChargeInkWh", maxChargeInKwH.Value, true);
+            }
+            if (auxiliaryPowerInKw != null)
+            {
+                uri.AppendQuery("auxiliaryPowerInkW", auxiliaryPowerInKw.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRouteRangeRequest(ResponseFormat format, IEnumerable<double> query, double? fuelBudgetInLiters, double? energyBudgetInKwH, double? timeBudgetInSec, double? distanceBudgetInMeters, DateTimeOffset? departAt, RouteType? routeType, bool? useTrafficData, IEnumerable<RouteAvoidType> avoid, TravelMode? travelMode, InclineLevel? inclineLevel, WindingnessLevel? windingness, int? vehicleAxleWeight, double? vehicleWidth, double? vehicleHeight, double? vehicleLength, int? vehicleMaxSpeed, int? vehicleWeight, bool? isCommercialVehicle, VehicleLoadType? vehicleLoadType, VehicleEngineType? vehicleEngineType, string constantSpeedConsumptionInLitersPerHundredKm, double? currentFuelInLiters, double? auxiliaryPowerInLitersPerHour, double? fuelEnergyDensityInMegajoulesPerLiter, double? accelerationEfficiency, double? decelerationEfficiency, double? uphillEfficiency, double? downhillEfficiency, string constantSpeedConsumptionInKwHPerHundredKm, double? currentChargeInKwH, double? maxChargeInKwH, double? auxiliaryPowerInKw)
         {
             var message = _pipeline.CreateMessage();
@@ -2752,6 +3433,16 @@ namespace Azure.Maps.Routing
             }
         }
 
+        internal RequestUriBuilder CreateRequestRouteDirectionsBatchRequestUri(JsonFormat format, BatchRequest routeDirectionsBatchQueries)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/directions/batch/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRequestRouteDirectionsBatchRequest(JsonFormat format, BatchRequest routeDirectionsBatchQueries)
         {
             var message = _pipeline.CreateMessage();
@@ -3125,6 +3816,16 @@ namespace Azure.Maps.Routing
             }
         }
 
+        internal RequestUriBuilder CreateGetRouteDirectionsBatchRequestUri(string batchId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/directions/batch/", false);
+            uri.AppendPath(batchId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRouteDirectionsBatchRequest(string batchId)
         {
             var message = _pipeline.CreateMessage();
@@ -3390,6 +4091,16 @@ namespace Azure.Maps.Routing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRequestRouteDirectionsBatchSyncRequestUri(JsonFormat format, BatchRequest routeDirectionsBatchQueries)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/route/directions/batch/sync/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRequestRouteDirectionsBatchSyncRequest(JsonFormat format, BatchRequest routeDirectionsBatchQueries)

@@ -43,6 +43,35 @@ namespace Azure.Maps.Rendering
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetMapTileRequestUri(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp, MapTileSize? tileSize, string language, LocalizedMapView? localizedMapView)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/tile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
+            uri.AppendQuery("zoom", tileIndex.Z, true);
+            uri.AppendQuery("x", tileIndex.X, true);
+            uri.AppendQuery("y", tileIndex.Y, true);
+            if (timeStamp != null)
+            {
+                uri.AppendQuery("timeStamp", timeStamp.Value, "O", true);
+            }
+            if (tileSize != null)
+            {
+                uri.AppendQuery("tileSize", tileSize.Value.ToString(), true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetMapTileRequest(MapTileSetId tilesetId, MapTileIndex tileIndex, DateTimeOffset? timeStamp, MapTileSize? tileSize, string language, LocalizedMapView? localizedMapView)
         {
             var message = _pipeline.CreateMessage();
@@ -177,6 +206,16 @@ namespace Azure.Maps.Rendering
             }
         }
 
+        internal RequestUriBuilder CreateGetMapTilesetRequestUri(MapTileSetId tilesetId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/tileset", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetMapTilesetRequest(MapTileSetId tilesetId)
         {
             var message = _pipeline.CreateMessage();
@@ -244,6 +283,21 @@ namespace Azure.Maps.Rendering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMapAttributionRequestUri(MapTileSetId tilesetId, int zoom, IEnumerable<double> bounds)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/attribution", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("tilesetId", tilesetId.ToString(), true);
+            uri.AppendQuery("zoom", zoom, true);
+            if (bounds != null && Optional.IsCollectionDefined(bounds))
+            {
+                uri.AppendQueryDelimited("bounds", bounds, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetMapAttributionRequest(MapTileSetId tilesetId, int zoom, IEnumerable<double> bounds)
@@ -334,6 +388,19 @@ namespace Azure.Maps.Rendering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMapStateTileRequestUri(string statesetId, MapTileIndex tileIndex)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/statetile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("zoom", tileIndex.Z, true);
+            uri.AppendQuery("x", tileIndex.X, true);
+            uri.AppendQuery("y", tileIndex.Y, true);
+            uri.AppendQuery("statesetId", statesetId, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetMapStateTileRequest(string statesetId, MapTileIndex tileIndex)
@@ -428,6 +495,16 @@ namespace Azure.Maps.Rendering
             }
         }
 
+        internal RequestUriBuilder CreateGetCopyrightCaptionRequestUri(ResponseFormat format)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/copyright/caption/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCopyrightCaptionRequest(ResponseFormat format)
         {
             var message = _pipeline.CreateMessage();
@@ -505,6 +582,66 @@ namespace Azure.Maps.Rendering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMapStaticImageRequestUri(RasterTileFormat format, MapImageLayer? layer, MapImageStyle? style, int? zoom, IEnumerable<double> center, IEnumerable<double> boundingBoxPrivate, int? height, int? width, string language, LocalizedMapView? localizedMapView, IEnumerable<string> pins, IEnumerable<string> path)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/static/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (layer != null)
+            {
+                uri.AppendQuery("layer", layer.Value.ToString(), true);
+            }
+            if (style != null)
+            {
+                uri.AppendQuery("style", style.Value.ToString(), true);
+            }
+            if (zoom != null)
+            {
+                uri.AppendQuery("zoom", zoom.Value, true);
+            }
+            if (center != null && Optional.IsCollectionDefined(center))
+            {
+                uri.AppendQueryDelimited("center", center, ",", true);
+            }
+            if (boundingBoxPrivate != null && Optional.IsCollectionDefined(boundingBoxPrivate))
+            {
+                uri.AppendQueryDelimited("bbox", boundingBoxPrivate, ",", true);
+            }
+            if (height != null)
+            {
+                uri.AppendQuery("height", height.Value, true);
+            }
+            if (width != null)
+            {
+                uri.AppendQuery("width", width.Value, true);
+            }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (localizedMapView != null)
+            {
+                uri.AppendQuery("view", localizedMapView.Value.ToString(), true);
+            }
+            if (pins != null && Optional.IsCollectionDefined(pins))
+            {
+                foreach (var param in pins)
+                {
+                    uri.AppendQuery("pins", param, true);
+                }
+            }
+            if (path != null && Optional.IsCollectionDefined(path))
+            {
+                foreach (var param in path)
+                {
+                    uri.AppendQuery("path", param, true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetMapStaticImageRequest(RasterTileFormat format, MapImageLayer? layer, MapImageStyle? style, int? zoom, IEnumerable<double> center, IEnumerable<double> boundingBoxPrivate, int? height, int? width, string language, LocalizedMapView? localizedMapView, IEnumerable<string> pins, IEnumerable<string> path)
@@ -1150,6 +1287,28 @@ namespace Azure.Maps.Rendering
             }
         }
 
+        internal RequestUriBuilder CreateGetCopyrightFromBoundingBoxRequestUri(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/copyright/bounding/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (boundingBox?.SouthWest != null && Optional.IsCollectionDefined(boundingBox?.SouthWest))
+            {
+                uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
+            }
+            if (boundingBox?.NorthEast != null && Optional.IsCollectionDefined(boundingBox?.NorthEast))
+            {
+                uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
+            }
+            if (includeText != null)
+            {
+                uri.AppendQuery("text", includeText.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetCopyrightFromBoundingBoxRequest(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
@@ -1247,6 +1406,23 @@ namespace Azure.Maps.Rendering
             }
         }
 
+        internal RequestUriBuilder CreateGetCopyrightForTileRequestUri(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/copyright/tile/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("zoom", tileIndex.Z, true);
+            uri.AppendQuery("x", tileIndex.X, true);
+            uri.AppendQuery("y", tileIndex.Y, true);
+            if (includeText != null)
+            {
+                uri.AppendQuery("text", includeText.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetCopyrightForTileRequest(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
@@ -1339,6 +1515,20 @@ namespace Azure.Maps.Rendering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetCopyrightForWorldRequestUri(ResponseFormat format, IncludeText? includeText)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/map/copyright/world/", false);
+            uri.AppendPath(format.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (includeText != null)
+            {
+                uri.AppendQuery("text", includeText.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetCopyrightForWorldRequest(ResponseFormat format, IncludeText? includeText)

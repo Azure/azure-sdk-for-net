@@ -37,6 +37,24 @@ namespace Azure.ResourceManager.HybridNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
+            uri.AppendPath(networkFunctionDefinitionGroupName, true);
+            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
+            uri.AppendPath(networkFunctionDefinitionVersionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName)
         {
             var message = _pipeline.CreateMessage();
@@ -117,6 +135,24 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
+            uri.AppendPath(networkFunctionDefinitionGroupName, true);
+            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
+            uri.AppendPath(networkFunctionDefinitionVersionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data)
@@ -207,6 +243,24 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
+            uri.AppendPath(networkFunctionDefinitionGroupName, true);
+            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
+            uri.AppendPath(networkFunctionDefinitionVersionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName)
@@ -301,6 +355,24 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, TagsObject tagsObject)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
+            uri.AppendPath(networkFunctionDefinitionGroupName, true);
+            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
+            uri.AppendPath(networkFunctionDefinitionVersionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, TagsObject tagsObject)
@@ -401,6 +473,23 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        internal RequestUriBuilder CreateListByNetworkFunctionDefinitionGroupRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
+            uri.AppendPath(networkFunctionDefinitionGroupName, true);
+            uri.AppendPath("/networkFunctionDefinitionVersions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByNetworkFunctionDefinitionGroupRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -484,6 +573,25 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateStateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
+            uri.AppendPath(networkFunctionDefinitionGroupName, true);
+            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
+            uri.AppendPath(networkFunctionDefinitionVersionName, true);
+            uri.AppendPath("/updateState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState)
@@ -575,6 +683,14 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByNetworkFunctionDefinitionGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByNetworkFunctionDefinitionGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName)

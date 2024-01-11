@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.LabServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByLabRequestUri(string subscriptionId, string resourceGroupName, string labName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualMachines", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByLabRequest(string subscriptionId, string resourceGroupName, string labName, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +139,22 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
@@ -210,6 +245,23 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
         {
             var message = _pipeline.CreateMessage();
@@ -285,6 +337,23 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
@@ -364,6 +433,23 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
+        internal RequestUriBuilder CreateReimageRequestUri(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/reimage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReimageRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
         {
             var message = _pipeline.CreateMessage();
@@ -441,6 +527,23 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
+        internal RequestUriBuilder CreateRedeployRequestUri(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/redeploy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRedeployRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName)
         {
             var message = _pipeline.CreateMessage();
@@ -516,6 +619,23 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResetPasswordRequestUri(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, LabVirtualMachineResetPasswordContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/virtualMachines/", false);
+            uri.AppendPath(virtualMachineName, true);
+            uri.AppendPath("/resetPassword", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResetPasswordRequest(string subscriptionId, string resourceGroupName, string labName, string virtualMachineName, LabVirtualMachineResetPasswordContent content)
@@ -601,6 +721,14 @@ namespace Azure.ResourceManager.LabServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByLabNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string labName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByLabNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string labName, string filter)

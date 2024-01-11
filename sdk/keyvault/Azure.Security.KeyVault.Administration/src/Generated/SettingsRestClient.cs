@@ -36,6 +36,16 @@ namespace Azure.Security.KeyVault.Administration
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateUpdateSettingRequestUri(string vaultBaseUrl, string settingName, string value)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/settings/", false);
+            uri.AppendPath(settingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateSettingRequest(string vaultBaseUrl, string settingName, string value)
         {
             var message = _pipeline.CreateMessage();
@@ -132,6 +142,16 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
+        internal RequestUriBuilder CreateGetSettingRequestUri(string vaultBaseUrl, string settingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/settings/", false);
+            uri.AppendPath(settingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSettingRequest(string vaultBaseUrl, string settingName)
         {
             var message = _pipeline.CreateMessage();
@@ -211,6 +231,15 @@ namespace Azure.Security.KeyVault.Administration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSettingsRequestUri(string vaultBaseUrl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/settings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSettingsRequest(string vaultBaseUrl)

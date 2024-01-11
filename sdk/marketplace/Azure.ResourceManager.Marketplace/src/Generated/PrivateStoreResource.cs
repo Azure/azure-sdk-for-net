@@ -409,7 +409,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreRestClient.DeleteAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Name));
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MarketplaceArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -451,7 +453,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreRestClient.Delete(Guid.Parse(Id.Name), cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateDeleteRequestUri(Guid.Parse(Id.Name));
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MarketplaceArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -497,7 +501,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Name), data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MarketplaceArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -543,7 +549,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreRestClient.CreateOrUpdate(Guid.Parse(Id.Name), data, cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateCreateOrUpdateRequestUri(Guid.Parse(Id.Name), data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new MarketplaceArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
