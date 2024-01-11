@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Chaos.Models
     /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
     /// </summary>
-    public partial class ChaosTargetSelector
+    public abstract partial class ChaosTargetSelector
     {
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSelector"/>. </summary>
         /// <param name="id"> String of the selector ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ChaosTargetSelector(string id)
+        protected ChaosTargetSelector(string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 

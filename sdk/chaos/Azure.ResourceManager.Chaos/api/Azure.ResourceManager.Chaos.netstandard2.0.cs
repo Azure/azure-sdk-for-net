@@ -363,9 +363,9 @@ namespace Azure.ResourceManager.Chaos.Models
         public string QueryString { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
     }
-    public partial class ChaosTargetSelector
+    public abstract partial class ChaosTargetSelector
     {
-        public ChaosTargetSelector(string id) { }
+        protected ChaosTargetSelector(string id) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public Azure.ResourceManager.Chaos.Models.ChaosTargetFilter Filter { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
