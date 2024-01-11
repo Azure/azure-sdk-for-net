@@ -78,6 +78,11 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("hsm"u8);
                 writer.WriteObjectValue(Hsm);
             }
+            if (Optional.IsDefined(RootSquashSettings))
+            {
+                writer.WritePropertyName("rootSquashSettings"u8);
+                writer.WriteObjectValue(RootSquashSettings);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -106,6 +111,7 @@ namespace Azure.ResourceManager.StorageCache
             Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
             Optional<AmlFileSystemPropertiesMaintenanceWindow> maintenanceWindow = default;
             Optional<AmlFileSystemPropertiesHsm> hsm = default;
+            Optional<AmlFileSystemRootSquashSettings> rootSquashSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -269,11 +275,20 @@ namespace Azure.ResourceManager.StorageCache
                             hsm = AmlFileSystemPropertiesHsm.DeserializeAmlFileSystemPropertiesHsm(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("rootSquashSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new AmlFileSystemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToList(zones), Optional.ToNullable(storageCapacityTiB), health.Value, Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value);
+            return new AmlFileSystemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToList(zones), Optional.ToNullable(storageCapacityTiB), health.Value, Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value, rootSquashSettings.Value);
         }
     }
 }
