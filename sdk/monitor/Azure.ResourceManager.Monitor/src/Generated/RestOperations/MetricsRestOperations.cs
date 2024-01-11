@@ -37,6 +37,62 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListAtSubscriptionScopeRequestUri(string subscriptionId, string region, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorMetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("region", region, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToString(), true);
+            }
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListAtSubscriptionScopeRequest(string subscriptionId, string region, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorMetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
         {
             var message = _pipeline.CreateMessage();
@@ -189,6 +245,62 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAtSubscriptionScopePostRequestUri(string subscriptionId, string region, SubscriptionResourceGetMonitorMetricsWithPostContent content, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorMetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("region", region, true);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToString(), true);
+            }
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListAtSubscriptionScopePostRequest(string subscriptionId, string region, SubscriptionResourceGetMonitorMetricsWithPostContent content, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorMetricResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
@@ -352,6 +464,61 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/metrics", false);
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToSerialString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (autoAdjustTimegrain != null)
+            {
+                uri.AppendQuery("AutoAdjustTimegrain", autoAdjustTimegrain.Value, true);
+            }
+            if (validateDimensions != null)
+            {
+                uri.AppendQuery("ValidateDimensions", validateDimensions.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceUri, string timespan, TimeSpan? interval, string metricnames, string aggregation, int? top, string orderby, string filter, MonitorResultType? resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions)

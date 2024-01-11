@@ -1585,6 +1585,16 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
+        internal RequestUriBuilder CreateGetBusinessMetadataDefByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/businessmetadatadef/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetBusinessMetadataDefByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1598,6 +1608,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetBusinessMetadataDefByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/businessmetadatadef/name/", false);
+            uri.AppendPath(name, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetBusinessMetadataDefByNameRequest(string name, RequestContext context)
@@ -1615,6 +1635,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetClassificationDefByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/classificationdef/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetClassificationDefByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1628,6 +1658,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetClassificationDefByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/classificationdef/name/", false);
+            uri.AppendPath(name, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetClassificationDefByNameRequest(string name, RequestContext context)
@@ -1645,6 +1685,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetEntityDefinitionByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/entitydef/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetEntityDefinitionByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1658,6 +1708,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEntityDefinitionByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/entitydef/name/", false);
+            uri.AppendPath(name, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetEntityDefinitionByNameRequest(string name, RequestContext context)
@@ -1675,6 +1735,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetEnumDefByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/enumdef/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetEnumDefByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1688,6 +1758,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEnumDefByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/enumdef/name/", false);
+            uri.AppendPath(name, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetEnumDefByNameRequest(string name, RequestContext context)
@@ -1705,6 +1785,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetRelationshipDefByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/relationshipdef/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRelationshipDefByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1718,6 +1808,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetRelationshipDefByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/relationshipdef/name/", false);
+            uri.AppendPath(name, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRelationshipDefByNameRequest(string name, RequestContext context)
@@ -1735,6 +1835,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetStructDefByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/structdef/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStructDefByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1748,6 +1858,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetStructDefByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/structdef/name/", false);
+            uri.AppendPath(name, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStructDefByNameRequest(string name, RequestContext context)
@@ -1765,6 +1885,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTypeDefinitionByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/typedef/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTypeDefinitionByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1778,6 +1908,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTypeDefinitionByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/typedef/name/", false);
+            uri.AppendPath(name, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetTypeDefinitionByNameRequest(string name, RequestContext context)
@@ -1795,6 +1935,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteTypeByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/typedef/name/", false);
+            uri.AppendPath(name, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteTypeByNameRequest(string name, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1808,6 +1958,23 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetAllTypeDefinitionsRequestUri(bool? includeTermTemplate, string type, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/typedefs", false);
+            if (includeTermTemplate != null)
+            {
+                uri.AppendQuery("includeTermTemplate", includeTermTemplate.Value, true);
+            }
+            if (type != null)
+            {
+                uri.AppendQuery("type", type, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAllTypeDefinitionsRequest(bool? includeTermTemplate, string type, RequestContext context)
@@ -1832,6 +1999,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateTypeDefinitionsRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/typedefs", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateTypeDefinitionsRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1846,6 +2022,15 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateAtlasTypeDefinitionsRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/typedefs", false);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAtlasTypeDefinitionsRequest(RequestContent content, RequestContext context)
@@ -1864,6 +2049,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteTypeDefinitionsRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/typedefs", false);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteTypeDefinitionsRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -1878,6 +2072,23 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTypeDefinitionHeadersRequestUri(bool? includeTermTemplate, string type, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/types/typedefs/headers", false);
+            if (includeTermTemplate != null)
+            {
+                uri.AppendQuery("includeTermTemplate", includeTermTemplate.Value, true);
+            }
+            if (type != null)
+            {
+                uri.AppendQuery("type", type, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetTypeDefinitionHeadersRequest(bool? includeTermTemplate, string type, RequestContext context)
@@ -1902,6 +2113,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetTermTemplateDefByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/types/termtemplatedef/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTermTemplateDefByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1916,6 +2138,17 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTermTemplateDefByNameRequestUri(string name, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/types/termtemplatedef/name/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetTermTemplateDefByNameRequest(string name, RequestContext context)

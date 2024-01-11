@@ -128,6 +128,16 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
+        internal RequestUriBuilder CreateSubmitRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/userrequests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSubmitRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

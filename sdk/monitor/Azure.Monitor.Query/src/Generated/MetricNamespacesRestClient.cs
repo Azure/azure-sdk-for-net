@@ -36,6 +36,21 @@ namespace Azure.Monitor.Query
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string startTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/microsoft.insights/metricNamespaces", false);
+            uri.AppendQuery("api-version", "2017-12-01-preview", true);
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceUri, string startTime)
         {
             var message = _pipeline.CreateMessage();

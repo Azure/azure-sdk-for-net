@@ -2618,6 +2618,31 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
+        internal RequestUriBuilder CreateGetGlossariesRequestUri(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            if (ignoreTermsAndCategories != null)
+            {
+                uri.AppendQuery("ignoreTermsAndCategories", ignoreTermsAndCategories.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetGlossariesRequest(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2648,6 +2673,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateGlossaryRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateGlossaryRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2662,6 +2696,15 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateGlossaryCategoriesRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/categories", false);
+            return uri;
         }
 
         internal HttpMessage CreateCreateGlossaryCategoriesRequest(RequestContent content, RequestContext context)
@@ -2680,6 +2723,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateGlossaryCategoryRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/category", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateGlossaryCategoryRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2696,6 +2748,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetGlossaryCategoryRequestUri(string categoryGuid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/category/", false);
+            uri.AppendPath(categoryGuid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetGlossaryCategoryRequest(string categoryGuid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2709,6 +2771,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateGlossaryCategoryRequestUri(string categoryGuid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/category/", false);
+            uri.AppendPath(categoryGuid, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content, RequestContext context)
@@ -2728,6 +2800,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteGlossaryCategoryRequestUri(string categoryGuid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/category/", false);
+            uri.AppendPath(categoryGuid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteGlossaryCategoryRequest(string categoryGuid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2741,6 +2823,17 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreatePartialUpdateGlossaryCategoryRequestUri(string categoryGuid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/category/", false);
+            uri.AppendPath(categoryGuid, true);
+            uri.AppendPath("/partial", false);
+            return uri;
         }
 
         internal HttpMessage CreatePartialUpdateGlossaryCategoryRequest(string categoryGuid, RequestContent content, RequestContext context)
@@ -2759,6 +2852,29 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetRelatedCategoriesRequestUri(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/category/", false);
+            uri.AppendPath(categoryGuid, true);
+            uri.AppendPath("/related", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRelatedCategoriesRequest(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
@@ -2789,6 +2905,29 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetCategoryTermsRequestUri(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/category/", false);
+            uri.AppendPath(categoryGuid, true);
+            uri.AppendPath("/terms", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetCategoryTermsRequest(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2817,6 +2956,19 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateGlossaryTermRequestUri(RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/term", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateGlossaryTermRequest(RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2835,6 +2987,27 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetGlossaryTermRequestUri(string termGuid, bool? includeTermHierarchy, IEnumerable<string> excludeRelationshipTypeList, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/term/", false);
+            uri.AppendPath(termGuid, true);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            if (excludeRelationshipTypeList != null && Optional.IsCollectionDefined(excludeRelationshipTypeList))
+            {
+                foreach (var param in excludeRelationshipTypeList)
+                {
+                    uri.AppendQuery("excludeRelationshipTypes", param, true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetGlossaryTermRequest(string termGuid, bool? includeTermHierarchy, IEnumerable<string> excludeRelationshipTypeList, RequestContext context)
@@ -2863,6 +3036,20 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateUpdateGlossaryTermRequestUri(string termGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/term/", false);
+            uri.AppendPath(termGuid, true);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2884,6 +3071,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteGlossaryTermRequestUri(string termGuid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/term/", false);
+            uri.AppendPath(termGuid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteGlossaryTermRequest(string termGuid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2897,6 +3094,21 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreatePartialUpdateGlossaryTermRequestUri(string termGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/term/", false);
+            uri.AppendPath(termGuid, true);
+            uri.AppendPath("/partial", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreatePartialUpdateGlossaryTermRequest(string termGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
@@ -2921,6 +3133,19 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateGlossaryTermsRequestUri(RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/terms", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateGlossaryTermsRequest(RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2939,6 +3164,29 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEntitiesAssignedWithTermRequestUri(string termGuid, int? limit, int? offset, string sort, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/terms/", false);
+            uri.AppendPath(termGuid, true);
+            uri.AppendPath("/assignedEntities", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetEntitiesAssignedWithTermRequest(string termGuid, int? limit, int? offset, string sort, RequestContext context)
@@ -2969,6 +3217,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateAssignTermToEntitiesRequestUri(string termGuid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/terms/", false);
+            uri.AppendPath(termGuid, true);
+            uri.AppendPath("/assignedEntities", false);
+            return uri;
+        }
+
         internal HttpMessage CreateAssignTermToEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2985,6 +3244,17 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateRemoveTermAssignmentFromEntitiesRequestUri(string termGuid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/terms/", false);
+            uri.AppendPath(termGuid, true);
+            uri.AppendPath("/assignedEntities", false);
+            return uri;
         }
 
         internal HttpMessage CreateRemoveTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
@@ -3005,6 +3275,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteTermAssignmentFromEntitiesRequestUri(string termGuid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/terms/", false);
+            uri.AppendPath(termGuid, true);
+            uri.AppendPath("/assignedEntities", false);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteTermAssignmentFromEntitiesRequest(string termGuid, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3021,6 +3302,29 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetRelatedTermsRequestUri(string termGuid, int? limit, int? offset, string sort, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/terms/", false);
+            uri.AppendPath(termGuid, true);
+            uri.AppendPath("/related", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRelatedTermsRequest(string termGuid, int? limit, int? offset, string sort, RequestContext context)
@@ -3051,6 +3355,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetGlossaryRequestUri(string glossaryGuid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetGlossaryRequest(string glossaryGuid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3064,6 +3378,16 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateGlossaryRequestUri(string glossaryGuid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateGlossaryRequest(string glossaryGuid, RequestContent content, RequestContext context)
@@ -3083,6 +3407,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteGlossaryRequestUri(string glossaryGuid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteGlossaryRequest(string glossaryGuid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3096,6 +3430,29 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetGlossaryCategoriesRequestUri(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            uri.AppendPath("/categories", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetGlossaryCategoriesRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
@@ -3126,6 +3483,29 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetGlossaryCategoriesHeadersRequestUri(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            uri.AppendPath("/categories/headers", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetGlossaryCategoriesHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3154,6 +3534,21 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetDetailedGlossaryRequestUri(string glossaryGuid, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            uri.AppendPath("/detailed", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetDetailedGlossaryRequest(string glossaryGuid, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3172,6 +3567,21 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreatePartialUpdateGlossaryRequestUri(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            uri.AppendPath("/partial", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreatePartialUpdateGlossaryRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
@@ -3194,6 +3604,33 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetGlossaryTermsRequestUri(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            uri.AppendPath("/terms", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetGlossaryTermsRequest(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort, RequestContext context)
@@ -3228,6 +3665,29 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetGlossaryTermHeadersRequestUri(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            uri.AppendPath("/terms/headers", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (sort != null)
+            {
+                uri.AppendQuery("sort", sort, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetGlossaryTermHeadersRequest(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3256,6 +3716,22 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateImportGlossaryTermsViaCsvRequestUri(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            uri.AppendPath("/terms/import", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -3277,6 +3753,22 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateImportGlossaryTermsViaCsvByGlossaryNameRequestUri(string glossaryName, RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/glossary/name/", false);
+            uri.AppendPath(glossaryName, true);
+            uri.AppendPath("/terms/import", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, bool? includeTermHierarchy, RequestContext context)
@@ -3302,6 +3794,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetImportCsvOperationStatusRequestUri(string operationGuid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/glossary/terms/import/", false);
+            uri.AppendPath(operationGuid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetImportCsvOperationStatusRequest(string operationGuid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3316,6 +3819,22 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateExportGlossaryTermsAsCsvRequestUri(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/glossary/", false);
+            uri.AppendPath(glossaryGuid, true);
+            uri.AppendPath("/terms/export", false);
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateExportGlossaryTermsAsCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
@@ -3339,6 +3858,30 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetTermsByGlossaryNameRequestUri(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/glossary/name/", false);
+            uri.AppendPath(glossaryName, true);
+            uri.AppendPath("/terms", false);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (offset != null)
+            {
+                uri.AppendQuery("offset", offset.Value, true);
+            }
+            if (includeTermHierarchy != null)
+            {
+                uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetTermsByGlossaryNameRequest(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy, RequestContext context)

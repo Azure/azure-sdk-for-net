@@ -106,6 +106,23 @@ namespace Azure.Analytics.Purview.Sharing
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ShareResourcesClient.GetAllShareResources", "value", "nextLink", context);
         }
 
+        internal RequestUriBuilder CreateGetAllShareResourcesRequestUri(string filter, string orderby, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/shareResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllShareResourcesRequest(string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -126,6 +143,14 @@ namespace Azure.Analytics.Purview.Sharing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetAllShareResourcesNextPageRequestUri(string nextLink, string filter, string orderby, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAllShareResourcesNextPageRequest(string nextLink, string filter, string orderby, RequestContext context)

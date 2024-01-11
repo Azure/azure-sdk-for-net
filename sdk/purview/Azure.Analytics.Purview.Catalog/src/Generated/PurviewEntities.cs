@@ -2573,6 +2573,15 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2587,6 +2596,37 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetByGuidsRequestUri(IEnumerable<string> guids, bool? minExtInfo, bool? ignoreRelationships, IEnumerable<string> excludeRelationshipTypes, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk", false);
+            if (guids != null && Optional.IsCollectionDefined(guids))
+            {
+                foreach (var param in guids)
+                {
+                    uri.AppendQuery("guid", param, true);
+                }
+            }
+            if (minExtInfo != null)
+            {
+                uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
+            }
+            if (ignoreRelationships != null)
+            {
+                uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
+            }
+            if (excludeRelationshipTypes != null && Optional.IsCollectionDefined(excludeRelationshipTypes))
+            {
+                foreach (var param in excludeRelationshipTypes)
+                {
+                    uri.AppendQuery("excludeRelationshipTypes", param, true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetByGuidsRequest(IEnumerable<string> guids, bool? minExtInfo, bool? ignoreRelationships, IEnumerable<string> excludeRelationshipTypes, RequestContext context)
@@ -2625,6 +2665,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateEntitiesRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk", false);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateEntitiesRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2639,6 +2688,22 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteByGuidsRequestUri(IEnumerable<string> guids, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk", false);
+            if (guids != null && Optional.IsCollectionDefined(guids))
+            {
+                foreach (var param in guids)
+                {
+                    uri.AppendQuery("guid", param, true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteByGuidsRequest(IEnumerable<string> guids, RequestContext context)
@@ -2662,6 +2727,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateAddClassificationRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
+            return uri;
+        }
+
         internal HttpMessage CreateAddClassificationRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2676,6 +2750,24 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetByGuidRequestUri(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            if (minExtInfo != null)
+            {
+                uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
+            }
+            if (ignoreRelationships != null)
+            {
+                uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetByGuidRequest(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
@@ -2701,6 +2793,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreatePartialUpdateEntityAttributeByGuidRequestUri(string guid, string name, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendQuery("name", name, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePartialUpdateEntityAttributeByGuidRequest(string guid, string name, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2719,6 +2822,16 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteByGuidRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteByGuidRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2732,6 +2845,18 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetClassificationRequestUri(string guid, string classificationName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classification/", false);
+            uri.AppendPath(classificationName, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetClassificationRequest(string guid, string classificationName, RequestContext context)
@@ -2751,6 +2876,18 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteClassificationRequestUri(string guid, string classificationName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classification/", false);
+            uri.AppendPath(classificationName, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteClassificationRequest(string guid, string classificationName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2768,6 +2905,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetClassificationsRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classifications", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetClassificationsRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2782,6 +2930,17 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateAddClassificationsRequestUri(string guid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classifications", false);
+            return uri;
         }
 
         internal HttpMessage CreateAddClassificationsRequest(string guid, RequestContent content, RequestContext context)
@@ -2802,6 +2961,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateUpdateClassificationsRequestUri(string guid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classifications", false);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2818,6 +2988,28 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetByUniqueAttributesRequestUri(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            if (minExtInfo != null)
+            {
+                uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
+            }
+            if (ignoreRelationships != null)
+            {
+                uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
+            }
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrQualifiedName, RequestContext context)
@@ -2847,6 +3039,20 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreatePartialUpdateEntityByUniqueAttributesRequestUri(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreatePartialUpdateEntityByUniqueAttributesRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2868,6 +3074,20 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteByUniqueAttributeRequestUri(string typeName, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attrQualifiedName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2885,6 +3105,22 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteClassificationByUniqueAttributeRequestUri(string typeName, string classificationName, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/classification/", false);
+            uri.AppendPath(classificationName, true);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attrQualifiedName, RequestContext context)
@@ -2906,6 +3142,21 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateAddClassificationsByUniqueAttributeRequestUri(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/classifications", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
@@ -2930,6 +3181,21 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateUpdateClassificationsByUniqueAttributeRequestUri(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/classifications", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -2952,6 +3218,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateSetClassificationsRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk/setClassifications", false);
+            return uri;
+        }
+
         internal HttpMessage CreateSetClassificationsRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -2966,6 +3241,28 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetEntitiesByUniqueAttributesRequestUri(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            if (minExtInfo != null)
+            {
+                uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
+            }
+            if (ignoreRelationships != null)
+            {
+                uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
+            }
+            if (attrNQualifiedName != null)
+            {
+                uri.AppendQuery("attr_N:qualifiedName", attrNQualifiedName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetEntitiesByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
@@ -2995,6 +3292,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetHeaderRequestUri(string guid, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/header", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetHeaderRequest(string guid, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3009,6 +3317,17 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteBusinessMetadataRequestUri(string guid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata", false);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteBusinessMetadataRequest(string guid, RequestContent content, RequestContext context)
@@ -3026,6 +3345,21 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateAddOrUpdateBusinessMetadataRequestUri(string guid, RequestContent content, bool? isOverwrite, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata", false);
+            if (isOverwrite != null)
+            {
+                uri.AppendQuery("isOverwrite", isOverwrite.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateAddOrUpdateBusinessMetadataRequest(string guid, RequestContent content, bool? isOverwrite, RequestContext context)
@@ -3049,6 +3383,18 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteBusinessMetadataAttributesRequestUri(string guid, string bmName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata/", false);
+            uri.AppendPath(bmName, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteBusinessMetadataAttributesRequest(string guid, string bmName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3065,6 +3411,18 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateAddOrUpdateBusinessMetadataAttributesRequestUri(string guid, string bmName, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata/", false);
+            uri.AppendPath(bmName, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddOrUpdateBusinessMetadataAttributesRequest(string guid, string bmName, RequestContent content, RequestContext context)
@@ -3085,6 +3443,15 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSampleBusinessMetadataTemplateRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import/template", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSampleBusinessMetadataTemplateRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -3097,6 +3464,15 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
             return message;
+        }
+
+        internal RequestUriBuilder CreateImportBusinessMetadataRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
+            return uri;
         }
 
         internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, RequestContext context)
@@ -3113,6 +3489,17 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteLabelsRequestUri(string guid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteLabelsRequest(string guid, RequestContent content, RequestContext context)
@@ -3132,6 +3519,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateSetLabelsRequestUri(string guid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            return uri;
+        }
+
         internal HttpMessage CreateSetLabelsRequest(string guid, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3149,6 +3547,17 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateAddLabelRequestUri(string guid, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            return uri;
+        }
+
         internal HttpMessage CreateAddLabelRequest(string guid, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3164,6 +3573,21 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteLabelsByUniqueAttributeRequestUri(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
@@ -3187,6 +3611,21 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
+        internal RequestUriBuilder CreateSetLabelsByUniqueAttributeRequestUri(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateSetLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
@@ -3206,6 +3645,21 @@ namespace Azure.Analytics.Purview.Catalog
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateAddLabelsByUniqueAttributeRequestUri(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/catalog/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attrQualifiedName != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attrQualifiedName, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateAddLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attrQualifiedName, RequestContext context)

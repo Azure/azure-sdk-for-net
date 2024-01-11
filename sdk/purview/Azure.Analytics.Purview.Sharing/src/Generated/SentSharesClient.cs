@@ -691,6 +691,24 @@ namespace Azure.Analytics.Purview.Sharing
             }
         }
 
+        internal RequestUriBuilder CreateGetAllSentSharesRequestUri(string referenceName, string filter, string orderby, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares", false);
+            uri.AppendQuery("referenceName", referenceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllSentSharesRequest(string referenceName, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -714,6 +732,16 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSentShareRequestUri(string sentShareId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares/", false);
+            uri.AppendPath(sentShareId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSentShareRequest(string sentShareId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -727,6 +755,16 @@ namespace Azure.Analytics.Purview.Sharing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrReplaceSentShareRequestUri(string sentShareId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares/", false);
+            uri.AppendPath(sentShareId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrReplaceSentShareRequest(string sentShareId, RequestContent content, RequestContext context)
@@ -746,6 +784,16 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteSentShareRequestUri(string sentShareId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares/", false);
+            uri.AppendPath(sentShareId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSentShareRequest(string sentShareId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -759,6 +807,25 @@ namespace Azure.Analytics.Purview.Sharing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetAllSentShareInvitationsRequestUri(string sentShareId, string filter, string orderby, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares/", false);
+            uri.AppendPath(sentShareId, true);
+            uri.AppendPath("/sentShareInvitations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("orderby", orderby, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetAllSentShareInvitationsRequest(string sentShareId, string filter, string orderby, RequestContext context)
@@ -785,6 +852,18 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
+        internal RequestUriBuilder CreateGetSentShareInvitationRequestUri(string sentShareId, string sentShareInvitationId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares/", false);
+            uri.AppendPath(sentShareId, true);
+            uri.AppendPath("/sentShareInvitations/", false);
+            uri.AppendPath(sentShareInvitationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -800,6 +879,18 @@ namespace Azure.Analytics.Purview.Sharing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateSentShareInvitationRequestUri(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares/", false);
+            uri.AppendPath(sentShareId, true);
+            uri.AppendPath("/sentShareInvitations/", false);
+            uri.AppendPath(sentShareInvitationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context)
@@ -821,6 +912,18 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteSentShareInvitationRequestUri(string sentShareId, string sentShareInvitationId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares/", false);
+            uri.AppendPath(sentShareId, true);
+            uri.AppendPath("/sentShareInvitations/", false);
+            uri.AppendPath(sentShareInvitationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -836,6 +939,19 @@ namespace Azure.Analytics.Purview.Sharing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateNotifyUserSentShareInvitationRequestUri(string sentShareId, string sentShareInvitationId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sentShares/", false);
+            uri.AppendPath(sentShareId, true);
+            uri.AppendPath("/sentShareInvitations/", false);
+            uri.AppendPath(sentShareInvitationId, true);
+            uri.AppendPath(":notify", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateNotifyUserSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
@@ -857,6 +973,14 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
+        internal RequestUriBuilder CreateGetAllSentSharesNextPageRequestUri(string nextLink, string referenceName, string filter, string orderby, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAllSentSharesNextPageRequest(string nextLink, string referenceName, string filter, string orderby, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -868,6 +992,14 @@ namespace Azure.Analytics.Purview.Sharing
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetAllSentShareInvitationsNextPageRequestUri(string nextLink, string sentShareId, string filter, string orderby, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetAllSentShareInvitationsNextPageRequest(string nextLink, string sentShareId, string filter, string orderby, RequestContext context)

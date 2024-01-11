@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckAtSubscriptionScopeRequestUri(string subscriptionId, CheckPolicyRestrictionsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/checkPolicyRestrictions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckAtSubscriptionScopeRequest(string subscriptionId, CheckPolicyRestrictionsContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -110,6 +121,19 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckAtResourceGroupScopeRequestUri(string subscriptionId, string resourceGroupName, CheckPolicyRestrictionsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/checkPolicyRestrictions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckAtResourceGroupScopeRequest(string subscriptionId, string resourceGroupName, CheckPolicyRestrictionsContent content)
@@ -191,6 +215,19 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckAtManagementGroupScopeRequestUri(string managementGroupId, CheckManagementGroupPolicyRestrictionsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath("Microsoft.Management", true);
+            uri.AppendPath("/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/checkPolicyRestrictions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckAtManagementGroupScopeRequest(string managementGroupId, CheckManagementGroupPolicyRestrictionsContent content)

@@ -234,6 +234,15 @@ namespace Azure.Analytics.Purview.Administration
             }
         }
 
+        internal RequestUriBuilder CreateGetResourceSetRuleRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourceSetRuleRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -246,6 +255,15 @@ namespace Azure.Analytics.Purview.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateResourceSetRuleRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateResourceSetRuleRequest(RequestContent content, RequestContext context)
@@ -262,6 +280,15 @@ namespace Azure.Analytics.Purview.Administration
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteResourceSetRuleRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/resourceSetRuleConfigs/defaultResourceSetRuleConfig", false);
+            uri.AppendQuery("api-version", "2019-11-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteResourceSetRuleRequest(RequestContext context)

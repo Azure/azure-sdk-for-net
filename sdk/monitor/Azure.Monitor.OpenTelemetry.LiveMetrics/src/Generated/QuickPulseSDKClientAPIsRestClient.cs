@@ -37,6 +37,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             _host = host ?? throw new ArgumentNullException(nameof(host));
         }
 
+        internal RequestUriBuilder CreatePingRequestUri(string ikey, string apikey, int? xMsQpsTransmissionTime, string xMsQpsMachineName, string xMsQpsInstanceName, string xMsQpsStreamId, string xMsQpsRoleName, string xMsQpsInvariantVersion, string xMsQpsConfigurationEtag, MonitoringDataPoint monitoringDataPoint)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_host, false);
+            uri.AppendPath("/QuickPulseService.svc/ping", false);
+            uri.AppendQuery("ikey", ikey, true);
+            if (apikey != null)
+            {
+                uri.AppendQuery("apikey", apikey, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreatePingRequest(string ikey, string apikey, int? xMsQpsTransmissionTime, string xMsQpsMachineName, string xMsQpsInstanceName, string xMsQpsStreamId, string xMsQpsRoleName, string xMsQpsInvariantVersion, string xMsQpsConfigurationEtag, MonitoringDataPoint monitoringDataPoint)
         {
             var message = _pipeline.CreateMessage();
@@ -186,6 +199,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePostRequestUri(string ikey, string apikey, string xMsQpsConfigurationEtag, int? xMsQpsTransmissionTime, IEnumerable<MonitoringDataPoint> monitoringDataPoints)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_host, false);
+            uri.AppendPath("/QuickPulseService.svc/post", false);
+            uri.AppendQuery("ikey", ikey, true);
+            if (apikey != null)
+            {
+                uri.AppendQuery("apikey", apikey, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreatePostRequest(string ikey, string apikey, string xMsQpsConfigurationEtag, int? xMsQpsTransmissionTime, IEnumerable<MonitoringDataPoint> monitoringDataPoints)

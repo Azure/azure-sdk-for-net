@@ -36,6 +36,21 @@ namespace Azure.Monitor.Query
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string metricnamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/metricDefinitions", false);
+            uri.AppendQuery("api-version", "2018-01-01", true);
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceUri, string metricnamespace)
         {
             var message = _pipeline.CreateMessage();

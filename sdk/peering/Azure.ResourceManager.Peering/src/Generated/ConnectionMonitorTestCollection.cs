@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = await _connectionMonitorTestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()));
+                var uri = _connectionMonitorTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.Peering
             try
             {
                 var response = _connectionMonitorTestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data, cancellationToken);
-                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()));
+                var uri = _connectionMonitorTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

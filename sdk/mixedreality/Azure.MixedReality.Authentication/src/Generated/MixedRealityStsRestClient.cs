@@ -38,6 +38,17 @@ namespace Azure.MixedReality.Authentication
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetTokenRequestUri(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/Accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/token", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetTokenRequest(Guid accountId, MixedRealityTokenRequestOptions tokenRequestOptions)
         {
             var message = _pipeline.CreateMessage();

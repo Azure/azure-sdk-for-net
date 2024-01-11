@@ -130,6 +130,18 @@ namespace Azure.Analytics.Purview.Workflows
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(Guid taskId, RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/workflow", false);
+            uri.AppendPath("/workflowtasks/", false);
+            uri.AppendPath(taskId, true);
+            uri.AppendPath("/change-task-status", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(Guid taskId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

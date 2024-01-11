@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnServerConfigurations/", false);
+            uri.AppendPath(vpnServerConfigurationName, true);
+            uri.AppendPath("/configurationPolicyGroups/", false);
+            uri.AppendPath(configurationPolicyGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData data)
         {
             var message = _pipeline.CreateMessage();
@@ -121,6 +137,22 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnServerConfigurations/", false);
+            uri.AppendPath(vpnServerConfigurationName, true);
+            uri.AppendPath("/configurationPolicyGroups/", false);
+            uri.AppendPath(configurationPolicyGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -197,6 +229,22 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnServerConfigurations/", false);
+            uri.AppendPath(vpnServerConfigurationName, true);
+            uri.AppendPath("/configurationPolicyGroups/", false);
+            uri.AppendPath(configurationPolicyGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName, string configurationPolicyGroupName)
@@ -287,6 +335,21 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        internal RequestUriBuilder CreateListByVpnServerConfigurationRequestUri(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnServerConfigurations/", false);
+            uri.AppendPath(vpnServerConfigurationName, true);
+            uri.AppendPath("/configurationPolicyGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByVpnServerConfigurationRequest(string subscriptionId, string resourceGroupName, string vpnServerConfigurationName)
         {
             var message = _pipeline.CreateMessage();
@@ -364,6 +427,14 @@ namespace Azure.ResourceManager.Network
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVpnServerConfigurationNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string vpnServerConfigurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByVpnServerConfigurationNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string vpnServerConfigurationName)

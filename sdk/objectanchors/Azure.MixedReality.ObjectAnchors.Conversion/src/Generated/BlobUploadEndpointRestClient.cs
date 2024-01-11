@@ -38,6 +38,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(Guid accountId, string xMrcCv)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/accounts/", false);
+            uri.AppendPath(accountId, true);
+            uri.AppendPath("/blobUploadEndpoint", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(Guid accountId, string xMrcCv)
         {
             var message = _pipeline.CreateMessage();
