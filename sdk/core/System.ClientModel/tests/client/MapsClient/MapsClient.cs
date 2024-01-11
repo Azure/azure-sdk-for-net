@@ -55,7 +55,7 @@ public class MapsClient
 
         PipelineResponse response = message.Response;
 
-        if (response.IsError && options.ErrorOptions == ResponseErrorOptions.Default)
+        if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
         {
             throw new ClientResultException(response);
         }

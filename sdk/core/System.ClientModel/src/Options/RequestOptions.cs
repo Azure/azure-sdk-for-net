@@ -24,14 +24,14 @@ public class RequestOptions
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
-        ErrorOptions = ResponseErrorOptions.Default;
+        ErrorOptions = ClientErrorBehaviors.Default;
 
         _requestHeaders = new PipelineRequestHeaders();
     }
 
     public CancellationToken CancellationToken { get; set; }
 
-    public ResponseErrorOptions ErrorOptions { get; set; }
+    public ClientErrorBehaviors ErrorOptions { get; set; }
 
     public void AddHeader(string name, string value)
     {

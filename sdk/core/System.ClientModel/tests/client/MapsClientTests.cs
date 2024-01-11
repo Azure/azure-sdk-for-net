@@ -233,7 +233,7 @@ public class MapsClientTests
             IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
 
             RequestOptions options = new RequestOptions();
-            options.ErrorOptions = ResponseErrorOptions.NoThrow;
+            options.ErrorOptions = ClientErrorBehaviors.NoThrow;
 
             // Call protocol method in order to pass RequestOptions
             ClientResult output = client.GetCountryCode(ipAddress.ToString(), options);

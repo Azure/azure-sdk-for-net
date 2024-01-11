@@ -35,22 +35,22 @@ namespace Azure
             set => base.ErrorOptions = ToResponseErrorOptions(value);
         }
 
-        private static ErrorOptions FromResponseErrorOptions(ResponseErrorOptions options)
+        private static ErrorOptions FromResponseErrorOptions(ClientErrorBehaviors options)
         {
             return options switch
             {
-                ResponseErrorOptions.Default => ErrorOptions.Default,
-                ResponseErrorOptions.NoThrow => ErrorOptions.NoThrow,
+                ClientErrorBehaviors.Default => ErrorOptions.Default,
+                ClientErrorBehaviors.NoThrow => ErrorOptions.NoThrow,
                 _ => throw new NotSupportedException(),
             };
         }
 
-        private static ResponseErrorOptions ToResponseErrorOptions(ErrorOptions options)
+        private static ClientErrorBehaviors ToResponseErrorOptions(ErrorOptions options)
         {
             return options switch
             {
-                ErrorOptions.Default => ResponseErrorOptions.Default,
-                ErrorOptions.NoThrow => ResponseErrorOptions.NoThrow,
+                ErrorOptions.Default => ClientErrorBehaviors.Default,
+                ErrorOptions.NoThrow => ClientErrorBehaviors.NoThrow,
                 _ => throw new NotSupportedException(),
             };
         }

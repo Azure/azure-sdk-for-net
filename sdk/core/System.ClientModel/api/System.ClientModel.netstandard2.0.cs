@@ -57,6 +57,12 @@ namespace System.ClientModel.Primitives
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
+    [System.FlagsAttribute]
+    public enum ClientErrorBehaviors
+    {
+        Default = 0,
+        NoThrow = 1,
+    }
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
@@ -152,7 +158,7 @@ namespace System.ClientModel.Primitives
     public partial class PipelineMessageDelay
     {
         public PipelineMessageDelay() { }
-        protected virtual System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int waitCount) { throw null; }
+        protected virtual System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
         protected virtual void OnWaitComplete(System.ClientModel.Primitives.PipelineMessage message) { }
         public void Wait(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { }
         public System.Threading.Tasks.Task WaitAsync(System.ClientModel.Primitives.PipelineMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -229,7 +235,7 @@ namespace System.ClientModel.Primitives
     {
         public RequestOptions() { }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public System.ClientModel.Primitives.ResponseErrorOptions ErrorOptions { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
     }
@@ -242,12 +248,6 @@ namespace System.ClientModel.Primitives
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
         public static void SetBufferingEnabled(System.ClientModel.Primitives.PipelineMessage message, bool bufferingEnabled) { }
         public static void SetNetworkTimeout(System.ClientModel.Primitives.PipelineMessage message, System.TimeSpan? networkTimeout) { }
-    }
-    [System.FlagsAttribute]
-    public enum ResponseErrorOptions
-    {
-        Default = 0,
-        NoThrow = 1,
     }
     public partial class ResponseStatusClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {

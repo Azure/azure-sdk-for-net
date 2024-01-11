@@ -52,10 +52,10 @@ public class PipelineMessageDelay
         await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
     }
 
-    protected virtual TimeSpan GetNextDelay(PipelineMessage message, int waitCount)
+    protected virtual TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
     {
         // Default implementation is exponential backoff
-        return TimeSpan.FromMilliseconds((1 << (waitCount - 1)) * _initialDelay.TotalMilliseconds);
+        return TimeSpan.FromMilliseconds((1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds);
     }
 
     protected virtual void OnWaitComplete(PipelineMessage message) { }
