@@ -137,14 +137,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="provisioningState"></param>
         /// <param name="dataSourceAuthCredentials"></param>
         /// <param name="validationType"></param>
-        /// <param name="identityDetails"></param>
         /// <param name="objectType"></param>
-        /// <param name="serializedAdditionalRawData"></param>
         /// <param name="deletionInfo"></param>
         /// <returns></returns>
-        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, DataProtectionIdentityDetails identityDetails = null, string objectType = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, BackupInstanceDeletionInfo deletionInfo = null)
+        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = null, DataSourceInfo dataSourceInfo = null, DataSourceSetInfo dataSourceSetInfo = null, BackupInstancePolicyInfo policyInfo = null, BackupInstanceProtectionStatusDetails protectionStatus = null, CurrentProtectionState? currentProtectionState = null, ResponseError protectionErrorDetails = null, string provisioningState = null, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = null, BackupValidationType? validationType = null, string objectType = null, BackupInstanceDeletionInfo deletionInfo = null)
         {
-            return new DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType, serializedAdditionalRawData, deletionInfo);
+            return new DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, null, objectType, null, deletionInfo);
         }
 
         /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
