@@ -756,6 +756,26 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
+        internal RequestUriBuilder CreateGetUpdatesRequestUri(string search, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (search != null)
+            {
+                uri.AppendQuery("search", search, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdatesRequest(string search, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -779,6 +799,23 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetUpdateRequestUri(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUpdateRequest(string provider, string name, string version, ETag? ifNoneMatch, RequestContext context)
@@ -807,6 +844,23 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateDeleteUpdateRequestUri(string provider, string name, string version, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteUpdateRequest(string provider, string name, string version, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -829,6 +883,18 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetProvidersRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetProvidersRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -844,6 +910,20 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetNamesRequestUri(string provider, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetNamesRequest(string provider, RequestContext context)
@@ -863,6 +943,26 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetVersionsRequestUri(string provider, string name, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetVersionsRequest(string provider, string name, string filter, RequestContext context)
@@ -890,6 +990,24 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetFilesRequestUri(string provider, string name, string version, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/files", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetFilesRequest(string provider, string name, string version, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -911,6 +1029,25 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetFileRequestUri(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/providers/", false);
+            uri.AppendPath(provider, true);
+            uri.AppendPath("/names/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/files/", false);
+            uri.AppendPath(fileId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetFileRequest(string provider, string name, string version, string fileId, ETag? ifNoneMatch, RequestContext context)
@@ -941,6 +1078,26 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetOperationStatusesRequestUri(string filter, int? top, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/operations", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -966,6 +1123,19 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetOperationStatusRequestUri(string operationId, ETag? ifNoneMatch, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetOperationStatusRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
@@ -988,6 +1158,18 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateStartImportUpdateRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deviceUpdate/", false);
+            uri.AppendPath(_instanceId, false);
+            uri.AppendPath("/updates:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartImportUpdateRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
@@ -1007,6 +1189,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetUpdatesNextPageRequestUri(string nextLink, string search, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUpdatesNextPageRequest(string nextLink, string search, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1019,6 +1210,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetProvidersNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetProvidersNextPageRequest(string nextLink, RequestContext context)
@@ -1035,6 +1235,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetNamesNextPageRequestUri(string nextLink, string provider, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNamesNextPageRequest(string nextLink, string provider, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1047,6 +1256,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetVersionsNextPageRequestUri(string nextLink, string provider, string name, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetVersionsNextPageRequest(string nextLink, string provider, string name, string filter, RequestContext context)
@@ -1063,6 +1281,15 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
+        internal RequestUriBuilder CreateGetFilesNextPageRequestUri(string nextLink, string provider, string name, string version, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetFilesNextPageRequest(string nextLink, string provider, string name, string version, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1075,6 +1302,15 @@ namespace Azure.IoT.DeviceUpdate
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetOperationStatusesNextPageRequestUri(string nextLink, string filter, int? top, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetOperationStatusesNextPageRequest(string nextLink, string filter, int? top, RequestContext context)

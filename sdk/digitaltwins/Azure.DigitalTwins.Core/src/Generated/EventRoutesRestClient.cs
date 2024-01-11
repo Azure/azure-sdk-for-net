@@ -38,6 +38,15 @@ namespace Azure.DigitalTwins.Core
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateListRequestUri(GetDigitalTwinsEventRoutesOptions eventRoutesListOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/eventroutes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(GetDigitalTwinsEventRoutesOptions eventRoutesListOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -104,6 +113,16 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByIdRequestUri(string id, GetDigitalTwinsEventRouteOptions eventRoutesGetByIdOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/eventroutes/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByIdRequest(string id, GetDigitalTwinsEventRouteOptions eventRoutesGetByIdOptions)
@@ -187,6 +206,16 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAddRequestUri(string id, DigitalTwinsEventRoute eventRoute, CreateOrReplaceEventRouteOptions eventRoutesAddOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/eventroutes/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAddRequest(string id, DigitalTwinsEventRoute eventRoute, CreateOrReplaceEventRouteOptions eventRoutesAddOptions)
@@ -282,6 +311,16 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string id, DeleteEventRouteOptions eventRoutesDeleteOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/eventroutes/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string id, DeleteEventRouteOptions eventRoutesDeleteOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -353,6 +392,14 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, GetDigitalTwinsEventRoutesOptions eventRoutesListOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, GetDigitalTwinsEventRoutesOptions eventRoutesListOptions)

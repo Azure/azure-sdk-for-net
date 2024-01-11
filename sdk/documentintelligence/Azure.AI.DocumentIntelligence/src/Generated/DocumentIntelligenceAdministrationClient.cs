@@ -915,6 +915,16 @@ namespace Azure.AI.DocumentIntelligence
             return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
         }
 
+        internal RequestUriBuilder CreateAuthorizeModelCopyRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels:authorizeCopy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAuthorizeModelCopyRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -930,6 +940,17 @@ namespace Azure.AI.DocumentIntelligence
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetModelRequestUri(string modelId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetModelRequest(string modelId, RequestContext context)
@@ -948,6 +969,16 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
+        internal RequestUriBuilder CreateGetModelsRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetModelsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -961,6 +992,17 @@ namespace Azure.AI.DocumentIntelligence
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteModelRequestUri(string modelId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteModelRequest(string modelId, RequestContext context)
@@ -979,6 +1021,16 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
+        internal RequestUriBuilder CreateGetResourceInfoRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/info", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetResourceInfoRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -992,6 +1044,17 @@ namespace Azure.AI.DocumentIntelligence
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetOperationRequestUri(Guid operationId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOperationRequest(Guid operationId, RequestContext context)
@@ -1010,6 +1073,16 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
+        internal RequestUriBuilder CreateGetOperationsRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetOperationsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1023,6 +1096,16 @@ namespace Azure.AI.DocumentIntelligence
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateBuildClassifierRequestUri(RequestContent content, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers:build", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateBuildClassifierRequest(RequestContent content, RequestContext context)
@@ -1042,6 +1125,17 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
+        internal RequestUriBuilder CreateGetClassifierRequestUri(string classifierId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetClassifierRequest(string classifierId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1058,6 +1152,16 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
+        internal RequestUriBuilder CreateGetClassifiersRequestUri(RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetClassifiersRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1071,6 +1175,17 @@ namespace Azure.AI.DocumentIntelligence
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteClassifierRequestUri(string classifierId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteClassifierRequest(string classifierId, RequestContext context)
@@ -1089,6 +1204,15 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
+        internal RequestUriBuilder CreateGetModelsNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetModelsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1103,6 +1227,15 @@ namespace Azure.AI.DocumentIntelligence
             return message;
         }
 
+        internal RequestUriBuilder CreateGetOperationsNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -1115,6 +1248,15 @@ namespace Azure.AI.DocumentIntelligence
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetClassifiersNextPageRequestUri(string nextLink, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetClassifiersNextPageRequest(string nextLink, RequestContext context)

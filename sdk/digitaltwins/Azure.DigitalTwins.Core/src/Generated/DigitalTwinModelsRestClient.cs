@@ -39,6 +39,15 @@ namespace Azure.DigitalTwins.Core
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateAddRequestUri(IEnumerable<object> models, CreateModelsOptions digitalTwinModelsAddOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/models", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAddRequest(IEnumerable<object> models, CreateModelsOptions digitalTwinModelsAddOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -155,6 +164,26 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(IEnumerable<string> dependenciesFor, bool? includeModelDefinition, GetModelsOptions digitalTwinModelsListOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/models", false);
+            if (dependenciesFor != null && Optional.IsCollectionDefined(dependenciesFor))
+            {
+                foreach (var param in dependenciesFor)
+                {
+                    uri.AppendQuery("dependenciesFor", param, true);
+                }
+            }
+            if (includeModelDefinition != null)
+            {
+                uri.AppendQuery("includeModelDefinition", includeModelDefinition.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(IEnumerable<string> dependenciesFor, bool? includeModelDefinition, GetModelsOptions digitalTwinModelsListOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -246,6 +275,20 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByIdRequestUri(string id, bool? includeModelDefinition, GetModelOptions digitalTwinModelsGetByIdOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(id, true);
+            if (includeModelDefinition != null)
+            {
+                uri.AppendQuery("includeModelDefinition", includeModelDefinition.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByIdRequest(string id, bool? includeModelDefinition, GetModelOptions digitalTwinModelsGetByIdOptions)
@@ -341,6 +384,16 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string id, IEnumerable<object> updateModel, DecommissionModelOptions digitalTwinModelsUpdateOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string id, IEnumerable<object> updateModel, DecommissionModelOptions digitalTwinModelsUpdateOptions)
@@ -452,6 +505,16 @@ namespace Azure.DigitalTwins.Core
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string id, DeleteModelOptions digitalTwinModelsDeleteOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/models/", false);
+            uri.AppendPath(id, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string id, DeleteModelOptions digitalTwinModelsDeleteOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -533,6 +596,14 @@ namespace Azure.DigitalTwins.Core
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, IEnumerable<string> dependenciesFor, bool? includeModelDefinition, GetModelsOptions digitalTwinModelsListOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, IEnumerable<string> dependenciesFor, bool? includeModelDefinition, GetModelsOptions digitalTwinModelsListOptions)

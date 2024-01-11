@@ -36,6 +36,15 @@ namespace Azure.Messaging.EventGrid
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreatePublishEventGridEventsRequestUri(string topicHostname, IEnumerable<EventGridEventInternal> events)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(topicHostname, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePublishEventGridEventsRequest(string topicHostname, IEnumerable<EventGridEventInternal> events)
         {
             var message = _pipeline.CreateMessage();
@@ -110,6 +119,15 @@ namespace Azure.Messaging.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePublishCloudEventEventsRequestUri(string topicHostname, IEnumerable<CloudEventInternal> events, string aegChannelName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(topicHostname, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePublishCloudEventEventsRequest(string topicHostname, IEnumerable<CloudEventInternal> events, string aegChannelName)
@@ -192,6 +210,15 @@ namespace Azure.Messaging.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePublishCustomEventEventsRequestUri(string topicHostname, IEnumerable<object> events)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(topicHostname, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePublishCustomEventEventsRequest(string topicHostname, IEnumerable<object> events)

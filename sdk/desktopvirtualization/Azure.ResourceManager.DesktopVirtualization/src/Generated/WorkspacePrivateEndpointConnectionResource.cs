@@ -201,7 +201,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation(response);
+                var uri = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteByWorkspaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DesktopVirtualizationArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +245,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation(response);
+                var uri = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteByWorkspaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DesktopVirtualizationArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -289,7 +293,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateByWorkspaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connection, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connection);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -335,7 +341,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateByWorkspace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connection, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _workspacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateByWorkspaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connection);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DesktopVirtualizationArmOperation<WorkspacePrivateEndpointConnectionResource>(Response.FromValue(new WorkspacePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

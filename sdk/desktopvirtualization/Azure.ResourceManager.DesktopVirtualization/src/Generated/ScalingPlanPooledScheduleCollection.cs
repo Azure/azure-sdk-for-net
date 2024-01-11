@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _scalingPlanPooledScheduleRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation<ScalingPlanPooledScheduleResource>(Response.FromValue(new ScalingPlanPooledScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _scalingPlanPooledScheduleRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DesktopVirtualizationArmOperation<ScalingPlanPooledScheduleResource>(Response.FromValue(new ScalingPlanPooledScheduleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _scalingPlanPooledScheduleRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, data, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation<ScalingPlanPooledScheduleResource>(Response.FromValue(new ScalingPlanPooledScheduleResource(Client, response), response.GetRawResponse()));
+                var uri = _scalingPlanPooledScheduleRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scalingPlanScheduleName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new DesktopVirtualizationArmOperation<ScalingPlanPooledScheduleResource>(Response.FromValue(new ScalingPlanPooledScheduleResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

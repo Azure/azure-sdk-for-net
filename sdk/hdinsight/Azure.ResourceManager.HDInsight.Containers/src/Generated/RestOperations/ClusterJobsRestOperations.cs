@@ -37,6 +37,23 @@ namespace Azure.ResourceManager.HDInsight.Containers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateRunJobRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterJob clusterJob)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/runJob", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRunJobRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName, ClusterJob clusterJob)
         {
             var message = _pipeline.CreateMessage();
@@ -122,6 +139,23 @@ namespace Azure.ResourceManager.HDInsight.Containers
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HDInsight/clusterpools/", false);
+            uri.AppendPath(clusterPoolName, true);
+            uri.AppendPath("/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/jobs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
@@ -205,6 +239,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterPoolName, string clusterName)
