@@ -10,6 +10,8 @@ namespace System.ClientModel.Primitives;
 
 public sealed partial class ClientPipeline
 {
+    internal static TimeSpan DefaultNetworkTimeout { get; } = TimeSpan.FromSeconds(100);
+
     private readonly int _perCallIndex;
     private readonly int _perTryIndex;
     private readonly int _beforeTransportIndex;
@@ -109,7 +111,7 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        TimeSpan networkTimeout = options.NetworkTimeout ?? PipelineResponse.DefaultNetworkTimeout;
+        TimeSpan networkTimeout = options.NetworkTimeout ?? DefaultNetworkTimeout;
 
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
@@ -129,7 +131,8 @@ public sealed partial class ClientPipeline
         else
         {
             // Add default transport.
-            policies[index++] = HttpClientPipelineTransport.Shared;
+            policies[index++] = new HttpClientPipelineTransport(networkTimeout);
+            //policies[index++] = HttpClientPipelineTransport.Shared;
         }
 
         return new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex); ;

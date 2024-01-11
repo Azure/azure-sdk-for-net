@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -466,9 +467,10 @@ public class CustomPipelineProcessorTests
         PipelineRequest request = new MockRequest();
         PipelineMessage message = new PipelineMessage(request);
 
-        PipelinePolicy[] original = new PipelinePolicy[2];
+        PipelinePolicy[] original = new PipelinePolicy[3];
         original[0] = new ObservablePolicy("A");
         original[1] = new ObservablePolicy("B");
+        original[2] = new ObservableTransport("Transport");
 
         PipelinePolicy[] perCall = new PipelinePolicy[2];
         perCall[0] = new ObservablePolicy("C");
@@ -499,6 +501,7 @@ public class CustomPipelineProcessorTests
         Assert.AreEqual("Request:D", observations[index++]);
         Assert.AreEqual("Request:E", observations[index++]);
         Assert.AreEqual("Request:F", observations[index++]);
+        Assert.AreEqual("Transport:Transport", observations[index++]);
         Assert.AreEqual("Response:F", observations[index++]);
         Assert.AreEqual("Response:E", observations[index++]);
         Assert.AreEqual("Response:D", observations[index++]);

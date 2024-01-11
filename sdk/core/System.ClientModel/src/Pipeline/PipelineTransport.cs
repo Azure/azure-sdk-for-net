@@ -17,7 +17,7 @@ public abstract class PipelineTransport : PipelinePolicy
     // TODO: Solve where client-option network timeout lives.
     public PipelineTransport(TimeSpan? networkTimeout = default)
     {
-        _networkTimeout = networkTimeout ?? PipelineResponse.DefaultNetworkTimeout;
+        _networkTimeout = networkTimeout ?? ClientPipeline.DefaultNetworkTimeout;
     }
 
     /// <summary>
