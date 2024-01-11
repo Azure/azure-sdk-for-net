@@ -97,9 +97,8 @@ namespace Azure.Communication.Messages
     {
         public MessageTemplateLocation(string name) : base (default(string)) { }
         public string Address { get { throw null; } set { } }
-        public double? Latitude { get { throw null; } set { } }
         public string LocationName { get { throw null; } set { } }
-        public double? Longitude { get { throw null; } set { } }
+        public Azure.Core.GeoJson.GeoPosition Position { get { throw null; } set { } }
     }
     public partial class MessageTemplateQuickAction : Azure.Communication.Messages.MessageTemplateValue
     {
@@ -165,10 +164,10 @@ namespace Azure.Communication.Messages
         public virtual Azure.Response DownloadMediaTo(string mediaContentId, string destinationPath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DownloadMediaToAsync(string mediaContentId, System.IO.Stream destinationStream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DownloadMediaToAsync(string mediaContentId, string destinationPath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Messages.SendMessageResult> SendMessage(Azure.Communication.Messages.NotificationContent notificationContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response SendMessage(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.SendMessageResult>> SendMessageAsync(Azure.Communication.Messages.NotificationContent notificationContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SendMessageAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.SendMessageResult> Send(Azure.Communication.Messages.NotificationContent notificationContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Send(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.SendMessageResult>> SendAsync(Azure.Communication.Messages.NotificationContent notificationContent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SendAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class SendMessageResult
     {
@@ -185,34 +184,34 @@ namespace Azure.Communication.Messages
         public TextNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, string content) : base (default(System.Guid), default(System.Collections.Generic.IEnumerable<string>)) { }
         public string Content { get { throw null; } }
     }
+}
+namespace Azure.Communication.Messages.Models.Channels
+{
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WhatsAppMessageButtonSubType : System.IEquatable<Azure.Communication.Messages.WhatsAppMessageButtonSubType>
+    public readonly partial struct WhatsAppMessageButtonSubType : System.IEquatable<Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public WhatsAppMessageButtonSubType(string value) { throw null; }
-        public static Azure.Communication.Messages.WhatsAppMessageButtonSubType QuickReply { get { throw null; } }
-        public static Azure.Communication.Messages.WhatsAppMessageButtonSubType Url { get { throw null; } }
-        public bool Equals(Azure.Communication.Messages.WhatsAppMessageButtonSubType other) { throw null; }
+        public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType QuickReply { get { throw null; } }
+        public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType Url { get { throw null; } }
+        public bool Equals(Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.Messages.WhatsAppMessageButtonSubType left, Azure.Communication.Messages.WhatsAppMessageButtonSubType right) { throw null; }
-        public static implicit operator Azure.Communication.Messages.WhatsAppMessageButtonSubType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.Messages.WhatsAppMessageButtonSubType left, Azure.Communication.Messages.WhatsAppMessageButtonSubType right) { throw null; }
+        public static bool operator ==(Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType left, Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType right) { throw null; }
+        public static implicit operator Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType left, Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType right) { throw null; }
         public override string ToString() { throw null; }
     }
-}
-namespace Azure.Communication.Messages.Models.Channels
-{
     public partial class WhatsAppMessageTemplateBindings : Azure.Communication.Messages.MessageTemplateBindings
     {
         public WhatsAppMessageTemplateBindings() { }
-        public System.Collections.Generic.IList<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Body { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton> Buttons { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Footer { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Header { get { throw null; } }
+        public System.Collections.Generic.IList<string> Body { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<string, Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType>> Buttons { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Footer { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Header { get { throw null; } set { } }
     }
     public partial class WhatsAppMessageTemplateBindingsButton
     {
