@@ -5,14 +5,14 @@ using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Developer.DevCenter.Models;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
+    //[PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class DevBoxClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         public const string DevBoxName = "MyDevBox";
@@ -22,7 +22,7 @@ namespace Azure.Developer.DevCenter.Tests
         internal DevBoxesClient GetDevBoxesClient() =>
             InstrumentClient(new DevBoxesClient(
                 TestEnvironment.Endpoint,
-                TestEnvironment.Credential,
+                new InteractiveBrowserCredential(),
                 InstrumentClientOptions(new DevCenterClientOptions())));
 
         public DevBoxClientTests(bool isAsync) : base(isAsync)
@@ -36,20 +36,7 @@ namespace Azure.Developer.DevCenter.Tests
             await SetUpDevBoxAsync();
         }
 
-        [TearDown]
-        public async Task TearDownAsync()
-        {
-            Operation devBoxDeleteOperation = await _devBoxesClient.DeleteDevBoxAsync(
-               WaitUntil.Completed,
-               TestEnvironment.ProjectName,
-               TestEnvironment.MeUserId,
-               DevBoxName);
-
-            await devBoxDeleteOperation.WaitForCompletionResponseAsync();
-            Console.WriteLine($"Completed dev box deletion.");
-        }
-
-        [RecordedTest]
+        [Test]
         public async Task StartAndStopDevBoxSucceeds()
         {
             // At this point we should have a running dev box, let's stop it
@@ -89,7 +76,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.True(devBoxStatus.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetRemoteConnectionSucceeds()
         {
             Response<RemoteConnection> remoteConnectionResponse = await _devBoxesClient.GetRemoteConnectionAsync(
@@ -116,24 +103,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(remoteConnectionUrl.Scheme, "ms-avd");
         }
 
-        [RecordedTest]
-        public async Task GetDevBoxSucceeds()
-        {
-            Response<DevBox> devBoxResponse = await _devBoxesClient.GetDevBoxAsync(
-               TestEnvironment.ProjectName,
-               TestEnvironment.MeUserId,
-               DevBoxName);
-
-            string devBoxName = devBoxResponse?.Value?.Name;
-            if (string.IsNullOrWhiteSpace(devBoxName))
-            {
-                FailDueToMissingProperty("name");
-            }
-
-            Assert.AreEqual(devBoxName, DevBoxName);
-        }
-
-        [RecordedTest]
+        [Test]
         public async Task GetDevBoxesSucceeds()
         {
             int numberOfReturnedDevBoxes = 0;
@@ -156,7 +126,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(1, numberOfReturnedDevBoxes);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAllDevBoxesSucceeds()
         {
             int numberOfReturnedDevBoxes = 0;
@@ -177,7 +147,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(1, numberOfReturnedDevBoxes);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAllDevBoxesByUserSucceeds()
         {
             int numberOfReturnedDevBoxes = 0;
@@ -198,7 +168,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(1, numberOfReturnedDevBoxes);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetPoolSucceeds()
         {
             Response<DevBoxPool> getPoolResponse = await _devBoxesClient.GetPoolAsync(
@@ -214,7 +184,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(poolName, TestEnvironment.PoolName);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetPoolsSucceeds()
         {
             var numberOfReturnedPools = 0;
@@ -233,7 +203,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(1, numberOfReturnedPools);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetSchedulesSucceeds()
         {
             var numberOfReturnedSchedules = 0;
@@ -254,7 +224,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(1, numberOfReturnedSchedules);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetScheduleSucceeds()
         {
             Response<DevBoxSchedule> getScheduleResponse = await _devBoxesClient.GetScheduleAsync(
@@ -271,73 +241,21 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual("default", scheduleName);
         }
 
-        [RecordedTest]
-        public async Task GetActionsSucceeds()
+        [Test]
+        public async Task GetAndDelayActionSucceeds()
         {
-            var numberOfReturnedActions = 0;
-            await foreach (DevBoxAction devBoxAction in _devBoxesClient.GetDevBoxActionsAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId,
-                DevBoxName))
-            {
-                numberOfReturnedActions++;
+            DevBoxAction action = await GetActionAsync();
 
-                string actionName = devBoxAction.Name;
-                if (string.IsNullOrWhiteSpace(actionName))
-                {
-                    FailDueToMissingProperty("name");
-                }
-                Assert.AreEqual("schedule-default", actionName);
-            }
-
-            Assert.AreEqual(1, numberOfReturnedActions);
-        }
-
-        [RecordedTest]
-        public async Task GetActionSucceeds()
-        {
-            Response<DevBoxAction> getActionResponse = await _devBoxesClient.GetDevBoxActionAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId,
-                DevBoxName,
-                "schedule-default");
-
-            string actionName = getActionResponse?.Value.Name;
-            if (string.IsNullOrWhiteSpace(actionName))
-            {
-                FailDueToMissingProperty("name");
-            }
-
-            Assert.AreEqual("schedule-default", actionName);
-        }
-
-        [RecordedTest]
-        public async Task SkipActionSucceeds()
-        {
-            Response skipActionResponse = await _devBoxesClient.SkipActionAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId,
-                DevBoxName,
-                "schedule-default");
-
-            Assert.AreEqual((int)HttpStatusCode.NoContent, skipActionResponse.Status);
-        }
-
-        [RecordedTest]
-        public async Task DelayActionSucceeds()
-        {
-            // Using fixed time to match sessions records
-            string time = "2023-05-02T16:01:53.3821556Z";
-            DateTimeOffset delayUntil = DateTimeOffset.Parse(time);
+            DateTimeOffset delayUntil = action.NextAction.ScheduledTime.AddHours(1);
 
             Response<DevBoxAction> delayActionResponse = await _devBoxesClient.DelayActionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
-                "schedule-default",
+                action.Name,
                 delayUntil);
 
-            DevBoxNextAction nextAction = delayActionResponse?.Value.NextAction;
+            DevBoxNextAction nextAction = delayActionResponse?.Value?.NextAction;
             if (nextAction == null)
             {
                 FailDueToMissingProperty("nextAction");
@@ -346,12 +264,31 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(delayUntil, nextAction.ScheduledTime);
         }
 
-        [RecordedTest]
-        public async Task DelayAllActionsSucceeds()
+        [Test]
+        public async Task GetAndDelayAllActionsSucceeds()
         {
-            // Using fixed time to match sessions records
-            DateTimeOffset delayUntil = DateTimeOffset.Parse("2023-05-02T16:01:53.3821556Z");
+            DevBoxAction action = default;
             var numberOfReturnedActions = 0;
+
+            await foreach (DevBoxAction devBoxAction in _devBoxesClient.GetDevBoxActionsAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                DevBoxName))
+            {
+                numberOfReturnedActions++;
+
+                action = devBoxAction;
+                if (string.IsNullOrWhiteSpace(action.Name))
+                {
+                    FailDueToMissingProperty("name");
+                }
+                Assert.AreEqual("schedule-default", action.Name);
+            }
+
+            Assert.AreEqual(1, numberOfReturnedActions);
+
+            DateTimeOffset delayUntil = action.NextAction.ScheduledTime.AddHours(1);
+            numberOfReturnedActions = 0;
 
             await foreach (DevBoxActionDelayResult actionDelayResult in _devBoxesClient.DelayAllActionsAsync(
                 TestEnvironment.ProjectName,
@@ -373,7 +310,86 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(1, numberOfReturnedActions);
         }
 
+        [Test]
+        public async Task SkipActionSucceeds()
+        {
+            Response skipActionResponse = await _devBoxesClient.SkipActionAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                DevBoxName,
+                "schedule-default");
+
+            Assert.AreEqual((int)HttpStatusCode.NoContent, skipActionResponse.Status);
+        }
+
+        [Test]
+        public async Task DeleteDevBoxSucceeds()
+        {
+            Operation devBoxDeleteOperation = await _devBoxesClient.DeleteDevBoxAsync(
+               WaitUntil.Completed,
+               TestEnvironment.ProjectName,
+               TestEnvironment.MeUserId,
+               DevBoxName);
+
+            await devBoxDeleteOperation.WaitForCompletionResponseAsync();
+            Console.WriteLine($"Completed dev box deletion.");
+        }
+
         private async Task SetUpDevBoxAsync()
+        {
+            DevBox devBox = await GetDevBoxAsync();
+            if (devBox == null)
+            {
+                devBox = await CreateDevBoxAsync();
+            }
+
+            string devBoxName = devBox.Name;
+            if (string.IsNullOrWhiteSpace(devBoxName))
+            {
+                FailDueToMissingProperty("name");
+            }
+
+            Assert.AreEqual(devBoxName, DevBoxName);
+
+            DevBoxProvisioningState? devBoxProvisioningState = devBox.ProvisioningState;
+
+            // Both states indicate successful provisioning
+            bool devBoxProvisionSucceeded =
+                devBoxProvisioningState.Equals(DevBoxProvisioningState.Succeeded) ||
+                devBoxProvisioningState.Equals(DevBoxProvisioningState.ProvisionedWithWarning);
+
+            Assert.IsTrue(devBoxProvisionSucceeded);
+        }
+
+        private async Task<DevBoxAction> GetActionAsync()
+        {
+            DevBoxAction action = (await _devBoxesClient.GetDevBoxActionAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                DevBoxName,
+                "schedule-default"))?.Value;
+
+            string actionName = action?.Name;
+            if (string.IsNullOrWhiteSpace(actionName))
+            {
+                FailDueToMissingProperty("name");
+            }
+
+            Assert.AreEqual("schedule-default", actionName);
+            Assert.AreEqual(DevBoxActionType.Stop, action.ActionType);
+
+            return action;
+        }
+
+        private async Task<DevBox> GetDevBoxAsync()
+        {
+            return (await _devBoxesClient.GetDevBoxAsync(
+               TestEnvironment.ProjectName,
+               TestEnvironment.MeUserId,
+               DevBoxName))?.Value;
+        }
+
+        private async Task<DevBox> CreateDevBoxAsync()
         {
             DevBox devBox = new DevBox
             (
@@ -388,12 +404,7 @@ namespace Azure.Developer.DevCenter.Tests
                 DevBoxName,
                 devBox);
 
-            devBox = await devBoxCreateOperation.WaitForCompletionAsync();
-            DevBoxProvisioningState? devBoxProvisioningState = devBox.ProvisioningState;
-
-            // Both states indicate successful provisioning
-            bool devBoxProvisionSucceeded = devBoxProvisioningState.Equals(DevBoxProvisioningState.Succeeded) || devBoxProvisioningState.Equals(DevBoxProvisioningState.ProvisionedWithWarning);
-            Assert.IsTrue(devBoxProvisionSucceeded);
+            return await devBoxCreateOperation.WaitForCompletionAsync();
         }
 
         private void FailDueToMissingProperty(string propertyName)

@@ -8,7 +8,7 @@ namespace Azure.Developer.DevCenter.Tests
 {
     public class DevCenterClientTestEnvironment : TestEnvironment
     {
-        public Uri Endpoint => new(GetRecordedVariable("DEFAULT_DEVCENTER_ENDPOINT"));
+        public Uri Endpoint => new(GetRecordedVariable("DEVCENTER_ENDPOINT"));
         public string ProjectName => GetRecordedVariable("DEFAULT_PROJECT_NAME");
         public string PoolName => GetRecordedVariable("DEFAULT_POOL_NAME");
         public string CatalogName => GetRecordedVariable("DEFAULT_CATALOG_NAME");

@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Developer.DevCenter.Models;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
@@ -15,6 +18,7 @@ namespace Azure.Developer.DevCenter.Tests
     public class EnvironmentsClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         private const string EnvName = "DevTestEnv";
+        private const string EnvDefinitionName = "Sandbox";
         private DeploymentEnvironmentsClient _environmentsClient;
 
         internal DeploymentEnvironmentsClient GetEnvironmentsClient() =>
@@ -102,7 +106,7 @@ namespace Azure.Developer.DevCenter.Tests
                     FailDueToMissingProperty("name");
                 }
 
-                Console.WriteLine(envDefinitionsName);
+                TestContext.WriteLine(envDefinitionsName);
             }
 
             Assert.AreEqual(3, numberOfEnvDefinitions);
@@ -124,126 +128,111 @@ namespace Azure.Developer.DevCenter.Tests
                     FailDueToMissingProperty("name");
                 }
 
-                Console.WriteLine(envDefinitionsName);
+                TestContext.WriteLine(envDefinitionsName);
             }
 
             Assert.AreEqual(3, numberOfEnvDefinitions);
         }
 
         [RecordedTest]
-        public async Task GetEnvironmentSucceeds()
+        public async Task EnvironmentCreateAndDeleteSucceeds()
         {
             await SetUpEnvironmentAsync();
+            await DeleteEnvironmentAsync();
+        }
 
-            Response<DevCenterEnvironment> getEnvResponse = await _environmentsClient.GetEnvironmentAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId,
-                EnvName);
+        [RecordedTest]
+        public async Task GetEnvironmentSucceeds()
+        {
+            DevCenterEnvironment environment = await GetEnvironmentAsync();
 
-            string envName = getEnvResponse?.Value?.Name;
+            if (environment == null)
+            {
+                await SetUpEnvironmentAsync();
+                environment = await GetEnvironmentAsync();
+            }
+
+            string envName = environment.Name;
             if (string.IsNullOrWhiteSpace(envName))
             {
                 FailDueToMissingProperty("name");
             }
 
             Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
-
-            await DeleteEnvironmentAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetEnvironmentsSucceeds()
         {
-            var numberOfEnvironments = await GetEnvironmentsAsync();
+            var environments = await GetEnvironmentsAsync();
 
-            if (numberOfEnvironments == 0)
+            if (!environments.Any())
             {
                 await SetUpEnvironmentAsync();
+                environments = await GetEnvironmentsAsync();
             }
 
-            numberOfEnvironments = await GetEnvironmentsAsync();
-            Assert.AreEqual(1, numberOfEnvironments);
+            Assert.AreEqual(1, environments.Count);
 
-            await DeleteEnvironmentAsync();
+            string envName = environments[0].Name;
+            if (string.IsNullOrWhiteSpace(envName))
+            {
+                FailDueToMissingProperty("name");
+            }
+
+            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
         [RecordedTest]
         public async Task GetAllEnvironmentsSucceeds()
         {
-            var numberOfEnvironments = await GetAllEnvironmentsAsync();
+            var environments = await GetAllEnvironmentsAsync();
 
-            if (numberOfEnvironments == 0)
+            if (!environments.Any())
             {
                 await SetUpEnvironmentAsync();
+                environments = await GetAllEnvironmentsAsync();
             }
 
-            numberOfEnvironments = await GetAllEnvironmentsAsync();
-            Assert.AreEqual(1, numberOfEnvironments);
+            Assert.AreEqual(1, environments.Count);
 
-            await DeleteEnvironmentAsync();
-        }
-
-        private async Task<int> GetAllEnvironmentsAsync()
-        {
-            var numberOfEnvironments = 0;
-            await foreach (DevCenterEnvironment environment in _environmentsClient.GetAllEnvironmentsAsync(
-                TestEnvironment.ProjectName))
+            string envName = environments[0].Name;
+            if (string.IsNullOrWhiteSpace(envName))
             {
-                numberOfEnvironments++;
-
-                string envName = environment.Name;
-                if (string.IsNullOrWhiteSpace(envName))
-                {
-                    FailDueToMissingProperty("name");
-                }
-                Console.WriteLine(envName);
+                FailDueToMissingProperty("name");
             }
 
-            return numberOfEnvironments;
+            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
-        private async Task<int> GetEnvironmentsAsync()
+        private async Task<DevCenterEnvironment> GetEnvironmentAsync()
         {
-            var numberOfEnvironments = 0;
-            await foreach (DevCenterEnvironment environment in _environmentsClient.GetEnvironmentsAsync(
+            return (await _environmentsClient.GetEnvironmentAsync(
                 TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId))
-            {
-                numberOfEnvironments++;
+                TestEnvironment.MeUserId,
+                EnvName))?.Value;
+        }
 
-                string envName = environment.Name;
-                if (string.IsNullOrWhiteSpace(envName))
-                {
-                    FailDueToMissingProperty("name");
-                }
-                Console.WriteLine(envName);
-            }
+        private async Task<List<DevCenterEnvironment>> GetEnvironmentsAsync()
+        {
+            return await _environmentsClient.GetEnvironmentsAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId).ToEnumerableAsync();
+        }
 
-            return numberOfEnvironments;
+        private async Task<List<DevCenterEnvironment>> GetAllEnvironmentsAsync()
+        {
+            return await _environmentsClient.GetAllEnvironmentsAsync(
+                TestEnvironment.ProjectName).ToEnumerableAsync();
         }
 
         private async Task SetUpEnvironmentAsync()
         {
-            string envDefinitionName = string.Empty;
-
-            await foreach (EnvironmentDefinition envDefinition in _environmentsClient.GetEnvironmentDefinitionsByCatalogAsync(
-                TestEnvironment.ProjectName,
-                TestEnvironment.CatalogName))
-            {
-                envDefinitionName = envDefinition.Name;
-                if (string.IsNullOrWhiteSpace(envDefinitionName))
-                {
-                    FailDueToMissingProperty("name");
-                }
-
-                if (envDefinitionName == "Sandbox") break;
-            }
-
             var environment = new DevCenterEnvironment
             (
                 TestEnvironment.EnvironmentTypeName,
                 TestEnvironment.CatalogName,
-                envDefinitionName
+                EnvDefinitionName
             );
 
             Operation<DevCenterEnvironment> environmentCreateOperation = await _environmentsClient.CreateOrUpdateEnvironmentAsync(
@@ -267,8 +256,9 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.MeUserId,
                 EnvName);
 
-            await environmentDeleteOperation.WaitForCompletionResponseAsync();
-            Console.WriteLine($"Completed environment deletion.");
+            Response response = await environmentDeleteOperation.WaitForCompletionResponseAsync();
+            var status = response.Status;
+            TestContext.WriteLine($"Completed environment deletion with status {status}");
         }
 
         private void FailDueToMissingProperty(string propertyName)

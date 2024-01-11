@@ -6,11 +6,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Developer.DevCenter.Models;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Developer.DevCenter.Tests
 {
-    [PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
+    //[PlaybackOnly("As deploy/delete manipulations with real resources take time.")]
     public class DevCenterClientTests : RecordedTestBase<DevCenterClientTestEnvironment>
     {
         private DevCenterClient _devCenterClient;
@@ -31,7 +32,7 @@ namespace Azure.Developer.DevCenter.Tests
             _devCenterClient = GetDevCenterClient();
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetProjectsSucceeds()
         {
             var numberOfReturnedProjects = 0;
@@ -51,7 +52,7 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.AreEqual(1, numberOfReturnedProjects);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetProjectSucceeds()
         {
             Response<DevCenterProject> getProjectResponse = await _devCenterClient.GetProjectAsync(TestEnvironment.ProjectName);
