@@ -1550,7 +1550,7 @@ namespace Azure.ResourceManager.Resources.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmRestApi
+    public partial class ArmRestApi : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmRestApi>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmRestApi>
     {
         internal ArmRestApi() { }
         public string Description { get { throw null; } }
@@ -1559,6 +1559,11 @@ namespace Azure.ResourceManager.Resources.Models
         public string Origin { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmRestApi System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmRestApi>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmRestApi>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmRestApi System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmRestApi>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmRestApi>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmRestApi>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AvailabilityZoneMappings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings>
     {
