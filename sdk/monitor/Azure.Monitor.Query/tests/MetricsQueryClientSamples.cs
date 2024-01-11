@@ -134,6 +134,26 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
+        public async Task GetMetricsNamespaces()
+        {
+            #region Snippet:GetMetricsNamespaces
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+#else
+            string resourceId = TestEnvironment.MetricsResource;
+#endif
+            var client = new MetricsQueryClient(new DefaultAzureCredential());
+            AsyncPageable<MetricNamespace> metricNamespaces = client.GetMetricNamespacesAsync(resourceId);
+
+            await foreach (var metricNamespace in metricNamespaces)
+            {
+                Console.WriteLine($"Metric namespace = {metricNamespace.Name}");
+            }
+            #endregion
+        }
+
+        [Test]
         public async Task QueryBatchMetrics()
         {
             #region Snippet:QueryBatchMetrics

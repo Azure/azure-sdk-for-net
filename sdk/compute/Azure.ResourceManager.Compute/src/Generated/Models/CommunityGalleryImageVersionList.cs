@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionList"/>. </summary>
         /// <param name="value"> A list of community gallery image versions. </param>
-        /// <param name="nextLink"> The uri to fetch the next page of community gallery image versions. Call ListNext() with this to fetch the next page of community gallery image versions. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of community gallery image versions. Call ListNext() with this to fetch the next page of community gallery image versions. </param>
         internal CommunityGalleryImageVersionList(IReadOnlyList<CommunityGalleryImageVersionData> value, string nextLink)
         {
             Value = value;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> A list of community gallery image versions. </summary>
         public IReadOnlyList<CommunityGalleryImageVersionData> Value { get; }
-        /// <summary> The uri to fetch the next page of community gallery image versions. Call ListNext() with this to fetch the next page of community gallery image versions. </summary>
+        /// <summary> The URI to fetch the next page of community gallery image versions. Call ListNext() with this to fetch the next page of community gallery image versions. </summary>
         public string NextLink { get; }
     }
 }

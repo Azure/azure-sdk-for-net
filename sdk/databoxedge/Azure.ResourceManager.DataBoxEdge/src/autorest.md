@@ -250,6 +250,11 @@ request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/networkSettings/default
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateSummary/default
 
+suppress-abstract-base-class:
+- DataBoxEdgeRoleAddonData
+- DataBoxEdgeRoleData
+- DataBoxEdgeTriggerData
+
 directive:
   - remove-operation: OperationsStatus_Get
   - from: databoxedge.json

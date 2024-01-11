@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment1 = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
             NginxDeploymentResource nginxDeployment2 = await collection.GetAsync(nginxDeploymentName);
 
-            ResourceDataHelper.AssertTrackedResource(nginxDeployment1.Data, nginxDeployment2.Data);
+            ResourceDataHelper.AssertTrackedResourceData(nginxDeployment1.Data, nginxDeployment2.Data);
             Assert.ThrowsAsync<RequestFailedException>(async () => _ = await collection.GetAsync(nginxDeploymentName + "1"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.GetAsync(null));
         }
@@ -70,6 +70,24 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsTrue(await collection.ExistsAsync(nginxDeploymentName));
             Assert.IsFalse(await collection.ExistsAsync(nginxDeploymentName + "1"));
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.ExistsAsync(null));
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetIfExists()
+        {
+            NginxDeploymentCollection collection = ResGroup.GetNginxDeployments();
+            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
+            NginxDeploymentResource nginxDeployment1 = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
+            NullableResponse<NginxDeploymentResource> nginxDeploymentResponse = await collection.GetIfExistsAsync(nginxDeploymentName);
+
+            Assert.True(nginxDeploymentResponse.HasValue);
+            NginxDeploymentResource nginxDeployment2 = nginxDeploymentResponse.Value;
+            ResourceDataHelper.AssertTrackedResourceData(nginxDeployment1.Data, nginxDeployment2.Data);
+
+            NullableResponse<NginxDeploymentResource> nginxDeploymentResource2 = await collection.GetIfExistsAsync(nginxDeploymentName + "1");
+            Assert.False(nginxDeploymentResource2.HasValue);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.GetIfExistsAsync(null));
         }
 
         [TestCase]

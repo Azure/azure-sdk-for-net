@@ -247,6 +247,14 @@ acronym-mapping:
   IoT: Iot
 #  Nt: NT
 
+suppress-abstract-base-class:
+- SecurityInsightsAlertRuleData
+- SecurityInsightsAlertRuleTemplateData
+- SecurityInsightsDataConnectorData
+- SecurityInsightsThreatIntelligenceIndicatorBaseData
+- SecurityMLAnalyticsSettingData
+- SecurityInsightsEntity
+
 directive:
   - rename-operation:
       from: ThreatIntelligenceIndicator_Get

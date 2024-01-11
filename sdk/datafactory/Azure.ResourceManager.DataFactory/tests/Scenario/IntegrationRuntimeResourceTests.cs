@@ -1,14 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataFactory.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
@@ -21,10 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryIntegrationRuntimeResource> CreateDefaultIntegrationRuntime(DataFactoryResource dataFactory, string integrationRuntimeName)
         {
-            DataFactoryIntegrationRuntimeProperties properties = new DataFactoryIntegrationRuntimeProperties()
-            {
-                IntegrationRuntimeType = "SelfHosted"
-            };
+            DataFactoryIntegrationRuntimeProperties properties = new SelfHostedIntegrationRuntime();
             DataFactoryIntegrationRuntimeData data = new DataFactoryIntegrationRuntimeData(properties);
             var integrationRuntime = await dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
             return integrationRuntime.Value;

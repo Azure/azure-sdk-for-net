@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPacketCoreControlPlaneVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

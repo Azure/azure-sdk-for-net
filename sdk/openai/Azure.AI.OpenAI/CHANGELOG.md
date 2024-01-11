@@ -1,6 +1,20 @@
 # Release History
 
-## 1.0.0-beta.12 (Unreleased)
+## 1.0.0-beta.13 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Addressed an issue with the public constructor for `ChatCompletionsFunctionToolCall` that failed to set the tool call type in the corresponding request.
+
+### Other Changes
+
+## 1.0.0-beta.12 (2023-12-15)
+
+Like beta.11, beta.12 is another release that brings further refinements and fixes. It remains based on the `2023-12-01-preview` service API version for Azure OpenAI and does not add any new service capabilities.
 
 ### Features Added
 
@@ -29,10 +43,13 @@
   - `ToolCallUpdate.Id` remains unchanged.
   - Instead of casting `ToolCallUpdate` to `ChatCompletionsFunctionToolCall`, cast it to `StreamingToolCallUpdate`.
   - Update cast instance use of `functionToolCallUpdate.Arguments` to accumulate `functionToolCallUpdate.ArgumentsUpdate`.
+- Removed the parameterized constructor of the `ChatCompletionsOptions` class that only received the messages as a parameter in favor of the parameterized constructor that receives the deployment name as well. This makes it consistent with the implementation of other Options classes.
+- Removed the setter of the `Input` property of the `EmbeddingsOptions` class as per the guidelines for collection properties.
 
-### Bugs Fixed
+### Bugs fixed
 
-### Other Changes
+- [[QUERY] Azure.AI.OpenAI_1.0.0-beta.10 no longer exposes message content on base ChatRequestMessage](https://github.com/Azure/azure-sdk-for-net/issues/40634)
+- [[BUG] Null Reference Exception in OpenAIClient.GetChatCompletionsAsync](https://github.com/Azure/azure-sdk-for-net/issues/40810)
 
 ## 1.0.0-beta.11 (2023-12-07)
 

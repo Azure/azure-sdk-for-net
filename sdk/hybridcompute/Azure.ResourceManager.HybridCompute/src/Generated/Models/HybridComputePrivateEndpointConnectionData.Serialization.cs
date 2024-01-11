@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 return null;
             }
-            Optional<PrivateEndpointConnectionProperties> properties = default;
+            Optional<HybridComputePrivateEndpointConnectionProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(property.Value);
+                    properties = HybridComputePrivateEndpointConnectionProperties.DeserializeHybridComputePrivateEndpointConnectionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

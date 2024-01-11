@@ -108,6 +108,7 @@
     "skus",
     "southcentralus",
     "structs",
+    "Uefi",
     "uints",
     "unbilled",
     "unencrypted",
@@ -123,7 +124,8 @@
     "vnet",
     "westcentralus",
     "westus",
-    "xunit"
+    "xunit",
+    "miscs"
   ],
   "overrides": [
     {
@@ -544,6 +546,12 @@
       "words": [
         "Vmip",
         "Kubevirt"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridcompute/**/*.cs",
+      "words": [
+        "Scvmm"
       ]
     },
     {

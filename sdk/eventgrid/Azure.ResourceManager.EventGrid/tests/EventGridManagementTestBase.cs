@@ -43,6 +43,12 @@ namespace Azure.ResourceManager.EventGrid.Tests
             return lro.Value;
         }
 
+        protected async Task<ResourceGroupResource> GetResourceGroupAsync(Azure.ResourceManager.Resources.SubscriptionResource subscription, string rgName)
+        {
+            var lro = await subscription.GetResourceGroups().GetAsync(rgName);
+            return lro.Value;
+        }
+
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync(AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);

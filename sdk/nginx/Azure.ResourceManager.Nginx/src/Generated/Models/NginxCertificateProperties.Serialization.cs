@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NginxProvisioningState> provisioningState = default;
             Optional<string> keyVirtualPath = default;
             Optional<string> certificateVirtualPath = default;
             Optional<string> keyVaultSecretId = default;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new NginxProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVirtualPath"u8))

@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("safetyProfile"u8);
                 writer.WriteObjectValue(SafetyProfile);
             }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.Compute
             Optional<GalleryImageVersionStorageProfile> storageProfile = default;
             Optional<GalleryImageVersionSafetyProfile> safetyProfile = default;
             Optional<ReplicationStatus> replicationStatus = default;
+            Optional<ImageVersionSecurityProfile> securityProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -168,11 +174,20 @@ namespace Azure.ResourceManager.Compute
                             replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("securityProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityProfile = ImageVersionSecurityProfile.DeserializeImageVersionSecurityProfile(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new GalleryImageVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, safetyProfile.Value, replicationStatus.Value);
+            return new GalleryImageVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, safetyProfile.Value, replicationStatus.Value, securityProfile.Value);
         }
     }
 }
