@@ -42,6 +42,30 @@ namespace Azure.Analytics.Synapse.Spark
             _sparkPoolName = sparkPoolName ?? throw new ArgumentNullException(nameof(sparkPoolName));
         }
 
+        internal RequestUriBuilder CreateGetSparkSessionsRequestUri(int? @from, int? size, bool? detailed)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions", false);
+            if (@from != null)
+            {
+                uri.AppendQuery("from", @from.Value, true);
+            }
+            if (size != null)
+            {
+                uri.AppendQuery("size", size.Value, true);
+            }
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkSessionsRequest(int? @from, int? size, bool? detailed)
         {
             var message = _pipeline.CreateMessage();
@@ -121,6 +145,22 @@ namespace Azure.Analytics.Synapse.Spark
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateSparkSessionRequestUri(SparkSessionOptions sparkSessionOptions, bool? detailed)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions", false);
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateCreateSparkSessionRequest(SparkSessionOptions sparkSessionOptions, bool? detailed)
@@ -204,6 +244,23 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
+        internal RequestUriBuilder CreateGetSparkSessionRequestUri(int sessionId, bool? detailed)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            if (detailed != null)
+            {
+                uri.AppendQuery("detailed", detailed.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkSessionRequest(int sessionId, bool? detailed)
         {
             var message = _pipeline.CreateMessage();
@@ -270,6 +327,19 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
+        internal RequestUriBuilder CreateCancelSparkSessionRequestUri(int sessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelSparkSessionRequest(int sessionId)
         {
             var message = _pipeline.CreateMessage();
@@ -317,6 +387,20 @@ namespace Azure.Analytics.Synapse.Spark
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResetSparkSessionTimeoutRequestUri(int sessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/reset-timeout", false);
+            return uri;
         }
 
         internal HttpMessage CreateResetSparkSessionTimeoutRequest(int sessionId)
@@ -367,6 +451,20 @@ namespace Azure.Analytics.Synapse.Spark
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSparkStatementsRequestUri(int sessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/statements", false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSparkStatementsRequest(int sessionId)
@@ -428,6 +526,20 @@ namespace Azure.Analytics.Synapse.Spark
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateSparkStatementRequestUri(int sessionId, SparkStatementOptions sparkStatementOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/statements", false);
+            return uri;
         }
 
         internal HttpMessage CreateCreateSparkStatementRequest(int sessionId, SparkStatementOptions sparkStatementOptions)
@@ -509,6 +621,21 @@ namespace Azure.Analytics.Synapse.Spark
             }
         }
 
+        internal RequestUriBuilder CreateGetSparkStatementRequestUri(int sessionId, int statementId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/statements/", false);
+            uri.AppendPath(statementId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkStatementRequest(int sessionId, int statementId)
         {
             var message = _pipeline.CreateMessage();
@@ -571,6 +698,22 @@ namespace Azure.Analytics.Synapse.Spark
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelSparkStatementRequestUri(int sessionId, int statementId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/livyApi/versions/", false);
+            uri.AppendPath(_livyApiVersion, false);
+            uri.AppendPath("/sparkPools/", false);
+            uri.AppendPath(_sparkPoolName, false);
+            uri.AppendPath("/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath("/statements/", false);
+            uri.AppendPath(statementId, true);
+            uri.AppendPath("/cancel", false);
+            return uri;
         }
 
         internal HttpMessage CreateCancelSparkStatementRequest(int sessionId, int statementId)

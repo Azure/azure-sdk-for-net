@@ -37,6 +37,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/libraries", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -89,6 +98,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFlushRequestUri(string libraryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendPath("/flush", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateFlushRequest(string libraryName)
@@ -151,6 +171,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOperationResultRequestUri(string operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/libraryOperationResults/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOperationResultRequest(string operationId)
@@ -236,6 +266,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string libraryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string libraryName)
         {
             var message = _pipeline.CreateMessage();
@@ -297,6 +337,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string libraryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string libraryName)
@@ -372,6 +422,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string libraryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string libraryName)
         {
             var message = _pipeline.CreateMessage();
@@ -431,6 +491,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAppendRequestUri(string libraryName, Stream content, long? blobConditionAppendPosition)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/libraries/", false);
+            uri.AppendPath(libraryName, true);
+            uri.AppendQuery("comp", "appendblock", true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateAppendRequest(string libraryName, Stream content, long? blobConditionAppendPosition)
@@ -509,6 +580,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink)

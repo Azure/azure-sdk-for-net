@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateCreateDataFlowDebugSessionRequestUri(CreateDataFlowDebugSessionRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/createDataFlowDebugSession", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateDataFlowDebugSessionRequest(CreateDataFlowDebugSessionRequest request)
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +111,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateQueryDataFlowDebugSessionsByWorkspaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/queryDataFlowDebugSessions", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateQueryDataFlowDebugSessionsByWorkspaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -154,6 +172,15 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAddDataFlowRequestUri(DataFlowDebugPackage request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/addDataFlowToDebugSession", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateAddDataFlowRequest(DataFlowDebugPackage request)
@@ -228,6 +255,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteDataFlowDebugSessionRequestUri(DeleteDataFlowDebugSessionRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/deleteDataFlowDebugSession", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteDataFlowDebugSessionRequest(DeleteDataFlowDebugSessionRequest request)
         {
             var message = _pipeline.CreateMessage();
@@ -288,6 +324,15 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExecuteCommandRequestUri(DataFlowDebugCommandRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/executeDataFlowDebugCommand", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateExecuteCommandRequest(DataFlowDebugCommandRequest request)
@@ -354,6 +399,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateQueryDataFlowDebugSessionsByWorkspaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateQueryDataFlowDebugSessionsByWorkspaceNextPageRequest(string nextLink)

@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateGetSqlScriptsByWorkspaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sqlScripts", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSqlScriptsByWorkspaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -88,6 +97,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateSqlScriptRequestUri(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sqlScripts/", false);
+            uri.AppendPath(sqlScriptName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateSqlScriptRequest(string sqlScriptName, SqlScriptResource sqlScript, string ifMatch)
@@ -171,6 +190,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetSqlScriptRequestUri(string sqlScriptName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sqlScripts/", false);
+            uri.AppendPath(sqlScriptName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSqlScriptRequest(string sqlScriptName, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -250,6 +279,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSqlScriptRequestUri(string sqlScriptName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sqlScripts/", false);
+            uri.AppendPath(sqlScriptName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSqlScriptRequest(string sqlScriptName)
         {
             var message = _pipeline.CreateMessage();
@@ -311,6 +350,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameSqlScriptRequestUri(string sqlScriptName, ArtifactRenameRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sqlScripts/", false);
+            uri.AppendPath(sqlScriptName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameSqlScriptRequest(string sqlScriptName, ArtifactRenameRequest request)
@@ -387,6 +437,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlScriptsByWorkspaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlScriptsByWorkspaceNextPageRequest(string nextLink)

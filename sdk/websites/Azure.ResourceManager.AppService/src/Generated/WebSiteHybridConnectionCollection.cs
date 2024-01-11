@@ -87,7 +87,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSiteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteHybridConnectionWebAppsRestClient.CreateCreateOrUpdateRelayServiceConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,7 +138,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSiteHybridConnectionWebAppsRestClient.CreateOrUpdateRelayServiceConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _webSiteHybridConnectionWebAppsRestClient.CreateCreateOrUpdateRelayServiceConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AppServiceArmOperation<WebSiteHybridConnectionResource>(Response.FromValue(new WebSiteHybridConnectionResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

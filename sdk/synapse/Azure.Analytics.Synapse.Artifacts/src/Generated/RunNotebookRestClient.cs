@@ -36,6 +36,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateCreateRunRequestUri(string runId, RunNotebookRequest runNotebookRequest)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendQuery("api-version", "2022-03-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRunRequest(string runId, RunNotebookRequest runNotebookRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -111,6 +121,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetStatusRequestUri(string runId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendQuery("api-version", "2022-03-01-preview", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStatusRequest(string runId)
         {
             var message = _pipeline.CreateMessage();
@@ -178,6 +198,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelRunRequestUri(string runId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", "2022-03-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelRunRequest(string runId)
@@ -248,6 +279,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSnapshotRequestUri(string runId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/snapshot", false);
+            uri.AppendQuery("api-version", "2022-03-01-preview", true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSnapshotRequest(string runId)

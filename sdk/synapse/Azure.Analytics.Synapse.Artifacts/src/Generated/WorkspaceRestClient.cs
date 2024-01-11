@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateGetRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/workspace", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest()
         {
             var message = _pipeline.CreateMessage();

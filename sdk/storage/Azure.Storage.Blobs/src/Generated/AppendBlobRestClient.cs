@@ -40,6 +40,17 @@ namespace Azure.Storage.Blobs
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(long contentLength, int? timeout, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(long contentLength, int? timeout, string blobContentType, string blobContentEncoding, string blobContentLanguage, byte[] blobContentMD5, string blobCacheControl, IDictionary<string, string> metadata, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             var message = _pipeline.CreateMessage();
@@ -220,6 +231,18 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        internal RequestUriBuilder CreateAppendBlockRequestUri(long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, string leaseId, long? maxSize, long? appendPosition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "appendblock", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateAppendBlockRequest(long contentLength, Stream body, int? timeout, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, string leaseId, long? maxSize, long? appendPosition, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
         {
             var message = _pipeline.CreateMessage();
@@ -373,6 +396,18 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAppendBlockFromUrlRequestUri(string sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "appendblock", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateAppendBlockFromUrlRequest(string sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization)
@@ -564,6 +599,18 @@ namespace Azure.Storage.Blobs
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSealRequestUri(int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, long? appendPosition)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("comp", "seal", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSealRequest(int? timeout, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, long? appendPosition)

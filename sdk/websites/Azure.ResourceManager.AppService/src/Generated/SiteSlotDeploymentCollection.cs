@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotDeploymentWebAppsRestClient.CreateDeploymentSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotDeploymentResource>(Response.FromValue(new SiteSlotDeploymentResource(Client, response), response.GetRawResponse()));
+                var uri = _siteSlotDeploymentWebAppsRestClient.CreateCreateDeploymentSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AppServiceArmOperation<SiteSlotDeploymentResource>(Response.FromValue(new SiteSlotDeploymentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotDeploymentWebAppsRestClient.CreateDeploymentSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotDeploymentResource>(Response.FromValue(new SiteSlotDeploymentResource(Client, response), response.GetRawResponse()));
+                var uri = _siteSlotDeploymentWebAppsRestClient.CreateCreateDeploymentSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AppServiceArmOperation<SiteSlotDeploymentResource>(Response.FromValue(new SiteSlotDeploymentResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

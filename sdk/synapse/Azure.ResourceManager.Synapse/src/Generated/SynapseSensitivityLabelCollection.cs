@@ -85,7 +85,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseSensitivityLabelResource>(Response.FromValue(new SynapseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SynapseArmOperation<SynapseSensitivityLabelResource>(Response.FromValue(new SynapseSensitivityLabelResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -131,7 +133,9 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseSensitivityLabelResource>(Response.FromValue(new SynapseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var uri = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new SynapseArmOperation<SynapseSensitivityLabelResource>(Response.FromValue(new SynapseSensitivityLabelResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

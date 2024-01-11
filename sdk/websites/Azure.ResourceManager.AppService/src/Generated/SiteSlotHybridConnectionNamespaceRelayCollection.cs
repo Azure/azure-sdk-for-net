@@ -89,7 +89,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
+                var uri = _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.CreateCreateOrUpdateHybridConnectionSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.CreateOrUpdateHybridConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()));
+                var uri = _siteSlotHybridConnectionNamespaceRelayWebAppsRestClient.CreateCreateOrUpdateHybridConnectionSlotRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, namespaceName, relayName, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new AppServiceArmOperation<SiteSlotHybridConnectionNamespaceRelayResource>(Response.FromValue(new SiteSlotHybridConnectionNamespaceRelayResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

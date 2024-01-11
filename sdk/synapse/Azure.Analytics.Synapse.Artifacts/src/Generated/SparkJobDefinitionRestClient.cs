@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateGetSparkJobDefinitionsByWorkspaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkJobDefinitions", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkJobDefinitionsByWorkspaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -88,6 +97,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateSparkJobDefinitionRequestUri(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateSparkJobDefinitionRequest(string sparkJobDefinitionName, SparkJobDefinitionResource sparkJobDefinition, string ifMatch)
@@ -171,6 +190,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetSparkJobDefinitionRequestUri(string sparkJobDefinitionName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSparkJobDefinitionRequest(string sparkJobDefinitionName, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -250,6 +279,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSparkJobDefinitionRequestUri(string sparkJobDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSparkJobDefinitionRequest(string sparkJobDefinitionName)
         {
             var message = _pipeline.CreateMessage();
@@ -313,6 +352,17 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateExecuteSparkJobDefinitionRequestUri(string sparkJobDefinitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendPath("/execute", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateExecuteSparkJobDefinitionRequest(string sparkJobDefinitionName)
         {
             var message = _pipeline.CreateMessage();
@@ -373,6 +423,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameSparkJobDefinitionRequestUri(string sparkJobDefinitionName, ArtifactRenameRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/sparkJobDefinitions/", false);
+            uri.AppendPath(sparkJobDefinitionName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameSparkJobDefinitionRequest(string sparkJobDefinitionName, ArtifactRenameRequest request)
@@ -451,6 +512,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDebugSparkJobDefinitionRequestUri(SparkJobDefinitionResource sparkJobDefinitionAzureResource)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/debugSparkJobDefinition", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDebugSparkJobDefinitionRequest(SparkJobDefinitionResource sparkJobDefinitionAzureResource)
         {
             var message = _pipeline.CreateMessage();
@@ -513,6 +583,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSparkJobDefinitionsByWorkspaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSparkJobDefinitionsByWorkspaceNextPageRequest(string nextLink)

@@ -38,6 +38,21 @@ namespace Azure.Storage.Queues
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string messageid, string popReceipt, int visibilitytimeout, int? timeout, QueueMessage queueMessage)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/messages/", false);
+            uri.AppendPath(messageid, true);
+            uri.AppendQuery("popreceipt", popReceipt, true);
+            uri.AppendQuery("visibilitytimeout", visibilitytimeout, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string messageid, string popReceipt, int visibilitytimeout, int? timeout, QueueMessage queueMessage)
         {
             var message = _pipeline.CreateMessage();
@@ -126,6 +141,20 @@ namespace Azure.Storage.Queues
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string messageid, string popReceipt, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/messages/", false);
+            uri.AppendPath(messageid, true);
+            uri.AppendQuery("popreceipt", popReceipt, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string messageid, string popReceipt, int? timeout)

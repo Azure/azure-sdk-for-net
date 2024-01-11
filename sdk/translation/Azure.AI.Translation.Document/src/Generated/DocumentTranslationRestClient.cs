@@ -37,6 +37,15 @@ namespace Azure.AI.Translation.Document
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateStartTranslationRequestUri(StartTranslationDetails body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/batches", false);
+            return uri;
+        }
+
         internal HttpMessage CreateStartTranslationRequest(StartTranslationDetails body)
         {
             var message = _pipeline.CreateMessage();
@@ -121,6 +130,47 @@ namespace Azure.AI.Translation.Document
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetTranslationsStatusRequestUri(int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/batches", false);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            if (ids != null && Optional.IsCollectionDefined(ids))
+            {
+                uri.AppendQueryDelimited("ids", ids, ",", true);
+            }
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            {
+                uri.AppendQueryDelimited("statuses", statuses, ",", true);
+            }
+            if (createdDateTimeUtcStart != null)
+            {
+                uri.AppendQuery("createdDateTimeUtcStart", createdDateTimeUtcStart.Value, "O", true);
+            }
+            if (createdDateTimeUtcEnd != null)
+            {
+                uri.AppendQuery("createdDateTimeUtcEnd", createdDateTimeUtcEnd.Value, "O", true);
+            }
+            if (orderBy != null && Optional.IsCollectionDefined(orderBy))
+            {
+                uri.AppendQueryDelimited("$orderBy", orderBy, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetTranslationsStatusRequest(int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
@@ -313,6 +363,18 @@ namespace Azure.AI.Translation.Document
             }
         }
 
+        internal RequestUriBuilder CreateGetDocumentStatusRequestUri(Guid id, Guid documentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/batches/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/documents/", false);
+            uri.AppendPath(documentId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDocumentStatusRequest(Guid id, Guid documentId)
         {
             var message = _pipeline.CreateMessage();
@@ -376,6 +438,16 @@ namespace Azure.AI.Translation.Document
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetTranslationStatusRequestUri(Guid id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/batches/", false);
+            uri.AppendPath(id, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetTranslationStatusRequest(Guid id)
@@ -443,6 +515,16 @@ namespace Azure.AI.Translation.Document
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCancelTranslationRequestUri(Guid id)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/batches/", false);
+            uri.AppendPath(id, true);
+            return uri;
         }
 
         internal HttpMessage CreateCancelTranslationRequest(Guid id)
@@ -514,6 +596,49 @@ namespace Azure.AI.Translation.Document
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDocumentsStatusRequestUri(Guid id, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/batches/", false);
+            uri.AppendPath(id, true);
+            uri.AppendPath("/documents", false);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            if (ids != null && Optional.IsCollectionDefined(ids))
+            {
+                uri.AppendQueryDelimited("ids", ids, ",", true);
+            }
+            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            {
+                uri.AppendQueryDelimited("statuses", statuses, ",", true);
+            }
+            if (createdDateTimeUtcStart != null)
+            {
+                uri.AppendQuery("createdDateTimeUtcStart", createdDateTimeUtcStart.Value, "O", true);
+            }
+            if (createdDateTimeUtcEnd != null)
+            {
+                uri.AppendQuery("createdDateTimeUtcEnd", createdDateTimeUtcEnd.Value, "O", true);
+            }
+            if (orderBy != null && Optional.IsCollectionDefined(orderBy))
+            {
+                uri.AppendQueryDelimited("$orderBy", orderBy, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetDocumentsStatusRequest(Guid id, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
@@ -704,6 +829,15 @@ namespace Azure.AI.Translation.Document
             }
         }
 
+        internal RequestUriBuilder CreateGetSupportedDocumentFormatsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/documents/formats", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSupportedDocumentFormatsRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -766,6 +900,15 @@ namespace Azure.AI.Translation.Document
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSupportedGlossaryFormatsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/glossaries/formats", false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSupportedGlossaryFormatsRequest()
@@ -832,6 +975,15 @@ namespace Azure.AI.Translation.Document
             }
         }
 
+        internal RequestUriBuilder CreateGetSupportedStorageSourcesRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendPath("/storagesources", false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSupportedStorageSourcesRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -888,6 +1040,15 @@ namespace Azure.AI.Translation.Document
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetTranslationsStatusNextPageRequestUri(string nextLink, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetTranslationsStatusNextPageRequest(string nextLink, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
@@ -1060,6 +1221,15 @@ namespace Azure.AI.Translation.Document
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetDocumentsStatusNextPageRequestUri(string nextLink, Guid id, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/translator/text/batch/v1.0", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetDocumentsStatusNextPageRequest(string nextLink, Guid id, int? top, int? skip, int? maxpagesize, IEnumerable<Guid> ids, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> orderBy)

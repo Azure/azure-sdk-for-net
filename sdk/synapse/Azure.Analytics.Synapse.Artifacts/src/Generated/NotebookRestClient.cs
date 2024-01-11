@@ -36,6 +36,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
         }
 
+        internal RequestUriBuilder CreateGetNotebooksByWorkspaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNotebooksByWorkspaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -90,6 +99,15 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetNotebookSummaryByWorkSpaceRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooksSummary", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNotebookSummaryByWorkSpaceRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -142,6 +160,16 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateNotebookRequestUri(string notebookName, NotebookResource notebook, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks/", false);
+            uri.AppendPath(notebookName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateNotebookRequest(string notebookName, NotebookResource notebook, string ifMatch)
@@ -225,6 +253,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetNotebookRequestUri(string notebookName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks/", false);
+            uri.AppendPath(notebookName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNotebookRequest(string notebookName, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -304,6 +342,16 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateDeleteNotebookRequestUri(string notebookName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks/", false);
+            uri.AppendPath(notebookName, true);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteNotebookRequest(string notebookName)
         {
             var message = _pipeline.CreateMessage();
@@ -365,6 +413,17 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRenameNotebookRequestUri(string notebookName, ArtifactRenameRequest request)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/notebooks/", false);
+            uri.AppendPath(notebookName, true);
+            uri.AppendPath("/rename", false);
+            uri.AppendQuery("api-version", "2020-12-01", true);
+            return uri;
         }
 
         internal HttpMessage CreateRenameNotebookRequest(string notebookName, ArtifactRenameRequest request)
@@ -443,6 +502,14 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
+        internal RequestUriBuilder CreateGetNotebooksByWorkspaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetNotebooksByWorkspaceNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -508,6 +575,14 @@ namespace Azure.Analytics.Synapse.Artifacts
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetNotebookSummaryByWorkSpaceNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetNotebookSummaryByWorkSpaceNextPageRequest(string nextLink)

@@ -41,6 +41,34 @@ namespace Azure.Data.Tables
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateQueryRequestUri(string nextTableName, QueryOptions queryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/Tables", false);
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            if (queryOptions?.Top != null)
+            {
+                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+            }
+            if (queryOptions?.Select != null)
+            {
+                uri.AppendQuery("$select", queryOptions.Select, true);
+            }
+            if (queryOptions?.Filter != null)
+            {
+                uri.AppendQuery("$filter", queryOptions.Filter, true);
+            }
+            if (nextTableName != null)
+            {
+                uri.AppendQuery("NextTableName", nextTableName, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateQueryRequest(string nextTableName, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +148,18 @@ namespace Azure.Data.Tables
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(TableProperties tableProperties, ResponseFormat? responsePreference, QueryOptions queryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/Tables", false);
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(TableProperties tableProperties, ResponseFormat? responsePreference, QueryOptions queryOptions)
@@ -211,6 +251,18 @@ namespace Azure.Data.Tables
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(RequestContent content, string format, string responsePreference, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/Tables", false);
+            if (format != null)
+            {
+                uri.AppendQuery("$format", format, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(RequestContent content, string format, string responsePreference, RequestContext context)
@@ -308,6 +360,16 @@ namespace Azure.Data.Tables
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string table)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/Tables('", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("')", false);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string table)
         {
             var message = _pipeline.CreateMessage();
@@ -368,6 +430,16 @@ namespace Azure.Data.Tables
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string table, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/Tables('", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("')", false);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string table, RequestContext context)
@@ -452,6 +524,44 @@ namespace Azure.Data.Tables
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal RequestUriBuilder CreateQueryEntitiesRequestUri(string table, int? timeout, string nextPartitionKey, string nextRowKey, QueryOptions queryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("()", false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            if (queryOptions?.Top != null)
+            {
+                uri.AppendQuery("$top", queryOptions.Top.Value, true);
+            }
+            if (queryOptions?.Select != null)
+            {
+                uri.AppendQuery("$select", queryOptions.Select, true);
+            }
+            if (queryOptions?.Filter != null)
+            {
+                uri.AppendQuery("$filter", queryOptions.Filter, true);
+            }
+            if (nextPartitionKey != null)
+            {
+                uri.AppendQuery("NextPartitionKey", nextPartitionKey, true);
+            }
+            if (nextRowKey != null)
+            {
+                uri.AppendQuery("NextRowKey", nextRowKey, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateQueryEntitiesRequest(string table, int? timeout, string nextPartitionKey, string nextRowKey, QueryOptions queryOptions)
@@ -561,6 +671,36 @@ namespace Azure.Data.Tables
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateQueryEntityWithPartitionAndRowKeyRequestUri(string table, string partitionKey, string rowKey, int? timeout, QueryOptions queryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("(PartitionKey='", false);
+            uri.AppendPath(partitionKey, true);
+            uri.AppendPath("',RowKey='", false);
+            uri.AppendPath(rowKey, true);
+            uri.AppendPath("')", false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            if (queryOptions?.Select != null)
+            {
+                uri.AppendQuery("$select", queryOptions.Select, true);
+            }
+            if (queryOptions?.Filter != null)
+            {
+                uri.AppendQuery("$filter", queryOptions.Filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateQueryEntityWithPartitionAndRowKeyRequest(string table, string partitionKey, string rowKey, int? timeout, QueryOptions queryOptions)
@@ -704,6 +844,36 @@ namespace Azure.Data.Tables
             }
         }
 
+        internal RequestUriBuilder CreateQueryEntityWithPartitionAndRowKeyRequestUri(string table, string partitionKey, string rowKey, int? timeout, string format, string select, string filter, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("(PartitionKey='", false);
+            uri.AppendPath(partitionKey, true);
+            uri.AppendPath("',RowKey='", false);
+            uri.AppendPath(rowKey, true);
+            uri.AppendPath("')", false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (format != null)
+            {
+                uri.AppendQuery("$format", format, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateQueryEntityWithPartitionAndRowKeyRequest(string table, string partitionKey, string rowKey, int? timeout, string format, string select, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -739,6 +909,28 @@ namespace Azure.Data.Tables
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Accept", "application/json;odata=minimalmetadata");
             return message;
+        }
+
+        internal RequestUriBuilder CreateUpdateEntityRequestUri(string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("(PartitionKey='", false);
+            uri.AppendPath(partitionKey, true);
+            uri.AppendPath("',RowKey='", false);
+            uri.AppendPath(rowKey, true);
+            uri.AppendPath("')", false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateUpdateEntityRequest(string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
@@ -866,6 +1058,28 @@ namespace Azure.Data.Tables
             }
         }
 
+        internal RequestUriBuilder CreateMergeEntityRequestUri(string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("(PartitionKey='", false);
+            uri.AppendPath(partitionKey, true);
+            uri.AppendPath("',RowKey='", false);
+            uri.AppendPath(rowKey, true);
+            uri.AppendPath("')", false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateMergeEntityRequest(string table, string partitionKey, string rowKey, int? timeout, string ifMatch, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -991,6 +1205,28 @@ namespace Azure.Data.Tables
             }
         }
 
+        internal RequestUriBuilder CreateDeleteEntityRequestUri(string table, string partitionKey, string rowKey, string ifMatch, int? timeout, QueryOptions queryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            uri.AppendPath("(PartitionKey='", false);
+            uri.AppendPath(partitionKey, true);
+            uri.AppendPath("',RowKey='", false);
+            uri.AppendPath(rowKey, true);
+            uri.AppendPath("')", false);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteEntityRequest(string table, string partitionKey, string rowKey, string ifMatch, int? timeout, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -1099,6 +1335,23 @@ namespace Azure.Data.Tables
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateInsertEntityRequestUri(string table, int? timeout, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (queryOptions?.Format != null)
+            {
+                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateInsertEntityRequest(string table, int? timeout, ResponseFormat? responsePreference, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
@@ -1239,6 +1492,20 @@ namespace Azure.Data.Tables
             }
         }
 
+        internal RequestUriBuilder CreateGetAccessPolicyRequestUri(string table, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            uri.AppendQuery("comp", "acl", true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAccessPolicyRequest(string table, int? timeout)
         {
             var message = _pipeline.CreateMessage();
@@ -1331,6 +1598,20 @@ namespace Azure.Data.Tables
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetAccessPolicyRequestUri(string table, int? timeout, IEnumerable<TableSignedIdentifier> tableAcl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            uri.AppendQuery("comp", "acl", true);
+            return uri;
         }
 
         internal HttpMessage CreateSetAccessPolicyRequest(string table, int? timeout, IEnumerable<TableSignedIdentifier> tableAcl)

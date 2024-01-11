@@ -201,7 +201,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageAccountManagementPolicyManagementPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation(response);
+                var uri = _storageAccountManagementPolicyManagementPoliciesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -243,7 +245,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageAccountManagementPolicyManagementPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new StorageArmOperation(response);
+                var uri = _storageAccountManagementPolicyManagementPoliciesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation(response, operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -289,7 +293,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _storageAccountManagementPolicyManagementPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<StorageAccountManagementPolicyResource>(Response.FromValue(new StorageAccountManagementPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _storageAccountManagementPolicyManagementPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation<StorageAccountManagementPolicyResource>(Response.FromValue(new StorageAccountManagementPolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -335,7 +341,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _storageAccountManagementPolicyManagementPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new StorageArmOperation<StorageAccountManagementPolicyResource>(Response.FromValue(new StorageAccountManagementPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _storageAccountManagementPolicyManagementPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation<StorageAccountManagementPolicyResource>(Response.FromValue(new StorageAccountManagementPolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -40,6 +40,16 @@ namespace Azure.AI.TextAnalytics.Legacy
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal RequestUriBuilder CreateAnalyzeRequestUri(AnalyzeBatchInput body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/analyze", false);
+            return uri;
+        }
+
         internal HttpMessage CreateAnalyzeRequest(AnalyzeBatchInput body)
         {
             var message = _pipeline.CreateMessage();
@@ -96,6 +106,29 @@ namespace Azure.AI.TextAnalytics.Legacy
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAnalyzeStatusRequestUri(string jobId, bool? showStats, int? top, int? skip)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/analyze/jobs/", false);
+            uri.AppendPath(jobId, true);
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateAnalyzeStatusRequest(string jobId, bool? showStats, int? top, int? skip)
@@ -188,6 +221,29 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
+        internal RequestUriBuilder CreateHealthStatusRequestUri(Guid jobId, int? top, int? skip, bool? showStats)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/entities/health/jobs/", false);
+            uri.AppendPath(jobId, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateHealthStatusRequest(Guid jobId, int? top, int? skip, bool? showStats)
         {
             var message = _pipeline.CreateMessage();
@@ -266,6 +322,17 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
+        internal RequestUriBuilder CreateCancelHealthJobRequestUri(Guid jobId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/entities/health/jobs/", false);
+            uri.AppendPath(jobId, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelHealthJobRequest(Guid jobId)
         {
             var message = _pipeline.CreateMessage();
@@ -316,6 +383,28 @@ namespace Azure.AI.TextAnalytics.Legacy
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateHealthRequestUri(MultiLanguageBatchInput input, string modelVersion, StringIndexType? stringIndexType, bool? loggingOptOut)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/entities/health/jobs", false);
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateHealthRequest(MultiLanguageBatchInput input, string modelVersion, StringIndexType? stringIndexType, bool? loggingOptOut)
@@ -401,6 +490,32 @@ namespace Azure.AI.TextAnalytics.Legacy
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateEntitiesRecognitionGeneralRequestUri(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, StringIndexType? stringIndexType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/entities/recognition/general", false);
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateEntitiesRecognitionGeneralRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, StringIndexType? stringIndexType)
@@ -500,6 +615,40 @@ namespace Azure.AI.TextAnalytics.Legacy
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateEntitiesRecognitionPiiRequestUri(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, string domain, StringIndexType? stringIndexType, IEnumerable<PiiEntityLegacyCategory> piiCategories)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/entities/recognition/pii", false);
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
+            if (domain != null)
+            {
+                uri.AppendQuery("domain", domain, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            if (piiCategories != null && Optional.IsCollectionDefined(piiCategories))
+            {
+                uri.AppendQueryDelimited("piiCategories", piiCategories, ",", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateEntitiesRecognitionPiiRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, string domain, StringIndexType? stringIndexType, IEnumerable<PiiEntityLegacyCategory> piiCategories)
@@ -619,6 +768,32 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
+        internal RequestUriBuilder CreateEntitiesLinkingRequestUri(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, StringIndexType? stringIndexType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/entities/linking", false);
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateEntitiesLinkingRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, StringIndexType? stringIndexType)
         {
             var message = _pipeline.CreateMessage();
@@ -718,6 +893,28 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
+        internal RequestUriBuilder CreateKeyPhrasesRequestUri(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/keyPhrases", false);
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateKeyPhrasesRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut)
         {
             var message = _pipeline.CreateMessage();
@@ -811,6 +1008,28 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
+        internal RequestUriBuilder CreateLanguagesRequestUri(LanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/languages", false);
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateLanguagesRequest(LanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut)
         {
             var message = _pipeline.CreateMessage();
@@ -902,6 +1121,36 @@ namespace Azure.AI.TextAnalytics.Legacy
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSentimentRequestUri(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, bool? opinionMining, StringIndexType? stringIndexType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/sentiment", false);
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            if (showStats != null)
+            {
+                uri.AppendQuery("showStats", showStats.Value, true);
+            }
+            if (loggingOptOut != null)
+            {
+                uri.AppendQuery("loggingOptOut", loggingOptOut.Value, true);
+            }
+            if (opinionMining != null)
+            {
+                uri.AppendQuery("opinionMining", opinionMining.Value, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateSentimentRequest(MultiLanguageBatchInput input, string modelVersion, bool? showStats, bool? loggingOptOut, bool? opinionMining, StringIndexType? stringIndexType)
@@ -1009,6 +1258,17 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
+        internal RequestUriBuilder CreateHealthStatusNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/entities/health/jobs/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateHealthStatusNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -1079,6 +1339,17 @@ namespace Azure.AI.TextAnalytics.Legacy
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAnalyzeStatusNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendPath("/analyze/jobs/", false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateAnalyzeStatusNextPageRequest(string nextLink)
@@ -1153,6 +1424,16 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
         }
 
+        internal RequestUriBuilder CreateHealthStatusNextPageNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateHealthStatusNextPageNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -1222,6 +1503,16 @@ namespace Azure.AI.TextAnalytics.Legacy
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAnalyzeStatusNextPageNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendRaw("/text/analytics/", false);
+            uri.AppendRaw(_apiVersion, false);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateAnalyzeStatusNextPageNextPageRequest(string nextLink)

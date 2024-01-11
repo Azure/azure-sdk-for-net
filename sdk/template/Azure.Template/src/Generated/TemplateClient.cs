@@ -130,6 +130,16 @@ namespace Azure.Template
             }
         }
 
+        internal RequestUriBuilder CreateGetSecretRequestUri(string secretName, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_vaultBaseUrl, false);
+            uri.AppendPath("/secrets/", false);
+            uri.AppendPath(secretName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetSecretRequest(string secretName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);

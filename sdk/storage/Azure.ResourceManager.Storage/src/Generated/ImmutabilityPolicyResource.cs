@@ -203,7 +203,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _immutabilityPolicyBlobContainersRestClient.DeleteImmutabilityPolicyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _immutabilityPolicyBlobContainersRestClient.CreateDeleteImmutabilityPolicyRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -246,7 +248,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _immutabilityPolicyBlobContainersRestClient.DeleteImmutabilityPolicy(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch, cancellationToken);
-                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _immutabilityPolicyBlobContainersRestClient.CreateDeleteImmutabilityPolicyRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Delete, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -293,7 +297,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _immutabilityPolicyBlobContainersRestClient.CreateOrUpdateImmutabilityPolicyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _immutabilityPolicyBlobContainersRestClient.CreateCreateOrUpdateImmutabilityPolicyRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -340,7 +346,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _immutabilityPolicyBlobContainersRestClient.CreateOrUpdateImmutabilityPolicy(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, data, ifMatch, cancellationToken);
-                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _immutabilityPolicyBlobContainersRestClient.CreateCreateOrUpdateImmutabilityPolicyRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Name, data, ifMatch);
+                var operationId = NextLinkOperationImplementation.GetOperationId(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None, false, null, OperationFinalStateVia.OriginalUri);
+                var operation = new StorageArmOperation<ImmutabilityPolicyResource>(Response.FromValue(new ImmutabilityPolicyResource(Client, response), response.GetRawResponse()), operationId);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

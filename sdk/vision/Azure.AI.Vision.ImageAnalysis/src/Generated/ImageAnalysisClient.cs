@@ -516,6 +516,36 @@ namespace Azure.AI.Vision.ImageAnalysis
             }
         }
 
+        internal RequestUriBuilder CreateAnalyzeFromBufferRequestUri(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/computervision", false);
+            uri.AppendPath("/imageanalysis:analyze", false);
+            if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
+            {
+                uri.AppendQueryDelimited("features", visualFeatures, ",", true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (genderNeutralCaption != null)
+            {
+                uri.AppendQuery("gender-neutral-caption", genderNeutralCaption.Value, true);
+            }
+            if (smartCropsAspectRatios != null && Optional.IsCollectionDefined(smartCropsAspectRatios))
+            {
+                uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", true);
+            }
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateAnalyzeFromBufferRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -551,6 +581,36 @@ namespace Azure.AI.Vision.ImageAnalysis
             request.Headers.Add("content-type", "application/octet-stream");
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateAnalyzeFromUrlRequestUri(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/computervision", false);
+            uri.AppendPath("/imageanalysis:analyze", false);
+            if (visualFeatures != null && Optional.IsCollectionDefined(visualFeatures))
+            {
+                uri.AppendQueryDelimited("features", visualFeatures, ",", true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (genderNeutralCaption != null)
+            {
+                uri.AppendQuery("gender-neutral-caption", genderNeutralCaption.Value, true);
+            }
+            if (smartCropsAspectRatios != null && Optional.IsCollectionDefined(smartCropsAspectRatios))
+            {
+                uri.AppendQueryDelimited("smartcrops-aspect-ratios", smartCropsAspectRatios, ",", true);
+            }
+            if (modelVersion != null)
+            {
+                uri.AppendQuery("model-version", modelVersion, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateAnalyzeFromUrlRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)

@@ -39,6 +39,31 @@ namespace Azure.Storage.Files.DataLake
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal RequestUriBuilder CreateListFileSystemsRequestUri(string prefix, string continuation, int? maxResults, int? timeout)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("resource", "account", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (continuation != null)
+            {
+                uri.AppendQuery("continuation", continuation, true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxResults", maxResults.Value, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListFileSystemsRequest(string prefix, string continuation, int? maxResults, int? timeout)
         {
             var message = _pipeline.CreateMessage();

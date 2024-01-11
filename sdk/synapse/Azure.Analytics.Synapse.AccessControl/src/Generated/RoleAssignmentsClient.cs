@@ -416,6 +416,15 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
+        internal RequestUriBuilder CreateCheckPrincipalAccessRequestUri(RequestContent content, ContentType contentType, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/checkAccessSynapseRbac", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckPrincipalAccessRequest(RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -430,6 +439,27 @@ namespace Azure.Analytics.Synapse.AccessControl
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
+        }
+
+        internal RequestUriBuilder CreateGetRoleAssignmentsRequestUri(string roleId, string principalId, string scope, string continuationToken, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/roleAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (roleId != null)
+            {
+                uri.AppendQuery("roleId", roleId, true);
+            }
+            if (principalId != null)
+            {
+                uri.AppendQuery("principalId", principalId, true);
+            }
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRoleAssignmentsRequest(string roleId, string principalId, string scope, string continuationToken, RequestContext context)
@@ -462,6 +492,16 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
+        internal RequestUriBuilder CreateCreateRoleAssignmentRequestUri(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/roleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRoleAssignmentRequest(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -479,6 +519,16 @@ namespace Azure.Analytics.Synapse.AccessControl
             return message;
         }
 
+        internal RequestUriBuilder CreateGetRoleAssignmentByIdRequestUri(string roleAssignmentId, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/roleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRoleAssignmentByIdRequest(string roleAssignmentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -492,6 +542,20 @@ namespace Azure.Analytics.Synapse.AccessControl
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             return message;
+        }
+
+        internal RequestUriBuilder CreateDeleteRoleAssignmentByIdRequestUri(string roleAssignmentId, string scope, RequestContext context)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/roleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRoleAssignmentByIdRequest(string roleAssignmentId, string scope, RequestContext context)

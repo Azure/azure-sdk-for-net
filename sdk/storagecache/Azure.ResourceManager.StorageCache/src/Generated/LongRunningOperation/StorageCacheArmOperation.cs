@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.StorageCache
         {
         }
 
-        internal StorageCacheArmOperation(Response response)
+        internal StorageCacheArmOperation(Response response, string operationId)
         {
-            _operation = OperationInternal.Succeeded(response);
+            _operation = OperationInternal.Succeeded(response, operationId);
         }
 
         internal StorageCacheArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <inheritdoc />
 #pragma warning disable CA1822
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
+        public override string Id => _operation.GetOperationId();
 #pragma warning restore CA1822
 
         /// <inheritdoc />
