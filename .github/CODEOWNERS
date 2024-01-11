@@ -112,7 +112,7 @@
 /sdk/analysisservices/Microsoft.Azure.Management.AnalysisServices/ @athipp @taiwu @minghan
 
 # ServiceLabel: %API Management %Service Attention
-/sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/       @miaojiang
+/sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/       @miaojiang @melina5656
 
 # PRLabel: %App Configuration
 /sdk/appconfiguration/                                             @kinelski @ShivangiReja @jsquire @pallavit
