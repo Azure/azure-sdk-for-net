@@ -63,9 +63,9 @@ public sealed partial class ClientPipeline
         pipelineLength += options.PerCallPolicies?.Length ?? 0;
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
-        // TODO: Retry and buffering policies will come in a later PR.
+        // TODO: Retry policy will come in a later PR.
         //pipelineLength++; // for retry policy
-        //pipelineLength++; // for response buffering policy
+        pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -104,10 +104,9 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        // TODO: Buffering policy will come in a later PR.
-        //TimeSpan networkTimeout = options.NetworkTimeout ?? PipelineResponse.DefaultNetworkTimeout;
-        //ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
-        //policies[index++] = bufferingPolicy;
+        TimeSpan networkTimeout = options.NetworkTimeout ?? PipelineResponse.DefaultNetworkTimeout;
+        ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
+        policies[index++] = bufferingPolicy;
 
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
@@ -126,9 +125,8 @@ public sealed partial class ClientPipeline
         }
         else
         {
-            // TODO: Transport implementation will come in a later PR.
-            //// Add default transport.
-            //policies[index++] = HttpClientPipelineTransport.Shared;
+            // Add default transport.
+            policies[index++] = HttpClientPipelineTransport.Shared;
         }
 
         return new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex); ;

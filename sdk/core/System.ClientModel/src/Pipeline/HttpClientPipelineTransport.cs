@@ -14,7 +14,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
     /// </summary>
-    internal static readonly HttpClientPipelineTransport Shared = new();
+    public static readonly HttpClientPipelineTransport Shared = new();
 
     private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
