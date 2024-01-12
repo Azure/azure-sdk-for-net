@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.ManagementGroups
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/managementGroups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string cacheControl, string skiptoken)
+        internal HttpMessage CreateListRequest(string cacheControl, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        internal RequestUriBuilder CreateGetDescendantsRequestUri(string groupId, string skiptoken, int? top)
+        internal RequestUriBuilder CreateGetDescendantsRequestUri(string groupId, string skipToken, int? top)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -529,9 +529,9 @@ namespace Azure.ResourceManager.ManagementGroups
             uri.AppendPath(groupId, true);
             uri.AppendPath("/descendants", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             if (top != null)
             {
