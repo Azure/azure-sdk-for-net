@@ -267,17 +267,17 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionUnderManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionUnderManagementGroupResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionUnderManagementGroupResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupRequest(Id.Name, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, Id.Name, skiptoken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupRequest(Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, Id.Name, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionUnderManagementGroupResource(Client, SubscriptionUnderManagementGroupData.DeserializeSubscriptionUnderManagementGroupData(e)), _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics, Pipeline, "SubscriptionUnderManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -303,17 +303,17 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionUnderManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionUnderManagementGroupResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionUnderManagementGroupResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupRequest(Id.Name, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, Id.Name, skiptoken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupRequest(Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, Id.Name, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionUnderManagementGroupResource(Client, SubscriptionUnderManagementGroupData.DeserializeSubscriptionUnderManagementGroupData(e)), _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics, Pipeline, "SubscriptionUnderManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

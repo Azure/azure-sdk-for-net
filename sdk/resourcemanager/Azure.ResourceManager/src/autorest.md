@@ -703,7 +703,6 @@ operation-positions:
   Entities_List: collection
 operation-groups-to-omit:
   - HierarchySettings
-  - Entities
   - TenantBackfill
 no-property-type-replacement: DescendantParentGroupInfo
 
