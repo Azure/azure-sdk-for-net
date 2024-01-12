@@ -26,6 +26,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 model-namespace: true
 public-clients: false
 head-as-boolean: false
@@ -83,7 +84,6 @@ rename-mapping:
   Resource: NetworkTrackedResourceData
   ConnectivityIssue.context: Contexts
   VpnClientConnectionHealthDetail.vpnConnectionDuration: vpnConnectionDurationInSeconds
-  VpnClientConnectionHealthDetail.VpnConnectionTime: vpnConnectedOn
   TunnelConnectionHealth.lastConnectionEstablishedUtcTime: lastConnectionEstablishedOn
   ConnectivityIssue.type: ConnectivityIssueType
   HttpHeader: NetworkWatcherHttpHeader
