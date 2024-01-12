@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class ChaosErrorResponse
+    public partial class ChaosErrorResult
     {
-        internal static ChaosErrorResponse DeserializeChaosErrorResponse(JsonElement element)
+        internal static ChaosErrorResult DeserializeChaosErrorResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new ChaosErrorResponse(error.Value);
+            return new ChaosErrorResult(error.Value);
         }
     }
 }

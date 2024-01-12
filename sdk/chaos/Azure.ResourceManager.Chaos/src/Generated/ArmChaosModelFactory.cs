@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ChaosTargetCapabilityData(id, name, resourceType, systemData, publisher, targetType, description, parametersSchema, urn);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ChaosErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChaosErrorResult"/>. </summary>
         /// <param name="error">
         /// The error object.
         /// Serialized Name: ErrorResponse.error
         /// </param>
-        /// <returns> A new <see cref="Models.ChaosErrorResponse"/> instance for mocking. </returns>
-        public static ChaosErrorResponse ChaosErrorResponse(ResponseError error = null)
+        /// <returns> A new <see cref="Models.ChaosErrorResult"/> instance for mocking. </returns>
+        public static ChaosErrorResult ChaosErrorResult(ResponseError error = null)
         {
-            return new ChaosErrorResponse(error);
+            return new ChaosErrorResult(error);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ChaosCapabilityTypeData"/>. </summary>

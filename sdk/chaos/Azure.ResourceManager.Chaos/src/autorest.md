@@ -57,7 +57,6 @@ prepend-rp-prefix:
   - Experiment
   - ExperimentExecution
   - CapabilityType
-  - ErrorResponse
   - OperationStatus
   - TargetReference
   - TargetReferenceType
@@ -74,5 +73,5 @@ rename-mapping:
   KeyValuePair: ContinuousActionKeyValuePair
   ProvisioningState: ExperimentProvisioningState
   SelectorType: ChaosTargetSelectorType
-
+  ErrorResponse: ChaosErrorResult
 ```

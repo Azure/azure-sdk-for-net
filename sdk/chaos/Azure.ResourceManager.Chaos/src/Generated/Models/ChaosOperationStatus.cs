@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Chaos.Models
     /// The status of operation.
     /// Serialized Name: OperationStatus
     /// </summary>
-    public partial class ChaosOperationStatus : ChaosErrorResponse
+    public partial class ChaosOperationStatus : ChaosErrorResult
     {
         /// <summary> Initializes a new instance of <see cref="ChaosOperationStatus"/>. </summary>
         internal ChaosOperationStatus()

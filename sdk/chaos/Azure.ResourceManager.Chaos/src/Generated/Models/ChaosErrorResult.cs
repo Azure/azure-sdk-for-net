@@ -13,19 +13,19 @@ namespace Azure.ResourceManager.Chaos.Models
     /// Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.).
     /// Serialized Name: ErrorResponse
     /// </summary>
-    public partial class ChaosErrorResponse
+    public partial class ChaosErrorResult
     {
-        /// <summary> Initializes a new instance of <see cref="ChaosErrorResponse"/>. </summary>
-        internal ChaosErrorResponse()
+        /// <summary> Initializes a new instance of <see cref="ChaosErrorResult"/>. </summary>
+        internal ChaosErrorResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosErrorResult"/>. </summary>
         /// <param name="error">
         /// The error object.
         /// Serialized Name: ErrorResponse.error
         /// </param>
-        internal ChaosErrorResponse(ResponseError error)
+        internal ChaosErrorResult(ResponseError error)
         {
             Error = error;
         }
