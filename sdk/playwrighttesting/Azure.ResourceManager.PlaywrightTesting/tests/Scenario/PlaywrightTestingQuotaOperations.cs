@@ -50,12 +50,6 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             Assert.IsNotNull(getResponse.Value.Data);
             Assert.IsNotNull(getResponse.Value.Data.Name);
             Assert.AreEqual(QuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
-            Assert.AreEqual(QuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
-            Assert.AreEqual(QuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
-            Assert.AreEqual(QuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
-            Assert.AreEqual(QuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
-            Assert.AreEqual(QuotaName.ScalableExecution.ToStr, getResponse.Value.Data.Name);
-            Assert.AreEqual(QuotaName.ScalableExecution., getResponse.Value.Data.Name);
             Assert.IsNotNull(getResponse.Value.Data.FreeTrial);
             Assert.IsNotNull(getResponse.Value.Data.FreeTrial.AccountId);
 
