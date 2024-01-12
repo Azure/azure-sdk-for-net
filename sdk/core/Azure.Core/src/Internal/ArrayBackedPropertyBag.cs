@@ -22,8 +22,8 @@ namespace Azure.Core
         private int _count;
 #if DEBUG
         private bool _disposed;
-#endif
         private readonly object _lock = new();
+#endif
 
         public ArrayBackedPropertyBag()
         {
