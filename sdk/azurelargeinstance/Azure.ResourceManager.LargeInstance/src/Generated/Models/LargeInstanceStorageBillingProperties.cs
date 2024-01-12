@@ -7,14 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
-    /// <summary> The response of a AzureLargeInstance list operation. </summary>
-    internal partial class AzureLargeInstanceListResult
+    /// <summary> Describes the billing related details of the AzureLargeStorageInstance. </summary>
+    public partial class LargeInstanceStorageBillingProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,35 +45,25 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AzureLargeInstanceListResult(IEnumerable<LargeInstanceData> value)
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceStorageBillingProperties"/>. </summary>
+        internal LargeInstanceStorageBillingProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceStorageBillingProperties"/>. </summary>
+        /// <param name="billingMode"> the billing mode for the storage instance. </param>
+        /// <param name="sku"> the SKU type that is provisioned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureLargeInstanceListResult(IReadOnlyList<LargeInstanceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LargeInstanceStorageBillingProperties(string billingMode, string sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            BillingMode = billingMode;
+            Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/> for deserialization. </summary>
-        internal AzureLargeInstanceListResult()
-        {
-        }
-
-        /// <summary> The AzureLargeInstance items on this page. </summary>
-        public IReadOnlyList<LargeInstanceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> the billing mode for the storage instance. </summary>
+        public string BillingMode { get; }
+        /// <summary> the SKU type that is provisioned. </summary>
+        public string Sku { get; }
     }
 }

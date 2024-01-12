@@ -7,14 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
-    /// <summary> The response of a AzureLargeInstance list operation. </summary>
-    internal partial class AzureLargeInstanceListResult
+    /// <summary> Specifies the storage settings for the Azure Large Instance disks. </summary>
+    public partial class LargeInstanceStorageProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,35 +46,32 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AzureLargeInstanceListResult(IEnumerable<LargeInstanceData> value)
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceStorageProfile"/>. </summary>
+        internal LargeInstanceStorageProfile()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            OSDisks = new ChangeTrackingList<LargeInstanceDisk>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceStorageProfile"/>. </summary>
+        /// <param name="nfsIPAddress"> IP Address to connect to storage. </param>
+        /// <param name="osDisks">
+        /// Specifies information about the operating system disk used by Azure Large
+        /// Instance.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureLargeInstanceListResult(IReadOnlyList<LargeInstanceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LargeInstanceStorageProfile(string nfsIPAddress, IReadOnlyList<LargeInstanceDisk> osDisks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            NfsIPAddress = nfsIPAddress;
+            OSDisks = osDisks;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/> for deserialization. </summary>
-        internal AzureLargeInstanceListResult()
-        {
-        }
-
-        /// <summary> The AzureLargeInstance items on this page. </summary>
-        public IReadOnlyList<LargeInstanceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> IP Address to connect to storage. </summary>
+        public string NfsIPAddress { get; }
+        /// <summary>
+        /// Specifies information about the operating system disk used by Azure Large
+        /// Instance.
+        /// </summary>
+        public IReadOnlyList<LargeInstanceDisk> OSDisks { get; }
     }
 }

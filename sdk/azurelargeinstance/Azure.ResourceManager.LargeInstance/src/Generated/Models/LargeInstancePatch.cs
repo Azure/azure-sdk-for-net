@@ -7,14 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
-    /// <summary> The response of a AzureLargeInstance list operation. </summary>
-    internal partial class AzureLargeInstanceListResult
+    /// <summary> The type used for updating tags in AzureLargeInstance resources. </summary>
+    public partial class LargeInstancePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,35 +46,22 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AzureLargeInstanceListResult(IEnumerable<LargeInstanceData> value)
+        /// <summary> Initializes a new instance of <see cref="LargeInstancePatch"/>. </summary>
+        public LargeInstancePatch()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="LargeInstancePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureLargeInstanceListResult(IReadOnlyList<LargeInstanceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LargeInstancePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/> for deserialization. </summary>
-        internal AzureLargeInstanceListResult()
-        {
-        }
-
-        /// <summary> The AzureLargeInstance items on this page. </summary>
-        public IReadOnlyList<LargeInstanceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

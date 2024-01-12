@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableLargeInstanceSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _azureLargeInstanceClientDiagnostics;
-        private AzureLargeInstanceRestOperations _azureLargeInstanceRestClient;
-        private ClientDiagnostics _azureLargeStorageInstanceClientDiagnostics;
-        private AzureLargeStorageInstanceRestOperations _azureLargeStorageInstanceRestClient;
+        private ClientDiagnostics _largeInstanceAzureLargeInstanceClientDiagnostics;
+        private AzureLargeInstanceRestOperations _largeInstanceAzureLargeInstanceRestClient;
+        private ClientDiagnostics _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics;
+        private AzureLargeStorageInstanceRestOperations _largeStorageInstanceAzureLargeStorageInstanceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableLargeInstanceSubscriptionResource"/> class for mocking. </summary>
         protected MockableLargeInstanceSubscriptionResource()
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         {
         }
 
-        private ClientDiagnostics AzureLargeInstanceClientDiagnostics => _azureLargeInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LargeInstance", AzureLargeInstanceResource.ResourceType.Namespace, Diagnostics);
-        private AzureLargeInstanceRestOperations AzureLargeInstanceRestClient => _azureLargeInstanceRestClient ??= new AzureLargeInstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AzureLargeInstanceResource.ResourceType));
-        private ClientDiagnostics AzureLargeStorageInstanceClientDiagnostics => _azureLargeStorageInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LargeInstance", AzureLargeStorageInstanceResource.ResourceType.Namespace, Diagnostics);
-        private AzureLargeStorageInstanceRestOperations AzureLargeStorageInstanceRestClient => _azureLargeStorageInstanceRestClient ??= new AzureLargeStorageInstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AzureLargeStorageInstanceResource.ResourceType));
+        private ClientDiagnostics LargeInstanceAzureLargeInstanceClientDiagnostics => _largeInstanceAzureLargeInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LargeInstance", LargeInstanceResource.ResourceType.Namespace, Diagnostics);
+        private AzureLargeInstanceRestOperations LargeInstanceAzureLargeInstanceRestClient => _largeInstanceAzureLargeInstanceRestClient ??= new AzureLargeInstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LargeInstanceResource.ResourceType));
+        private ClientDiagnostics LargeStorageInstanceAzureLargeStorageInstanceClientDiagnostics => _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LargeInstance", LargeStorageInstanceResource.ResourceType.Namespace, Diagnostics);
+        private AzureLargeStorageInstanceRestOperations LargeStorageInstanceAzureLargeStorageInstanceRestClient => _largeStorageInstanceAzureLargeStorageInstanceRestClient ??= new AzureLargeStorageInstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LargeStorageInstanceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -58,15 +58,23 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureLargeInstance_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureLargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureLargeInstanceResource> GetAzureLargeInstancesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LargeInstanceResource> GetLargeInstancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureLargeInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureLargeInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureLargeInstanceResource(Client, AzureLargeInstanceData.DeserializeAzureLargeInstanceData(e)), AzureLargeInstanceClientDiagnostics, Pipeline, "MockableLargeInstanceSubscriptionResource.GetAzureLargeInstances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LargeInstanceAzureLargeInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LargeInstanceAzureLargeInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LargeInstanceResource(Client, LargeInstanceData.DeserializeLargeInstanceData(e)), LargeInstanceAzureLargeInstanceClientDiagnostics, Pipeline, "MockableLargeInstanceSubscriptionResource.GetLargeInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,15 +89,23 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureLargeInstance_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureLargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureLargeInstanceResource> GetAzureLargeInstances(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LargeInstanceResource> GetLargeInstances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureLargeInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureLargeInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureLargeInstanceResource(Client, AzureLargeInstanceData.DeserializeAzureLargeInstanceData(e)), AzureLargeInstanceClientDiagnostics, Pipeline, "MockableLargeInstanceSubscriptionResource.GetAzureLargeInstances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LargeInstanceAzureLargeInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LargeInstanceAzureLargeInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LargeInstanceResource(Client, LargeInstanceData.DeserializeLargeInstanceData(e)), LargeInstanceAzureLargeInstanceClientDiagnostics, Pipeline, "MockableLargeInstanceSubscriptionResource.GetLargeInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -104,15 +120,23 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureLargeStorageInstance_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureLargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureLargeStorageInstanceResource> GetAzureLargeStorageInstancesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LargeStorageInstanceResource> GetLargeStorageInstancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureLargeStorageInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureLargeStorageInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureLargeStorageInstanceResource(Client, AzureLargeStorageInstanceData.DeserializeAzureLargeStorageInstanceData(e)), AzureLargeStorageInstanceClientDiagnostics, Pipeline, "MockableLargeInstanceSubscriptionResource.GetAzureLargeStorageInstances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LargeStorageInstanceAzureLargeStorageInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LargeStorageInstanceAzureLargeStorageInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LargeStorageInstanceResource(Client, LargeStorageInstanceData.DeserializeLargeStorageInstanceData(e)), LargeStorageInstanceAzureLargeStorageInstanceClientDiagnostics, Pipeline, "MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -127,15 +151,23 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureLargeStorageInstance_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureLargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureLargeStorageInstanceResource> GetAzureLargeStorageInstances(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LargeStorageInstanceResource> GetLargeStorageInstances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureLargeStorageInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureLargeStorageInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureLargeStorageInstanceResource(Client, AzureLargeStorageInstanceData.DeserializeAzureLargeStorageInstanceData(e)), AzureLargeStorageInstanceClientDiagnostics, Pipeline, "MockableLargeInstanceSubscriptionResource.GetAzureLargeStorageInstances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LargeStorageInstanceAzureLargeStorageInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LargeStorageInstanceAzureLargeStorageInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LargeStorageInstanceResource(Client, LargeStorageInstanceData.DeserializeLargeStorageInstanceData(e)), LargeStorageInstanceAzureLargeStorageInstanceClientDiagnostics, Pipeline, "MockableLargeInstanceSubscriptionResource.GetLargeStorageInstances", "value", "nextLink", cancellationToken);
         }
     }
 }

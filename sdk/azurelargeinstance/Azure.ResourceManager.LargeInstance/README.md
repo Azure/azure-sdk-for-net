@@ -1,6 +1,12 @@
-# Microsoft Azure LargeInstance management client library for .NET
+# Microsoft Azure Large Instance management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Large Instances is comprised of dedicated large compute instances with the following key features:
+
+High-performance storage appropriate to the application (Fiber Channel). Storage can also be shared across Azure Large Instances to enable features like scale-out clusters or high availability pairs with failed-node-fencing capability.
+
+A set of function-specific virtual LANs (VLANs) in an isolated environment. This environment also has special VLANs you can access if you're running virtual machines (VMs) on one or more Azure Virtual Networks (VNets) in your Azure subscription. The entire environment is represented as a resource group in that subscription.
+
+A large set of Azure Large Instances SKUs is available with Optane memory. Azure offers the largest range of Azure Large Instances in a hyperscale cloud.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +20,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure LargeInstance management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Large Instance management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.LargeInstance --prerelease

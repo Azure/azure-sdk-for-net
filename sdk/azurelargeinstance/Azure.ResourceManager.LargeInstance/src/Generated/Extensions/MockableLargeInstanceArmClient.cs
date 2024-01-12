@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AzureLargeInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureLargeInstanceResource.CreateResourceIdentifier" /> to create an <see cref="AzureLargeInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="LargeInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LargeInstanceResource.CreateResourceIdentifier" /> to create a <see cref="LargeInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureLargeInstanceResource"/> object. </returns>
-        public virtual AzureLargeInstanceResource GetAzureLargeInstanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LargeInstanceResource"/> object. </returns>
+        public virtual LargeInstanceResource GetLargeInstanceResource(ResourceIdentifier id)
         {
-            AzureLargeInstanceResource.ValidateResourceId(id);
-            return new AzureLargeInstanceResource(Client, id);
+            LargeInstanceResource.ValidateResourceId(id);
+            return new LargeInstanceResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AzureLargeStorageInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AzureLargeStorageInstanceResource.CreateResourceIdentifier" /> to create an <see cref="AzureLargeStorageInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="LargeStorageInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LargeStorageInstanceResource.CreateResourceIdentifier" /> to create a <see cref="LargeStorageInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureLargeStorageInstanceResource"/> object. </returns>
-        public virtual AzureLargeStorageInstanceResource GetAzureLargeStorageInstanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LargeStorageInstanceResource"/> object. </returns>
+        public virtual LargeStorageInstanceResource GetLargeStorageInstanceResource(ResourceIdentifier id)
         {
-            AzureLargeStorageInstanceResource.ValidateResourceId(id);
-            return new AzureLargeStorageInstanceResource(Client, id);
+            LargeStorageInstanceResource.ValidateResourceId(id);
+            return new LargeStorageInstanceResource(Client, id);
         }
     }
 }

@@ -7,14 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
-    /// <summary> The response of a AzureLargeInstance list operation. </summary>
-    internal partial class AzureLargeInstanceListResult
+    /// <summary> Specifies the operating system settings for the Azure Large Instance. </summary>
+    public partial class LargeInstanceOSProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,35 +45,33 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AzureLargeInstanceListResult(IEnumerable<LargeInstanceData> value)
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceOSProfile"/>. </summary>
+        internal LargeInstanceOSProfile()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceOSProfile"/>. </summary>
+        /// <param name="computerName"> Specifies the host OS name of the Azure Large Instance. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS. </param>
+        /// <param name="version"> Specifies version of operating system. </param>
+        /// <param name="sshPublicKey"> Specifies the SSH public key used to access the operating system. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureLargeInstanceListResult(IReadOnlyList<LargeInstanceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LargeInstanceOSProfile(string computerName, string osType, string version, string sshPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            ComputerName = computerName;
+            OSType = osType;
+            Version = version;
+            SshPublicKey = sshPublicKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/> for deserialization. </summary>
-        internal AzureLargeInstanceListResult()
-        {
-        }
-
-        /// <summary> The AzureLargeInstance items on this page. </summary>
-        public IReadOnlyList<LargeInstanceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Specifies the host OS name of the Azure Large Instance. </summary>
+        public string ComputerName { get; }
+        /// <summary> This property allows you to specify the type of the OS. </summary>
+        public string OSType { get; }
+        /// <summary> Specifies version of operating system. </summary>
+        public string Version { get; }
+        /// <summary> Specifies the SSH public key used to access the operating system. </summary>
+        public string SshPublicKey { get; }
     }
 }

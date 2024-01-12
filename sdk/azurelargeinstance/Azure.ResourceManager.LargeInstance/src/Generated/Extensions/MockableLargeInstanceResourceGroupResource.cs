@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AzureLargeInstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AzureLargeInstanceResources and their operations over a AzureLargeInstanceResource. </returns>
-        public virtual AzureLargeInstanceCollection GetAzureLargeInstances()
+        /// <summary> Gets a collection of LargeInstanceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of LargeInstanceResources and their operations over a LargeInstanceResource. </returns>
+        public virtual LargeInstanceCollection GetLargeInstances()
         {
-            return GetCachedClient(client => new AzureLargeInstanceCollection(client, Id));
+            return GetCachedClient(client => new LargeInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureLargeInstance_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeInstanceName"> Name of the AzureLargeInstance. </param>
@@ -62,9 +70,9 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AzureLargeInstanceResource>> GetAzureLargeInstanceAsync(string azureLargeInstanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LargeInstanceResource>> GetLargeInstanceAsync(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            return await GetAzureLargeInstances().GetAsync(azureLargeInstanceName, cancellationToken).ConfigureAwait(false);
+            return await GetLargeInstances().GetAsync(azureLargeInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -79,6 +87,14 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureLargeInstance_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeInstanceName"> Name of the AzureLargeInstance. </param>
@@ -86,40 +102,16 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AzureLargeInstanceResource> GetAzureLargeInstance(string azureLargeInstanceName, CancellationToken cancellationToken = default)
+        public virtual Response<LargeInstanceResource> GetLargeInstance(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            return GetAzureLargeInstances().Get(azureLargeInstanceName, cancellationToken);
+            return GetLargeInstances().Get(azureLargeInstanceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AzureLargeStorageInstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AzureLargeStorageInstanceResources and their operations over a AzureLargeStorageInstanceResource. </returns>
-        public virtual AzureLargeStorageInstanceCollection GetAzureLargeStorageInstances()
+        /// <summary> Gets a collection of LargeStorageInstanceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of LargeStorageInstanceResources and their operations over a LargeStorageInstanceResource. </returns>
+        public virtual LargeStorageInstanceCollection GetLargeStorageInstances()
         {
-            return GetCachedClient(client => new AzureLargeStorageInstanceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an Azure Large Storage instance for the specified subscription, resource
-        /// group, and instance name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeStorageInstance_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AzureLargeStorageInstanceResource>> GetAzureLargeStorageInstanceAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
-        {
-            return await GetAzureLargeStorageInstances().GetAsync(azureLargeStorageInstanceName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new LargeStorageInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -134,6 +126,14 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>AzureLargeStorageInstance_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
@@ -141,9 +141,41 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AzureLargeStorageInstanceResource> GetAzureLargeStorageInstance(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LargeStorageInstanceResource>> GetLargeStorageInstanceAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            return GetAzureLargeStorageInstances().Get(azureLargeStorageInstanceName, cancellationToken);
+            return await GetLargeStorageInstances().GetAsync(azureLargeStorageInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an Azure Large Storage instance for the specified subscription, resource
+        /// group, and instance name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LargeStorageInstanceResource> GetLargeStorageInstance(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
+        {
+            return GetLargeStorageInstances().Get(azureLargeStorageInstanceName, cancellationToken);
         }
     }
 }

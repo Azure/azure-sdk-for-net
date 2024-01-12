@@ -7,14 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
-    /// <summary> The response of a AzureLargeInstance list operation. </summary>
-    internal partial class AzureLargeInstanceListResult
+    /// <summary> Specifies the disk information fo the Azure Large Instance. </summary>
+    public partial class LargeInstanceDisk
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,35 +45,37 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AzureLargeInstanceListResult(IEnumerable<LargeInstanceData> value)
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceDisk"/>. </summary>
+        internal LargeInstanceDisk()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/>. </summary>
-        /// <param name="value"> The AzureLargeInstance items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="LargeInstanceDisk"/>. </summary>
+        /// <param name="name"> The disk name. </param>
+        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. </param>
+        /// <param name="lun">
+        /// Specifies the logical unit number of the data disk. This value is used to
+        /// identify data disks within the VM and therefore must be unique for each data
+        /// disk attached to a VM.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureLargeInstanceListResult(IReadOnlyList<LargeInstanceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LargeInstanceDisk(string name, int? diskSizeGB, int? lun, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Name = name;
+            DiskSizeGB = diskSizeGB;
+            Lun = lun;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureLargeInstanceListResult"/> for deserialization. </summary>
-        internal AzureLargeInstanceListResult()
-        {
-        }
-
-        /// <summary> The AzureLargeInstance items on this page. </summary>
-        public IReadOnlyList<LargeInstanceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The disk name. </summary>
+        public string Name { get; }
+        /// <summary> Specifies the size of an empty data disk in gigabytes. </summary>
+        public int? DiskSizeGB { get; }
+        /// <summary>
+        /// Specifies the logical unit number of the data disk. This value is used to
+        /// identify data disks within the VM and therefore must be unique for each data
+        /// disk attached to a VM.
+        /// </summary>
+        public int? Lun { get; }
     }
 }

@@ -16,11 +16,46 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+rename-mapping:
+  AzureLargeStorageInstance: LargeStorageInstance
+  AzureLargeInstance: LargeInstance
+  AzureLargeInstanceForcePowerState: LargeInstanceForcePowerState
+  AzureLargeInstanceHardwareTypeNamesEnum: LargeInstanceHardwareTypeName
+  AzureLargeInstanceHardwareTypeNamesEnum.Cisco_UCS: CiscoUcs
+  AzureLargeInstanceHardwareTypeNamesEnum.HPE: Hpe
+  AzureLargeInstanceHardwareTypeNamesEnum.SDFLEX: SDFlex
+  AzureLargeInstancePowerStateEnum: LargeInstancePowerState
+  AzureLargeInstanceProvisioningStatesEnum: LargeInstanceProvisioningState
+  AzureLargeInstanceSizeNamesEnum: LargeInstanceSizeName
+  AzureLargeInstanceSizeNamesEnum.S72m: S72m
+  AzureLargeInstanceSizeNamesEnum.S144m: S144m
+  AzureLargeInstanceSizeNamesEnum.S192m: S192m
+  AzureLargeInstanceSizeNamesEnum.S224m: S224m
+  AzureLargeInstanceSizeNamesEnum.S384m: S384m
+  AzureLargeInstanceSizeNamesEnum.S448m: S448m
+  AzureLargeInstanceSizeNamesEnum.S576m: S576m
+  AzureLargeInstanceSizeNamesEnum.S672m: S672m
+  AzureLargeInstanceSizeNamesEnum.S768m: S768m
+  AzureLargeInstanceSizeNamesEnum.S896m: S896m
+  AzureLargeInstanceSizeNamesEnum.S960m: S960m
+
+prepend-rp-prefix:
+  - Disk
+  - ForceState
+  - HardwareProfile
+  - IpAddress
+  - NetworkProfile
+  - OperationStatusResult
+  - OsProfile
+  - ProvisioningState
+  - StorageBillingProperties
+  - StorageProfile
+  - StorageProperties
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -51,5 +86,12 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Xm: xm
+  Xxm: xxm
+  Se: se
+  Om: om
+  Oom: oom
+  Oo: oo
+  Ooo: ooo
 
 ```

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,24 +14,81 @@ using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
-    internal partial class AzureLargeStorageInstanceListResult
+    internal partial class AzureLargeStorageInstanceListResult : IUtf8JsonSerializable, IJsonModel<AzureLargeStorageInstanceListResult>
     {
-        internal static AzureLargeStorageInstanceListResult DeserializeAzureLargeStorageInstanceListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureLargeStorageInstanceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureLargeStorageInstanceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureLargeStorageInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureLargeStorageInstanceListResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AzureLargeStorageInstanceListResult IJsonModel<AzureLargeStorageInstanceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureLargeStorageInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureLargeStorageInstanceListResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureLargeStorageInstanceListResult(document.RootElement, options);
+        }
+
+        internal static AzureLargeStorageInstanceListResult DeserializeAzureLargeStorageInstanceListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<AzureLargeStorageInstanceData> value = default;
+            IReadOnlyList<LargeStorageInstanceData> value = default;
             Optional<Uri> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AzureLargeStorageInstanceData> array = new List<AzureLargeStorageInstanceData>();
+                    List<LargeStorageInstanceData> array = new List<LargeStorageInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureLargeStorageInstanceData.DeserializeAzureLargeStorageInstanceData(item));
+                        array.Add(LargeStorageInstanceData.DeserializeLargeStorageInstanceData(item));
                     }
                     value = array;
                     continue;
@@ -44,8 +102,44 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureLargeStorageInstanceListResult(value, nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureLargeStorageInstanceListResult(value, nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureLargeStorageInstanceListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureLargeStorageInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureLargeStorageInstanceListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureLargeStorageInstanceListResult IPersistableModel<AzureLargeStorageInstanceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureLargeStorageInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureLargeStorageInstanceListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureLargeStorageInstanceListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureLargeStorageInstanceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
