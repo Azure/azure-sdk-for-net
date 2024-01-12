@@ -14,7 +14,7 @@ using System.Net;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
-    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10, SchemaRegistryClientOptions.ServiceVersion.V2023_07)]
+    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01)]
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
         private readonly SchemaRegistryClientOptions.ServiceVersion _serviceVersion;
@@ -29,7 +29,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             string endpoint;
             switch (format, _serviceVersion)
             {
-                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2023_07):
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
                     break;
                 case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
@@ -38,7 +38,7 @@ namespace Azure.Data.SchemaRegistry.Tests
                 case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
                     endpoint = TestEnvironment.SchemaRegistryEndpointAvro2021;
                     break;
-                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2023_07):
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointJson;
                     break;
                 case (Json, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
@@ -47,7 +47,7 @@ namespace Azure.Data.SchemaRegistry.Tests
                 case (Json, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
                     endpoint = TestEnvironment.SchemaRegistryEndpointJson2021;
                     break;
-                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2023_07):
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
                     break;
                 case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
@@ -56,7 +56,7 @@ namespace Azure.Data.SchemaRegistry.Tests
                 case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
                     endpoint = TestEnvironment.SchemaRegistryEndpointCustom2021;
                     break;
-                case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2023_07):
+                case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointProtobuf;
                     break;
                 case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
