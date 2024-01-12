@@ -41,7 +41,7 @@ public class PipelineMessageTests
     }
 
     [Test]
-    public void CanSetAndGetProperties()
+    public void CanSetAndGetMessageProperties()
     {
         ClientPipeline pipeline = ClientPipeline.Create();
         PipelineMessage message = pipeline.CreateMessage();
@@ -51,6 +51,7 @@ public class PipelineMessageTests
         Assert.IsTrue(message.TryGetProperty(GetType(), out object? property));
         Assert.AreEqual("MockProperty", property);
     }
+
     [Test]
     public void TryGetPropertyReturnsFalseIfNotExist()
     {

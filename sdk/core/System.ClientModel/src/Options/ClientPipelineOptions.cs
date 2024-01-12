@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
+
 namespace System.ClientModel.Primitives;
 
 /// <summary>
@@ -38,7 +40,7 @@ public class ClientPipelineOptions
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
-        if (policy is null) throw new ArgumentNullException(nameof(policy));
+        Argument.AssertNotNull(policy, nameof(policy));
 
         switch (position)
         {

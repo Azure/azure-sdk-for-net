@@ -17,7 +17,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task CanEnumeratePipeline()
+    public async Task CanSetCustomTransport()
     {
         ClientPipelineOptions options = new();
         options.Transport = new ObservableTransport("Transport");
@@ -31,6 +31,251 @@ public class ClientPipelineTests : SyncAsyncTestBase
         int index = 0;
         Assert.AreEqual(1, observations.Count);
         Assert.AreEqual("Transport:Transport", observations[index++]);
+    }
+
+    [Test]
+    public async Task CanCreateWithPerCallPolicies()
+    {
+        ClientPipelineOptions options = new();
+        options.Transport = new ObservableTransport("Transport");
+
+        PipelinePolicy[] perCallPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("PerCallPolicyA"),
+            new ObservablePolicy("PerCallPolicyB"),
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options, perCallPolicies);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(5, observations.Count);
+        Assert.AreEqual("Request:PerCallPolicyA", observations[index++]);
+        Assert.AreEqual("Request:PerCallPolicyB", observations[index++]);
+
+        // TODO: Validate that per call policy comes before retry policy
+
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual("Response:PerCallPolicyB", observations[index++]);
+        Assert.AreEqual("Response:PerCallPolicyA", observations[index++]);
+    }
+
+    [Test]
+    public async Task CanCreateWithPerTryPolicies()
+    {
+        ClientPipelineOptions options = new();
+        options.Transport = new ObservableTransport("Transport");
+
+        PipelinePolicy[] perTryPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("PerTryPolicyA"),
+            new ObservablePolicy("PerTryPolicyB"),
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: perTryPolicies,
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(5, observations.Count);
+        Assert.AreEqual("Request:PerTryPolicyA", observations[index++]);
+        Assert.AreEqual("Request:PerTryPolicyB", observations[index++]);
+
+        // TODO: Validate that per try policy comes after retry policy
+
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual("Response:PerTryPolicyB", observations[index++]);
+        Assert.AreEqual("Response:PerTryPolicyA", observations[index++]);
+    }
+
+    [Test]
+    public async Task CanCreateWithBeforeTransportPolicies()
+    {
+        ClientPipelineOptions options = new();
+        options.Transport = new ObservableTransport("Transport");
+
+        PipelinePolicy[] beforeTransportPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("BeforeTransportPolicyA"),
+            new ObservablePolicy("BeforeTransportPolicyB"),
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            beforeTransportPolicies: beforeTransportPolicies);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(5, observations.Count);
+        Assert.AreEqual("Request:BeforeTransportPolicyA", observations[index++]);
+        Assert.AreEqual("Request:BeforeTransportPolicyB", observations[index++]);
+
+        // TODO: Validate that before transport policy comes after retry policy
+
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual("Response:BeforeTransportPolicyB", observations[index++]);
+        Assert.AreEqual("Response:BeforeTransportPolicyA", observations[index++]);
+    }
+
+    [Test]
+    public async Task CanCreateWithAllPolicyTypes()
+    {
+        ClientPipelineOptions options = new();
+        options.Transport = new ObservableTransport("Transport");
+
+        PipelinePolicy[] perCallPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("PerCallPolicyA"),
+            new ObservablePolicy("PerCallPolicyB"),
+        };
+
+        PipelinePolicy[] perTryPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("PerTryPolicyA"),
+            new ObservablePolicy("PerTryPolicyB"),
+        };
+
+        PipelinePolicy[] beforeTransportPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("BeforeTransportPolicyA"),
+            new ObservablePolicy("BeforeTransportPolicyB"),
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: perCallPolicies,
+            perTryPolicies: perTryPolicies,
+            beforeTransportPolicies: beforeTransportPolicies);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(13, observations.Count);
+
+        Assert.AreEqual("Request:PerCallPolicyA", observations[index++]);
+        Assert.AreEqual("Request:PerCallPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:PerTryPolicyA", observations[index++]);
+        Assert.AreEqual("Request:PerTryPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:BeforeTransportPolicyA", observations[index++]);
+        Assert.AreEqual("Request:BeforeTransportPolicyB", observations[index++]);
+
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual("Response:BeforeTransportPolicyB", observations[index++]);
+        Assert.AreEqual("Response:BeforeTransportPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:PerTryPolicyB", observations[index++]);
+        Assert.AreEqual("Response:PerTryPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:PerCallPolicyB", observations[index++]);
+        Assert.AreEqual("Response:PerCallPolicyA", observations[index++]);
+    }
+
+    [Test]
+    public async Task CanCreateWithClientAuthorAndClientUserPolicies()
+    {
+        ClientPipelineOptions options = new();
+        options.Transport = new ObservableTransport("Transport");
+
+        options.AddPolicy(new ObservablePolicy("UserPerCallPolicyA"), PipelinePosition.PerCall);
+        options.AddPolicy(new ObservablePolicy("UserPerCallPolicyB"), PipelinePosition.PerCall);
+
+        options.AddPolicy(new ObservablePolicy("UserPerTryPolicyA"), PipelinePosition.PerTry);
+        options.AddPolicy(new ObservablePolicy("UserPerTryPolicyB"), PipelinePosition.PerTry);
+
+        options.AddPolicy(new ObservablePolicy("UserBeforeTransportPolicyA"), PipelinePosition.BeforeTransport);
+        options.AddPolicy(new ObservablePolicy("UserBeforeTransportPolicyB"), PipelinePosition.BeforeTransport);
+
+        PipelinePolicy[] perCallPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("ClientPerCallPolicyA"),
+            new ObservablePolicy("ClientPerCallPolicyB"),
+        };
+
+        PipelinePolicy[] perTryPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("ClientPerTryPolicyA"),
+            new ObservablePolicy("ClientPerTryPolicyB"),
+        };
+
+        PipelinePolicy[] beforeTransportPolicies = new PipelinePolicy[]
+        {
+            new ObservablePolicy("ClientBeforeTransportPolicyA"),
+            new ObservablePolicy("ClientBeforeTransportPolicyB"),
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: perCallPolicies,
+            perTryPolicies: perTryPolicies,
+            beforeTransportPolicies: beforeTransportPolicies);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        List<string> observations = ObservablePolicy.GetData(message);
+
+        int index = 0;
+        Assert.AreEqual(25, observations.Count);
+
+        Assert.AreEqual("Request:ClientPerCallPolicyA", observations[index++]);
+        Assert.AreEqual("Request:ClientPerCallPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:UserPerCallPolicyA", observations[index++]);
+        Assert.AreEqual("Request:UserPerCallPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:ClientPerTryPolicyA", observations[index++]);
+        Assert.AreEqual("Request:ClientPerTryPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:UserPerTryPolicyA", observations[index++]);
+        Assert.AreEqual("Request:UserPerTryPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:ClientBeforeTransportPolicyA", observations[index++]);
+        Assert.AreEqual("Request:ClientBeforeTransportPolicyB", observations[index++]);
+
+        Assert.AreEqual("Request:UserBeforeTransportPolicyA", observations[index++]);
+        Assert.AreEqual("Request:UserBeforeTransportPolicyB", observations[index++]);
+
+        Assert.AreEqual("Transport:Transport", observations[index++]);
+
+        Assert.AreEqual("Response:UserBeforeTransportPolicyB", observations[index++]);
+        Assert.AreEqual("Response:UserBeforeTransportPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:ClientBeforeTransportPolicyB", observations[index++]);
+        Assert.AreEqual("Response:ClientBeforeTransportPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:UserPerTryPolicyB", observations[index++]);
+        Assert.AreEqual("Response:UserPerTryPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:ClientPerTryPolicyB", observations[index++]);
+        Assert.AreEqual("Response:ClientPerTryPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:UserPerCallPolicyB", observations[index++]);
+        Assert.AreEqual("Response:UserPerCallPolicyA", observations[index++]);
+
+        Assert.AreEqual("Response:ClientPerCallPolicyB", observations[index++]);
+        Assert.AreEqual("Response:ClientPerCallPolicyA", observations[index++]);
     }
 
     [Test]

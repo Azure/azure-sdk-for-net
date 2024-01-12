@@ -8,7 +8,6 @@ namespace System.ClientModel.Primitives;
 
 public class PipelineMessage : IDisposable
 {
-    private PipelineResponse? _response;
     private ArrayBackedPropertyBag<ulong, object> _propertyBag;
     private bool _disposed;
 
@@ -26,10 +25,10 @@ public class PipelineMessage : IDisposable
 
     public PipelineResponse? Response
     {
-        get => _response;
+        get;
 
-        // This is set internally by the transport.
-        protected internal set => _response = value;
+        // Set internally by the transport.
+        protected internal set;
     }
 
     #region Pipeline invocation options
@@ -65,8 +64,10 @@ public class PipelineMessage : IDisposable
 
     #region Per-request pipeline
 
-    internal bool CustomRequestPipeline =>
-        PerCallPolicies is not null || PerTryPolicies is not null;
+    internal bool UseCustomRequestPipeline =>
+        PerCallPolicies is not null ||
+        PerTryPolicies is not null ||
+        BeforeTransportPolicies is not null;
 
     internal PipelinePolicy[]? PerCallPolicies { get; set; }
 
@@ -95,15 +96,11 @@ public class PipelineMessage : IDisposable
 
             _propertyBag.Dispose();
 
-            // TODO: this means we return a disposed response to the end-user.
-            // Would be nice to possibly introduce an OnMessageDiposed pattern
-            // to notify the response that it needs to dispose network resources
-            // without being officially disposed itself?
-            var response = _response;
+            var response = Response;
             if (response != null)
             {
-                _response = null;
                 response.Dispose();
+                Response = null;
             }
 
             _disposed = true;

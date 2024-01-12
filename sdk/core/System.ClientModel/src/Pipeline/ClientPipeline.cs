@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -19,12 +20,12 @@ public sealed partial class ClientPipeline
 
     private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex, int beforeTransportIndex)
     {
-        if (perCallIndex > perTryIndex) throw new ArgumentOutOfRangeException(nameof(perCallIndex), "perCallIndex cannot be greater than perTryIndex.");
-
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
         {
-            throw new ArgumentException("Last policy in the array must be of type 'PipelineTransport'.", nameof(policies));
+            throw new ArgumentException("The last policy must be of type 'PipelineTransport'.", nameof(policies));
         }
+
+        Debug.Assert(perCallIndex <= perTryIndex);
 
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
@@ -54,22 +55,13 @@ public sealed partial class ClientPipeline
     {
         Argument.AssertNotNull(options, nameof(options));
 
+        // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
 
-        if (options.PerTryPolicies != null)
-        {
-            pipelineLength += options.PerTryPolicies.Length;
-        }
-
-        if (options.PerCallPolicies != null)
-        {
-            pipelineLength += options.PerCallPolicies.Length;
-        }
-
-        if (options.BeforeTransportPolicies != null)
-        {
-            pipelineLength += options.BeforeTransportPolicies.Length;
-        }
+        // Add length of end-user provided policies.
+        pipelineLength += options.PerTryPolicies?.Length ?? 0;
+        pipelineLength += options.PerCallPolicies?.Length ?? 0;
+        pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
         pipelineLength++; // for response buffering policy
@@ -154,7 +146,7 @@ public sealed partial class ClientPipeline
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
     {
-        if (message.CustomRequestPipeline)
+        if (message.UseCustomRequestPipeline)
         {
             return new RequestOptionsProcessor(_policies,
                 message.PerCallPolicies,
@@ -207,7 +199,7 @@ public sealed partial class ClientPipeline
                     return _policies[_current];
                 }
 
-                return null!;
+                throw new InvalidOperationException("'Current' is outside the bounds of the policy collection.");
             }
         }
 

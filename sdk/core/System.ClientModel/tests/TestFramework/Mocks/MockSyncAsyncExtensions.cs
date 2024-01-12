@@ -1,7 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
@@ -17,6 +21,42 @@ public static class MockSyncAsyncExtensions
         else
         {
             pipeline.Send(message);
+        }
+    }
+
+    public static async Task WriteToSyncOrAsync(this BinaryContent content, Stream stream, CancellationToken cancellationToken, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            content.WriteTo(stream, cancellationToken);
+        }
+    }
+
+    public static async Task ProcessSyncOrAsync(this PipelinePolicy policy, PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await policy.ProcessAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        }
+        else
+        {
+            policy.Process(message, pipeline, currentIndex);
+        }
+    }
+
+    public static async Task ProcessNextSyncOrAsync(this MockPipelinePolicy policy, PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await policy.ProcessNextAsync(message, pipeline, currentIndex, isAsync).ConfigureAwait(false);
+        }
+        else
+        {
+            policy.ProcessNext(message, pipeline, currentIndex, isAsync);
         }
     }
 

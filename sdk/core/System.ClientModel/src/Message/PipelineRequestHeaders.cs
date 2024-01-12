@@ -37,7 +37,7 @@ internal class PipelineRequestHeaders : PipelineMessageHeaders
 
     public override bool TryGetValue(string name, out string? value)
     {
-        if (_headers.TryGetValue(new IgnoreCaseString(name), out object headerValue))
+        if (_headers.TryGetValue(new IgnoreCaseString(name), out object? headerValue))
         {
             value = GetHeaderValueString(name, headerValue);
             return true;
@@ -49,7 +49,7 @@ internal class PipelineRequestHeaders : PipelineMessageHeaders
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
     {
-        if (_headers.TryGetValue(new IgnoreCaseString(name), out object value))
+        if (_headers.TryGetValue(new IgnoreCaseString(name), out object? value))
         {
             values = GetHeaderValueEnumerable(name, value);
             return true;

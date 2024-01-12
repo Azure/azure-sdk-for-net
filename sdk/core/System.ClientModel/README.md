@@ -43,14 +43,13 @@ The main shared concepts of `System.ClientModel` include:
 A rudimentary client implementation is as follows:
 
 ```csharp
-KeyCredential credential = new KeyCredential(key);
-MessagePipeline pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(credential, "Authorization", "Bearer"));
-ClientMessage message = pipeline.CreateMessage(options, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
-MessageRequest request = message.Request;
-request.SetMethod("POST");
-var uri = new RequestUri();
-uri.Reset(new Uri("https://www.example.com/"));
-request.Uri = uri.ToUri();
+ApiKeyCredential credential = new ApiKeyCredential(key);
+ClientPipeline pipeline = ClientPipeline.Create(options, new KeyCredentialAuthenticationPolicy(credential, "Authorization", "Bearer"));
+PipelineMessage message = pipeline.CreateMessage(options, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
+PipelineRequest request = message.Request;
+request.Method = "POST";
+UriBuilder uriBuilder = new("https://www.example.com/");
+request.Uri = uriBuilder.Uri;
 pipeline.Send(message);
 Console.WriteLine(message.Response.Status);
 ```

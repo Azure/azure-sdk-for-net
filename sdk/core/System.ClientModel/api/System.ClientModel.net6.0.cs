@@ -98,6 +98,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {
+        public static readonly System.ClientModel.Primitives.HttpClientPipelineTransport Shared;
         public HttpClientPipelineTransport() { }
         public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
         protected override System.ClientModel.Primitives.PipelineMessage CreateMessageCore() { throw null; }
