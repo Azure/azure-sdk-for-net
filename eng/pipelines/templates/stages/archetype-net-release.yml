@@ -82,7 +82,6 @@ stages:
                             PackageName: ${{artifact.name}}
                             ServiceDirectory: ${{parameters.ServiceDirectory}}
                             ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                            GitHubSpecRepoPat: $(azuresdk-github-pat)
                         - task: PowerShell@2
                           inputs:
                             filePath: $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1
