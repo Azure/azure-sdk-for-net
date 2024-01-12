@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.ManagementGroups
         public virtual Azure.Response<bool> Exists(string subscriptionId, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string subscriptionId, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource> Get(string subscriptionId, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource> GetAll(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource> GetAllAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource>> GetAsync(string subscriptionId, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource> GetIfExists(string subscriptionId, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource>> GetIfExistsAsync(string subscriptionId, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -201,13 +201,18 @@ namespace Azure.ResourceManager.ManagementGroups
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SubscriptionUnderManagementGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class SubscriptionUnderManagementGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData>
     {
         internal SubscriptionUnderManagementGroupData() { }
         public string DisplayName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ParentId { get { throw null; } }
         public string State { get { throw null; } }
         public string Tenant { get { throw null; } }
+        Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagementGroups.SubscriptionUnderManagementGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SubscriptionUnderManagementGroupResource : Azure.ResourceManager.ArmResource
     {
