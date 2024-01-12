@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The status of the health report. </summary>
+    /// <summary>
+    /// The status of the health report
+    /// Serialized Name: StatusName
+    /// </summary>
     public readonly partial struct StatusName : IEquatable<StatusName>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string NotHealthyValue = "NotHealthy";
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> Healthy. </summary>
+        /// <summary>
+        /// Healthy
+        /// Serialized Name: StatusName.Healthy
+        /// </summary>
         public static StatusName Healthy { get; } = new StatusName(HealthyValue);
-        /// <summary> NotHealthy. </summary>
+        /// <summary>
+        /// NotHealthy
+        /// Serialized Name: StatusName.NotHealthy
+        /// </summary>
         public static StatusName NotHealthy { get; } = new StatusName(NotHealthyValue);
-        /// <summary> NotApplicable. </summary>
+        /// <summary>
+        /// NotApplicable
+        /// Serialized Name: StatusName.NotApplicable
+        /// </summary>
         public static StatusName NotApplicable { get; } = new StatusName(NotApplicableValue);
         /// <summary> Determines if two <see cref="StatusName"/> values are the same. </summary>
         public static bool operator ==(StatusName left, StatusName right) => left.Equals(right);

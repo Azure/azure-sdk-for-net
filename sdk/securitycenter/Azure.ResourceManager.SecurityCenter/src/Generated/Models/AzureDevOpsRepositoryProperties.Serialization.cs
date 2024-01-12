@@ -6,16 +6,36 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AzureDevOpsRepositoryProperties : IUtf8JsonSerializable
+    public partial class AzureDevOpsRepositoryProperties : IUtf8JsonSerializable, IJsonModel<AzureDevOpsRepositoryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsRepositoryProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureDevOpsRepositoryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDevOpsRepositoryProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
+            {
+                writer.WritePropertyName("provisioningStatusMessage"u8);
+                writer.WriteStringValue(ProvisioningStatusMessage);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            {
+                writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
+                writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
+            }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -31,6 +51,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("parentProjectName"u8);
                 writer.WriteStringValue(ParentProjectName);
             }
+            if (options.Format != "W" && Optional.IsDefined(RepoId))
+            {
+                writer.WritePropertyName("repoId"u8);
+                writer.WriteStringValue(RepoId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RepoUri))
+            {
+                writer.WritePropertyName("repoUrl"u8);
+                writer.WriteStringValue(RepoUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Visibility))
+            {
+                writer.WritePropertyName("visibility"u8);
+                writer.WriteStringValue(Visibility);
+            }
             if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
@@ -41,11 +76,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureDevOpsRepositoryProperties DeserializeAzureDevOpsRepositoryProperties(JsonElement element)
+        AzureDevOpsRepositoryProperties IJsonModel<AzureDevOpsRepositoryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDevOpsRepositoryProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDevOpsRepositoryProperties(document.RootElement, options);
+        }
+
+        internal static AzureDevOpsRepositoryProperties DeserializeAzureDevOpsRepositoryProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +124,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> visibility = default;
             Optional<OnboardingState> onboardingState = default;
             Optional<ActionableRemediation> actionableRemediation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatusMessage"u8))
@@ -132,8 +198,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     actionableRemediation = ActionableRemediation.DeserializeActionableRemediation(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureDevOpsRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), parentOrgName.Value, parentProjectName.Value, repoId.Value, repoUrl.Value, visibility.Value, Optional.ToNullable(onboardingState), actionableRemediation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureDevOpsRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), parentOrgName.Value, parentProjectName.Value, repoId.Value, repoUrl.Value, visibility.Value, Optional.ToNullable(onboardingState), actionableRemediation.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureDevOpsRepositoryProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureDevOpsRepositoryProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureDevOpsRepositoryProperties IPersistableModel<AzureDevOpsRepositoryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDevOpsRepositoryProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureDevOpsRepositoryProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDevOpsRepositoryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

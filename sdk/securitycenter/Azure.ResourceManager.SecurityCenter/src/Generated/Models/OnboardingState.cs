@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Onboarded - this resource has already been onboarded by the specified connector.
     /// NotOnboarded - this resource has not been onboarded to any connector.
     /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+    /// Serialized Name: OnboardingState
     /// </summary>
     public readonly partial struct OnboardingState : IEquatable<OnboardingState>
     {
@@ -34,13 +35,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string OnboardedValue = "Onboarded";
         private const string NotOnboardedValue = "NotOnboarded";
 
-        /// <summary> NotApplicable. </summary>
+        /// <summary>
+        /// NotApplicable
+        /// Serialized Name: OnboardingState.NotApplicable
+        /// </summary>
         public static OnboardingState NotApplicable { get; } = new OnboardingState(NotApplicableValue);
-        /// <summary> OnboardedByOtherConnector. </summary>
+        /// <summary>
+        /// OnboardedByOtherConnector
+        /// Serialized Name: OnboardingState.OnboardedByOtherConnector
+        /// </summary>
         public static OnboardingState OnboardedByOtherConnector { get; } = new OnboardingState(OnboardedByOtherConnectorValue);
-        /// <summary> Onboarded. </summary>
+        /// <summary>
+        /// Onboarded
+        /// Serialized Name: OnboardingState.Onboarded
+        /// </summary>
         public static OnboardingState Onboarded { get; } = new OnboardingState(OnboardedValue);
-        /// <summary> NotOnboarded. </summary>
+        /// <summary>
+        /// NotOnboarded
+        /// Serialized Name: OnboardingState.NotOnboarded
+        /// </summary>
         public static OnboardingState NotOnboarded { get; } = new OnboardingState(NotOnboardedValue);
         /// <summary> Determines if two <see cref="OnboardingState"/> values are the same. </summary>
         public static bool operator ==(OnboardingState left, OnboardingState right) => left.Equals(right);

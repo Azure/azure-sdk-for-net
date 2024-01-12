@@ -5,28 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The databases DSPM configuration. </summary>
+    /// <summary>
+    /// The databases DSPM configuration
+    /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm
+    /// </summary>
     public partial class DefenderCspmAwsOfferingDatabasesDspm
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingDatabasesDspm"/>. </summary>
         public DefenderCspmAwsOfferingDatabasesDspm()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingDatabasesDspm"/>. </summary>
-        /// <param name="enabled"> Is databases DSPM protection enabled. </param>
-        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal DefenderCspmAwsOfferingDatabasesDspm(bool? enabled, string cloudRoleArn)
+        /// <param name="enabled">
+        /// Is databases DSPM protection enabled
+        /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm.enabled
+        /// </param>
+        /// <param name="cloudRoleArn">
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm.cloudRoleArn
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderCspmAwsOfferingDatabasesDspm(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Is databases DSPM protection enabled. </summary>
+        /// <summary>
+        /// Is databases DSPM protection enabled
+        /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The cloud role ARN in AWS for this feature. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: DefenderCspmAwsOfferingDatabasesDspm.cloudRoleArn
+        /// </summary>
         public string CloudRoleArn { get; set; }
     }
 }

@@ -6,20 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> GitHub Repository properties. </summary>
+    /// <summary>
+    /// GitHub Repository properties.
+    /// Serialized Name: GitHubRepositoryProperties
+    /// </summary>
     public partial class GitHubRepositoryProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GitHubRepositoryProperties"/>. </summary>
         public GitHubRepositoryProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="GitHubRepositoryProperties"/>. </summary>
-        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningStatusMessage">
+        /// Gets or sets resource status message.
+        /// Serialized Name: GitHubRepositoryProperties.provisioningStatusMessage
+        /// </param>
+        /// <param name="provisioningStatusUpdateTimeUtc">
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: GitHubRepositoryProperties.provisioningStatusUpdateTimeUtc
+        /// </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         ///
@@ -30,21 +72,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: GitHubRepositoryProperties.provisioningState
         /// </param>
         /// <param name="repoId">
         /// Gets or sets GitHub Repository id.
         ///
         /// This is a numeric id defined by Github.
         /// Eg: "123456".
+        /// Serialized Name: GitHubRepositoryProperties.repoId
         /// </param>
         /// <param name="repoName">
         /// Gets or sets GitHub Repository name.
         /// Eg: "new-repo-1".
+        /// Serialized Name: GitHubRepositoryProperties.repoName
         /// </param>
         /// <param name="repoFullName">
         /// Gets or sets GitHub Full Name.
         /// Repository name, prefixed with Owner name.
         /// Eg: "my-org/new-repo-1".
+        /// Serialized Name: GitHubRepositoryProperties.repoFullName
         /// </param>
         /// <param name="onboardingState">
         /// Details about resource onboarding status across all connectors.
@@ -53,10 +99,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Onboarded - this resource has already been onboarded by the specified connector.
         /// NotOnboarded - this resource has not been onboarded to any connector.
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// Serialized Name: GitHubRepositoryProperties.onboardingState
         /// </param>
-        /// <param name="repoUri"> Gets or sets GitHub Repository url. </param>
-        /// <param name="parentOwnerName"> Gets or sets parent GitHub Owner name. </param>
-        internal GitHubRepositoryProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, string repoId, string repoName, string repoFullName, OnboardingState? onboardingState, Uri repoUri, string parentOwnerName)
+        /// <param name="repoUri">
+        /// Gets or sets GitHub Repository url.
+        /// Serialized Name: GitHubRepositoryProperties.repoUrl
+        /// </param>
+        /// <param name="parentOwnerName">
+        /// Gets or sets parent GitHub Owner name.
+        /// Serialized Name: GitHubRepositoryProperties.parentOwnerName
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubRepositoryProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, string repoId, string repoName, string repoFullName, OnboardingState? onboardingState, Uri repoUri, string parentOwnerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
             ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
@@ -67,11 +121,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OnboardingState = onboardingState;
             RepoUri = repoUri;
             ParentOwnerName = parentOwnerName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets resource status message. </summary>
+        /// <summary>
+        /// Gets or sets resource status message.
+        /// Serialized Name: GitHubRepositoryProperties.provisioningStatusMessage
+        /// </summary>
         public string ProvisioningStatusMessage { get; }
-        /// <summary> Gets or sets time when resource was last checked. </summary>
+        /// <summary>
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: GitHubRepositoryProperties.provisioningStatusUpdateTimeUtc
+        /// </summary>
         public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
         /// <summary>
         /// The provisioning state of the resource.
@@ -83,6 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: GitHubRepositoryProperties.provisioningState
         /// </summary>
         public DevOpsProvisioningState? ProvisioningState { get; set; }
         /// <summary>
@@ -90,17 +152,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         ///
         /// This is a numeric id defined by Github.
         /// Eg: "123456".
+        /// Serialized Name: GitHubRepositoryProperties.repoId
         /// </summary>
         public string RepoId { get; }
         /// <summary>
         /// Gets or sets GitHub Repository name.
         /// Eg: "new-repo-1".
+        /// Serialized Name: GitHubRepositoryProperties.repoName
         /// </summary>
         public string RepoName { get; }
         /// <summary>
         /// Gets or sets GitHub Full Name.
         /// Repository name, prefixed with Owner name.
         /// Eg: "my-org/new-repo-1".
+        /// Serialized Name: GitHubRepositoryProperties.repoFullName
         /// </summary>
         public string RepoFullName { get; }
         /// <summary>
@@ -110,11 +175,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Onboarded - this resource has already been onboarded by the specified connector.
         /// NotOnboarded - this resource has not been onboarded to any connector.
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// Serialized Name: GitHubRepositoryProperties.onboardingState
         /// </summary>
         public OnboardingState? OnboardingState { get; set; }
-        /// <summary> Gets or sets GitHub Repository url. </summary>
+        /// <summary>
+        /// Gets or sets GitHub Repository url.
+        /// Serialized Name: GitHubRepositoryProperties.repoUrl
+        /// </summary>
         public Uri RepoUri { get; }
-        /// <summary> Gets or sets parent GitHub Owner name. </summary>
+        /// <summary>
+        /// Gets or sets parent GitHub Owner name.
+        /// Serialized Name: GitHubRepositoryProperties.parentOwnerName
+        /// </summary>
         public string ParentOwnerName { get; set; }
     }
 }

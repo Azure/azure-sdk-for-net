@@ -5,28 +5,72 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// A resource identifier for an alert which can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.).
+    /// Serialized Name: AlertResourceIdentifier
     /// Please note <see cref="SecurityAlertResourceIdentifier"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureResourceIdentifier"/> and <see cref="LogAnalyticsIdentifier"/>.
     /// </summary>
     public abstract partial class SecurityAlertResourceIdentifier
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecurityAlertResourceIdentifier"/>. </summary>
         protected SecurityAlertResourceIdentifier()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertResourceIdentifier"/>. </summary>
-        /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
-        internal SecurityAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType)
+        /// <param name="resourceIdentifierType">
+        /// There can be multiple identifiers of different type per alert, this field specify the identifier type.
+        /// Serialized Name: AlertResourceIdentifier.type
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAlertResourceIdentifier(ResourceIdentifierType resourceIdentifierType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceIdentifierType = resourceIdentifierType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> There can be multiple identifiers of different type per alert, this field specify the identifier type. </summary>
+        /// <summary>
+        /// There can be multiple identifiers of different type per alert, this field specify the identifier type.
+        /// Serialized Name: AlertResourceIdentifier.type
+        /// </summary>
         internal ResourceIdentifierType ResourceIdentifierType { get; set; }
     }
 }

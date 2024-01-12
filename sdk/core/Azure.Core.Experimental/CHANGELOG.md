@@ -1,14 +1,10 @@
 # Release History
 
-## 0.1.0-preview.32 (Unreleased)
+## 0.1.0-preview.32 (2024-01-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added types `PopTokenRequestContext`, `PopTokenAuthenticationPolicy`, and `ISupportsProofOfPossession` to support Proof of Possession tokens.
 
 ## 0.1.0-preview.31 (2023-11-10)
 

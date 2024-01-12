@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The recommendation action of the machine or rule. </summary>
+    /// <summary>
+    /// The recommendation action of the machine or rule
+    /// Serialized Name: RecommendationAction
+    /// </summary>
     public readonly partial struct RecommendationAction : IEquatable<RecommendationAction>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AddValue = "Add";
         private const string RemoveValue = "Remove";
 
-        /// <summary> Recommended. </summary>
+        /// <summary>
+        /// Recommended
+        /// Serialized Name: RecommendationAction.Recommended
+        /// </summary>
         public static RecommendationAction Recommended { get; } = new RecommendationAction(RecommendedValue);
-        /// <summary> Add. </summary>
+        /// <summary>
+        /// Add
+        /// Serialized Name: RecommendationAction.Add
+        /// </summary>
         public static RecommendationAction Add { get; } = new RecommendationAction(AddValue);
-        /// <summary> Remove. </summary>
+        /// <summary>
+        /// Remove
+        /// Serialized Name: RecommendationAction.Remove
+        /// </summary>
         public static RecommendationAction Remove { get; } = new RecommendationAction(RemoveValue);
         /// <summary> Determines if two <see cref="RecommendationAction"/> values are the same. </summary>
         public static bool operator ==(RecommendationAction left, RecommendationAction right) => left.Equals(right);

@@ -16,9 +16,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityAssessment data model.
     /// Security assessment on a resource - response format
+    /// Serialized Name: SecurityAssessmentResponse
     /// </summary>
     public partial class SecurityAssessmentData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentData"/>. </summary>
         public SecurityAssessmentData()
         {
@@ -32,16 +65,36 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceDetails">
         /// Details of the resource that was assessed
+        /// Serialized Name: SecurityAssessmentResponse.properties.resourceDetails
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </param>
-        /// <param name="displayName"> User friendly display name of the assessment. </param>
-        /// <param name="additionalData"> Additional data regarding the assessment. </param>
-        /// <param name="links"> Links relevant to the assessment. </param>
-        /// <param name="metadata"> Describes properties of an assessment metadata. </param>
-        /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
-        /// <param name="status"> The result of the assessment. </param>
-        internal SecurityAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, SecurityAssessmentStatusResult status) : base(id, name, resourceType, systemData)
+        /// <param name="displayName">
+        /// User friendly display name of the assessment
+        /// Serialized Name: SecurityAssessmentResponse.properties.displayName
+        /// </param>
+        /// <param name="additionalData">
+        /// Additional data regarding the assessment
+        /// Serialized Name: SecurityAssessmentResponse.properties.additionalData
+        /// </param>
+        /// <param name="links">
+        /// Links relevant to the assessment
+        /// Serialized Name: SecurityAssessmentResponse.properties.links
+        /// </param>
+        /// <param name="metadata">
+        /// Describes properties of an assessment metadata.
+        /// Serialized Name: SecurityAssessmentResponse.properties.metadata
+        /// </param>
+        /// <param name="partnersData">
+        /// Data regarding 3rd party partner integration
+        /// Serialized Name: SecurityAssessmentResponse.properties.partnersData
+        /// </param>
+        /// <param name="status">
+        /// The result of the assessment
+        /// Serialized Name: SecurityAssessmentResponse.properties.status
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, SecurityAssessmentStatusResult status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceDetails = resourceDetails;
             DisplayName = displayName;
@@ -50,26 +103,46 @@ namespace Azure.ResourceManager.SecurityCenter
             Metadata = metadata;
             PartnersData = partnersData;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
         /// Details of the resource that was assessed
+        /// Serialized Name: SecurityAssessmentResponse.properties.resourceDetails
         /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
         /// </summary>
         public SecurityCenterResourceDetails ResourceDetails { get; set; }
-        /// <summary> User friendly display name of the assessment. </summary>
+        /// <summary>
+        /// User friendly display name of the assessment
+        /// Serialized Name: SecurityAssessmentResponse.properties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Additional data regarding the assessment. </summary>
+        /// <summary>
+        /// Additional data regarding the assessment
+        /// Serialized Name: SecurityAssessmentResponse.properties.additionalData
+        /// </summary>
         public IDictionary<string, string> AdditionalData { get; }
-        /// <summary> Links relevant to the assessment. </summary>
+        /// <summary>
+        /// Links relevant to the assessment
+        /// Serialized Name: SecurityAssessmentResponse.properties.links
+        /// </summary>
         internal AssessmentLinks Links { get; }
 
-        /// <summary> Describes properties of an assessment metadata. </summary>
+        /// <summary>
+        /// Describes properties of an assessment metadata.
+        /// Serialized Name: SecurityAssessmentResponse.properties.metadata
+        /// </summary>
         public SecurityAssessmentMetadataProperties Metadata { get; set; }
-        /// <summary> Data regarding 3rd party partner integration. </summary>
+        /// <summary>
+        /// Data regarding 3rd party partner integration
+        /// Serialized Name: SecurityAssessmentResponse.properties.partnersData
+        /// </summary>
         public SecurityAssessmentPartner PartnersData { get; set; }
-        /// <summary> The result of the assessment. </summary>
+        /// <summary>
+        /// The result of the assessment
+        /// Serialized Name: SecurityAssessmentResponse.properties.status
+        /// </summary>
         public SecurityAssessmentStatusResult Status { get; set; }
     }
 }

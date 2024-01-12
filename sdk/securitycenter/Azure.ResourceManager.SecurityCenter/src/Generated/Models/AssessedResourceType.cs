@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Sub-assessment resource type. </summary>
+    /// <summary>
+    /// Sub-assessment resource type
+    /// Serialized Name: AssessedResourceType
+    /// </summary>
     internal readonly partial struct AssessedResourceType : IEquatable<AssessedResourceType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ContainerRegistryVulnerabilityValue = "ContainerRegistryVulnerability";
         private const string ServerVulnerabilityValue = "ServerVulnerability";
 
-        /// <summary> SqlServerVulnerability. </summary>
+        /// <summary>
+        /// SqlServerVulnerability
+        /// Serialized Name: AssessedResourceType.SqlServerVulnerability
+        /// </summary>
         public static AssessedResourceType SqlServerVulnerability { get; } = new AssessedResourceType(SqlServerVulnerabilityValue);
-        /// <summary> ContainerRegistryVulnerability. </summary>
+        /// <summary>
+        /// ContainerRegistryVulnerability
+        /// Serialized Name: AssessedResourceType.ContainerRegistryVulnerability
+        /// </summary>
         public static AssessedResourceType ContainerRegistryVulnerability { get; } = new AssessedResourceType(ContainerRegistryVulnerabilityValue);
-        /// <summary> ServerVulnerability. </summary>
+        /// <summary>
+        /// ServerVulnerability
+        /// Serialized Name: AssessedResourceType.ServerVulnerability
+        /// </summary>
         public static AssessedResourceType ServerVulnerability { get; } = new AssessedResourceType(ServerVulnerabilityValue);
         /// <summary> Determines if two <see cref="AssessedResourceType"/> values are the same. </summary>
         public static bool operator ==(AssessedResourceType left, AssessedResourceType right) => left.Equals(right);

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GetSensitivitySettingsResponseCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class GetSensitivitySettingsResponseCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<GetSensitivitySettingsResponseCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetSensitivitySettingsResponseCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GetSensitivitySettingsResponseCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponseCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GetSensitivitySettingsResponseCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sensitiveInfoTypesIds"u8);
             writer.WriteStartArray();
@@ -32,7 +43,117 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("sensitivityThresholdLabelId"u8);
                 writer.WriteStringValue(SensitivityThresholdLabelId.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        GetSensitivitySettingsResponseCreateOrUpdateContent IJsonModel<GetSensitivitySettingsResponseCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponseCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GetSensitivitySettingsResponseCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetSensitivitySettingsResponseCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static GetSensitivitySettingsResponseCreateOrUpdateContent DeserializeGetSensitivitySettingsResponseCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<Guid> sensitiveInfoTypesIds = default;
+            Optional<float> sensitivityThresholdLabelOrder = default;
+            Optional<Guid> sensitivityThresholdLabelId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sensitiveInfoTypesIds"u8))
+                {
+                    List<Guid> array = new List<Guid>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetGuid());
+                    }
+                    sensitiveInfoTypesIds = array;
+                    continue;
+                }
+                if (property.NameEquals("sensitivityThresholdLabelOrder"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitivityThresholdLabelOrder = property.Value.GetSingle();
+                    continue;
+                }
+                if (property.NameEquals("sensitivityThresholdLabelId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitivityThresholdLabelId = property.Value.GetGuid();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GetSensitivitySettingsResponseCreateOrUpdateContent(sensitiveInfoTypesIds, Optional.ToNullable(sensitivityThresholdLabelOrder), Optional.ToNullable(sensitivityThresholdLabelId), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<GetSensitivitySettingsResponseCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponseCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponseCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GetSensitivitySettingsResponseCreateOrUpdateContent IPersistableModel<GetSensitivitySettingsResponseCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponseCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGetSensitivitySettingsResponseCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponseCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GetSensitivitySettingsResponseCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

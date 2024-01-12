@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> State of the service principal and its secret. </summary>
+    /// <summary>
+    /// State of the service principal and its secret
+    /// Serialized Name: HybridComputeProvisioningState
+    /// </summary>
     public readonly partial struct HybridComputeProvisioningState : IEquatable<HybridComputeProvisioningState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string InvalidValue = "Invalid";
         private const string ExpiredValue = "Expired";
 
-        /// <summary> Valid service principal details. </summary>
+        /// <summary>
+        /// Valid service principal details.
+        /// Serialized Name: HybridComputeProvisioningState.Valid
+        /// </summary>
         public static HybridComputeProvisioningState Valid { get; } = new HybridComputeProvisioningState(ValidValue);
-        /// <summary> Invalid service principal details. </summary>
+        /// <summary>
+        /// Invalid service principal details.
+        /// Serialized Name: HybridComputeProvisioningState.Invalid
+        /// </summary>
         public static HybridComputeProvisioningState Invalid { get; } = new HybridComputeProvisioningState(InvalidValue);
-        /// <summary> the service principal details are expired. </summary>
+        /// <summary>
+        /// the service principal details are expired
+        /// Serialized Name: HybridComputeProvisioningState.Expired
+        /// </summary>
         public static HybridComputeProvisioningState Expired { get; } = new HybridComputeProvisioningState(ExpiredValue);
         /// <summary> Determines if two <see cref="HybridComputeProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HybridComputeProvisioningState left, HybridComputeProvisioningState right) => left.Equals(right);

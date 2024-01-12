@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// IaC results.
     /// Secrets scanning results.
     /// Container scanning results.
+    /// Serialized Name: RuleCategory
     /// </summary>
     public readonly partial struct RuleCategory : IEquatable<RuleCategory>
     {
@@ -37,17 +38,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string IaCValue = "IaC";
         private const string ContainersValue = "Containers";
 
-        /// <summary> Code. </summary>
+        /// <summary>
+        /// Code
+        /// Serialized Name: RuleCategory.Code
+        /// </summary>
         public static RuleCategory Code { get; } = new RuleCategory(CodeValue);
-        /// <summary> Artifacts. </summary>
+        /// <summary>
+        /// Artifacts
+        /// Serialized Name: RuleCategory.Artifacts
+        /// </summary>
         public static RuleCategory Artifacts { get; } = new RuleCategory(ArtifactsValue);
-        /// <summary> Dependencies. </summary>
+        /// <summary>
+        /// Dependencies
+        /// Serialized Name: RuleCategory.Dependencies
+        /// </summary>
         public static RuleCategory Dependencies { get; } = new RuleCategory(DependenciesValue);
-        /// <summary> Secrets. </summary>
+        /// <summary>
+        /// Secrets
+        /// Serialized Name: RuleCategory.Secrets
+        /// </summary>
         public static RuleCategory Secrets { get; } = new RuleCategory(SecretsValue);
-        /// <summary> IaC. </summary>
+        /// <summary>
+        /// IaC
+        /// Serialized Name: RuleCategory.IaC
+        /// </summary>
         public static RuleCategory IaC { get; } = new RuleCategory(IaCValue);
-        /// <summary> Containers. </summary>
+        /// <summary>
+        /// Containers
+        /// Serialized Name: RuleCategory.Containers
+        /// </summary>
         public static RuleCategory Containers { get; } = new RuleCategory(ContainersValue);
         /// <summary> Determines if two <see cref="RuleCategory"/> values are the same. </summary>
         public static bool operator ==(RuleCategory left, RuleCategory right) => left.Equals(right);

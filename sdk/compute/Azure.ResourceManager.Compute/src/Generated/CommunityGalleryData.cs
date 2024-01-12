@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryData"/>. </summary>
         internal CommunityGalleryData()
         {
+            ArtifactTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryData"/>. </summary>
@@ -26,10 +28,22 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        internal CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId) : base(name, location, resourceType, uniqueId)
+        /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
+        /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
+        /// <param name="communityMetadata"> The metadata of community gallery. </param>
+        internal CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, string disclaimer, IReadOnlyDictionary<string, string> artifactTags, CommunityGalleryMetadata communityMetadata) : base(name, location, resourceType, uniqueId)
         {
+            Disclaimer = disclaimer;
+            ArtifactTags = artifactTags;
+            CommunityMetadata = communityMetadata;
         }
 
+        /// <summary> The disclaimer for a community gallery resource. </summary>
+        public string Disclaimer { get; }
+        /// <summary> The artifact tags of a community gallery resource. </summary>
+        public IReadOnlyDictionary<string, string> ArtifactTags { get; }
+        /// <summary> The metadata of community gallery. </summary>
+        public CommunityGalleryMetadata CommunityMetadata { get; }
         /// <summary> The resource identifier. </summary>
         public ResourceIdentifier Id { get; internal set; }
     }

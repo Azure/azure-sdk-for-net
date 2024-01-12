@@ -6,20 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Azure DevOps Organization properties. </summary>
+    /// <summary>
+    /// Azure DevOps Organization properties.
+    /// Serialized Name: AzureDevOpsOrgProperties
+    /// </summary>
     public partial class AzureDevOpsOrgProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgProperties"/>. </summary>
         public AzureDevOpsOrgProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgProperties"/>. </summary>
-        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningStatusMessage">
+        /// Gets or sets resource status message.
+        /// Serialized Name: AzureDevOpsOrgProperties.provisioningStatusMessage
+        /// </param>
+        /// <param name="provisioningStatusUpdateTimeUtc">
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: AzureDevOpsOrgProperties.provisioningStatusUpdateTimeUtc
+        /// </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         ///
@@ -30,6 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: AzureDevOpsOrgProperties.provisioningState
         /// </param>
         /// <param name="onboardingState">
         /// Details about resource onboarding status across all connectors.
@@ -38,20 +81,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Onboarded - this resource has already been onboarded by the specified connector.
         /// NotOnboarded - this resource has not been onboarded to any connector.
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// Serialized Name: AzureDevOpsOrgProperties.onboardingState
         /// </param>
-        /// <param name="actionableRemediation"> Configuration payload for PR Annotations. </param>
-        internal AzureDevOpsOrgProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, OnboardingState? onboardingState, ActionableRemediation actionableRemediation)
+        /// <param name="actionableRemediation">
+        /// Configuration payload for PR Annotations.
+        /// Serialized Name: AzureDevOpsOrgProperties.actionableRemediation
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsOrgProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, OnboardingState? onboardingState, ActionableRemediation actionableRemediation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
             ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
             ProvisioningState = provisioningState;
             OnboardingState = onboardingState;
             ActionableRemediation = actionableRemediation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets resource status message. </summary>
+        /// <summary>
+        /// Gets or sets resource status message.
+        /// Serialized Name: AzureDevOpsOrgProperties.provisioningStatusMessage
+        /// </summary>
         public string ProvisioningStatusMessage { get; }
-        /// <summary> Gets or sets time when resource was last checked. </summary>
+        /// <summary>
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: AzureDevOpsOrgProperties.provisioningStatusUpdateTimeUtc
+        /// </summary>
         public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
         /// <summary>
         /// The provisioning state of the resource.
@@ -63,6 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: AzureDevOpsOrgProperties.provisioningState
         /// </summary>
         public DevOpsProvisioningState? ProvisioningState { get; set; }
         /// <summary>
@@ -72,9 +128,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Onboarded - this resource has already been onboarded by the specified connector.
         /// NotOnboarded - this resource has not been onboarded to any connector.
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// Serialized Name: AzureDevOpsOrgProperties.onboardingState
         /// </summary>
         public OnboardingState? OnboardingState { get; set; }
-        /// <summary> Configuration payload for PR Annotations. </summary>
+        /// <summary>
+        /// Configuration payload for PR Annotations.
+        /// Serialized Name: AzureDevOpsOrgProperties.actionableRemediation
+        /// </summary>
         public ActionableRemediation ActionableRemediation { get; set; }
     }
 }

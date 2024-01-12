@@ -5,28 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
+    /// <summary>
+    /// The Microsoft Defender for Server VM scanning configuration
+    /// Serialized Name: DefenderCspmAwsOfferingVmScanners
+    /// </summary>
     public partial class DefenderCspmAwsOfferingVmScanners
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingVmScanners"/>. </summary>
         public DefenderCspmAwsOfferingVmScanners()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingVmScanners"/>. </summary>
-        /// <param name="enabled"> Is Microsoft Defender for Server VM scanning enabled. </param>
-        /// <param name="configuration"> configuration for Microsoft Defender for Server VM scanning. </param>
-        internal DefenderCspmAwsOfferingVmScanners(bool? enabled, DefenderCspmAwsOfferingVmScannersConfiguration configuration)
+        /// <param name="enabled">
+        /// Is Microsoft Defender for Server VM scanning enabled
+        /// Serialized Name: DefenderCspmAwsOfferingVmScanners.enabled
+        /// </param>
+        /// <param name="configuration">
+        /// configuration for Microsoft Defender for Server VM scanning
+        /// Serialized Name: DefenderCspmAwsOfferingVmScanners.configuration
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderCspmAwsOfferingVmScanners(bool? enabled, DefenderCspmAwsOfferingVmScannersConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Configuration = configuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Is Microsoft Defender for Server VM scanning enabled. </summary>
+        /// <summary>
+        /// Is Microsoft Defender for Server VM scanning enabled
+        /// Serialized Name: DefenderCspmAwsOfferingVmScanners.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
+        /// <summary>
+        /// configuration for Microsoft Defender for Server VM scanning
+        /// Serialized Name: DefenderCspmAwsOfferingVmScanners.configuration
+        /// </summary>
         public DefenderCspmAwsOfferingVmScannersConfiguration Configuration { get; set; }
     }
 }

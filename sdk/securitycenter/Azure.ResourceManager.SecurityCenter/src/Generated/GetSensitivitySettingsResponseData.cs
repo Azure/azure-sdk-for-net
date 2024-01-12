@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -14,9 +16,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the GetSensitivitySettingsResponse data model.
     /// Data sensitivity settings for sensitive data discovery
+    /// Serialized Name: GetSensitivitySettingsResponse
     /// </summary>
     public partial class GetSensitivitySettingsResponseData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponseData"/>. </summary>
         internal GetSensitivitySettingsResponseData()
         {
@@ -27,13 +62,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The sensitivity settings properties. </param>
-        internal GetSensitivitySettingsResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GetSensitivitySettingsResponseProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="properties">
+        /// The sensitivity settings properties
+        /// Serialized Name: GetSensitivitySettingsResponse.properties
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetSensitivitySettingsResponseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GetSensitivitySettingsResponseProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The sensitivity settings properties. </summary>
+        /// <summary>
+        /// The sensitivity settings properties
+        /// Serialized Name: GetSensitivitySettingsResponse.properties
+        /// </summary>
         public GetSensitivitySettingsResponseProperties Properties { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The sub-assessment severity level. </summary>
+    /// <summary>
+    /// The sub-assessment severity level
+    /// Serialized Name: Severity
+    /// </summary>
     public readonly partial struct SecurityAssessmentSeverity : IEquatable<SecurityAssessmentSeverity>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary> Low. </summary>
+        /// <summary>
+        /// Low
+        /// Serialized Name: Severity.Low
+        /// </summary>
         public static SecurityAssessmentSeverity Low { get; } = new SecurityAssessmentSeverity(LowValue);
-        /// <summary> Medium. </summary>
+        /// <summary>
+        /// Medium
+        /// Serialized Name: Severity.Medium
+        /// </summary>
         public static SecurityAssessmentSeverity Medium { get; } = new SecurityAssessmentSeverity(MediumValue);
-        /// <summary> High. </summary>
+        /// <summary>
+        /// High
+        /// Serialized Name: Severity.High
+        /// </summary>
         public static SecurityAssessmentSeverity High { get; } = new SecurityAssessmentSeverity(HighValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentSeverity left, SecurityAssessmentSeverity right) => left.Equals(right);

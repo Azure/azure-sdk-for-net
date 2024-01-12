@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The type of the action that will be triggered by the Automation. </summary>
+    /// <summary>
+    /// The type of the action that will be triggered by the Automation
+    /// Serialized Name: ActionType
+    /// </summary>
     internal readonly partial struct ActionType : IEquatable<ActionType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string EventHubValue = "EventHub";
         private const string WorkspaceValue = "Workspace";
 
-        /// <summary> LogicApp. </summary>
+        /// <summary>
+        /// LogicApp
+        /// Serialized Name: ActionType.LogicApp
+        /// </summary>
         public static ActionType LogicApp { get; } = new ActionType(LogicAppValue);
-        /// <summary> EventHub. </summary>
+        /// <summary>
+        /// EventHub
+        /// Serialized Name: ActionType.EventHub
+        /// </summary>
         public static ActionType EventHub { get; } = new ActionType(EventHubValue);
-        /// <summary> Workspace. </summary>
+        /// <summary>
+        /// Workspace
+        /// Serialized Name: ActionType.Workspace
+        /// </summary>
         public static ActionType Workspace { get; } = new ActionType(WorkspaceValue);
         /// <summary> Determines if two <see cref="ActionType"/> values are the same. </summary>
         public static bool operator ==(ActionType left, ActionType right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A possible role to configure sending security notification alerts to. </summary>
+    /// <summary>
+    /// A possible role to configure sending security notification alerts to
+    /// Serialized Name: Roles
+    /// </summary>
     public readonly partial struct SecurityAlertReceivingRole : IEquatable<SecurityAlertReceivingRole>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string OwnerValue = "Owner";
         private const string ContributorValue = "Contributor";
 
-        /// <summary> If enabled, send notification on new alerts to the account admins. </summary>
+        /// <summary>
+        /// If enabled, send notification on new alerts to the account admins
+        /// Serialized Name: Roles.AccountAdmin
+        /// </summary>
         public static SecurityAlertReceivingRole AccountAdmin { get; } = new SecurityAlertReceivingRole(AccountAdminValue);
-        /// <summary> If enabled, send notification on new alerts to the service admins. </summary>
+        /// <summary>
+        /// If enabled, send notification on new alerts to the service admins
+        /// Serialized Name: Roles.ServiceAdmin
+        /// </summary>
         public static SecurityAlertReceivingRole ServiceAdmin { get; } = new SecurityAlertReceivingRole(ServiceAdminValue);
-        /// <summary> If enabled, send notification on new alerts to the subscription owners. </summary>
+        /// <summary>
+        /// If enabled, send notification on new alerts to the subscription owners
+        /// Serialized Name: Roles.Owner
+        /// </summary>
         public static SecurityAlertReceivingRole Owner { get; } = new SecurityAlertReceivingRole(OwnerValue);
-        /// <summary> If enabled, send notification on new alerts to the subscription contributors. </summary>
+        /// <summary>
+        /// If enabled, send notification on new alerts to the subscription contributors
+        /// Serialized Name: Roles.Contributor
+        /// </summary>
         public static SecurityAlertReceivingRole Contributor { get; } = new SecurityAlertReceivingRole(ContributorValue);
         /// <summary> Determines if two <see cref="SecurityAlertReceivingRole"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertReceivingRole left, SecurityAlertReceivingRole right) => left.Equals(right);

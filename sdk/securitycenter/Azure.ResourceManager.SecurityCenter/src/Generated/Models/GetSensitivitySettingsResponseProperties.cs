@@ -11,9 +11,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The sensitivity settings properties. </summary>
+    /// <summary>
+    /// The sensitivity settings properties
+    /// Serialized Name: GetSensitivitySettingsResponseProperties
+    /// </summary>
     public partial class GetSensitivitySettingsResponseProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponseProperties"/>. </summary>
         internal GetSensitivitySettingsResponseProperties()
         {
@@ -21,25 +56,51 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponseProperties"/>. </summary>
-        /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
-        /// <param name="sensitivityThresholdLabelOrder"> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </param>
-        /// <param name="sensitivityThresholdLabelId"> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </param>
-        /// <param name="mipInformation"> Microsoft information protection built-in and custom information types, labels, and integration status. </param>
-        internal GetSensitivitySettingsResponseProperties(IReadOnlyList<Guid> sensitiveInfoTypesIds, float? sensitivityThresholdLabelOrder, Guid? sensitivityThresholdLabelId, GetSensitivitySettingsResponsePropertiesMipInformation mipInformation)
+        /// <param name="sensitiveInfoTypesIds">
+        /// List of selected sensitive info types' IDs.
+        /// Serialized Name: GetSensitivitySettingsResponseProperties.sensitiveInfoTypesIds
+        /// </param>
+        /// <param name="sensitivityThresholdLabelOrder">
+        /// The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off
+        /// Serialized Name: GetSensitivitySettingsResponseProperties.sensitivityThresholdLabelOrder
+        /// </param>
+        /// <param name="sensitivityThresholdLabelId">
+        /// The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive.
+        /// Serialized Name: GetSensitivitySettingsResponseProperties.sensitivityThresholdLabelId
+        /// </param>
+        /// <param name="mipInformation">
+        /// Microsoft information protection built-in and custom information types, labels, and integration status.
+        /// Serialized Name: GetSensitivitySettingsResponseProperties.mipInformation
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetSensitivitySettingsResponseProperties(IReadOnlyList<Guid> sensitiveInfoTypesIds, float? sensitivityThresholdLabelOrder, Guid? sensitivityThresholdLabelId, GetSensitivitySettingsResponsePropertiesMipInformation mipInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SensitiveInfoTypesIds = sensitiveInfoTypesIds;
             SensitivityThresholdLabelOrder = sensitivityThresholdLabelOrder;
             SensitivityThresholdLabelId = sensitivityThresholdLabelId;
             MipInformation = mipInformation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of selected sensitive info types' IDs. </summary>
+        /// <summary>
+        /// List of selected sensitive info types' IDs.
+        /// Serialized Name: GetSensitivitySettingsResponseProperties.sensitiveInfoTypesIds
+        /// </summary>
         public IReadOnlyList<Guid> SensitiveInfoTypesIds { get; }
-        /// <summary> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </summary>
+        /// <summary>
+        /// The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off
+        /// Serialized Name: GetSensitivitySettingsResponseProperties.sensitivityThresholdLabelOrder
+        /// </summary>
         public float? SensitivityThresholdLabelOrder { get; }
-        /// <summary> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </summary>
+        /// <summary>
+        /// The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive.
+        /// Serialized Name: GetSensitivitySettingsResponseProperties.sensitivityThresholdLabelId
+        /// </summary>
         public Guid? SensitivityThresholdLabelId { get; }
-        /// <summary> Microsoft information protection built-in and custom information types, labels, and integration status. </summary>
+        /// <summary>
+        /// Microsoft information protection built-in and custom information types, labels, and integration status.
+        /// Serialized Name: GetSensitivitySettingsResponseProperties.mipInformation
+        /// </summary>
         public GetSensitivitySettingsResponsePropertiesMipInformation MipInformation { get; }
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S : IUtf8JsonSerializable
+    public partial class DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S : IUtf8JsonSerializable, IJsonModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S DeserializeDefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(JsonElement element)
+        DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S IJsonModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(document.RootElement, options);
+        }
+
+        internal static DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S DeserializeDefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enabled = default;
             Optional<string> cloudRoleArn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(Optional.ToNullable(enabled), cloudRoleArn.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(Optional.ToNullable(enabled), cloudRoleArn.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S IPersistableModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

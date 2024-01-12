@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The information protection for AWS offering. </summary>
+    /// <summary>
+    /// The information protection for AWS offering
+    /// Serialized Name: InformationProtectionAwsOffering
+    /// </summary>
     public partial class InformationProtectionAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="InformationProtectionAwsOffering"/>. </summary>
@@ -17,18 +23,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InformationProtectionAwsOffering"/>. </summary>
-        /// <param name="offeringType"> The type of the security offering. </param>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="informationProtection"> The native cloud connection configuration. </param>
-        internal InformationProtectionAwsOffering(OfferingType offeringType, string description, AwsInformationProtection informationProtection) : base(offeringType, description)
+        /// <param name="offeringType">
+        /// The type of the security offering.
+        /// Serialized Name: CloudOffering.offeringType
+        /// </param>
+        /// <param name="description">
+        /// The offering description.
+        /// Serialized Name: CloudOffering.description
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="informationProtection">
+        /// The native cloud connection configuration
+        /// Serialized Name: InformationProtectionAwsOffering.informationProtection
+        /// </param>
+        internal InformationProtectionAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, AwsInformationProtection informationProtection) : base(offeringType, description, serializedAdditionalRawData)
         {
             InformationProtection = informationProtection;
             OfferingType = offeringType;
         }
 
-        /// <summary> The native cloud connection configuration. </summary>
+        /// <summary>
+        /// The native cloud connection configuration
+        /// Serialized Name: InformationProtectionAwsOffering.informationProtection
+        /// </summary>
         internal AwsInformationProtection InformationProtection { get; set; }
-        /// <summary> The cloud role ARN in AWS for this feature. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: InformationProtectionAwsOfferingInformationProtection.cloudRoleArn
+        /// </summary>
         public string InformationProtectionCloudRoleArn
         {
             get => InformationProtection is null ? default : InformationProtection.CloudRoleArn;

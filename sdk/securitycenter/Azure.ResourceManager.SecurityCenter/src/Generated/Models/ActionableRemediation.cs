@@ -5,14 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Configuration payload for PR Annotations. </summary>
+    /// <summary>
+    /// Configuration payload for PR Annotations.
+    /// Serialized Name: ActionableRemediation
+    /// </summary>
     public partial class ActionableRemediation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ActionableRemediation"/>. </summary>
         public ActionableRemediation()
         {
@@ -25,21 +61,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// None - the setting was never set.
         /// Enabled - ActionableRemediation is enabled.
         /// Disabled - ActionableRemediation is disabled.
+        /// Serialized Name: ActionableRemediation.state
         /// </param>
-        /// <param name="categoryConfigurations"> Gets or sets list of categories and severity levels. </param>
-        /// <param name="branchConfiguration"> Repository branch configuration for PR Annotations. </param>
+        /// <param name="categoryConfigurations">
+        /// Gets or sets list of categories and severity levels.
+        /// Serialized Name: ActionableRemediation.categoryConfigurations
+        /// </param>
+        /// <param name="branchConfiguration">
+        /// Repository branch configuration for PR Annotations.
+        /// Serialized Name: ActionableRemediation.branchConfiguration
+        /// </param>
         /// <param name="inheritFromParentState">
         /// Update Settings.
         ///
         /// Enabled - Resource should inherit configurations from parent.
         /// Disabled - Resource should not inherit configurations from parent.
+        /// Serialized Name: ActionableRemediation.inheritFromParentState
         /// </param>
-        internal ActionableRemediation(ActionableRemediationState? state, IList<CategoryConfiguration> categoryConfigurations, TargetBranchConfiguration branchConfiguration, InheritFromParentState? inheritFromParentState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionableRemediation(ActionableRemediationState? state, IList<CategoryConfiguration> categoryConfigurations, TargetBranchConfiguration branchConfiguration, InheritFromParentState? inheritFromParentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             CategoryConfigurations = categoryConfigurations;
             BranchConfiguration = branchConfiguration;
             InheritFromParentState = inheritFromParentState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
@@ -47,17 +93,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// None - the setting was never set.
         /// Enabled - ActionableRemediation is enabled.
         /// Disabled - ActionableRemediation is disabled.
+        /// Serialized Name: ActionableRemediation.state
         /// </summary>
         public ActionableRemediationState? State { get; set; }
-        /// <summary> Gets or sets list of categories and severity levels. </summary>
+        /// <summary>
+        /// Gets or sets list of categories and severity levels.
+        /// Serialized Name: ActionableRemediation.categoryConfigurations
+        /// </summary>
         public IList<CategoryConfiguration> CategoryConfigurations { get; }
-        /// <summary> Repository branch configuration for PR Annotations. </summary>
+        /// <summary>
+        /// Repository branch configuration for PR Annotations.
+        /// Serialized Name: ActionableRemediation.branchConfiguration
+        /// </summary>
         public TargetBranchConfiguration BranchConfiguration { get; set; }
         /// <summary>
         /// Update Settings.
         ///
         /// Enabled - Resource should inherit configurations from parent.
         /// Disabled - Resource should not inherit configurations from parent.
+        /// Serialized Name: ActionableRemediation.inheritFromParentState
         /// </summary>
         public InheritFromParentState? InheritFromParentState { get; set; }
     }

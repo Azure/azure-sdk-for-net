@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The user impact of the assessment. </summary>
+    /// <summary>
+    /// The user impact of the assessment
+    /// Serialized Name: UserImpact
+    /// </summary>
     public readonly partial struct SecurityAssessmentUserImpact : IEquatable<SecurityAssessmentUserImpact>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ModerateValue = "Moderate";
         private const string HighValue = "High";
 
-        /// <summary> Low. </summary>
+        /// <summary>
+        /// Low
+        /// Serialized Name: UserImpact.Low
+        /// </summary>
         public static SecurityAssessmentUserImpact Low { get; } = new SecurityAssessmentUserImpact(LowValue);
-        /// <summary> Moderate. </summary>
+        /// <summary>
+        /// Moderate
+        /// Serialized Name: UserImpact.Moderate
+        /// </summary>
         public static SecurityAssessmentUserImpact Moderate { get; } = new SecurityAssessmentUserImpact(ModerateValue);
-        /// <summary> High. </summary>
+        /// <summary>
+        /// High
+        /// Serialized Name: UserImpact.High
+        /// </summary>
         public static SecurityAssessmentUserImpact High { get; } = new SecurityAssessmentUserImpact(HighValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentUserImpact"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentUserImpact left, SecurityAssessmentUserImpact right) => left.Equals(right);

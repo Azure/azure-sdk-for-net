@@ -5,32 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Microsoft Defender Container image assessment configuration. </summary>
+    /// <summary>
+    /// The Microsoft Defender Container image assessment configuration
+    /// Serialized Name: DefenderCspmGcpOfferingMdcContainersImageAssessment
+    /// </summary>
     public partial class DefenderCspmGcpOfferingMdcContainersImageAssessment
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOfferingMdcContainersImageAssessment"/>. </summary>
         public DefenderCspmGcpOfferingMdcContainersImageAssessment()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOfferingMdcContainersImageAssessment"/>. </summary>
-        /// <param name="enabled"> Is Microsoft Defender container image assessment enabled. </param>
-        /// <param name="workloadIdentityProviderId"> The workload identity provider id in GCP for this feature. </param>
-        /// <param name="serviceAccountEmailAddress"> The service account email address in GCP for this feature. </param>
-        internal DefenderCspmGcpOfferingMdcContainersImageAssessment(bool? enabled, string workloadIdentityProviderId, string serviceAccountEmailAddress)
+        /// <param name="enabled">
+        /// Is Microsoft Defender container image assessment enabled
+        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersImageAssessment.enabled
+        /// </param>
+        /// <param name="workloadIdentityProviderId">
+        /// The workload identity provider id in GCP for this feature
+        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersImageAssessment.workloadIdentityProviderId
+        /// </param>
+        /// <param name="serviceAccountEmailAddress">
+        /// The service account email address in GCP for this feature
+        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersImageAssessment.serviceAccountEmailAddress
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderCspmGcpOfferingMdcContainersImageAssessment(bool? enabled, string workloadIdentityProviderId, string serviceAccountEmailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Is Microsoft Defender container image assessment enabled. </summary>
+        /// <summary>
+        /// Is Microsoft Defender container image assessment enabled
+        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersImageAssessment.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The workload identity provider id in GCP for this feature. </summary>
+        /// <summary>
+        /// The workload identity provider id in GCP for this feature
+        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersImageAssessment.workloadIdentityProviderId
+        /// </summary>
         public string WorkloadIdentityProviderId { get; set; }
-        /// <summary> The service account email address in GCP for this feature. </summary>
+        /// <summary>
+        /// The service account email address in GCP for this feature
+        /// Serialized Name: DefenderCspmGcpOfferingMdcContainersImageAssessment.serviceAccountEmailAddress
+        /// </summary>
         public string ServiceAccountEmailAddress { get; set; }
     }
 }

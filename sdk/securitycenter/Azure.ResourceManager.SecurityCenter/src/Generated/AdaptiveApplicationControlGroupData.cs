@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,9 +13,45 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the AdaptiveApplicationControlGroup data model. </summary>
+    /// <summary>
+    /// A class representing the AdaptiveApplicationControlGroup data model.
+    /// The AdaptiveApplicationControlGroup.
+    /// Serialized Name: AdaptiveApplicationControlGroup
+    /// </summary>
     public partial class AdaptiveApplicationControlGroupData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlGroupData"/>. </summary>
         public AdaptiveApplicationControlGroupData()
         {
@@ -28,16 +65,35 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="enforcementMode"> The application control policy enforcement/protection mode of the machine group. </param>
-        /// <param name="protectionMode"> The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux. </param>
-        /// <param name="configurationStatus"> The configuration status of the machines group or machine or rule. </param>
-        /// <param name="recommendationStatus"> The initial recommendation status of the machine group or machine. </param>
-        /// <param name="issues"></param>
-        /// <param name="sourceSystem"> The source type of the machine group. </param>
-        /// <param name="vmRecommendations"></param>
-        /// <param name="pathRecommendations"></param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        internal AdaptiveApplicationControlGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdaptiveApplicationControlEnforcementMode? enforcementMode, SecurityCenterFileProtectionMode protectionMode, SecurityCenterConfigurationStatus? configurationStatus, RecommendationStatus? recommendationStatus, IReadOnlyList<AdaptiveApplicationControlIssueSummary> issues, AdaptiveApplicationControlGroupSourceSystem? sourceSystem, IList<VmRecommendation> vmRecommendations, IList<PathRecommendation> pathRecommendations, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="enforcementMode">
+        /// The application control policy enforcement/protection mode of the machine group
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.enforcementMode
+        /// </param>
+        /// <param name="protectionMode">
+        /// The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux.
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.protectionMode
+        /// </param>
+        /// <param name="configurationStatus">
+        /// The configuration status of the machines group or machine or rule
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.configurationStatus
+        /// </param>
+        /// <param name="recommendationStatus">
+        /// The initial recommendation status of the machine group or machine
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.recommendationStatus
+        /// </param>
+        /// <param name="issues"> Serialized Name: AdaptiveApplicationControlGroup.properties.issues. </param>
+        /// <param name="sourceSystem">
+        /// The source type of the machine group
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.sourceSystem
+        /// </param>
+        /// <param name="vmRecommendations"> Serialized Name: AdaptiveApplicationControlGroup.properties.vmRecommendations. </param>
+        /// <param name="pathRecommendations"> Serialized Name: AdaptiveApplicationControlGroup.properties.pathRecommendations. </param>
+        /// <param name="location">
+        /// Location where the resource is stored
+        /// Serialized Name: Location.location
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdaptiveApplicationControlGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdaptiveApplicationControlEnforcementMode? enforcementMode, SecurityCenterFileProtectionMode protectionMode, SecurityCenterConfigurationStatus? configurationStatus, RecommendationStatus? recommendationStatus, IReadOnlyList<AdaptiveApplicationControlIssueSummary> issues, AdaptiveApplicationControlGroupSourceSystem? sourceSystem, IList<VmRecommendation> vmRecommendations, IList<PathRecommendation> pathRecommendations, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EnforcementMode = enforcementMode;
             ProtectionMode = protectionMode;
@@ -48,25 +104,44 @@ namespace Azure.ResourceManager.SecurityCenter
             VmRecommendations = vmRecommendations;
             PathRecommendations = pathRecommendations;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The application control policy enforcement/protection mode of the machine group. </summary>
+        /// <summary>
+        /// The application control policy enforcement/protection mode of the machine group
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.enforcementMode
+        /// </summary>
         public AdaptiveApplicationControlEnforcementMode? EnforcementMode { get; set; }
-        /// <summary> The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux. </summary>
+        /// <summary>
+        /// The protection mode of the collection/file types. Exe/Msi/Script are used for Windows, Executable is used for Linux.
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.protectionMode
+        /// </summary>
         public SecurityCenterFileProtectionMode ProtectionMode { get; set; }
-        /// <summary> The configuration status of the machines group or machine or rule. </summary>
+        /// <summary>
+        /// The configuration status of the machines group or machine or rule
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.configurationStatus
+        /// </summary>
         public SecurityCenterConfigurationStatus? ConfigurationStatus { get; }
-        /// <summary> The initial recommendation status of the machine group or machine. </summary>
+        /// <summary>
+        /// The initial recommendation status of the machine group or machine
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.recommendationStatus
+        /// </summary>
         public RecommendationStatus? RecommendationStatus { get; }
-        /// <summary> Gets the issues. </summary>
+        /// <summary> Serialized Name: AdaptiveApplicationControlGroup.properties.issues. </summary>
         public IReadOnlyList<AdaptiveApplicationControlIssueSummary> Issues { get; }
-        /// <summary> The source type of the machine group. </summary>
+        /// <summary>
+        /// The source type of the machine group
+        /// Serialized Name: AdaptiveApplicationControlGroup.properties.sourceSystem
+        /// </summary>
         public AdaptiveApplicationControlGroupSourceSystem? SourceSystem { get; }
-        /// <summary> Gets the vm recommendations. </summary>
+        /// <summary> Serialized Name: AdaptiveApplicationControlGroup.properties.vmRecommendations. </summary>
         public IList<VmRecommendation> VmRecommendations { get; }
-        /// <summary> Gets the path recommendations. </summary>
+        /// <summary> Serialized Name: AdaptiveApplicationControlGroup.properties.pathRecommendations. </summary>
         public IList<PathRecommendation> PathRecommendations { get; }
-        /// <summary> Location where the resource is stored. </summary>
+        /// <summary>
+        /// Location where the resource is stored
+        /// Serialized Name: Location.location
+        /// </summary>
         public AzureLocation? Location { get; }
     }
 }

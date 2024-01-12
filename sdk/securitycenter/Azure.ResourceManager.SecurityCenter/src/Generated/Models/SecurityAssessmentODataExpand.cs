@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecurityAssessmentODataExpand. </summary>
+    /// <summary>
+    /// The SecurityAssessmentODataExpand.
+    /// Serialized Name: ExpandEnum
+    /// </summary>
     public readonly partial struct SecurityAssessmentODataExpand : IEquatable<SecurityAssessmentODataExpand>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string LinksValue = "links";
         private const string MetadataValue = "metadata";
 
-        /// <summary> All links associated with an assessment. </summary>
+        /// <summary>
+        /// All links associated with an assessment
+        /// Serialized Name: ExpandEnum.links
+        /// </summary>
         public static SecurityAssessmentODataExpand Links { get; } = new SecurityAssessmentODataExpand(LinksValue);
-        /// <summary> Assessment metadata. </summary>
+        /// <summary>
+        /// Assessment metadata
+        /// Serialized Name: ExpandEnum.metadata
+        /// </summary>
         public static SecurityAssessmentODataExpand Metadata { get; } = new SecurityAssessmentODataExpand(MetadataValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentODataExpand"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentODataExpand left, SecurityAssessmentODataExpand right) => left.Equals(right);

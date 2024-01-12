@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderCspmAwsOfferingCiem : IUtf8JsonSerializable
+    public partial class DefenderCspmAwsOfferingCiem : IUtf8JsonSerializable, IJsonModel<DefenderCspmAwsOfferingCiem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOfferingCiem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefenderCspmAwsOfferingCiem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOfferingCiem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingCiem)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CiemDiscovery))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("ciemOidc"u8);
                 writer.WriteObjectValue(CiemOidc);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderCspmAwsOfferingCiem DeserializeDefenderCspmAwsOfferingCiem(JsonElement element)
+        DefenderCspmAwsOfferingCiem IJsonModel<DefenderCspmAwsOfferingCiem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOfferingCiem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingCiem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderCspmAwsOfferingCiem(document.RootElement, options);
+        }
+
+        internal static DefenderCspmAwsOfferingCiem DeserializeDefenderCspmAwsOfferingCiem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DefenderCspmAwsOfferingCiemDiscovery> ciemDiscovery = default;
             Optional<DefenderCspmAwsOfferingCiemOidc> ciemOidc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ciemDiscovery"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     ciemOidc = DefenderCspmAwsOfferingCiemOidc.DeserializeDefenderCspmAwsOfferingCiemOidc(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderCspmAwsOfferingCiem(ciemDiscovery.Value, ciemOidc.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DefenderCspmAwsOfferingCiem(ciemDiscovery.Value, ciemOidc.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefenderCspmAwsOfferingCiem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOfferingCiem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingCiem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DefenderCspmAwsOfferingCiem IPersistableModel<DefenderCspmAwsOfferingCiem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmAwsOfferingCiem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderCspmAwsOfferingCiem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderCspmAwsOfferingCiem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderCspmAwsOfferingCiem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

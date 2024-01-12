@@ -11,9 +11,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> DevOps Configuration properties. </summary>
+    /// <summary>
+    /// DevOps Configuration properties.
+    /// Serialized Name: DevOpsConfigurationProperties
+    /// </summary>
     public partial class DevOpsConfigurationProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DevOpsConfigurationProperties"/>. </summary>
         public DevOpsConfigurationProperties()
         {
@@ -21,8 +56,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsConfigurationProperties"/>. </summary>
-        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningStatusMessage">
+        /// Gets or sets resource status message.
+        /// Serialized Name: DevOpsConfigurationProperties.provisioningStatusMessage
+        /// </param>
+        /// <param name="provisioningStatusUpdateTimeUtc">
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: DevOpsConfigurationProperties.provisioningStatusUpdateTimeUtc
+        /// </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         ///
@@ -33,14 +74,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: DevOpsConfigurationProperties.provisioningState
         /// </param>
-        /// <param name="authorization"> Authorization payload. </param>
-        /// <param name="autoDiscovery"> AutoDiscovery states. </param>
+        /// <param name="authorization">
+        /// Authorization payload.
+        /// Serialized Name: DevOpsConfigurationProperties.authorization
+        /// </param>
+        /// <param name="autoDiscovery">
+        /// AutoDiscovery states.
+        /// Serialized Name: DevOpsConfigurationProperties.autoDiscovery
+        /// </param>
         /// <param name="topLevelInventoryList">
         /// List of top-level inventory to select when AutoDiscovery is disabled.
         /// This field is ignored when AutoDiscovery is enabled.
+        /// Serialized Name: DevOpsConfigurationProperties.topLevelInventoryList
         /// </param>
-        internal DevOpsConfigurationProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, Authorization authorization, AutoDiscovery? autoDiscovery, IList<string> topLevelInventoryList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsConfigurationProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, Authorization authorization, AutoDiscovery? autoDiscovery, IList<string> topLevelInventoryList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
             ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
@@ -48,11 +98,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Authorization = authorization;
             AutoDiscovery = autoDiscovery;
             TopLevelInventoryList = topLevelInventoryList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets resource status message. </summary>
+        /// <summary>
+        /// Gets or sets resource status message.
+        /// Serialized Name: DevOpsConfigurationProperties.provisioningStatusMessage
+        /// </summary>
         public string ProvisioningStatusMessage { get; }
-        /// <summary> Gets or sets time when resource was last checked. </summary>
+        /// <summary>
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: DevOpsConfigurationProperties.provisioningStatusUpdateTimeUtc
+        /// </summary>
         public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
         /// <summary>
         /// The provisioning state of the resource.
@@ -64,14 +121,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: DevOpsConfigurationProperties.provisioningState
         /// </summary>
         public DevOpsProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Authorization payload. </summary>
+        /// <summary>
+        /// Authorization payload.
+        /// Serialized Name: DevOpsConfigurationProperties.authorization
+        /// </summary>
         internal Authorization Authorization { get; set; }
         /// <summary>
         /// Gets or sets one-time OAuth code to exchange for refresh and access tokens.
         ///
         /// Only used during PUT/PATCH operations. The secret is cleared during GET.
+        /// Serialized Name: Authorization.code
         /// </summary>
         public string AuthorizationCode
         {
@@ -84,11 +146,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary> AutoDiscovery states. </summary>
+        /// <summary>
+        /// AutoDiscovery states.
+        /// Serialized Name: DevOpsConfigurationProperties.autoDiscovery
+        /// </summary>
         public AutoDiscovery? AutoDiscovery { get; set; }
         /// <summary>
         /// List of top-level inventory to select when AutoDiscovery is disabled.
         /// This field is ignored when AutoDiscovery is enabled.
+        /// Serialized Name: DevOpsConfigurationProperties.topLevelInventoryList
         /// </summary>
         public IList<string> TopLevelInventoryList { get; }
     }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Describes what kind of security agent provisioning action to take. </summary>
+    /// <summary>
+    /// Describes what kind of security agent provisioning action to take
+    /// Serialized Name: AutoProvision
+    /// </summary>
     public readonly partial struct AutoProvisionState : IEquatable<AutoProvisionState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string OnValue = "On";
         private const string OffValue = "Off";
 
-        /// <summary> Install missing security agent on VMs automatically. </summary>
+        /// <summary>
+        /// Install missing security agent on VMs automatically
+        /// Serialized Name: AutoProvision.On
+        /// </summary>
         public static AutoProvisionState On { get; } = new AutoProvisionState(OnValue);
-        /// <summary> Do not install security agent on the VMs automatically. </summary>
+        /// <summary>
+        /// Do not install security agent on the VMs automatically
+        /// Serialized Name: AutoProvision.Off
+        /// </summary>
         public static AutoProvisionState Off { get; } = new AutoProvisionState(OffValue);
         /// <summary> Determines if two <see cref="AutoProvisionState"/> values are the same. </summary>
         public static bool operator ==(AutoProvisionState left, AutoProvisionState right) => left.Equals(right);

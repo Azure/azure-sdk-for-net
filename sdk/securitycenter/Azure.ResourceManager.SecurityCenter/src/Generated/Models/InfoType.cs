@@ -6,33 +6,89 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Custom user-defined information type. </summary>
+    /// <summary>
+    /// Custom user-defined information type
+    /// Serialized Name: InfoType
+    /// </summary>
     public partial class InfoType
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InfoType"/>. </summary>
         internal InfoType()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="InfoType"/>. </summary>
-        /// <param name="name"> Display name of the info type. </param>
-        /// <param name="id"> Id of the info type. </param>
-        /// <param name="description"> Description of the info type. </param>
-        internal InfoType(string name, Guid? id, string description)
+        /// <param name="name">
+        /// Display name of the info type
+        /// Serialized Name: InfoType.name
+        /// </param>
+        /// <param name="id">
+        /// Id of the info type
+        /// Serialized Name: InfoType.id
+        /// </param>
+        /// <param name="description">
+        /// Description of the info type
+        /// Serialized Name: InfoType.description
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InfoType(string name, Guid? id, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display name of the info type. </summary>
+        /// <summary>
+        /// Display name of the info type
+        /// Serialized Name: InfoType.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> Id of the info type. </summary>
+        /// <summary>
+        /// Id of the info type
+        /// Serialized Name: InfoType.id
+        /// </summary>
         public Guid? Id { get; }
-        /// <summary> Description of the info type. </summary>
+        /// <summary>
+        /// Description of the info type
+        /// Serialized Name: InfoType.description
+        /// </summary>
         public string Description { get; }
     }
 }

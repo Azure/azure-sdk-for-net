@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The platform where the assessed resource resides. </summary>
+    /// <summary>
+    /// The platform where the assessed resource resides
+    /// Serialized Name: Source
+    /// </summary>
     public readonly partial struct Source : IEquatable<Source>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string OnPremiseValue = "OnPremise";
         private const string OnPremiseSqlValue = "OnPremiseSql";
 
-        /// <summary> Resource is in Azure. </summary>
+        /// <summary>
+        /// Resource is in Azure
+        /// Serialized Name: Source.Azure
+        /// </summary>
         public static Source Azure { get; } = new Source(AzureValue);
-        /// <summary> Resource in an on premise machine connected to Azure cloud. </summary>
+        /// <summary>
+        /// Resource in an on premise machine connected to Azure cloud
+        /// Serialized Name: Source.OnPremise
+        /// </summary>
         public static Source OnPremise { get; } = new Source(OnPremiseValue);
-        /// <summary> SQL Resource in an on premise machine connected to Azure cloud. </summary>
+        /// <summary>
+        /// SQL Resource in an on premise machine connected to Azure cloud
+        /// Serialized Name: Source.OnPremiseSql
+        /// </summary>
         public static Source OnPremiseSql { get; } = new Source(OnPremiseSqlValue);
         /// <summary> Determines if two <see cref="Source"/> values are the same. </summary>
         public static bool operator ==(Source left, Source right) => left.Equals(right);

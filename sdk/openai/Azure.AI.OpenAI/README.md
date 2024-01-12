@@ -301,26 +301,71 @@ calls, and the tool messages that resolved each of those tools -- when making a 
 ChatChoice responseChoice = response.Value.Choices[0];
 if (responseChoice.FinishReason == CompletionsFinishReason.ToolCalls)
 {
-    List<ChatRequestToolMessage> toolCallResolutionMessages = new();
+    // Add the assistant message with tool calls to the conversation history
+    ChatRequestAssistantMessage toolCallHistoryMessage = new(responseChoice.Message);
+    chatCompletionsOptions.Messages.Add(toolCallHistoryMessage);
+
+    // Add a new tool message for each tool call that is resolved
     foreach (ChatCompletionsToolCall toolCall in responseChoice.Message.ToolCalls)
     {
-        toolCallResolutionMessages.Add(GetToolCallResponseMessage(toolCall));
+        chatCompletionsOptions.Messages.Add(GetToolCallResponseMessage(toolCall));
     }
 
-    // Include the ToolCall message from the assistant in the conversation history, too
-    var toolCallHistoryMessage = new ChatRequestAssistantMessage(responseChoice.Message.Content);
-    foreach (ChatCompletionsToolCall requestedToolCall in responseChoice.Message.ToolCalls)
-    {
-        toolCallHistoryMessage.ToolCalls.Add(requestedToolCall);
-    }
+    // Now make a new request with all the messages thus far, including the original
+}
+```
 
-    // Now make a new request using all the messages, including the original
-    chatCompletionsOptions.Messages.Add(toolCallHistoryMessage);
-    foreach (ChatRequestToolMessage resolutionMessage in toolCallResolutionMessages)
+When using tool calls with streaming responses, accumulate tool call details much like you'd accumulate the other
+portions of streamed choices, in this case using the accumulated `StreamingToolCallUpdate` data to instantiate new
+tool call messages for assistant message history. Note that the model will ignore `ChoiceCount` when providing tools
+and that all streamed responses should map to a single, common choice index in the range of `[0..(ChoiceCount - 1)]`.
+
+```C# Snippet:ChatTools:StreamingChatTools
+Dictionary<int, string> toolCallIdsByIndex = new();
+Dictionary<int, string> functionNamesByIndex = new();
+Dictionary<int, StringBuilder> functionArgumentBuildersByIndex = new();
+StringBuilder contentBuilder = new();
+
+await foreach (StreamingChatCompletionsUpdate chatUpdate
+    in await client.GetChatCompletionsStreamingAsync(chatCompletionsOptions))
+{
+    if (chatUpdate.ToolCallUpdate is StreamingFunctionToolCallUpdate functionToolCallUpdate)
     {
-        chatCompletionsOptions.Messages.Add(resolutionMessage);
+        if (functionToolCallUpdate.Id != null)
+        {
+            toolCallIdsByIndex[functionToolCallUpdate.ToolCallIndex] = functionToolCallUpdate.Id;
+        }
+        if (functionToolCallUpdate.Name != null)
+        {
+            functionNamesByIndex[functionToolCallUpdate.ToolCallIndex] = functionToolCallUpdate.Name;
+        }
+        if (functionToolCallUpdate.ArgumentsUpdate != null)
+        {
+            StringBuilder argumentsBuilder
+                = functionArgumentBuildersByIndex.TryGetValue(
+                    functionToolCallUpdate.ToolCallIndex,
+                    out StringBuilder existingBuilder) ? existingBuilder : new StringBuilder();
+            argumentsBuilder.Append(functionToolCallUpdate.ArgumentsUpdate);
+            functionArgumentBuildersByIndex[functionToolCallUpdate.ToolCallIndex] = argumentsBuilder;
+        }
+    }
+    if (chatUpdate.ContentUpdate != null)
+    {
+        contentBuilder.Append(chatUpdate.ContentUpdate);
     }
 }
+
+ChatRequestAssistantMessage assistantHistoryMessage = new(contentBuilder.ToString());
+foreach (KeyValuePair<int, string> indexIdPair in toolCallIdsByIndex)
+{
+    assistantHistoryMessage.ToolCalls.Add(new ChatCompletionsFunctionToolCall(
+        id: indexIdPair.Value,
+        functionNamesByIndex[indexIdPair.Key],
+        functionArgumentBuildersByIndex[indexIdPair.Key].ToString()));
+}
+chatCompletionsOptions.Messages.Add(assistantHistoryMessage);
+
+// Add request tool messages and proceed just like non-streaming
 ```
 
 Additionally: if you would like to control the behavior of tool calls, you can use the `ToolChoice` property on
@@ -589,15 +634,21 @@ ReadOnlyMemory<float> embedding = item.Embedding;
 ### Generate images with DALL-E image generation models
 
 ```C# Snippet:GenerateImages
-Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAsync(
+Response<ImageGenerations> response = await client.GetImageGenerationsAsync(
     new ImageGenerationOptions()
     {
+        DeploymentName = usingAzure ? "my-azure-openai-dall-e-3-deployment" : "dall-e-3",
         Prompt = "a happy monkey eating a banana, in watercolor",
-        Size = ImageSize.Size256x256,
+        Size = ImageSize.Size1024x1024,
+        Quality = ImageGenerationQuality.Standard
     });
 
-// Image Generations responses provide URLs you can use to retrieve requested images
-Uri imageUri = imageGenerations.Value.Data[0].Url;
+ImageGenerationData generatedImage = response.Value.Data[0];
+if (!string.IsNullOrEmpty(generatedImage.RevisedPrompt))
+{
+    Console.WriteLine($"Input prompt automatically revised to: {generatedImage.RevisedPrompt}");
+}
+Console.WriteLine($"Generated image available at: {generatedImage.Url.AbsoluteUri}");
 ```
 
 ### Transcribe audio data with Whisper speech models
@@ -664,12 +715,13 @@ ChatCompletionsOptions chatCompletionsOptions = new()
 ```
 
 Chat Completions will then proceed as usual, though the model may report the more informative `finish_details` in lieu
-of `finish_reason`:
+of `finish_reason`; this will converge as `gpt-4-vision-preview` is updated but checking for either one is recommended
+in the interim:
 
 ```C# Snippet:GetResponseFromImages
 Response<ChatCompletions> chatResponse = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ChatChoice choice = chatResponse.Value.Choices[0];
-if (choice.FinishDetails is StopFinishDetails stopDetails)
+if (choice.FinishDetails is StopFinishDetails stopDetails || choice.FinishReason == CompletionsFinishReason.Stopped)
 {
     Console.WriteLine($"{choice.Message.Role}: {choice.Message.Content}");
 }

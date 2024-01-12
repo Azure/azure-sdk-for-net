@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Threats impact of the assessment. </summary>
+    /// <summary>
+    /// Threats impact of the assessment
+    /// Serialized Name: Threats
+    /// </summary>
     public readonly partial struct SecurityThreat : IEquatable<SecurityThreat>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string MissingCoverageValue = "missingCoverage";
         private const string DenialOfServiceValue = "denialOfService";
 
-        /// <summary> accountBreach. </summary>
+        /// <summary>
+        /// accountBreach
+        /// Serialized Name: Threats.accountBreach
+        /// </summary>
         public static SecurityThreat AccountBreach { get; } = new SecurityThreat(AccountBreachValue);
-        /// <summary> dataExfiltration. </summary>
+        /// <summary>
+        /// dataExfiltration
+        /// Serialized Name: Threats.dataExfiltration
+        /// </summary>
         public static SecurityThreat DataExfiltration { get; } = new SecurityThreat(DataExfiltrationValue);
-        /// <summary> dataSpillage. </summary>
+        /// <summary>
+        /// dataSpillage
+        /// Serialized Name: Threats.dataSpillage
+        /// </summary>
         public static SecurityThreat DataSpillage { get; } = new SecurityThreat(DataSpillageValue);
-        /// <summary> maliciousInsider. </summary>
+        /// <summary>
+        /// maliciousInsider
+        /// Serialized Name: Threats.maliciousInsider
+        /// </summary>
         public static SecurityThreat MaliciousInsider { get; } = new SecurityThreat(MaliciousInsiderValue);
-        /// <summary> elevationOfPrivilege. </summary>
+        /// <summary>
+        /// elevationOfPrivilege
+        /// Serialized Name: Threats.elevationOfPrivilege
+        /// </summary>
         public static SecurityThreat ElevationOfPrivilege { get; } = new SecurityThreat(ElevationOfPrivilegeValue);
-        /// <summary> threatResistance. </summary>
+        /// <summary>
+        /// threatResistance
+        /// Serialized Name: Threats.threatResistance
+        /// </summary>
         public static SecurityThreat ThreatResistance { get; } = new SecurityThreat(ThreatResistanceValue);
-        /// <summary> missingCoverage. </summary>
+        /// <summary>
+        /// missingCoverage
+        /// Serialized Name: Threats.missingCoverage
+        /// </summary>
         public static SecurityThreat MissingCoverage { get; } = new SecurityThreat(MissingCoverageValue);
-        /// <summary> denialOfService. </summary>
+        /// <summary>
+        /// denialOfService
+        /// Serialized Name: Threats.denialOfService
+        /// </summary>
         public static SecurityThreat DenialOfService { get; } = new SecurityThreat(DenialOfServiceValue);
         /// <summary> Determines if two <see cref="SecurityThreat"/> values are the same. </summary>
         public static bool operator ==(SecurityThreat left, SecurityThreat right) => left.Equals(right);

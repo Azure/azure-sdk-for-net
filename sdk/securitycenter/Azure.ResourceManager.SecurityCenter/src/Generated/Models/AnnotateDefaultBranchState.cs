@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     ///
     /// Enabled - PR Annotations are enabled on the resource's default branch.
     /// Disabled - PR Annotations are disabled on the resource's default branch.
+    /// Serialized Name: AnnotateDefaultBranchState
     /// </summary>
     public readonly partial struct AnnotateDefaultBranchState : IEquatable<AnnotateDefaultBranchState>
     {
@@ -30,9 +31,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: AnnotateDefaultBranchState.Disabled
+        /// </summary>
         public static AnnotateDefaultBranchState Disabled { get; } = new AnnotateDefaultBranchState(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: AnnotateDefaultBranchState.Enabled
+        /// </summary>
         public static AnnotateDefaultBranchState Enabled { get; } = new AnnotateDefaultBranchState(EnabledValue);
         /// <summary> Determines if two <see cref="AnnotateDefaultBranchState"/> values are the same. </summary>
         public static bool operator ==(AnnotateDefaultBranchState left, AnnotateDefaultBranchState right) => left.Equals(right);

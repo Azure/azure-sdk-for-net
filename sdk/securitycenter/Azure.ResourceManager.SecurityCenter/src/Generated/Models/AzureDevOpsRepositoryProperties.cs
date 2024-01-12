@@ -6,20 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Azure DevOps Repository properties. </summary>
+    /// <summary>
+    /// Azure DevOps Repository properties.
+    /// Serialized Name: AzureDevOpsRepositoryProperties
+    /// </summary>
     public partial class AzureDevOpsRepositoryProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsRepositoryProperties"/>. </summary>
         public AzureDevOpsRepositoryProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsRepositoryProperties"/>. </summary>
-        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningStatusMessage">
+        /// Gets or sets resource status message.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.provisioningStatusMessage
+        /// </param>
+        /// <param name="provisioningStatusUpdateTimeUtc">
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.provisioningStatusUpdateTimeUtc
+        /// </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         ///
@@ -30,12 +72,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.provisioningState
         /// </param>
-        /// <param name="parentOrgName"> Gets or sets parent Azure DevOps Organization name. </param>
-        /// <param name="parentProjectName"> Gets or sets parent Azure DevOps Project name. </param>
-        /// <param name="repoId"> Gets or sets Azure DevOps Repository id. </param>
-        /// <param name="repoUri"> Gets or sets Azure DevOps Repository url. </param>
-        /// <param name="visibility"> Gets or sets Azure DevOps repository visibility, whether it is public or private etc. </param>
+        /// <param name="parentOrgName">
+        /// Gets or sets parent Azure DevOps Organization name.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.parentOrgName
+        /// </param>
+        /// <param name="parentProjectName">
+        /// Gets or sets parent Azure DevOps Project name.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.parentProjectName
+        /// </param>
+        /// <param name="repoId">
+        /// Gets or sets Azure DevOps Repository id.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.repoId
+        /// </param>
+        /// <param name="repoUri">
+        /// Gets or sets Azure DevOps Repository url.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.repoUrl
+        /// </param>
+        /// <param name="visibility">
+        /// Gets or sets Azure DevOps repository visibility, whether it is public or private etc.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.visibility
+        /// </param>
         /// <param name="onboardingState">
         /// Details about resource onboarding status across all connectors.
         ///
@@ -43,9 +101,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Onboarded - this resource has already been onboarded by the specified connector.
         /// NotOnboarded - this resource has not been onboarded to any connector.
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.onboardingState
         /// </param>
-        /// <param name="actionableRemediation"> Configuration payload for PR Annotations. </param>
-        internal AzureDevOpsRepositoryProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, string parentOrgName, string parentProjectName, string repoId, Uri repoUri, string visibility, OnboardingState? onboardingState, ActionableRemediation actionableRemediation)
+        /// <param name="actionableRemediation">
+        /// Configuration payload for PR Annotations.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.actionableRemediation
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsRepositoryProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, string parentOrgName, string parentProjectName, string repoId, Uri repoUri, string visibility, OnboardingState? onboardingState, ActionableRemediation actionableRemediation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
             ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
@@ -57,11 +120,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Visibility = visibility;
             OnboardingState = onboardingState;
             ActionableRemediation = actionableRemediation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets resource status message. </summary>
+        /// <summary>
+        /// Gets or sets resource status message.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.provisioningStatusMessage
+        /// </summary>
         public string ProvisioningStatusMessage { get; }
-        /// <summary> Gets or sets time when resource was last checked. </summary>
+        /// <summary>
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.provisioningStatusUpdateTimeUtc
+        /// </summary>
         public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
         /// <summary>
         /// The provisioning state of the resource.
@@ -73,17 +143,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.provisioningState
         /// </summary>
         public DevOpsProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Gets or sets parent Azure DevOps Organization name. </summary>
+        /// <summary>
+        /// Gets or sets parent Azure DevOps Organization name.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.parentOrgName
+        /// </summary>
         public string ParentOrgName { get; set; }
-        /// <summary> Gets or sets parent Azure DevOps Project name. </summary>
+        /// <summary>
+        /// Gets or sets parent Azure DevOps Project name.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.parentProjectName
+        /// </summary>
         public string ParentProjectName { get; set; }
-        /// <summary> Gets or sets Azure DevOps Repository id. </summary>
+        /// <summary>
+        /// Gets or sets Azure DevOps Repository id.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.repoId
+        /// </summary>
         public string RepoId { get; }
-        /// <summary> Gets or sets Azure DevOps Repository url. </summary>
+        /// <summary>
+        /// Gets or sets Azure DevOps Repository url.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.repoUrl
+        /// </summary>
         public Uri RepoUri { get; }
-        /// <summary> Gets or sets Azure DevOps repository visibility, whether it is public or private etc. </summary>
+        /// <summary>
+        /// Gets or sets Azure DevOps repository visibility, whether it is public or private etc.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.visibility
+        /// </summary>
         public string Visibility { get; }
         /// <summary>
         /// Details about resource onboarding status across all connectors.
@@ -92,9 +178,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Onboarded - this resource has already been onboarded by the specified connector.
         /// NotOnboarded - this resource has not been onboarded to any connector.
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.onboardingState
         /// </summary>
         public OnboardingState? OnboardingState { get; set; }
-        /// <summary> Configuration payload for PR Annotations. </summary>
+        /// <summary>
+        /// Configuration payload for PR Annotations.
+        /// Serialized Name: AzureDevOpsRepositoryProperties.actionableRemediation
+        /// </summary>
         public ActionableRemediation ActionableRemediation { get; set; }
     }
 }

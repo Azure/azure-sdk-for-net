@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,9 +16,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the HealthReport data model.
     /// The health report resource
+    /// Serialized Name: HealthReport
     /// </summary>
     public partial class HealthReportData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HealthReportData"/>. </summary>
         public HealthReportData()
         {
@@ -32,15 +66,40 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="resourceDetails"> The resource details of the health report. </param>
-        /// <param name="environmentDetails"> The environment details of the resource. </param>
-        /// <param name="healthDataClassification"> The classification of the health report. </param>
-        /// <param name="status"> The status of the health report. </param>
-        /// <param name="affectedDefendersPlans"> The affected defenders plans by unhealthy report. </param>
-        /// <param name="affectedDefendersSubPlans"> The affected defenders sub plans by unhealthy report. </param>
-        /// <param name="reportAdditionalData"> Additional data for the given health report, this field can include more details on the resource and the health scenario. </param>
-        /// <param name="issues"> A collection of the issues in the report. </param>
-        internal HealthReportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthReportResourceDetails resourceDetails, EnvironmentDetails environmentDetails, HealthDataClassification healthDataClassification, HealthReportStatus status, IList<string> affectedDefendersPlans, IList<string> affectedDefendersSubPlans, IReadOnlyDictionary<string, string> reportAdditionalData, IList<Issue> issues) : base(id, name, resourceType, systemData)
+        /// <param name="resourceDetails">
+        /// The resource details of the health report
+        /// Serialized Name: HealthReport.properties.resourceDetails
+        /// </param>
+        /// <param name="environmentDetails">
+        /// The environment details of the resource
+        /// Serialized Name: HealthReport.properties.environmentDetails
+        /// </param>
+        /// <param name="healthDataClassification">
+        /// The classification of the health report
+        /// Serialized Name: HealthReport.properties.healthDataClassification
+        /// </param>
+        /// <param name="status">
+        /// The status of the health report
+        /// Serialized Name: HealthReport.properties.status
+        /// </param>
+        /// <param name="affectedDefendersPlans">
+        /// The affected defenders plans by unhealthy report
+        /// Serialized Name: HealthReport.properties.affectedDefendersPlans
+        /// </param>
+        /// <param name="affectedDefendersSubPlans">
+        /// The affected defenders sub plans by unhealthy report
+        /// Serialized Name: HealthReport.properties.affectedDefendersSubPlans
+        /// </param>
+        /// <param name="reportAdditionalData">
+        /// Additional data for the given health report, this field can include more details on the resource and the health scenario.
+        /// Serialized Name: HealthReport.properties.reportAdditionalData
+        /// </param>
+        /// <param name="issues">
+        /// A collection of the issues in the report
+        /// Serialized Name: HealthReport.properties.issues
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthReportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthReportResourceDetails resourceDetails, EnvironmentDetails environmentDetails, HealthDataClassification healthDataClassification, HealthReportStatus status, IList<string> affectedDefendersPlans, IList<string> affectedDefendersSubPlans, IReadOnlyDictionary<string, string> reportAdditionalData, IList<Issue> issues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceDetails = resourceDetails;
             EnvironmentDetails = environmentDetails;
@@ -50,23 +109,48 @@ namespace Azure.ResourceManager.SecurityCenter
             AffectedDefendersSubPlans = affectedDefendersSubPlans;
             ReportAdditionalData = reportAdditionalData;
             Issues = issues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource details of the health report. </summary>
+        /// <summary>
+        /// The resource details of the health report
+        /// Serialized Name: HealthReport.properties.resourceDetails
+        /// </summary>
         public HealthReportResourceDetails ResourceDetails { get; set; }
-        /// <summary> The environment details of the resource. </summary>
+        /// <summary>
+        /// The environment details of the resource
+        /// Serialized Name: HealthReport.properties.environmentDetails
+        /// </summary>
         public EnvironmentDetails EnvironmentDetails { get; set; }
-        /// <summary> The classification of the health report. </summary>
+        /// <summary>
+        /// The classification of the health report
+        /// Serialized Name: HealthReport.properties.healthDataClassification
+        /// </summary>
         public HealthDataClassification HealthDataClassification { get; set; }
-        /// <summary> The status of the health report. </summary>
+        /// <summary>
+        /// The status of the health report
+        /// Serialized Name: HealthReport.properties.status
+        /// </summary>
         public HealthReportStatus Status { get; set; }
-        /// <summary> The affected defenders plans by unhealthy report. </summary>
+        /// <summary>
+        /// The affected defenders plans by unhealthy report
+        /// Serialized Name: HealthReport.properties.affectedDefendersPlans
+        /// </summary>
         public IList<string> AffectedDefendersPlans { get; }
-        /// <summary> The affected defenders sub plans by unhealthy report. </summary>
+        /// <summary>
+        /// The affected defenders sub plans by unhealthy report
+        /// Serialized Name: HealthReport.properties.affectedDefendersSubPlans
+        /// </summary>
         public IList<string> AffectedDefendersSubPlans { get; }
-        /// <summary> Additional data for the given health report, this field can include more details on the resource and the health scenario. </summary>
+        /// <summary>
+        /// Additional data for the given health report, this field can include more details on the resource and the health scenario.
+        /// Serialized Name: HealthReport.properties.reportAdditionalData
+        /// </summary>
         public IReadOnlyDictionary<string, string> ReportAdditionalData { get; }
-        /// <summary> A collection of the issues in the report. </summary>
+        /// <summary>
+        /// A collection of the issues in the report
+        /// Serialized Name: HealthReport.properties.issues
+        /// </summary>
         public IList<Issue> Issues { get; }
     }
 }

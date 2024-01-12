@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,9 +15,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityWorkspaceSetting data model.
     /// Configures where to store the OMS agent data for workspaces under a scope
+    /// Serialized Name: WorkspaceSetting
     /// </summary>
     public partial class SecurityWorkspaceSettingData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecurityWorkspaceSettingData"/>. </summary>
         public SecurityWorkspaceSettingData()
         {
@@ -26,17 +61,31 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="workspaceId"> The full Azure ID of the workspace to save the data in. </param>
-        /// <param name="scope"> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </param>
-        internal SecurityWorkspaceSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier workspaceId, string scope) : base(id, name, resourceType, systemData)
+        /// <param name="workspaceId">
+        /// The full Azure ID of the workspace to save the data in
+        /// Serialized Name: WorkspaceSetting.properties.workspaceId
+        /// </param>
+        /// <param name="scope">
+        /// All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope
+        /// Serialized Name: WorkspaceSetting.properties.scope
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityWorkspaceSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier workspaceId, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WorkspaceId = workspaceId;
             Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The full Azure ID of the workspace to save the data in. </summary>
+        /// <summary>
+        /// The full Azure ID of the workspace to save the data in
+        /// Serialized Name: WorkspaceSetting.properties.workspaceId
+        /// </summary>
         public ResourceIdentifier WorkspaceId { get; set; }
-        /// <summary> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </summary>
+        /// <summary>
+        /// All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope
+        /// Serialized Name: WorkspaceSetting.properties.scope
+        /// </summary>
         public string Scope { get; set; }
     }
 }

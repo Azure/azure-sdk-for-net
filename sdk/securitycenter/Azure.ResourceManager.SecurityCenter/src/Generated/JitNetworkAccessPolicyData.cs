@@ -14,11 +14,50 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the JitNetworkAccessPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the JitNetworkAccessPolicy data model.
+    /// The JitNetworkAccessPolicy.
+    /// Serialized Name: JitNetworkAccessPolicy
+    /// </summary>
     public partial class JitNetworkAccessPolicyData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyData"/>. </summary>
-        /// <param name="virtualMachines"> Configurations for Microsoft.Compute/virtualMachines resource type. </param>
+        /// <param name="virtualMachines">
+        /// Configurations for Microsoft.Compute/virtualMachines resource type.
+        /// Serialized Name: JitNetworkAccessPolicy.properties.virtualMachines
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyData(IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines)
         {
@@ -33,29 +72,60 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="virtualMachines"> Configurations for Microsoft.Compute/virtualMachines resource type. </param>
-        /// <param name="requests"></param>
-        /// <param name="provisioningState"> Gets the provisioning state of the Just-in-Time policy. </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, IList<JitNetworkAccessRequestInfo> requests, string provisioningState, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="virtualMachines">
+        /// Configurations for Microsoft.Compute/virtualMachines resource type.
+        /// Serialized Name: JitNetworkAccessPolicy.properties.virtualMachines
+        /// </param>
+        /// <param name="requests"> Serialized Name: JitNetworkAccessPolicy.properties.requests. </param>
+        /// <param name="provisioningState">
+        /// Gets the provisioning state of the Just-in-Time policy.
+        /// Serialized Name: JitNetworkAccessPolicy.properties.provisioningState
+        /// </param>
+        /// <param name="kind">
+        /// Kind of the resource
+        /// Serialized Name: ResourceKind.kind
+        /// </param>
+        /// <param name="location">
+        /// Location where the resource is stored
+        /// Serialized Name: Location.location
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<JitNetworkAccessPolicyVirtualMachine> virtualMachines, IList<JitNetworkAccessRequestInfo> requests, string provisioningState, string kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             VirtualMachines = virtualMachines;
             Requests = requests;
             ProvisioningState = provisioningState;
             Kind = kind;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Configurations for Microsoft.Compute/virtualMachines resource type. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyData"/> for deserialization. </summary>
+        internal JitNetworkAccessPolicyData()
+        {
+        }
+
+        /// <summary>
+        /// Configurations for Microsoft.Compute/virtualMachines resource type.
+        /// Serialized Name: JitNetworkAccessPolicy.properties.virtualMachines
+        /// </summary>
         public IList<JitNetworkAccessPolicyVirtualMachine> VirtualMachines { get; }
-        /// <summary> Gets the requests. </summary>
+        /// <summary> Serialized Name: JitNetworkAccessPolicy.properties.requests. </summary>
         public IList<JitNetworkAccessRequestInfo> Requests { get; }
-        /// <summary> Gets the provisioning state of the Just-in-Time policy. </summary>
+        /// <summary>
+        /// Gets the provisioning state of the Just-in-Time policy.
+        /// Serialized Name: JitNetworkAccessPolicy.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Kind of the resource. </summary>
+        /// <summary>
+        /// Kind of the resource
+        /// Serialized Name: ResourceKind.kind
+        /// </summary>
         public string Kind { get; set; }
-        /// <summary> Location where the resource is stored. </summary>
+        /// <summary>
+        /// Location where the resource is stored
+        /// Serialized Name: Location.location
+        /// </summary>
         public AzureLocation? Location { get; }
     }
 }

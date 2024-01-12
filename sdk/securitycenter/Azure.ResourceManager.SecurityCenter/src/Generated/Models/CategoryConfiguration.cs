@@ -5,18 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Severity level per category configuration for PR Annotations. </summary>
+    /// <summary>
+    /// Severity level per category configuration for PR Annotations.
+    /// Serialized Name: CategoryConfiguration
+    /// </summary>
     public partial class CategoryConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CategoryConfiguration"/>. </summary>
         public CategoryConfiguration()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="CategoryConfiguration"/>. </summary>
-        /// <param name="minimumSeverityLevel"> Gets or sets minimum severity level for a given category. </param>
+        /// <param name="minimumSeverityLevel">
+        /// Gets or sets minimum severity level for a given category.
+        /// Serialized Name: CategoryConfiguration.minimumSeverityLevel
+        /// </param>
         /// <param name="category">
         /// Rule categories.
         /// Code - code scanning results.
@@ -25,14 +66,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// IaC results.
         /// Secrets scanning results.
         /// Container scanning results.
+        /// Serialized Name: CategoryConfiguration.category
         /// </param>
-        internal CategoryConfiguration(string minimumSeverityLevel, RuleCategory? category)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CategoryConfiguration(string minimumSeverityLevel, RuleCategory? category, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinimumSeverityLevel = minimumSeverityLevel;
             Category = category;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets minimum severity level for a given category. </summary>
+        /// <summary>
+        /// Gets or sets minimum severity level for a given category.
+        /// Serialized Name: CategoryConfiguration.minimumSeverityLevel
+        /// </summary>
         public string MinimumSeverityLevel { get; set; }
         /// <summary>
         /// Rule categories.
@@ -42,6 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// IaC results.
         /// Secrets scanning results.
         /// Container scanning results.
+        /// Serialized Name: CategoryConfiguration.category
         /// </summary>
         public RuleCategory? Category { get; set; }
     }

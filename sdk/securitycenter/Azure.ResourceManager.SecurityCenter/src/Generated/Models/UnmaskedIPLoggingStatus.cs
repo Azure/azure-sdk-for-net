@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Unmasked IP address logging status. </summary>
+    /// <summary>
+    /// Unmasked IP address logging status
+    /// Serialized Name: UnmaskedIpLoggingStatus
+    /// </summary>
     public readonly partial struct UnmaskedIPLoggingStatus : IEquatable<UnmaskedIPLoggingStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Unmasked IP logging is disabled. </summary>
+        /// <summary>
+        /// Unmasked IP logging is disabled
+        /// Serialized Name: UnmaskedIpLoggingStatus.Disabled
+        /// </summary>
         public static UnmaskedIPLoggingStatus Disabled { get; } = new UnmaskedIPLoggingStatus(DisabledValue);
-        /// <summary> Unmasked IP logging is enabled. </summary>
+        /// <summary>
+        /// Unmasked IP logging is enabled
+        /// Serialized Name: UnmaskedIpLoggingStatus.Enabled
+        /// </summary>
         public static UnmaskedIPLoggingStatus Enabled { get; } = new UnmaskedIPLoggingStatus(EnabledValue);
         /// <summary> Determines if two <see cref="UnmaskedIPLoggingStatus"/> values are the same. </summary>
         public static bool operator ==(UnmaskedIPLoggingStatus left, UnmaskedIPLoggingStatus right) => left.Equals(right);

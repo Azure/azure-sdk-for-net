@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The kind of alert simulation. </summary>
+    /// <summary>
+    /// The kind of alert simulation.
+    /// Serialized Name: Kind
+    /// </summary>
     internal readonly partial struct SecurityCenterKind : IEquatable<SecurityCenterKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string BundlesValue = "Bundles";
 
-        /// <summary> Simulate alerts according to bundles. </summary>
+        /// <summary>
+        /// Simulate alerts according to bundles
+        /// Serialized Name: Kind.Bundles
+        /// </summary>
         public static SecurityCenterKind Bundles { get; } = new SecurityCenterKind(BundlesValue);
         /// <summary> Determines if two <see cref="SecurityCenterKind"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterKind left, SecurityCenterKind right) => left.Equals(right);

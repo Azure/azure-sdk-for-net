@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The security family of the discovered solution. </summary>
+    /// <summary>
+    /// The security family of the discovered solution
+    /// Serialized Name: SecurityFamily
+    /// </summary>
     public readonly partial struct SecurityFamily : IEquatable<SecurityFamily>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string SaasWafValue = "SaasWaf";
         private const string VulnerabilityAssessmentValue = "Va";
 
-        /// <summary> Waf. </summary>
+        /// <summary>
+        /// Waf
+        /// Serialized Name: SecurityFamily.Waf
+        /// </summary>
         public static SecurityFamily Waf { get; } = new SecurityFamily(WafValue);
-        /// <summary> Ngfw. </summary>
+        /// <summary>
+        /// Ngfw
+        /// Serialized Name: SecurityFamily.Ngfw
+        /// </summary>
         public static SecurityFamily Ngfw { get; } = new SecurityFamily(NgfwValue);
-        /// <summary> SaasWaf. </summary>
+        /// <summary>
+        /// SaasWaf
+        /// Serialized Name: SecurityFamily.SaasWaf
+        /// </summary>
         public static SecurityFamily SaasWaf { get; } = new SecurityFamily(SaasWafValue);
-        /// <summary> Va. </summary>
+        /// <summary>
+        /// Va
+        /// Serialized Name: SecurityFamily.Va
+        /// </summary>
         public static SecurityFamily VulnerabilityAssessment { get; } = new SecurityFamily(VulnerabilityAssessmentValue);
         /// <summary> Determines if two <see cref="SecurityFamily"/> values are the same. </summary>
         public static bool operator ==(SecurityFamily left, SecurityFamily right) => left.Equals(right);

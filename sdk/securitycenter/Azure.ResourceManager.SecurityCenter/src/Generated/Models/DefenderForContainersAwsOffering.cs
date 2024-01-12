@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Defender for Containers AWS offering. </summary>
+    /// <summary>
+    /// The Defender for Containers AWS offering
+    /// Serialized Name: DefenderForContainersAwsOffering
+    /// </summary>
     public partial class DefenderForContainersAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOffering"/>. </summary>
@@ -17,21 +23,64 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOffering"/>. </summary>
-        /// <param name="offeringType"> The type of the security offering. </param>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="kubernetesService"> The kubernetes service connection configuration. </param>
-        /// <param name="kubernetesScubaReader"> The kubernetes to scuba connection configuration. </param>
-        /// <param name="cloudWatchToKinesis"> The cloudwatch to kinesis connection configuration. </param>
-        /// <param name="kinesisToS3"> The kinesis to s3 connection configuration. </param>
-        /// <param name="containerVulnerabilityAssessment"> The container vulnerability assessment configuration. </param>
-        /// <param name="containerVulnerabilityAssessmentTask"> The container vulnerability assessment task configuration. </param>
-        /// <param name="isContainerVulnerabilityAssessmentEnabled"> Enable container vulnerability assessment feature. </param>
-        /// <param name="isAutoProvisioningEnabled"> Is audit logs pipeline auto provisioning enabled. </param>
-        /// <param name="kubeAuditRetentionTime"> The retention time in days of kube audit logs set on the CloudWatch log group. </param>
-        /// <param name="scubaExternalId"> The externalId used by the data reader to prevent the confused deputy attack. </param>
-        /// <param name="mdcContainersImageAssessment"> The Microsoft Defender container image assessment configuration. </param>
-        /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender container agentless discovery K8s configuration. </param>
-        internal DefenderForContainersAwsOffering(OfferingType offeringType, string description, DefenderForContainersAwsOfferingKubernetesService kubernetesService, DefenderForContainersAwsOfferingKubernetesScubaReader kubernetesScubaReader, DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis, DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3, DefenderForContainersAwsOfferingContainerVulnerabilityAssessment containerVulnerabilityAssessment, DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask containerVulnerabilityAssessmentTask, bool? isContainerVulnerabilityAssessmentEnabled, bool? isAutoProvisioningEnabled, long? kubeAuditRetentionTime, string scubaExternalId, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description)
+        /// <param name="offeringType">
+        /// The type of the security offering.
+        /// Serialized Name: CloudOffering.offeringType
+        /// </param>
+        /// <param name="description">
+        /// The offering description.
+        /// Serialized Name: CloudOffering.description
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kubernetesService">
+        /// The kubernetes service connection configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.kubernetesService
+        /// </param>
+        /// <param name="kubernetesScubaReader">
+        /// The kubernetes to scuba connection configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.kubernetesScubaReader
+        /// </param>
+        /// <param name="cloudWatchToKinesis">
+        /// The cloudwatch to kinesis connection configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.cloudWatchToKinesis
+        /// </param>
+        /// <param name="kinesisToS3">
+        /// The kinesis to s3 connection configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.kinesisToS3
+        /// </param>
+        /// <param name="containerVulnerabilityAssessment">
+        /// The container vulnerability assessment configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.containerVulnerabilityAssessment
+        /// </param>
+        /// <param name="containerVulnerabilityAssessmentTask">
+        /// The container vulnerability assessment task configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.containerVulnerabilityAssessmentTask
+        /// </param>
+        /// <param name="isContainerVulnerabilityAssessmentEnabled">
+        /// Enable container vulnerability assessment feature
+        /// Serialized Name: DefenderForContainersAwsOffering.enableContainerVulnerabilityAssessment
+        /// </param>
+        /// <param name="isAutoProvisioningEnabled">
+        /// Is audit logs pipeline auto provisioning enabled
+        /// Serialized Name: DefenderForContainersAwsOffering.autoProvisioning
+        /// </param>
+        /// <param name="kubeAuditRetentionTime">
+        /// The retention time in days of kube audit logs set on the CloudWatch log group
+        /// Serialized Name: DefenderForContainersAwsOffering.kubeAuditRetentionTime
+        /// </param>
+        /// <param name="scubaExternalId">
+        /// The externalId used by the data reader to prevent the confused deputy attack
+        /// Serialized Name: DefenderForContainersAwsOffering.scubaExternalId
+        /// </param>
+        /// <param name="mdcContainersImageAssessment">
+        /// The Microsoft Defender container image assessment configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.mdcContainersImageAssessment
+        /// </param>
+        /// <param name="mdcContainersAgentlessDiscoveryK8S">
+        /// The Microsoft Defender container agentless discovery K8s configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.mdcContainersAgentlessDiscoveryK8s
+        /// </param>
+        internal DefenderForContainersAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DefenderForContainersAwsOfferingKubernetesService kubernetesService, DefenderForContainersAwsOfferingKubernetesScubaReader kubernetesScubaReader, DefenderForContainersAwsOfferingCloudWatchToKinesis cloudWatchToKinesis, DefenderForContainersAwsOfferingKinesisToS3 kinesisToS3, DefenderForContainersAwsOfferingContainerVulnerabilityAssessment containerVulnerabilityAssessment, DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask containerVulnerabilityAssessmentTask, bool? isContainerVulnerabilityAssessmentEnabled, bool? isAutoProvisioningEnabled, long? kubeAuditRetentionTime, string scubaExternalId, DefenderForContainersAwsOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description, serializedAdditionalRawData)
         {
             KubernetesService = kubernetesService;
             KubernetesScubaReader = kubernetesScubaReader;
@@ -48,9 +97,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OfferingType = offeringType;
         }
 
-        /// <summary> The kubernetes service connection configuration. </summary>
+        /// <summary>
+        /// The kubernetes service connection configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.kubernetesService
+        /// </summary>
         internal DefenderForContainersAwsOfferingKubernetesService KubernetesService { get; set; }
-        /// <summary> The cloud role ARN in AWS for this feature used for provisioning resources. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS for this feature used for provisioning resources
+        /// Serialized Name: DefenderForContainersAwsOfferingKubernetesService.cloudRoleArn
+        /// </summary>
         public string KubernetesServiceCloudRoleArn
         {
             get => KubernetesService is null ? default : KubernetesService.CloudRoleArn;
@@ -62,9 +117,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary> The kubernetes to scuba connection configuration. </summary>
+        /// <summary>
+        /// The kubernetes to scuba connection configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.kubernetesScubaReader
+        /// </summary>
         internal DefenderForContainersAwsOfferingKubernetesScubaReader KubernetesScubaReader { get; set; }
-        /// <summary> The cloud role ARN in AWS for this feature used for reading data. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS for this feature used for reading data
+        /// Serialized Name: DefenderForContainersAwsOfferingKubernetesScubaReader.cloudRoleArn
+        /// </summary>
         public string KubernetesScubaReaderCloudRoleArn
         {
             get => KubernetesScubaReader is null ? default : KubernetesScubaReader.CloudRoleArn;
@@ -76,9 +137,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary> The cloudwatch to kinesis connection configuration. </summary>
+        /// <summary>
+        /// The cloudwatch to kinesis connection configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.cloudWatchToKinesis
+        /// </summary>
         internal DefenderForContainersAwsOfferingCloudWatchToKinesis CloudWatchToKinesis { get; set; }
-        /// <summary> The cloud role ARN in AWS used by CloudWatch to transfer data into Kinesis. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS used by CloudWatch to transfer data into Kinesis
+        /// Serialized Name: DefenderForContainersAwsOfferingCloudWatchToKinesis.cloudRoleArn
+        /// </summary>
         public string CloudRoleArn
         {
             get => CloudWatchToKinesis is null ? default : CloudWatchToKinesis.CloudRoleArn;
@@ -90,9 +157,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary> The kinesis to s3 connection configuration. </summary>
+        /// <summary>
+        /// The kinesis to s3 connection configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.kinesisToS3
+        /// </summary>
         internal DefenderForContainersAwsOfferingKinesisToS3 KinesisToS3 { get; set; }
-        /// <summary> The cloud role ARN in AWS used by Kinesis to transfer data into S3. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS used by Kinesis to transfer data into S3
+        /// Serialized Name: DefenderForContainersAwsOfferingKinesisToS3.cloudRoleArn
+        /// </summary>
         public string KinesisToS3CloudRoleArn
         {
             get => KinesisToS3 is null ? default : KinesisToS3.CloudRoleArn;
@@ -104,9 +177,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary> The container vulnerability assessment configuration. </summary>
+        /// <summary>
+        /// The container vulnerability assessment configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.containerVulnerabilityAssessment
+        /// </summary>
         internal DefenderForContainersAwsOfferingContainerVulnerabilityAssessment ContainerVulnerabilityAssessment { get; set; }
-        /// <summary> The cloud role ARN in AWS for this feature. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: DefenderForContainersAwsOfferingContainerVulnerabilityAssessment.cloudRoleArn
+        /// </summary>
         public string ContainerVulnerabilityAssessmentCloudRoleArn
         {
             get => ContainerVulnerabilityAssessment is null ? default : ContainerVulnerabilityAssessment.CloudRoleArn;
@@ -118,9 +197,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary> The container vulnerability assessment task configuration. </summary>
+        /// <summary>
+        /// The container vulnerability assessment task configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.containerVulnerabilityAssessmentTask
+        /// </summary>
         internal DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask ContainerVulnerabilityAssessmentTask { get; set; }
-        /// <summary> The cloud role ARN in AWS for this feature. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask.cloudRoleArn
+        /// </summary>
         public string ContainerVulnerabilityAssessmentTaskCloudRoleArn
         {
             get => ContainerVulnerabilityAssessmentTask is null ? default : ContainerVulnerabilityAssessmentTask.CloudRoleArn;
@@ -132,17 +217,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary> Enable container vulnerability assessment feature. </summary>
+        /// <summary>
+        /// Enable container vulnerability assessment feature
+        /// Serialized Name: DefenderForContainersAwsOffering.enableContainerVulnerabilityAssessment
+        /// </summary>
         public bool? IsContainerVulnerabilityAssessmentEnabled { get; set; }
-        /// <summary> Is audit logs pipeline auto provisioning enabled. </summary>
+        /// <summary>
+        /// Is audit logs pipeline auto provisioning enabled
+        /// Serialized Name: DefenderForContainersAwsOffering.autoProvisioning
+        /// </summary>
         public bool? IsAutoProvisioningEnabled { get; set; }
-        /// <summary> The retention time in days of kube audit logs set on the CloudWatch log group. </summary>
+        /// <summary>
+        /// The retention time in days of kube audit logs set on the CloudWatch log group
+        /// Serialized Name: DefenderForContainersAwsOffering.kubeAuditRetentionTime
+        /// </summary>
         public long? KubeAuditRetentionTime { get; set; }
-        /// <summary> The externalId used by the data reader to prevent the confused deputy attack. </summary>
+        /// <summary>
+        /// The externalId used by the data reader to prevent the confused deputy attack
+        /// Serialized Name: DefenderForContainersAwsOffering.scubaExternalId
+        /// </summary>
         public string ScubaExternalId { get; set; }
-        /// <summary> The Microsoft Defender container image assessment configuration. </summary>
+        /// <summary>
+        /// The Microsoft Defender container image assessment configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.mdcContainersImageAssessment
+        /// </summary>
         public DefenderForContainersAwsOfferingMdcContainersImageAssessment MdcContainersImageAssessment { get; set; }
-        /// <summary> The Microsoft Defender container agentless discovery K8s configuration. </summary>
+        /// <summary>
+        /// The Microsoft Defender container agentless discovery K8s configuration
+        /// Serialized Name: DefenderForContainersAwsOffering.mdcContainersAgentlessDiscoveryK8s
+        /// </summary>
         public DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S { get; set; }
     }
 }

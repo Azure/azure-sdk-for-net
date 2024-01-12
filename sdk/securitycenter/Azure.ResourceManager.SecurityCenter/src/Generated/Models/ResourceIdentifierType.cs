@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> There can be multiple identifiers of different type per alert, this field specify the identifier type. </summary>
+    /// <summary>
+    /// There can be multiple identifiers of different type per alert, this field specify the identifier type.
+    /// Serialized Name: ResourceIdentifierType
+    /// </summary>
     internal readonly partial struct ResourceIdentifierType : IEquatable<ResourceIdentifierType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AzureResourceValue = "AzureResource";
         private const string LogAnalyticsValue = "LogAnalytics";
 
-        /// <summary> AzureResource. </summary>
+        /// <summary>
+        /// AzureResource
+        /// Serialized Name: ResourceIdentifierType.AzureResource
+        /// </summary>
         public static ResourceIdentifierType AzureResource { get; } = new ResourceIdentifierType(AzureResourceValue);
-        /// <summary> LogAnalytics. </summary>
+        /// <summary>
+        /// LogAnalytics
+        /// Serialized Name: ResourceIdentifierType.LogAnalytics
+        /// </summary>
         public static ResourceIdentifierType LogAnalytics { get; } = new ResourceIdentifierType(LogAnalyticsValue);
         /// <summary> Determines if two <see cref="ResourceIdentifierType"/> values are the same. </summary>
         public static bool operator ==(ResourceIdentifierType left, ResourceIdentifierType right) => left.Equals(right);

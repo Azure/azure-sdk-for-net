@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Changing set of properties depending on the entity type. </summary>
+    /// <summary>
+    /// Changing set of properties depending on the entity type.
+    /// Serialized Name: AlertEntity
+    /// </summary>
     public partial class SecurityAlertEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAlertEntity"/>. </summary>
@@ -21,7 +24,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertEntity"/>. </summary>
-        /// <param name="alertEntityType"> Type of entity. </param>
+        /// <param name="alertEntityType">
+        /// Type of entity
+        /// Serialized Name: AlertEntity.type
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SecurityAlertEntity(string alertEntityType, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -29,7 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Type of entity. </summary>
+        /// <summary>
+        /// Type of entity
+        /// Serialized Name: AlertEntity.type
+        /// </summary>
         public string AlertEntityType { get; }
         /// <summary>
         /// Additional Properties

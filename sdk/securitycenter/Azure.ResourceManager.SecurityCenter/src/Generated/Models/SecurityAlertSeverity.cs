@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </summary>
+    /// <summary>
+    /// The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified.
+    /// Serialized Name: AlertSeverity
+    /// </summary>
     public readonly partial struct SecurityAlertSeverity : IEquatable<SecurityAlertSeverity>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary> Informational. </summary>
+        /// <summary>
+        /// Informational
+        /// Serialized Name: AlertSeverity.Informational
+        /// </summary>
         public static SecurityAlertSeverity Informational { get; } = new SecurityAlertSeverity(InformationalValue);
-        /// <summary> Low. </summary>
+        /// <summary>
+        /// Low
+        /// Serialized Name: AlertSeverity.Low
+        /// </summary>
         public static SecurityAlertSeverity Low { get; } = new SecurityAlertSeverity(LowValue);
-        /// <summary> Medium. </summary>
+        /// <summary>
+        /// Medium
+        /// Serialized Name: AlertSeverity.Medium
+        /// </summary>
         public static SecurityAlertSeverity Medium { get; } = new SecurityAlertSeverity(MediumValue);
-        /// <summary> High. </summary>
+        /// <summary>
+        /// High
+        /// Serialized Name: AlertSeverity.High
+        /// </summary>
         public static SecurityAlertSeverity High { get; } = new SecurityAlertSeverity(HighValue);
         /// <summary> Determines if two <see cref="SecurityAlertSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertSeverity left, SecurityAlertSeverity right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The rule type of the governance rule, defines the source of the rule e.g. Integrated. </summary>
+    /// <summary>
+    /// The rule type of the governance rule, defines the source of the rule e.g. Integrated
+    /// Serialized Name: GovernanceRuleType
+    /// </summary>
     public readonly partial struct GovernanceRuleType : IEquatable<GovernanceRuleType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string IntegratedValue = "Integrated";
         private const string ServiceNowValue = "ServiceNow";
 
-        /// <summary> The source of the rule type definition is integrated. </summary>
+        /// <summary>
+        /// The source of the rule type definition is integrated
+        /// Serialized Name: GovernanceRuleType.Integrated
+        /// </summary>
         public static GovernanceRuleType Integrated { get; } = new GovernanceRuleType(IntegratedValue);
-        /// <summary> The source of the rule type definition is ServiceNow. </summary>
+        /// <summary>
+        /// The source of the rule type definition is ServiceNow
+        /// Serialized Name: GovernanceRuleType.ServiceNow
+        /// </summary>
         public static GovernanceRuleType ServiceNow { get; } = new GovernanceRuleType(ServiceNowValue);
         /// <summary> Determines if two <see cref="GovernanceRuleType"/> values are the same. </summary>
         public static bool operator ==(GovernanceRuleType left, GovernanceRuleType right) => left.Equals(right);

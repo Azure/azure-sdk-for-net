@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// Describes properties of an alert simulation request
+    /// Serialized Name: AlertSimulatorRequestProperties
     /// Please note <see cref="SecurityAlertSimulatorRequestProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>.
     /// </summary>
@@ -25,7 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorRequestProperties"/>. </summary>
-        /// <param name="kind"> The kind of alert simulation. </param>
+        /// <param name="kind">
+        /// The kind of alert simulation.
+        /// Serialized Name: AlertSimulatorRequestProperties.kind
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SecurityAlertSimulatorRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -33,7 +37,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The kind of alert simulation. </summary>
+        /// <summary>
+        /// The kind of alert simulation.
+        /// Serialized Name: AlertSimulatorRequestProperties.kind
+        /// </summary>
         internal SecurityCenterKind Kind { get; set; }
         /// <summary>
         /// Additional Properties

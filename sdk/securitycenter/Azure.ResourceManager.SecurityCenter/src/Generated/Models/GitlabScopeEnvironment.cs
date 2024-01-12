@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The GitLab scope connector's environment data. </summary>
+    /// <summary>
+    /// The GitLab scope connector's environment data
+    /// Serialized Name: GitlabScopeEnvironmentData
+    /// </summary>
     public partial class GitlabScopeEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="GitlabScopeEnvironment"/>. </summary>
@@ -17,8 +23,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GitlabScopeEnvironment"/>. </summary>
-        /// <param name="environmentType"> The type of the environment data. </param>
-        internal GitlabScopeEnvironment(EnvironmentType environmentType) : base(environmentType)
+        /// <param name="environmentType">
+        /// The type of the environment data.
+        /// Serialized Name: EnvironmentData.environmentType
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitlabScopeEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(environmentType, serializedAdditionalRawData)
         {
             EnvironmentType = environmentType;
         }

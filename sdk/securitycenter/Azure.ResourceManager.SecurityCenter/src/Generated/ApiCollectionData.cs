@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -15,9 +16,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the ApiCollection data model.
     /// An API collection as represented by Microsoft Defender for APIs.
+    /// Serialized Name: ApiCollection
     /// </summary>
     public partial class ApiCollectionData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ApiCollectionData"/>. </summary>
         public ApiCollectionData()
         {
@@ -28,17 +62,48 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the API collection. </param>
-        /// <param name="displayName"> The display name of the API collection. </param>
-        /// <param name="discoveredVia"> The resource Id of the resource from where this API collection was discovered. </param>
-        /// <param name="baseUri"> The base URI for this API collection. All endpoints of this API collection extend this base URI. </param>
-        /// <param name="numberOfApiEndpoints"> The number of API endpoints discovered in this API collection. </param>
-        /// <param name="numberOfInactiveApiEndpoints"> The number of API endpoints in this API collection that have not received any API traffic in the last 30 days. </param>
-        /// <param name="numberOfUnauthenticatedApiEndpoints"> The number of API endpoints in this API collection that are unauthenticated. </param>
-        /// <param name="numberOfExternalApiEndpoints"> The number of API endpoints in this API collection for which API traffic from the internet was observed. </param>
-        /// <param name="numberOfApiEndpointsWithSensitiveDataExposed"> The number of API endpoints in this API collection which are exposing sensitive data in their requests and/or responses. </param>
-        /// <param name="sensitivityLabel"> The highest priority sensitivity label from Microsoft Purview in this API collection. </param>
-        internal ApiCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamilyProvisioningState? provisioningState, string displayName, ResourceIdentifier discoveredVia, Uri baseUri, long? numberOfApiEndpoints, long? numberOfInactiveApiEndpoints, long? numberOfUnauthenticatedApiEndpoints, long? numberOfExternalApiEndpoints, long? numberOfApiEndpointsWithSensitiveDataExposed, string sensitivityLabel) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState">
+        /// Gets the provisioning state of the API collection.
+        /// Serialized Name: ApiCollection.properties.provisioningState
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the API collection.
+        /// Serialized Name: ApiCollection.properties.displayName
+        /// </param>
+        /// <param name="discoveredVia">
+        /// The resource Id of the resource from where this API collection was discovered.
+        /// Serialized Name: ApiCollection.properties.discoveredVia
+        /// </param>
+        /// <param name="baseUri">
+        /// The base URI for this API collection. All endpoints of this API collection extend this base URI.
+        /// Serialized Name: ApiCollection.properties.baseUrl
+        /// </param>
+        /// <param name="numberOfApiEndpoints">
+        /// The number of API endpoints discovered in this API collection.
+        /// Serialized Name: ApiCollection.properties.numberOfApiEndpoints
+        /// </param>
+        /// <param name="numberOfInactiveApiEndpoints">
+        /// The number of API endpoints in this API collection that have not received any API traffic in the last 30 days.
+        /// Serialized Name: ApiCollection.properties.numberOfInactiveApiEndpoints
+        /// </param>
+        /// <param name="numberOfUnauthenticatedApiEndpoints">
+        /// The number of API endpoints in this API collection that are unauthenticated.
+        /// Serialized Name: ApiCollection.properties.numberOfUnauthenticatedApiEndpoints
+        /// </param>
+        /// <param name="numberOfExternalApiEndpoints">
+        /// The number of API endpoints in this API collection for which API traffic from the internet was observed.
+        /// Serialized Name: ApiCollection.properties.numberOfExternalApiEndpoints
+        /// </param>
+        /// <param name="numberOfApiEndpointsWithSensitiveDataExposed">
+        /// The number of API endpoints in this API collection which are exposing sensitive data in their requests and/or responses.
+        /// Serialized Name: ApiCollection.properties.numberOfApiEndpointsWithSensitiveDataExposed
+        /// </param>
+        /// <param name="sensitivityLabel">
+        /// The highest priority sensitivity label from Microsoft Purview in this API collection.
+        /// Serialized Name: ApiCollection.properties.sensitivityLabel
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamilyProvisioningState? provisioningState, string displayName, ResourceIdentifier discoveredVia, Uri baseUri, long? numberOfApiEndpoints, long? numberOfInactiveApiEndpoints, long? numberOfUnauthenticatedApiEndpoints, long? numberOfExternalApiEndpoints, long? numberOfApiEndpointsWithSensitiveDataExposed, string sensitivityLabel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -50,27 +115,58 @@ namespace Azure.ResourceManager.SecurityCenter
             NumberOfExternalApiEndpoints = numberOfExternalApiEndpoints;
             NumberOfApiEndpointsWithSensitiveDataExposed = numberOfApiEndpointsWithSensitiveDataExposed;
             SensitivityLabel = sensitivityLabel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provisioning state of the API collection. </summary>
+        /// <summary>
+        /// Gets the provisioning state of the API collection.
+        /// Serialized Name: ApiCollection.properties.provisioningState
+        /// </summary>
         public SecurityFamilyProvisioningState? ProvisioningState { get; }
-        /// <summary> The display name of the API collection. </summary>
+        /// <summary>
+        /// The display name of the API collection.
+        /// Serialized Name: ApiCollection.properties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The resource Id of the resource from where this API collection was discovered. </summary>
+        /// <summary>
+        /// The resource Id of the resource from where this API collection was discovered.
+        /// Serialized Name: ApiCollection.properties.discoveredVia
+        /// </summary>
         public ResourceIdentifier DiscoveredVia { get; }
-        /// <summary> The base URI for this API collection. All endpoints of this API collection extend this base URI. </summary>
+        /// <summary>
+        /// The base URI for this API collection. All endpoints of this API collection extend this base URI.
+        /// Serialized Name: ApiCollection.properties.baseUrl
+        /// </summary>
         public Uri BaseUri { get; }
-        /// <summary> The number of API endpoints discovered in this API collection. </summary>
+        /// <summary>
+        /// The number of API endpoints discovered in this API collection.
+        /// Serialized Name: ApiCollection.properties.numberOfApiEndpoints
+        /// </summary>
         public long? NumberOfApiEndpoints { get; }
-        /// <summary> The number of API endpoints in this API collection that have not received any API traffic in the last 30 days. </summary>
+        /// <summary>
+        /// The number of API endpoints in this API collection that have not received any API traffic in the last 30 days.
+        /// Serialized Name: ApiCollection.properties.numberOfInactiveApiEndpoints
+        /// </summary>
         public long? NumberOfInactiveApiEndpoints { get; }
-        /// <summary> The number of API endpoints in this API collection that are unauthenticated. </summary>
+        /// <summary>
+        /// The number of API endpoints in this API collection that are unauthenticated.
+        /// Serialized Name: ApiCollection.properties.numberOfUnauthenticatedApiEndpoints
+        /// </summary>
         public long? NumberOfUnauthenticatedApiEndpoints { get; }
-        /// <summary> The number of API endpoints in this API collection for which API traffic from the internet was observed. </summary>
+        /// <summary>
+        /// The number of API endpoints in this API collection for which API traffic from the internet was observed.
+        /// Serialized Name: ApiCollection.properties.numberOfExternalApiEndpoints
+        /// </summary>
         public long? NumberOfExternalApiEndpoints { get; }
-        /// <summary> The number of API endpoints in this API collection which are exposing sensitive data in their requests and/or responses. </summary>
+        /// <summary>
+        /// The number of API endpoints in this API collection which are exposing sensitive data in their requests and/or responses.
+        /// Serialized Name: ApiCollection.properties.numberOfApiEndpointsWithSensitiveDataExposed
+        /// </summary>
         public long? NumberOfApiEndpointsWithSensitiveDataExposed { get; }
-        /// <summary> The highest priority sensitivity label from Microsoft Purview in this API collection. </summary>
+        /// <summary>
+        /// The highest priority sensitivity label from Microsoft Purview in this API collection.
+        /// Serialized Name: ApiCollection.properties.sensitivityLabel
+        /// </summary>
         public string SensitivityLabel { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Techniques of the assessment. </summary>
+    /// <summary>
+    /// Techniques of the assessment
+    /// Serialized Name: Techniques
+    /// </summary>
     public readonly partial struct SecurityAssessmentTechnique : IEquatable<SecurityAssessmentTechnique>
     {
         private readonly string _value;
@@ -127,213 +130,525 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string WindowsManagementInstrumentationValue = "Windows Management Instrumentation";
         private const string FileAndDirectoryPermissionsModificationValue = "File and Directory Permissions Modification";
 
-        /// <summary> Abuse Elevation Control Mechanism. </summary>
+        /// <summary>
+        /// Abuse Elevation Control Mechanism
+        /// Serialized Name: Techniques.Abuse Elevation Control Mechanism
+        /// </summary>
         public static SecurityAssessmentTechnique AbuseElevationControlMechanism { get; } = new SecurityAssessmentTechnique(AbuseElevationControlMechanismValue);
-        /// <summary> Access Token Manipulation. </summary>
+        /// <summary>
+        /// Access Token Manipulation
+        /// Serialized Name: Techniques.Access Token Manipulation
+        /// </summary>
         public static SecurityAssessmentTechnique AccessTokenManipulation { get; } = new SecurityAssessmentTechnique(AccessTokenManipulationValue);
-        /// <summary> Account Discovery. </summary>
+        /// <summary>
+        /// Account Discovery
+        /// Serialized Name: Techniques.Account Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique AccountDiscovery { get; } = new SecurityAssessmentTechnique(AccountDiscoveryValue);
-        /// <summary> Account Manipulation. </summary>
+        /// <summary>
+        /// Account Manipulation
+        /// Serialized Name: Techniques.Account Manipulation
+        /// </summary>
         public static SecurityAssessmentTechnique AccountManipulation { get; } = new SecurityAssessmentTechnique(AccountManipulationValue);
-        /// <summary> Active Scanning. </summary>
+        /// <summary>
+        /// Active Scanning
+        /// Serialized Name: Techniques.Active Scanning
+        /// </summary>
         public static SecurityAssessmentTechnique ActiveScanning { get; } = new SecurityAssessmentTechnique(ActiveScanningValue);
-        /// <summary> Application Layer Protocol. </summary>
+        /// <summary>
+        /// Application Layer Protocol
+        /// Serialized Name: Techniques.Application Layer Protocol
+        /// </summary>
         public static SecurityAssessmentTechnique ApplicationLayerProtocol { get; } = new SecurityAssessmentTechnique(ApplicationLayerProtocolValue);
-        /// <summary> Audio Capture. </summary>
+        /// <summary>
+        /// Audio Capture
+        /// Serialized Name: Techniques.Audio Capture
+        /// </summary>
         public static SecurityAssessmentTechnique AudioCapture { get; } = new SecurityAssessmentTechnique(AudioCaptureValue);
-        /// <summary> Boot or Logon Autostart Execution. </summary>
+        /// <summary>
+        /// Boot or Logon Autostart Execution
+        /// Serialized Name: Techniques.Boot or Logon Autostart Execution
+        /// </summary>
         public static SecurityAssessmentTechnique BootOrLogonAutostartExecution { get; } = new SecurityAssessmentTechnique(BootOrLogonAutostartExecutionValue);
-        /// <summary> Boot or Logon Initialization Scripts. </summary>
+        /// <summary>
+        /// Boot or Logon Initialization Scripts
+        /// Serialized Name: Techniques.Boot or Logon Initialization Scripts
+        /// </summary>
         public static SecurityAssessmentTechnique BootOrLogonInitializationScripts { get; } = new SecurityAssessmentTechnique(BootOrLogonInitializationScriptsValue);
-        /// <summary> Brute Force. </summary>
+        /// <summary>
+        /// Brute Force
+        /// Serialized Name: Techniques.Brute Force
+        /// </summary>
         public static SecurityAssessmentTechnique BruteForce { get; } = new SecurityAssessmentTechnique(BruteForceValue);
-        /// <summary> Cloud Infrastructure Discovery. </summary>
+        /// <summary>
+        /// Cloud Infrastructure Discovery
+        /// Serialized Name: Techniques.Cloud Infrastructure Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique CloudInfrastructureDiscovery { get; } = new SecurityAssessmentTechnique(CloudInfrastructureDiscoveryValue);
-        /// <summary> Cloud Service Dashboard. </summary>
+        /// <summary>
+        /// Cloud Service Dashboard
+        /// Serialized Name: Techniques.Cloud Service Dashboard
+        /// </summary>
         public static SecurityAssessmentTechnique CloudServiceDashboard { get; } = new SecurityAssessmentTechnique(CloudServiceDashboardValue);
-        /// <summary> Cloud Service Discovery. </summary>
+        /// <summary>
+        /// Cloud Service Discovery
+        /// Serialized Name: Techniques.Cloud Service Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique CloudServiceDiscovery { get; } = new SecurityAssessmentTechnique(CloudServiceDiscoveryValue);
-        /// <summary> Command and Scripting Interpreter. </summary>
+        /// <summary>
+        /// Command and Scripting Interpreter
+        /// Serialized Name: Techniques.Command and Scripting Interpreter
+        /// </summary>
         public static SecurityAssessmentTechnique CommandAndScriptingInterpreter { get; } = new SecurityAssessmentTechnique(CommandAndScriptingInterpreterValue);
-        /// <summary> Compromise Client Software Binary. </summary>
+        /// <summary>
+        /// Compromise Client Software Binary
+        /// Serialized Name: Techniques.Compromise Client Software Binary
+        /// </summary>
         public static SecurityAssessmentTechnique CompromiseClientSoftwareBinary { get; } = new SecurityAssessmentTechnique(CompromiseClientSoftwareBinaryValue);
-        /// <summary> Compromise Infrastructure. </summary>
+        /// <summary>
+        /// Compromise Infrastructure
+        /// Serialized Name: Techniques.Compromise Infrastructure
+        /// </summary>
         public static SecurityAssessmentTechnique CompromiseInfrastructure { get; } = new SecurityAssessmentTechnique(CompromiseInfrastructureValue);
-        /// <summary> Container and Resource Discovery. </summary>
+        /// <summary>
+        /// Container and Resource Discovery
+        /// Serialized Name: Techniques.Container and Resource Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique ContainerAndResourceDiscovery { get; } = new SecurityAssessmentTechnique(ContainerAndResourceDiscoveryValue);
-        /// <summary> Create Account. </summary>
+        /// <summary>
+        /// Create Account
+        /// Serialized Name: Techniques.Create Account
+        /// </summary>
         public static SecurityAssessmentTechnique CreateAccount { get; } = new SecurityAssessmentTechnique(CreateAccountValue);
-        /// <summary> Create or Modify System Process. </summary>
+        /// <summary>
+        /// Create or Modify System Process
+        /// Serialized Name: Techniques.Create or Modify System Process
+        /// </summary>
         public static SecurityAssessmentTechnique CreateOrModifySystemProcess { get; } = new SecurityAssessmentTechnique(CreateOrModifySystemProcessValue);
-        /// <summary> Credentials from Password Stores. </summary>
+        /// <summary>
+        /// Credentials from Password Stores
+        /// Serialized Name: Techniques.Credentials from Password Stores
+        /// </summary>
         public static SecurityAssessmentTechnique CredentialsFromPasswordStores { get; } = new SecurityAssessmentTechnique(CredentialsFromPasswordStoresValue);
-        /// <summary> Data Destruction. </summary>
+        /// <summary>
+        /// Data Destruction
+        /// Serialized Name: Techniques.Data Destruction
+        /// </summary>
         public static SecurityAssessmentTechnique DataDestruction { get; } = new SecurityAssessmentTechnique(DataDestructionValue);
-        /// <summary> Data Encrypted for Impact. </summary>
+        /// <summary>
+        /// Data Encrypted for Impact
+        /// Serialized Name: Techniques.Data Encrypted for Impact
+        /// </summary>
         public static SecurityAssessmentTechnique DataEncryptedForImpact { get; } = new SecurityAssessmentTechnique(DataEncryptedForImpactValue);
-        /// <summary> Data from Cloud Storage Object. </summary>
+        /// <summary>
+        /// Data from Cloud Storage Object
+        /// Serialized Name: Techniques.Data from Cloud Storage Object
+        /// </summary>
         public static SecurityAssessmentTechnique DataFromCloudStorageObject { get; } = new SecurityAssessmentTechnique(DataFromCloudStorageObjectValue);
-        /// <summary> Data from Configuration Repository. </summary>
+        /// <summary>
+        /// Data from Configuration Repository
+        /// Serialized Name: Techniques.Data from Configuration Repository
+        /// </summary>
         public static SecurityAssessmentTechnique DataFromConfigurationRepository { get; } = new SecurityAssessmentTechnique(DataFromConfigurationRepositoryValue);
-        /// <summary> Data from Information Repositories. </summary>
+        /// <summary>
+        /// Data from Information Repositories
+        /// Serialized Name: Techniques.Data from Information Repositories
+        /// </summary>
         public static SecurityAssessmentTechnique DataFromInformationRepositories { get; } = new SecurityAssessmentTechnique(DataFromInformationRepositoriesValue);
-        /// <summary> Data from Local System. </summary>
+        /// <summary>
+        /// Data from Local System
+        /// Serialized Name: Techniques.Data from Local System
+        /// </summary>
         public static SecurityAssessmentTechnique DataFromLocalSystem { get; } = new SecurityAssessmentTechnique(DataFromLocalSystemValue);
-        /// <summary> Data Manipulation. </summary>
+        /// <summary>
+        /// Data Manipulation
+        /// Serialized Name: Techniques.Data Manipulation
+        /// </summary>
         public static SecurityAssessmentTechnique DataManipulation { get; } = new SecurityAssessmentTechnique(DataManipulationValue);
-        /// <summary> Data Staged. </summary>
+        /// <summary>
+        /// Data Staged
+        /// Serialized Name: Techniques.Data Staged
+        /// </summary>
         public static SecurityAssessmentTechnique DataStaged { get; } = new SecurityAssessmentTechnique(DataStagedValue);
-        /// <summary> Defacement. </summary>
+        /// <summary>
+        /// Defacement
+        /// Serialized Name: Techniques.Defacement
+        /// </summary>
         public static SecurityAssessmentTechnique Defacement { get; } = new SecurityAssessmentTechnique(DefacementValue);
-        /// <summary> Deobfuscate/Decode Files or Information. </summary>
+        /// <summary>
+        /// Deobfuscate/Decode Files or Information
+        /// Serialized Name: Techniques.Deobfuscate/Decode Files or Information
+        /// </summary>
         public static SecurityAssessmentTechnique DeobfuscateDecodeFilesOrInformation { get; } = new SecurityAssessmentTechnique(DeobfuscateDecodeFilesOrInformationValue);
-        /// <summary> Disk Wipe. </summary>
+        /// <summary>
+        /// Disk Wipe
+        /// Serialized Name: Techniques.Disk Wipe
+        /// </summary>
         public static SecurityAssessmentTechnique DiskWipe { get; } = new SecurityAssessmentTechnique(DiskWipeValue);
-        /// <summary> Domain Trust Discovery. </summary>
+        /// <summary>
+        /// Domain Trust Discovery
+        /// Serialized Name: Techniques.Domain Trust Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique DomainTrustDiscovery { get; } = new SecurityAssessmentTechnique(DomainTrustDiscoveryValue);
-        /// <summary> Drive-by Compromise. </summary>
+        /// <summary>
+        /// Drive-by Compromise
+        /// Serialized Name: Techniques.Drive-by Compromise
+        /// </summary>
         public static SecurityAssessmentTechnique DriveByCompromise { get; } = new SecurityAssessmentTechnique(DriveByCompromiseValue);
-        /// <summary> Dynamic Resolution. </summary>
+        /// <summary>
+        /// Dynamic Resolution
+        /// Serialized Name: Techniques.Dynamic Resolution
+        /// </summary>
         public static SecurityAssessmentTechnique DynamicResolution { get; } = new SecurityAssessmentTechnique(DynamicResolutionValue);
-        /// <summary> Endpoint Denial of Service. </summary>
+        /// <summary>
+        /// Endpoint Denial of Service
+        /// Serialized Name: Techniques.Endpoint Denial of Service
+        /// </summary>
         public static SecurityAssessmentTechnique EndpointDenialOfService { get; } = new SecurityAssessmentTechnique(EndpointDenialOfServiceValue);
-        /// <summary> Event Triggered Execution. </summary>
+        /// <summary>
+        /// Event Triggered Execution
+        /// Serialized Name: Techniques.Event Triggered Execution
+        /// </summary>
         public static SecurityAssessmentTechnique EventTriggeredExecution { get; } = new SecurityAssessmentTechnique(EventTriggeredExecutionValue);
-        /// <summary> Exfiltration Over Alternative Protocol. </summary>
+        /// <summary>
+        /// Exfiltration Over Alternative Protocol
+        /// Serialized Name: Techniques.Exfiltration Over Alternative Protocol
+        /// </summary>
         public static SecurityAssessmentTechnique ExfiltrationOverAlternativeProtocol { get; } = new SecurityAssessmentTechnique(ExfiltrationOverAlternativeProtocolValue);
-        /// <summary> Exploit Public-Facing Application. </summary>
+        /// <summary>
+        /// Exploit Public-Facing Application
+        /// Serialized Name: Techniques.Exploit Public-Facing Application
+        /// </summary>
         public static SecurityAssessmentTechnique ExploitPublicFacingApplication { get; } = new SecurityAssessmentTechnique(ExploitPublicFacingApplicationValue);
-        /// <summary> Exploitation for Client Execution. </summary>
+        /// <summary>
+        /// Exploitation for Client Execution
+        /// Serialized Name: Techniques.Exploitation for Client Execution
+        /// </summary>
         public static SecurityAssessmentTechnique ExploitationForClientExecution { get; } = new SecurityAssessmentTechnique(ExploitationForClientExecutionValue);
-        /// <summary> Exploitation for Credential Access. </summary>
+        /// <summary>
+        /// Exploitation for Credential Access
+        /// Serialized Name: Techniques.Exploitation for Credential Access
+        /// </summary>
         public static SecurityAssessmentTechnique ExploitationForCredentialAccess { get; } = new SecurityAssessmentTechnique(ExploitationForCredentialAccessValue);
-        /// <summary> Exploitation for Defense Evasion. </summary>
+        /// <summary>
+        /// Exploitation for Defense Evasion
+        /// Serialized Name: Techniques.Exploitation for Defense Evasion
+        /// </summary>
         public static SecurityAssessmentTechnique ExploitationForDefenseEvasion { get; } = new SecurityAssessmentTechnique(ExploitationForDefenseEvasionValue);
-        /// <summary> Exploitation for Privilege Escalation. </summary>
+        /// <summary>
+        /// Exploitation for Privilege Escalation
+        /// Serialized Name: Techniques.Exploitation for Privilege Escalation
+        /// </summary>
         public static SecurityAssessmentTechnique ExploitationForPrivilegeEscalation { get; } = new SecurityAssessmentTechnique(ExploitationForPrivilegeEscalationValue);
-        /// <summary> Exploitation of Remote Services. </summary>
+        /// <summary>
+        /// Exploitation of Remote Services
+        /// Serialized Name: Techniques.Exploitation of Remote Services
+        /// </summary>
         public static SecurityAssessmentTechnique ExploitationOfRemoteServices { get; } = new SecurityAssessmentTechnique(ExploitationOfRemoteServicesValue);
-        /// <summary> External Remote Services. </summary>
+        /// <summary>
+        /// External Remote Services
+        /// Serialized Name: Techniques.External Remote Services
+        /// </summary>
         public static SecurityAssessmentTechnique ExternalRemoteServices { get; } = new SecurityAssessmentTechnique(ExternalRemoteServicesValue);
-        /// <summary> Fallback Channels. </summary>
+        /// <summary>
+        /// Fallback Channels
+        /// Serialized Name: Techniques.Fallback Channels
+        /// </summary>
         public static SecurityAssessmentTechnique FallbackChannels { get; } = new SecurityAssessmentTechnique(FallbackChannelsValue);
-        /// <summary> File and Directory Discovery. </summary>
+        /// <summary>
+        /// File and Directory Discovery
+        /// Serialized Name: Techniques.File and Directory Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique FileAndDirectoryDiscovery { get; } = new SecurityAssessmentTechnique(FileAndDirectoryDiscoveryValue);
-        /// <summary> Gather Victim Network Information. </summary>
+        /// <summary>
+        /// Gather Victim Network Information
+        /// Serialized Name: Techniques.Gather Victim Network Information
+        /// </summary>
         public static SecurityAssessmentTechnique GatherVictimNetworkInformation { get; } = new SecurityAssessmentTechnique(GatherVictimNetworkInformationValue);
-        /// <summary> Hide Artifacts. </summary>
+        /// <summary>
+        /// Hide Artifacts
+        /// Serialized Name: Techniques.Hide Artifacts
+        /// </summary>
         public static SecurityAssessmentTechnique HideArtifacts { get; } = new SecurityAssessmentTechnique(HideArtifactsValue);
-        /// <summary> Hijack Execution Flow. </summary>
+        /// <summary>
+        /// Hijack Execution Flow
+        /// Serialized Name: Techniques.Hijack Execution Flow
+        /// </summary>
         public static SecurityAssessmentTechnique HijackExecutionFlow { get; } = new SecurityAssessmentTechnique(HijackExecutionFlowValue);
-        /// <summary> Impair Defenses. </summary>
+        /// <summary>
+        /// Impair Defenses
+        /// Serialized Name: Techniques.Impair Defenses
+        /// </summary>
         public static SecurityAssessmentTechnique ImpairDefenses { get; } = new SecurityAssessmentTechnique(ImpairDefensesValue);
-        /// <summary> Implant Container Image. </summary>
+        /// <summary>
+        /// Implant Container Image
+        /// Serialized Name: Techniques.Implant Container Image
+        /// </summary>
         public static SecurityAssessmentTechnique ImplantContainerImage { get; } = new SecurityAssessmentTechnique(ImplantContainerImageValue);
-        /// <summary> Indicator Removal on Host. </summary>
+        /// <summary>
+        /// Indicator Removal on Host
+        /// Serialized Name: Techniques.Indicator Removal on Host
+        /// </summary>
         public static SecurityAssessmentTechnique IndicatorRemovalOnHost { get; } = new SecurityAssessmentTechnique(IndicatorRemovalOnHostValue);
-        /// <summary> Indirect Command Execution. </summary>
+        /// <summary>
+        /// Indirect Command Execution
+        /// Serialized Name: Techniques.Indirect Command Execution
+        /// </summary>
         public static SecurityAssessmentTechnique IndirectCommandExecution { get; } = new SecurityAssessmentTechnique(IndirectCommandExecutionValue);
-        /// <summary> Ingress Tool Transfer. </summary>
+        /// <summary>
+        /// Ingress Tool Transfer
+        /// Serialized Name: Techniques.Ingress Tool Transfer
+        /// </summary>
         public static SecurityAssessmentTechnique IngressToolTransfer { get; } = new SecurityAssessmentTechnique(IngressToolTransferValue);
-        /// <summary> Input Capture. </summary>
+        /// <summary>
+        /// Input Capture
+        /// Serialized Name: Techniques.Input Capture
+        /// </summary>
         public static SecurityAssessmentTechnique InputCapture { get; } = new SecurityAssessmentTechnique(InputCaptureValue);
-        /// <summary> Inter-Process Communication. </summary>
+        /// <summary>
+        /// Inter-Process Communication
+        /// Serialized Name: Techniques.Inter-Process Communication
+        /// </summary>
         public static SecurityAssessmentTechnique InterProcessCommunication { get; } = new SecurityAssessmentTechnique(InterProcessCommunicationValue);
-        /// <summary> Lateral Tool Transfer. </summary>
+        /// <summary>
+        /// Lateral Tool Transfer
+        /// Serialized Name: Techniques.Lateral Tool Transfer
+        /// </summary>
         public static SecurityAssessmentTechnique LateralToolTransfer { get; } = new SecurityAssessmentTechnique(LateralToolTransferValue);
-        /// <summary> Man-in-the-Middle. </summary>
+        /// <summary>
+        /// Man-in-the-Middle
+        /// Serialized Name: Techniques.Man-in-the-Middle
+        /// </summary>
         public static SecurityAssessmentTechnique ManInTheMiddle { get; } = new SecurityAssessmentTechnique(ManInTheMiddleValue);
-        /// <summary> Masquerading. </summary>
+        /// <summary>
+        /// Masquerading
+        /// Serialized Name: Techniques.Masquerading
+        /// </summary>
         public static SecurityAssessmentTechnique Masquerading { get; } = new SecurityAssessmentTechnique(MasqueradingValue);
-        /// <summary> Modify Authentication Process. </summary>
+        /// <summary>
+        /// Modify Authentication Process
+        /// Serialized Name: Techniques.Modify Authentication Process
+        /// </summary>
         public static SecurityAssessmentTechnique ModifyAuthenticationProcess { get; } = new SecurityAssessmentTechnique(ModifyAuthenticationProcessValue);
-        /// <summary> Modify Registry. </summary>
+        /// <summary>
+        /// Modify Registry
+        /// Serialized Name: Techniques.Modify Registry
+        /// </summary>
         public static SecurityAssessmentTechnique ModifyRegistry { get; } = new SecurityAssessmentTechnique(ModifyRegistryValue);
-        /// <summary> Network Denial of Service. </summary>
+        /// <summary>
+        /// Network Denial of Service
+        /// Serialized Name: Techniques.Network Denial of Service
+        /// </summary>
         public static SecurityAssessmentTechnique NetworkDenialOfService { get; } = new SecurityAssessmentTechnique(NetworkDenialOfServiceValue);
-        /// <summary> Network Service Scanning. </summary>
+        /// <summary>
+        /// Network Service Scanning
+        /// Serialized Name: Techniques.Network Service Scanning
+        /// </summary>
         public static SecurityAssessmentTechnique NetworkServiceScanning { get; } = new SecurityAssessmentTechnique(NetworkServiceScanningValue);
-        /// <summary> Network Sniffing. </summary>
+        /// <summary>
+        /// Network Sniffing
+        /// Serialized Name: Techniques.Network Sniffing
+        /// </summary>
         public static SecurityAssessmentTechnique NetworkSniffing { get; } = new SecurityAssessmentTechnique(NetworkSniffingValue);
-        /// <summary> Non-Application Layer Protocol. </summary>
+        /// <summary>
+        /// Non-Application Layer Protocol
+        /// Serialized Name: Techniques.Non-Application Layer Protocol
+        /// </summary>
         public static SecurityAssessmentTechnique NonApplicationLayerProtocol { get; } = new SecurityAssessmentTechnique(NonApplicationLayerProtocolValue);
-        /// <summary> Non-Standard Port. </summary>
+        /// <summary>
+        /// Non-Standard Port
+        /// Serialized Name: Techniques.Non-Standard Port
+        /// </summary>
         public static SecurityAssessmentTechnique NonStandardPort { get; } = new SecurityAssessmentTechnique(NonStandardPortValue);
-        /// <summary> Obtain Capabilities. </summary>
+        /// <summary>
+        /// Obtain Capabilities
+        /// Serialized Name: Techniques.Obtain Capabilities
+        /// </summary>
         public static SecurityAssessmentTechnique ObtainCapabilities { get; } = new SecurityAssessmentTechnique(ObtainCapabilitiesValue);
-        /// <summary> Obfuscated Files or Information. </summary>
+        /// <summary>
+        /// Obfuscated Files or Information
+        /// Serialized Name: Techniques.Obfuscated Files or Information
+        /// </summary>
         public static SecurityAssessmentTechnique ObfuscatedFilesOrInformation { get; } = new SecurityAssessmentTechnique(ObfuscatedFilesOrInformationValue);
-        /// <summary> Office Application Startup. </summary>
+        /// <summary>
+        /// Office Application Startup
+        /// Serialized Name: Techniques.Office Application Startup
+        /// </summary>
         public static SecurityAssessmentTechnique OfficeApplicationStartup { get; } = new SecurityAssessmentTechnique(OfficeApplicationStartupValue);
-        /// <summary> OS Credential Dumping. </summary>
+        /// <summary>
+        /// OS Credential Dumping
+        /// Serialized Name: Techniques.OS Credential Dumping
+        /// </summary>
         public static SecurityAssessmentTechnique OSCredentialDumping { get; } = new SecurityAssessmentTechnique(OSCredentialDumpingValue);
-        /// <summary> Permission Groups Discovery. </summary>
+        /// <summary>
+        /// Permission Groups Discovery
+        /// Serialized Name: Techniques.Permission Groups Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique PermissionGroupsDiscovery { get; } = new SecurityAssessmentTechnique(PermissionGroupsDiscoveryValue);
-        /// <summary> Phishing. </summary>
+        /// <summary>
+        /// Phishing
+        /// Serialized Name: Techniques.Phishing
+        /// </summary>
         public static SecurityAssessmentTechnique Phishing { get; } = new SecurityAssessmentTechnique(PhishingValue);
-        /// <summary> Pre-OS Boot. </summary>
+        /// <summary>
+        /// Pre-OS Boot
+        /// Serialized Name: Techniques.Pre-OS Boot
+        /// </summary>
         public static SecurityAssessmentTechnique PreOSBoot { get; } = new SecurityAssessmentTechnique(PreOSBootValue);
-        /// <summary> Process Discovery. </summary>
+        /// <summary>
+        /// Process Discovery
+        /// Serialized Name: Techniques.Process Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique ProcessDiscovery { get; } = new SecurityAssessmentTechnique(ProcessDiscoveryValue);
-        /// <summary> Process Injection. </summary>
+        /// <summary>
+        /// Process Injection
+        /// Serialized Name: Techniques.Process Injection
+        /// </summary>
         public static SecurityAssessmentTechnique ProcessInjection { get; } = new SecurityAssessmentTechnique(ProcessInjectionValue);
-        /// <summary> Protocol Tunneling. </summary>
+        /// <summary>
+        /// Protocol Tunneling
+        /// Serialized Name: Techniques.Protocol Tunneling
+        /// </summary>
         public static SecurityAssessmentTechnique ProtocolTunneling { get; } = new SecurityAssessmentTechnique(ProtocolTunnelingValue);
-        /// <summary> Proxy. </summary>
+        /// <summary>
+        /// Proxy
+        /// Serialized Name: Techniques.Proxy
+        /// </summary>
         public static SecurityAssessmentTechnique Proxy { get; } = new SecurityAssessmentTechnique(ProxyValue);
-        /// <summary> Query Registry. </summary>
+        /// <summary>
+        /// Query Registry
+        /// Serialized Name: Techniques.Query Registry
+        /// </summary>
         public static SecurityAssessmentTechnique QueryRegistry { get; } = new SecurityAssessmentTechnique(QueryRegistryValue);
-        /// <summary> Remote Access Software. </summary>
+        /// <summary>
+        /// Remote Access Software
+        /// Serialized Name: Techniques.Remote Access Software
+        /// </summary>
         public static SecurityAssessmentTechnique RemoteAccessSoftware { get; } = new SecurityAssessmentTechnique(RemoteAccessSoftwareValue);
-        /// <summary> Remote Service Session Hijacking. </summary>
+        /// <summary>
+        /// Remote Service Session Hijacking
+        /// Serialized Name: Techniques.Remote Service Session Hijacking
+        /// </summary>
         public static SecurityAssessmentTechnique RemoteServiceSessionHijacking { get; } = new SecurityAssessmentTechnique(RemoteServiceSessionHijackingValue);
-        /// <summary> Remote Services. </summary>
+        /// <summary>
+        /// Remote Services
+        /// Serialized Name: Techniques.Remote Services
+        /// </summary>
         public static SecurityAssessmentTechnique RemoteServices { get; } = new SecurityAssessmentTechnique(RemoteServicesValue);
-        /// <summary> Remote System Discovery. </summary>
+        /// <summary>
+        /// Remote System Discovery
+        /// Serialized Name: Techniques.Remote System Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique RemoteSystemDiscovery { get; } = new SecurityAssessmentTechnique(RemoteSystemDiscoveryValue);
-        /// <summary> Resource Hijacking. </summary>
+        /// <summary>
+        /// Resource Hijacking
+        /// Serialized Name: Techniques.Resource Hijacking
+        /// </summary>
         public static SecurityAssessmentTechnique ResourceHijacking { get; } = new SecurityAssessmentTechnique(ResourceHijackingValue);
-        /// <summary> Scheduled Task/Job. </summary>
+        /// <summary>
+        /// Scheduled Task/Job
+        /// Serialized Name: Techniques.Scheduled Task/Job
+        /// </summary>
         public static SecurityAssessmentTechnique ScheduledTaskJob { get; } = new SecurityAssessmentTechnique(ScheduledTaskJobValue);
-        /// <summary> Screen Capture. </summary>
+        /// <summary>
+        /// Screen Capture
+        /// Serialized Name: Techniques.Screen Capture
+        /// </summary>
         public static SecurityAssessmentTechnique ScreenCapture { get; } = new SecurityAssessmentTechnique(ScreenCaptureValue);
-        /// <summary> Search Victim-Owned Websites. </summary>
+        /// <summary>
+        /// Search Victim-Owned Websites
+        /// Serialized Name: Techniques.Search Victim-Owned Websites
+        /// </summary>
         public static SecurityAssessmentTechnique SearchVictimOwnedWebsites { get; } = new SecurityAssessmentTechnique(SearchVictimOwnedWebsitesValue);
-        /// <summary> Server Software Component. </summary>
+        /// <summary>
+        /// Server Software Component
+        /// Serialized Name: Techniques.Server Software Component
+        /// </summary>
         public static SecurityAssessmentTechnique ServerSoftwareComponent { get; } = new SecurityAssessmentTechnique(ServerSoftwareComponentValue);
-        /// <summary> Service Stop. </summary>
+        /// <summary>
+        /// Service Stop
+        /// Serialized Name: Techniques.Service Stop
+        /// </summary>
         public static SecurityAssessmentTechnique ServiceStop { get; } = new SecurityAssessmentTechnique(ServiceStopValue);
-        /// <summary> Signed Binary Proxy Execution. </summary>
+        /// <summary>
+        /// Signed Binary Proxy Execution
+        /// Serialized Name: Techniques.Signed Binary Proxy Execution
+        /// </summary>
         public static SecurityAssessmentTechnique SignedBinaryProxyExecution { get; } = new SecurityAssessmentTechnique(SignedBinaryProxyExecutionValue);
-        /// <summary> Software Deployment Tools. </summary>
+        /// <summary>
+        /// Software Deployment Tools
+        /// Serialized Name: Techniques.Software Deployment Tools
+        /// </summary>
         public static SecurityAssessmentTechnique SoftwareDeploymentTools { get; } = new SecurityAssessmentTechnique(SoftwareDeploymentToolsValue);
-        /// <summary> SQL Stored Procedures. </summary>
+        /// <summary>
+        /// SQL Stored Procedures
+        /// Serialized Name: Techniques.SQL Stored Procedures
+        /// </summary>
         public static SecurityAssessmentTechnique SQLStoredProcedures { get; } = new SecurityAssessmentTechnique(SQLStoredProceduresValue);
-        /// <summary> Steal or Forge Kerberos Tickets. </summary>
+        /// <summary>
+        /// Steal or Forge Kerberos Tickets
+        /// Serialized Name: Techniques.Steal or Forge Kerberos Tickets
+        /// </summary>
         public static SecurityAssessmentTechnique StealOrForgeKerberosTickets { get; } = new SecurityAssessmentTechnique(StealOrForgeKerberosTicketsValue);
-        /// <summary> Subvert Trust Controls. </summary>
+        /// <summary>
+        /// Subvert Trust Controls
+        /// Serialized Name: Techniques.Subvert Trust Controls
+        /// </summary>
         public static SecurityAssessmentTechnique SubvertTrustControls { get; } = new SecurityAssessmentTechnique(SubvertTrustControlsValue);
-        /// <summary> Supply Chain Compromise. </summary>
+        /// <summary>
+        /// Supply Chain Compromise
+        /// Serialized Name: Techniques.Supply Chain Compromise
+        /// </summary>
         public static SecurityAssessmentTechnique SupplyChainCompromise { get; } = new SecurityAssessmentTechnique(SupplyChainCompromiseValue);
-        /// <summary> System Information Discovery. </summary>
+        /// <summary>
+        /// System Information Discovery
+        /// Serialized Name: Techniques.System Information Discovery
+        /// </summary>
         public static SecurityAssessmentTechnique SystemInformationDiscovery { get; } = new SecurityAssessmentTechnique(SystemInformationDiscoveryValue);
-        /// <summary> Taint Shared Content. </summary>
+        /// <summary>
+        /// Taint Shared Content
+        /// Serialized Name: Techniques.Taint Shared Content
+        /// </summary>
         public static SecurityAssessmentTechnique TaintSharedContent { get; } = new SecurityAssessmentTechnique(TaintSharedContentValue);
-        /// <summary> Traffic Signaling. </summary>
+        /// <summary>
+        /// Traffic Signaling
+        /// Serialized Name: Techniques.Traffic Signaling
+        /// </summary>
         public static SecurityAssessmentTechnique TrafficSignaling { get; } = new SecurityAssessmentTechnique(TrafficSignalingValue);
-        /// <summary> Transfer Data to Cloud Account. </summary>
+        /// <summary>
+        /// Transfer Data to Cloud Account
+        /// Serialized Name: Techniques.Transfer Data to Cloud Account
+        /// </summary>
         public static SecurityAssessmentTechnique TransferDataToCloudAccount { get; } = new SecurityAssessmentTechnique(TransferDataToCloudAccountValue);
-        /// <summary> Trusted Relationship. </summary>
+        /// <summary>
+        /// Trusted Relationship
+        /// Serialized Name: Techniques.Trusted Relationship
+        /// </summary>
         public static SecurityAssessmentTechnique TrustedRelationship { get; } = new SecurityAssessmentTechnique(TrustedRelationshipValue);
-        /// <summary> Unsecured Credentials. </summary>
+        /// <summary>
+        /// Unsecured Credentials
+        /// Serialized Name: Techniques.Unsecured Credentials
+        /// </summary>
         public static SecurityAssessmentTechnique UnsecuredCredentials { get; } = new SecurityAssessmentTechnique(UnsecuredCredentialsValue);
-        /// <summary> User Execution. </summary>
+        /// <summary>
+        /// User Execution
+        /// Serialized Name: Techniques.User Execution
+        /// </summary>
         public static SecurityAssessmentTechnique UserExecution { get; } = new SecurityAssessmentTechnique(UserExecutionValue);
-        /// <summary> Valid Accounts. </summary>
+        /// <summary>
+        /// Valid Accounts
+        /// Serialized Name: Techniques.Valid Accounts
+        /// </summary>
         public static SecurityAssessmentTechnique ValidAccounts { get; } = new SecurityAssessmentTechnique(ValidAccountsValue);
-        /// <summary> Windows Management Instrumentation. </summary>
+        /// <summary>
+        /// Windows Management Instrumentation
+        /// Serialized Name: Techniques.Windows Management Instrumentation
+        /// </summary>
         public static SecurityAssessmentTechnique WindowsManagementInstrumentation { get; } = new SecurityAssessmentTechnique(WindowsManagementInstrumentationValue);
-        /// <summary> File and Directory Permissions Modification. </summary>
+        /// <summary>
+        /// File and Directory Permissions Modification
+        /// Serialized Name: Techniques.File and Directory Permissions Modification
+        /// </summary>
         public static SecurityAssessmentTechnique FileAndDirectoryPermissionsModification { get; } = new SecurityAssessmentTechnique(FileAndDirectoryPermissionsModificationValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentTechnique"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentTechnique left, SecurityAssessmentTechnique right) => left.Equals(right);

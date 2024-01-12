@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]. </summary>
+    /// <summary>
+    /// The data type of the compared operands (string, integer, floating point number or a boolean [true/false]]
+    /// Serialized Name: PropertyType
+    /// </summary>
     public readonly partial struct AutomationTriggeringRulePropertyType : IEquatable<AutomationTriggeringRulePropertyType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string NumberValue = "Number";
         private const string BooleanValue = "Boolean";
 
-        /// <summary> String. </summary>
+        /// <summary>
+        /// String
+        /// Serialized Name: PropertyType.String
+        /// </summary>
         public static AutomationTriggeringRulePropertyType String { get; } = new AutomationTriggeringRulePropertyType(StringValue);
-        /// <summary> Integer. </summary>
+        /// <summary>
+        /// Integer
+        /// Serialized Name: PropertyType.Integer
+        /// </summary>
         public static AutomationTriggeringRulePropertyType Integer { get; } = new AutomationTriggeringRulePropertyType(IntegerValue);
-        /// <summary> Number. </summary>
+        /// <summary>
+        /// Number
+        /// Serialized Name: PropertyType.Number
+        /// </summary>
         public static AutomationTriggeringRulePropertyType Number { get; } = new AutomationTriggeringRulePropertyType(NumberValue);
-        /// <summary> Boolean. </summary>
+        /// <summary>
+        /// Boolean
+        /// Serialized Name: PropertyType.Boolean
+        /// </summary>
         public static AutomationTriggeringRulePropertyType Boolean { get; } = new AutomationTriggeringRulePropertyType(BooleanValue);
         /// <summary> Determines if two <see cref="AutomationTriggeringRulePropertyType"/> values are the same. </summary>
         public static bool operator ==(AutomationTriggeringRulePropertyType left, AutomationTriggeringRulePropertyType right) => left.Equals(right);

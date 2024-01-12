@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Relevant cloud for the custom assessment automation. </summary>
+    /// <summary>
+    /// Relevant cloud for the custom assessment automation.
+    /// Serialized Name: SupportedCloudEnum
+    /// </summary>
     public readonly partial struct CustomAssessmentAutomationSupportedCloud : IEquatable<CustomAssessmentAutomationSupportedCloud>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AwsValue = "AWS";
         private const string GcpValue = "GCP";
 
-        /// <summary> AWS. </summary>
+        /// <summary>
+        /// AWS
+        /// Serialized Name: SupportedCloudEnum.AWS
+        /// </summary>
         public static CustomAssessmentAutomationSupportedCloud Aws { get; } = new CustomAssessmentAutomationSupportedCloud(AwsValue);
-        /// <summary> GCP. </summary>
+        /// <summary>
+        /// GCP
+        /// Serialized Name: SupportedCloudEnum.GCP
+        /// </summary>
         public static CustomAssessmentAutomationSupportedCloud Gcp { get; } = new CustomAssessmentAutomationSupportedCloud(GcpValue);
         /// <summary> Determines if two <see cref="CustomAssessmentAutomationSupportedCloud"/> values are the same. </summary>
         public static bool operator ==(CustomAssessmentAutomationSupportedCloud left, CustomAssessmentAutomationSupportedCloud right) => left.Equals(right);

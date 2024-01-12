@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,9 +16,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the IotSecuritySolutionAnalyticsModel data model.
     /// Security analytics of your IoT Security solution
+    /// Serialized Name: IoTSecuritySolutionAnalyticsModel
     /// </summary>
     public partial class IotSecuritySolutionAnalyticsModelData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
         public IotSecuritySolutionAnalyticsModelData()
         {
@@ -32,13 +66,32 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="metrics"> Security analytics of your IoT Security solution. </param>
-        /// <param name="unhealthyDeviceCount"> Number of unhealthy devices within your IoT Security solution. </param>
-        /// <param name="devicesMetrics"> List of device metrics by the aggregation date. </param>
-        /// <param name="topAlertedDevices"> List of the 3 devices with the most alerts. </param>
-        /// <param name="mostPrevalentDeviceAlerts"> List of the 3 most prevalent device alerts. </param>
-        /// <param name="mostPrevalentDeviceRecommendations"> List of the 3 most prevalent device recommendations. </param>
-        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics, IList<IotSecurityAlertedDevice> topAlertedDevices, IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations) : base(id, name, resourceType, systemData)
+        /// <param name="metrics">
+        /// Security analytics of your IoT Security solution.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.metrics
+        /// </param>
+        /// <param name="unhealthyDeviceCount">
+        /// Number of unhealthy devices within your IoT Security solution.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.unhealthyDeviceCount
+        /// </param>
+        /// <param name="devicesMetrics">
+        /// List of device metrics by the aggregation date.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.devicesMetrics
+        /// </param>
+        /// <param name="topAlertedDevices">
+        /// List of the 3 devices with the most alerts.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.topAlertedDevices
+        /// </param>
+        /// <param name="mostPrevalentDeviceAlerts">
+        /// List of the 3 most prevalent device alerts.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.mostPrevalentDeviceAlerts
+        /// </param>
+        /// <param name="mostPrevalentDeviceRecommendations">
+        /// List of the 3 most prevalent device recommendations.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.mostPrevalentDeviceRecommendations
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics, IList<IotSecurityAlertedDevice> topAlertedDevices, IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Metrics = metrics;
             UnhealthyDeviceCount = unhealthyDeviceCount;
@@ -46,19 +99,38 @@ namespace Azure.ResourceManager.SecurityCenter
             TopAlertedDevices = topAlertedDevices;
             MostPrevalentDeviceAlerts = mostPrevalentDeviceAlerts;
             MostPrevalentDeviceRecommendations = mostPrevalentDeviceRecommendations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Security analytics of your IoT Security solution. </summary>
+        /// <summary>
+        /// Security analytics of your IoT Security solution.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.metrics
+        /// </summary>
         public IotSeverityMetrics Metrics { get; }
-        /// <summary> Number of unhealthy devices within your IoT Security solution. </summary>
+        /// <summary>
+        /// Number of unhealthy devices within your IoT Security solution.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.unhealthyDeviceCount
+        /// </summary>
         public long? UnhealthyDeviceCount { get; }
-        /// <summary> List of device metrics by the aggregation date. </summary>
+        /// <summary>
+        /// List of device metrics by the aggregation date.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.devicesMetrics
+        /// </summary>
         public IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> DevicesMetrics { get; }
-        /// <summary> List of the 3 devices with the most alerts. </summary>
+        /// <summary>
+        /// List of the 3 devices with the most alerts.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.topAlertedDevices
+        /// </summary>
         public IList<IotSecurityAlertedDevice> TopAlertedDevices { get; }
-        /// <summary> List of the 3 most prevalent device alerts. </summary>
+        /// <summary>
+        /// List of the 3 most prevalent device alerts.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.mostPrevalentDeviceAlerts
+        /// </summary>
         public IList<IotSecurityDeviceAlert> MostPrevalentDeviceAlerts { get; }
-        /// <summary> List of the 3 most prevalent device recommendations. </summary>
+        /// <summary>
+        /// List of the 3 most prevalent device recommendations.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModel.properties.mostPrevalentDeviceRecommendations
+        /// </summary>
         public IList<IotSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations { get; }
     }
 }

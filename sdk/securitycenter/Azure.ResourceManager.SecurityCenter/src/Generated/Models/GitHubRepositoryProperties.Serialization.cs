@@ -6,36 +6,105 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GitHubRepositoryProperties : IUtf8JsonSerializable
+    public partial class GitHubRepositoryProperties : IUtf8JsonSerializable, IJsonModel<GitHubRepositoryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubRepositoryProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GitHubRepositoryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GitHubRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GitHubRepositoryProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
+            {
+                writer.WritePropertyName("provisioningStatusMessage"u8);
+                writer.WriteStringValue(ProvisioningStatusMessage);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            {
+                writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
+                writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
+            }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RepoId))
+            {
+                writer.WritePropertyName("repoId"u8);
+                writer.WriteStringValue(RepoId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RepoName))
+            {
+                writer.WritePropertyName("repoName"u8);
+                writer.WriteStringValue(RepoName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RepoFullName))
+            {
+                writer.WritePropertyName("repoFullName"u8);
+                writer.WriteStringValue(RepoFullName);
             }
             if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(RepoUri))
+            {
+                writer.WritePropertyName("repoUrl"u8);
+                writer.WriteStringValue(RepoUri.AbsoluteUri);
+            }
             if (Optional.IsDefined(ParentOwnerName))
             {
                 writer.WritePropertyName("parentOwnerName"u8);
                 writer.WriteStringValue(ParentOwnerName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GitHubRepositoryProperties DeserializeGitHubRepositoryProperties(JsonElement element)
+        GitHubRepositoryProperties IJsonModel<GitHubRepositoryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GitHubRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GitHubRepositoryProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGitHubRepositoryProperties(document.RootElement, options);
+        }
+
+        internal static GitHubRepositoryProperties DeserializeGitHubRepositoryProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +118,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<OnboardingState> onboardingState = default;
             Optional<Uri> repoUrl = default;
             Optional<string> parentOwnerName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatusMessage"u8))
@@ -112,8 +183,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     parentOwnerName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GitHubRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), repoId.Value, repoName.Value, repoFullName.Value, Optional.ToNullable(onboardingState), repoUrl.Value, parentOwnerName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GitHubRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), repoId.Value, repoName.Value, repoFullName.Value, Optional.ToNullable(onboardingState), repoUrl.Value, parentOwnerName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GitHubRepositoryProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GitHubRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GitHubRepositoryProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GitHubRepositoryProperties IPersistableModel<GitHubRepositoryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GitHubRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGitHubRepositoryProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GitHubRepositoryProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GitHubRepositoryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

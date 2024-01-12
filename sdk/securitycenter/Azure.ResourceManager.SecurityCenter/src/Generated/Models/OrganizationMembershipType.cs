@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The multi cloud account's membership type in the organization. </summary>
+    /// <summary>
+    /// The multi cloud account's membership type in the organization
+    /// Serialized Name: OrganizationMembershipType
+    /// </summary>
     internal readonly partial struct OrganizationMembershipType : IEquatable<OrganizationMembershipType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string MemberValue = "Member";
         private const string OrganizationValue = "Organization";
 
-        /// <summary> Member. </summary>
+        /// <summary>
+        /// Member
+        /// Serialized Name: OrganizationMembershipType.Member
+        /// </summary>
         public static OrganizationMembershipType Member { get; } = new OrganizationMembershipType(MemberValue);
-        /// <summary> Organization. </summary>
+        /// <summary>
+        /// Organization
+        /// Serialized Name: OrganizationMembershipType.Organization
+        /// </summary>
         public static OrganizationMembershipType Organization { get; } = new OrganizationMembershipType(OrganizationValue);
         /// <summary> Determines if two <see cref="OrganizationMembershipType"/> values are the same. </summary>
         public static bool operator ==(OrganizationMembershipType left, OrganizationMembershipType right) => left.Equals(right);

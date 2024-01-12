@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </summary>
+    /// <summary>
+    /// BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition
+    /// Serialized Name: AssessmentType
+    /// </summary>
     public readonly partial struct SecurityAssessmentType : IEquatable<SecurityAssessmentType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string CustomerManagedValue = "CustomerManaged";
         private const string VerifiedPartnerValue = "VerifiedPartner";
 
-        /// <summary> Microsoft Defender for Cloud managed assessments. </summary>
+        /// <summary>
+        /// Microsoft Defender for Cloud managed assessments
+        /// Serialized Name: AssessmentType.BuiltIn
+        /// </summary>
         public static SecurityAssessmentType BuiltIn { get; } = new SecurityAssessmentType(BuiltInValue);
-        /// <summary> User defined policies that are automatically ingested from Azure Policy to Microsoft Defender for Cloud. </summary>
+        /// <summary>
+        /// User defined policies that are automatically ingested from Azure Policy to Microsoft Defender for Cloud
+        /// Serialized Name: AssessmentType.CustomPolicy
+        /// </summary>
         public static SecurityAssessmentType CustomPolicy { get; } = new SecurityAssessmentType(CustomPolicyValue);
-        /// <summary> User assessments pushed directly by the user or other third party to Microsoft Defender for Cloud. </summary>
+        /// <summary>
+        /// User assessments pushed directly by the user or other third party to Microsoft Defender for Cloud
+        /// Serialized Name: AssessmentType.CustomerManaged
+        /// </summary>
         public static SecurityAssessmentType CustomerManaged { get; } = new SecurityAssessmentType(CustomerManagedValue);
-        /// <summary> An assessment that was created by a verified 3rd party if the user connected it to ASC. </summary>
+        /// <summary>
+        /// An assessment that was created by a verified 3rd party if the user connected it to ASC
+        /// Serialized Name: AssessmentType.VerifiedPartner
+        /// </summary>
         public static SecurityAssessmentType VerifiedPartner { get; } = new SecurityAssessmentType(VerifiedPartnerValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentType"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentType left, SecurityAssessmentType right) => left.Equals(right);

@@ -5,28 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Microsoft Defender Data Sensitivity discovery configuration. </summary>
+    /// <summary>
+    /// The Microsoft Defender Data Sensitivity discovery configuration
+    /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery
+    /// </summary>
     public partial class DefenderCspmAwsOfferingDataSensitivityDiscovery
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingDataSensitivityDiscovery"/>. </summary>
         public DefenderCspmAwsOfferingDataSensitivityDiscovery()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingDataSensitivityDiscovery"/>. </summary>
-        /// <param name="enabled"> Is Microsoft Defender Data Sensitivity discovery enabled. </param>
-        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal DefenderCspmAwsOfferingDataSensitivityDiscovery(bool? enabled, string cloudRoleArn)
+        /// <param name="enabled">
+        /// Is Microsoft Defender Data Sensitivity discovery enabled
+        /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery.enabled
+        /// </param>
+        /// <param name="cloudRoleArn">
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery.cloudRoleArn
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderCspmAwsOfferingDataSensitivityDiscovery(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Is Microsoft Defender Data Sensitivity discovery enabled. </summary>
+        /// <summary>
+        /// Is Microsoft Defender Data Sensitivity discovery enabled
+        /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The cloud role ARN in AWS for this feature. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: DefenderCspmAwsOfferingDataSensitivityDiscovery.cloudRoleArn
+        /// </summary>
         public string CloudRoleArn { get; set; }
     }
 }

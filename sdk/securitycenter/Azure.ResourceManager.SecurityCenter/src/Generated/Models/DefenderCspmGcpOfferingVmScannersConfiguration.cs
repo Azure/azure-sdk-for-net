@@ -5,14 +5,50 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> configuration for Microsoft Defender for Server VM scanning. </summary>
+    /// <summary>
+    /// configuration for Microsoft Defender for Server VM scanning
+    /// Serialized Name: DefenderCspmGcpOfferingVmScannersConfiguration
+    /// </summary>
     public partial class DefenderCspmGcpOfferingVmScannersConfiguration
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOfferingVmScannersConfiguration"/>. </summary>
         public DefenderCspmGcpOfferingVmScannersConfiguration()
         {
@@ -20,17 +56,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmGcpOfferingVmScannersConfiguration"/>. </summary>
-        /// <param name="scanningMode"> The scanning mode for the VM scan. </param>
-        /// <param name="exclusionTags"> VM tags that indicates that VM should not be scanned. </param>
-        internal DefenderCspmGcpOfferingVmScannersConfiguration(DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags)
+        /// <param name="scanningMode">
+        /// The scanning mode for the VM scan.
+        /// Serialized Name: DefenderCspmGcpOfferingVmScannersConfiguration.scanningMode
+        /// </param>
+        /// <param name="exclusionTags">
+        /// VM tags that indicates that VM should not be scanned
+        /// Serialized Name: DefenderCspmGcpOfferingVmScannersConfiguration.exclusionTags
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderCspmGcpOfferingVmScannersConfiguration(DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScanningMode = scanningMode;
             ExclusionTags = exclusionTags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The scanning mode for the VM scan. </summary>
+        /// <summary>
+        /// The scanning mode for the VM scan.
+        /// Serialized Name: DefenderCspmGcpOfferingVmScannersConfiguration.scanningMode
+        /// </summary>
         public DefenderForServersScanningMode? ScanningMode { get; set; }
-        /// <summary> VM tags that indicates that VM should not be scanned. </summary>
+        /// <summary>
+        /// VM tags that indicates that VM should not be scanned
+        /// Serialized Name: DefenderCspmGcpOfferingVmScannersConfiguration.exclusionTags
+        /// </summary>
         public IDictionary<string, string> ExclusionTags { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The type of security control (for example, BuiltIn). </summary>
+    /// <summary>
+    /// The type of security control (for example, BuiltIn)
+    /// Serialized Name: ControlType
+    /// </summary>
     public readonly partial struct SecurityControlType : IEquatable<SecurityControlType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string BuiltInValue = "BuiltIn";
         private const string CustomValue = "Custom";
 
-        /// <summary> Microsoft Defender for Cloud managed assessments. </summary>
+        /// <summary>
+        /// Microsoft Defender for Cloud managed assessments
+        /// Serialized Name: ControlType.BuiltIn
+        /// </summary>
         public static SecurityControlType BuiltIn { get; } = new SecurityControlType(BuiltInValue);
-        /// <summary> Non Microsoft Defender for Cloud managed assessments. </summary>
+        /// <summary>
+        /// Non Microsoft Defender for Cloud managed assessments
+        /// Serialized Name: ControlType.Custom
+        /// </summary>
         public static SecurityControlType Custom { get; } = new SecurityControlType(CustomValue);
         /// <summary> Determines if two <see cref="SecurityControlType"/> values are the same. </summary>
         public static bool operator ==(SecurityControlType left, SecurityControlType right) => left.Equals(right);

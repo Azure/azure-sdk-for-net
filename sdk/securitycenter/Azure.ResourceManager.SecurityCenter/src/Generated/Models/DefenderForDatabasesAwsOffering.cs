@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Defender for Databases AWS offering. </summary>
+    /// <summary>
+    /// The Defender for Databases AWS offering
+    /// Serialized Name: DefenderForDatabasesAwsOffering
+    /// </summary>
     public partial class DefenderForDatabasesAwsOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOffering"/>. </summary>
@@ -17,12 +23,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOffering"/>. </summary>
-        /// <param name="offeringType"> The type of the security offering. </param>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
-        /// <param name="rds"> The RDS configuration. </param>
-        /// <param name="databasesDspm"> The databases data security posture management (DSPM) configuration. </param>
-        internal DefenderForDatabasesAwsOffering(OfferingType offeringType, string description, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesAwsOfferingRds rds, DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm) : base(offeringType, description)
+        /// <param name="offeringType">
+        /// The type of the security offering.
+        /// Serialized Name: CloudOffering.offeringType
+        /// </param>
+        /// <param name="description">
+        /// The offering description.
+        /// Serialized Name: CloudOffering.description
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="arcAutoProvisioning">
+        /// The ARC autoprovisioning configuration
+        /// Serialized Name: DefenderForDatabasesAwsOffering.arcAutoProvisioning
+        /// </param>
+        /// <param name="rds">
+        /// The RDS configuration
+        /// Serialized Name: DefenderForDatabasesAwsOffering.rds
+        /// </param>
+        /// <param name="databasesDspm">
+        /// The databases data security posture management (DSPM) configuration
+        /// Serialized Name: DefenderForDatabasesAwsOffering.databasesDspm
+        /// </param>
+        internal DefenderForDatabasesAwsOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning, DefenderForDatabasesAwsOfferingRds rds, DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm) : base(offeringType, description, serializedAdditionalRawData)
         {
             ArcAutoProvisioning = arcAutoProvisioning;
             Rds = rds;
@@ -30,11 +52,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OfferingType = offeringType;
         }
 
-        /// <summary> The ARC autoprovisioning configuration. </summary>
+        /// <summary>
+        /// The ARC autoprovisioning configuration
+        /// Serialized Name: DefenderForDatabasesAwsOffering.arcAutoProvisioning
+        /// </summary>
         public DefenderForDatabasesAwsOfferingArcAutoProvisioning ArcAutoProvisioning { get; set; }
-        /// <summary> The RDS configuration. </summary>
+        /// <summary>
+        /// The RDS configuration
+        /// Serialized Name: DefenderForDatabasesAwsOffering.rds
+        /// </summary>
         public DefenderForDatabasesAwsOfferingRds Rds { get; set; }
-        /// <summary> The databases data security posture management (DSPM) configuration. </summary>
+        /// <summary>
+        /// The databases data security posture management (DSPM) configuration
+        /// Serialized Name: DefenderForDatabasesAwsOffering.databasesDspm
+        /// </summary>
         public DefenderFoDatabasesAwsOfferingDatabasesDspm DatabasesDspm { get; set; }
     }
 }

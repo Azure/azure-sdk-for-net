@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Microsoft information protection integration status. </summary>
+    /// <summary>
+    /// Microsoft information protection integration status
+    /// Serialized Name: MipIntegrationStatus
+    /// </summary>
     public readonly partial struct MipIntegrationStatus : IEquatable<MipIntegrationStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string NoAutoLabelingRulesValue = "noAutoLabelingRules";
         private const string NoMipLabelsValue = "noMipLabels";
 
-        /// <summary> Ok. </summary>
+        /// <summary>
+        /// Ok
+        /// Serialized Name: MipIntegrationStatus.Ok
+        /// </summary>
         public static MipIntegrationStatus Ok { get; } = new MipIntegrationStatus(OkValue);
-        /// <summary> noConsent. </summary>
+        /// <summary>
+        /// noConsent
+        /// Serialized Name: MipIntegrationStatus.noConsent
+        /// </summary>
         public static MipIntegrationStatus NoConsent { get; } = new MipIntegrationStatus(NoConsentValue);
-        /// <summary> noAutoLabelingRules. </summary>
+        /// <summary>
+        /// noAutoLabelingRules
+        /// Serialized Name: MipIntegrationStatus.noAutoLabelingRules
+        /// </summary>
         public static MipIntegrationStatus NoAutoLabelingRules { get; } = new MipIntegrationStatus(NoAutoLabelingRulesValue);
-        /// <summary> noMipLabels. </summary>
+        /// <summary>
+        /// noMipLabels
+        /// Serialized Name: MipIntegrationStatus.noMipLabels
+        /// </summary>
         public static MipIntegrationStatus NoMipLabels { get; } = new MipIntegrationStatus(NoMipLabelsValue);
         /// <summary> Determines if two <see cref="MipIntegrationStatus"/> values are the same. </summary>
         public static bool operator ==(MipIntegrationStatus left, MipIntegrationStatus right) => left.Equals(right);

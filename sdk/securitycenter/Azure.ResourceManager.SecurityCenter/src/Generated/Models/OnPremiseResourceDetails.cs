@@ -6,22 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// Details of the On Premise resource that was assessed
+    /// Serialized Name: OnPremiseResourceDetails
     /// Please note <see cref="OnPremiseResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="OnPremiseSqlResourceDetails"/>.
     /// </summary>
     public partial class OnPremiseResourceDetails : SecurityCenterResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/>. </summary>
-        /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
-        /// <param name="vmUuid"> The unique Id of the machine. </param>
-        /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
-        /// <param name="machineName"> The name of the machine. </param>
+        /// <param name="workspaceId">
+        /// Azure resource Id of the workspace the machine is attached to
+        /// Serialized Name: OnPremiseResourceDetails.workspaceId
+        /// </param>
+        /// <param name="vmUuid">
+        /// The unique Id of the machine
+        /// Serialized Name: OnPremiseResourceDetails.vmuuid
+        /// </param>
+        /// <param name="sourceComputerId">
+        /// The oms agent Id installed on the machine
+        /// Serialized Name: OnPremiseResourceDetails.sourceComputerId
+        /// </param>
+        /// <param name="machineName">
+        /// The name of the machine
+        /// Serialized Name: OnPremiseResourceDetails.machineName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/>, <paramref name="sourceComputerId"/> or <paramref name="machineName"/> is null. </exception>
         public OnPremiseResourceDetails(ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName)
         {
@@ -37,12 +51,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/>. </summary>
-        /// <param name="source"> The platform where the assessed resource resides. </param>
-        /// <param name="workspaceId"> Azure resource Id of the workspace the machine is attached to. </param>
-        /// <param name="vmUuid"> The unique Id of the machine. </param>
-        /// <param name="sourceComputerId"> The oms agent Id installed on the machine. </param>
-        /// <param name="machineName"> The name of the machine. </param>
-        internal OnPremiseResourceDetails(Source source, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName) : base(source)
+        /// <param name="source">
+        /// The platform where the assessed resource resides
+        /// Serialized Name: ResourceDetails.source
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="workspaceId">
+        /// Azure resource Id of the workspace the machine is attached to
+        /// Serialized Name: OnPremiseResourceDetails.workspaceId
+        /// </param>
+        /// <param name="vmUuid">
+        /// The unique Id of the machine
+        /// Serialized Name: OnPremiseResourceDetails.vmuuid
+        /// </param>
+        /// <param name="sourceComputerId">
+        /// The oms agent Id installed on the machine
+        /// Serialized Name: OnPremiseResourceDetails.sourceComputerId
+        /// </param>
+        /// <param name="machineName">
+        /// The name of the machine
+        /// Serialized Name: OnPremiseResourceDetails.machineName
+        /// </param>
+        internal OnPremiseResourceDetails(Source source, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier workspaceId, Guid vmUuid, string sourceComputerId, string machineName) : base(source, serializedAdditionalRawData)
         {
             WorkspaceId = workspaceId;
             VmUuid = vmUuid;
@@ -51,13 +81,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Source = source;
         }
 
-        /// <summary> Azure resource Id of the workspace the machine is attached to. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnPremiseResourceDetails"/> for deserialization. </summary>
+        internal OnPremiseResourceDetails()
+        {
+        }
+
+        /// <summary>
+        /// Azure resource Id of the workspace the machine is attached to
+        /// Serialized Name: OnPremiseResourceDetails.workspaceId
+        /// </summary>
         public ResourceIdentifier WorkspaceId { get; set; }
-        /// <summary> The unique Id of the machine. </summary>
+        /// <summary>
+        /// The unique Id of the machine
+        /// Serialized Name: OnPremiseResourceDetails.vmuuid
+        /// </summary>
         public Guid VmUuid { get; set; }
-        /// <summary> The oms agent Id installed on the machine. </summary>
+        /// <summary>
+        /// The oms agent Id installed on the machine
+        /// Serialized Name: OnPremiseResourceDetails.sourceComputerId
+        /// </summary>
         public string SourceComputerId { get; set; }
-        /// <summary> The name of the machine. </summary>
+        /// <summary>
+        /// The name of the machine
+        /// Serialized Name: OnPremiseResourceDetails.machineName
+        /// </summary>
         public string MachineName { get; set; }
     }
 }

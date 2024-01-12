@@ -12,11 +12,49 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Request to update data sensitivity settings for sensitive data discovery. </summary>
+    /// <summary>
+    /// Request to update data sensitivity settings for sensitive data discovery
+    /// Serialized Name: UpdateSensitivitySettingsRequest
+    /// </summary>
     public partial class GetSensitivitySettingsResponseCreateOrUpdateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponseCreateOrUpdateContent"/>. </summary>
-        /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
+        /// <param name="sensitiveInfoTypesIds">
+        /// List of selected sensitive info types' IDs.
+        /// Serialized Name: UpdateSensitivitySettingsRequest.sensitiveInfoTypesIds
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensitiveInfoTypesIds"/> is null. </exception>
         public GetSensitivitySettingsResponseCreateOrUpdateContent(IEnumerable<Guid> sensitiveInfoTypesIds)
         {
@@ -26,21 +64,46 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponseCreateOrUpdateContent"/>. </summary>
-        /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
-        /// <param name="sensitivityThresholdLabelOrder"> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </param>
-        /// <param name="sensitivityThresholdLabelId"> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </param>
-        internal GetSensitivitySettingsResponseCreateOrUpdateContent(IList<Guid> sensitiveInfoTypesIds, float? sensitivityThresholdLabelOrder, Guid? sensitivityThresholdLabelId)
+        /// <param name="sensitiveInfoTypesIds">
+        /// List of selected sensitive info types' IDs.
+        /// Serialized Name: UpdateSensitivitySettingsRequest.sensitiveInfoTypesIds
+        /// </param>
+        /// <param name="sensitivityThresholdLabelOrder">
+        /// The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off
+        /// Serialized Name: UpdateSensitivitySettingsRequest.sensitivityThresholdLabelOrder
+        /// </param>
+        /// <param name="sensitivityThresholdLabelId">
+        /// The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive.
+        /// Serialized Name: UpdateSensitivitySettingsRequest.sensitivityThresholdLabelId
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetSensitivitySettingsResponseCreateOrUpdateContent(IList<Guid> sensitiveInfoTypesIds, float? sensitivityThresholdLabelOrder, Guid? sensitivityThresholdLabelId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SensitiveInfoTypesIds = sensitiveInfoTypesIds;
             SensitivityThresholdLabelOrder = sensitivityThresholdLabelOrder;
             SensitivityThresholdLabelId = sensitivityThresholdLabelId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of selected sensitive info types' IDs. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponseCreateOrUpdateContent"/> for deserialization. </summary>
+        internal GetSensitivitySettingsResponseCreateOrUpdateContent()
+        {
+        }
+
+        /// <summary>
+        /// List of selected sensitive info types' IDs.
+        /// Serialized Name: UpdateSensitivitySettingsRequest.sensitiveInfoTypesIds
+        /// </summary>
         public IList<Guid> SensitiveInfoTypesIds { get; }
-        /// <summary> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </summary>
+        /// <summary>
+        /// The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off
+        /// Serialized Name: UpdateSensitivitySettingsRequest.sensitivityThresholdLabelOrder
+        /// </summary>
         public float? SensitivityThresholdLabelOrder { get; set; }
-        /// <summary> The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive. </summary>
+        /// <summary>
+        /// The id of the sensitivity threshold label. Any label at or above this rank will be considered sensitive.
+        /// Serialized Name: UpdateSensitivitySettingsRequest.sensitivityThresholdLabelId
+        /// </summary>
         public Guid? SensitivityThresholdLabelId { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Workspace type. </summary>
+    /// <summary>
+    /// Workspace type.
+    /// Serialized Name: AdditionalWorkspaceType
+    /// </summary>
     public readonly partial struct AdditionalWorkspaceType : IEquatable<AdditionalWorkspaceType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string SentinelValue = "Sentinel";
 
-        /// <summary> Sentinel. </summary>
+        /// <summary>
+        /// Sentinel
+        /// Serialized Name: AdditionalWorkspaceType.Sentinel
+        /// </summary>
         public static AdditionalWorkspaceType Sentinel { get; } = new AdditionalWorkspaceType(SentinelValue);
         /// <summary> Determines if two <see cref="AdditionalWorkspaceType"/> values are the same. </summary>
         public static bool operator ==(AdditionalWorkspaceType left, AdditionalWorkspaceType right) => left.Equals(right);

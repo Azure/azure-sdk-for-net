@@ -11,12 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> AWS cloud account connector based credentials, the credentials is composed of access key ID and secret key, for more details, refer to &lt;a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html"&gt;Creating an IAM User in Your AWS Account (write only)&lt;/a&gt;. </summary>
+    /// <summary>
+    /// AWS cloud account connector based credentials, the credentials is composed of access key ID and secret key, for more details, refer to &lt;a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html"&gt;Creating an IAM User in Your AWS Account (write only)&lt;/a&gt;
+    /// Serialized Name: AwsCredsAuthenticationDetailsProperties
+    /// </summary>
     public partial class AwsCredsAuthenticationDetailsProperties : AuthenticationDetailsProperties
     {
         /// <summary> Initializes a new instance of <see cref="AwsCredsAuthenticationDetailsProperties"/>. </summary>
-        /// <param name="awsAccessKeyId"> Public key element of the AWS credential object (write only). </param>
-        /// <param name="awsSecretAccessKey"> Secret key element of the AWS credential object (write only). </param>
+        /// <param name="awsAccessKeyId">
+        /// Public key element of the AWS credential object (write only)
+        /// Serialized Name: AwsCredsAuthenticationDetailsProperties.awsAccessKeyId
+        /// </param>
+        /// <param name="awsSecretAccessKey">
+        /// Secret key element of the AWS credential object (write only)
+        /// Serialized Name: AwsCredsAuthenticationDetailsProperties.awsSecretAccessKey
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="awsAccessKeyId"/> or <paramref name="awsSecretAccessKey"/> is null. </exception>
         public AwsCredsAuthenticationDetailsProperties(string awsAccessKeyId, string awsSecretAccessKey)
         {
@@ -29,13 +38,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsCredsAuthenticationDetailsProperties"/>. </summary>
-        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
-        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
-        /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
-        /// <param name="accountId"> The ID of the cloud account. </param>
-        /// <param name="awsAccessKeyId"> Public key element of the AWS credential object (write only). </param>
-        /// <param name="awsSecretAccessKey"> Secret key element of the AWS credential object (write only). </param>
-        internal AwsCredsAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, string accountId, string awsAccessKeyId, string awsSecretAccessKey) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
+        /// <param name="authenticationProvisioningState">
+        /// State of the multi-cloud connector
+        /// Serialized Name: AuthenticationDetailsProperties.authenticationProvisioningState
+        /// </param>
+        /// <param name="grantedPermissions">
+        /// The permissions detected in the cloud account.
+        /// Serialized Name: AuthenticationDetailsProperties.grantedPermissions
+        /// </param>
+        /// <param name="authenticationType">
+        /// Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials.
+        /// Serialized Name: AuthenticationDetailsProperties.authenticationType
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="accountId">
+        /// The ID of the cloud account
+        /// Serialized Name: AwsCredsAuthenticationDetailsProperties.accountId
+        /// </param>
+        /// <param name="awsAccessKeyId">
+        /// Public key element of the AWS credential object (write only)
+        /// Serialized Name: AwsCredsAuthenticationDetailsProperties.awsAccessKeyId
+        /// </param>
+        /// <param name="awsSecretAccessKey">
+        /// Secret key element of the AWS credential object (write only)
+        /// Serialized Name: AwsCredsAuthenticationDetailsProperties.awsSecretAccessKey
+        /// </param>
+        internal AwsCredsAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountId, string awsAccessKeyId, string awsSecretAccessKey) : base(authenticationProvisioningState, grantedPermissions, authenticationType, serializedAdditionalRawData)
         {
             AccountId = accountId;
             AwsAccessKeyId = awsAccessKeyId;
@@ -43,11 +71,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthenticationType = authenticationType;
         }
 
-        /// <summary> The ID of the cloud account. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsCredsAuthenticationDetailsProperties"/> for deserialization. </summary>
+        internal AwsCredsAuthenticationDetailsProperties()
+        {
+        }
+
+        /// <summary>
+        /// The ID of the cloud account
+        /// Serialized Name: AwsCredsAuthenticationDetailsProperties.accountId
+        /// </summary>
         public string AccountId { get; }
-        /// <summary> Public key element of the AWS credential object (write only). </summary>
+        /// <summary>
+        /// Public key element of the AWS credential object (write only)
+        /// Serialized Name: AwsCredsAuthenticationDetailsProperties.awsAccessKeyId
+        /// </summary>
         public string AwsAccessKeyId { get; set; }
-        /// <summary> Secret key element of the AWS credential object (write only). </summary>
+        /// <summary>
+        /// Secret key element of the AWS credential object (write only)
+        /// Serialized Name: AwsCredsAuthenticationDetailsProperties.awsSecretAccessKey
+        /// </summary>
         public string AwsSecretAccessKey { get; set; }
     }
 }

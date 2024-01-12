@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> An alert that machines within a group can have. </summary>
+    /// <summary>
+    /// An alert that machines within a group can have
+    /// Serialized Name: AdaptiveApplicationControlIssue
+    /// </summary>
     public readonly partial struct AdaptiveApplicationControlIssue : IEquatable<AdaptiveApplicationControlIssue>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ExecutableViolationsAuditedValue = "ExecutableViolationsAudited";
         private const string RulesViolatedManuallyValue = "RulesViolatedManually";
 
-        /// <summary> ViolationsAudited. </summary>
+        /// <summary>
+        /// ViolationsAudited
+        /// Serialized Name: AdaptiveApplicationControlIssue.ViolationsAudited
+        /// </summary>
         public static AdaptiveApplicationControlIssue ViolationsAudited { get; } = new AdaptiveApplicationControlIssue(ViolationsAuditedValue);
-        /// <summary> ViolationsBlocked. </summary>
+        /// <summary>
+        /// ViolationsBlocked
+        /// Serialized Name: AdaptiveApplicationControlIssue.ViolationsBlocked
+        /// </summary>
         public static AdaptiveApplicationControlIssue ViolationsBlocked { get; } = new AdaptiveApplicationControlIssue(ViolationsBlockedValue);
-        /// <summary> MsiAndScriptViolationsAudited. </summary>
+        /// <summary>
+        /// MsiAndScriptViolationsAudited
+        /// Serialized Name: AdaptiveApplicationControlIssue.MsiAndScriptViolationsAudited
+        /// </summary>
         public static AdaptiveApplicationControlIssue MsiAndScriptViolationsAudited { get; } = new AdaptiveApplicationControlIssue(MsiAndScriptViolationsAuditedValue);
-        /// <summary> MsiAndScriptViolationsBlocked. </summary>
+        /// <summary>
+        /// MsiAndScriptViolationsBlocked
+        /// Serialized Name: AdaptiveApplicationControlIssue.MsiAndScriptViolationsBlocked
+        /// </summary>
         public static AdaptiveApplicationControlIssue MsiAndScriptViolationsBlocked { get; } = new AdaptiveApplicationControlIssue(MsiAndScriptViolationsBlockedValue);
-        /// <summary> ExecutableViolationsAudited. </summary>
+        /// <summary>
+        /// ExecutableViolationsAudited
+        /// Serialized Name: AdaptiveApplicationControlIssue.ExecutableViolationsAudited
+        /// </summary>
         public static AdaptiveApplicationControlIssue ExecutableViolationsAudited { get; } = new AdaptiveApplicationControlIssue(ExecutableViolationsAuditedValue);
-        /// <summary> RulesViolatedManually. </summary>
+        /// <summary>
+        /// RulesViolatedManually
+        /// Serialized Name: AdaptiveApplicationControlIssue.RulesViolatedManually
+        /// </summary>
         public static AdaptiveApplicationControlIssue RulesViolatedManually { get; } = new AdaptiveApplicationControlIssue(RulesViolatedManuallyValue);
         /// <summary> Determines if two <see cref="AdaptiveApplicationControlIssue"/> values are the same. </summary>
         public static bool operator ==(AdaptiveApplicationControlIssue left, AdaptiveApplicationControlIssue right) => left.Equals(right);

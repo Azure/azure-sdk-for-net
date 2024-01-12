@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The IotSecuritySolutionDataSource. </summary>
+    /// <summary>
+    /// The IotSecuritySolutionDataSource.
+    /// Serialized Name: DataSource
+    /// </summary>
     public readonly partial struct IotSecuritySolutionDataSource : IEquatable<IotSecuritySolutionDataSource>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string TwinDataValue = "TwinData";
 
-        /// <summary> Devices twin data. </summary>
+        /// <summary>
+        /// Devices twin data
+        /// Serialized Name: DataSource.TwinData
+        /// </summary>
         public static IotSecuritySolutionDataSource TwinData { get; } = new IotSecuritySolutionDataSource(TwinDataValue);
         /// <summary> Determines if two <see cref="IotSecuritySolutionDataSource"/> values are the same. </summary>
         public static bool operator ==(IotSecuritySolutionDataSource left, IotSecuritySolutionDataSource right) => left.Equals(right);

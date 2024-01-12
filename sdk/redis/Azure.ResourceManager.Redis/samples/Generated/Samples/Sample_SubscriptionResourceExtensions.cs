@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAsyncOperationStatus_RedisCacheAsyncOperationStatus()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-04-01/examples/RedisCacheAsyncOperationStatus.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2023-08-01/examples/RedisCacheAsyncOperationStatus.json
             // this example is just showing the usage of "AsyncOperationStatus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The implementation effort required to remediate this assessment. </summary>
+    /// <summary>
+    /// The implementation effort required to remediate this assessment
+    /// Serialized Name: ImplementationEffort
+    /// </summary>
     public readonly partial struct ImplementationEffort : IEquatable<ImplementationEffort>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ModerateValue = "Moderate";
         private const string HighValue = "High";
 
-        /// <summary> Low. </summary>
+        /// <summary>
+        /// Low
+        /// Serialized Name: ImplementationEffort.Low
+        /// </summary>
         public static ImplementationEffort Low { get; } = new ImplementationEffort(LowValue);
-        /// <summary> Moderate. </summary>
+        /// <summary>
+        /// Moderate
+        /// Serialized Name: ImplementationEffort.Moderate
+        /// </summary>
         public static ImplementationEffort Moderate { get; } = new ImplementationEffort(ModerateValue);
-        /// <summary> High. </summary>
+        /// <summary>
+        /// High
+        /// Serialized Name: ImplementationEffort.High
+        /// </summary>
         public static ImplementationEffort High { get; } = new ImplementationEffort(HighValue);
         /// <summary> Determines if two <see cref="ImplementationEffort"/> values are the same. </summary>
         public static bool operator ==(ImplementationEffort left, ImplementationEffort right) => left.Equals(right);

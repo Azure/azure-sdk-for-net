@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Possible states of the rule. </summary>
+    /// <summary>
+    /// Possible states of the rule
+    /// Serialized Name: RuleState
+    /// </summary>
     public enum SecurityAlertsSuppressionRuleState
     {
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: RuleState.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: RuleState.Disabled
+        /// </summary>
         Disabled,
-        /// <summary> Expired. </summary>
+        /// <summary>
+        /// Expired
+        /// Serialized Name: RuleState.Expired
+        /// </summary>
         Expired
     }
 }

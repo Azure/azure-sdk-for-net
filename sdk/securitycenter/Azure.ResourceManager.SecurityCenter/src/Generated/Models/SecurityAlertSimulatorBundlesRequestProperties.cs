@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Simulate alerts according to this bundles. </summary>
+    /// <summary>
+    /// Simulate alerts according to this bundles.
+    /// Serialized Name: AlertSimulatorBundlesRequestProperties
+    /// </summary>
     public partial class SecurityAlertSimulatorBundlesRequestProperties : SecurityAlertSimulatorRequestProperties
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>. </summary>
@@ -22,16 +25,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertSimulatorBundlesRequestProperties"/>. </summary>
-        /// <param name="kind"> The kind of alert simulation. </param>
+        /// <param name="kind">
+        /// The kind of alert simulation.
+        /// Serialized Name: AlertSimulatorRequestProperties.kind
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="bundles"> Bundles list. </param>
+        /// <param name="bundles">
+        /// Bundles list.
+        /// Serialized Name: AlertSimulatorBundlesRequestProperties.bundles
+        /// </param>
         internal SecurityAlertSimulatorBundlesRequestProperties(SecurityCenterKind kind, IDictionary<string, BinaryData> additionalProperties, IList<SecurityAlertSimulatorBundleType> bundles) : base(kind, additionalProperties)
         {
             Bundles = bundles;
             Kind = kind;
         }
 
-        /// <summary> Bundles list. </summary>
+        /// <summary>
+        /// Bundles list.
+        /// Serialized Name: AlertSimulatorBundlesRequestProperties.bundles
+        /// </summary>
         public IList<SecurityAlertSimulatorBundleType> Bundles { get; }
     }
 }

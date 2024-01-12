@@ -5,15 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Page of a security applications list. </summary>
+    /// <summary>
+    /// Page of a security applications list
+    /// Serialized Name: ApplicationsList
+    /// </summary>
     internal partial class ApplicationsList
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ApplicationsList"/>. </summary>
         internal ApplicationsList()
         {
@@ -21,17 +57,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationsList"/>. </summary>
-        /// <param name="value"> Collection of applications in this page. </param>
-        /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal ApplicationsList(IReadOnlyList<SecurityApplicationData> value, string nextLink)
+        /// <param name="value">
+        /// Collection of applications in this page
+        /// Serialized Name: ApplicationsList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI to fetch the next page
+        /// Serialized Name: ApplicationsList.nextLink
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationsList(IReadOnlyList<SecurityApplicationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Collection of applications in this page. </summary>
+        /// <summary>
+        /// Collection of applications in this page
+        /// Serialized Name: ApplicationsList.value
+        /// </summary>
         public IReadOnlyList<SecurityApplicationData> Value { get; }
-        /// <summary> The URI to fetch the next page. </summary>
+        /// <summary>
+        /// The URI to fetch the next page
+        /// Serialized Name: ApplicationsList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

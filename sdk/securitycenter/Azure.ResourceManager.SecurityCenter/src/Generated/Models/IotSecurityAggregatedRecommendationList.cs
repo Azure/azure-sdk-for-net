@@ -13,11 +13,49 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> List of IoT Security solution aggregated recommendations. </summary>
+    /// <summary>
+    /// List of IoT Security solution aggregated recommendations.
+    /// Serialized Name: IoTSecurityAggregatedRecommendationList
+    /// </summary>
     internal partial class IotSecurityAggregatedRecommendationList
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationList"/>. </summary>
-        /// <param name="value"> List of aggregated recommendations data. </param>
+        /// <param name="value">
+        /// List of aggregated recommendations data.
+        /// Serialized Name: IoTSecurityAggregatedRecommendationList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IotSecurityAggregatedRecommendationList(IEnumerable<IotSecurityAggregatedRecommendationData> value)
         {
@@ -27,17 +65,36 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationList"/>. </summary>
-        /// <param name="value"> List of aggregated recommendations data. </param>
-        /// <param name="nextLink"> When there is too much alert data for one page, use this URI to fetch the next page. </param>
-        internal IotSecurityAggregatedRecommendationList(IReadOnlyList<IotSecurityAggregatedRecommendationData> value, string nextLink)
+        /// <param name="value">
+        /// List of aggregated recommendations data.
+        /// Serialized Name: IoTSecurityAggregatedRecommendationList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// When there is too much alert data for one page, use this URI to fetch the next page.
+        /// Serialized Name: IoTSecurityAggregatedRecommendationList.nextLink
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecurityAggregatedRecommendationList(IReadOnlyList<IotSecurityAggregatedRecommendationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of aggregated recommendations data. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationList"/> for deserialization. </summary>
+        internal IotSecurityAggregatedRecommendationList()
+        {
+        }
+
+        /// <summary>
+        /// List of aggregated recommendations data.
+        /// Serialized Name: IoTSecurityAggregatedRecommendationList.value
+        /// </summary>
         public IReadOnlyList<IotSecurityAggregatedRecommendationData> Value { get; }
-        /// <summary> When there is too much alert data for one page, use this URI to fetch the next page. </summary>
+        /// <summary>
+        /// When there is too much alert data for one page, use this URI to fetch the next page.
+        /// Serialized Name: IoTSecurityAggregatedRecommendationList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

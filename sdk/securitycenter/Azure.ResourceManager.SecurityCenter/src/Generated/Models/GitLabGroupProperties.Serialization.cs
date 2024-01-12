@@ -6,31 +6,95 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GitLabGroupProperties : IUtf8JsonSerializable
+    public partial class GitLabGroupProperties : IUtf8JsonSerializable, IJsonModel<GitLabGroupProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitLabGroupProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GitLabGroupProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GitLabGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GitLabGroupProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
+            {
+                writer.WritePropertyName("provisioningStatusMessage"u8);
+                writer.WriteStringValue(ProvisioningStatusMessage);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            {
+                writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
+                writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
+            }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedName))
+            {
+                writer.WritePropertyName("fullyQualifiedName"u8);
+                writer.WriteStringValue(FullyQualifiedName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedFriendlyName))
+            {
+                writer.WritePropertyName("fullyQualifiedFriendlyName"u8);
+                writer.WriteStringValue(FullyQualifiedFriendlyName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GitLabGroupProperties DeserializeGitLabGroupProperties(JsonElement element)
+        GitLabGroupProperties IJsonModel<GitLabGroupProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GitLabGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GitLabGroupProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGitLabGroupProperties(document.RootElement, options);
+        }
+
+        internal static GitLabGroupProperties DeserializeGitLabGroupProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +106,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> fullyQualifiedFriendlyName = default;
             Optional<Uri> url = default;
             Optional<OnboardingState> onboardingState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatusMessage"u8))
@@ -95,8 +161,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     onboardingState = new OnboardingState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GitLabGroupProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), fullyQualifiedName.Value, fullyQualifiedFriendlyName.Value, url.Value, Optional.ToNullable(onboardingState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GitLabGroupProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), fullyQualifiedName.Value, fullyQualifiedFriendlyName.Value, url.Value, Optional.ToNullable(onboardingState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GitLabGroupProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GitLabGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GitLabGroupProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GitLabGroupProperties IPersistableModel<GitLabGroupProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GitLabGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGitLabGroupProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GitLabGroupProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GitLabGroupProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

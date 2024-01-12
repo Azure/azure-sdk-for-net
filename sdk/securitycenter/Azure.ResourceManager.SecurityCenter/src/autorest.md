@@ -24,10 +24,11 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
+use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 keep-orphaned-models:
   - ExternalSecuritySolutionKind
@@ -343,6 +344,11 @@ list-exception:
   - /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
   - /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
   - /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}
+
+suppress-abstract-base-class:
+- SecuritySettingData
+- ExternalSecuritySolution
+- SecurityAlertSimulatorRequestProperties
 
 directive:
   - rename-operation:

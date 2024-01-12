@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Azure resource identifier. </summary>
+    /// <summary>
+    /// Azure resource identifier.
+    /// Serialized Name: AzureResourceIdentifier
+    /// </summary>
     public partial class AzureResourceIdentifier : SecurityAlertResourceIdentifier
     {
         /// <summary> Initializes a new instance of <see cref="AzureResourceIdentifier"/>. </summary>
@@ -19,15 +24,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceIdentifier"/>. </summary>
-        /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
-        /// <param name="azureResourceId"> ARM resource identifier for the cloud resource being alerted on. </param>
-        internal AzureResourceIdentifier(ResourceIdentifierType resourceIdentifierType, ResourceIdentifier azureResourceId) : base(resourceIdentifierType)
+        /// <param name="resourceIdentifierType">
+        /// There can be multiple identifiers of different type per alert, this field specify the identifier type.
+        /// Serialized Name: AlertResourceIdentifier.type
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="azureResourceId">
+        /// ARM resource identifier for the cloud resource being alerted on
+        /// Serialized Name: AzureResourceIdentifier.azureResourceId
+        /// </param>
+        internal AzureResourceIdentifier(ResourceIdentifierType resourceIdentifierType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureResourceId) : base(resourceIdentifierType, serializedAdditionalRawData)
         {
             AzureResourceId = azureResourceId;
             ResourceIdentifierType = resourceIdentifierType;
         }
 
-        /// <summary> ARM resource identifier for the cloud resource being alerted on. </summary>
+        /// <summary>
+        /// ARM resource identifier for the cloud resource being alerted on
+        /// Serialized Name: AzureResourceIdentifier.azureResourceId
+        /// </summary>
         public ResourceIdentifier AzureResourceId { get; }
     }
 }

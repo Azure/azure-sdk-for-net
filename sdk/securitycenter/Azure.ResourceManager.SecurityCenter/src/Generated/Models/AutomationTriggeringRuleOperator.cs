@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType. </summary>
+    /// <summary>
+    /// A valid comparer operator to use. A case-insensitive comparison will be applied for String PropertyType.
+    /// Serialized Name: Operator
+    /// </summary>
     public readonly partial struct AutomationTriggeringRuleOperator : IEquatable<AutomationTriggeringRuleOperator>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string StartsWithValue = "StartsWith";
         private const string EndsWithValue = "EndsWith";
 
-        /// <summary> Applies for decimal and non-decimal operands. </summary>
+        /// <summary>
+        /// Applies for decimal and non-decimal operands
+        /// Serialized Name: Operator.Equals
+        /// </summary>
         public static AutomationTriggeringRuleOperator EqualsValue { get; } = new AutomationTriggeringRuleOperator(EqualsValueValue);
-        /// <summary> Applies only for decimal operands. </summary>
+        /// <summary>
+        /// Applies only for decimal operands
+        /// Serialized Name: Operator.GreaterThan
+        /// </summary>
         public static AutomationTriggeringRuleOperator GreaterThan { get; } = new AutomationTriggeringRuleOperator(GreaterThanValue);
-        /// <summary> Applies only for decimal operands. </summary>
+        /// <summary>
+        /// Applies only for decimal operands
+        /// Serialized Name: Operator.GreaterThanOrEqualTo
+        /// </summary>
         public static AutomationTriggeringRuleOperator GreaterThanOrEqualTo { get; } = new AutomationTriggeringRuleOperator(GreaterThanOrEqualToValue);
-        /// <summary> Applies only for decimal operands. </summary>
+        /// <summary>
+        /// Applies only for decimal operands
+        /// Serialized Name: Operator.LesserThan
+        /// </summary>
         public static AutomationTriggeringRuleOperator LesserThan { get; } = new AutomationTriggeringRuleOperator(LesserThanValue);
-        /// <summary> Applies only for decimal operands. </summary>
+        /// <summary>
+        /// Applies only for decimal operands
+        /// Serialized Name: Operator.LesserThanOrEqualTo
+        /// </summary>
         public static AutomationTriggeringRuleOperator LesserThanOrEqualTo { get; } = new AutomationTriggeringRuleOperator(LesserThanOrEqualToValue);
-        /// <summary> Applies  for decimal and non-decimal operands. </summary>
+        /// <summary>
+        /// Applies  for decimal and non-decimal operands
+        /// Serialized Name: Operator.NotEquals
+        /// </summary>
         public static AutomationTriggeringRuleOperator NotEquals { get; } = new AutomationTriggeringRuleOperator(NotEqualsValue);
-        /// <summary> Applies only for non-decimal operands. </summary>
+        /// <summary>
+        /// Applies only for non-decimal operands
+        /// Serialized Name: Operator.Contains
+        /// </summary>
         public static AutomationTriggeringRuleOperator Contains { get; } = new AutomationTriggeringRuleOperator(ContainsValue);
-        /// <summary> Applies only for non-decimal operands. </summary>
+        /// <summary>
+        /// Applies only for non-decimal operands
+        /// Serialized Name: Operator.StartsWith
+        /// </summary>
         public static AutomationTriggeringRuleOperator StartsWith { get; } = new AutomationTriggeringRuleOperator(StartsWithValue);
-        /// <summary> Applies only for non-decimal operands. </summary>
+        /// <summary>
+        /// Applies only for non-decimal operands
+        /// Serialized Name: Operator.EndsWith
+        /// </summary>
         public static AutomationTriggeringRuleOperator EndsWith { get; } = new AutomationTriggeringRuleOperator(EndsWithValue);
         /// <summary> Determines if two <see cref="AutomationTriggeringRuleOperator"/> values are the same. </summary>
         public static bool operator ==(AutomationTriggeringRuleOperator left, AutomationTriggeringRuleOperator right) => left.Equals(right);

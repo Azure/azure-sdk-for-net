@@ -11,21 +11,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> GCP cloud account connector based service to service credentials, the credentials are composed of the organization ID and a JSON API key (write only). </summary>
+    /// <summary>
+    /// GCP cloud account connector based service to service credentials, the credentials are composed of the organization ID and a JSON API key (write only)
+    /// Serialized Name: GcpCredentialsDetailsProperties
+    /// </summary>
     public partial class GcpCredentialsDetailsProperties : AuthenticationDetailsProperties
     {
         /// <summary> Initializes a new instance of <see cref="GcpCredentialsDetailsProperties"/>. </summary>
-        /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
-        /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
-        /// <param name="projectId"> Project ID field of the API key (write only). </param>
-        /// <param name="privateKeyId"> Private key ID field of the API key (write only). </param>
-        /// <param name="privateKey"> Private key field of the API key (write only). </param>
-        /// <param name="clientEmail"> Client email field of the API key (write only). </param>
-        /// <param name="clientId"> Client ID field of the API key (write only). </param>
-        /// <param name="authUri"> Auth URI field of the API key (write only). </param>
-        /// <param name="tokenUri"> Token URI field of the API key (write only). </param>
-        /// <param name="authProviderX509CertUri"> Auth provider x509 certificate URL field of the API key (write only). </param>
-        /// <param name="clientX509CertUri"> Client x509 certificate URL field of the API key (write only). </param>
+        /// <param name="organizationId">
+        /// The organization ID of the GCP cloud account
+        /// Serialized Name: GcpCredentialsDetailsProperties.organizationId
+        /// </param>
+        /// <param name="gcpCredentialType">
+        /// Type field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.type
+        /// </param>
+        /// <param name="projectId">
+        /// Project ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.projectId
+        /// </param>
+        /// <param name="privateKeyId">
+        /// Private key ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.privateKeyId
+        /// </param>
+        /// <param name="privateKey">
+        /// Private key field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.privateKey
+        /// </param>
+        /// <param name="clientEmail">
+        /// Client email field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientEmail
+        /// </param>
+        /// <param name="clientId">
+        /// Client ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientId
+        /// </param>
+        /// <param name="authUri">
+        /// Auth URI field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.authUri
+        /// </param>
+        /// <param name="tokenUri">
+        /// Token URI field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.tokenUri
+        /// </param>
+        /// <param name="authProviderX509CertUri">
+        /// Auth provider x509 certificate URL field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.authProviderX509CertUrl
+        /// </param>
+        /// <param name="clientX509CertUri">
+        /// Client x509 certificate URL field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientX509CertUrl
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationId"/>, <paramref name="gcpCredentialType"/>, <paramref name="projectId"/>, <paramref name="privateKeyId"/>, <paramref name="privateKey"/>, <paramref name="clientEmail"/>, <paramref name="clientId"/>, <paramref name="authUri"/>, <paramref name="tokenUri"/>, <paramref name="authProviderX509CertUri"/> or <paramref name="clientX509CertUri"/> is null. </exception>
         public GcpCredentialsDetailsProperties(string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri)
         {
@@ -56,21 +92,64 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpCredentialsDetailsProperties"/>. </summary>
-        /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
-        /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
-        /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
-        /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
-        /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
-        /// <param name="projectId"> Project ID field of the API key (write only). </param>
-        /// <param name="privateKeyId"> Private key ID field of the API key (write only). </param>
-        /// <param name="privateKey"> Private key field of the API key (write only). </param>
-        /// <param name="clientEmail"> Client email field of the API key (write only). </param>
-        /// <param name="clientId"> Client ID field of the API key (write only). </param>
-        /// <param name="authUri"> Auth URI field of the API key (write only). </param>
-        /// <param name="tokenUri"> Token URI field of the API key (write only). </param>
-        /// <param name="authProviderX509CertUri"> Auth provider x509 certificate URL field of the API key (write only). </param>
-        /// <param name="clientX509CertUri"> Client x509 certificate URL field of the API key (write only). </param>
-        internal GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
+        /// <param name="authenticationProvisioningState">
+        /// State of the multi-cloud connector
+        /// Serialized Name: AuthenticationDetailsProperties.authenticationProvisioningState
+        /// </param>
+        /// <param name="grantedPermissions">
+        /// The permissions detected in the cloud account.
+        /// Serialized Name: AuthenticationDetailsProperties.grantedPermissions
+        /// </param>
+        /// <param name="authenticationType">
+        /// Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials.
+        /// Serialized Name: AuthenticationDetailsProperties.authenticationType
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="organizationId">
+        /// The organization ID of the GCP cloud account
+        /// Serialized Name: GcpCredentialsDetailsProperties.organizationId
+        /// </param>
+        /// <param name="gcpCredentialType">
+        /// Type field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.type
+        /// </param>
+        /// <param name="projectId">
+        /// Project ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.projectId
+        /// </param>
+        /// <param name="privateKeyId">
+        /// Private key ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.privateKeyId
+        /// </param>
+        /// <param name="privateKey">
+        /// Private key field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.privateKey
+        /// </param>
+        /// <param name="clientEmail">
+        /// Client email field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientEmail
+        /// </param>
+        /// <param name="clientId">
+        /// Client ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientId
+        /// </param>
+        /// <param name="authUri">
+        /// Auth URI field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.authUri
+        /// </param>
+        /// <param name="tokenUri">
+        /// Token URI field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.tokenUri
+        /// </param>
+        /// <param name="authProviderX509CertUri">
+        /// Auth provider x509 certificate URL field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.authProviderX509CertUrl
+        /// </param>
+        /// <param name="clientX509CertUri">
+        /// Client x509 certificate URL field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientX509CertUrl
+        /// </param>
+        internal GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri) : base(authenticationProvisioningState, grantedPermissions, authenticationType, serializedAdditionalRawData)
         {
             OrganizationId = organizationId;
             GcpCredentialType = gcpCredentialType;
@@ -86,27 +165,65 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthenticationType = authenticationType;
         }
 
-        /// <summary> The organization ID of the GCP cloud account. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpCredentialsDetailsProperties"/> for deserialization. </summary>
+        internal GcpCredentialsDetailsProperties()
+        {
+        }
+
+        /// <summary>
+        /// The organization ID of the GCP cloud account
+        /// Serialized Name: GcpCredentialsDetailsProperties.organizationId
+        /// </summary>
         public string OrganizationId { get; set; }
-        /// <summary> Type field of the API key (write only). </summary>
+        /// <summary>
+        /// Type field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.type
+        /// </summary>
         public string GcpCredentialType { get; set; }
-        /// <summary> Project ID field of the API key (write only). </summary>
+        /// <summary>
+        /// Project ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.projectId
+        /// </summary>
         public string ProjectId { get; set; }
-        /// <summary> Private key ID field of the API key (write only). </summary>
+        /// <summary>
+        /// Private key ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.privateKeyId
+        /// </summary>
         public string PrivateKeyId { get; set; }
-        /// <summary> Private key field of the API key (write only). </summary>
+        /// <summary>
+        /// Private key field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.privateKey
+        /// </summary>
         public string PrivateKey { get; set; }
-        /// <summary> Client email field of the API key (write only). </summary>
+        /// <summary>
+        /// Client email field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientEmail
+        /// </summary>
         public string ClientEmail { get; set; }
-        /// <summary> Client ID field of the API key (write only). </summary>
+        /// <summary>
+        /// Client ID field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientId
+        /// </summary>
         public string ClientId { get; set; }
-        /// <summary> Auth URI field of the API key (write only). </summary>
+        /// <summary>
+        /// Auth URI field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.authUri
+        /// </summary>
         public Uri AuthUri { get; set; }
-        /// <summary> Token URI field of the API key (write only). </summary>
+        /// <summary>
+        /// Token URI field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.tokenUri
+        /// </summary>
         public Uri TokenUri { get; set; }
-        /// <summary> Auth provider x509 certificate URL field of the API key (write only). </summary>
+        /// <summary>
+        /// Auth provider x509 certificate URL field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.authProviderX509CertUrl
+        /// </summary>
         public Uri AuthProviderX509CertUri { get; set; }
-        /// <summary> Client x509 certificate URL field of the API key (write only). </summary>
+        /// <summary>
+        /// Client x509 certificate URL field of the API key (write only)
+        /// Serialized Name: GcpCredentialsDetailsProperties.clientX509CertUrl
+        /// </summary>
         public Uri ClientX509CertUri { get; set; }
     }
 }

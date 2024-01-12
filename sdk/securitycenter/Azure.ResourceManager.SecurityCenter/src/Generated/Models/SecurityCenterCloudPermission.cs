@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> A permission detected in the cloud account. </summary>
+    /// <summary>
+    /// A permission detected in the cloud account.
+    /// Serialized Name: PermissionProperty
+    /// </summary>
     public readonly partial struct SecurityCenterCloudPermission : IEquatable<SecurityCenterCloudPermission>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string AwsAmazonSsmAutomationRoleValue = "AWS::AmazonSSMAutomationRole";
         private const string GcpSecurityCenterAdminViewerValue = "GCP::Security Center Admin Viewer";
 
-        /// <summary> This permission provides read only access to AWS Security Hub resources. </summary>
+        /// <summary>
+        /// This permission provides read only access to AWS Security Hub resources.
+        /// Serialized Name: PermissionProperty.AWS::AWSSecurityHubReadOnlyAccess
+        /// </summary>
         public static SecurityCenterCloudPermission AwsAwsSecurityHubReadOnlyAccess { get; } = new SecurityCenterCloudPermission(AwsAwsSecurityHubReadOnlyAccessValue);
-        /// <summary> This permission grants access to read security configuration metadata. </summary>
+        /// <summary>
+        /// This permission grants access to read security configuration metadata.
+        /// Serialized Name: PermissionProperty.AWS::SecurityAudit
+        /// </summary>
         public static SecurityCenterCloudPermission AwsSecurityAudit { get; } = new SecurityCenterCloudPermission(AwsSecurityAuditValue);
-        /// <summary> The permission provides for EC2 Automation service to execute activities defined within Automation documents. </summary>
+        /// <summary>
+        /// The permission provides for EC2 Automation service to execute activities defined within Automation documents.
+        /// Serialized Name: PermissionProperty.AWS::AmazonSSMAutomationRole
+        /// </summary>
         public static SecurityCenterCloudPermission AwsAmazonSsmAutomationRole { get; } = new SecurityCenterCloudPermission(AwsAmazonSsmAutomationRoleValue);
-        /// <summary> This permission provides read only access to GCP Security Command Center. </summary>
+        /// <summary>
+        /// This permission provides read only access to GCP Security Command Center.
+        /// Serialized Name: PermissionProperty.GCP::Security Center Admin Viewer
+        /// </summary>
         public static SecurityCenterCloudPermission GcpSecurityCenterAdminViewer { get; } = new SecurityCenterCloudPermission(GcpSecurityCenterAdminViewerValue);
         /// <summary> Determines if two <see cref="SecurityCenterCloudPermission"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterCloudPermission left, SecurityCenterCloudPermission right) => left.Equals(right);

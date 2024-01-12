@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecurityTransportProtocol. </summary>
+    /// <summary>
+    /// The SecurityTransportProtocol.
+    /// Serialized Name: TransportProtocol
+    /// </summary>
     public readonly partial struct SecurityTransportProtocol : IEquatable<SecurityTransportProtocol>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string TcpValue = "TCP";
         private const string UdpValue = "UDP";
 
-        /// <summary> TCP. </summary>
+        /// <summary>
+        /// TCP
+        /// Serialized Name: TransportProtocol.TCP
+        /// </summary>
         public static SecurityTransportProtocol Tcp { get; } = new SecurityTransportProtocol(TcpValue);
-        /// <summary> UDP. </summary>
+        /// <summary>
+        /// UDP
+        /// Serialized Name: TransportProtocol.UDP
+        /// </summary>
         public static SecurityTransportProtocol Udp { get; } = new SecurityTransportProtocol(UdpValue);
         /// <summary> Determines if two <see cref="SecurityTransportProtocol"/> values are the same. </summary>
         public static bool operator ==(SecurityTransportProtocol left, SecurityTransportProtocol right) => left.Equals(right);

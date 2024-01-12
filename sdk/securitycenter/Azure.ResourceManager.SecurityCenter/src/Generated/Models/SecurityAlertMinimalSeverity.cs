@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Defines the minimal alert severity which will be sent as email notifications. </summary>
+    /// <summary>
+    /// Defines the minimal alert severity which will be sent as email notifications
+    /// Serialized Name: MinimalSeverity
+    /// </summary>
     public readonly partial struct SecurityAlertMinimalSeverity : IEquatable<SecurityAlertMinimalSeverity>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string MediumValue = "Medium";
         private const string LowValue = "Low";
 
-        /// <summary> Get notifications on new alerts with High severity. </summary>
+        /// <summary>
+        /// Get notifications on new alerts with High severity
+        /// Serialized Name: MinimalSeverity.High
+        /// </summary>
         public static SecurityAlertMinimalSeverity High { get; } = new SecurityAlertMinimalSeverity(HighValue);
-        /// <summary> Get notifications on new alerts with medium or high severity. </summary>
+        /// <summary>
+        /// Get notifications on new alerts with medium or high severity
+        /// Serialized Name: MinimalSeverity.Medium
+        /// </summary>
         public static SecurityAlertMinimalSeverity Medium { get; } = new SecurityAlertMinimalSeverity(MediumValue);
-        /// <summary> Don't get notifications on new alerts with low, medium or high severity. </summary>
+        /// <summary>
+        /// Don't get notifications on new alerts with low, medium or high severity
+        /// Serialized Name: MinimalSeverity.Low
+        /// </summary>
         public static SecurityAlertMinimalSeverity Low { get; } = new SecurityAlertMinimalSeverity(LowValue);
         /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are the same. </summary>
         public static bool operator ==(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => left.Equals(right);

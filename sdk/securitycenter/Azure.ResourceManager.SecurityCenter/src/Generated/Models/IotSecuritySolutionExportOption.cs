@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The IotSecuritySolutionExportOption. </summary>
+    /// <summary>
+    /// The IotSecuritySolutionExportOption.
+    /// Serialized Name: ExportData
+    /// </summary>
     public readonly partial struct IotSecuritySolutionExportOption : IEquatable<IotSecuritySolutionExportOption>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         private const string RawEventsValue = "RawEvents";
 
-        /// <summary> Agent raw events. </summary>
+        /// <summary>
+        /// Agent raw events
+        /// Serialized Name: ExportData.RawEvents
+        /// </summary>
         public static IotSecuritySolutionExportOption RawEvents { get; } = new IotSecuritySolutionExportOption(RawEventsValue);
         /// <summary> Determines if two <see cref="IotSecuritySolutionExportOption"/> values are the same. </summary>
         public static bool operator ==(IotSecuritySolutionExportOption left, IotSecuritySolutionExportOption right) => left.Equals(right);

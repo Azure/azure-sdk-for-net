@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Represents an ATA security solution which sends logs to an OMS workspace. </summary>
+    /// <summary>
+    /// Represents an ATA security solution which sends logs to an OMS workspace
+    /// Serialized Name: AtaExternalSecuritySolution
+    /// </summary>
     public partial class AtaExternalSecuritySolution : ExternalSecuritySolution
     {
         /// <summary> Initializes a new instance of <see cref="AtaExternalSecuritySolution"/>. </summary>
@@ -24,16 +29,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the external solution. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <param name="properties"> The external security solution properties for ATA solutions. </param>
-        internal AtaExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, AtaSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location)
+        /// <param name="kind">
+        /// The kind of the external solution
+        /// Serialized Name: ExternalSecuritySolution.kind
+        /// </param>
+        /// <param name="location">
+        /// Location where the resource is stored
+        /// Serialized Name: Location.location
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties">
+        /// The external security solution properties for ATA solutions
+        /// Serialized Name: AtaExternalSecuritySolution.properties
+        /// </param>
+        internal AtaExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, AtaSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location, serializedAdditionalRawData)
         {
             Properties = properties;
             Kind = kind;
         }
 
-        /// <summary> The external security solution properties for ATA solutions. </summary>
+        /// <summary>
+        /// The external security solution properties for ATA solutions
+        /// Serialized Name: AtaExternalSecuritySolution.properties
+        /// </summary>
         public AtaSolutionProperties Properties { get; set; }
     }
 }

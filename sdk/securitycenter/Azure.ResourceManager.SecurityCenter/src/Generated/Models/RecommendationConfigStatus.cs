@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Recommendation status. When the recommendation status is disabled recommendations are not generated. </summary>
+    /// <summary>
+    /// Recommendation status. When the recommendation status is disabled recommendations are not generated.
+    /// Serialized Name: RecommendationConfigStatus
+    /// </summary>
     public readonly partial struct RecommendationConfigStatus : IEquatable<RecommendationConfigStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: RecommendationConfigStatus.Disabled
+        /// </summary>
         public static RecommendationConfigStatus Disabled { get; } = new RecommendationConfigStatus(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: RecommendationConfigStatus.Enabled
+        /// </summary>
         public static RecommendationConfigStatus Enabled { get; } = new RecommendationConfigStatus(EnabledValue);
         /// <summary> Determines if two <see cref="RecommendationConfigStatus"/> values are the same. </summary>
         public static bool operator ==(RecommendationConfigStatus left, RecommendationConfigStatus right) => left.Equals(right);

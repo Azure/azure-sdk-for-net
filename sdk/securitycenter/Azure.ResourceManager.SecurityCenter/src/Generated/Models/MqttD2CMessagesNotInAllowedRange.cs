@@ -6,33 +6,76 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Number of device to cloud messages (MQTT protocol) is not in allowed range. </summary>
+    /// <summary>
+    /// Number of device to cloud messages (MQTT protocol) is not in allowed range.
+    /// Serialized Name: MqttD2CMessagesNotInAllowedRange
+    /// </summary>
     public partial class MqttD2CMessagesNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="MqttD2CMessagesNotInAllowedRange"/>. </summary>
-        /// <param name="isEnabled"> Status of the custom alert. </param>
-        /// <param name="minThreshold"> The minimum threshold. </param>
-        /// <param name="maxThreshold"> The maximum threshold. </param>
-        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <param name="isEnabled">
+        /// Status of the custom alert.
+        /// Serialized Name: CustomAlertRule.isEnabled
+        /// </param>
+        /// <param name="minThreshold">
+        /// The minimum threshold.
+        /// Serialized Name: ThresholdCustomAlertRule.minThreshold
+        /// </param>
+        /// <param name="maxThreshold">
+        /// The maximum threshold.
+        /// Serialized Name: ThresholdCustomAlertRule.maxThreshold
+        /// </param>
+        /// <param name="timeWindowSize">
+        /// The time window size in iso8601 format.
+        /// Serialized Name: TimeWindowCustomAlertRule.timeWindowSize
+        /// </param>
         public MqttD2CMessagesNotInAllowedRange(bool isEnabled, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(isEnabled, minThreshold, maxThreshold, timeWindowSize)
         {
             RuleType = "MqttD2CMessagesNotInAllowedRange";
         }
 
         /// <summary> Initializes a new instance of <see cref="MqttD2CMessagesNotInAllowedRange"/>. </summary>
-        /// <param name="displayName"> The display name of the custom alert. </param>
-        /// <param name="description"> The description of the custom alert. </param>
-        /// <param name="isEnabled"> Status of the custom alert. </param>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
-        /// <param name="minThreshold"> The minimum threshold. </param>
-        /// <param name="maxThreshold"> The maximum threshold. </param>
-        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
-        internal MqttD2CMessagesNotInAllowedRange(string displayName, string description, bool isEnabled, string ruleType, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(displayName, description, isEnabled, ruleType, minThreshold, maxThreshold, timeWindowSize)
+        /// <param name="displayName">
+        /// The display name of the custom alert.
+        /// Serialized Name: CustomAlertRule.displayName
+        /// </param>
+        /// <param name="description">
+        /// The description of the custom alert.
+        /// Serialized Name: CustomAlertRule.description
+        /// </param>
+        /// <param name="isEnabled">
+        /// Status of the custom alert.
+        /// Serialized Name: CustomAlertRule.isEnabled
+        /// </param>
+        /// <param name="ruleType">
+        /// The type of the custom alert rule.
+        /// Serialized Name: CustomAlertRule.ruleType
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="minThreshold">
+        /// The minimum threshold.
+        /// Serialized Name: ThresholdCustomAlertRule.minThreshold
+        /// </param>
+        /// <param name="maxThreshold">
+        /// The maximum threshold.
+        /// Serialized Name: ThresholdCustomAlertRule.maxThreshold
+        /// </param>
+        /// <param name="timeWindowSize">
+        /// The time window size in iso8601 format.
+        /// Serialized Name: TimeWindowCustomAlertRule.timeWindowSize
+        /// </param>
+        internal MqttD2CMessagesNotInAllowedRange(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold, timeWindowSize)
         {
             RuleType = ruleType ?? "MqttD2CMessagesNotInAllowedRange";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MqttD2CMessagesNotInAllowedRange"/> for deserialization. </summary>
+        internal MqttD2CMessagesNotInAllowedRange()
+        {
         }
     }
 }

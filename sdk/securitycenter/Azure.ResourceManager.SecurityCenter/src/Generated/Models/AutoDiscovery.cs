@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> AutoDiscovery states. </summary>
+    /// <summary>
+    /// AutoDiscovery states.
+    /// Serialized Name: AutoDiscovery
+    /// </summary>
     public readonly partial struct AutoDiscovery : IEquatable<AutoDiscovery>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string EnabledValue = "Enabled";
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: AutoDiscovery.Disabled
+        /// </summary>
         public static AutoDiscovery Disabled { get; } = new AutoDiscovery(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: AutoDiscovery.Enabled
+        /// </summary>
         public static AutoDiscovery Enabled { get; } = new AutoDiscovery(EnabledValue);
-        /// <summary> NotApplicable. </summary>
+        /// <summary>
+        /// NotApplicable
+        /// Serialized Name: AutoDiscovery.NotApplicable
+        /// </summary>
         public static AutoDiscovery NotApplicable { get; } = new AutoDiscovery(NotApplicableValue);
         /// <summary> Determines if two <see cref="AutoDiscovery"/> values are the same. </summary>
         public static bool operator ==(AutoDiscovery left, AutoDiscovery right) => left.Equals(right);

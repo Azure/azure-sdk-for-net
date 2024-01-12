@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The CSPM (Cloud security posture management) monitoring for gitlab offering. </summary>
+    /// <summary>
+    /// The CSPM (Cloud security posture management) monitoring for gitlab offering
+    /// Serialized Name: CspmMonitorGitLabOffering
+    /// </summary>
     public partial class CspmMonitorGitLabOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGitLabOffering"/>. </summary>
@@ -17,9 +23,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CspmMonitorGitLabOffering"/>. </summary>
-        /// <param name="offeringType"> The type of the security offering. </param>
-        /// <param name="description"> The offering description. </param>
-        internal CspmMonitorGitLabOffering(OfferingType offeringType, string description) : base(offeringType, description)
+        /// <param name="offeringType">
+        /// The type of the security offering.
+        /// Serialized Name: CloudOffering.offeringType
+        /// </param>
+        /// <param name="description">
+        /// The offering description.
+        /// Serialized Name: CloudOffering.description
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CspmMonitorGitLabOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(offeringType, description, serializedAdditionalRawData)
         {
             OfferingType = offeringType;
         }

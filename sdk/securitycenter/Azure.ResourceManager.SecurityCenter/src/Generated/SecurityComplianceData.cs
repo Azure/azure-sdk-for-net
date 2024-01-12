@@ -16,9 +16,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecurityCompliance data model.
     /// Compliance of a scope
+    /// Serialized Name: Compliance
     /// </summary>
     public partial class SecurityComplianceData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecurityComplianceData"/>. </summary>
         public SecurityComplianceData()
         {
@@ -30,21 +63,41 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="assessedOn"> The timestamp when the Compliance calculation was conducted. </param>
-        /// <param name="resourceCount"> The resource count of the given subscription for which the Compliance calculation was conducted (needed for Management Group Compliance calculation). </param>
-        /// <param name="assessmentResult"> An array of segment, which is the actually the compliance assessment. </param>
-        internal SecurityComplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? assessedOn, int? resourceCount, IReadOnlyList<ComplianceSegment> assessmentResult) : base(id, name, resourceType, systemData)
+        /// <param name="assessedOn">
+        /// The timestamp when the Compliance calculation was conducted.
+        /// Serialized Name: Compliance.properties.assessmentTimestampUtcDate
+        /// </param>
+        /// <param name="resourceCount">
+        /// The resource count of the given subscription for which the Compliance calculation was conducted (needed for Management Group Compliance calculation).
+        /// Serialized Name: Compliance.properties.resourceCount
+        /// </param>
+        /// <param name="assessmentResult">
+        /// An array of segment, which is the actually the compliance assessment.
+        /// Serialized Name: Compliance.properties.assessmentResult
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityComplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? assessedOn, int? resourceCount, IReadOnlyList<ComplianceSegment> assessmentResult, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AssessedOn = assessedOn;
             ResourceCount = resourceCount;
             AssessmentResult = assessmentResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The timestamp when the Compliance calculation was conducted. </summary>
+        /// <summary>
+        /// The timestamp when the Compliance calculation was conducted.
+        /// Serialized Name: Compliance.properties.assessmentTimestampUtcDate
+        /// </summary>
         public DateTimeOffset? AssessedOn { get; }
-        /// <summary> The resource count of the given subscription for which the Compliance calculation was conducted (needed for Management Group Compliance calculation). </summary>
+        /// <summary>
+        /// The resource count of the given subscription for which the Compliance calculation was conducted (needed for Management Group Compliance calculation).
+        /// Serialized Name: Compliance.properties.resourceCount
+        /// </summary>
         public int? ResourceCount { get; }
-        /// <summary> An array of segment, which is the actually the compliance assessment. </summary>
+        /// <summary>
+        /// An array of segment, which is the actually the compliance assessment.
+        /// Serialized Name: Compliance.properties.assessmentResult
+        /// </summary>
         public IReadOnlyList<ComplianceSegment> AssessmentResult { get; }
     }
 }

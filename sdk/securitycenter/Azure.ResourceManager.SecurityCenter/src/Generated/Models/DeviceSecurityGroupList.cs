@@ -5,15 +5,51 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> List of device security groups. </summary>
+    /// <summary>
+    /// List of device security groups
+    /// Serialized Name: DeviceSecurityGroupList
+    /// </summary>
     internal partial class DeviceSecurityGroupList
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupList"/>. </summary>
         internal DeviceSecurityGroupList()
         {
@@ -21,17 +57,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceSecurityGroupList"/>. </summary>
-        /// <param name="value"> List of device security group objects. </param>
-        /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal DeviceSecurityGroupList(IReadOnlyList<DeviceSecurityGroupData> value, string nextLink)
+        /// <param name="value">
+        /// List of device security group objects
+        /// Serialized Name: DeviceSecurityGroupList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI to fetch the next page.
+        /// Serialized Name: DeviceSecurityGroupList.nextLink
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceSecurityGroupList(IReadOnlyList<DeviceSecurityGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of device security group objects. </summary>
+        /// <summary>
+        /// List of device security group objects
+        /// Serialized Name: DeviceSecurityGroupList.value
+        /// </summary>
         public IReadOnlyList<DeviceSecurityGroupData> Value { get; }
-        /// <summary> The URI to fetch the next page. </summary>
+        /// <summary>
+        /// The URI to fetch the next page.
+        /// Serialized Name: DeviceSecurityGroupList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

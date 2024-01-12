@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The rule severity. </summary>
+    /// <summary>
+    /// The rule severity.
+    /// Serialized Name: RuleSeverity
+    /// </summary>
     public readonly partial struct RuleSeverity : IEquatable<RuleSeverity>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string InformationalValue = "Informational";
         private const string ObsoleteValue = "Obsolete";
 
-        /// <summary> High. </summary>
+        /// <summary>
+        /// High
+        /// Serialized Name: RuleSeverity.High
+        /// </summary>
         public static RuleSeverity High { get; } = new RuleSeverity(HighValue);
-        /// <summary> Medium. </summary>
+        /// <summary>
+        /// Medium
+        /// Serialized Name: RuleSeverity.Medium
+        /// </summary>
         public static RuleSeverity Medium { get; } = new RuleSeverity(MediumValue);
-        /// <summary> Low. </summary>
+        /// <summary>
+        /// Low
+        /// Serialized Name: RuleSeverity.Low
+        /// </summary>
         public static RuleSeverity Low { get; } = new RuleSeverity(LowValue);
-        /// <summary> Informational. </summary>
+        /// <summary>
+        /// Informational
+        /// Serialized Name: RuleSeverity.Informational
+        /// </summary>
         public static RuleSeverity Informational { get; } = new RuleSeverity(InformationalValue);
-        /// <summary> Obsolete. </summary>
+        /// <summary>
+        /// Obsolete
+        /// Serialized Name: RuleSeverity.Obsolete
+        /// </summary>
         public static RuleSeverity Obsolete { get; } = new RuleSeverity(ObsoleteValue);
         /// <summary> Determines if two <see cref="RuleSeverity"/> values are the same. </summary>
         public static bool operator ==(RuleSeverity left, RuleSeverity right) => left.Equals(right);

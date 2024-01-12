@@ -6,29 +6,79 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Details of the service principal. </summary>
+    /// <summary>
+    /// Details of the service principal.
+    /// Serialized Name: ServicePrincipalProperties
+    /// </summary>
     public partial class ServicePrincipalProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
         public ServicePrincipalProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalProperties"/>. </summary>
-        /// <param name="applicationId"> Application ID of service principal. </param>
-        /// <param name="secret"> A secret string that the application uses to prove its identity, also can be referred to as application password (write only). </param>
-        internal ServicePrincipalProperties(Guid? applicationId, string secret)
+        /// <param name="applicationId">
+        /// Application ID of service principal.
+        /// Serialized Name: ServicePrincipalProperties.applicationId
+        /// </param>
+        /// <param name="secret">
+        /// A secret string that the application uses to prove its identity, also can be referred to as application password (write only).
+        /// Serialized Name: ServicePrincipalProperties.secret
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicePrincipalProperties(Guid? applicationId, string secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationId = applicationId;
             Secret = secret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Application ID of service principal. </summary>
+        /// <summary>
+        /// Application ID of service principal.
+        /// Serialized Name: ServicePrincipalProperties.applicationId
+        /// </summary>
         public Guid? ApplicationId { get; set; }
-        /// <summary> A secret string that the application uses to prove its identity, also can be referred to as application password (write only). </summary>
+        /// <summary>
+        /// A secret string that the application uses to prove its identity, also can be referred to as application password (write only).
+        /// Serialized Name: ServicePrincipalProperties.secret
+        /// </summary>
         public string Secret { get; set; }
     }
 }

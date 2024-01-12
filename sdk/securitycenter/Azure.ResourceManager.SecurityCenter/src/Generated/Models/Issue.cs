@@ -11,11 +11,49 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The issue that caused the resource to by unhealthy. </summary>
+    /// <summary>
+    /// The issue that caused the resource to by unhealthy
+    /// Serialized Name: Issue
+    /// </summary>
     public partial class Issue
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="Issue"/>. </summary>
-        /// <param name="issueKey"> The unique issue key. </param>
+        /// <param name="issueKey">
+        /// The unique issue key
+        /// Serialized Name: Issue.issueKey
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueKey"/> is null. </exception>
         public Issue(string issueKey)
         {
@@ -27,14 +65,36 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Issue"/>. </summary>
-        /// <param name="issueKey"> The unique issue key. </param>
-        /// <param name="issueName"> The issue name. </param>
-        /// <param name="securityValues"> The affected security values that MDC offers that will be affected by the issue, for example: recommendations, alerts, etc. </param>
-        /// <param name="issueDescription"> The issue description. </param>
-        /// <param name="remediationSteps"> Human readable description of what you should do to mitigate this health issue. </param>
-        /// <param name="remediationScript"> The remediation script to solve this issue. </param>
-        /// <param name="issueAdditionalData"> Additional data for the given issue. The additional data depends on the issue type. </param>
-        internal Issue(string issueKey, string issueName, IList<string> securityValues, string issueDescription, string remediationSteps, string remediationScript, IDictionary<string, string> issueAdditionalData)
+        /// <param name="issueKey">
+        /// The unique issue key
+        /// Serialized Name: Issue.issueKey
+        /// </param>
+        /// <param name="issueName">
+        /// The issue name
+        /// Serialized Name: Issue.issueName
+        /// </param>
+        /// <param name="securityValues">
+        /// The affected security values that MDC offers that will be affected by the issue, for example: recommendations, alerts, etc
+        /// Serialized Name: Issue.securityValues
+        /// </param>
+        /// <param name="issueDescription">
+        /// The issue description
+        /// Serialized Name: Issue.issueDescription
+        /// </param>
+        /// <param name="remediationSteps">
+        /// Human readable description of what you should do to mitigate this health issue
+        /// Serialized Name: Issue.remediationSteps
+        /// </param>
+        /// <param name="remediationScript">
+        /// The remediation script to solve this issue
+        /// Serialized Name: Issue.remediationScript
+        /// </param>
+        /// <param name="issueAdditionalData">
+        /// Additional data for the given issue. The additional data depends on the issue type
+        /// Serialized Name: Issue.issueAdditionalData
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Issue(string issueKey, string issueName, IList<string> securityValues, string issueDescription, string remediationSteps, string remediationScript, IDictionary<string, string> issueAdditionalData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueKey = issueKey;
             IssueName = issueName;
@@ -43,21 +103,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             RemediationSteps = remediationSteps;
             RemediationScript = remediationScript;
             IssueAdditionalData = issueAdditionalData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The unique issue key. </summary>
+        /// <summary> Initializes a new instance of <see cref="Issue"/> for deserialization. </summary>
+        internal Issue()
+        {
+        }
+
+        /// <summary>
+        /// The unique issue key
+        /// Serialized Name: Issue.issueKey
+        /// </summary>
         public string IssueKey { get; set; }
-        /// <summary> The issue name. </summary>
+        /// <summary>
+        /// The issue name
+        /// Serialized Name: Issue.issueName
+        /// </summary>
         public string IssueName { get; set; }
-        /// <summary> The affected security values that MDC offers that will be affected by the issue, for example: recommendations, alerts, etc. </summary>
+        /// <summary>
+        /// The affected security values that MDC offers that will be affected by the issue, for example: recommendations, alerts, etc
+        /// Serialized Name: Issue.securityValues
+        /// </summary>
         public IList<string> SecurityValues { get; }
-        /// <summary> The issue description. </summary>
+        /// <summary>
+        /// The issue description
+        /// Serialized Name: Issue.issueDescription
+        /// </summary>
         public string IssueDescription { get; set; }
-        /// <summary> Human readable description of what you should do to mitigate this health issue. </summary>
+        /// <summary>
+        /// Human readable description of what you should do to mitigate this health issue
+        /// Serialized Name: Issue.remediationSteps
+        /// </summary>
         public string RemediationSteps { get; set; }
-        /// <summary> The remediation script to solve this issue. </summary>
+        /// <summary>
+        /// The remediation script to solve this issue
+        /// Serialized Name: Issue.remediationScript
+        /// </summary>
         public string RemediationScript { get; set; }
-        /// <summary> Additional data for the given issue. The additional data depends on the issue type. </summary>
+        /// <summary>
+        /// Additional data for the given issue. The additional data depends on the issue type
+        /// Serialized Name: Issue.issueAdditionalData
+        /// </summary>
         public IDictionary<string, string> IssueAdditionalData { get; }
     }
 }

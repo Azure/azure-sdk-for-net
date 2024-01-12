@@ -12,12 +12,53 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The JitNetworkAccessRequestVirtualMachine. </summary>
+    /// <summary>
+    /// The JitNetworkAccessRequestVirtualMachine.
+    /// Serialized Name: JitNetworkAccessRequestVirtualMachine
+    /// </summary>
     public partial class JitNetworkAccessRequestVirtualMachine
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/>. </summary>
-        /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
-        /// <param name="ports"> The ports that were opened for the virtual machine. </param>
+        /// <param name="id">
+        /// Resource ID of the virtual machine that is linked to this policy
+        /// Serialized Name: JitNetworkAccessRequestVirtualMachine.id
+        /// </param>
+        /// <param name="ports">
+        /// The ports that were opened for the virtual machine
+        /// Serialized Name: JitNetworkAccessRequestVirtualMachine.ports
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="ports"/> is null. </exception>
         public JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IEnumerable<JitNetworkAccessRequestPort> ports)
         {
@@ -29,17 +70,36 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/>. </summary>
-        /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
-        /// <param name="ports"> The ports that were opened for the virtual machine. </param>
-        internal JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports)
+        /// <param name="id">
+        /// Resource ID of the virtual machine that is linked to this policy
+        /// Serialized Name: JitNetworkAccessRequestVirtualMachine.id
+        /// </param>
+        /// <param name="ports">
+        /// The ports that were opened for the virtual machine
+        /// Serialized Name: JitNetworkAccessRequestVirtualMachine.ports
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessRequestVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessRequestPort> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Ports = ports;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID of the virtual machine that is linked to this policy. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/> for deserialization. </summary>
+        internal JitNetworkAccessRequestVirtualMachine()
+        {
+        }
+
+        /// <summary>
+        /// Resource ID of the virtual machine that is linked to this policy
+        /// Serialized Name: JitNetworkAccessRequestVirtualMachine.id
+        /// </summary>
         public ResourceIdentifier Id { get; set; }
-        /// <summary> The ports that were opened for the virtual machine. </summary>
+        /// <summary>
+        /// The ports that were opened for the virtual machine
+        /// Serialized Name: JitNetworkAccessRequestVirtualMachine.ports
+        /// </summary>
         public IList<JitNetworkAccessRequestPort> Ports { get; }
     }
 }

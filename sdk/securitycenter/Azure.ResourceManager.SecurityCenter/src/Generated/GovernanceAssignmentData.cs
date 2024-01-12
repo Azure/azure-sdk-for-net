@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -15,9 +16,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the GovernanceAssignment data model.
     /// Governance assignment over a given scope
+    /// Serialized Name: GovernanceAssignment
     /// </summary>
     public partial class GovernanceAssignmentData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentData"/>. </summary>
         public GovernanceAssignmentData()
         {
@@ -28,13 +62,32 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="owner"> The Owner for the governance assignment - e.g. user@contoso.com - see example. </param>
-        /// <param name="remediationDueOn"> The remediation due-date - after this date Secure Score will be affected (in case of  active grace-period). </param>
-        /// <param name="remediationEta"> The ETA (estimated time of arrival) for remediation (optional), see example. </param>
-        /// <param name="isGracePeriod"> Defines whether there is a grace period on the governance assignment. </param>
-        /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
-        /// <param name="additionalData"> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </param>
-        internal GovernanceAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string owner, DateTimeOffset? remediationDueOn, RemediationEta remediationEta, bool? isGracePeriod, GovernanceEmailNotification governanceEmailNotification, GovernanceAssignmentAdditionalInfo additionalData) : base(id, name, resourceType, systemData)
+        /// <param name="owner">
+        /// The Owner for the governance assignment - e.g. user@contoso.com - see example
+        /// Serialized Name: GovernanceAssignment.properties.owner
+        /// </param>
+        /// <param name="remediationDueOn">
+        /// The remediation due-date - after this date Secure Score will be affected (in case of  active grace-period)
+        /// Serialized Name: GovernanceAssignment.properties.remediationDueDate
+        /// </param>
+        /// <param name="remediationEta">
+        /// The ETA (estimated time of arrival) for remediation (optional), see example
+        /// Serialized Name: GovernanceAssignment.properties.remediationEta
+        /// </param>
+        /// <param name="isGracePeriod">
+        /// Defines whether there is a grace period on the governance assignment
+        /// Serialized Name: GovernanceAssignment.properties.isGracePeriod
+        /// </param>
+        /// <param name="governanceEmailNotification">
+        /// The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners
+        /// Serialized Name: GovernanceAssignment.properties.governanceEmailNotification
+        /// </param>
+        /// <param name="additionalData">
+        /// The additional data for the governance assignment - e.g. links to ticket (optional), see example
+        /// Serialized Name: GovernanceAssignment.properties.additionalData
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string owner, DateTimeOffset? remediationDueOn, RemediationEta remediationEta, bool? isGracePeriod, GovernanceEmailNotification governanceEmailNotification, GovernanceAssignmentAdditionalInfo additionalData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Owner = owner;
             RemediationDueOn = remediationDueOn;
@@ -42,19 +95,38 @@ namespace Azure.ResourceManager.SecurityCenter
             IsGracePeriod = isGracePeriod;
             GovernanceEmailNotification = governanceEmailNotification;
             AdditionalData = additionalData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Owner for the governance assignment - e.g. user@contoso.com - see example. </summary>
+        /// <summary>
+        /// The Owner for the governance assignment - e.g. user@contoso.com - see example
+        /// Serialized Name: GovernanceAssignment.properties.owner
+        /// </summary>
         public string Owner { get; set; }
-        /// <summary> The remediation due-date - after this date Secure Score will be affected (in case of  active grace-period). </summary>
+        /// <summary>
+        /// The remediation due-date - after this date Secure Score will be affected (in case of  active grace-period)
+        /// Serialized Name: GovernanceAssignment.properties.remediationDueDate
+        /// </summary>
         public DateTimeOffset? RemediationDueOn { get; set; }
-        /// <summary> The ETA (estimated time of arrival) for remediation (optional), see example. </summary>
+        /// <summary>
+        /// The ETA (estimated time of arrival) for remediation (optional), see example
+        /// Serialized Name: GovernanceAssignment.properties.remediationEta
+        /// </summary>
         public RemediationEta RemediationEta { get; set; }
-        /// <summary> Defines whether there is a grace period on the governance assignment. </summary>
+        /// <summary>
+        /// Defines whether there is a grace period on the governance assignment
+        /// Serialized Name: GovernanceAssignment.properties.isGracePeriod
+        /// </summary>
         public bool? IsGracePeriod { get; set; }
-        /// <summary> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </summary>
+        /// <summary>
+        /// The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners
+        /// Serialized Name: GovernanceAssignment.properties.governanceEmailNotification
+        /// </summary>
         public GovernanceEmailNotification GovernanceEmailNotification { get; set; }
-        /// <summary> The additional data for the governance assignment - e.g. links to ticket (optional), see example. </summary>
+        /// <summary>
+        /// The additional data for the governance assignment - e.g. links to ticket (optional), see example
+        /// Serialized Name: GovernanceAssignment.properties.additionalData
+        /// </summary>
         public GovernanceAssignmentAdditionalInfo AdditionalData { get; set; }
     }
 }

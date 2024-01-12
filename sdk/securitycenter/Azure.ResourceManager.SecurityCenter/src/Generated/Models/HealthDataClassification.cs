@@ -5,32 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The classification of the health report. </summary>
+    /// <summary>
+    /// The classification of the health report
+    /// Serialized Name: HealthDataClassification
+    /// </summary>
     public partial class HealthDataClassification
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HealthDataClassification"/>. </summary>
         public HealthDataClassification()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthDataClassification"/>. </summary>
-        /// <param name="component"> The component describes the name of the agent/service that scans the issue. </param>
-        /// <param name="scenario"> The scenario describes the health scenario issue of the component. </param>
-        /// <param name="scope"> The resource scope of the health report. </param>
-        internal HealthDataClassification(string component, string scenario, string scope)
+        /// <param name="component">
+        /// The component describes the name of the agent/service that scans the issue
+        /// Serialized Name: HealthDataClassification.component
+        /// </param>
+        /// <param name="scenario">
+        /// The scenario describes the health scenario issue of the component
+        /// Serialized Name: HealthDataClassification.scenario
+        /// </param>
+        /// <param name="scope">
+        /// The resource scope of the health report
+        /// Serialized Name: HealthDataClassification.scope
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthDataClassification(string component, string scenario, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Component = component;
             Scenario = scenario;
             Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The component describes the name of the agent/service that scans the issue. </summary>
+        /// <summary>
+        /// The component describes the name of the agent/service that scans the issue
+        /// Serialized Name: HealthDataClassification.component
+        /// </summary>
         public string Component { get; set; }
-        /// <summary> The scenario describes the health scenario issue of the component. </summary>
+        /// <summary>
+        /// The scenario describes the health scenario issue of the component
+        /// Serialized Name: HealthDataClassification.scenario
+        /// </summary>
         public string Scenario { get; set; }
-        /// <summary> The resource scope of the health report. </summary>
+        /// <summary>
+        /// The resource scope of the health report
+        /// Serialized Name: HealthDataClassification.scope
+        /// </summary>
         public string Scope { get; set; }
     }
 }

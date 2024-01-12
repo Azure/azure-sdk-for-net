@@ -5,11 +5,16 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Log Analytics Workspace to which event data will be exported. Security alerts data will reside in the 'SecurityAlert' table and the assessments data will reside in the 'SecurityRecommendation' table (under the 'Security'/'SecurityCenterFree' solutions). Note that in order to view the data in the workspace, the Security Center Log Analytics free/standard solution needs to be enabled on that workspace. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
+    /// <summary>
+    /// The Log Analytics Workspace to which event data will be exported. Security alerts data will reside in the 'SecurityAlert' table and the assessments data will reside in the 'SecurityRecommendation' table (under the 'Security'/'SecurityCenterFree' solutions). Note that in order to view the data in the workspace, the Security Center Log Analytics free/standard solution needs to be enabled on that workspace. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore
+    /// Serialized Name: AutomationActionWorkspace
+    /// </summary>
     public partial class SecurityAutomationActionWorkspace : SecurityAutomationAction
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionWorkspace"/>. </summary>
@@ -19,15 +24,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionWorkspace"/>. </summary>
-        /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
-        /// <param name="workspaceResourceId"> The fully qualified Log Analytics Workspace Azure Resource ID. </param>
-        internal SecurityAutomationActionWorkspace(ActionType actionType, ResourceIdentifier workspaceResourceId) : base(actionType)
+        /// <param name="actionType">
+        /// The type of the action that will be triggered by the Automation
+        /// Serialized Name: AutomationAction.actionType
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="workspaceResourceId">
+        /// The fully qualified Log Analytics Workspace Azure Resource ID.
+        /// Serialized Name: AutomationActionWorkspace.workspaceResourceId
+        /// </param>
+        internal SecurityAutomationActionWorkspace(ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier workspaceResourceId) : base(actionType, serializedAdditionalRawData)
         {
             WorkspaceResourceId = workspaceResourceId;
             ActionType = actionType;
         }
 
-        /// <summary> The fully qualified Log Analytics Workspace Azure Resource ID. </summary>
+        /// <summary>
+        /// The fully qualified Log Analytics Workspace Azure Resource ID.
+        /// Serialized Name: AutomationActionWorkspace.workspaceResourceId
+        /// </summary>
         public ResourceIdentifier WorkspaceResourceId { get; set; }
     }
 }

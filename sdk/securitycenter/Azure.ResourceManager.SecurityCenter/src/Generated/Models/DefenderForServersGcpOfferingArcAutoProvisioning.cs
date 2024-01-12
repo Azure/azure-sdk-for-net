@@ -5,28 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The ARC autoprovisioning configuration. </summary>
+    /// <summary>
+    /// The ARC autoprovisioning configuration
+    /// Serialized Name: DefenderForServersGcpOfferingArcAutoProvisioning
+    /// </summary>
     public partial class DefenderForServersGcpOfferingArcAutoProvisioning
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingArcAutoProvisioning"/>. </summary>
         public DefenderForServersGcpOfferingArcAutoProvisioning()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersGcpOfferingArcAutoProvisioning"/>. </summary>
-        /// <param name="isEnabled"> Is arc auto provisioning enabled. </param>
-        /// <param name="configuration"> Configuration for servers Arc auto provisioning. </param>
-        internal DefenderForServersGcpOfferingArcAutoProvisioning(bool? isEnabled, DefenderForServersGcpOfferingArcAutoProvisioningConfiguration configuration)
+        /// <param name="isEnabled">
+        /// Is arc auto provisioning enabled
+        /// Serialized Name: DefenderForServersGcpOfferingArcAutoProvisioning.enabled
+        /// </param>
+        /// <param name="configuration">
+        /// Configuration for servers Arc auto provisioning
+        /// Serialized Name: DefenderForServersGcpOfferingArcAutoProvisioning.configuration
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForServersGcpOfferingArcAutoProvisioning(bool? isEnabled, DefenderForServersGcpOfferingArcAutoProvisioningConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Configuration = configuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Is arc auto provisioning enabled. </summary>
+        /// <summary>
+        /// Is arc auto provisioning enabled
+        /// Serialized Name: DefenderForServersGcpOfferingArcAutoProvisioning.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> Configuration for servers Arc auto provisioning. </summary>
+        /// <summary>
+        /// Configuration for servers Arc auto provisioning
+        /// Serialized Name: DefenderForServersGcpOfferingArcAutoProvisioning.configuration
+        /// </summary>
         public DefenderForServersGcpOfferingArcAutoProvisioningConfiguration Configuration { get; set; }
     }
 }

@@ -5,28 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The native cloud connection configuration. </summary>
+    /// <summary>
+    /// The native cloud connection configuration
+    /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection
+    /// </summary>
     public partial class DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection"/>. </summary>
         public DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection"/>. </summary>
-        /// <param name="serviceAccountEmailAddress"> The data collection service account email address in GCP for this offering. </param>
-        /// <param name="workloadIdentityProviderId"> The data collection GCP workload identity provider id for this offering. </param>
-        internal DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(string serviceAccountEmailAddress, string workloadIdentityProviderId)
+        /// <param name="serviceAccountEmailAddress">
+        /// The data collection service account email address in GCP for this offering
+        /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.serviceAccountEmailAddress
+        /// </param>
+        /// <param name="workloadIdentityProviderId">
+        /// The data collection GCP workload identity provider id for this offering
+        /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.workloadIdentityProviderId
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(string serviceAccountEmailAddress, string workloadIdentityProviderId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The data collection service account email address in GCP for this offering. </summary>
+        /// <summary>
+        /// The data collection service account email address in GCP for this offering
+        /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.serviceAccountEmailAddress
+        /// </summary>
         public string ServiceAccountEmailAddress { get; set; }
-        /// <summary> The data collection GCP workload identity provider id for this offering. </summary>
+        /// <summary>
+        /// The data collection GCP workload identity provider id for this offering
+        /// Serialized Name: DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.workloadIdentityProviderId
+        /// </summary>
         public string WorkloadIdentityProviderId { get; set; }
     }
 }

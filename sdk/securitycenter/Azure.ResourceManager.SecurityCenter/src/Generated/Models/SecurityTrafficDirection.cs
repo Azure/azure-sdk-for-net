@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The rule's direction. </summary>
+    /// <summary>
+    /// The rule's direction
+    /// Serialized Name: Direction
+    /// </summary>
     public readonly partial struct SecurityTrafficDirection : IEquatable<SecurityTrafficDirection>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string InboundValue = "Inbound";
         private const string OutboundValue = "Outbound";
 
-        /// <summary> Inbound. </summary>
+        /// <summary>
+        /// Inbound
+        /// Serialized Name: Direction.Inbound
+        /// </summary>
         public static SecurityTrafficDirection Inbound { get; } = new SecurityTrafficDirection(InboundValue);
-        /// <summary> Outbound. </summary>
+        /// <summary>
+        /// Outbound
+        /// Serialized Name: Direction.Outbound
+        /// </summary>
         public static SecurityTrafficDirection Outbound { get; } = new SecurityTrafficDirection(OutboundValue);
         /// <summary> Determines if two <see cref="SecurityTrafficDirection"/> values are the same. </summary>
         public static bool operator ==(SecurityTrafficDirection left, SecurityTrafficDirection right) => left.Equals(right);

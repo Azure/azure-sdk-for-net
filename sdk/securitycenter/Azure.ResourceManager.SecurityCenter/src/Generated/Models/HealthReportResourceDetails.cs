@@ -5,32 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The resource details of the health report. </summary>
+    /// <summary>
+    /// The resource details of the health report
+    /// Serialized Name: HealthReportResourceDetails
+    /// </summary>
     public partial class HealthReportResourceDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HealthReportResourceDetails"/>. </summary>
         public HealthReportResourceDetails()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthReportResourceDetails"/>. </summary>
-        /// <param name="source"> The status of the health report. </param>
-        /// <param name="id"> The azure id of the resource. </param>
-        /// <param name="connectorId"> The id of the connector. </param>
-        internal HealthReportResourceDetails(Source? source, string id, string connectorId)
+        /// <param name="source">
+        /// The status of the health report
+        /// Serialized Name: HealthReportResourceDetails.source
+        /// </param>
+        /// <param name="id">
+        /// The azure id of the resource
+        /// Serialized Name: HealthReportResourceDetails.id
+        /// </param>
+        /// <param name="connectorId">
+        /// The id of the connector
+        /// Serialized Name: HealthReportResourceDetails.connectorId
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthReportResourceDetails(Source? source, string id, string connectorId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             Id = id;
             ConnectorId = connectorId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The status of the health report. </summary>
+        /// <summary>
+        /// The status of the health report
+        /// Serialized Name: HealthReportResourceDetails.source
+        /// </summary>
         public Source? Source { get; set; }
-        /// <summary> The azure id of the resource. </summary>
+        /// <summary>
+        /// The azure id of the resource
+        /// Serialized Name: HealthReportResourceDetails.id
+        /// </summary>
         public string Id { get; }
-        /// <summary> The id of the connector. </summary>
+        /// <summary>
+        /// The id of the connector
+        /// Serialized Name: HealthReportResourceDetails.connectorId
+        /// </summary>
         public string ConnectorId { get; }
     }
 }

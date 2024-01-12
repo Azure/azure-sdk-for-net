@@ -6,20 +6,62 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> GitLab Group properties. </summary>
+    /// <summary>
+    /// GitLab Group properties.
+    /// Serialized Name: GitLabGroupProperties
+    /// </summary>
     public partial class GitLabGroupProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GitLabGroupProperties"/>. </summary>
         public GitLabGroupProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="GitLabGroupProperties"/>. </summary>
-        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningStatusMessage">
+        /// Gets or sets resource status message.
+        /// Serialized Name: GitLabGroupProperties.provisioningStatusMessage
+        /// </param>
+        /// <param name="provisioningStatusUpdateTimeUtc">
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: GitLabGroupProperties.provisioningStatusUpdateTimeUtc
+        /// </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         ///
@@ -30,18 +72,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: GitLabGroupProperties.provisioningState
         /// </param>
         /// <param name="fullyQualifiedName">
         /// Gets or sets the fully-qualified name of the Group object.
         ///
         /// This contains the entire namespace hierarchy where namespaces are separated by the '$' character.
+        /// Serialized Name: GitLabGroupProperties.fullyQualifiedName
         /// </param>
         /// <param name="fullyQualifiedFriendlyName">
         /// Gets or sets the human readable fully-qualified name of the Group object.
         ///
         /// This contains the entire namespace hierarchy as seen on GitLab UI where namespaces are separated by the '/' character.
+        /// Serialized Name: GitLabGroupProperties.fullyQualifiedFriendlyName
         /// </param>
-        /// <param name="uri"> Gets or sets the url of the GitLab Group. </param>
+        /// <param name="uri">
+        /// Gets or sets the url of the GitLab Group.
+        /// Serialized Name: GitLabGroupProperties.url
+        /// </param>
         /// <param name="onboardingState">
         /// Details about resource onboarding status across all connectors.
         ///
@@ -49,8 +97,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Onboarded - this resource has already been onboarded by the specified connector.
         /// NotOnboarded - this resource has not been onboarded to any connector.
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// Serialized Name: GitLabGroupProperties.onboardingState
         /// </param>
-        internal GitLabGroupProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, string fullyQualifiedName, string fullyQualifiedFriendlyName, Uri uri, OnboardingState? onboardingState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitLabGroupProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, string fullyQualifiedName, string fullyQualifiedFriendlyName, Uri uri, OnboardingState? onboardingState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
             ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
@@ -59,11 +109,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             FullyQualifiedFriendlyName = fullyQualifiedFriendlyName;
             Uri = uri;
             OnboardingState = onboardingState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets resource status message. </summary>
+        /// <summary>
+        /// Gets or sets resource status message.
+        /// Serialized Name: GitLabGroupProperties.provisioningStatusMessage
+        /// </summary>
         public string ProvisioningStatusMessage { get; }
-        /// <summary> Gets or sets time when resource was last checked. </summary>
+        /// <summary>
+        /// Gets or sets time when resource was last checked.
+        /// Serialized Name: GitLabGroupProperties.provisioningStatusUpdateTimeUtc
+        /// </summary>
         public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
         /// <summary>
         /// The provisioning state of the resource.
@@ -75,21 +132,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// PendingDeletion - Deletion pending.
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
+        /// Serialized Name: GitLabGroupProperties.provisioningState
         /// </summary>
         public DevOpsProvisioningState? ProvisioningState { get; set; }
         /// <summary>
         /// Gets or sets the fully-qualified name of the Group object.
         ///
         /// This contains the entire namespace hierarchy where namespaces are separated by the '$' character.
+        /// Serialized Name: GitLabGroupProperties.fullyQualifiedName
         /// </summary>
         public string FullyQualifiedName { get; }
         /// <summary>
         /// Gets or sets the human readable fully-qualified name of the Group object.
         ///
         /// This contains the entire namespace hierarchy as seen on GitLab UI where namespaces are separated by the '/' character.
+        /// Serialized Name: GitLabGroupProperties.fullyQualifiedFriendlyName
         /// </summary>
         public string FullyQualifiedFriendlyName { get; }
-        /// <summary> Gets or sets the url of the GitLab Group. </summary>
+        /// <summary>
+        /// Gets or sets the url of the GitLab Group.
+        /// Serialized Name: GitLabGroupProperties.url
+        /// </summary>
         public Uri Uri { get; }
         /// <summary>
         /// Details about resource onboarding status across all connectors.
@@ -98,6 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Onboarded - this resource has already been onboarded by the specified connector.
         /// NotOnboarded - this resource has not been onboarded to any connector.
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// Serialized Name: GitLabGroupProperties.onboardingState
         /// </summary>
         public OnboardingState? OnboardingState { get; set; }
     }

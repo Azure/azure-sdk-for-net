@@ -7,18 +7,36 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The rank of the sensitivity label. </summary>
+    /// <summary>
+    /// The rank of the sensitivity label.
+    /// Serialized Name: Rank
+    /// </summary>
     public enum SensitivityLabelRank
     {
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: Rank.None
+        /// </summary>
         None,
-        /// <summary> Low. </summary>
+        /// <summary>
+        /// Low
+        /// Serialized Name: Rank.Low
+        /// </summary>
         Low,
-        /// <summary> Medium. </summary>
+        /// <summary>
+        /// Medium
+        /// Serialized Name: Rank.Medium
+        /// </summary>
         Medium,
-        /// <summary> High. </summary>
+        /// <summary>
+        /// High
+        /// Serialized Name: Rank.High
+        /// </summary>
         High,
-        /// <summary> Critical. </summary>
+        /// <summary>
+        /// Critical
+        /// Serialized Name: Rank.Critical
+        /// </summary>
         Critical
     }
 }

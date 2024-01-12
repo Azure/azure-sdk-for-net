@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The GCP project connector environment data. </summary>
+    /// <summary>
+    /// The GCP project connector environment data
+    /// Serialized Name: GcpProjectEnvironmentData
+    /// </summary>
     public partial class GcpProjectEnvironment : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironment"/>. </summary>
@@ -17,15 +23,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironment"/>. </summary>
-        /// <param name="environmentType"> The type of the environment data. </param>
+        /// <param name="environmentType">
+        /// The type of the environment data.
+        /// Serialized Name: EnvironmentData.environmentType
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="organizationalData">
         /// The Gcp project's organizational data
+        /// Serialized Name: GcpProjectEnvironmentData.organizationalData
         /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
         /// </param>
-        /// <param name="projectDetails"> The Gcp project's details. </param>
-        /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
-        internal GcpProjectEnvironment(EnvironmentType environmentType, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails, long? scanInterval) : base(environmentType)
+        /// <param name="projectDetails">
+        /// The Gcp project's details
+        /// Serialized Name: GcpProjectEnvironmentData.projectDetails
+        /// </param>
+        /// <param name="scanInterval">
+        /// Scan interval in hours (value should be between 1-hour to 24-hours)
+        /// Serialized Name: GcpProjectEnvironmentData.scanInterval
+        /// </param>
+        internal GcpProjectEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData, GcpOrganizationalInfo organizationalData, GcpProjectDetails projectDetails, long? scanInterval) : base(environmentType, serializedAdditionalRawData)
         {
             OrganizationalData = organizationalData;
             ProjectDetails = projectDetails;
@@ -35,13 +52,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary>
         /// The Gcp project's organizational data
+        /// Serialized Name: GcpProjectEnvironmentData.organizationalData
         /// Please note <see cref="GcpOrganizationalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GcpMemberOrganizationalInfo"/> and <see cref="GcpParentOrganizationalInfo"/>.
         /// </summary>
         public GcpOrganizationalInfo OrganizationalData { get; set; }
-        /// <summary> The Gcp project's details. </summary>
+        /// <summary>
+        /// The Gcp project's details
+        /// Serialized Name: GcpProjectEnvironmentData.projectDetails
+        /// </summary>
         public GcpProjectDetails ProjectDetails { get; set; }
-        /// <summary> Scan interval in hours (value should be between 1-hour to 24-hours). </summary>
+        /// <summary>
+        /// Scan interval in hours (value should be between 1-hour to 24-hours)
+        /// Serialized Name: GcpProjectEnvironmentData.scanInterval
+        /// </summary>
         public long? ScanInterval { get; set; }
     }
 }

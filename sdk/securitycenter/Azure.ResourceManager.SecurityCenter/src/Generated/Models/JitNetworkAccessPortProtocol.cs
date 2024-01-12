@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The JitNetworkAccessPortProtocol. </summary>
+    /// <summary>
+    /// The JitNetworkAccessPortProtocol.
+    /// Serialized Name: Protocol
+    /// </summary>
     public readonly partial struct JitNetworkAccessPortProtocol : IEquatable<JitNetworkAccessPortProtocol>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string UdpValue = "UDP";
         private const string AllValue = "*";
 
-        /// <summary> TCP. </summary>
+        /// <summary>
+        /// TCP
+        /// Serialized Name: Protocol.TCP
+        /// </summary>
         public static JitNetworkAccessPortProtocol Tcp { get; } = new JitNetworkAccessPortProtocol(TcpValue);
-        /// <summary> UDP. </summary>
+        /// <summary>
+        /// UDP
+        /// Serialized Name: Protocol.UDP
+        /// </summary>
         public static JitNetworkAccessPortProtocol Udp { get; } = new JitNetworkAccessPortProtocol(UdpValue);
-        /// <summary> *. </summary>
+        /// <summary>
+        /// *
+        /// Serialized Name: Protocol.*
+        /// </summary>
         public static JitNetworkAccessPortProtocol All { get; } = new JitNetworkAccessPortProtocol(AllValue);
         /// <summary> Determines if two <see cref="JitNetworkAccessPortProtocol"/> values are the same. </summary>
         public static bool operator ==(JitNetworkAccessPortProtocol left, JitNetworkAccessPortProtocol right) => left.Equals(right);

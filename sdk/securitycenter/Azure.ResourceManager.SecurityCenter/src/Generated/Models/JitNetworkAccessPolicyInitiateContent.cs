@@ -12,11 +12,49 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The JitNetworkAccessPolicyInitiateContent. </summary>
+    /// <summary>
+    /// The JitNetworkAccessPolicyInitiateRequest.
+    /// Serialized Name: JitNetworkAccessPolicyInitiateRequest
+    /// </summary>
     public partial class JitNetworkAccessPolicyInitiateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateContent"/>. </summary>
-        /// <param name="virtualMachines"> A list of virtual machines &amp; ports to open access for. </param>
+        /// <param name="virtualMachines">
+        /// A list of virtual machines &amp; ports to open access for
+        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.virtualMachines
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
         public JitNetworkAccessPolicyInitiateContent(IEnumerable<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines)
         {
@@ -26,17 +64,36 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateContent"/>. </summary>
-        /// <param name="virtualMachines"> A list of virtual machines &amp; ports to open access for. </param>
-        /// <param name="justification"> The justification for making the initiate request. </param>
-        internal JitNetworkAccessPolicyInitiateContent(IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification)
+        /// <param name="virtualMachines">
+        /// A list of virtual machines &amp; ports to open access for
+        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.virtualMachines
+        /// </param>
+        /// <param name="justification">
+        /// The justification for making the initiate request
+        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.justification
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessPolicyInitiateContent(IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualMachines = virtualMachines;
             Justification = justification;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of virtual machines &amp; ports to open access for. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiateContent"/> for deserialization. </summary>
+        internal JitNetworkAccessPolicyInitiateContent()
+        {
+        }
+
+        /// <summary>
+        /// A list of virtual machines &amp; ports to open access for
+        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.virtualMachines
+        /// </summary>
         public IList<JitNetworkAccessPolicyInitiateVirtualMachine> VirtualMachines { get; }
-        /// <summary> The justification for making the initiate request. </summary>
+        /// <summary>
+        /// The justification for making the initiate request
+        /// Serialized Name: JitNetworkAccessPolicyInitiateRequest.justification
+        /// </summary>
         public string Justification { get; set; }
     }
 }

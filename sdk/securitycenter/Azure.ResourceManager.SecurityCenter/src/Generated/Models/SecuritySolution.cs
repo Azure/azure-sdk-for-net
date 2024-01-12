@@ -5,14 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecuritySolution. </summary>
+    /// <summary>
+    /// The SecuritySolution.
+    /// Serialized Name: SecuritySolution
+    /// </summary>
     public partial class SecuritySolution : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecuritySolution"/>. </summary>
         public SecuritySolution()
         {
@@ -23,29 +60,61 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="securityFamily"> The security family of the security solution. </param>
-        /// <param name="provisioningState"> The security family provisioning State. </param>
-        /// <param name="template"> The security solutions' template. </param>
-        /// <param name="protectionStatus"> The security solutions' status. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        internal SecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, SecurityFamilyProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="securityFamily">
+        /// The security family of the security solution
+        /// Serialized Name: SecuritySolution.properties.securityFamily
+        /// </param>
+        /// <param name="provisioningState">
+        /// The security family provisioning State
+        /// Serialized Name: SecuritySolution.properties.provisioningState
+        /// </param>
+        /// <param name="template">
+        /// The security solutions' template
+        /// Serialized Name: SecuritySolution.properties.template
+        /// </param>
+        /// <param name="protectionStatus">
+        /// The security solutions' status
+        /// Serialized Name: SecuritySolution.properties.protectionStatus
+        /// </param>
+        /// <param name="location">
+        /// Location where the resource is stored
+        /// Serialized Name: Location.location
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily? securityFamily, SecurityFamilyProvisioningState? provisioningState, string template, string protectionStatus, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SecurityFamily = securityFamily;
             ProvisioningState = provisioningState;
             Template = template;
             ProtectionStatus = protectionStatus;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The security family of the security solution. </summary>
+        /// <summary>
+        /// The security family of the security solution
+        /// Serialized Name: SecuritySolution.properties.securityFamily
+        /// </summary>
         public SecurityFamily? SecurityFamily { get; set; }
-        /// <summary> The security family provisioning State. </summary>
+        /// <summary>
+        /// The security family provisioning State
+        /// Serialized Name: SecuritySolution.properties.provisioningState
+        /// </summary>
         public SecurityFamilyProvisioningState? ProvisioningState { get; set; }
-        /// <summary> The security solutions' template. </summary>
+        /// <summary>
+        /// The security solutions' template
+        /// Serialized Name: SecuritySolution.properties.template
+        /// </summary>
         public string Template { get; set; }
-        /// <summary> The security solutions' status. </summary>
+        /// <summary>
+        /// The security solutions' status
+        /// Serialized Name: SecuritySolution.properties.protectionStatus
+        /// </summary>
         public string ProtectionStatus { get; set; }
-        /// <summary> Location where the resource is stored. </summary>
+        /// <summary>
+        /// Location where the resource is stored
+        /// Serialized Name: Location.location
+        /// </summary>
         public AzureLocation? Location { get; }
     }
 }

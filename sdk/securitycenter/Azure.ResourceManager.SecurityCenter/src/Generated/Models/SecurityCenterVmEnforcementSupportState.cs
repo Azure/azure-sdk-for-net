@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The machine supportability of Enforce feature. </summary>
+    /// <summary>
+    /// The machine supportability of Enforce feature
+    /// Serialized Name: EnforcementSupport
+    /// </summary>
     public readonly partial struct SecurityCenterVmEnforcementSupportState : IEquatable<SecurityCenterVmEnforcementSupportState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string NotSupportedValue = "NotSupported";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Supported. </summary>
+        /// <summary>
+        /// Supported
+        /// Serialized Name: EnforcementSupport.Supported
+        /// </summary>
         public static SecurityCenterVmEnforcementSupportState Supported { get; } = new SecurityCenterVmEnforcementSupportState(SupportedValue);
-        /// <summary> NotSupported. </summary>
+        /// <summary>
+        /// NotSupported
+        /// Serialized Name: EnforcementSupport.NotSupported
+        /// </summary>
         public static SecurityCenterVmEnforcementSupportState NotSupported { get; } = new SecurityCenterVmEnforcementSupportState(NotSupportedValue);
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: EnforcementSupport.Unknown
+        /// </summary>
         public static SecurityCenterVmEnforcementSupportState Unknown { get; } = new SecurityCenterVmEnforcementSupportState(UnknownValue);
         /// <summary> Determines if two <see cref="SecurityCenterVmEnforcementSupportState"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterVmEnforcementSupportState left, SecurityCenterVmEnforcementSupportState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Status of the IoT Security solution. </summary>
+    /// <summary>
+    /// Status of the IoT Security solution.
+    /// Serialized Name: SecuritySolutionStatus
+    /// </summary>
     public readonly partial struct SecuritySolutionStatus : IEquatable<SecuritySolutionStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SecuritySolutionStatus.Enabled
+        /// </summary>
         public static SecuritySolutionStatus Enabled { get; } = new SecuritySolutionStatus(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SecuritySolutionStatus.Disabled
+        /// </summary>
         public static SecuritySolutionStatus Disabled { get; } = new SecuritySolutionStatus(DisabledValue);
         /// <summary> Determines if two <see cref="SecuritySolutionStatus"/> values are the same. </summary>
         public static bool operator ==(SecuritySolutionStatus left, SecuritySolutionStatus right) => left.Equals(right);

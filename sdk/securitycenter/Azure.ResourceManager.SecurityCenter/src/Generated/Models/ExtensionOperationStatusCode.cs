@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The operation status code. </summary>
+    /// <summary>
+    /// The operation status code.
+    /// Serialized Name: Code
+    /// </summary>
     public readonly partial struct ExtensionOperationStatusCode : IEquatable<ExtensionOperationStatusCode>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary> Extension was created/updated successfully. </summary>
+        /// <summary>
+        /// Extension was created/updated successfully.
+        /// Serialized Name: Code.Succeeded
+        /// </summary>
         public static ExtensionOperationStatusCode Succeeded { get; } = new ExtensionOperationStatusCode(SucceededValue);
-        /// <summary> Extension was not created/updated successfully. See operation status message for more details. </summary>
+        /// <summary>
+        /// Extension was not created/updated successfully. See operation status message for more details.
+        /// Serialized Name: Code.Failed
+        /// </summary>
         public static ExtensionOperationStatusCode Failed { get; } = new ExtensionOperationStatusCode(FailedValue);
         /// <summary> Determines if two <see cref="ExtensionOperationStatusCode"/> values are the same. </summary>
         public static bool operator ==(ExtensionOperationStatusCode left, ExtensionOperationStatusCode right) => left.Equals(right);

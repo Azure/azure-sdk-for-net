@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The owner type for the governance rule owner source. </summary>
+    /// <summary>
+    /// The owner type for the governance rule owner source
+    /// Serialized Name: GovernanceRuleOwnerSourceType
+    /// </summary>
     public readonly partial struct GovernanceRuleOwnerSourceType : IEquatable<GovernanceRuleOwnerSourceType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ByTagValue = "ByTag";
         private const string ManuallyValue = "Manually";
 
-        /// <summary> The rule source type defined using resource tag. </summary>
+        /// <summary>
+        /// The rule source type defined using resource tag
+        /// Serialized Name: GovernanceRuleOwnerSourceType.ByTag
+        /// </summary>
         public static GovernanceRuleOwnerSourceType ByTag { get; } = new GovernanceRuleOwnerSourceType(ByTagValue);
-        /// <summary> The rule source type defined manually. </summary>
+        /// <summary>
+        /// The rule source type defined manually
+        /// Serialized Name: GovernanceRuleOwnerSourceType.Manually
+        /// </summary>
         public static GovernanceRuleOwnerSourceType Manually { get; } = new GovernanceRuleOwnerSourceType(ManuallyValue);
         /// <summary> Determines if two <see cref="GovernanceRuleOwnerSourceType"/> values are the same. </summary>
         public static bool operator ==(GovernanceRuleOwnerSourceType left, GovernanceRuleOwnerSourceType right) => left.Equals(right);

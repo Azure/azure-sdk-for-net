@@ -6,21 +6,35 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// A custom alert rule that checks if the number of activities (depends on the custom alert type) in a time window is within the given range.
+    /// Serialized Name: TimeWindowCustomAlertRule
     /// Please note <see cref="TimeWindowCustomAlertRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TwinUpdatesNotInAllowedRange"/> and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
     /// </summary>
     public partial class TimeWindowCustomAlertRule : ThresholdCustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/>. </summary>
-        /// <param name="isEnabled"> Status of the custom alert. </param>
-        /// <param name="minThreshold"> The minimum threshold. </param>
-        /// <param name="maxThreshold"> The maximum threshold. </param>
-        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <param name="isEnabled">
+        /// Status of the custom alert.
+        /// Serialized Name: CustomAlertRule.isEnabled
+        /// </param>
+        /// <param name="minThreshold">
+        /// The minimum threshold.
+        /// Serialized Name: ThresholdCustomAlertRule.minThreshold
+        /// </param>
+        /// <param name="maxThreshold">
+        /// The maximum threshold.
+        /// Serialized Name: ThresholdCustomAlertRule.maxThreshold
+        /// </param>
+        /// <param name="timeWindowSize">
+        /// The time window size in iso8601 format.
+        /// Serialized Name: TimeWindowCustomAlertRule.timeWindowSize
+        /// </param>
         public TimeWindowCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(isEnabled, minThreshold, maxThreshold)
         {
             TimeWindowSize = timeWindowSize;
@@ -28,20 +42,50 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/>. </summary>
-        /// <param name="displayName"> The display name of the custom alert. </param>
-        /// <param name="description"> The description of the custom alert. </param>
-        /// <param name="isEnabled"> Status of the custom alert. </param>
-        /// <param name="ruleType"> The type of the custom alert rule. </param>
-        /// <param name="minThreshold"> The minimum threshold. </param>
-        /// <param name="maxThreshold"> The maximum threshold. </param>
-        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
-        internal TimeWindowCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(displayName, description, isEnabled, ruleType, minThreshold, maxThreshold)
+        /// <param name="displayName">
+        /// The display name of the custom alert.
+        /// Serialized Name: CustomAlertRule.displayName
+        /// </param>
+        /// <param name="description">
+        /// The description of the custom alert.
+        /// Serialized Name: CustomAlertRule.description
+        /// </param>
+        /// <param name="isEnabled">
+        /// Status of the custom alert.
+        /// Serialized Name: CustomAlertRule.isEnabled
+        /// </param>
+        /// <param name="ruleType">
+        /// The type of the custom alert rule.
+        /// Serialized Name: CustomAlertRule.ruleType
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="minThreshold">
+        /// The minimum threshold.
+        /// Serialized Name: ThresholdCustomAlertRule.minThreshold
+        /// </param>
+        /// <param name="maxThreshold">
+        /// The maximum threshold.
+        /// Serialized Name: ThresholdCustomAlertRule.maxThreshold
+        /// </param>
+        /// <param name="timeWindowSize">
+        /// The time window size in iso8601 format.
+        /// Serialized Name: TimeWindowCustomAlertRule.timeWindowSize
+        /// </param>
+        internal TimeWindowCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold)
         {
             TimeWindowSize = timeWindowSize;
             RuleType = ruleType ?? "TimeWindowCustomAlertRule";
         }
 
-        /// <summary> The time window size in iso8601 format. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/> for deserialization. </summary>
+        internal TimeWindowCustomAlertRule()
+        {
+        }
+
+        /// <summary>
+        /// The time window size in iso8601 format.
+        /// Serialized Name: TimeWindowCustomAlertRule.timeWindowSize
+        /// </summary>
         public TimeSpan TimeWindowSize { get; set; }
     }
 }

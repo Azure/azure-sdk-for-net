@@ -183,6 +183,11 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public bool TrimBlobNameSlashes { get; set; } = Constants.DefaultTrimBlobNameSlashes;
 
+        /// <summary>
+        /// Behavior options for setting HTTP header <c>Expect: 100-continue</c> on requests.
+        /// </summary>
+        public ExpectContinueOptions ExpectContinueBehavior { get; set; }
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion
@@ -334,7 +339,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri);
+            return this.Build(authentication, GeoRedundantSecondaryUri, ExpectContinueBehavior);
         }
 
         /// <summary>
@@ -344,7 +349,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri);
+            return this.Build(credentials, GeoRedundantSecondaryUri, ExpectContinueBehavior);
         }
 
         /// <inheritdoc />

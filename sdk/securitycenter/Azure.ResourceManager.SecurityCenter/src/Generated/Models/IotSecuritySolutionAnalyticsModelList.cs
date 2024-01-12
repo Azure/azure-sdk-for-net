@@ -13,11 +13,49 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> List of Security analytics of your IoT Security solution. </summary>
+    /// <summary>
+    /// List of Security analytics of your IoT Security solution
+    /// Serialized Name: IoTSecuritySolutionAnalyticsModelList
+    /// </summary>
     internal partial class IotSecuritySolutionAnalyticsModelList
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelList"/>. </summary>
-        /// <param name="value"> List of Security analytics of your IoT Security solution. </param>
+        /// <param name="value">
+        /// List of Security analytics of your IoT Security solution
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModelList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IotSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value)
         {
@@ -27,17 +65,36 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelList"/>. </summary>
-        /// <param name="value"> List of Security analytics of your IoT Security solution. </param>
-        /// <param name="nextLink"> When there is too much alert data for one page, use this URI to fetch the next page. </param>
-        internal IotSecuritySolutionAnalyticsModelList(IReadOnlyList<IotSecuritySolutionAnalyticsModelData> value, string nextLink)
+        /// <param name="value">
+        /// List of Security analytics of your IoT Security solution
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModelList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// When there is too much alert data for one page, use this URI to fetch the next page.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModelList.nextLink
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecuritySolutionAnalyticsModelList(IReadOnlyList<IotSecuritySolutionAnalyticsModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Security analytics of your IoT Security solution. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelList"/> for deserialization. </summary>
+        internal IotSecuritySolutionAnalyticsModelList()
+        {
+        }
+
+        /// <summary>
+        /// List of Security analytics of your IoT Security solution
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModelList.value
+        /// </summary>
         public IReadOnlyList<IotSecuritySolutionAnalyticsModelData> Value { get; }
-        /// <summary> When there is too much alert data for one page, use this URI to fetch the next page. </summary>
+        /// <summary>
+        /// When there is too much alert data for one page, use this URI to fetch the next page.
+        /// Serialized Name: IoTSecuritySolutionAnalyticsModelList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

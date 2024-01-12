@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,9 +15,42 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing the SecureScore data model.
     /// Secure score item data model
+    /// Serialized Name: SecureScoreItem
     /// </summary>
     public partial class SecureScoreData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecureScoreData"/>. </summary>
         public SecureScoreData()
         {
@@ -26,29 +61,61 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> The initiative’s name. </param>
-        /// <param name="weight"> The relative weight for each subscription. Used when calculating an aggregated secure score for multiple subscriptions. </param>
-        /// <param name="max"> Maximum score available. </param>
-        /// <param name="current"> Current score. </param>
-        /// <param name="percentage"> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </param>
-        internal SecureScoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? weight, int? max, double? current, double? percentage) : base(id, name, resourceType, systemData)
+        /// <param name="displayName">
+        /// The initiative’s name
+        /// Serialized Name: SecureScoreItem.properties.displayName
+        /// </param>
+        /// <param name="weight">
+        /// The relative weight for each subscription. Used when calculating an aggregated secure score for multiple subscriptions.
+        /// Serialized Name: SecureScoreItem.properties.weight
+        /// </param>
+        /// <param name="max">
+        /// Maximum score available
+        /// Serialized Name: SecureScoreItem.properties.score.max
+        /// </param>
+        /// <param name="current">
+        /// Current score
+        /// Serialized Name: SecureScoreItem.properties.score.current
+        /// </param>
+        /// <param name="percentage">
+        /// Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point
+        /// Serialized Name: SecureScoreItem.properties.score.percentage
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecureScoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? weight, int? max, double? current, double? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Weight = weight;
             Max = max;
             Current = current;
             Percentage = percentage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The initiative’s name. </summary>
+        /// <summary>
+        /// The initiative’s name
+        /// Serialized Name: SecureScoreItem.properties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The relative weight for each subscription. Used when calculating an aggregated secure score for multiple subscriptions. </summary>
+        /// <summary>
+        /// The relative weight for each subscription. Used when calculating an aggregated secure score for multiple subscriptions.
+        /// Serialized Name: SecureScoreItem.properties.weight
+        /// </summary>
         public long? Weight { get; }
-        /// <summary> Maximum score available. </summary>
+        /// <summary>
+        /// Maximum score available
+        /// Serialized Name: SecureScoreItem.properties.score.max
+        /// </summary>
         public int? Max { get; }
-        /// <summary> Current score. </summary>
+        /// <summary>
+        /// Current score
+        /// Serialized Name: SecureScoreItem.properties.score.current
+        /// </summary>
         public double? Current { get; }
-        /// <summary> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </summary>
+        /// <summary>
+        /// Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point
+        /// Serialized Name: SecureScoreItem.properties.score.percentage
+        /// </summary>
         public double? Percentage { get; }
     }
 }

@@ -5,28 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Microsoft Defender container agentless discovery K8s configuration. </summary>
+    /// <summary>
+    /// The Microsoft Defender container agentless discovery K8s configuration
+    /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S
+    /// </summary>
     public partial class DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S"/>. </summary>
         public DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S"/>. </summary>
-        /// <param name="enabled"> Is Microsoft Defender container agentless discovery K8s enabled. </param>
-        /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(bool? enabled, string cloudRoleArn)
+        /// <param name="enabled">
+        /// Is Microsoft Defender container agentless discovery K8s enabled
+        /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.enabled
+        /// </param>
+        /// <param name="cloudRoleArn">
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.cloudRoleArn
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Is Microsoft Defender container agentless discovery K8s enabled. </summary>
+        /// <summary>
+        /// Is Microsoft Defender container agentless discovery K8s enabled
+        /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The cloud role ARN in AWS for this feature. </summary>
+        /// <summary>
+        /// The cloud role ARN in AWS for this feature
+        /// Serialized Name: DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.cloudRoleArn
+        /// </summary>
         public string CloudRoleArn { get; set; }
     }
 }

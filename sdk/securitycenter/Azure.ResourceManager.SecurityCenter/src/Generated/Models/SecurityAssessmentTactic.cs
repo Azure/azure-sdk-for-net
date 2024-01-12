@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Tactic of the assessment. </summary>
+    /// <summary>
+    /// Tactic of the assessment
+    /// Serialized Name: Tactics
+    /// </summary>
     public readonly partial struct SecurityAssessmentTactic : IEquatable<SecurityAssessmentTactic>
     {
         private readonly string _value;
@@ -37,33 +40,75 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string ExfiltrationValue = "Exfiltration";
         private const string ImpactValue = "Impact";
 
-        /// <summary> Reconnaissance. </summary>
+        /// <summary>
+        /// Reconnaissance
+        /// Serialized Name: Tactics.Reconnaissance
+        /// </summary>
         public static SecurityAssessmentTactic Reconnaissance { get; } = new SecurityAssessmentTactic(ReconnaissanceValue);
-        /// <summary> Resource Development. </summary>
+        /// <summary>
+        /// Resource Development
+        /// Serialized Name: Tactics.Resource Development
+        /// </summary>
         public static SecurityAssessmentTactic ResourceDevelopment { get; } = new SecurityAssessmentTactic(ResourceDevelopmentValue);
-        /// <summary> Initial Access. </summary>
+        /// <summary>
+        /// Initial Access
+        /// Serialized Name: Tactics.Initial Access
+        /// </summary>
         public static SecurityAssessmentTactic InitialAccess { get; } = new SecurityAssessmentTactic(InitialAccessValue);
-        /// <summary> Execution. </summary>
+        /// <summary>
+        /// Execution
+        /// Serialized Name: Tactics.Execution
+        /// </summary>
         public static SecurityAssessmentTactic Execution { get; } = new SecurityAssessmentTactic(ExecutionValue);
-        /// <summary> Persistence. </summary>
+        /// <summary>
+        /// Persistence
+        /// Serialized Name: Tactics.Persistence
+        /// </summary>
         public static SecurityAssessmentTactic Persistence { get; } = new SecurityAssessmentTactic(PersistenceValue);
-        /// <summary> Privilege Escalation. </summary>
+        /// <summary>
+        /// Privilege Escalation
+        /// Serialized Name: Tactics.Privilege Escalation
+        /// </summary>
         public static SecurityAssessmentTactic PrivilegeEscalation { get; } = new SecurityAssessmentTactic(PrivilegeEscalationValue);
-        /// <summary> Defense Evasion. </summary>
+        /// <summary>
+        /// Defense Evasion
+        /// Serialized Name: Tactics.Defense Evasion
+        /// </summary>
         public static SecurityAssessmentTactic DefenseEvasion { get; } = new SecurityAssessmentTactic(DefenseEvasionValue);
-        /// <summary> Credential Access. </summary>
+        /// <summary>
+        /// Credential Access
+        /// Serialized Name: Tactics.Credential Access
+        /// </summary>
         public static SecurityAssessmentTactic CredentialAccess { get; } = new SecurityAssessmentTactic(CredentialAccessValue);
-        /// <summary> Discovery. </summary>
+        /// <summary>
+        /// Discovery
+        /// Serialized Name: Tactics.Discovery
+        /// </summary>
         public static SecurityAssessmentTactic Discovery { get; } = new SecurityAssessmentTactic(DiscoveryValue);
-        /// <summary> Lateral Movement. </summary>
+        /// <summary>
+        /// Lateral Movement
+        /// Serialized Name: Tactics.Lateral Movement
+        /// </summary>
         public static SecurityAssessmentTactic LateralMovement { get; } = new SecurityAssessmentTactic(LateralMovementValue);
-        /// <summary> Collection. </summary>
+        /// <summary>
+        /// Collection
+        /// Serialized Name: Tactics.Collection
+        /// </summary>
         public static SecurityAssessmentTactic Collection { get; } = new SecurityAssessmentTactic(CollectionValue);
-        /// <summary> Command and Control. </summary>
+        /// <summary>
+        /// Command and Control
+        /// Serialized Name: Tactics.Command and Control
+        /// </summary>
         public static SecurityAssessmentTactic CommandAndControl { get; } = new SecurityAssessmentTactic(CommandAndControlValue);
-        /// <summary> Exfiltration. </summary>
+        /// <summary>
+        /// Exfiltration
+        /// Serialized Name: Tactics.Exfiltration
+        /// </summary>
         public static SecurityAssessmentTactic Exfiltration { get; } = new SecurityAssessmentTactic(ExfiltrationValue);
-        /// <summary> Impact. </summary>
+        /// <summary>
+        /// Impact
+        /// Serialized Name: Tactics.Impact
+        /// </summary>
         public static SecurityAssessmentTactic Impact { get; } = new SecurityAssessmentTactic(ImpactValue);
         /// <summary> Determines if two <see cref="SecurityAssessmentTactic"/> values are the same. </summary>
         public static bool operator ==(SecurityAssessmentTactic left, SecurityAssessmentTactic right) => left.Equals(right);

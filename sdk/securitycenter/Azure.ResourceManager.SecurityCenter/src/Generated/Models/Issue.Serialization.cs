@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class Issue : IUtf8JsonSerializable
+    public partial class Issue : IUtf8JsonSerializable, IJsonModel<Issue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Issue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<Issue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Issue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Issue)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("issueKey"u8);
             writer.WriteStringValue(IssueKey);
@@ -59,11 +69,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Issue DeserializeIssue(JsonElement element)
+        Issue IJsonModel<Issue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Issue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Issue)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIssue(document.RootElement, options);
+        }
+
+        internal static Issue DeserializeIssue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +114,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> remediationSteps = default;
             Optional<string> remediationScript = default;
             Optional<IDictionary<string, string>> issueAdditionalData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issueKey"u8))
@@ -130,8 +171,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     issueAdditionalData = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Issue(issueKey, issueName.Value, Optional.ToList(securityValues), issueDescription.Value, remediationSteps.Value, remediationScript.Value, Optional.ToDictionary(issueAdditionalData));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Issue(issueKey, issueName.Value, Optional.ToList(securityValues), issueDescription.Value, remediationSteps.Value, remediationScript.Value, Optional.ToDictionary(issueAdditionalData), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Issue>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Issue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(Issue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        Issue IPersistableModel<Issue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Issue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIssue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Issue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Issue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

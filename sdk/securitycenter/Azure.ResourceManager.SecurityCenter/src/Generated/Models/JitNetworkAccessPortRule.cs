@@ -11,13 +11,51 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The JitNetworkAccessPortRule. </summary>
+    /// <summary>
+    /// The JitNetworkAccessPortRule.
+    /// Serialized Name: JitNetworkAccessPortRule
+    /// </summary>
     public partial class JitNetworkAccessPortRule
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPortRule"/>. </summary>
-        /// <param name="number"></param>
-        /// <param name="protocol"></param>
-        /// <param name="maxRequestAccessDuration"> Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day. </param>
+        /// <param name="number"> Serialized Name: JitNetworkAccessPortRule.number. </param>
+        /// <param name="protocol"> Serialized Name: JitNetworkAccessPortRule.protocol. </param>
+        /// <param name="maxRequestAccessDuration">
+        /// Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day
+        /// Serialized Name: JitNetworkAccessPortRule.maxRequestAccessDuration
+        /// </param>
         public JitNetworkAccessPortRule(int number, JitNetworkAccessPortProtocol protocol, TimeSpan maxRequestAccessDuration)
         {
             Number = number;
@@ -27,29 +65,54 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPortRule"/>. </summary>
-        /// <param name="number"></param>
-        /// <param name="protocol"></param>
-        /// <param name="allowedSourceAddressPrefix"> Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16". </param>
-        /// <param name="allowedSourceAddressPrefixes"> Mutually exclusive with the "allowedSourceAddressPrefix" parameter. </param>
-        /// <param name="maxRequestAccessDuration"> Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day. </param>
-        internal JitNetworkAccessPortRule(int number, JitNetworkAccessPortProtocol protocol, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, TimeSpan maxRequestAccessDuration)
+        /// <param name="number"> Serialized Name: JitNetworkAccessPortRule.number. </param>
+        /// <param name="protocol"> Serialized Name: JitNetworkAccessPortRule.protocol. </param>
+        /// <param name="allowedSourceAddressPrefix">
+        /// Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16".
+        /// Serialized Name: JitNetworkAccessPortRule.allowedSourceAddressPrefix
+        /// </param>
+        /// <param name="allowedSourceAddressPrefixes">
+        /// Mutually exclusive with the "allowedSourceAddressPrefix" parameter.
+        /// Serialized Name: JitNetworkAccessPortRule.allowedSourceAddressPrefixes
+        /// </param>
+        /// <param name="maxRequestAccessDuration">
+        /// Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day
+        /// Serialized Name: JitNetworkAccessPortRule.maxRequestAccessDuration
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessPortRule(int number, JitNetworkAccessPortProtocol protocol, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, TimeSpan maxRequestAccessDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Number = number;
             Protocol = protocol;
             AllowedSourceAddressPrefix = allowedSourceAddressPrefix;
             AllowedSourceAddressPrefixes = allowedSourceAddressPrefixes;
             MaxRequestAccessDuration = maxRequestAccessDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the number. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPortRule"/> for deserialization. </summary>
+        internal JitNetworkAccessPortRule()
+        {
+        }
+
+        /// <summary> Serialized Name: JitNetworkAccessPortRule.number. </summary>
         public int Number { get; set; }
-        /// <summary> Gets or sets the protocol. </summary>
+        /// <summary> Serialized Name: JitNetworkAccessPortRule.protocol. </summary>
         public JitNetworkAccessPortProtocol Protocol { get; set; }
-        /// <summary> Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16". </summary>
+        /// <summary>
+        /// Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16".
+        /// Serialized Name: JitNetworkAccessPortRule.allowedSourceAddressPrefix
+        /// </summary>
         public string AllowedSourceAddressPrefix { get; set; }
-        /// <summary> Mutually exclusive with the "allowedSourceAddressPrefix" parameter. </summary>
+        /// <summary>
+        /// Mutually exclusive with the "allowedSourceAddressPrefix" parameter.
+        /// Serialized Name: JitNetworkAccessPortRule.allowedSourceAddressPrefixes
+        /// </summary>
         public IList<string> AllowedSourceAddressPrefixes { get; }
-        /// <summary> Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day. </summary>
+        /// <summary>
+        /// Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day
+        /// Serialized Name: JitNetworkAccessPortRule.maxRequestAccessDuration
+        /// </summary>
         public TimeSpan MaxRequestAccessDuration { get; set; }
     }
 }

@@ -5,9 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The containers GCP offering. </summary>
+    /// <summary>
+    /// The containers GCP offering
+    /// Serialized Name: DefenderForContainersGcpOffering
+    /// </summary>
     public partial class DefenderForContainersGcpOffering : SecurityCenterCloudOffering
     {
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOffering"/>. </summary>
@@ -17,16 +23,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOffering"/>. </summary>
-        /// <param name="offeringType"> The type of the security offering. </param>
-        /// <param name="description"> The offering description. </param>
-        /// <param name="nativeCloudConnection"> The native cloud connection configuration. </param>
-        /// <param name="dataPipelineNativeCloudConnection"> The native cloud connection configuration. </param>
-        /// <param name="isAuditLogsAutoProvisioningEnabled"> Is audit logs data collection enabled. </param>
-        /// <param name="isDefenderAgentAutoProvisioningEnabled"> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </param>
-        /// <param name="isPolicyAgentAutoProvisioningEnabled"> Is Policy Kubernetes agent auto provisioning enabled. </param>
-        /// <param name="mdcContainersImageAssessment"> The Microsoft Defender Container image assessment configuration. </param>
-        /// <param name="mdcContainersAgentlessDiscoveryK8S"> The Microsoft Defender Container agentless discovery configuration. </param>
-        internal DefenderForContainersGcpOffering(OfferingType offeringType, string description, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? isAuditLogsAutoProvisioningEnabled, bool? isDefenderAgentAutoProvisioningEnabled, bool? isPolicyAgentAutoProvisioningEnabled, DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description)
+        /// <param name="offeringType">
+        /// The type of the security offering.
+        /// Serialized Name: CloudOffering.offeringType
+        /// </param>
+        /// <param name="description">
+        /// The offering description.
+        /// Serialized Name: CloudOffering.description
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="nativeCloudConnection">
+        /// The native cloud connection configuration
+        /// Serialized Name: DefenderForContainersGcpOffering.nativeCloudConnection
+        /// </param>
+        /// <param name="dataPipelineNativeCloudConnection">
+        /// The native cloud connection configuration
+        /// Serialized Name: DefenderForContainersGcpOffering.dataPipelineNativeCloudConnection
+        /// </param>
+        /// <param name="isAuditLogsAutoProvisioningEnabled">
+        /// Is audit logs data collection enabled
+        /// Serialized Name: DefenderForContainersGcpOffering.auditLogsAutoProvisioningFlag
+        /// </param>
+        /// <param name="isDefenderAgentAutoProvisioningEnabled">
+        /// Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled
+        /// Serialized Name: DefenderForContainersGcpOffering.defenderAgentAutoProvisioningFlag
+        /// </param>
+        /// <param name="isPolicyAgentAutoProvisioningEnabled">
+        /// Is Policy Kubernetes agent auto provisioning enabled
+        /// Serialized Name: DefenderForContainersGcpOffering.policyAgentAutoProvisioningFlag
+        /// </param>
+        /// <param name="mdcContainersImageAssessment">
+        /// The Microsoft Defender Container image assessment configuration
+        /// Serialized Name: DefenderForContainersGcpOffering.mdcContainersImageAssessment
+        /// </param>
+        /// <param name="mdcContainersAgentlessDiscoveryK8S">
+        /// The Microsoft Defender Container agentless discovery configuration
+        /// Serialized Name: DefenderForContainersGcpOffering.mdcContainersAgentlessDiscoveryK8s
+        /// </param>
+        internal DefenderForContainersGcpOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection, bool? isAuditLogsAutoProvisioningEnabled, bool? isDefenderAgentAutoProvisioningEnabled, bool? isPolicyAgentAutoProvisioningEnabled, DefenderForContainersGcpOfferingMdcContainersImageAssessment mdcContainersImageAssessment, DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S mdcContainersAgentlessDiscoveryK8S) : base(offeringType, description, serializedAdditionalRawData)
         {
             NativeCloudConnection = nativeCloudConnection;
             DataPipelineNativeCloudConnection = dataPipelineNativeCloudConnection;
@@ -38,19 +72,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OfferingType = offeringType;
         }
 
-        /// <summary> The native cloud connection configuration. </summary>
+        /// <summary>
+        /// The native cloud connection configuration
+        /// Serialized Name: DefenderForContainersGcpOffering.nativeCloudConnection
+        /// </summary>
         public DefenderForContainersGcpOfferingNativeCloudConnection NativeCloudConnection { get; set; }
-        /// <summary> The native cloud connection configuration. </summary>
+        /// <summary>
+        /// The native cloud connection configuration
+        /// Serialized Name: DefenderForContainersGcpOffering.dataPipelineNativeCloudConnection
+        /// </summary>
         public DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection DataPipelineNativeCloudConnection { get; set; }
-        /// <summary> Is audit logs data collection enabled. </summary>
+        /// <summary>
+        /// Is audit logs data collection enabled
+        /// Serialized Name: DefenderForContainersGcpOffering.auditLogsAutoProvisioningFlag
+        /// </summary>
         public bool? IsAuditLogsAutoProvisioningEnabled { get; set; }
-        /// <summary> Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled. </summary>
+        /// <summary>
+        /// Is Microsoft Defender for Cloud Kubernetes agent auto provisioning enabled
+        /// Serialized Name: DefenderForContainersGcpOffering.defenderAgentAutoProvisioningFlag
+        /// </summary>
         public bool? IsDefenderAgentAutoProvisioningEnabled { get; set; }
-        /// <summary> Is Policy Kubernetes agent auto provisioning enabled. </summary>
+        /// <summary>
+        /// Is Policy Kubernetes agent auto provisioning enabled
+        /// Serialized Name: DefenderForContainersGcpOffering.policyAgentAutoProvisioningFlag
+        /// </summary>
         public bool? IsPolicyAgentAutoProvisioningEnabled { get; set; }
-        /// <summary> The Microsoft Defender Container image assessment configuration. </summary>
+        /// <summary>
+        /// The Microsoft Defender Container image assessment configuration
+        /// Serialized Name: DefenderForContainersGcpOffering.mdcContainersImageAssessment
+        /// </summary>
         public DefenderForContainersGcpOfferingMdcContainersImageAssessment MdcContainersImageAssessment { get; set; }
-        /// <summary> The Microsoft Defender Container agentless discovery configuration. </summary>
+        /// <summary>
+        /// The Microsoft Defender Container agentless discovery configuration
+        /// Serialized Name: DefenderForContainersGcpOffering.mdcContainersAgentlessDiscoveryK8s
+        /// </summary>
         public DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S MdcContainersAgentlessDiscoveryK8S { get; set; }
     }
 }

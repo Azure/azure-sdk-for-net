@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The status of the port. </summary>
+    /// <summary>
+    /// The status of the port
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct JitNetworkAccessPortStatus : IEquatable<JitNetworkAccessPortStatus>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string RevokedValue = "Revoked";
         private const string InitiatedValue = "Initiated";
 
-        /// <summary> Revoked. </summary>
+        /// <summary>
+        /// Revoked
+        /// Serialized Name: Status.Revoked
+        /// </summary>
         public static JitNetworkAccessPortStatus Revoked { get; } = new JitNetworkAccessPortStatus(RevokedValue);
-        /// <summary> Initiated. </summary>
+        /// <summary>
+        /// Initiated
+        /// Serialized Name: Status.Initiated
+        /// </summary>
         public static JitNetworkAccessPortStatus Initiated { get; } = new JitNetworkAccessPortStatus(InitiatedValue);
         /// <summary> Determines if two <see cref="JitNetworkAccessPortStatus"/> values are the same. </summary>
         public static bool operator ==(JitNetworkAccessPortStatus left, JitNetworkAccessPortStatus right) => left.Equals(right);
