@@ -16,22 +16,13 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="InternalFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments that the model requires are provided to the named function. </param>
+        /// <param name="output"> The output of the function, only populated for function calls that have already have had their outputs submitted. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        internal InternalFunctionToolCallDetails(string name, string arguments)
+        internal InternalFunctionToolCallDetails(string name, string arguments, string output)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(arguments, nameof(arguments));
 
-            Name = name;
-            Arguments = arguments;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionToolCallDetails"/>. </summary>
-        /// <param name="name"> The name of the function. </param>
-        /// <param name="arguments"> The arguments that the model requires are provided to the named function. </param>
-        /// <param name="output"> The output of the function, only populated for function calls that have already have had their outputs submitted. </param>
-        internal InternalFunctionToolCallDetails(string name, string arguments, string output)
-        {
             Name = name;
             Arguments = arguments;
             Output = output;

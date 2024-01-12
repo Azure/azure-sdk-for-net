@@ -54,7 +54,7 @@ public class AssistantsTests : AssistantsTestBase
 
         // Retrieve the assistant we just created to ensure it's the same
         Response<Assistant> retrievalResponse
-            = await client.RetrieveAssistantAsync(assistantCreationResponse.Value.Id);
+            = await client.GetAssistantAsync(assistantCreationResponse.Value.Id);
         AssertSuccessfulResponse(retrievalResponse);
         Assert.That(retrievalResponse.Value.Id, Is.EqualTo(assistantCreationResponse.Value.Id));
 
@@ -109,7 +109,7 @@ public class AssistantsTests : AssistantsTestBase
         EnsuredThreadDeletions.Add((client, thread.Id));
         Assert.That(thread.Metadata.Contains(TestMetadataPair));
 
-        Response<AssistantThread> retrievalResponse = await client.RetrieveThreadAsync(thread.Id);
+        Response<AssistantThread> retrievalResponse = await client.GetThreadAsync(thread.Id);
         AssertSuccessfulResponse(retrievalResponse);
         Assert.That(retrievalResponse.Value.Id, Is.EqualTo(thread.Id));
 
@@ -142,7 +142,7 @@ public class AssistantsTests : AssistantsTestBase
         AssertSuccessfulResponse(messageCreationResponse);
 
         Response<ThreadMessage> retrievalResponse
-            = await client.RetrieveMessageAsync(
+            = await client.GetMessageAsync(
                 threadCreationResponse.Value.Id,
                 messageCreationResponse.Value.Id);
         AssertSuccessfulResponse(retrievalResponse);
@@ -160,7 +160,7 @@ public class AssistantsTests : AssistantsTestBase
                 });
         AssertSuccessfulResponse(modificationResponse);
 
-        retrievalResponse = await client.RetrieveMessageAsync(
+        retrievalResponse = await client.GetMessageAsync(
             threadCreationResponse.Value.Id,
             messageCreationResponse.Value.Id);
         AssertSuccessfulResponse(retrievalResponse);
@@ -225,7 +225,7 @@ public class AssistantsTests : AssistantsTestBase
         do
         {
             await Task.Delay(500);
-            Response<ThreadRun> runRetrievalResponse = await client.RetrieveRunAsync(thread.Id, run.Id);
+            Response<ThreadRun> runRetrievalResponse = await client.GetRunAsync(thread.Id, run.Id);
             AssertSuccessfulResponse(runRetrievalResponse);
             run = runRetrievalResponse.Value;
         }
@@ -282,7 +282,7 @@ public class AssistantsTests : AssistantsTestBase
         Assert.That(stepDetails.MessageCreation.MessageId, Is.EqualTo(messages[0].Id));
 
         // Check that we can retrieve the same run step
-        Response<RunStep> runStepRetrievalResponse = await client.RetrieveRunStepAsync(thread.Id, run.Id, runSteps[0].Id);
+        Response<RunStep> runStepRetrievalResponse = await client.GetRunStepAsync(thread.Id, run.Id, runSteps[0].Id);
         AssertSuccessfulResponse(runStepRetrievalResponse);
 
         // Delete the assistant we created

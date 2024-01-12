@@ -82,7 +82,7 @@ public partial class Samples_AssistantsClient
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            runResponse = await client.RetrieveRunAsync(thread.Id, runResponse.Value.Id);
+            runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
         }
         while (runResponse.Value.Status == RunStatus.Queued
             || runResponse.Value.Status == RunStatus.InProgress);

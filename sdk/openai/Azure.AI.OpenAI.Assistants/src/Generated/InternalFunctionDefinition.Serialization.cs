@@ -19,8 +19,11 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("description"u8);
-            writer.WriteStringValue(Description);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Parameters);
@@ -40,7 +43,7 @@ namespace Azure.AI.OpenAI.Assistants
                 return null;
             }
             string name = default;
-            string description = default;
+            Optional<string> description = default;
             BinaryData parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +63,7 @@ namespace Azure.AI.OpenAI.Assistants
                     continue;
                 }
             }
-            return new InternalFunctionDefinition(name, description, parameters);
+            return new InternalFunctionDefinition(name, description.Value, parameters);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

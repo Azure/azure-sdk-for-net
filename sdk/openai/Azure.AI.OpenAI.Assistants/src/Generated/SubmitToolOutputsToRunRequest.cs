@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The SubmitRunToolOutputsRequest. </summary>
-    internal partial class SubmitRunToolOutputsRequest
+    /// <summary> The SubmitToolOutputsToRunRequest. </summary>
+    internal partial class SubmitToolOutputsToRunRequest
     {
-        /// <summary> Initializes a new instance of <see cref="SubmitRunToolOutputsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
         /// <param name="toolOutputs"> The list of tool outputs requested by tool calls from the specified run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolOutputs"/> is null. </exception>
-        public SubmitRunToolOutputsRequest(IEnumerable<ToolOutput> toolOutputs)
+        public SubmitToolOutputsToRunRequest(IEnumerable<ToolOutput> toolOutputs)
         {
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
             ToolOutputs = toolOutputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubmitRunToolOutputsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsToRunRequest"/>. </summary>
         /// <param name="toolOutputs"> The list of tool outputs requested by tool calls from the specified run. </param>
-        internal SubmitRunToolOutputsRequest(IList<ToolOutput> toolOutputs)
+        internal SubmitToolOutputsToRunRequest(IList<ToolOutput> toolOutputs)
         {
             ToolOutputs = toolOutputs;
         }

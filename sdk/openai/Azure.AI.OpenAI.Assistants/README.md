@@ -86,7 +86,7 @@ Once the run has started, it should then be polled until it reaches a terminal s
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.RetrieveRunAsync(thread.Id, runResponse.Value.Id);
+    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
 }
 while (runResponse.Value.Status == RunStatus.Queued
     || runResponse.Value.Status == RunStatus.InProgress);
@@ -292,17 +292,17 @@ run via the `SubmitRunToolOutputs` method so that the run can continue:
 do
 {
     await Task.Delay(TimeSpan.FromMilliseconds(500));
-    runResponse = await client.RetrieveRunAsync(thread.Id, runResponse.Value.Id);
+    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
 
     if (runResponse.Value.Status == RunStatus.RequiresAction
         && runResponse.Value.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
     {
         List<ToolOutput> toolOutputs = new();
-        foreach (var toolCall in submitToolOutputsAction.ToolCalls)
+        foreach (ToolCall toolCall in submitToolOutputsAction.ToolCalls)
         {
             toolOutputs.Add(GetResolvedToolOutput(toolCall));
         }
-        runResponse = await client.SubmitRunToolOutputsAsync(runResponse.Value, toolOutputs);
+        runResponse = await client.SubmitToolOutputsToRunAsync(runResponse.Value, toolOutputs);
     }
 }
 while (runResponse.Value.Status == RunStatus.Queued

@@ -25,8 +25,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// A list of file IDs that the assistant should use. Useful for tools like retrieval and code_interpreter that can
         /// access files.
         /// </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="contentItems"/> or <paramref name="fileIds"/> is null. </exception>
-        public ThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageRole role, IEnumerable<MessageContent> contentItems, IEnumerable<string> fileIds)
+        public ThreadMessage(string id, DateTimeOffset createdAt, string threadId, MessageRole role, IEnumerable<MessageContent> contentItems, IEnumerable<string> fileIds, IDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(threadId, nameof(threadId));
@@ -39,7 +40,7 @@ namespace Azure.AI.OpenAI.Assistants
             Role = role;
             ContentItems = contentItems.ToList();
             FileIds = fileIds.ToList();
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = metadata;
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreadMessage"/>. </summary>
@@ -95,6 +96,6 @@ namespace Azure.AI.OpenAI.Assistants
         /// </summary>
         public IList<string> FileIds { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; set; }
     }
 }

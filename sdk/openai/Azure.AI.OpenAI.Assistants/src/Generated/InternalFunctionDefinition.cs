@@ -15,15 +15,23 @@ namespace Azure.AI.OpenAI.Assistants
     {
         /// <summary> Initializes a new instance of <see cref="InternalFunctionDefinition"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="parameters"/> is null. </exception>
-        public InternalFunctionDefinition(string name, string description, BinaryData parameters)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
+        public InternalFunctionDefinition(string name, BinaryData parameters)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
+            Name = name;
+            Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InternalFunctionDefinition"/>. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        internal InternalFunctionDefinition(string name, string description, BinaryData parameters)
+        {
             Name = name;
             Description = description;
             Parameters = parameters;

@@ -31,8 +31,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="completedAt"> The Unix timestamp, in seconds, representing when this completed. </param>
         /// <param name="cancelledAt"> The Unix timestamp, in seconds, representing when this was cancelled. </param>
         /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="assistantId"/>, <paramref name="model"/>, <paramref name="instructions"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
-        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt)
+        internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(threadId, nameof(threadId));
@@ -57,7 +58,7 @@ namespace Azure.AI.OpenAI.Assistants
             CompletedAt = completedAt;
             CancelledAt = cancelledAt;
             FailedAt = failedAt;
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = metadata;
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreadRun"/>. </summary>

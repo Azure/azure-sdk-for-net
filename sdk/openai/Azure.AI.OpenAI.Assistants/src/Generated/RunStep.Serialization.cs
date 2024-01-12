@@ -35,7 +35,7 @@ namespace Azure.AI.OpenAI.Assistants
             DateTimeOffset? completedAt = default;
             DateTimeOffset? cancelledAt = default;
             DateTimeOffset? failedAt = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,6 +117,7 @@ namespace Azure.AI.OpenAI.Assistants
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        metadata = new ChangeTrackingDictionary<string, string>();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -128,7 +129,7 @@ namespace Azure.AI.OpenAI.Assistants
                     continue;
                 }
             }
-            return new RunStep(id, @object, type, assistantId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, Optional.ToDictionary(metadata));
+            return new RunStep(id, @object, type, assistantId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, metadata);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

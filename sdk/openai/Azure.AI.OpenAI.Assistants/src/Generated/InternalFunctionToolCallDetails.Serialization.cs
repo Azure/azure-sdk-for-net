@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
             string name = default;
             string arguments = default;
-            Optional<string> output = default;
+            string output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -45,7 +44,7 @@ namespace Azure.AI.OpenAI.Assistants
                     continue;
                 }
             }
-            return new InternalFunctionToolCallDetails(name, arguments, output.Value);
+            return new InternalFunctionToolCallDetails(name, arguments, output);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

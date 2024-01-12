@@ -5,25 +5,41 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The status of an assistant deletion operation. </summary>
-    internal partial class InternalAssistantDeletionStatus : InternalDeletionStatus
+    internal partial class InternalAssistantDeletionStatus
     {
         /// <summary> Initializes a new instance of <see cref="InternalAssistantDeletionStatus"/>. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
-        internal InternalAssistantDeletionStatus(bool deleted) : base(deleted)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal InternalAssistantDeletionStatus(string id, bool deleted)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
+            Deleted = deleted;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAssistantDeletionStatus"/>. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'assistant.deleted'. </param>
-        internal InternalAssistantDeletionStatus(bool deleted, InternalAssistantDeletionStatusObject @object) : base(deleted)
+        internal InternalAssistantDeletionStatus(string id, bool deleted, InternalAssistantDeletionStatusObject @object)
         {
+            Id = id;
+            Deleted = deleted;
             Object = @object;
         }
 
+        /// <summary> The ID of the resource specified for deletion. </summary>
+        public string Id { get; }
+        /// <summary> A value indicating whether deletion was successful. </summary>
+        public bool Deleted { get; }
         /// <summary> The object type, which is always 'assistant.deleted'. </summary>
         public InternalAssistantDeletionStatusObject Object { get; } = InternalAssistantDeletionStatusObject.AssistantDeleted;
     }

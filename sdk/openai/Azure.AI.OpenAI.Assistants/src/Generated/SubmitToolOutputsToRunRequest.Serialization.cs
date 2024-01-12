@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class SubmitRunToolOutputsRequest : IUtf8JsonSerializable
+    internal partial class SubmitToolOutputsToRunRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

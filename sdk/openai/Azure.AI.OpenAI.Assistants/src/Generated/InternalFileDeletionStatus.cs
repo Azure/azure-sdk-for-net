@@ -11,33 +11,36 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> A status response from a file deletion operation. </summary>
-    internal partial class InternalFileDeletionStatus : InternalDeletionStatus
+    internal partial class InternalFileDeletionStatus
     {
         /// <summary> Initializes a new instance of <see cref="InternalFileDeletionStatus"/>. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
-        /// <param name="id"> The ID of the deleted file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal InternalFileDeletionStatus(bool deleted, string id) : base(deleted)
+        internal InternalFileDeletionStatus(string id, bool deleted)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
+            Deleted = deleted;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalFileDeletionStatus"/>. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'file'. </param>
-        /// <param name="id"> The ID of the deleted file. </param>
-        internal InternalFileDeletionStatus(bool deleted, InternalFileDeletionStatusObject @object, string id) : base(deleted)
+        internal InternalFileDeletionStatus(string id, bool deleted, InternalFileDeletionStatusObject @object)
         {
-            Object = @object;
             Id = id;
+            Deleted = deleted;
+            Object = @object;
         }
 
+        /// <summary> The ID of the resource specified for deletion. </summary>
+        public string Id { get; }
+        /// <summary> A value indicating whether deletion was successful. </summary>
+        public bool Deleted { get; }
         /// <summary> The object type, which is always 'file'. </summary>
         public InternalFileDeletionStatusObject Object { get; } = InternalFileDeletionStatusObject.File;
-
-        /// <summary> The ID of the deleted file. </summary>
-        public string Id { get; }
     }
 }

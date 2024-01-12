@@ -117,7 +117,7 @@ public class FunctionsTests : AssistantsTestBase
         do
         {
             await Task.Delay(500);
-            Response<ThreadRun> runRetrievalResponse = await client.RetrieveRunAsync(thread.Id, run.Id);
+            Response<ThreadRun> runRetrievalResponse = await client.GetRunAsync(thread.Id, run.Id);
             AssertSuccessfulResponse(runRetrievalResponse);
             run = runRetrievalResponse.Value;
         }

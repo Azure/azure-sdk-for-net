@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> FileIds { get { throw null; } }
         public string Instructions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string Model { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ToolDefinition> Tools { get { throw null; } }
@@ -37,7 +37,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> FileIds { get { throw null; } }
         public string Instructions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string Model { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ToolDefinition> Tools { get { throw null; } }
@@ -72,22 +72,36 @@ namespace Azure.AI.OpenAI.Assistants
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteFileAsync(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteThread(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteThreadAsync(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.Assistant> GetAssistant(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.Assistant>> GetAssistantAsync(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantFile> GetAssistantFile(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantFile>> GetAssistantFileAsync(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.AssistantFile>> GetAssistantFiles(string assistantId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.AssistantFile>>> GetAssistantFilesAsync(string assistantId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.Assistant>> GetAssistants(int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.Assistant>>> GetAssistantsAsync(int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.OpenAIFile>> GetFiles(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose? purpose = default(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.OpenAIFile>>> GetFilesAsync(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose? purpose = default(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage> GetMessage(string threadId, string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage>> GetMessageAsync(string threadId, string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.MessageFile> GetMessageFile(string threadId, string messageId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.MessageFile>> GetMessageFileAsync(string threadId, string messageId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.MessageFile>> GetMessageFiles(string threadId, string messageId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.MessageFile>>> GetMessageFilesAsync(string threadId, string messageId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.ThreadMessage>> GetMessages(string threadId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.ThreadMessage>>> GetMessagesAsync(string threadId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> GetRun(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> GetRunAsync(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.ThreadRun>> GetRuns(string threadId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.ThreadRun>>> GetRunsAsync(string threadId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.RunStep> GetRunStep(string threadId, string runId, string stepId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.RunStep>> GetRunSteps(Azure.AI.OpenAI.Assistants.ThreadRun run, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.RunStep>> GetRunSteps(string threadId, string runId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.RunStep>>> GetRunStepsAsync(Azure.AI.OpenAI.Assistants.ThreadRun run, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.PageableList<Azure.AI.OpenAI.Assistants.RunStep>>> GetRunStepsAsync(string threadId, string runId, int? limit = default(int?), Azure.AI.OpenAI.Assistants.ListSortOrder? order = default(Azure.AI.OpenAI.Assistants.ListSortOrder?), string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread> GetThread(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread>> GetThreadAsync(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantFile> LinkAssistantFile(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantFile>> LinkAssistantFileAsync(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.Assistant> ModifyAssistant(string assistantId, Azure.AI.OpenAI.Assistants.AssistantModificationOptions modificationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -98,28 +112,12 @@ namespace Azure.AI.OpenAI.Assistants
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> ModifyRunAsync(string threadId, string runId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread> ModifyThread(string threadId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread>> ModifyThreadAsync(string threadId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.Assistant> RetrieveAssistant(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.Assistant>> RetrieveAssistantAsync(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantFile> RetrieveAssistantFile(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantFile>> RetrieveAssistantFileAsync(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile> RetrieveFile(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile>> RetrieveFileAsync(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.BinaryData> RetrieveFileContent(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> RetrieveFileContentAsync(string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage> RetrieveMessage(string threadId, string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage>> RetrieveMessageAsync(string threadId, string messageId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.MessageFile> RetrieveMessageFile(string threadId, string messageId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.MessageFile>> RetrieveMessageFileAsync(string threadId, string messageId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> RetrieveRun(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> RetrieveRunAsync(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.RunStep> RetrieveRunStep(string threadId, string runId, string stepId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.RunStep>> RetrieveRunStepAsync(string threadId, string runId, string stepId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread> RetrieveThread(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread>> RetrieveThreadAsync(string threadId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> SubmitRunToolOutputs(Azure.AI.OpenAI.Assistants.ThreadRun run, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> SubmitRunToolOutputs(string threadId, string runId, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> SubmitRunToolOutputsAsync(Azure.AI.OpenAI.Assistants.ThreadRun run, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> SubmitRunToolOutputsAsync(string threadId, string runId, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> SubmitToolOutputsToRun(Azure.AI.OpenAI.Assistants.ThreadRun run, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> SubmitToolOutputsToRunAsync(Azure.AI.OpenAI.Assistants.ThreadRun run, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> UnlinkAssistantFile(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> UnlinkAssistantFileAsync(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile> UploadFile(System.BinaryData data, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose, string filename = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -129,10 +127,10 @@ namespace Azure.AI.OpenAI.Assistants
     }
     public partial class AssistantsClientOptions : Azure.Core.ClientOptions
     {
-        public AssistantsClientOptions(Azure.AI.OpenAI.Assistants.AssistantsClientOptions.ServiceVersion version = Azure.AI.OpenAI.Assistants.AssistantsClientOptions.ServiceVersion.V2023_11_06_Beta) { }
+        public AssistantsClientOptions(Azure.AI.OpenAI.Assistants.AssistantsClientOptions.ServiceVersion version = Azure.AI.OpenAI.Assistants.AssistantsClientOptions.ServiceVersion.V2024_02_15_Preview) { }
         public enum ServiceVersion
         {
-            V2023_11_06_Beta = 1,
+            V2024_02_15_Preview = 1,
         }
     }
     public static partial class AssistantsModelFactory
@@ -175,7 +173,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         public AssistantThreadCreationOptions() { }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ThreadMessage> Messages { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
     }
     public partial class CodeInterpreterImageOutput : Azure.AI.OpenAI.Assistants.CodeInterpreterToolCallOutput
     {
@@ -210,7 +208,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         public CreateAndRunThreadOptions(string assistantId) { }
         public string AssistantId { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string OverrideInstructions { get { throw null; } set { } }
         public string OverrideModelName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ToolDefinition> OverrideTools { get { throw null; } }
@@ -503,13 +501,13 @@ namespace Azure.AI.OpenAI.Assistants
     }
     public partial class ThreadMessage
     {
-        public ThreadMessage(string id, System.DateTimeOffset createdAt, string threadId, Azure.AI.OpenAI.Assistants.MessageRole role, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.MessageContent> contentItems, System.Collections.Generic.IEnumerable<string> fileIds) { }
+        public ThreadMessage(string id, System.DateTimeOffset createdAt, string threadId, Azure.AI.OpenAI.Assistants.MessageRole role, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.MessageContent> contentItems, System.Collections.Generic.IEnumerable<string> fileIds, System.Collections.Generic.IDictionary<string, string> metadata) { }
         public string AssistantId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.MessageContent> ContentItems { get { throw null; } }
         public System.DateTimeOffset CreatedAt { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> FileIds { get { throw null; } }
         public string Id { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.AI.OpenAI.Assistants.MessageRole Role { get { throw null; } set { } }
         public string RunId { get { throw null; } set { } }
         public string ThreadId { get { throw null; } set { } }

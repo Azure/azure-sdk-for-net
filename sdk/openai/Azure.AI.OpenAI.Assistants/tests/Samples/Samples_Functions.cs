@@ -151,17 +151,17 @@ public partial class Samples_Functions
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
-            runResponse = await client.RetrieveRunAsync(thread.Id, runResponse.Value.Id);
+            runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
 
             if (runResponse.Value.Status == RunStatus.RequiresAction
                 && runResponse.Value.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
             {
                 List<ToolOutput> toolOutputs = new();
-                foreach (var toolCall in submitToolOutputsAction.ToolCalls)
+                foreach (ToolCall toolCall in submitToolOutputsAction.ToolCalls)
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }
-                runResponse = await client.SubmitRunToolOutputsAsync(runResponse.Value, toolOutputs);
+                runResponse = await client.SubmitToolOutputsToRunAsync(runResponse.Value, toolOutputs);
             }
         }
         while (runResponse.Value.Status == RunStatus.Queued

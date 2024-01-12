@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Assistants
             string instructions = default;
             IReadOnlyList<ToolDefinition> tools = default;
             IReadOnlyList<string> fileIds = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,6 +107,7 @@ namespace Azure.AI.OpenAI.Assistants
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        metadata = new ChangeTrackingDictionary<string, string>();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -118,7 +119,7 @@ namespace Azure.AI.OpenAI.Assistants
                     continue;
                 }
             }
-            return new Assistant(id, @object, createdAt, name, description, model, instructions, tools, fileIds, Optional.ToDictionary(metadata));
+            return new Assistant(id, @object, createdAt, name, description, model, instructions, tools, fileIds, metadata);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -5,25 +5,41 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The status of an assistant file deletion operation. </summary>
-    internal partial class InternalAssistantFileDeletionStatus : InternalDeletionStatus
+    internal partial class InternalAssistantFileDeletionStatus
     {
         /// <summary> Initializes a new instance of <see cref="InternalAssistantFileDeletionStatus"/>. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
-        internal InternalAssistantFileDeletionStatus(bool deleted) : base(deleted)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal InternalAssistantFileDeletionStatus(string id, bool deleted)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
+            Deleted = deleted;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAssistantFileDeletionStatus"/>. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
         /// <param name="deleted"> A value indicating whether deletion was successful. </param>
         /// <param name="object"> The object type, which is always 'assistant.file.deleted'. </param>
-        internal InternalAssistantFileDeletionStatus(bool deleted, InternalAssistantFileDeletionStatusObject @object) : base(deleted)
+        internal InternalAssistantFileDeletionStatus(string id, bool deleted, InternalAssistantFileDeletionStatusObject @object)
         {
+            Id = id;
+            Deleted = deleted;
             Object = @object;
         }
 
+        /// <summary> The ID of the resource specified for deletion. </summary>
+        public string Id { get; }
+        /// <summary> A value indicating whether deletion was successful. </summary>
+        public bool Deleted { get; }
         /// <summary> The object type, which is always 'assistant.file.deleted'. </summary>
         public InternalAssistantFileDeletionStatusObject Object { get; } = InternalAssistantFileDeletionStatusObject.AssistantFileDeleted;
     }

@@ -84,10 +84,10 @@ public partial class AssistantsClient
     /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an assistant thread run. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
-    public virtual Response<ThreadRun> SubmitRunToolOutputs(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+    public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(run, nameof(run));
-        return SubmitRunToolOutputs(run.ThreadId, run.Id, toolOutputs, cancellationToken);
+        return SubmitToolOutputsToRun(run.ThreadId, run.Id, toolOutputs, cancellationToken);
     }
 
     /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -95,10 +95,10 @@ public partial class AssistantsClient
     /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an assistant thread run. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
-    public virtual Task<Response<ThreadRun>> SubmitRunToolOutputsAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+    public virtual Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(run, nameof(run));
-        return SubmitRunToolOutputsAsync(run.ThreadId, run.Id, toolOutputs, cancellationToken);
+        return SubmitToolOutputsToRunAsync(run.ThreadId, run.Id, toolOutputs, cancellationToken);
     }
 
     /// <summary>

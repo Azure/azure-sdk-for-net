@@ -24,8 +24,9 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="instructions"> The system instructions for the assistant to use. </param>
         /// <param name="tools"> The collection of tools enabled for the assistant. </param>
         /// <param name="fileIds"> A list of attached file IDs, ordered by creation date in ascending order. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="model"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
-        internal Assistant(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds)
+        internal Assistant(string id, DateTimeOffset createdAt, string name, string description, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, IReadOnlyDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(model, nameof(model));
@@ -40,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
             Instructions = instructions;
             Tools = tools.ToList();
             FileIds = fileIds.ToList();
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = metadata;
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistant"/>. </summary>

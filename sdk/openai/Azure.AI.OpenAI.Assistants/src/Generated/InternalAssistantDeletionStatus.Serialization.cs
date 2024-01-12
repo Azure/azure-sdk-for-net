@@ -18,13 +18,14 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            InternalAssistantDeletionStatusObject @object = default;
+            string id = default;
             bool deleted = default;
+            InternalAssistantDeletionStatusObject @object = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("object"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    @object = new InternalAssistantDeletionStatusObject(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("deleted"u8))
@@ -32,8 +33,13 @@ namespace Azure.AI.OpenAI.Assistants
                     deleted = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("object"u8))
+                {
+                    @object = new InternalAssistantDeletionStatusObject(property.Value.GetString());
+                    continue;
+                }
             }
-            return new InternalAssistantDeletionStatus(deleted, @object);
+            return new InternalAssistantDeletionStatus(id, deleted, @object);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

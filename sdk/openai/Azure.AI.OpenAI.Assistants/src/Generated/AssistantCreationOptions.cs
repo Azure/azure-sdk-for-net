@@ -63,6 +63,6 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> A list of previously uploaded file IDs to attach to the assistant. </summary>
         public IList<string> FileIds { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; set; }
     }
 }

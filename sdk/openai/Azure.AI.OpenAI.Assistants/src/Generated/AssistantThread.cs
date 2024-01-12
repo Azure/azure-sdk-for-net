@@ -17,14 +17,15 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="AssistantThread"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal AssistantThread(string id, DateTimeOffset createdAt)
+        internal AssistantThread(string id, DateTimeOffset createdAt, IReadOnlyDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             CreatedAt = createdAt;
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = metadata;
         }
 
         /// <summary> Initializes a new instance of <see cref="AssistantThread"/>. </summary>

@@ -24,6 +24,7 @@ public partial class AssistantsClient
     private static readonly string s_openAIEndpoint = "https://api.openai.com/v1";
     private static readonly string s_aoaiNotYetSupportedMessage = "Azure OpenAI does not yet support Assistants.";
 
+    private readonly string _apiVersion;
     private bool _isConfiguredForAzure;
 
     /// <summary>
@@ -56,7 +57,15 @@ public partial class AssistantsClient
             },
             new ResponseClassifier());
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        if (options.Version == "2024-02-15-preview")
+        {
+            // Temporary redirection pending Azure versioning finalization
+            _apiVersion = "2024-01-01-preview";
+        }
+        else
+        {
+            _apiVersion = options.Version;
+        }
     }
 
     /// <summary>
@@ -579,8 +588,7 @@ public partial class AssistantsClient
                 uri.AppendPath("/beta", escape: false);
             }
             uri.AppendPath(operationPath, escape: false);
-            // uri.AppendQuery("api-version", _apiVersion, true);
-            uri.AppendQuery("api-version", "2024-01-01-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
         }
         else
         {
@@ -618,7 +626,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateCreateAssistantRequest(RequestContent content, RequestContext context)
         => CreateRequestMessage("/assistants", content, context, RequestMethod.Post);
 
-    internal HttpMessage CreateRetrieveAssistantRequest(string assistantId, RequestContext context)
+    internal HttpMessage CreateGetAssistantRequest(string assistantId, RequestContext context)
         => CreateRequestMessage($"/assistants/{assistantId}", content: null, context, RequestMethod.Get);
 
     internal HttpMessage CreateModifyAssistantRequest(string assistantId, RequestContent content, RequestContext context)
@@ -643,7 +651,7 @@ public partial class AssistantsClient
             ("before", before));
     }
 
-    internal HttpMessage CreateRetrieveAssistantFileRequest(string assistantId, string fileId, RequestContext context)
+    internal HttpMessage CreateGetAssistantFileRequest(string assistantId, string fileId, RequestContext context)
         => CreateRequestMessage($"/assistants/{assistantId}/files/{fileId}", content: null, context, RequestMethod.Get);
 
     internal HttpMessage CreateInternalUnlinkAssistantFileRequest(string assistantId, string fileId, RequestContext context)
@@ -652,7 +660,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateCreateThreadRequest(RequestContent content, RequestContext context)
         => CreateRequestMessage($"/threads", content, context, RequestMethod.Post);
 
-    internal HttpMessage CreateRetrieveThreadRequest(string threadId, RequestContext context)
+    internal HttpMessage CreateGetThreadRequest(string threadId, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}", content: null, context, RequestMethod.Get);
     internal HttpMessage CreateModifyThreadRequest(string threadId, RequestContent content, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}", content, context, RequestMethod.Post);
@@ -673,7 +681,7 @@ public partial class AssistantsClient
             ("after", after),
             ("before", before));
 
-    internal HttpMessage CreateRetrieveMessageRequest(string threadId, string messageId, RequestContext context)
+    internal HttpMessage CreateGetMessageRequest(string threadId, string messageId, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}/messages/{messageId}", content: null, context, RequestMethod.Get);
 
     internal HttpMessage CreateModifyMessageRequest(string threadId, string messageId, RequestContent content, RequestContext context)
@@ -689,7 +697,7 @@ public partial class AssistantsClient
             ("after", after),
             ("before", before));
 
-    internal HttpMessage CreateRetrieveMessageFileRequest(string threadId, string messageId, string fileId, RequestContext context)
+    internal HttpMessage CreateGetMessageFileRequest(string threadId, string messageId, string fileId, RequestContext context)
         => CreateRequestMessage(
             $"/threads/{threadId}/messages/{messageId}/files/{fileId}",
             content: null,
@@ -710,12 +718,12 @@ public partial class AssistantsClient
             ("after", after),
             ("before", before));
 
-    internal HttpMessage CreateRetrieveRunRequest(string threadId, string runId, RequestContext context)
+    internal HttpMessage CreateGetRunRequest(string threadId, string runId, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}/runs/{runId}", content: null, context, RequestMethod.Get);
 
     internal HttpMessage CreateModifyRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}/runs/{runId}", content, context, RequestMethod.Post);
-    internal HttpMessage CreateSubmitRunToolOutputsRequest(string threadId, string runId, RequestContent content, RequestContext context)
+    internal HttpMessage CreateSubmitToolOuputsToRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
         => CreateRequestMessage(
             $"/threads/{threadId}/runs/{runId}/submit_tool_outputs",
             content,
@@ -728,7 +736,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateCreateThreadAndRunRequest(RequestContent content, RequestContext context)
         => CreateRequestMessage($"/threads/runs", content, context, RequestMethod.Post);
 
-    internal HttpMessage CreateRetrieveRunStepRequest(string threadId, string runId, string stepId, RequestContext context)
+    internal HttpMessage CreateGetRunStepRequest(string threadId, string runId, string stepId, RequestContext context)
         => CreateRequestMessage(
             $"/threads/{threadId}/runs/{runId}/steps/{stepId}",
             content: null,
@@ -749,7 +757,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateInternalListFilesRequest(string purpose, RequestContext context)
         => CreateRequestMessage("/files", content: null, context, RequestMethod.Get, ("purpose", purpose));
 
-    internal HttpMessage CreateUploadFileRequest(RequestContent content, RequestContext context)
+    internal HttpMessage CreateCreateFileRequest(RequestContent content, RequestContext context)
     {
         HttpMessage message = CreateRequestMessage("/files", content, context, RequestMethod.Post);
         (content as Azure.Core.MultipartFormDataContent).ApplyToRequest(message.Request);
@@ -761,9 +769,6 @@ public partial class AssistantsClient
 
     internal HttpMessage CreateRetrieveFileRequest(string fileId, RequestContext context)
         => CreateRequestMessage($"/files/{fileId}", content: null, context, RequestMethod.Get);
-
-    internal HttpMessage CreateRetrieveFileContentRequest(string fileId, RequestContext context)
-        => CreateRequestMessage($"/files/{fileId}/content", content: null, context, RequestMethod.Get);
 
     private static TokenCredential CreateDelegatedToken(string token)
     {

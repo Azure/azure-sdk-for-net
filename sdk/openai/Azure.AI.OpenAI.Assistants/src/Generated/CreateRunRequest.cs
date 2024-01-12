@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="CreateRunRequest"/>. </summary>
         /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
-        /// <param name="overrideModelName"> The overriden model name that the assistant should use to run the thread. </param>
+        /// <param name="overrideModelName"> The overridden model name that the assistant should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions that the assistant should use to run the thread. </param>
         /// <param name="overrideTools"> The overridden list of enabled tools that the assistant should use to run the thread. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
@@ -43,7 +43,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> The ID of the assistant that should run the thread. </summary>
         public string AssistantId { get; }
-        /// <summary> The overriden model name that the assistant should use to run the thread. </summary>
+        /// <summary> The overridden model name that the assistant should use to run the thread. </summary>
         public string OverrideModelName { get; set; }
         /// <summary> The overridden system instructions that the assistant should use to run the thread. </summary>
         public string OverrideInstructions { get; set; }
@@ -54,6 +54,6 @@ namespace Azure.AI.OpenAI.Assistants
         /// </summary>
         public IList<ToolDefinition> OverrideTools { get; }
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        public IDictionary<string, string> Metadata { get; set; }
     }
 }
