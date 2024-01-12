@@ -39,18 +39,18 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
         SanitizedQueryParameters.Add("sig");
 
-        if (mode == RecordedTestMode.Playback)
-        {
-            _nonAzureApiKey = s_placeholderApiKey;
-            _azureResourceUrl = s_placeholderAzureResourceUrl;
-            _azureApiKeyCredential = new(s_placeholderApiKey);
-        }
-        else
+        if (mode == RecordedTestMode.Record || mode == RecordedTestMode.Live)
         {
             _nonAzureApiKey = TestEnvironment.NonAzureOpenAIApiKey;
             _azureResourceUrl = TestEnvironment.AzureOpenAIResourceUri;
             _azureApiKeyCredential = new(TestEnvironment.AzureOpenAIApiKey);
             UriRegexSanitizers.Add(new(_azureResourceUrl, s_placeholderAzureResourceUrl));
+        }
+        else
+        {
+            _nonAzureApiKey = s_placeholderApiKey;
+            _azureResourceUrl = s_placeholderAzureResourceUrl;
+            _azureApiKeyCredential = new(s_placeholderApiKey);
         }
     }
 
