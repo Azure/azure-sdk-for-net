@@ -19,6 +19,8 @@ public class PipelineMessage : IDisposable
 
         Request = request;
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+
+        BufferResponse = true;
     }
 
     public PipelineRequest Request { get; }
@@ -46,6 +48,10 @@ public class PipelineMessage : IDisposable
     #region Meta-data for pipeline processing
 
     internal int RetryCount { get; set; }
+
+    internal bool BufferResponse { get; set; }
+
+    internal TimeSpan? NetworkTimeout { get; set; }
 
     #endregion
 
