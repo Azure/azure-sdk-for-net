@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents the execution details of an Experiment. </summary>
+    /// <summary>
+    /// Model that represents the execution details of an Experiment.
+    /// Serialized Name: ExperimentExecutionDetails
+    /// </summary>
     public partial class ExperimentExecutionDetails : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetails"/>. </summary>
@@ -25,12 +28,30 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="startedOn"> String that represents the start date time. </param>
-        /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <param name="failureReason"> The reason why the execution failed. </param>
-        /// <param name="lastActionOn"> String that represents the last action date time. </param>
-        /// <param name="runInformation"> The information of the experiment run. </param>
+        /// <param name="status">
+        /// The status of the execution.
+        /// Serialized Name: ExperimentExecutionDetails.properties.status
+        /// </param>
+        /// <param name="startedOn">
+        /// String that represents the start date time.
+        /// Serialized Name: ExperimentExecutionDetails.properties.startedAt
+        /// </param>
+        /// <param name="stoppedOn">
+        /// String that represents the stop date time.
+        /// Serialized Name: ExperimentExecutionDetails.properties.stoppedAt
+        /// </param>
+        /// <param name="failureReason">
+        /// The reason why the execution failed.
+        /// Serialized Name: ExperimentExecutionDetails.properties.failureReason
+        /// </param>
+        /// <param name="lastActionOn">
+        /// String that represents the last action date time.
+        /// Serialized Name: ExperimentExecutionDetails.properties.lastActionAt
+        /// </param>
+        /// <param name="runInformation">
+        /// The information of the experiment run.
+        /// Serialized Name: ExperimentExecutionDetails.properties.runInformation
+        /// </param>
         internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation) : base(id, name, resourceType, systemData)
         {
             Status = status;
@@ -41,20 +62,41 @@ namespace Azure.ResourceManager.Chaos.Models
             RunInformation = runInformation;
         }
 
-        /// <summary> The status of the execution. </summary>
+        /// <summary>
+        /// The status of the execution.
+        /// Serialized Name: ExperimentExecutionDetails.properties.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> String that represents the start date time. </summary>
+        /// <summary>
+        /// String that represents the start date time.
+        /// Serialized Name: ExperimentExecutionDetails.properties.startedAt
+        /// </summary>
         public DateTimeOffset? StartedOn { get; }
-        /// <summary> String that represents the stop date time. </summary>
+        /// <summary>
+        /// String that represents the stop date time.
+        /// Serialized Name: ExperimentExecutionDetails.properties.stoppedAt
+        /// </summary>
         public DateTimeOffset? StoppedOn { get; }
-        /// <summary> The reason why the execution failed. </summary>
+        /// <summary>
+        /// The reason why the execution failed.
+        /// Serialized Name: ExperimentExecutionDetails.properties.failureReason
+        /// </summary>
         public string FailureReason { get; }
-        /// <summary> String that represents the last action date time. </summary>
+        /// <summary>
+        /// String that represents the last action date time.
+        /// Serialized Name: ExperimentExecutionDetails.properties.lastActionAt
+        /// </summary>
         public DateTimeOffset? LastActionOn { get; }
-        /// <summary> The information of the experiment run. </summary>
+        /// <summary>
+        /// The information of the experiment run.
+        /// Serialized Name: ExperimentExecutionDetails.properties.runInformation
+        /// </summary>
         internal ExperimentExecutionDetailsPropertiesRunInformation RunInformation { get; }
-        /// <summary> The steps of the experiment run. </summary>
-        public IReadOnlyList<StepStatus> RunInformationSteps
+        /// <summary>
+        /// The steps of the experiment run.
+        /// Serialized Name: ExperimentExecutionDetailsPropertiesRunInformation.steps
+        /// </summary>
+        public IReadOnlyList<ExecutionStepStatus> RunInformationSteps
         {
             get => RunInformation?.Steps;
         }

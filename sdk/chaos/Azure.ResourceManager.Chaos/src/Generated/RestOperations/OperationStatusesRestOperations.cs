@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="asyncOperationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OperationStatus>> GetAsync(string subscriptionId, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        public async Task<Response<ChaosOperationStatus>> GetAsync(string subscriptionId, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        OperationStatus value = default;
+                        ChaosOperationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = ChaosOperationStatus.DeserializeChaosOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="asyncOperationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OperationStatus> Get(string subscriptionId, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        public Response<ChaosOperationStatus> Get(string subscriptionId, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        OperationStatus value = default;
+                        ChaosOperationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = ChaosOperationStatus.DeserializeChaosOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StepStatus>> steps = default;
+            Optional<IReadOnlyList<ExecutionStepStatus>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("steps"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    List<StepStatus> array = new List<StepStatus>();
+                    List<ExecutionStepStatus> array = new List<ExecutionStepStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StepStatus.DeserializeStepStatus(item));
+                        array.Add(ExecutionStepStatus.DeserializeExecutionStepStatus(item));
                     }
                     steps = array;
                     continue;

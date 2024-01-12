@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Runtime properties of this Capability Type. </summary>
+    /// <summary>
+    /// Runtime properties of this Capability Type.
+    /// Serialized Name: CapabilityTypePropertiesRuntimeProperties
+    /// </summary>
     internal partial class CapabilityTypePropertiesRuntimeProperties
     {
         /// <summary> Initializes a new instance of <see cref="CapabilityTypePropertiesRuntimeProperties"/>. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilityTypePropertiesRuntimeProperties"/>. </summary>
-        /// <param name="kind"> String of the kind of the resource's action type (continuous or discrete). </param>
+        /// <param name="kind">
+        /// String of the kind of the resource's action type (continuous or discrete).
+        /// Serialized Name: CapabilityTypePropertiesRuntimeProperties.kind
+        /// </param>
         internal CapabilityTypePropertiesRuntimeProperties(string kind)
         {
             Kind = kind;
         }
 
-        /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
+        /// <summary>
+        /// String of the kind of the resource's action type (continuous or discrete).
+        /// Serialized Name: CapabilityTypePropertiesRuntimeProperties.kind
+        /// </summary>
         public string Kind { get; }
     }
 }

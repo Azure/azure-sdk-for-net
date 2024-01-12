@@ -12,15 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a branch in the step. 9 total per experiment. </summary>
+    /// <summary>
+    /// Model that represents a branch in the step. 9 total per experiment.
+    /// Serialized Name: ChaosExperimentBranch
+    /// </summary>
     public partial class ChaosExperimentBranch
     {
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentBranch"/>. </summary>
-        /// <param name="name"> String of the branch name. </param>
+        /// <param name="name">
+        /// String of the branch name.
+        /// Serialized Name: ChaosExperimentBranch.name
+        /// </param>
         /// <param name="actions">
         /// List of actions.
+        /// Serialized Name: ChaosExperimentBranch.actions
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousAction"/>, <see cref="DelayAction"/> and <see cref="DiscreteAction"/>.
+        /// The available derived classes include <see cref="ExperimentContinuousAction"/>, <see cref="ExperimentDelayAction"/> and <see cref="ExperimentDiscreteAction"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="actions"/> is null. </exception>
         public ChaosExperimentBranch(string name, IEnumerable<ChaosExperimentAction> actions)
@@ -33,11 +40,15 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentBranch"/>. </summary>
-        /// <param name="name"> String of the branch name. </param>
+        /// <param name="name">
+        /// String of the branch name.
+        /// Serialized Name: ChaosExperimentBranch.name
+        /// </param>
         /// <param name="actions">
         /// List of actions.
+        /// Serialized Name: ChaosExperimentBranch.actions
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousAction"/>, <see cref="DelayAction"/> and <see cref="DiscreteAction"/>.
+        /// The available derived classes include <see cref="ExperimentContinuousAction"/>, <see cref="ExperimentDelayAction"/> and <see cref="ExperimentDiscreteAction"/>.
         /// </param>
         internal ChaosExperimentBranch(string name, IList<ChaosExperimentAction> actions)
         {
@@ -45,12 +56,16 @@ namespace Azure.ResourceManager.Chaos.Models
             Actions = actions;
         }
 
-        /// <summary> String of the branch name. </summary>
+        /// <summary>
+        /// String of the branch name.
+        /// Serialized Name: ChaosExperimentBranch.name
+        /// </summary>
         public string Name { get; set; }
         /// <summary>
         /// List of actions.
+        /// Serialized Name: ChaosExperimentBranch.actions
         /// Please note <see cref="ChaosExperimentAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousAction"/>, <see cref="DelayAction"/> and <see cref="DiscreteAction"/>.
+        /// The available derived classes include <see cref="ExperimentContinuousAction"/>, <see cref="ExperimentDelayAction"/> and <see cref="ExperimentDiscreteAction"/>.
         /// </summary>
         public IList<ChaosExperimentAction> Actions { get; }
     }

@@ -11,27 +11,42 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a list of Target Type resources and a link for pagination. </summary>
+    /// <summary>
+    /// Model that represents a list of Target Type resources and a link for pagination.
+    /// Serialized Name: TargetTypeListResult
+    /// </summary>
     internal partial class TargetTypeListResult
     {
         /// <summary> Initializes a new instance of <see cref="TargetTypeListResult"/>. </summary>
         internal TargetTypeListResult()
         {
-            Value = new ChangeTrackingList<TargetTypeData>();
+            Value = new ChangeTrackingList<ChaosTargetTypeData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetTypeListResult"/>. </summary>
-        /// <param name="value"> List of Target Type resources. </param>
-        /// <param name="nextLink"> URL to retrieve the next page of Target Type resources. </param>
-        internal TargetTypeListResult(IReadOnlyList<TargetTypeData> value, string nextLink)
+        /// <param name="value">
+        /// List of Target Type resources.
+        /// Serialized Name: TargetTypeListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to retrieve the next page of Target Type resources.
+        /// Serialized Name: TargetTypeListResult.nextLink
+        /// </param>
+        internal TargetTypeListResult(IReadOnlyList<ChaosTargetTypeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Target Type resources. </summary>
-        public IReadOnlyList<TargetTypeData> Value { get; }
-        /// <summary> URL to retrieve the next page of Target Type resources. </summary>
+        /// <summary>
+        /// List of Target Type resources.
+        /// Serialized Name: TargetTypeListResult.value
+        /// </summary>
+        public IReadOnlyList<ChaosTargetTypeData> Value { get; }
+        /// <summary>
+        /// URL to retrieve the next page of Target Type resources.
+        /// Serialized Name: TargetTypeListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

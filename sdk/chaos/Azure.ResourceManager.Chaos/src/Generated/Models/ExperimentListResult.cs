@@ -11,27 +11,42 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a list of Experiment resources and a link for pagination. </summary>
+    /// <summary>
+    /// Model that represents a list of Experiment resources and a link for pagination.
+    /// Serialized Name: ExperimentListResult
+    /// </summary>
     internal partial class ExperimentListResult
     {
         /// <summary> Initializes a new instance of <see cref="ExperimentListResult"/>. </summary>
         internal ExperimentListResult()
         {
-            Value = new ChangeTrackingList<ExperimentData>();
+            Value = new ChangeTrackingList<ChaosExperimentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentListResult"/>. </summary>
-        /// <param name="value"> List of Experiment resources. </param>
-        /// <param name="nextLink"> URL to retrieve the next page of Experiment resources. </param>
-        internal ExperimentListResult(IReadOnlyList<ExperimentData> value, string nextLink)
+        /// <param name="value">
+        /// List of Experiment resources.
+        /// Serialized Name: ExperimentListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to retrieve the next page of Experiment resources.
+        /// Serialized Name: ExperimentListResult.nextLink
+        /// </param>
+        internal ExperimentListResult(IReadOnlyList<ChaosExperimentData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Experiment resources. </summary>
-        public IReadOnlyList<ExperimentData> Value { get; }
-        /// <summary> URL to retrieve the next page of Experiment resources. </summary>
+        /// <summary>
+        /// List of Experiment resources.
+        /// Serialized Name: ExperimentListResult.value
+        /// </summary>
+        public IReadOnlyList<ChaosExperimentData> Value { get; }
+        /// <summary>
+        /// URL to retrieve the next page of Experiment resources.
+        /// Serialized Name: ExperimentListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

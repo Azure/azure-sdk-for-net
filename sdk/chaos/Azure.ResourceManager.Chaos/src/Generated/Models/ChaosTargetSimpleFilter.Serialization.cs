@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             Optional<ChaosTargetSimpleFilterParameters> parameters = default;
-            FilterType type = default;
+            ChaosTargetFilterType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new FilterType(property.Value.GetString());
+                    type = new ChaosTargetFilterType(property.Value.GetString());
                     continue;
                 }
             }

@@ -7,12 +7,18 @@
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The UnknownChaosTargetFilter. </summary>
+    /// <summary>
+    /// The UnknownChaosTargetFilter.
+    /// Serialized Name: UnknownChaosTargetFilter
+    /// </summary>
     internal partial class UnknownChaosTargetFilter : ChaosTargetFilter
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosTargetFilter"/>. </summary>
-        /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
-        internal UnknownChaosTargetFilter(FilterType filterType) : base(filterType)
+        /// <param name="filterType">
+        /// Enum that discriminates between filter types. Currently only `Simple` type is supported.
+        /// Serialized Name: ChaosTargetFilter.type
+        /// </param>
+        internal UnknownChaosTargetFilter(ChaosTargetFilterType filterType) : base(filterType)
         {
             FilterType = filterType;
         }

@@ -9,27 +9,42 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a simple target filter. </summary>
+    /// <summary>
+    /// Model that represents a simple target filter.
+    /// Serialized Name: ChaosTargetSimpleFilter
+    /// </summary>
     public partial class ChaosTargetSimpleFilter : ChaosTargetFilter
     {
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSimpleFilter"/>. </summary>
         public ChaosTargetSimpleFilter()
         {
-            FilterType = FilterType.Simple;
+            FilterType = ChaosTargetFilterType.Simple;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSimpleFilter"/>. </summary>
-        /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
-        /// <param name="parameters"> Model that represents the Simple filter parameters. </param>
-        internal ChaosTargetSimpleFilter(FilterType filterType, ChaosTargetSimpleFilterParameters parameters) : base(filterType)
+        /// <param name="filterType">
+        /// Enum that discriminates between filter types. Currently only `Simple` type is supported.
+        /// Serialized Name: ChaosTargetFilter.type
+        /// </param>
+        /// <param name="parameters">
+        /// Model that represents the Simple filter parameters.
+        /// Serialized Name: ChaosTargetSimpleFilter.parameters
+        /// </param>
+        internal ChaosTargetSimpleFilter(ChaosTargetFilterType filterType, ChaosTargetSimpleFilterParameters parameters) : base(filterType)
         {
             Parameters = parameters;
             FilterType = filterType;
         }
 
-        /// <summary> Model that represents the Simple filter parameters. </summary>
+        /// <summary>
+        /// Model that represents the Simple filter parameters.
+        /// Serialized Name: ChaosTargetSimpleFilter.parameters
+        /// </summary>
         internal ChaosTargetSimpleFilterParameters Parameters { get; set; }
-        /// <summary> List of Azure availability zones to filter targets by. </summary>
+        /// <summary>
+        /// List of Azure availability zones to filter targets by.
+        /// Serialized Name: ChaosTargetSimpleFilterParameters.zones
+        /// </summary>
         public IList<string> ParametersZones
         {
             get

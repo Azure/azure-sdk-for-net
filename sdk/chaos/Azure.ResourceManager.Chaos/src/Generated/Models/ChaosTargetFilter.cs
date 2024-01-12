@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary>
     /// Model that represents available filter types that can be applied to a targets list.
+    /// Serialized Name: ChaosTargetFilter
     /// Please note <see cref="ChaosTargetFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ChaosTargetSimpleFilter"/>.
     /// </summary>
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetFilter"/>. </summary>
-        /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
-        internal ChaosTargetFilter(FilterType filterType)
+        /// <param name="filterType">
+        /// Enum that discriminates between filter types. Currently only `Simple` type is supported.
+        /// Serialized Name: ChaosTargetFilter.type
+        /// </param>
+        internal ChaosTargetFilter(ChaosTargetFilterType filterType)
         {
             FilterType = filterType;
         }
 
-        /// <summary> Enum that discriminates between filter types. Currently only `Simple` type is supported. </summary>
-        internal FilterType FilterType { get; set; }
+        /// <summary>
+        /// Enum that discriminates between filter types. Currently only `Simple` type is supported.
+        /// Serialized Name: ChaosTargetFilter.type
+        /// </summary>
+        internal ChaosTargetFilterType FilterType { get; set; }
     }
 }

@@ -11,27 +11,42 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a list of Target resources and a link for pagination. </summary>
+    /// <summary>
+    /// Model that represents a list of Target resources and a link for pagination.
+    /// Serialized Name: TargetListResult
+    /// </summary>
     internal partial class TargetListResult
     {
         /// <summary> Initializes a new instance of <see cref="TargetListResult"/>. </summary>
         internal TargetListResult()
         {
-            Value = new ChangeTrackingList<TargetData>();
+            Value = new ChangeTrackingList<ChaosTargetData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetListResult"/>. </summary>
-        /// <param name="value"> List of Target resources. </param>
-        /// <param name="nextLink"> URL to retrieve the next page of Target resources. </param>
-        internal TargetListResult(IReadOnlyList<TargetData> value, string nextLink)
+        /// <param name="value">
+        /// List of Target resources.
+        /// Serialized Name: TargetListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to retrieve the next page of Target resources.
+        /// Serialized Name: TargetListResult.nextLink
+        /// </param>
+        internal TargetListResult(IReadOnlyList<ChaosTargetData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Target resources. </summary>
-        public IReadOnlyList<TargetData> Value { get; }
-        /// <summary> URL to retrieve the next page of Target resources. </summary>
+        /// <summary>
+        /// List of Target resources.
+        /// Serialized Name: TargetListResult.value
+        /// </summary>
+        public IReadOnlyList<ChaosTargetData> Value { get; }
+        /// <summary>
+        /// URL to retrieve the next page of Target resources.
+        /// Serialized Name: TargetListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

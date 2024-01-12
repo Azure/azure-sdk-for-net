@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            IList<TargetReference> targets = default;
-            SelectorType type = default;
+            IList<ChaosTargetReference> targets = default;
+            ChaosTargetSelectorType type = default;
             string id = default;
             Optional<ChaosTargetFilter> filter = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 if (property.NameEquals("targets"u8))
                 {
-                    List<TargetReference> array = new List<TargetReference>();
+                    List<ChaosTargetReference> array = new List<ChaosTargetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetReference.DeserializeTargetReference(item));
+                        array.Add(ChaosTargetReference.DeserializeChaosTargetReference(item));
                     }
                     targets = array;
                     continue;
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new SelectorType(property.Value.GetString());
+                    type = new ChaosTargetSelectorType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

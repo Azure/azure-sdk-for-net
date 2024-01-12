@@ -11,27 +11,42 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a list of Capability Type resources and a link for pagination. </summary>
+    /// <summary>
+    /// Model that represents a list of Capability Type resources and a link for pagination.
+    /// Serialized Name: CapabilityTypeListResult
+    /// </summary>
     internal partial class CapabilityTypeListResult
     {
         /// <summary> Initializes a new instance of <see cref="CapabilityTypeListResult"/>. </summary>
         internal CapabilityTypeListResult()
         {
-            Value = new ChangeTrackingList<CapabilityTypeData>();
+            Value = new ChangeTrackingList<ChaosCapabilityTypeData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilityTypeListResult"/>. </summary>
-        /// <param name="value"> List of Capability Type resources. </param>
-        /// <param name="nextLink"> URL to retrieve the next page of Capability Type resources. </param>
-        internal CapabilityTypeListResult(IReadOnlyList<CapabilityTypeData> value, string nextLink)
+        /// <param name="value">
+        /// List of Capability Type resources.
+        /// Serialized Name: CapabilityTypeListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to retrieve the next page of Capability Type resources.
+        /// Serialized Name: CapabilityTypeListResult.nextLink
+        /// </param>
+        internal CapabilityTypeListResult(IReadOnlyList<ChaosCapabilityTypeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Capability Type resources. </summary>
-        public IReadOnlyList<CapabilityTypeData> Value { get; }
-        /// <summary> URL to retrieve the next page of Capability Type resources. </summary>
+        /// <summary>
+        /// List of Capability Type resources.
+        /// Serialized Name: CapabilityTypeListResult.value
+        /// </summary>
+        public IReadOnlyList<ChaosCapabilityTypeData> Value { get; }
+        /// <summary>
+        /// URL to retrieve the next page of Capability Type resources.
+        /// Serialized Name: CapabilityTypeListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

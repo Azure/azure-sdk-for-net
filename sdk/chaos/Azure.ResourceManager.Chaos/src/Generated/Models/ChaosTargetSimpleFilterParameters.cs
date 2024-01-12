@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents the Simple filter parameters. </summary>
+    /// <summary>
+    /// Model that represents the Simple filter parameters.
+    /// Serialized Name: ChaosTargetSimpleFilterParameters
+    /// </summary>
     internal partial class ChaosTargetSimpleFilterParameters
     {
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSimpleFilterParameters"/>. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSimpleFilterParameters"/>. </summary>
-        /// <param name="zones"> List of Azure availability zones to filter targets by. </param>
+        /// <param name="zones">
+        /// List of Azure availability zones to filter targets by.
+        /// Serialized Name: ChaosTargetSimpleFilterParameters.zones
+        /// </param>
         internal ChaosTargetSimpleFilterParameters(IList<string> zones)
         {
             Zones = zones;
         }
 
-        /// <summary> List of Azure availability zones to filter targets by. </summary>
+        /// <summary>
+        /// List of Azure availability zones to filter targets by.
+        /// Serialized Name: ChaosTargetSimpleFilterParameters.zones
+        /// </summary>
         public IList<string> Zones { get; }
     }
 }

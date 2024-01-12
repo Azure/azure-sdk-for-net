@@ -10,23 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The information of the experiment run. </summary>
+    /// <summary>
+    /// The information of the experiment run.
+    /// Serialized Name: ExperimentExecutionDetailsPropertiesRunInformation
+    /// </summary>
     internal partial class ExperimentExecutionDetailsPropertiesRunInformation
     {
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsPropertiesRunInformation"/>. </summary>
         internal ExperimentExecutionDetailsPropertiesRunInformation()
         {
-            Steps = new ChangeTrackingList<StepStatus>();
+            Steps = new ChangeTrackingList<ExecutionStepStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsPropertiesRunInformation"/>. </summary>
-        /// <param name="steps"> The steps of the experiment run. </param>
-        internal ExperimentExecutionDetailsPropertiesRunInformation(IReadOnlyList<StepStatus> steps)
+        /// <param name="steps">
+        /// The steps of the experiment run.
+        /// Serialized Name: ExperimentExecutionDetailsPropertiesRunInformation.steps
+        /// </param>
+        internal ExperimentExecutionDetailsPropertiesRunInformation(IReadOnlyList<ExecutionStepStatus> steps)
         {
             Steps = steps;
         }
 
-        /// <summary> The steps of the experiment run. </summary>
-        public IReadOnlyList<StepStatus> Steps { get; }
+        /// <summary>
+        /// The steps of the experiment run.
+        /// Serialized Name: ExperimentExecutionDetailsPropertiesRunInformation.steps
+        /// </summary>
+        public IReadOnlyList<ExecutionStepStatus> Steps { get; }
     }
 }

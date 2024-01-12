@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The UnknownChaosExperimentAction. </summary>
+    /// <summary>
+    /// The UnknownChaosExperimentAction.
+    /// Serialized Name: UnknownChaosExperimentAction
+    /// </summary>
     internal partial class UnknownChaosExperimentAction : ChaosExperimentAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChaosExperimentAction"/>. </summary>
-        /// <param name="actionType"> Enum that discriminates between action models. </param>
-        /// <param name="name"> String that represents a Capability URN. </param>
+        /// <param name="actionType">
+        /// Enum that discriminates between action models.
+        /// Serialized Name: ChaosExperimentAction.type
+        /// </param>
+        /// <param name="name">
+        /// String that represents a Capability URN.
+        /// Serialized Name: ChaosExperimentAction.name
+        /// </param>
         internal UnknownChaosExperimentAction(string actionType, string name) : base(actionType, name)
         {
             ActionType = actionType ?? "Unknown";

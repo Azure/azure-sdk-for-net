@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            FilterType type = "Unknown";
+            ChaosTargetFilterType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new FilterType(property.Value.GetString());
+                    type = new ChaosTargetFilterType(property.Value.GetString());
                     continue;
                 }
             }

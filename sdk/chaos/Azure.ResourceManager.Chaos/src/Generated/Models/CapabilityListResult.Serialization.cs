@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CapabilityData>> value = default;
+            Optional<IReadOnlyList<ChaosTargetCapabilityData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    List<CapabilityData> array = new List<CapabilityData>();
+                    List<ChaosTargetCapabilityData> array = new List<ChaosTargetCapabilityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapabilityData.DeserializeCapabilityData(item));
+                        array.Add(ChaosTargetCapabilityData.DeserializeChaosTargetCapabilityData(item));
                     }
                     value = array;
                     continue;

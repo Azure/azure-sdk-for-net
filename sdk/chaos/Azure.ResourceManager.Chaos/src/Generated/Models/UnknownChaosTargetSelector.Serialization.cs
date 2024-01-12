@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            SelectorType type = "Unknown";
+            ChaosTargetSelectorType type = "Unknown";
             string id = default;
             Optional<ChaosTargetFilter> filter = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new SelectorType(property.Value.GetString());
+                    type = new ChaosTargetSelectorType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

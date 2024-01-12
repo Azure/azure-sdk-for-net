@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents the Experiment action target details properties model. </summary>
+    /// <summary>
+    /// Model that represents the Experiment action target details properties model.
+    /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties
+    /// </summary>
     public partial class ExperimentExecutionActionTargetDetailsProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
@@ -18,11 +21,26 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsProperties"/>. </summary>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="target"> The target for the action. </param>
-        /// <param name="targetFailedOn"> String that represents the failed date time. </param>
-        /// <param name="targetCompletedOn"> String that represents the completed date time. </param>
-        /// <param name="error"> The error of the action. </param>
+        /// <param name="status">
+        /// The status of the execution.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.status
+        /// </param>
+        /// <param name="target">
+        /// The target for the action.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.target
+        /// </param>
+        /// <param name="targetFailedOn">
+        /// String that represents the failed date time.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetFailedTime
+        /// </param>
+        /// <param name="targetCompletedOn">
+        /// String that represents the completed date time.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetCompletedTime
+        /// </param>
+        /// <param name="error">
+        /// The error of the action.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.error
+        /// </param>
         internal ExperimentExecutionActionTargetDetailsProperties(string status, string target, DateTimeOffset? targetFailedOn, DateTimeOffset? targetCompletedOn, ExperimentExecutionActionTargetDetailsError error)
         {
             Status = status;
@@ -32,15 +50,30 @@ namespace Azure.ResourceManager.Chaos.Models
             Error = error;
         }
 
-        /// <summary> The status of the execution. </summary>
+        /// <summary>
+        /// The status of the execution.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.status
+        /// </summary>
         public string Status { get; }
-        /// <summary> The target for the action. </summary>
+        /// <summary>
+        /// The target for the action.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.target
+        /// </summary>
         public string Target { get; }
-        /// <summary> String that represents the failed date time. </summary>
+        /// <summary>
+        /// String that represents the failed date time.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetFailedTime
+        /// </summary>
         public DateTimeOffset? TargetFailedOn { get; }
-        /// <summary> String that represents the completed date time. </summary>
+        /// <summary>
+        /// String that represents the completed date time.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.targetCompletedTime
+        /// </summary>
         public DateTimeOffset? TargetCompletedOn { get; }
-        /// <summary> The error of the action. </summary>
+        /// <summary>
+        /// The error of the action.
+        /// Serialized Name: ExperimentExecutionActionTargetDetailsProperties.error
+        /// </summary>
         public ExperimentExecutionActionTargetDetailsError Error { get; }
     }
 }

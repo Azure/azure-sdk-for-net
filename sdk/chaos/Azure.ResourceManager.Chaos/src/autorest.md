@@ -18,6 +18,9 @@ skip-csproj: true
 modelerfour:
     flatten-payloads: false
 
+mgmt-debug:
+ show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -47,5 +50,29 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+prepend-rp-prefix:
+  - Target
+  - TargetType
+  - Experiment
+  - ExperimentExecution
+  - CapabilityType
+  - ErrorResponse
+  - OperationStatus
+  - TargetReference
+  - TargetReferenceType
+
+rename-mapping:
+  Capability: ChaosTargetCapability
+  ActionStatus: ExecutionActionStatus
+  BranchStatus: ExecutionBranchStatus
+  StepStatus: ExecutionStepStatus
+  ContinuousAction: ExperimentContinuousAction
+  DelayAction: ExperimentDelayAction
+  DiscreteAction: ExperimentDiscreteAction
+  FilterType: ChaosTargetFilterType
+  KeyValuePair: ContinuousActionKeyValuePair
+  ProvisioningState: ExperimentProvisioningState
+  SelectorType: ChaosTargetSelectorType
 
 ```

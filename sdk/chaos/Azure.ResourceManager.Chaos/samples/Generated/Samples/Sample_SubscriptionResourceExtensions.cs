@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Samples
             // invoke the operation
             AzureLocation location = new AzureLocation("West US");
             string asyncOperationId = "713192d7-503f-477a-9cfe-4efc3ee2bd11";
-            OperationStatus result = await subscriptionResource.GetOperationStatusAsync(location, asyncOperationId);
+            ChaosOperationStatus result = await subscriptionResource.GetOperationStatusAsync(location, asyncOperationId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

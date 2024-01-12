@@ -11,27 +11,42 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a list of Capability resources and a link for pagination. </summary>
+    /// <summary>
+    /// Model that represents a list of Capability resources and a link for pagination.
+    /// Serialized Name: CapabilityListResult
+    /// </summary>
     internal partial class CapabilityListResult
     {
         /// <summary> Initializes a new instance of <see cref="CapabilityListResult"/>. </summary>
         internal CapabilityListResult()
         {
-            Value = new ChangeTrackingList<CapabilityData>();
+            Value = new ChangeTrackingList<ChaosTargetCapabilityData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilityListResult"/>. </summary>
-        /// <param name="value"> List of Capability resources. </param>
-        /// <param name="nextLink"> URL to retrieve the next page of Capability resources. </param>
-        internal CapabilityListResult(IReadOnlyList<CapabilityData> value, string nextLink)
+        /// <param name="value">
+        /// List of Capability resources.
+        /// Serialized Name: CapabilityListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to retrieve the next page of Capability resources.
+        /// Serialized Name: CapabilityListResult.nextLink
+        /// </param>
+        internal CapabilityListResult(IReadOnlyList<ChaosTargetCapabilityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Capability resources. </summary>
-        public IReadOnlyList<CapabilityData> Value { get; }
-        /// <summary> URL to retrieve the next page of Capability resources. </summary>
+        /// <summary>
+        /// List of Capability resources.
+        /// Serialized Name: CapabilityListResult.value
+        /// </summary>
+        public IReadOnlyList<ChaosTargetCapabilityData> Value { get; }
+        /// <summary>
+        /// URL to retrieve the next page of Capability resources.
+        /// Serialized Name: CapabilityListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

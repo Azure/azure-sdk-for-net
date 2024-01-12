@@ -11,27 +11,42 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a list of Experiment executions and a link for pagination. </summary>
+    /// <summary>
+    /// Model that represents a list of Experiment executions and a link for pagination.
+    /// Serialized Name: ExperimentExecutionListResult
+    /// </summary>
     internal partial class ExperimentExecutionListResult
     {
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionListResult"/>. </summary>
         internal ExperimentExecutionListResult()
         {
-            Value = new ChangeTrackingList<ExperimentExecutionData>();
+            Value = new ChangeTrackingList<ChaosExperimentExecutionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionListResult"/>. </summary>
-        /// <param name="value"> List of Experiment executions. </param>
-        /// <param name="nextLink"> URL to retrieve the next page of Experiment executions. </param>
-        internal ExperimentExecutionListResult(IReadOnlyList<ExperimentExecutionData> value, string nextLink)
+        /// <param name="value">
+        /// List of Experiment executions.
+        /// Serialized Name: ExperimentExecutionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to retrieve the next page of Experiment executions.
+        /// Serialized Name: ExperimentExecutionListResult.nextLink
+        /// </param>
+        internal ExperimentExecutionListResult(IReadOnlyList<ChaosExperimentExecutionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Experiment executions. </summary>
-        public IReadOnlyList<ExperimentExecutionData> Value { get; }
-        /// <summary> URL to retrieve the next page of Experiment executions. </summary>
+        /// <summary>
+        /// List of Experiment executions.
+        /// Serialized Name: ExperimentExecutionListResult.value
+        /// </summary>
+        public IReadOnlyList<ChaosExperimentExecutionData> Value { get; }
+        /// <summary>
+        /// URL to retrieve the next page of Experiment executions.
+        /// Serialized Name: ExperimentExecutionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
