@@ -15,18 +15,8 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ResponseBufferingPolicy : PipelinePolicy
 {
-    private readonly TimeSpan _networkTimeout;
-
-    public ResponseBufferingPolicy(TimeSpan networkTimeout)
+    public ResponseBufferingPolicy()
     {
-        // Note: we set this in the constructor because we need a value for it and
-        // don't want to expect/require a caller to know/remember to set it on the message.
-        // The one on the message then becomes and invocation-time override of what was
-        // baked in at pipeline-construction time.
-
-        // TODO: It feels like this should live on the transport and not a random policy.
-        // Revisit this and see if we can do it and what it would look like.
-        _networkTimeout = networkTimeout;
     }
 
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -43,12 +33,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
 
-        // Get the network timeout for this particular invocation of the pipeline.
-        // We either use the default that the policy was constructed with at
-        // pipeline-creation time, or we get an override value from the message that
-        // we use for the duration of this invocation only.
-        TimeSpan invocationNetworkTimeout = message.NetworkTimeout ?? _networkTimeout;
-
+        TimeSpan invocationNetworkTimeout = (TimeSpan)message.NetworkTimeout!;
         cts.CancelAfter(invocationNetworkTimeout);
         try
         {
@@ -135,7 +120,6 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
         if (timeoutToken.IsCancellationRequested)
         {
-            // TODO: Make this error message correct
             throw CancellationHelper.CreateOperationCanceledException(
                 inner,
                 timeoutToken,
