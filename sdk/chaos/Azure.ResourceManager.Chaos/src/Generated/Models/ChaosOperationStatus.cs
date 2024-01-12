@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The operation name.
         /// Serialized Name: OperationStatus.name
         /// </param>
-        /// <param name="startOn">
+        /// <param name="startedOn">
         /// The start time of the operation.
         /// Serialized Name: OperationStatus.startTime
         /// </param>
-        /// <param name="endOn">
+        /// <param name="endedOn">
         /// The end time of the operation.
         /// Serialized Name: OperationStatus.endTime
         /// </param>
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The status of the operation.
         /// Serialized Name: OperationStatus.status
         /// </param>
-        internal ChaosOperationStatus(ResponseError error, string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status) : base(error)
+        internal ChaosOperationStatus(ResponseError error, string id, string name, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string status) : base(error)
         {
             Id = id;
             Name = name;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartedOn = startedOn;
+            EndedOn = endedOn;
             Status = status;
         }
 
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The start time of the operation.
         /// Serialized Name: OperationStatus.startTime
         /// </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartedOn { get; }
         /// <summary>
         /// The end time of the operation.
         /// Serialized Name: OperationStatus.endTime
         /// </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndedOn { get; }
         /// <summary>
         /// The status of the operation.
         /// Serialized Name: OperationStatus.status

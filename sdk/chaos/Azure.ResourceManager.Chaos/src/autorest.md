@@ -74,10 +74,9 @@ rename-mapping:
   ProvisioningState: ExperimentProvisioningState
   SelectorType: ChaosTargetSelectorType
   ErrorResponse: ChaosErrorResult
-  OperationStatus.startTime: StartOn|datetime
-  OperationStatus.endTime: EndOn|datetime
+  OperationStatus.startTime: StartedOn|datetime
+  OperationStatus.endTime: EndedOn|datetime
   TargetReference.id: -|arm-id
-  # ChaosTargetSelector.id: -|arm-id
   ActionStatus.actionId: -|uuid
   
 ```
