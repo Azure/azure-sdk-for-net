@@ -132,9 +132,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private readonly bool _isProcessor;
 
-        private static readonly IReadOnlyList<ServiceBusReceivedMessage> s_emptyList = Array.Empty<ServiceBusReceivedMessage>();
+        private static readonly IReadOnlyList<ServiceBusReceivedMessage> s_emptyReceivedMessageList = Array.Empty<ServiceBusReceivedMessage>();
 
-        private static IReadOnlyList<AmqpMessage> s_emptyAmqpMessageList = Array.Empty<AmqpMessage>();
+        private static readonly IReadOnlyList<AmqpMessage> s_emptyAmqpMessageList = Array.Empty<AmqpMessage>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
@@ -392,7 +392,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     message.Dispose();
                 }
 
-                return receivedMessages ?? s_emptyList;
+                return receivedMessages ?? s_emptyReceivedMessageList;
             }
             catch (OperationCanceledException)
             {
@@ -1044,13 +1044,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     LastPeekedSequenceNumber = message.SequenceNumber;
                 }
-                return messages ?? s_emptyList;
+                return messages ?? s_emptyReceivedMessageList;
             }
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
                 (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
             {
-                return s_emptyList;
+                return s_emptyReceivedMessageList;
             }
 
             throw amqpResponseMessage.ToMessagingContractException();
@@ -1369,7 +1369,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw; // will never be reached
             }
 
-            return messages ?? s_emptyList;
+            return messages ?? s_emptyReceivedMessageList;
         }
 
         /// <summary>
