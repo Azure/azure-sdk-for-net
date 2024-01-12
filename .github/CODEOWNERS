@@ -860,3 +860,6 @@
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                    @sunkun99
+
+# Azure Large Instance SDK
+/sdk/azurelargeinstance                                             @8Gitbrix
