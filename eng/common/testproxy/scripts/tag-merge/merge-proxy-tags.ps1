@@ -68,24 +68,6 @@ function Git-Command($CommandString, $WorkingDirectory, $HardExit=$true) {
     return $result.Output
 }
 
-function Resolve-Proxy {
-    $testProxyExe = "test-proxy"
-    # this script requires the presence of the test-proxy on the PATH
-    $proxyToolPresent = Test-Exe-In-Path -ExeToLookFor "test-proxy" -ExitOnError $false
-    $proxyStandalonePresent = Test-Exe-In-Path -ExeToLookFor "Azure.Sdk.Tools.TestProxy" -ExitOnError $false
-
-    if (-not $proxyToolPresent -and -not $proxyStandalonePresent) {
-        Write-Error "This script requires the presence of a test-proxy executable to complete its operations. Exiting."
-        exit 1
-    }
-
-    if (-not $proxyToolPresent) {
-        $testProxyExe = "Azure.Sdk.Tools.TestProxy"
-    }
-
-    return $testProxyExe
-}
-
 function Call-Proxy {
     param(
     [string] $TestProxyExe,
