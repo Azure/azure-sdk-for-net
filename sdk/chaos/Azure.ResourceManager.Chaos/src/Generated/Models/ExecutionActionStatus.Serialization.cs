@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             Optional<string> actionName = default;
-            Optional<string> actionId = default;
+            Optional<Guid> actionId = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
@@ -35,7 +35,11 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (property.NameEquals("actionId"u8))
                 {
-                    actionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    actionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new ExecutionActionStatus(actionName.Value, actionId.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(targets));
+            return new ExecutionActionStatus(actionName.Value, Optional.ToNullable(actionId), status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(targets));
         }
     }
 }

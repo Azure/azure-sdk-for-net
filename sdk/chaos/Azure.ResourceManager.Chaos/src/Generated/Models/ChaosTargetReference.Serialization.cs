@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             ChaosTargetReferenceType type = default;
-            string id = default;
+            ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

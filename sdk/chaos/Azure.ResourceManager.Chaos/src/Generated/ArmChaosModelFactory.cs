@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// Serialized Name: ActionStatus.targets
         /// </param>
         /// <returns> A new <see cref="Models.ExecutionActionStatus"/> instance for mocking. </returns>
-        public static ExecutionActionStatus ExecutionActionStatus(string actionName = null, string actionId = null, string status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ExperimentExecutionActionTargetDetailsProperties> targets = null)
+        public static ExecutionActionStatus ExecutionActionStatus(string actionName = null, Guid? actionId = null, string status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ExperimentExecutionActionTargetDetailsProperties> targets = null)
         {
             targets ??= new List<ExperimentExecutionActionTargetDetailsProperties>();
 
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The operation name.
         /// Serialized Name: OperationStatus.name
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// The start time of the operation.
         /// Serialized Name: OperationStatus.startTime
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// The end time of the operation.
         /// Serialized Name: OperationStatus.endTime
         /// </param>
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// Serialized Name: OperationStatus.status
         /// </param>
         /// <returns> A new <see cref="Models.ChaosOperationStatus"/> instance for mocking. </returns>
-        public static ChaosOperationStatus ChaosOperationStatus(ResponseError error = null, string id = null, string name = null, string startTime = null, string endTime = null, string status = null)
+        public static ChaosOperationStatus ChaosOperationStatus(ResponseError error = null, string id = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string status = null)
         {
-            return new ChaosOperationStatus(error, id, name, startTime, endTime, status);
+            return new ChaosOperationStatus(error, id, name, startOn, endOn, status);
         }
 
         /// <summary> Initializes a new instance of <see cref="Chaos.ChaosTargetTypeData"/>. </summary>

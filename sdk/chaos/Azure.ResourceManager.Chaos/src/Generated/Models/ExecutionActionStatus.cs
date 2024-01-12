@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The array of targets.
         /// Serialized Name: ActionStatus.targets
         /// </param>
-        internal ExecutionActionStatus(string actionName, string actionId, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets)
+        internal ExecutionActionStatus(string actionName, Guid? actionId, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets)
         {
             ActionName = actionName;
             ActionId = actionId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The id of the action status.
         /// Serialized Name: ActionStatus.actionId
         /// </summary>
-        public string ActionId { get; }
+        public Guid? ActionId { get; }
         /// <summary>
         /// The status of the action.
         /// Serialized Name: ActionStatus.status

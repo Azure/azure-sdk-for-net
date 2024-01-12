@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// Serialized Name: TargetReference.id
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ChaosTargetReference(ChaosTargetReferenceType referenceType, string id)
+        public ChaosTargetReference(ChaosTargetReferenceType referenceType, ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// String of the resource ID of a Target resource.
         /// Serialized Name: TargetReference.id
         /// </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

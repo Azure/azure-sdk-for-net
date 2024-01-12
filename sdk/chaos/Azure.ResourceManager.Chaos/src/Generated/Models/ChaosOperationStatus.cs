@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -33,11 +34,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The operation name.
         /// Serialized Name: OperationStatus.name
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// The start time of the operation.
         /// Serialized Name: OperationStatus.startTime
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// The end time of the operation.
         /// Serialized Name: OperationStatus.endTime
         /// </param>
@@ -45,12 +46,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The status of the operation.
         /// Serialized Name: OperationStatus.status
         /// </param>
-        internal ChaosOperationStatus(ResponseError error, string id, string name, string startTime, string endTime, string status) : base(error)
+        internal ChaosOperationStatus(ResponseError error, string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status) : base(error)
         {
             Id = id;
             Name = name;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Status = status;
         }
 
@@ -68,12 +69,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// The start time of the operation.
         /// Serialized Name: OperationStatus.startTime
         /// </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary>
         /// The end time of the operation.
         /// Serialized Name: OperationStatus.endTime
         /// </summary>
-        public string EndTime { get; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary>
         /// The status of the operation.
         /// Serialized Name: OperationStatus.status

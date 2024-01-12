@@ -205,7 +205,7 @@ new ContinuousActionKeyValuePair("abruptShutdown","false")
             {
 new ChaosTargetListSelector("selector1",new ChaosTargetReference[]
 {
-new ChaosTargetReference(ChaosTargetReferenceType.ChaosTarget,"/subscriptions/6b052e15-03d3-4f17-b2e1-be7f07588291/resourceGroups/exampleRG/providers/Microsoft.Compute/virtualMachines/exampleVM/providers/Microsoft.Chaos/targets/Microsoft-VirtualMachine")
+new ChaosTargetReference(ChaosTargetReferenceType.ChaosTarget,new ResourceIdentifier("/subscriptions/6b052e15-03d3-4f17-b2e1-be7f07588291/resourceGroups/exampleRG/providers/Microsoft.Compute/virtualMachines/exampleVM/providers/Microsoft.Chaos/targets/Microsoft-VirtualMachine"))
 })
             })
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<string> startTime = default;
-            Optional<string> endTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
             Optional<string> status = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
@@ -39,12 +40,20 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    endTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -62,7 +71,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new ChaosOperationStatus(error.Value, id.Value, name.Value, startTime.Value, endTime.Value, status.Value);
+            return new ChaosOperationStatus(error.Value, id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value);
         }
     }
 }
