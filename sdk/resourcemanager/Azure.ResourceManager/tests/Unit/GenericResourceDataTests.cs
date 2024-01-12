@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.AccessControl;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +25,6 @@ namespace Azure.ResourceManager.Tests
             ArmPlan plan = new ArmPlan("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             ResourcesSku sku = new ResourcesSku("NameForSku", ArmSkuTier.Basic.ToString(), "SizeForSku", "FamilyForSku", "ModelForSku", 15464547, null);
             GenericResourceData data = new GenericResourceData(id, id.Name, id.ResourceType, null, new Dictionary<string, string>(), AzureLocation.EastUS, null, null, plan, null, "KindForResource", "ManagedByForResource", sku, null, null, null, null);
-
             var json = JsonHelper.SerializePropertiesToString(data, indented: true) + Environment.NewLine;
             Assert.AreEqual(expected, json);
         }
