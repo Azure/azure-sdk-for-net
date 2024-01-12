@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Buffers;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Internal;
@@ -55,7 +57,7 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         };
     }
 
-    public bool TryGetValue(TKey key, /*[MaybeNullWhen(false)]*/ out TValue value)
+    public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
     {
         CheckDisposed();
         var index = GetIndex(key);
@@ -266,21 +268,24 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
         _count = 0;
         _first = default;
         _second = default;
-        if (_rest == default)
-        {
-            return;
-        }
 
         lock (_lock)
         {
+            if (_rest == default)
+            {
+                return;
+            }
+
             var rest = _rest;
             _rest = default;
             ArrayPool<(TKey Key, TValue Value)>.Shared.Return(rest, true);
         }
     }
 
-    private (TKey Key, TValue Value)[] GetRest() => _rest ?? throw new InvalidOperationException($"{nameof(_rest)} field is null while {nameof(_count)} == {_count}");
+    private (TKey Key, TValue Value)[] GetRest() => _rest ??
+        throw new InvalidOperationException($"{nameof(_rest)} field is null while {nameof(_count)} == {_count}");
 
+    [Conditional("DEBUG")]
     private void CheckDisposed()
     {
 #if DEBUG
