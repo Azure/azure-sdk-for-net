@@ -19,10 +19,10 @@ internal struct ArrayBackedPropertyBag<TKey, TValue> where TKey : struct, IEquat
     private (TKey Key, TValue Value) _second;
     private (TKey Key, TValue Value)[]? _rest;
     private int _count;
+    private readonly object _lock = new();
 #if DEBUG
     private bool _disposed;
 #endif
-    private readonly object _lock = new();
 
     public ArrayBackedPropertyBag()
     {
